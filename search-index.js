@@ -1,0 +1,11511 @@
+const searchIndex = [
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "Dan Koe 提出了一個整合性的人類發展模型「Human 3.0」，融合了 Ken Wilber 的 AQAL 框架、Spiral Dynamics（螺旋動力學）和心流心理學。核心主張：真正的頂尖表現不是單一領域的專精，而是 心智、身體、靈性、志業 四個象限的全方位發展。模型包含三個意識層級（Conformist → Individualist → Synthesist）、三個發展階段（Dissonance → Uncertainty → Discovery），以及用於加速突破的「Channel」機制。這不是一套教條式的步驟，而是一張導航圖，幫助你找到目前卡在哪裡、以及下一步該往哪裡走。"
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "學習目標",
+    "sectionTitle": "學習目標",
+    "content": "🗺️ 理解四象限模型 掌握 Mind / Body / Spirit / Vocation 四個發展象限如何相互影響，以及為什麼單一領域的發展會導致「偏科」 📊 辨識發展層級與階段 學會用 3 個 Level 和 3 個 Phase 定位自己在每個象限的發展位置，辨識「假轉變」（False Transformation） ⚡ 應用 Channel 加速機制 理解如何進入「Channel」狀態來加速突破瓶頸，並將 AI 視為一種跨域「Glitch」工具 Human 3.0 發展路徑 🧭 Quadrants 四象限定位 → 📶 Levels 1.0 → 2.0 → 3.0 → 🔄 Phases 不適 → 不確定 → 發現 → 🛠️ Traits 知識 + 技能累積 → 🚀 Channels 加速突破 基礎架構 發展機制 實際應用"
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-i-四象限-quadrants人生的四個發展維度",
+    "sectionTitle": "Part I — 四象限 (Quadrants)：人生的四個發展維度",
+    "content": "改編自 Ken Wilber 的 AQAL 模型，涵蓋個人內在與外在、個體與集體的完整光譜 Human 3.0 的基礎是四個象限，代表人生的四個發展領域。這個架構改編自 Ken Wilber 的 AQAL 模型 （All Quadrants, All Levels），代表了四種根本的觀點視角，創造了一張涵蓋所有知識與經驗的通用地圖。 \"The foundation of Human 3.0 is four quadrants that represent the four domains of life... Adapted from Ken Wilber's AQAL model, the quadrants represent the four fundamental perspectives, creating a generalized map of all knowledge and experience.\" Koe 的核心論點是：所有現有的發展模型——無論是 Spiral Dynamics、佛教、紅藥丸理論還是電商課程——都 侷限在單一領域 。靈性導師可能身體虛弱，商業大亨"
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-ii-三個意識層級-levels從-npc-到-creator",
+    "sectionTitle": "Part II — 三個意識層級 (Levels)：從 NPC 到 Creator",
+    "content": "改編自 Spiral Dynamics 和 Ego Development 理論的三層意識發展模型 每個象限內有三個宏觀發展層級：低意識（1.0）、中意識（2.0）、高意識（3.0）。這些層級改編自多種發展心理學模型，包括 Spiral Dynamics （螺旋動力學）和 9 Stages of Ego Development （自我發展九階段）。核心發現是：我們的心智——價值觀、信念、世界觀——會隨著時間以 可預測的階段 演化。 \"Within each quadrant, there are 3 macro levels of development that represent low consciousness (1.0), mid consciousness (2.0), and high consciousness (3.0).\" 關鍵原則：你不會「離開」任何層級，而是 超越並包含 （transcend and include）前一個層級。你獲得更大的視角，讓你能夠運用在較低階段累積的知識、技能和工具。 \"You do not leave any given level. "
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-iii-三個發展階段-phases垂直上升的引擎",
+    "sectionTitle": "Part III — 三個發展階段 (Phases)：垂直上升的引擎",
+    "content": "每個層級內的三階段發展模式：不適感、不確定性、發現 在每個層級內部，有三個發展階段代表垂直發展——向上升級或向下退行。這是人類經歷深刻改變時可以觀察到的三個通用模式。 \"Within each level, there are 3 phases of development that one must go through to reach the next level. Phases represent vertical development, moving up a level or regressing back down.\" Koe 提出了一個重要的警告： 假轉變（False Transformation） 。有些人感覺自己已經升級，但其實只是在「模仿」更高層級的樣子，而沒有真正發展所需的特質。這種自我欺騙會困住人，阻止真正的進步。 \"They may feel as if they've advanced through each phase to reach a new level, but they are simply imitating what that leve"
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-iv-特質-traits水平發展的累積",
+    "sectionTitle": "Part IV — 特質 (Traits)：水平發展的累積",
+    "content": "知識、經驗、技能的門檻——沒有水平累積，就無法垂直突破 每個階段內部，都有一個 知識、經驗和技能的門檻 必須達到，下一個層級才會向你顯現。階段（Phases）代表垂直發展，特質（Traits）則代表 水平發展 ——在未知中探索，直到你積累足夠的發現來進入下一個階段。 \"Within each phase, there is a threshold of knowledge, experience, and skill that must be acquired before the next level reveals itself to you.\" 垂直和水平發展共同的陷阱是 無聊和焦慮 。如果你試圖跳級但缺乏技能，你會焦慮失敗。如果你不嘗試升級，你會無聊、退縮到舒適和分心。兩者都會導致心智失序，讓生活變得沉悶和無意義。 \"If you attempt to jump to a new level of development without the skill and experience to do so, you will become anxious and fail. If"
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-v-通道-channels加速突破的秘密武器",
+    "sectionTitle": "Part V — 通道 (Channels)：加速突破的秘密武器",
+    "content": "當不適感遇上正確的興奮點，你就會被吸入一個加速成長的通道 當你到達任何層級的 Dissonance 階段時，你就獲得了利用「Channel」的能力。Channel 就像遊戲中的刺激任務——一個知識或技能的兔子洞。 當你無法停止研究某個主題或投入某個專案，時間飛逝——那就是 Channel。 \"Think of a Channel as an exciting quest in a video game. A rabbit hole of knowledge or skill. When you can't stop researching a topic or working on a project and time passes by surprisingly quick.\" 進入 Channel 的過程：先到達 Dissonance 階段 → 用不滿作為燃料推入未知 → 在特定象限設定願景或目標 → 開始獲取知識和技能 → 不斷實驗 → 找到那個讓你 被吸入 的 Channel。判斷方法很簡單：看他們談到這件事時有多興奮。 \"You can tell someone is in "
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-vi-原型與元型-archetypes-metatypes",
+    "sectionTitle": "Part VI — 原型與元型 (Archetypes & Metatypes)",
+    "content": "用四象限定位來理解自己和他人的發展全貌 Archetype（原型） 是在特定象限和層級中出現的人格模式。 Metatype（元型） 是一個人四個象限原型的綜合——類似人格測試，但用於自我發展定位。 \"Archetypes – patterns of people that show up in specific quadrants and levels. Metatypes – the synthesis of a single person's four archetypes within each quadrant.\" 計算方式：Level 1 的每個點得 1 分，Level 2 得 2 分，Level 3 得 3 分。總分除以 12（圖上的發展切片總數），就得到你的 Metatype 分數。例如一個綜合分數為 2.0 的人被稱為「Human 2.0」。 \"For every point in Level 1, they receive 1 point. For every point in Level 2, they receive 2. For every point in L"
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-vii-30-生活方式用問題解決來創造平衡",
+    "sectionTitle": "Part VII — 3.0 生活方式：用問題解決來創造平衡",
+    "content": "終極目標不是完美平衡，而是通過持續解決問題來自然地發展所有象限 「如何平衡所有象限的發展？」Koe 的回答是：終極目標是創造一種 生活方式 ，讓所有象限都通過問題解決被照顧到。不是追求完美平衡，而是 注意到問題並持續解決 。 \"The ultimate goal is to create a lifestyle where all quadrants are accounted for through problem-solving.\" 突破某個象限可能會讓另一個象限的問題變得明顯。生意做到頂尖可能不需要更多的商業發展，而是解決身體、心智或靈性的問題。即使你有了所有的錢，胸口可能仍有一個空洞——那是志業中缺乏意義的問題。 \"Reaching the next level of business may not require more development in business, but in solving problems related to the body, mind, or spirit.\" 🛠️ 生活方式設計的核心邏輯 通過持續的問題解決（並保持警覺不被分心所阻擋）"
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "重點整理",
+    "sectionTitle": "重點整理",
+    "content": "🗺️ 全象限思維防止偏科 Mind / Body / Spirit / Vocation 四象限缺一不可。單一領域的極致發展不等於真正的自我實現——靈性導師可能體弱，商業巨頭可能無法維持關係。真正的 3.0 是全方位的。 📶 超越並包含，不是取代 從 1.0 到 3.0 不是推翻前一個層級，而是獲得更大的視角去整合。Conformist 的規則、Individualist 的自主性，都被 Synthesist 包含在更全面的理解中。 ⚡ Channel 是可尋找的加速器 當你感到迷失，你可能正在 Dissonance 階段。保持開放、追求讓你興奮的事物、不要因為羞恥感而退縮——你的下一個 Channel 就在那裡等你。 🎯 AI 是雙面刃 Glitch AI 是最新的跨域加速器，但在缺乏基礎的情況下使用高風險工具，後果嚴重。先建立「自然」的能力基礎，才能安全地利用 AI 的加速效果。知識和技能是降低風險的唯一途徑。"
+  },
+  {
+    "docFile": "2025-08-26_human30-life-map.html",
+    "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
+    "docDate": "2025-08-26",
+    "docSource": "Dan Koe / future-proof Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "練習題",
+    "sectionTitle": "練習題",
+    "content": "Q1 概念理解 Human 3.0 模型中的「超越並包含」(transcend and include) 原則，與一般「階段升級」觀念有什麼根本差異？為什麼這個區別很重要？ 一般「階段升級」暗示你離開舊階段進入新階段，像爬樓梯丟掉下面的梯子。但「超越並包含」意味著 Level 3 的 Synthesist 仍然擁有 Level 1 的結構性思維和 Level 2 的個人驅動力——只是現在有更大的視角來選擇何時運用它們。 這很重要，因為它解釋了為什麼 Level 3 的人有時「看起來」像 Level 1（例如有紀律的日常作息），但那是有意識的選擇而非無意識的順從——這就是 Ken Wilber 所說的「前/超謬誤」：從外部看，前理性和超理性狀態看起來相似，但內在運作完全不同。 Q2 產業應用 作為 CDMO 的營運主管，你如何用 Human 3.0 的四象限模型來診斷自己目前的「Metatype」？哪個象限可能是你的瓶頸？ 以 CDMO 營運主管的情境來映射： Vocation （志業）— 可能在 2.x 層級：已經從「打工」進入「職涯管理」，正在朝 COO 的 Calling 方向發展"
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "導言第二大腦的困境",
+    "sectionTitle": "導言：第二大腦的困境",
+    "content": "A week ago, I showed you how I automated my second brain : voice memos automatically transcribed, processed by AI, and organized into my Notion database. The system works perfectly. I record a thought during my walk, and by the time I get home, it's already structured and ready to use. But that's only half the battle. I've solved the capture problem . Ideas flow into my system without me having to do anything now. Everything's organized, searchable, and categorized exactly the way I need it. But"
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "從倉庫到鍛造廠的轉變",
+    "sectionTitle": "從倉庫到鍛造廠的轉變",
+    "content": "I felt a familiar, frustrating paralysis. My perfectly organized 'second brain' was failing me. I'd spend more time searching for a note I vaguely remembered than actually thinking with the ideas it contained. I had built a museum for other people's thoughts. This isn't a new problem. Decades ago, philosopher Mortimer Adler argued a clean book signals an unengaged mind. To truly own knowledge, you must argue with it, question it, and leave your intellectual fingerprints all over it. What if the "
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "技法一風箱-the-bellows---打破假設",
+    "sectionTitle": "技法一：風箱 (The Bellows) - 打破假設",
+    "content": "The Principle: Overcoming functional fixedness . Our thinking gets stuck in familiar ruts. The AI's non-human associative patterns can break us out by generating novel connections and perspectives. The Craft: To heat the raw ore of an idea, making it malleable and ready for shaping. To explore the adjacent possible and see your concept in a new light. #Role: You are a Systems Poet, a master of analogical thinking and conceptual blending. #Context: My Core Idea: [Insert your core idea, concept, o"
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "技法二鍛鍊之錘-the-hammer---壓力測試與精煉",
+    "sectionTitle": "技法二：鍛鍊之錘 (The Hammer) - 壓力測試與精煉",
+    "content": "The Principle: Desirable Difficulty & Retrieval Practice . Forcing yourself to actively defend your ideas against smart criticism is what builds durable, flexible understanding. The Craft: To beat the impurities (weak assumptions, logical fallacies) out of an idea, giving it shape, strength, and integrity. #context I'm going to state a core belief or plan I have. #task Your task is to act as four distinct personas and attack this belief from your unique perspective. Do not offer solutions or pos"
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "技法三鍛造砧-the-anvil---綜合與落地",
+    "sectionTitle": "技法三：鍛造砧 (The Anvil) - 綜合與落地",
+    "content": "The Principle: Elaboration & Schema-Building . As Barbara Oakley teaches, knowledge becomes sticky when we connect it to what we already know and re-state it in different ways. The Craft: To provide a solid, stable surface against which to shape the hammered idea, connecting it to first principles and making it memorable. #role You are a Knowledge Weaver, an AI that forges durable mental models by connecting new ideas to existing knowledge. #context My goal is to make my refined insight unforget"
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "技法四淬火-the-quench---應用與固化",
+    "sectionTitle": "技法四：淬火 (The Quench) - 應用與固化",
+    "content": "The Principle: The Testing Effect . Knowledge becomes truly permanent and useful only when it is applied in the real world. Abstract ideas must be made concrete. The Craft: To rapidly cool and harden the finished insight into a usable tool, making it a permanent part of your intellectual toolkit. #Context My Insight (The \"Golden Rule\"): [Insert the 'Law' or 'Rule' from the 'Anvil' stage.] The Domain of Application: [Choose ONE: Personal Habit, Creative Project, Team Collaboration, Strategic Deci"
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "結語你的心智就是工坊",
+    "sectionTitle": "結語：你的心智就是工坊",
+    "content": "Our digital tools have made it seductively easy to build beautiful, useless warehouses for information. We've optimized for collection at the expense of connection. The framework in this playbook is an antidote. It uses AI not to give you easier answers, but to help you ask harder questions. It invites productive friction back into your thinking. It treats your AI as a powerful but unintelligent set of tools waiting to be picked up by a skilled craftsman: you. The future of knowledge work won't "
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "核心概念解析",
+    "sectionTitle": "核心概念解析",
+    "content": "關鍵術語 Key Terms Second Brain (第二大腦)： 一套數位化的知識管理系統，用於捕捉、組織、儲存個人的想法、筆記與資訊。常見工具包括 Notion、Obsidian、Roam Research 等。 Capture Problem (捕捉問題)： 如何有效地將腦中的想法、外部的資訊轉化為可儲存、可檢索的數位內容。 Warehouse vs Forge (倉庫 vs 鍛造廠)： 兩種截然不同的知識管理心態。倉庫模式專注於儲存與整理；鍛造廠模式專注於轉化與創造。 比喻說明 Analogy 圖書館員 vs 工匠 想像兩種人：一位是圖書館員，他的工作是將書籍分類上架、建立索引、保持整潔。另一位是鐵匠，他拿起原料，在火焰中加熱，用錘子敲打，最終創造出一把獨特的刀劍。 大多數人使用 AI 時，都在扮演圖書館員——整理、摘要、分類。但真正的價值來自於扮演鐵匠——質疑、連結、創造。 重點提示 Key Insight 知識的「能力錯覺」(Illusion of Competence) 心理學家發現，當我們輕鬆地閱讀、畫線、摘要時，大腦會產生「我已經學會了」的錯覺。但這種輕鬆的處理過"
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "技法一深度解析風箱-the-bellows",
+    "sectionTitle": "技法一深度解析：風箱 The Bellows",
+    "content": "關鍵術語 Key Terms Functional Fixedness (功能固著)： 一種認知偏誤，指人們傾向於只用傳統的方式看待事物，無法想像其他用途。例如：看到迴紋針只想到固定紙張，而非撬鎖或做藝術品。 Adjacent Possible (相鄰可能性)： 來自複雜系統理論的概念，指從當前狀態可以「一步到達」的所有可能創新。創新往往發生在相鄰可能性的邊界。 比喻說明 Analogy 風箱加熱鐵塊 在鍛造過程中，風箱的作用是將空氣吹入火爐，提高溫度，讓鐵塊變得柔軟可塑。這個 Prompt 就像風箱——透過 AI 的非人類聯想模式，將你僵硬的想法「加熱」，讓它變得可塑，準備好被重新塑形。 三個「世界」（真菌網絡、潮汐生態系、工匠工坊）就像三種不同的「爐火」，每一種都會以獨特的方式「加熱」你的想法。 重點提示 Key Insight 為什麼選擇這三個世界？ 這三個隱喻世界經過精心設計，分別代表不同的思維模式： • 真菌網絡 → 去中心化、隱藏連結、共生 • 潮汐生態系 → 週期循環、適應變化、漲退之間 • 工匠工坊 → 專注深耕、實踐傳承、慢工出細活 應用框架 Application "
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "技法二深度解析鍛鍊之錘-the-hammer",
+    "sectionTitle": "技法二深度解析：鍛鍊之錘 The Hammer",
+    "content": "關鍵術語 Key Terms Desirable Difficulty (合意困難)： 學習科學中的重要概念，指那些增加短期學習難度、但提升長期記憶與遷移能力的學習策略。 Retrieval Practice (提取練習)： 透過主動回憶來強化記憶的學習方法，比單純重讀更有效。被批評、被質疑就是一種高強度的提取練習。 比喻說明 Analogy 四個魔鬼代言人 想像你的想法是一塊剛加熱完的鐵塊。錘子的工作是敲打它，敲出雜質、敲出形狀。這四個 Persona（犬儒 CFO、老練員工、理性科學家、社會倫理學者）就像四把不同角度的錘子： • CFO 從金錢/資源角度敲 • 前線員工 從執行/實務角度敲 • 科學家 從證據/邏輯角度敲 • 倫理學者 從公平/影響角度敲 重點提示 Key Insight 為什麼不提供解決方案？ Prompt 特別強調「Do not offer solutions or positive reinforcement」。這是刻意的設計——真正的批判性思考來自於面對純粹的質疑，而非被「建設性批評」安撫。當你必須自己找到反駁的方法時，才是真正在鍛造你的思想。 ⚖️"
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "技法三深度解析鍛造砧-the-anvil",
+    "sectionTitle": "技法三深度解析：鍛造砧 The Anvil",
+    "content": "關鍵術語 Key Terms Elaboration (精緻化)： 將新知識與已知知識建立連結的過程。連結越多，記憶越牢固。 Schema-Building (基模建構)： 在大腦中建立知識框架的過程。新知識會被整合到現有的基模中，形成更強大的認知結構。 Mental Hooks (心智錨點)： 你已經熟悉的概念或框架，可以用來「掛住」新知識。例如：80/20 法則、複利效應等。 比喻說明 Analogy 砧座：穩定的支撐面 鍛造時，砧座提供一個堅固、穩定的表面，讓錘子的每一下敲擊都能有效傳導。你的「心智錨點」就是這個砧座——如果沒有穩固的已知知識作為支撐，新的洞見就像在空中揮錘，無法成形。 Barbara Oakley 的研究顯示：最強的學習發生在新舊知識建立連結的時刻。 輸出結構解析 Output Structure 這個 Prompt 會產生四個輸出： 輸出項目 目的 Golden Rule (黃金法則) 壓縮洞見為一句可傳播的話 Core Analogy (核心類比) 與已知知識建立神經連結 Origin Story (起源故事) 透過敘事強化情感記憶 Litmus Test "
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "技法四深度解析淬火-the-quench",
+    "sectionTitle": "技法四深度解析：淬火 The Quench",
+    "content": "關鍵術語 Key Terms Testing Effect (測試效應)： 透過測試自己來學習，比單純閱讀或複習更能強化長期記憶。關鍵在於「主動產出」而非「被動輸入」。 Pre-Mortem (事前驗屍)： 在行動之前，先想像「如果失敗了會是什麼原因」。這種逆向思考能大幅提高成功機率。 比喻說明 Analogy 淬火：定型的關鍵一步 在鍛造完成後，將熾熱的金屬快速浸入冷水或油中，這個「淬火」過程會改變金屬的內部結構，使其變得更堅硬、更耐用。 知識的「淬火」就是實踐——將抽象的洞見投入真實世界的行動中。48 小時任務的設計，就是創造一個「快速冷卻」的環境，讓洞見從液態（理論）變成固態（習慣/能力）。 重點提示 Key Insight 「Quest Field Guide」的巧妙設計 注意這個 Prompt 要求的五個輸出： 1. Quest Name — 命名創造承諾感 2. Prime Directive — 極度具體的行動（二元判斷：做了/沒做） 3. Proof of Engagement — 可觀察的證據（避免自我欺騙） 4. Pre-Mortem — 預防失敗（If-Then "
+  },
+  {
+    "docFile": "2025-11-04_ai-prompts-insight-creator.html",
+    "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
+    "docDate": "2025-11-04",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "本文核心要點總結",
+    "sectionTitle": "本文核心要點總結",
+    "content": "第二大腦的真正價值不在儲存，而在轉化 「能力錯覺」讓我們誤以為整理等於學會 四個鍛造技法對應四種思維操作：加熱（打破假設）、錘打（壓力測試）、成形（綜合連結）、淬火（實踐固化） AI 不是給你答案的工具，而是幫你問更好問題的工具 知識的最終歸宿是行動，48 小時任務是「淬火」的最小可行單位 四技法綜合比較 Technique Comparison 技法 認知原理 鍛造隱喻 核心問題 風箱 Bellows 功能固著突破 加熱使其可塑 這個想法還能是什麼？ 錘 Hammer 合意困難 敲打去除雜質 這個想法哪裡錯了？ 砧 Anvil 精緻化學習 提供穩定支撐 這跟我已知的有何關聯？ 淬火 Quench 測試效應 快速冷卻定型 48小時內我能做什麼？ 實務應用建議 如何開始？ 1. 選擇一個最近讓你困擾的想法或決策 ——不要選太大的題目 2. 從「錘」開始 ——讓 AI 扮演四個批評者，看看你的想法能否承受 3. 如果想法存活了 ，用「砧」將它連結到你的已知框架 4. 最後用「淬火」 設計一個 48 小時任務 5. 「風箱」適合在你感覺卡住時使用 ——當你需要全新視角時"
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "學習目標 Learning Objectives",
+    "content": "Mindset 心態轉變 理解為何學習 AI 工具不等於 AI 時代領導力 Framework 框架理解 掌握三角系統的相互依存關係與失衡後果 Action 實踐應用 運用自我檢視問題診斷個人發展缺口 正文開始 Content Start 第 1 部分，共 4 部分 Original Text 原文"
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "the-problem-tool-overwhelm",
+    "sectionTitle": "The Problem: Tool Overwhelm",
+    "content": "My friend came back from an AI conference looking exhausted. He writes and creates content for a living. \"Everyone's talking about tools,\" he said. \" ChatGPT here, automation there, agentic workflows, prompt engineering. I don't even know what half those words mean. I came back more confused than when I left.\" Think of it like this: imagine you're standing in a massive hardware store, surrounded by power tools you've never seen before . Everyone around you is shouting about which drill is best, "
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "工具迷失ai-時代的常見陷阱",
+    "sectionTitle": "工具迷失：AI 時代的常見陷阱",
+    "content": "比喻說明 Analogy 五金行比喻 (Hardware Store Metaphor) 作者用「站在五金行裡，被各種電動工具包圍」來比喻 AI 工具的爆炸式成長。每個人都在討論哪個工具最好，但沒人問：「你到底要建造什麼？」 這揭示了一個關鍵盲點：工具只是手段，目的才是關鍵。 核心概念 Core Concept Tool Overwhelm (工具超載) 這是 AI 時代特有的現象：新工具每週推出，每個都聲稱能提升效率。領導者疲於追趕，反而失去方向感。 這與藥廠製造的情況類似：製程設備不斷更新（連續製造、PAT 技術），但真正的競爭優勢來自於「如何整合這些工具達成品質目標」。 重點提示 Key Point 作者的朋友是內容創作者，參加 AI 會議後「更困惑了」。這反映了一個普遍現象：AI 教育多聚焦在「工具操作」而非「策略思考」。 正文開始 Content Start 第 2 部分，共 4 部分 Original Text 原文"
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "the-gap-most-leaders-miss",
+    "sectionTitle": "The Gap Most Leaders Miss",
+    "content": "When AI anxiety hits, most leaders respond by trying to learn everything. They sign up for prompt engineering courses. They read about large language models (LLMs, the AI technology behind tools like ChatGPT). They try to understand how AI actually thinks. But something I saw is that leaders struggling with AI weren't confused about the technology. They were applying old frameworks to a completely different game. For decades, leadership success meant mastery . You mastered your industry, your pr"
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "從精通到適應的典範轉移",
+    "sectionTitle": "從「精通」到「適應」的典範轉移",
+    "content": "核心概念 Core Concept Mastery Paradigm (精通典範) 過去數十年，領導力的成功公式是「精通」：精通產業、精通流程、精通市場。你花越多時間深耕，你越有價值。 AI 打破這個公式：重複性任務被自動化，分析工作被秒速複製。「精通」不再是護城河。 比喻說明 Analogy 藥廠情境對照 想像一位資深製程工程師，花了 15 年精通某個凍乾 (Lyophilization) 配方。現在 AI 可以根據歷史數據預測最佳參數。這位工程師的價值在哪裡？ 答案是：在「例外處理」(Deviation Management)、「跨部門協調」(Cross-functional Coordination)、「監管策略」(Regulatory Strategy) 這些 AI 無法處理的「混亂人類工作」。 重點提示 Key Point Old Frameworks to a Different Game 作者的核心洞察：領導者的困惑不是「不懂技術」，而是「用舊框架玩新遊戲」。 就像用足球規則來打籃球，努力程度不是問題，規則認知才是。 正文開始 Content Start 第 3 部分，共"
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "the-ai-leadership-triad-explained",
+    "sectionTitle": "The AI Leadership Triad Explained",
+    "content": "Creativity: Seeing What AI Misses When I say creativity, I don't mean artistic expression. I mean the ability to make connections AI doesn't see, ask questions AI doesn't know to ask, and solve problems under constraints . Creative leaders see what doesn't follow. They notice the gap between what the data says and what their experience tells them. Here's something I've discovered: reading fiction and biographies opens creativity in ways technical books never will . Different stories, different e"
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "三角系統深度解析",
+    "sectionTitle": "三角系統深度解析",
+    "content": "AI Leadership Triad 領導力三角 Creativity 創造力 Adaptation 適應力 Innovation 創新力 概念澄清 Definition Creativity (創造力) = 看見 AI 看不見的連結 這不是藝術創作，而是：問 AI 不會問的問題、在限制條件下解決問題、發現數據與經驗之間的落差。 Adaptation (適應力) = 使命不變，方法進化 不是每次新工具出現就轉向，而是保持核心使命同時更新執行方式。 Innovation (創新力) = 真正的進步 vs 創新劇場 Innovation Theater 是「因為別人用所以我也用」。真創新問：「這讓我們的核心工作更好嗎？」 實務應用 Practical Application 培養創造力的具體方法 作者發現：閱讀小說和傳記比技術書籍更能開啟創造力。因為不同故事、不同時代、不同思維方式會促進跨領域連結。 這呼應了「Capability Overhang」概念：AI 系統比表面看起來更強大，關鍵在於「scaffolding」(鷹架)，而這種鷹架需要人類的創造性思維來建構。 正文開始 Conte"
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "why-these-three-work-as-a-system",
+    "sectionTitle": "Why These Three Work as a System",
+    "content": "The AI Leadership Triad isn't three separate skills you develop independently. They feed each other. Creativity without Adaptation equals constant pivots. Adaptation without Innovation equals busy work. Innovation without Creativity equals expensive theater. Quick self-check: Creativity: When's the last time you read something completely outside your field? Adaptation: Do you believe there's always a better way to do what you're currently doing? Innovation: Did your last \"improvement\" actually m"
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "系統性思維失衡的代價",
+    "sectionTitle": "系統性思維：失衡的代價",
+    "content": "三角失衡分析 Triad Imbalance Analysis 失衡類型 症狀 結果 有創造力，無適應力 不斷有新想法，但每個都半途而廢 Constant Pivots (持續轉向) 有適應力，無創新力 很會調整方向，但只是在忙而已 Busy Work (瞎忙) 有創新力，無創造力 採用最新工具，但沒有獨特價值 Expensive Theater (昂貴的表演) 自我檢視問題 Self-Assessment Creativity 創造力 你上次閱讀完全跨領域的內容（小說、歷史、傳記）是什麼時候？如果只讀商業書和 AI 文章，你的創造力正在挨餓。 Adaptation 適應力 你是否相信「目前做的事永遠有更好的方法」？如果你在防守現狀而非尋找改進，適應力就沒發生。 Innovation 創新力 你上次實施的「改進」真的讓核心工作更好了嗎？還是只是看起來很創新？ 關鍵警示 Critical Warning The skills that got you here may not get you there. 讓你走到這裡的技能，不一定能帶你去那裡。這是典範轉移的核心提醒：過去的成功方程式可"
+  },
+  {
+    "docFile": "2025-11-10_ai-leadership-triad.html",
+    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
+    "docDate": "2025-11-10",
+    "docSource": "Joel Salinas / AI Leadership Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "01 技能優先於工具 AI 領導力三角（創造力、適應力、創新力）比技術知識重要。掌握這三項人類技能，隨著 AI 進步你會更加成功。 02 系統性相互依存 三項技能相互增強，不是獨立運作。單一技能發展會導致失衡：創意沒適應=轉向不停、適應沒創新=瞎忙、創新沒創意=昂貴劇場。 03 刻意練習是關鍵 你不會自然「漂流」到 AI 時代的領導成功。所有人都能發展這些技能，但需要有意識的計畫，不只是收集資訊。 04 從「精通」到「適應」 過去領導力強調精通，AI 使這過時。AI 無法做「在限制下創造」「混亂中策略調適」「使命導向創新」這些混亂人類工作。 練習題 Practice Questions 問題 1：情境分析題 一位製藥公司的品質總監（QA Director）發現團隊成員都在學習各種 AI 工具，但實際工作效率沒有提升，反而因為工具切換和學習成本增加了混亂。根據 AI Leadership Triad 框架，你會如何診斷這個問題並提出改善建議？ 顯示參考答案 診斷： 這是典型的「Tool Overwhelm」(工具超載) 加上「Innovation Theater」(創新劇場) 的組合。團"
+  },
+  {
+    "docFile": "2025-11-10_substack-notes-growth.html",
+    "docTitle": "Substack Notes 訂閱成長策略 - 每日 10-30 新訂閱者的系統方法",
+    "docDate": "2025-11-10",
+    "docSource": "Creator's Playbook / Mark Wils",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "📋 快速摘要",
+    "content": "這篇文章分享作者從零開始，一年內在 Substack 累積 2,000 訂閱者的完整策略。核心方法是善用 Substack Notes（類似 Twitter 的短文功能）作為「前廊」(front porch)，透過三層演算法擴散機制（訂閱者網絡 → 網絡效應 → 發現引擎）持續觸及新受眾。文章提供具體的發文頻率（每日 3-5 則）、互動策略（早鳥回覆、深度評論、附帶觀點的轉發）以及應避免的錯誤。雖然是 Substack 特定平台的指南，但其中的社群經營原則（真實互動 > 廣播式發文）適用於所有內容創作平台。"
+  },
+  {
+    "docFile": "2025-11-10_substack-notes-growth.html",
+    "docTitle": "Substack Notes 訂閱成長策略 - 每日 10-30 新訂閱者的系統方法",
+    "docDate": "2025-11-10",
+    "docSource": "Creator's Playbook / Mark Wils",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "學習目標",
+    "sectionTitle": "🎯 學習目標",
+    "content": "01 理解 Substack Notes 的三層演算法分發機制，以及如何觸發每一層 02 掌握 Followers vs Subscribers 的差異，設計正確的轉換漏斗 03 學會四種互動策略：早鳥回覆、深度評論、觀點轉發、關係培養 Substack Notes 三層分發機制 👥 Tier 1: 訂閱者網絡 Notes 先發給現有訂閱者 → 🔗 Tier 2: 網絡效應 互動者的訂閱者也會看到 → 🌐 Tier 3: 發現引擎 進入公開發現頁面"
+  },
+  {
+    "docFile": "2025-11-10_substack-notes-growth.html",
+    "docTitle": "Substack Notes 訂閱成長策略 - 每日 10-30 新訂閱者的系統方法",
+    "docDate": "2025-11-10",
+    "docSource": "Creator's Playbook / Mark Wils",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-i-notes-的價值主張",
+    "sectionTitle": "Part I: Notes 的價值主張",
+    "content": "為什麼 Substack Notes 是被低估的成長工具 如果你的 Substack 電子報是你的「家」，那麼 Notes 就是你的「前廊」 。這是人們第一次認識你的地方，感受你的個性，然後決定是否要「進來」——也就是訂閱你的電子報。 \"If your Substack newsletter is your home, then Notes is your front porch. It's where people first meet you, get a feel for your personality, and decide if they want to come inside — a.k.a. subscribe to your newsletter.\" 大多數平台會埋沒你的貼文，除非你已經很紅了。但 Substack Notes 給你的內容 自然的曝光機會 。你的 Notes 可以被：你的追蹤者和訂閱者看到、追蹤類似創作者的人看到、對類似主題感興趣的讀者看到。 \"Most platforms bury your posts unless you're already p"
+  },
+  {
+    "docFile": "2025-11-10_substack-notes-growth.html",
+    "docTitle": "Substack Notes 訂閱成長策略 - 每日 10-30 新訂閱者的系統方法",
+    "docDate": "2025-11-10",
+    "docSource": "Creator's Playbook / Mark Wils",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-ii-演算法機制詳解",
+    "sectionTitle": "Part II: 演算法機制詳解",
+    "content": "三層分發 + 品質訊號 Substack 以 三個階段 分發 Notes：第一層是你的訂閱者網絡——Notes 首先發給現有訂閱者。如果他們互動，這會向 Substack 發出訊號，表示你的貼文值得更廣泛分享。 \"Substack distributes Notes in 3 stages: Your Subscriber Network (Tier 1) — Your Notes first go to your existing subscribers. If they engage, that signals to Substack that your post is worth sharing more widely.\" 第二層是網絡效應——早期表現好的 Notes 會分享給互動者的訂閱者。 評論和轉發比按讚更重要 ——它們把你的內容推進新的圈子。 \"Network Effects (Tier 2) — Notes that perform well early get shared with subscribers of people who engaged. Comment"
+  },
+  {
+    "docFile": "2025-11-10_substack-notes-growth.html",
+    "docTitle": "Substack Notes 訂閱成長策略 - 每日 10-30 新訂閱者的系統方法",
+    "docDate": "2025-11-10",
+    "docSource": "Creator's Playbook / Mark Wils",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-iii-發文策略與節奏",
+    "sectionTitle": "Part III: 發文策略與節奏",
+    "content": "頻率、內容組合、常見錯誤 如果你想要穩定成長，遵循這個簡單節奏： 每天發 3-5 則 Notes （混合教育性、激勵性、個人性內容），在其他創作者的 Notes 下留 5-10 則有意義的評論，每隔一天轉發一則 Note，附上你自己的洞察或心得。 \"If you want steady growth, follow this simple rhythm: Post 3–5 Notes per day (mix educational, motivational, and personal), Leave 5–10 meaningful comments on other creators' Notes, Repost one Note every other day with your own insight or takeaway.\" 這種小而持續的努力會快速複利。你不需要 24/7 拼命。 只要每天出現，用心互動 。 \"This small, consistent effort compounds quickly. You don't need to hustle 24/7. Ju"
+  },
+  {
+    "docFile": "2025-11-10_substack-notes-growth.html",
+    "docTitle": "Substack Notes 訂閱成長策略 - 每日 10-30 新訂閱者的系統方法",
+    "docDate": "2025-11-10",
+    "docSource": "Creator's Playbook / Mark Wils",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-iv-互動策略",
+    "sectionTitle": "Part IV: 互動策略",
+    "content": "透過互動成長，而非只是發文 這是真相： 如果你只發文不互動，成長會很慢 。Notes 不只是廣播頻道，它是對話中心。每一則有意義的評論、轉發或回覆，都是被發現的機會。 \"Here's the truth: if you only post and never engage, your growth will be slow. Notes isn't just a broadcast channel, it's a conversation hub. Every meaningful comment, repost, or reply is a chance to be discovered.\" 「早鳥回覆」策略 ：當一個熱門創作者發文時，成為第一批留言的人。 Notes 是按時間排序的；你越早留言，獲得的曝光越多 。如果你的留言有價值，其他人會注意到並追蹤你。 \"When a popular creator posts, be one of the first to comment. Notes are chronological; the earlier you comment, t"
+  },
+  {
+    "docFile": "2025-11-10_substack-notes-growth.html",
+    "docTitle": "Substack Notes 訂閱成長策略 - 每日 10-30 新訂閱者的系統方法",
+    "docDate": "2025-11-10",
+    "docSource": "Creator's Playbook / Mark Wils",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-v-心態與核心原則",
+    "sectionTitle": "Part V: 心態與核心原則",
+    "content": "社群思維 vs 廣告看板思維 Substack Notes 不只是另一個社群媒體動態——它是 連結、分享想法、有機成長受眾的地方 。如果你把它當成社群而非廣告看板，你就會開始看到魔法發生：更多能見度、更強的關係、穩定的訂閱者成長。 \"Substack Notes isn't just another social feed; it's a place to connect, share ideas, and grow your audience organically. If you treat it like a community, not a billboard, you'll start seeing the magic happen: more visibility, stronger relationships, and steady subscriber growth.\" 每天出現。保持好奇。增加價值。 這就是你如何把 Substack Notes 變成真正關心你作品的電子報訂閱者。 \"So show up daily. Be curious. Add value. Th"
+  },
+  {
+    "docFile": "2025-11-10_substack-notes-growth.html",
+    "docTitle": "Substack Notes 訂閱成長策略 - 每日 10-30 新訂閱者的系統方法",
+    "docDate": "2025-11-10",
+    "docSource": "Creator's Playbook / Mark Wils",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "💡 重點整理 Key Takeaways",
+    "content": "1. Notes 是你的「前廊」 電子報是家，Notes 是讓陌生人認識你的前廊。低壓力、高頻率的互動比長篇文章更容易建立熟悉感。每天 3-5 則 + 5-10 則評論 = 穩定的新訂閱者。 2. 三層分發 + 品質訊號 演算法看的是「真正的互動」：引發回覆的評論 > 空泛的讚。評論和轉發是進入 Tier 2 網絡效應的關鍵。從 Note 直接訂閱是最強訊號。 3. 互動策略四要素 早鳥回覆（搶曝光）、深度評論（展示專業）、附帶觀點的轉發（10x 效果）、培養關係（私訊、提及、分享）。80% 互動 + 20% 發文。 4. 社群思維 vs 廣告看板 把 Notes 當成專業研討會的小組討論，不是廣告看板。真實互動複利速度比任何成長駭客技巧都快。Followers 是漏斗頂端，Subscribers 才是目標。"
+  },
+  {
+    "docFile": "2025-11-10_substack-notes-growth.html",
+    "docTitle": "Substack Notes 訂閱成長策略 - 每日 10-30 新訂閱者的系統方法",
+    "docDate": "2025-11-10",
+    "docSource": "Creator's Playbook / Mark Wils",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "📝 練習題 Practice Questions",
+    "content": "Q1 概念理解 為什麼作者說「評論和轉發比按讚更重要」？這背後的演算法邏輯是什麼？ 因為 Substack Notes 的三層分發機制中， Tier 2 網絡效應 是由「互動者的訂閱者」觸發的。當有人評論或轉發你的 Note，他們的訂閱者也會看到這則內容——這是進入新圈子的關鍵。 按讚只是一個訊號，告訴演算法「這內容不錯」，但不會直接把內容推進新網絡。評論和轉發則會創造一條「社交路徑」，讓你的內容沿著這條路徑擴散。 此外，Substack 優先考慮「品質互動」，而評論（尤其是引發回覆的評論）代表更深層的參與。這也是為什麼「Great post!」這種空泛評論權重很低——它不會引發對話。 Q2 產業應用 作為 CDMO 產業的專業人士，如果你要經營一個製藥/生技領域的 Substack，這篇文章的策略有哪些需要調適的地方？ 這篇文章的策略來自「創作者經濟」(Creator Economy) 領域，直接套用到製藥/生技 B2B 情境需要調適： 受眾規模差異 ：創作者經濟的 Substack 有數百萬用戶，但製藥領域的專業讀者基數小很多。每日 3-5 則 Notes 可能過於頻繁，可調整為每"
+  },
+  {
+    "docFile": "2025-11-15_ai-content-repurposing.html",
+    "docTitle": "AI 內容再利用自動化系統教學 | AI Content Repurposing Automation Guide",
+    "docDate": "2025-11-15",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "痛點手動內容再利用的困境",
+    "sectionTitle": "痛點：手動內容再利用的困境",
+    "content": "作者每週花費 5 小時 手動將電子報重新格式化成社群貼文，感覺像是在做機械式的複製貼製工作。 「諷刺的是：我是一個寫 AI 自動化主題的作家，卻在做機器人的工作。」 每週的痛苦流程： 週一上午： 開始撰寫週四電子報的草稿 週一下午： 嘗試預先 Repurpose (再利用) ，將最強的段落轉成 LinkedIn 草稿、重新格式化、加換行、檢查字數、調整語氣 週二： 製作 Substack Notes — 10 個精簡到約 200 字元的短洞見。規劃 Twitter thread 大綱 週三： 定稿電子報，編輯、加例子、精煉開頭結尾 但有些週，作者完全跳過這個流程。寫完 2,000-3,000 字的長篇內容後，已經精疲力盡，無法再花 5 小時手動調整各平台格式。"
+  },
+  {
+    "docFile": "2025-11-15_ai-content-repurposing.html",
+    "docTitle": "AI 內容再利用自動化系統教學 | AI Content Repurposing Automation Guide",
+    "docDate": "2025-11-15",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "核心挑戰每個平台都有不同語言",
+    "sectionTitle": "核心挑戰：每個平台都有不同語言",
+    "content": "Content Repurposing (內容再利用) 不只是「到處複製貼上同樣的東西」。 各平台特性： LinkedIn： 需要 Thought Leadership (思想領袖) 風格，搭配策略性換行和宣言式開場 Substack Notes： 需要 200 字元的洞見，創造「mic-drop（一句話打趴全場）」的效果 Twitter Threads： 需要對話式的流暢感，加上 Curiosity Gaps (好奇心缺口) 每個平台都有自己的語言、節奏和受眾期待。"
+  },
+  {
+    "docFile": "2025-11-15_ai-content-repurposing.html",
+    "docTitle": "AI 內容再利用自動化系統教學 | AI Content Repurposing Automation Guide",
+    "docDate": "2025-11-15",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "解決方案ai-自動化系統",
+    "sectionTitle": "解決方案：AI 自動化系統",
+    "content": "「如果我能自動化處理語音備忘錄，為什麼不能自動化內容再利用？」 作者需要的系統必須： ✅ 理解每個平台的特定適應規則 ✅ 保留作者的對話風格和框架思維 ✅ 自動運行，不需要每週手動請求 ChatGPT ✅ 產出 80% 完成度的內容，只需 10-20% 最後潤飾 系統運作方式： 把電子報 URL 加到 Google Sheet，將狀態從 \"Live\" 改成 \"Repurpose\"。就這樣。 自動化產出： 5 篇 LinkedIn 貼文（各種風格：步驟、教訓、範例、數據、錯誤） 10 則 Substack Notes（200 字元洞見，粗體格式，精彩結尾） 3 條 Twitter threads（對話式開場，好奇心驅動流程） 原本需要 5 小時的工作，現在只需 30 分鐘 最後潤飾。"
+  },
+  {
+    "docFile": "2025-11-15_ai-content-repurposing.html",
+    "docTitle": "AI 內容再利用自動化系統教學 | AI Content Repurposing Automation Guide",
+    "docDate": "2025-11-15",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "建置步驟概覽",
+    "sectionTitle": "建置步驟概覽",
+    "content": "所需工具： Google Sheet（用於 Webhook 整合和 URL 管理） OpenAI API key（約 $5 額度） Firecrawl API key（免費處理 500 個 URL） Make.com 帳號（免費方案即可） 六大建置步驟： 建立 Google Sheet webhook 整合： 在 Make.com 新增「Google Sheets — Watch Changes」模組，監控試算表的編輯變更 新增 Google Sheets 模組管理 URL： 加入「Google Sheets — Search Rows」模組，讀取 webhook 整合的試算表資料 設定 \"Repurpose\" 篩選器： 設定篩選器只監聽狀態變更為 \"Repurpose\" 的列 使用 Firecrawl 抓取電子報內容： 輸入要抓取的 URL，Firecrawl 會擷取網頁內容 新增 Router 建立社群頻道分流： 三個 Router 分別處理 Substack、LinkedIn、Twitter。每個頻道有自己的 System Prompt OpenAI 模組產生各平台內容： 設定平"
+  },
+  {
+    "docFile": "2025-11-15_ai-content-repurposing.html",
+    "docTitle": "AI 內容再利用自動化系統教學 | AI Content Repurposing Automation Guide",
+    "docDate": "2025-11-15",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "google-sheet-欄位設計",
+    "sectionTitle": "Google Sheet 欄位設計",
+    "content": "欄位 功能說明 URL 貼上已發布的電子報 URL Status 當狀態變更為 \"Repurpose\" 時觸發自動化 Channel 選擇要再利用到哪些社群頻道 Outputs 生成的 Substack Notes、LinkedIn 貼文、Twitter threads 草稿"
+  },
+  {
+    "docFile": "2025-11-15_ai-content-repurposing.html",
+    "docTitle": "AI 內容再利用自動化系統教學 | AI Content Repurposing Automation Guide",
+    "docDate": "2025-11-15",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "router-路由邏輯",
+    "sectionTitle": "Router 路由邏輯",
+    "content": "篩選器來自前一個 Google Sheets 模組，邏輯如下： 如果 Column C (Channel) 包含 \"Substack\"，送到 Substack router 如果 Column C (Channel) 包含 \"LinkedIn\"，送到 LinkedIn router 如果 Column C (Channel) 包含 \"Twitter\"，送到 Twitter router 如果 Column C (Channel) 包含 \"All\"，送到所有 router"
+  },
+  {
+    "docFile": "2025-11-15_ai-content-repurposing.html",
+    "docTitle": "AI 內容再利用自動化系統教學 | AI Content Repurposing Automation Guide",
+    "docDate": "2025-11-15",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "教學解析-tutorial-commentary",
+    "sectionTitle": "💡 教學解析 Tutorial Commentary",
+    "content": "關鍵術語 Key Terms Content Repurposing (內容再利用)： 將一份原始內容轉換成適合不同平台、格式或受眾的多種版本。不是複製貼上，而是「轉譯」。 Webhook (網路鉤子)： 一種讓應用程式之間即時通訊的機制。當某個事件發生（如試算表更新），自動通知另一個系統。 Make.com (原 Integromat)： 視覺化的自動化平台，讓你用「拖拉」方式串接不同的 App 和 API。 Firecrawl： 網頁抓取（Web Scraping）工具，可以擷取網頁內容並轉成結構化資料。 Router (路由器)： 在自動化流程中，根據條件將資料分流到不同的處理路徑。 比喻說明：內容再利用就像「翻譯」 想像你寫了一篇中文文章，要分享給英文、日文、西班牙文的讀者。你不會直接複製中文給他們，而是： 翻譯成他們的語言 調整文化背景的例子 配合當地讀者的閱讀習慣 社群平台就像不同的「語言區」。LinkedIn 是商務正式區、Twitter 是快節奏對話區、Substack Notes 是精煉金句區。同一個好點子，要用不同的「語法」來表達。 重點提示：為什麼「複製貼上」行不"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "目錄-table-of-contents",
+    "sectionTitle": "目錄 Table of Contents",
+    "content": "核心問題：為何你的電子報不賺錢？ 三大成長殺手 The 3 Hidden Killers Phase 1: Metrics Baseline 數據基準建立 Phase 2: Content Performance 內容績效分析 Phase 3: Substack 平台特色功能 Phase 4: Monetization 變現評估 Phase 5: Technical Health 技術健檢 AI 輔助稽核系統 總結與行動計畫"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "核心洞察-the-core-insight",
+    "sectionTitle": "核心洞察 The Core Insight",
+    "content": "You're publishing every week. Your open rates look decent. You're getting new subscribers. But your newsletter isn't making real money. The problem isn't your content. It's that you've never audited what you already have. While you're stressing about your next post, you're sitting on data that could tell you exactly which content converts, which subscribers will never buy, and which platform features could double your revenue in 90 days."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "the-numbers-dont-lie",
+    "sectionTitle": "The Numbers Don't Lie",
+    "content": "Newsletter audits deliver $36-40 return for every $1 invested when implemented correctly. Creators remove 1,000 inactive subscribers and gain 255 engaged ones in 30 days. Open rates jump from 32% to 59% in six weeks. Newsletter writers grow from 100 to 4,500 subscribers while building $3,000-$5,000 monthly revenue. Most creators think they need to write more. They don't. They need to systematically audit what's already working and double down on it."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "the-business-first-truth",
+    "sectionTitle": "The Business-First Truth",
+    "content": "Open rates don't pay bills. Subscriber counts don't fund your business. Writing more content doesn't guarantee revenue. Conversion does. The newsletter creators earning $100,000+ annually aren't just better writers. They're better auditors. They identify what moves revenue, double down on it, and cut everything else. 核心概念解析 Newsletter Audit（電子報稽核） ：系統性地檢視電子報的各項數據指標、內容表現、訂閱者行為，以找出成長瓶頸與變現機會的過程。 Open Rate（開信率） ：收到電子報的訂閱者中，實際開啟郵件閱讀的比例。 Conversion（轉換） ：訂閱者從免費用戶轉變為付費用戶的行為。 比喻說明 想像你經營一家餐廳： 訂閱者數量 = 每天進店"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "killer-1-dead-weight-subscribers死重訂閱者",
+    "sectionTitle": "Killer #1: Dead Weight Subscribers（死重訂閱者）",
+    "content": "Your email list has a dirty secret. Roughly 25% of your subscribers decay annually —they stop opening, they stop engaging, they stop caring. But they're still on your list, dragging down your metrics. When email providers see low engagement, they assume your content is spam. Your deliverability tanks. Your emails start landing in promotions tabs or spam folders. Inactive subscribers aren't neutral. They're actively hurting your growth."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "killer-2-content-that-doesnt-convert不轉換的內容",
+    "sectionTitle": "Killer #2: Content That Doesn't Convert（不轉換的內容）",
+    "content": "Most creators have no idea which content drives revenue. They write what they think is interesting. They cover trending topics. They follow other newsletters' formats. And then they wonder why their free-to-paid conversion sits at 0.5% when successful newsletters hit 5-10%. The reality? You probably have 2-3 content types that drive 80% of your paid conversions. But because you've never audited your content performance, you keep creating the stuff that gets opens but generates zero revenue."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "killer-3-ignoring-platform-specific-growth-levers忽略平台特有功能",
+    "sectionTitle": "Killer #3: Ignoring Platform-Specific Growth Levers（忽略平台特有功能）",
+    "content": "If you're on Substack, this one's costing you the most money. Substack isn't just an email platform. It's a network with built-in discovery mechanisms that drive 50% of all new subscriptions platform-wide. Features like Notes , Recommendations , and Chat can generate thousands of subscribers without you spending a dollar on ads. 2024 Q4 Data: Substack Notes drove 32 million free subscriptions and 500,000 paid subscriptions. Creators who use Chat earn 19% more annual revenue. 核心概念解析 Deliverabilit"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "phase-1-metrics-baseline-數據基準建立",
+    "sectionTitle": "Phase 1: Metrics Baseline 數據基準建立",
+    "content": "5 Phase System: 1/5 You can't improve what you don't measure. And you can't measure what you don't baseline."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "the-7-metrics-that-actually-predict-revenue",
+    "sectionTitle": "The 7 Metrics That Actually Predict Revenue",
+    "content": "1. Open Rate（開信率） Substack average: 30-40% Excellent: 45%+ | Good: 30-45% | Average: 20-30% Below 20%? Something is seriously broken. 2. Click-Through Rate / CTR（點擊率） Excellent: 5%+ | Good: 3-5% | Average: 2-3% Measures whether your content is compelling enough to drive action. 3. Click-to-Open Rate（點擊開信比） Target: 10-15% or higher Reveals content resonance better than CTR alone. 4. Free-to-Paid Conversion Rate（免費轉付費率） Realistic range: 2-5% for most creators Political/niche: 10-15% | Tech/general"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "phase-2-content-performance-內容績效分析",
+    "sectionTitle": "Phase 2: Content Performance 內容績效分析",
+    "content": "5 Phase System: 2/5"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "the-55-editorial-audit-method",
+    "sectionTitle": "The 5×5 Editorial Audit Method",
+    "content": "Step 1: Identify Your Top 5 Performers Sort your spreadsheet by engagement (total of comments + likes + shares). Look at your top 5 posts and answer: What topics did they cover? What format did they use? What made them shareable? Which ones drove paid conversions? What problems did they solve? Step 2: Identify Your Bottom 5 Performers What topics fell flat? What format didn't resonate? Were they too long? Too short? Too generic? What assumptions about your audience were wrong? Step 3: Pattern Re"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "content-roi-analysis",
+    "sectionTitle": "Content ROI Analysis",
+    "content": "For each post, note how many paid subscriptions came from it. You might discover: Your case study content has a 5× higher conversion rate than your tips content Question-based subject lines outperform standard format by 18% Your \"systems\" content converts 3× better than your \"tools\" content 核心概念解析 5×5 Editorial Audit Method（5×5 編輯稽核法） ： 第一個 5：分析表現最好的 5 篇文章 第二個 5：分析表現最差的 5 篇文章 透過對比兩個極端，快速找出「成功模式」和「失敗模式」。 Pattern Recognition（模式識別） ：從大量數據中找出重複出現的規律。這是 AI 擅長的事，也是人類常忽略的事。 比喻說明：餐廳菜單優化 想像你是餐廳老闆，每月檢視銷售數"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "phase-3-substack-平台特色-platform-specific-opportunities",
+    "sectionTitle": "Phase 3: Substack 平台特色 Platform-Specific Opportunities",
+    "content": "5 Phase System: 3/5 Are you leveraging Substack's unique network effects and discovery mechanisms, or are you just using it as an email tool?"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "feature-1-notes筆記功能",
+    "sectionTitle": "Feature #1: Notes（筆記功能）",
+    "content": "Substack Notes isn't optional anymore. It's the primary growth channel. In Q4 2024 alone, Notes drove 32 million free subscriptions and 500,000 paid subscriptions . Here's why Notes works: The algorithm is optimized for SUBSCRIPTIONS, not just engagement. When you post a Note recommending another creator, Substack amplifies your reach 4-10×. One creator tested this—a generic Note got 300 views while a Note recommending another writer got 1,300 views."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "feature-2-recommendations-network推薦網絡",
+    "sectionTitle": "Feature #2: Recommendations Network（推薦網絡）",
+    "content": "Recommendations appear during the subscription flow. When someone subscribes to another publication, they see a curated list of recommended newsletters—including yours. This mechanism drives 50% of all new subscriptions platform-wide . For top creators like Lenny Rachitsky (800,000+ subscribers), 78% of growth comes from recommendations."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "feature-3-chat聊天功能",
+    "sectionTitle": "Feature #3: Chat（聊天功能）",
+    "content": "Chat is Substack's private discussion space for subscribers only. Creators who host 2+ Chats earn 19% more annual revenue than those who don't. Why? Because Chat transforms passive readers into active community members. It creates a reason to stay subscribed beyond just content. 核心概念解析 Network Effects（網絡效應） ：當更多人使用某個平台或功能時，每個人獲得的價值都會增加。Substack 的推薦系統就是典型的網絡效應——越多創作者互相推薦，每個人都能獲得更多曝光。 Discovery Mechanisms（發現機制） ：平台幫助新讀者找到你的內容的各種方式，包括演算法推薦、搜尋、分類瀏覽等。 比喻說明：百貨公司 vs 街邊店 只發電子報 = 街邊獨立店鋪 只有路過的人會看到你 成長完全靠自"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "phase-4-monetization-變現評估",
+    "sectionTitle": "Phase 4: Monetization 變現評估",
+    "content": "5 Phase System: 4/5"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "conversion-funnel-analysis轉換漏斗分析",
+    "sectionTitle": "Conversion Funnel Analysis（轉換漏斗分析）",
+    "content": "Map out exactly where potential paid subscribers drop off: Stage 1: Free Subscriber Base (100%) Stage 2: Premium Content Exposure (Target: 10-40%) Stage 3: Paywall Engagement (Measure click-through) Stage 4: Pricing Page Visits (Track drop-off) Stage 5: Completed Subscriptions (Target: 2-10%) Improving each stage by just 10% yields 46% overall conversion improvement."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "pricing-strategy-evaluation",
+    "sectionTitle": "Pricing Strategy Evaluation",
+    "content": "Common Substack pricing patterns: Monthly: $5-10 (sweet spot for most) Annual: $50-100 (15-20% discount, MUCH lower churn) Founding Member: $200-500+ (most creators ignore this)"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "churn-analysis流失分析",
+    "sectionTitle": "Churn Analysis（流失分析）",
+    "content": "Analyze WHEN cancellations occur: Month 1? Your onboarding or value delivery is broken. Month 3? The novelty wore off—content isn't delivering ongoing value. Month 6? Natural churn—people's circumstances change. Month 12? Actually good retention."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "the-founding-member-opportunity",
+    "sectionTitle": "The Founding Member Opportunity",
+    "content": "Founding Member tiers can drive significant revenue from your most engaged readers. They're believers who want to support you beyond the standard subscription and are willing to pay 2-5× your annual price. 核心概念解析 Conversion Funnel（轉換漏斗） ：描繪用戶從「知道你」到「付錢給你」的完整路徑。每個階段都會有人「漏掉」，所以叫漏斗。 Paywall（付費牆） ：阻止非付費用戶閱讀特定內容的機制。 Founding Member（創始會員） ：願意付出高於標準價格的忠實支持者，通常獲得額外福利或榮譽感。 公式計算：10% 改善的複合效果 假設原始轉換漏斗： Stage 1 → 2: 30% 看到付費內容 Stage 2 → 3: 20% 點擊付費牆 Stage 3 → 4: 50% 查看價格 Stage 4 → 5: 10% 完成付費 原始總轉換：0.30 × 0."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "phase-5-technical-health-技術健檢",
+    "sectionTitle": "Phase 5: Technical Health 技術健檢",
+    "content": "5 Phase System: 5/5 Your content could be perfect, your offers could be irresistible, but if your emails aren't reaching inboxes, none of it matters."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "the-brutal-truth",
+    "sectionTitle": "The Brutal Truth",
+    "content": "20% of permission-based emails never reach the inbox . They're filtered, blocked, or sent to spam without the sender ever knowing."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "authentication-protocols-non-negotiable",
+    "sectionTitle": "Authentication Protocols (Non-Negotiable)",
+    "content": "These three protocols are foundational. Without them, your deliverability tanks: SPF (Sender Policy Framework) Verifies your sending server is authorized. DKIM (DomainKeys Identified Mail) Validates authenticity through digital signatures. DMARC (Domain-based Message Authentication) Tells receivers how to handle failed authentication. Check these using MXToolbox.com or ask your email provider. If they're not properly configured, fix them immediately. Note: If you're sending emails using Substack"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "ai-輔助稽核-using-ai-to-10-your-audit-speed",
+    "sectionTitle": "AI 輔助稽核 Using AI to 10× Your Audit Speed",
+    "content": "What used to take me 2-3 weeks of manual analysis now takes 2-3 days with AI assistance."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "the-critical-insight",
+    "sectionTitle": "The Critical Insight",
+    "content": "AI is a pattern recognition machine, not a strategy machine. You feed it structured data, ask specific questions, and use it to accelerate the analysis phase. Then YOU make the strategic decisions based on your knowledge of your audience."
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "setting-up-claude-projects",
+    "sectionTitle": "Setting Up Claude Projects",
+    "content": "Create a Dedicated Project called \"Newsletter Audit\" Upload Context Files: Your last 2-5 newsletter issues (PDFs/text) Your audit spreadsheet (CSV) Brand document and about you file Set Custom Instructions for strategic newsletter analysis"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "the-5-essential-audit-prompts",
+    "sectionTitle": "The 5 Essential Audit Prompts",
+    "content": "Prompt #1: Comprehensive Content Quality Analysis Prompt #2: Audience Pain Point & Engagement Analysis Prompt #3: Subject Line Performance Audit Prompt #4: Monetization Optimization Analysis Prompt #5: Content Gap Identification"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "the-critical-ai-audit-rules",
+    "sectionTitle": "The Critical AI Audit Rules",
+    "content": "Rule #1: Feed AI specific data, not vague questions Rule #2: Always validate AI insights with your data Rule #3: Use AI for analysis, not strategy Rule #4: Iterate your prompts Rule #5: Build on previous context 核心概念解析 Pattern Recognition vs Strategy（模式識別 vs 策略） ： 模式識別 ：從大量數據中找出重複出現的規律（AI 擅長） 策略制定 ：根據規律、結合情境、做出判斷和決策（人類擅長） 作者強調的是「人機協作」的正確分工：讓 AI 做它擅長的（處理大量數據、找模式），人做人擅長的（理解脈絡、做決策）。 比喻說明：AI 是分析師，你是 CEO 想像一家公司的決策流程： 數據分析師（AI） ： 處理原始數據 製作圖表和報告 指出「A 產品銷售下滑 20%」 發現「週三的廣告效果最好」 CEO（你） ： 判斷「A 產品下滑是因為市場變化還"
+  },
+  {
+    "docFile": "2025-11-15_newsletter-audit-playbook.html",
+    "docTitle": "Newsletter Audit Playbook 深度學習筆記",
+    "docDate": "2025-11-15",
+    "docSource": "The Digital Creator / Sharyph",
+    "docRating": 3.5,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "總結newsletter-audit-playbook-核心要點",
+    "sectionTitle": "總結：Newsletter Audit Playbook 核心要點",
+    "content": "核心觀念轉變 從「創造更多內容」轉向「優化現有內容」。稽核不是額外工作，而是讓既有努力產生複利的關鍵步驟。 三大成長殺手 死重訂閱者拖累送達率、不轉換的內容消耗資源、忽略平台功能放棄 50% 成長潛力。 七個關鍵指標 Open Rate、CTR、Click-to-Open、Free-to-Paid Conversion、List Growth、Churn、Unsubscribe Rate——但最重要的是 Conversion。 5×5 內容分析法 比較最好的 5 篇和最差的 5 篇，找出「成功模式」和「失敗模式」。高互動 ≠ 高轉換。 平台功能槓桿 Notes、Recommendations、Chat 不是可選項，而是主要成長引擎。把平台當「網絡」而非「工具」。 AI 輔助稽核 AI 是模式識別器，不是策略制定者。給它具體數據，讓它找模式，你來做決策。 關鍵行動：本週內完成 Phase 1，建立你的數據基準線。 「You can't improve what you don't measure. And you can't measure what you don't baseline"
+  },
+  {
+    "docFile": "2025-11-20_ai-productivity-paradox.html",
+    "docTitle": "AI 生產力悖論 | 學習指南",
+    "docDate": "2025-11-20",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Analysis",
+      "Tool",
+      "LLM"
+    ],
+    "sectionId": "引言ai-使用的隱藏成本",
+    "sectionTitle": "引言：AI 使用的隱藏成本",
+    "content": "作者分享了一個親身經歷：花了 45 分鐘 用 AI 撰寫一封電子郵件，但如果自己寫只需要 8 分鐘 。 \"We're so excited about what AI can do that we forget to ask: Should AI do this? \" 「我們太興奮於 AI 能做什麼，以至於忘了問：AI 應該做這件事嗎？」 這不是單一事件，而是普遍現象。我們對 AI 的興奮感讓我們忘記思考：這個任務真的需要 AI 嗎？"
+  },
+  {
+    "docFile": "2025-11-20_ai-productivity-paradox.html",
+    "docTitle": "AI 生產力悖論 | 學習指南",
+    "docDate": "2025-11-20",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Analysis",
+      "Tool",
+      "LLM"
+    ],
+    "sectionId": "the-ai-productivity-paradoxai-生產力悖論",
+    "sectionTitle": "The AI Productivity Paradox（AI 生產力悖論）",
+    "content": "一個不舒服的真相： AI 經常讓我們感覺很有生產力，實際上卻讓我們變慢了 。 常見的時間浪費模式： Simple emails become editing marathons （簡單郵件變成編輯馬拉松）：你快速寫草稿，請 AI「改進」，然後花 20 分鐘把 AI 的版本改回像你自己的風格 Quick decisions become AI consultations （快速決策變成 AI 諮詢）：你已經知道要做什麼，但還是問 AI 驗證，20 分鐘後還在解釋背景而非執行 Basic tasks require more explanation than execution （基本任務解釋比執行還久）：有些任務描述給 AI 的時間比自己做還長"
+  },
+  {
+    "docFile": "2025-11-20_ai-productivity-paradox.html",
+    "docTitle": "AI 生產力悖論 | 學習指南",
+    "docDate": "2025-11-20",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Analysis",
+      "Tool",
+      "LLM"
+    ],
+    "sectionId": "why-this-happens為什麼會這樣",
+    "sectionTitle": "Why This Happens（為什麼會這樣）",
+    "content": "三個核心原因： \"I have this powerful tool - I should use it for everything!\" （我有強大工具，應該用在所有事上）：擁有 AI 的興奮感讓我們反射性地使用，而非策略性地使用 \"If I ask AI to do it, I'm offloading work.\" （讓 AI 做就是卸載工作）：請 AI 做事感覺像在減輕負擔，即使它透過解釋、迭代和編輯創造了更多工作 \"I'm paying $20/month for this. I should maximize usage.\" （我每月付 $20，應該最大化使用）：為了證明訂閱合理，把 AI 用在不受益的任務上 \"The most expensive resource isn't your AI subscription. It's your time and attention .\" 「最昂貴的資源不是你的 AI 訂閱費，而是你的時間和注意力。」"
+  },
+  {
+    "docFile": "2025-11-20_ai-productivity-paradox.html",
+    "docTitle": "AI 生產力悖論 | 學習指南",
+    "docDate": "2025-11-20",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Analysis",
+      "Tool",
+      "LLM"
+    ],
+    "sectionId": "the-solution-the-30-second-framework解決方案30-秒框架",
+    "sectionTitle": "The Solution: The 30-Second Framework（解決方案：30 秒框架）",
+    "content": "在使用 AI 之前，問自己三個問題，只需 30 秒： Question 1 - CLARITY（清晰度）: Do I know exactly what I want? 我是否確切知道我要什麼？ YES = Maybe AI can help（也許 AI 能幫忙） NO = Start solo to get clarity first（先自己開始釐清） Question 2 - SPEED（速度）: Can I do this manually in under 5 minutes? 我能在 5 分鐘內手動完成嗎？ YES = Do it yourself（自己做） NO = Continue considering AI（繼續考慮 AI） Question 3 - LEARNING（學習）: Do I need to understand the process? 我需要理解這個過程嗎？ YES = Do it yourself or AI-assisted（自己做或 AI 輔助） NO = AI can handle it（AI 可以處理）"
+  },
+  {
+    "docFile": "2025-11-20_ai-productivity-paradox.html",
+    "docTitle": "AI 生產力悖論 | 學習指南",
+    "docDate": "2025-11-20",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Analysis",
+      "Tool",
+      "LLM"
+    ],
+    "sectionId": "the-3-categories-of-work三種工作類別",
+    "sectionTitle": "The 3 Categories of Work（三種工作類別）",
+    "content": "SOLO TASKS（獨自完成的任務） 當你確切知道要什麼、手動完成少於 5 分鐘、需要理解過程、或解釋比執行還久時。 例子： 給同事的快速郵件、簡單的程式碼修復、例行決策、有明確肌肉記憶的任務 AI-ASSISTED TASKS（AI 輔助任務） 當你有大致方向但需要精煉、手動完成需 15-60 分鐘、過程熟悉但能受益於新觀點、想要更好地思考而非只是更快工作時。 例子： 長篇寫作、策略規劃、複雜問題解決、架構設計、學習新概念 AI-GENERATED TASKS（AI 生成任務） 當你需要輸出但不在乎過程、手動完成超過 60 分鐘、例行性或機械性工作、格式比創意更重要時。 例子： 資料格式轉換、內容變體生成、多來源研究摘要、批量結構化內容操作"
+  },
+  {
+    "docFile": "2025-11-20_ai-productivity-paradox.html",
+    "docTitle": "AI 生產力悖論 | 學習指南",
+    "docDate": "2025-11-20",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Analysis",
+      "Tool",
+      "LLM"
+    ],
+    "sectionId": "common-mistakes常見錯誤",
+    "sectionTitle": "Common Mistakes（常見錯誤）",
+    "content": "Mistake #1: The Delegation Trap（委託陷阱） 你有簡單任務但請 AI 處理，因為委託感覺有效率。結果：解釋任務的時間比做任務還長。 修正：如果解釋比做還久，就自己做。 Mistake #2: The Editing Spiral（編輯螺旋） 你請 AI 生成內容，然後花比自己寫還久的時間編輯。 修正：如果你對語調和風格有強烈意見，自己寫。用 AI 輔助模式處理結構，而非生成。 Mistake #3: The Over-Reliance（過度依賴） 你把 AI 用在應該建立自己技能和理解的任務上，用短期速度換取長期能力。 修正：學習性任務使用 AI 輔助模式，理解解決方案背後的「為什麼」。"
+  },
+  {
+    "docFile": "2025-11-20_ai-productivity-paradox.html",
+    "docTitle": "AI 生產力悖論 | 學習指南",
+    "docDate": "2025-11-20",
+    "docSource": "AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Analysis",
+      "Tool",
+      "LLM"
+    ],
+    "sectionId": "conclusion結論",
+    "sectionTitle": "Conclusion（結論）",
+    "content": "\"The goal isn't to use AI less. The goal is to use AI better .\" 「目標不是少用 AI，而是更好地使用 AI。」 當你停止在不受益的任務上使用 AI，你就有更多時間和精力用於真正受益的任務。這就是「AI 作為生產力劇場」和「AI 作為真正思考夥伴」的差別。 導讀與解析 Commentary 核心概念解析 Key Concepts AI Productivity Paradox（AI 生產力悖論） ：指使用 AI 工具時產生的矛盾現象——工具本應提升效率，但不當使用反而降低生產力。這個概念挑戰了「AI = 更快」的直覺假設。 Productivity Theater（生產力劇場） ：看起來在工作、感覺很忙碌，但實際上沒有產出有意義的成果。AI 的來回對話很容易創造這種假象。 Explanation Overhead（解釋開銷） ：向 AI 解釋任務所需的時間成本。當解釋開銷超過執行時間，AI 就不值得使用。 比喻說明 Analogy AI 就像請助理幫忙 想像你要寄一封簡單的感謝信： 情境 A：自己寫，3 分鐘搞定 情境 B："
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "快速摘要-executive-summary",
+    "sectionTitle": "快速摘要 Executive Summary",
+    "content": "★★★★☆ 4.2/5 ↑ 實務應用、工具生態 ↓ 技術深度（無底層原理） 這篇文章解決一個常見痛點：語音備忘錄累積成「點子墳場」。作者 Wyndo 分享他用 Make.com + OpenAI API + Notion 建立的自動化系統，將語音轉錄自動轉化為 10 篇 Substack Notes、5 個 Newsletter 主題、3-5 個商業點子，並自動分類到 8 個類別。 這篇是完整的 Step-by-step 教學，包含 4 個完整的 System Prompt、Make.com Blueprint、Notion 模板連結。對於想要建立「第二大腦」自動化流程的人來說，這是一篇可以直接複製執行的實戰指南。"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "學習目標 Learning Objectives",
+    "content": "理解自動化架構 學會用 Router 模組設計多輸出的 AI 自動化流程，根據 Email Subject Line 觸發不同的處理邏輯 掌握 Prompt Engineering 拆解 4 個高品質 System Prompt 的設計模式：角色定義、輸出 Schema、品質護欄、範例引導 應用 JSON Parse + Iterator 理解如何將 OpenAI 的 JSON 輸出拆解成多筆資料，批次寫入 Notion Database Voice Memo to Content Pipeline 🎤 Capture Wisprflow 語音轉錄 → 📧 Trigger Email to Mailhook → 🔀 Route Subject Line 分流 → 🤖 Process OpenAI 轉化 → 📊 Store Notion Database 問題與解法 基礎設置 Prompt 設計 整合與測試 Part I"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "我花了好幾個月完善我的語音備忘錄捕捉系統：透過 Wisprflow 自動轉錄、即時存到 Apple Notes。結果只是創造了一個 100+ 好點子的墳場，永遠不會再碰 。 \"I spent months perfecting my voice memo capture system: automatic transcription through Wisprflow, instant save to Apple Notes. Only to create a graveyard of 100+ good ideas I'd never touch again.\" 捕捉點子從來不是問題。知道如何處理它們才是。 每一則語音備忘錄都增加了「我之後會處理」的隱形堆積。 \"Capturing ideas was never the problem. Knowing what to do with them was. Every voice memo I recorded added to an invisible pile of 'I'll process this later.'\" 處理一則"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "💡 比喻說明 這就像 CDMO 的「製程瓶頸分析」：作者發現 輸入端（capture）已經優化 ，但 處理端（process）才是真正的瓶頸 。他解決錯誤的問題解決得太好，反而讓真正的問題更明顯。 ⚠️ 重點提示 「Capture-Process Gap」 是知識管理的常見陷阱。很多人投資在 capture 工具（筆記 app、語音轉錄），卻忽略 process 的自動化。這篇文章的核心價值就是解決這個 gap。 📚 核心概念 Second Brain（第二大腦） ：Tiago Forte 提出的概念，指用數位工具建立個人知識管理系統。但傳統 Second Brain 假設人會手動整理，這篇文章用 AI 自動化挑戰這個假設。 Part II"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "我建了一個 AI 自動化，自動處理語音備忘錄。我在 Wisprflow 錄一個想法，它即時轉錄並 email 到我的自動化。 AI 根據我的需求分析和轉化 ： \"So I built an AI automation that processes voice memos automatically: I record a thought on Wisprflow during my walk. It transcribes instantly and emails the transcript to my automation.\" • Subject line 寫 \"Substack\" → 產出 10 篇策略性 Substack Notes • Subject line 寫 \"Newsletter\" → 產出 完整的 Newsletter Brief • Subject line 寫 \"Business\" → 產出 3-5 個經過驗證的商業概念 • 無論內容是什麼，都會整理到 8 個類別 \"'Substack' in the subject line → 10 strategic Su"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "🛠️ 實務應用 Router Pattern（路由模式） ：用 Email Subject Line 作為「路由器」，決定要執行哪個 AI 處理邏輯。這是一個簡單但強大的設計： 輸入端統一（都是 email） 輸出端多樣化（不同的 Notion DB） 使用者控制觸發條件 💰 成本分析 作者計算的 ROI： 每週節省 ：5 則 x 15 分鐘 = 75 分鐘 每年節省 ：65+ 小時 運營成本 ：Make.com 免費 + OpenAI ~$2-3/月 Part III"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "運行這個自動化之前你需要： Wisprflow 帳號（免費版可用） Notion 頁面 + 4 個資料庫 OpenAI API key + $5 額度 Make.com 帳號（免費版足夠） \"What you'll need: Wisprflow account, A Notion page + 4 databases, OpenAI API key with credits worth of $5, Make.com account (free tier works).\" 自動化從 email 發送語音轉錄開始。開啟 Gmail → 寫新郵件 → 用 Wisprflow 從鍵盤建立內容 → 設定 subject line，收件人填 mailhook 地址 ，發送。 \"This automation starts by sending your voice transcription via email. Open Gmail, Compose a new message, Use Wisprflow from your keyboard to create the content.."
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "📚 核心概念 Mailhook 是 Make.com 提供的 email webhook。它給你一個專屬 email 地址，任何寄到這個地址的郵件都會觸發你的自動化 scenario。這比傳統的 Gmail 監控更可靠、更即時。 💡 比喻說明 Mailhook 就像 CDMO 的「樣品收件室」：任何符合格式的「樣品」（email）進來，就啟動後續的「分析流程」（automation）。你不需要有人盯著收件匣，系統會自動處理。 ⚠️ 重點提示 為什麼用 Email 而不是 Webhook？ 作者提到 Wisprflow 目前還不支援 webhook 整合。Voicenotes 有原生 webhook 支援，可以跳過 email 這一層。工具選擇要根據你的 workflow 需求。 Part IV"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "這個 AI Second Brain 有 4 種輸出 ：Substack notes、newsletter brief、business ideas、thoughts organization。每一種都到不同的 Notion 資料庫。 \"This AI second brain has four outputs: Substack notes, newsletter brief, business ideas, and thoughts organization. And each goes to a different Notion database.\" 我們透過 email subject line 控制要產出哪些輸出 。如果你的語音備忘錄適合「business ideas」但不適合「newsletter brief」，你可以透過 Router 用 subject line 決定要處理哪一個。 \"You should know we have control over which outputs we want to produce with AI. If your voice m"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "💻 程式碼/API Router Filter 邏輯 ： Subject contains \"substack\" → Substack Notes 分支 Subject contains \"newsletter\" → Newsletter Brief 分支 Subject contains \"business\" → Business Ideas 分支 Subject contains \"memo\" OR fallback → Memo Organization 🛠️ 實務應用 這個設計的優點是 使用者保持控制權 。不是每則語音備忘錄都適合所有輸出類型。你可以選擇只要一種輸出，或全部都要。這種「可選擇性」在自動化設計中很重要。 Part V"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "System Prompt 將語音備忘錄轉化為 10 種策略性 Notes 格式 ：Signature Thesis、Contrarian Perspective、Vulnerable Story、Tactical Wisdom、Curiosity Catalyst、Insight Revelation、Mistake & Lesson、Industry Commentary、Community Connection、Future-Focused Vision。 \"Transform the voice memo into 10 strategic Notes using these proven formats: Signature Thesis, Contrarian Perspective, Vulnerable Story...\" 品質護欄（Quality Guardrails） ：每則 note 必須 3-8 行、約 200-300 字元。第一行 = 最強洞察或 hook。每一行都要有價值。不要通用陳述或填充內容。 \"Critical Quality Guardrails: "
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "📚 Prompt Engineering 拆解 這個 Prompt 展示了高品質 System Prompt 的結構： 角色定義 ：「You are an expert Substack Notes strategist...」 上下文理解 ：解釋 voice memo 和 Substack Notes 的特性 分析階段 ：要 AI 先識別說話者風格、內容元素、互動潛力 輸出格式 ：10 種明確定義的 note 類型 品質護欄 ：具體的字數、行數限制 JSON Schema ：嚴格的輸出格式 範例 ：展示期望的輸出風格 ⚠️ 重點提示 Voice Preservation（聲音保留） 是這個 prompt 的亮點。它要求 AI「match speaker's natural patterns」、「preserve authentic imperfections」。這避免了 AI 生成內容常見的「太完美、失去人味」問題。 Part VI"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "這個模組的目的是將語音備忘錄整理到 8 個類別 ：Content Ideas、Business Ideas、Quick Observations、Personal Journal、Tasks & Reminders、Learning Notes、Framework Development、Research Notes。 \"The purpose of this module is to organize your voice memo into eight categories with a title, summary, and the original transcript.\" 關鍵規則 ：永遠不要失去上下文 — 摘要應該能獨立理解。保留聲音 — 維持說話者表達想法的自然方式。具體描述 — 標題要有描述性，不要通用。 \"Critical Rules: Never lose context — Your summary should be standalone understandable. Preserve voice — Maintain the speaker's natura"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "🛠️ 實務應用 這 8 個類別覆蓋了知識工作者的主要思考類型。如果你要建自己的系統，可以根據你的工作調整： CDMO 版本 ：Process Improvement、Customer Feedback、Regulatory Notes、Equipment Issues、Training Ideas 💡 比喻說明 這就像 QC 實驗室的「樣品分類系統」：不同類型的樣品（stability、release、in-process）有不同的處理流程和存放位置。AI 在這裡扮演的是「分類員」角色。 Part VII"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "Newsletter Brief 的目標是 推銷我一個可以寫的 newsletter 主題 。我加了一個額外的調整：設定 關於我是誰和我想做什麼的上下文 。這是大多數人產出低品質輸出失敗的地方，因為他們很少告訴 AI 他們是誰、做什麼、想達成什麼。 \"The goal of Newsletter Brief is to sell me a newsletter topic I can write based on my voice memo. I added an extra tweak: setting context about who I am and what I'm trying to do. This is where most people fail to generate high-quality output.\" Prompt 包含完整的 CONTEXT 區塊 ：Publication 名稱、Focus 領域、Voice 風格、Audience 描述、Content Pillars、Core Values。AI 會根據這些上下文產出 5 個不同角度的 newslett"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "⚠️ 關鍵洞察 「Experience Check」 是這個 prompt 的創新設計。它要求 AI 評估： ✅ Ready to write（有實際經驗） ⚠️ Needs testing（概念可行但需驗證） ❌ Needs research（缺乏足夠個人經驗） 這避免了 AI 推薦你沒有資格寫的主題。 📚 核心概念 Context Engineering（上下文工程） ：這個 prompt 示範了如何用「個人上下文」提升 AI 輸出品質。關鍵是提供：Who you are、What you do、Who you serve、What you value。 Part VIII"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "這個模組的目標是提取語音備忘錄，產出 3-5 個商業點子 ，包含：Core Problem、Solution Overview、Target Market、Business Model、Unique Advantage、Implementation Complexity、Validation Steps、Market Timing、Revenue Potential、Next Action。 \"The goal of this module is to extract voice memos and generate 3-5 business ideas by understanding the real core problem, solution, target market, business model, unique advantage, implementation, and validation steps.\" 驗證框架（Validation Framework） ：Demand Validation（需求驗證）、Execution Validation（執行驗證）、Co"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "🛠️ 實務應用 這個 prompt 的 Meta Analysis 輸出特別有用： strongest_opportunity ：哪個點子潛力最高？ quickest_validation ：哪個點子最快能驗證？ best_leverage ：哪個點子最能發揮現有優勢？ 這幫助決策而不只是產出點子。 ⚠️ 重點提示 作者強調： 「Spend more time [on context] before running this system prompt.」 如果不提供個人上下文，AI 會產出和你的技能、資源、興趣無關的通用商業點子。 Part IX"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "要將 OpenAI 輸出傳到 Notion，用 JSON Parse 模組 。設定很簡單：把前一個 OpenAI 輸出餵進這個模組。然後進到 Iterator 模組。 \"To pass OpenAI outputs into Notion later, use the JSON Parse module. Setup is simple: feed the previous OpenAI output into this module. Then move on to the Iterator module.\" 我們用 Iterator 模組 是因為我們想把前一個 OpenAI 輸出的全部 10 篇 Substack Notes 拆解成 10 個項目，然後產生到 Notion 資料庫。 \"We use the Iterator module because we want to unbundle all 10 Substack Notes from the previous OpenAI output into 10 items, which will be generated int"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "💻 Make.com 模組流程 OpenAI (JSON output) ↓ JSON Parse (解析 JSON 結構) ↓ Iterator (拆解 array 成單筆) ↓ Notion: Create Database Item (每筆寫入一列) 📚 核心概念 Iterator Pattern ：當 AI 輸出是一個 array（如 10 篇 notes），你需要 Iterator 來「展開」這個 array，讓後續模組可以對每一筆資料執行操作。這是 Make.com 處理批次資料的標準做法。 Part X"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "原文摘要",
+    "sectionTitle": "原文摘要",
+    "content": "在你依賴這個自動化處理每一則語音備忘錄之前，用真實錄音跑一個完整測試。用 Wisprflow 錄一則測試語音備忘錄。 用 3-5 種不同的備忘錄類型測試 ，看看系統如何處理各種輸入。 \"Before you rely on this automation for every voice memo, run a complete test with a real recording. Run this test 3-5 times with different memo types to see how the system handles various inputs.\" Q: Make.com 免費版夠用嗎？ A: 如果你每天錄 3-5 則備忘錄，免費版足夠。OpenAI 成本很低 — 每月大約 $2-3 。總成本：每月 ~$5 或更少。 \"Make.com free tier handles this fine if you're recording 3-5 memos daily. OpenAI costs are minimal — maybe $2-3 monthly dep"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "學習筆記",
+    "sectionTitle": "學習筆記",
+    "content": "💰 成本分析 項目 成本 Wisprflow Free Make.com Free tier OpenAI API ~$2-3/月 Notion Free 總計 ~$5/月 ⚠️ 重點提示 「If the AI output misses the mark?」 作者的答案： 加更多個人上下文 。所有輸出都必須根據你的情況個人化。用他的 Newsletter Brief prompt 作為範例，他加了大量關於自己的上下文。"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "Capture ≠ Process 捕捉點子容易，處理點子難。自動化應該解決「處理」的瓶頸，而不是繼續優化「捕捉」。 Router Pattern 用 Email Subject Line 作為路由器，同一個輸入可以觸發不同的處理邏輯，使用者保持控制權。 Context is King AI 輸出品質取決於你提供的個人上下文。告訴 AI 你是誰、做什麼、想達成什麼。 Quality Guardrails 好的 Prompt 需要明確的品質護欄：字數限制、格式要求、禁止事項、範例引導。"
+  },
+  {
+    "docFile": "2025-11-30_ai-second-brain-voice.html",
+    "docTitle": "AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子",
+    "docDate": "2025-11-30",
+    "docSource": "Wyndo / AI Maker Newsletter",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "練習題 Practice Questions",
+    "content": "Q1 概念理解 作者說「Capturing ideas was never the problem」，但大多數人還是花很多時間在選擇筆記 app。為什麼會有這個落差？ 參考答案： 這是「可見性偏誤」（Visibility Bias）：Capture 是可見的動作（選 app、錄音、存檔），Process 是隱形的認知負擔（什麼時候處理？如何分類？怎麼找到？）。 人們傾向解決「看得見」的問題，而忽略「感覺不到但持續消耗」的問題。這就像 CDMO 的「批次記錄審核」：看起來是文書工作，但實際上是品質的關鍵瓶頸。 延伸思考： 你自己的工作中，有哪些「隱形瓶頸」被忽略了？ Q2 產業應用 如果你要為 CDMO 設計類似的「Voice Memo to Action」系統，會有哪些 output 類別？需要考慮哪些 GMP 合規問題？ 參考答案： 可能的 Output 類別： Deviation / CAPA Notes（偏差/糾正預防記錄） Process Improvement Ideas（製程改進點子） Training Observations（訓練觀察） Equipment Issues"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "introduction-引言",
+    "sectionTitle": "Introduction 引言",
+    "content": "I've built a fully automated content repurposing system that turns my newsletters into 15+ social posts without me touching a single platform. It saves me 5+ hours every week . But here's what I've realized: there are multiple valid paths to solving the same problem. My approach leverages AI automation - AI runs in the background, processes everything automatically, and delivers platform-optimized content ready to edit and publish. Benjamin Hies uses a different framework: \" AI at the edges, you"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "bens-three-decision-points",
+    "sectionTitle": "Ben's Three Decision Points:",
+    "content": "Before writing - AI validates if an idea is worth pursuing After writing - AI catches blind spots and tightens prose During repurposing - AI extracts angles for LinkedIn adaptation Then he writes everything himself. Both approaches work. Both save significant time. Both preserve your voice. The difference is control versus automation ."
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "解析與評註",
+    "sectionTitle": "解析與評註",
+    "content": "核心概念：Content Repurposing（內容再利用） Content Repurposing（內容再利用） 指的是將一份內容（如長文章）轉化為多種格式，以適應不同平台的需求。 這不是簡單的「複製貼上」，而是根據每個平台的特性（字數限制、受眾習慣、互動方式）重新調整內容的呈現方式。 比喻說明：廚師與食材的關係 想像你是一位廚師，有一塊上等牛肉（你的原創文章）。你可以： 全自動化方法（Wyndo） ：像是擁有一台智能料理機，把牛肉放進去，自動切成牛排、做成牛肉麵、製作牛肉乾——你只需要最後試味。 邊緣AI方法（Ben） ：你自己掌廚，但在關鍵時刻請AI助手幫忙：「這塊肉適合做什麼？」「調味夠嗎？」「怎麼擺盤最好看？」 兩種方法都能做出美味料理，差別在於你想要多少「親手參與」的感覺。 重點提示：兩種方法論的核心差異 面向 Full Automation（全自動化） AI at the Edges（邊緣AI） 控制程度 低（規則預設後自動運行） 高（每個決策點你都參與） 時間節省 最大化（5+小時/週） 中等（減少但需要手動介入） 聲音保留 依賴預設規則品質 你直接寫，天然保留 適合"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "the-3-prompt-pipeline-系統架構圖",
+    "sectionTitle": "The 3-Prompt Pipeline 系統架構圖",
+    "content": "1 Audience Validator 受眾驗證器 寫作前：驗證想法是否值得投入 → 2 Pencil Sharpener 鉛筆削尖器 寫作後：捕捉盲點、精簡文字 → 3 Angle Extractor 角度萃取器 轉發時：找到適合平台的切入點"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "the-problem-it-solves",
+    "sectionTitle": "The problem it solves",
+    "content": "I have a running list of 50+ article ideas. Every week I used to pick one based on gut feeling . Sometimes it worked, sometimes it didn't. But, I was just guessing and needed a way to validate."
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "the-concept-segment-matching",
+    "sectionTitle": "The concept: \"Segment Matching\"",
+    "content": "Not every idea fits every reader. My audience has different life situations. Working adults exploring options. Retirees planning their exit. Digital nomads already on the move. \"If no segment scores above 40%, the idea is too broad. If a segment scores 70%+, I'm onto something. If all segments score 50%+, I can create an evergreen post.\""
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "the-prompt",
+    "sectionTitle": "The Prompt",
+    "content": "THE AUDIENCE VALIDATOR #Role: You are a Content Strategist who validates topic ideas before writers waste hours on articles that won't resonate. #Context: Before I commit 3-5 hours to an article, I need to know if it's worth pursuing and what angle to take. #Task: 1. VALIDATION CHECK - What are people actually asking about this topic? (Reddit, forums, common questions) - What's already been written? What's missing? - Is this timely or evergreen? 2. SEGMENT MATCHING For this topic, estimate fit p"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "解析與評註",
+    "sectionTitle": "解析與評註",
+    "content": "核心概念：Segment Matching（受眾分群配對） Audience Segmentation（受眾分群） 是市場行銷的基礎概念：將你的讀者/客戶分成不同群體，每個群體有獨特的需求、痛點和興趣。 Segment Matching 則是進一步：評估某個內容主題對每個分群的「相關性分數」，幫你判斷這個主題是否值得寫。 比喻說明：餐廳菜單設計 想像你經營一家餐廳，客人有三種： 🥗 健康派 ：追求低卡、有機食材 🍖 享樂派 ：要大份量、重口味 👶 家庭派 ：需要兒童友善選項 你想推出新菜「松露牛排」——健康派可能興趣 30%、享樂派 85%、家庭派 45%。 這道菜值得推嗎？要看你的核心客群是誰。如果享樂派是主力，85% 說明這是好選擇！ 重點提示：Prompt 結構解析 這個 Prompt 使用了經典的 RCTF 框架 ： R ole（角色）：定義 AI 扮演「內容策略師」 C ontext（情境）：說明你面臨的決策困境 T ask（任務）：具體的分析步驟 F ormat（格式）：明確的輸出結構 這種結構讓 AI 能給出一致、可操作的回答。 決策閾值參考 判讀規則： • 任一分"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "2-the-pencil-sharpener-鉛筆削尖器",
+    "sectionTitle": "2. The Pencil Sharpener 鉛筆削尖器",
+    "content": "I could not see my own blind spots. After my LinkedIn coaching, it became obvious to me, that I'm over-explaining in my articles. Also, as a non-native speaker, I tend to use filler words ."
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "the-checklist-10-techniques",
+    "sectionTitle": "The Checklist (10 Techniques)",
+    "content": "1. End Weight - Put important words at the end of sentences 2. No Function Word Clusters - Don't stack small words (of the, in the, for the) 3. Active Voice - Make clear who's doing what 4. Specific Beats Vague - Concrete details over generic statements 5. One Idea Per Sentence - Break up complex thoughts 6. Show, Don't Tell - Evidence over claims 7. Cut Intensifiers - Remove \"very, really, extremely\" 8. Strong Verbs - Choose verbs over nominalizations 9. Cut Unnecessary Words - Every word earns"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "example-result",
+    "sectionTitle": "Example Result",
+    "content": "❌ ORIGINAL: \"Without legal agreements in place, you could end up paying tax twice on the same earnings, once where you live, and again where the money was made.\" 🔧 TECHNIQUE: Cut Unnecessary Words + One Idea Per Sentence ✅ REVISED: \"Without a tax treaty, you pay twice. Once where you live. Once where the money came from.\""
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "解析與評註",
+    "sectionTitle": "解析與評註",
+    "content": "核心概念：End Weight Principle（尾重原則） 英文句子中，讀者的注意力會自然落在句尾。因此， 最重要的詞彙應該放在句子末端 。 弱： \"There are many important factors in this decision.\" 強： \"This decision depends on many important factors.\" → 「重要因素」被推到句尾，獲得更大的強調效果。 比喻說明：音樂的漸強與落點 想像一首交響樂的結尾——樂團會在最後幾個音符「漸強」（crescendo），讓結束的那一刻最有力量。 寫作也一樣：句子的「最後幾個字」就是你的落點。如果你把重要訊息埋在中間，就像交響樂在高潮時突然變弱——讀者會感到「洩氣」。 ❌ \"The project, which was incredibly important, was completed by the team.\" ✓ \"The team completed this incredibly important project.\" 重點提示：Nominalization（名詞化）的陷阱 Nom"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "3-the-angle-extractor-角度萃取器",
+    "sectionTitle": "3. The Angle Extractor 角度萃取器",
+    "content": "Once I published my article on Substack, the next challenge was LinkedIn. I would stare at LinkedIn and think: \" Do I just... summarize it? \" That's what I used to do. 1,380 impressions. 7 reactions. For an article that got over 25,000 views on Substack. \"LinkedIn posts need to be standalone. There can't be an intro like 'Here is XYZ, and now please click this link'\""
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "the-concept-buckets",
+    "sectionTitle": "The concept: \"Buckets\"",
+    "content": "Not every angle works the same way on LinkedIn. Life - Who you are (personal transformation) Expertise - What you know (professional domain) Business - What you're building (entrepreneurship lessons)"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "hook-options-output-example",
+    "sectionTitle": "Hook Options Output Example",
+    "content": "Contrarian: \"Too many people overcomplicate residencies.\" Specific: \"5 residencies. 3 steps. That's it.\" Personal: \"I used to overthink residencies. Then I got 5 of them.\""
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "the-result",
+    "sectionTitle": "The Result",
+    "content": "From 1,300 impressions to 6,000 impressions, without any new content. The contrarian hook was chosen because \"LinkedIn loves those.\""
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "解析與評註",
+    "sectionTitle": "解析與評註",
+    "content": "核心概念：Standalone Content（獨立內容） 在社群媒體上，每一則貼文都必須是 自給自足 的——讀者不會因為你說「請看我的文章」就點進去。 貼文本身必須提供足夠的價值或好奇心，讓人願意繼續閱讀或互動。 失敗模式 ：「我寫了一篇關於 AI 的文章，點這裡看」→ 沒有 hook，沒有價值預覽 成功模式 ：提出一個觀點、分享一個洞察，文章連結是「bonus」而非主體 比喻說明：電影預告片 vs 完整電影 你的長文章是「完整電影」，LinkedIn 貼文是「預告片」。 好的預告片不會說：「這是一部很棒的電影，請去電影院看。」 好的預告片會：展示最精彩的片段、製造懸念、讓觀眾「必須」知道後續。 同樣地，LinkedIn 貼文應該是你文章中 最有衝擊力的一個觀點 ，而不是整篇文章的摘要。 重點提示：三種 Hook 類型解析 Contrarian Hook（反直覺鉤子） 挑戰普遍認知，製造認知衝突。LinkedIn 演算法偏愛能引發討論的內容。 例：「大多數人把生產力搞反了。」 Specific Hook（具體數字鉤子） 用精確數字建立可信度，暗示「這人有實戰經驗」。 例：「3 年，1"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "核心概念總結-key-takeaways",
+    "sectionTitle": "🎯 核心概念總結 Key Takeaways",
+    "content": "AI at the Edges, You in the Middle（邊緣 AI，你在中間） ：AI 負責「決策前」和「完成後」的輔助，你負責核心創作。這種方法保留你的聲音，同時減輕認知負擔。 Segment Matching（分群配對） ：在投入時間寫作前，先評估主題對各受眾分群的相關性分數。70%+ 表示強烈信號；所有分群 <40% 表示需要調整方向。 Ten Writing Techniques（十個寫作技巧） ：End Weight、Active Voice、One Idea Per Sentence 等技巧可以讓文章更清晰有力。AI 可以幫你發現盲點，但改寫仍需你的判斷。 Standalone Content（獨立內容） ：社群貼文必須自給自足，不是長文章的「摘要+連結」，而是獨立的有價值觀點。 Hook Types（鉤子類型） ：Contrarian（反直覺）、Specific（具體數字）、Personal（個人故事）三種類型各有適用場景，選擇時考慮平台特性和目標受眾。 Control vs Automation（控制 vs 自動化） ：兩種方法都有效，選擇取決於你對策略決"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "step-1-建立你的受眾分群",
+    "sectionTitle": "Step 1: 建立你的受眾分群",
+    "content": "在使用 Audience Validator 之前，你需要明確定義 3-5 個受眾分群。問自己： • 誰在讀我的內容？他們的人生階段是什麼？ • 他們最大的痛點是什麼？ • 他們希望達成什麼目標？"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "step-2-建立你的寫作檢查清單",
+    "sectionTitle": "Step 2: 建立你的寫作檢查清單",
+    "content": "Ben 的 10 個技巧是基於他的弱點（over-explaining、filler words）。你需要識別自己的弱點，建立個人化的檢查清單。"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "step-3-定義你的內容桶",
+    "sectionTitle": "Step 3: 定義你的內容桶",
+    "content": "Life、Expertise、Business 是 Ben 的分類。你的可能不同。例如： • 技術部落客：Tutorial / Opinion / Behind-the-scenes • 職涯教練：Mindset / Tactics / Success Stories"
+  },
+  {
+    "docFile": "2025-12-02_prompt-pipeline.html",
+    "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
+    "docDate": "2025-12-02",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Automation",
+      "Content"
+    ],
+    "sectionId": "常見錯誤與解決方案",
+    "sectionTitle": "常見錯誤與解決方案",
+    "content": "❌ 錯誤 1：不了解受眾就使用工具 如果你無法清楚描述你的受眾分群，Audience Validator 的輸出會很模糊。 解決方案 ：先花時間做受眾研究——查看留言、做問卷、分析誰在互動。 ❌ 錯誤 2：把 AI 修改建議照單全收 Pencil Sharpener 會給你修改建議，但不是每個建議都適合你的風格。 解決方案 ：把它當作「第二雙眼睛」而非「最終權威」。你保留否決權。 ❌ 錯誤 3：LinkedIn 貼文只是「文章摘要」 這是最常見的錯誤——把長文章壓縮成 5 句話，然後放一個連結。 解決方案 ：選擇文章中的 一個 洞察，把它變成獨立的觀點。連結是 optional。 原文連結： The AI Maker - The 3-Prompt Pipeline 學習指南製作日期：2025年12月3日"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "目錄-table-of-contents",
+    "sectionTitle": "目錄 Table of Contents",
+    "content": "1. 核心問題：為什麼需要這個系統？ 2. 系統架構總覽 3. Scenario 1：資料收集流程 4. Scenario 2：摘要與洞察生成 5. Prompt Engineering 深度解析 6. 客製化應用場景 7. 練習題與自我評估"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "原文核心痛點",
+    "sectionTitle": "原文：核心痛點",
+    "content": "Keeping up with AI news is overwhelming work and so tiring. You don't know who's going to lead this week and no idea what new tools will rise to the surface. Every AI model tells they are better. Until another AI model takes over. The King throne only lasts for a week or two. That's how brutal AI news is. To keep up with AI, I run an RSS reader with AI automation 24/7. It delivers every newsletter and blog post from 30+ sources I curated: the system works exactly as designed. But it only covers "
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "解析與評論",
+    "sectionTitle": "解析與評論",
+    "content": "關鍵術語 Key Terms RSS (Really Simple Syndication, 簡易資訊聚合) ：一種標準化的內容訂閱格式，讓用戶可以訂閱特定網站的更新。就像訂報紙一樣，但只有你選擇訂閱的報紙才會送到你家。 Blind Spot (盲點) ：你不知道自己不知道的資訊來源。這是資訊焦慮的根源——你無法訂閱一個你根本不知道存在的部落格。 比喻說明 Analogy 想像你經營一家餐廳，你有一份固定的供應商名單（RSS 訂閱）。這些供應商每天準時送貨，品質穩定。 但問題是：如果有一家新的農場種出了更好的有機蔬菜，而你根本不知道這家農場存在，你就永遠無法品嚐到這些食材。 這篇文章要解決的問題 ：建立一個「食材偵察員」，主動出去探索整個市場，找到你從未聽過但可能對你有價值的供應商。 重點提示 Key Insight 作者點出了一個關鍵區別： RSS = Known Network (已知網絡) ：被動監控你已經知道的來源 AI Agent = Discovery Engine (發現引擎) ：主動搜尋整個網路，找到你不知道存在的資訊 這不是二選一，而是兩者互補。你需要 RSS 來追蹤"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "原文系統架構",
+    "sectionTitle": "原文：系統架構",
+    "content": "By the time you finish implementing this system, you'll have a fully automated AI news agent that: Searches intelligently across the entire internet - Not limited to RSS feeds or pre-selected sources. Perplexity AI actively searches based on your custom topics and queries. Stores everything in organized Google Sheets - Every research finding gets logged with metadata (source, date, topic, relevance score). Sends weekly intelligence summaries to your email - OpenAI analyzes your accumulated findi"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "解析與評論",
+    "sectionTitle": "解析與評論",
+    "content": "系統流程圖 System Architecture Email 觸發 (Mailhook) → Perplexity 搜尋研究 → Google Sheets 資料儲存 → OpenAI 摘要分析 → Gmail 發送報告 關鍵術語 Key Terms Webhook (網路掛鉤) ：一種讓不同應用程式之間自動傳遞資訊的機制。當某個事件發生（例如收到 Email），就會自動觸發另一個動作。 API (Application Programming Interface, 應用程式介面) ：讓不同軟體可以「對話」的標準化方式。Perplexity API 讓你可以用程式的方式使用 Perplexity 的搜尋功能。 Token (代幣) ：AI API 計費的基本單位。大約每 4 個英文字母 = 1 個 token。中文每個字約 2-3 個 token。 比喻說明 Analogy 這個系統就像一家公司的情報部門： Mailhook = 總經理的指令（「去調查這個主題」） Perplexity = 外勤情報員（出去實地調查、蒐集資料） Google Sheets = 檔案室（整理歸檔所有蒐集"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "原文scenario-1-資料收集",
+    "sectionTitle": "原文：Scenario 1 資料收集",
+    "content": "The goal of this scenario is to begin requesting information from Perplexity to collect the data. We start this workflow with a Mailhook module . Step 1: Use Mailhook to start your research This automation begins by triggering a Mailhook and sending the request to Perplexity as the next module. You need to write your request in the email body. For example: \"Research New AI tools this week.\" Step 2: Perplexity to start researching I chose Perplexity because it's great at deep research, scouring t"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "解析與評論",
+    "sectionTitle": "解析與評論",
+    "content": "Mailhook 觸發器 這就像一個私人信箱地址。當你發 Email 到這個地址，Make.com 就知道要開始執行自動化流程。這個設計的好處是：你可以從手機、電腦、任何地方隨時觸發研究。 Perplexity 搜尋 Perplexity 的優勢在於它不只是關鍵字搜尋，而是會「理解」你的問題，然後去網路上找相關資訊並整合。這比傳統 Google 搜尋更接近「研究助理」的功能。 JSON 清理 這是一個常見的技術問題：AI 有時會在 JSON 前面加上 \"```json\" 這樣的標記。這個步驟用 Regex (正規表達式) 來清除這些多餘的字元。 關鍵術語 Key Terms JSON (JavaScript Object Notation) ：一種資料交換格式，用花括號 {} 和方括號 [] 來組織資料。它是現代 API 最常用的資料格式，因為它既人類可讀，又容易被程式處理。 Regex (Regular Expression, 正規表達式) ：一種用來描述文字模式的語言。例如 ```json\\s*|\\s*``` 這個 pattern 可以找到並移除 JSON 前後的標記。 比喻說明 "
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "原文system-prompt-核心邏輯",
+    "sectionTitle": "原文：System Prompt 核心邏輯",
+    "content": "The system prompt is the agent's brain. It tells Perplexity: \"You're not just finding AI news - you're filtering signal from noise for people who actually USE AI tools, not just read about them.\" EVALUATION CRITERIA: Practical implementation potential for knowledge workers Integration possibilities with existing workflows Actual availability and accessibility (not vaporware) Relevance to AI-augmented thinking, productivity, or learning CATEGORIZATION FRAMEWORK: \"Tool Mastery\" = Specific AI tools"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "解析與評論",
+    "sectionTitle": "解析與評論",
+    "content": "關鍵術語 Key Terms System Prompt vs User Prompt System Prompt (系統提示) ：定義 AI 的「人格」和「工作方式」。這是永久性的指令，告訴 AI「你是誰」以及「你應該如何思考」。 User Prompt (用戶提示) ：每次互動時給的具體任務。這是「做什麼」的指令。 Vaporware (畫餅軟體) ：指那些被大肆宣傳但實際上還不存在或無法使用的產品。這個詞提醒我們要專注於「真正可用」的工具。 比喻說明 Analogy System Prompt 和 User Prompt 的關係，就像是： System Prompt = 員工手冊 ：定義公司文化、工作標準、評估準則。員工入職時就要學會，之後每次工作都遵循這些原則。 User Prompt = 每日工作指令 ：今天要完成什麼任務、要調查什麼主題。 這個設計的優點是：你可以改變「做什麼」（User Prompt），但不需要重新教 AI「怎麼做」（System Prompt）。 分數 意義 範例 10 現在就能用的革命性功能 Claude 推出 100 萬 token 上下文 8-9 "
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "原文scenario-2-摘要生成",
+    "sectionTitle": "原文：Scenario 2 摘要生成",
+    "content": "Step 1: Get the data from Google Sheets Filter and get data using Google Sheets: Search Rows (Advanced). The query returns rows where: The date falls within the last 7 days The relevance score is greater than or equal to 7 SQL-like Query: where C >= date 'YYYY-MM-DD' and C = 7 order by E desc Step 2: Aggregate all data into Array Bundle all selected rows into an array for downstream processing. Step 3: OpenAI to summarize The prompt transforms raw data into actionable insights by identifying pat"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "解析與評論",
+    "sectionTitle": "解析與評論",
+    "content": "關鍵術語 Key Terms SQL-like Query (類 SQL 查詢) ：Google Sheets API 支援類似資料庫查詢的語法。這裡用的 WHERE、AND、ORDER BY 都是標準 SQL 關鍵字。 Array Aggregation (陣列聚合) ：將多筆資料合併成一個陣列，方便一次性傳給下游處理。這樣 OpenAI 可以「看到全貌」再做分析。 比喻說明 Analogy Scenario 2 就像一位資深編輯在做週報： Step 1 (篩選) ：從檔案櫃中拿出本週的文件，只挑選評分 7 分以上的 Step 2 (整理) ：把所有文件放在桌上，讓編輯可以一次看完 Step 3 (寫作) ：編輯閱讀所有資料，找出模式，寫成一篇有洞察的報告 Step 4 (發送) ：把報告寄給老闆 重點提示 Key Insight 為什麼 OpenAI 的 Prompt 如此複雜？ 這個 prompt 的設計目標不是「列出本週新聞」，而是「像資深分析師一樣思考」。它要求 OpenAI： Pattern Recognition ：找出多家公司在解決類似問題 Relationship M"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "原文客製化應用",
+    "sectionTitle": "原文：客製化應用",
+    "content": "For Content Creators: Track Your Niche Modify the Perplexity queries to focus on your domain: \"AI marketing tools launched this week\" \"AI productivity apps for knowledge workers\" \"AI automation tools for consultants\" For Consultants: Monitor Client Industries Configure multiple agents to track different industries simultaneously: Agent 1: Financial services AI developments Agent 2: Healthcare AI applications Agent 3: Legal tech AI tools Agent 4: AI regulatory changes For Investors: Track Funding"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "解析與評論",
+    "sectionTitle": "解析與評論",
+    "content": "使用者類型 客製化方向 關鍵調整 內容創作者 追蹤特定領域 修改 User Prompt 的查詢主題 顧問 多產業平行監控 複製多個 Scenario 1，各自追蹤不同產業 投資人 Deal Flow 監控 強化 funding 相關的評分邏輯 比喻說明 Analogy 這個系統就像一台「可程式化的望遠鏡」： 基礎架構 （Make.com + Perplexity + OpenAI）= 望遠鏡的光學系統，這是固定的 Prompt = 望遠鏡的「瞄準方向」，這是可以調整的 一個天文學家可以用同一台望遠鏡觀察月球、木星、銀河。同樣地，你可以用同一套系統追蹤 AI 新聞、醫療科技、金融市場。 重點提示 Key Insight 可擴展性的設計思維 這個系統的聰明之處在於它分離了「收集」和「分析」： 多個 Scenario 1 可以平行運作，各自收集不同主題 所有資料都匯入同一個 Google Sheet Scenario 2 可以一次分析所有主題，或分開處理 這就像一家媒體公司：可以有多個記者（Scenario 1）各自跑不同線，但最後由同一個編輯部（Scenario 2）整合出刊。 實務應用"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "學習總結",
+    "sectionTitle": "學習總結",
+    "content": "Expected results after 1 month: 3-5 hours saved weekly on research and news consumption Discovery of sources outside your RSS feeds One clean summary email instead of dozens of browser tabs No more anxiety about missing important news The compound effect: Every week it runs, your Google Sheets becomes a more valuable intelligence database. Every pattern it surfaces saves you hours of manual research. Six months from now, you'll have historical data showing how the AI landscape evolved. What's ne"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "練習題與自我評估",
+    "sectionTitle": "練習題與自我評估",
+    "content": "練習思考 Practice Questions 問題 1：系統設計理解 這個系統使用兩個 Scenario（收集 vs 摘要）而不是合併成一個。請解釋這種設計的優點和可能的缺點？ 提示：思考資料累積、執行頻率、成本控制、除錯難度 問題 2：Prompt Engineering System Prompt 中的「Relevance Score」採用 1-10 分制。如果你要追蹤醫療 AI 領域，你會如何修改評分標準？請舉出 10 分和 5 分的具體範例。 提示：考慮 FDA 批准、臨床試驗、實際臨床應用 問題 3：擴展應用 如果你要將這個系統改造為「競品監控系統」，追蹤 3 家主要競爭對手的動態，你會如何修改架構？需要哪些額外的 module？ 提示：考慮多個 Perplexity 查詢、資料合併、警報機制 ROI 計算公式 ROI Calculation 每月時間節省價值： 價值 = (每週節省小時 × 4 週) × 時薪 價值 = (4 小時 × 4) × $50 = $800/月 每月系統成本： 成本 = Make.com + Perplexity + OpenAI 成本 = $9"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "核心概念總結-key-takeaways",
+    "sectionTitle": "核心概念總結 Key Takeaways",
+    "content": "1. RSS vs AI Agent RSS 監控已知來源，AI Agent 發現未知來源。兩者互補，不是替代關係。 2. System vs User Prompt System Prompt 定義「如何思考」，User Prompt 定義「做什麼」。分離兩者讓系統更靈活。 3. 收集 vs 分析分離 Scenario 1 專注收集，Scenario 2 專注分析。這種架構更容易擴展和維護。 4. 複利效應 系統運行越久，資料庫越有價值。這不只是省時間，而是在建立情報資產。"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "技術堆疊總覽",
+    "sectionTitle": "技術堆疊總覽",
+    "content": "組件 功能 成本 Make.com 自動化協調平台 $0-9/月 Perplexity API 即時網路搜尋與研究 ~$3/月 OpenAI API 摘要生成與模式分析 ~$2/月 Google Sheets 資料儲存與歷史記錄 $0 Gmail 報告發送 $0"
+  },
+  {
+    "docFile": "2025-12-04_ai-news-agent-perplexity.html",
+    "docTitle": "AI 新聞代理系統學習指南 | AI News Agent Study Guide",
+    "docDate": "2025-12-04",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "學習資源",
+    "sectionTitle": "學習資源",
+    "content": "延伸學習 Further Reading Make.com 官方文檔 ：學習更多 module 的使用方式 Perplexity API 文檔 ：了解不同模型的差異（Sonar Pro vs Sonar Reasoning） OpenAI Prompt Engineering Guide ：深入學習 prompt 設計技巧 Google Sheets Query 語法 ：掌握更複雜的資料篩選 下一步行動 Next Steps 註冊 Make.com 帳號並完成基礎教學 購買 Perplexity API credits ($5 起) 複製 Google Sheets 模板 按照文章步驟建立 Scenario 1 測試並調整 prompt 符合你的需求 原文來源： AI Maker Labs - How I Built an AI Agent That Scours the Internet for News I Actually Care About 學習文檔製作：Claude AI | 此為教學用途，原文版權歸作者 Wyndo 所有"
+  },
+  {
+    "docFile": "2025-12-09_anthropic-skills-agents.html",
+    "docTitle": "AI 技能庫 vs AI 代理：Anthropic 的策略洞見",
+    "docDate": "2025-12-09",
+    "docSource": "TechNews 科技新報",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "LLM",
+      "Research"
+    ],
+    "sectionId": "本文核心要點",
+    "sectionTitle": "本文核心要點",
+    "content": "主要論點 ：與其開發多個專用 AI Agent，不如開發一個通用 Agent + 豐富的技能庫 Skills 定義 ：組織化的程序知識包，讓 AI 能一致且高效地執行特定領域任務 市場趨勢 ：企業 AI 使用從「增強」轉向「自動化」（77-97%） 市場警示 ：許多「AI Agent」產品只是 LLM + 聊天介面的換皮銷售 安全考量 ：AI 能力提升是雙面刃，需兼顧能力、安全、可解釋、可控四大面向 練習思考 Practice Questions 練習思考 Self-Assessment 概念理解 ：請用自己的話解釋 AI Agent 和 Skills 的差異，並舉一個工作中可能的應用場景。 批判思考 ：a16z 合夥人警告 AI Agent 有泡沫化現象。如果你是企業採購決策者，你會用哪三個標準來判斷一個 AI Agent 產品是否值得購買？ 策略應用 ：假設你負責一家中型企業的數位轉型，根據 Anthropic 的建議，你會如何規劃 AI 導入策略？請考慮：(a) 選擇通用 Agent 還是多個專用 Agent，(b) 如何建立技能庫，(c) 如何平衡能力與安全。 學習指南製作：Claude AI | 原文來源：TechNews 科技新報 原文連結： https://infosecu.technews.tw/2025/12/09/anthropic-researchers-say-more-ai-agents-isnt-the-answer/"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "learning-objectives-學習目標",
+    "sectionTitle": "Learning Objectives 學習目標",
+    "content": "Agent 理解 Agentic Workflow 的基本架構與 Scaffolding 的必要性 LLM 掌握 Token 效率與總成本的關係，建立模型選擇決策框架 Tool 認識 MCP、Nova Act、Nova Forge 等新工具的應用場景 Section 1 of 5 8 分鐘"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "andrew-ng-的信建構你的第一個-agent",
+    "sectionTitle": "Andrew Ng 的信：建構你的第一個 Agent",
+    "content": "Dear friends, If you have not yet built an agentic workflow , I encourage you to try doing so, using the simple recipe I'll share here! With a few lines of code, you can now build a highly autonomous, moderately capable, and highly unreliable agent . The ability of frontier LLMs to carry out multiple steps autonomously makes this possible. Specifically, you can give an LLM a tool such as disk access (or web search), instruct it via a prompt to perform a high-level task such as creating a game an"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "核心概念 Key Concepts Agentic Workflow（代理工作流程） ：讓 AI 模型能夠自主執行多步驟任務的工作流程。不同於單次問答，Agent 可以自己決定下一步該做什麼。 Scaffolding（腳手架/框架程式碼） ：引導 Agent 行為的輔助程式碼。就像蓋房子需要鷹架支撐，目前的 Agent 也需要大量程式碼來確保穩定運作。 MCP (Model Context Protocol) ：Anthropic 推出的協定，讓 LLM 能夠標準化地使用外部工具，如檔案系統、網頁搜尋等。 比喻說明 Analogy Agent 就像新手員工： 想像你僱用了一位聰明但沒經驗的新員工： 方法A（無 Scaffolding） ：給他辦公室鑰匙和電腦，說「把這份報告完成」，然後離開。結果可能很有創意，但也可能完全偏離方向。 方法B（有 Scaffolding） ：給他詳細的 SOP、每個步驟的檢查清單、完成每階段要回報。結果更可預測、更可靠。 Andrew 這封信教的是方法 A——快速體驗 Agent 的可能性，但實際商業應用需要方法 B。 程式碼/API Code/API a"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "claude-opus-45更少-token-做更多事",
+    "sectionTitle": "Claude Opus 4.5：更少 Token 做更多事",
+    "content": "Claude Opus 4.5 , the latest version of Anthropic's flagship model, extends the earlier version's strengths in coding, computer use, and agentic workflows while generating fewer tokens. What's new: Claude Opus 4.5 outperforms its immediate predecessor at one-third the price per token . Input/output: Text and images in (up to 200,000 tokens), text out (up to 64,000 tokens) Features: Adjustable effort (low, medium, high) that governs token generation Extended thinking that raises the budget for re"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "核心概念 Key Concepts Token（代幣/標記） ：LLM 處理文字的基本單位。英文約 1 token = 0.75 字；中文約 1 字 = 1.5-2 tokens。Token 數量直接影響 API 成本。 Extended Thinking（延伸思考） ：讓模型「思考更久」的功能。模型會先產生內部推理過程（消耗更多 token），再給出最終答案。 Hybrid Reasoning Model（混合推理模型） ：可以在「快速回應」與「深度思考」兩種模式間切換的模型。 比喻說明 Analogy Effort Level 就像汽車檔位： Low（低檔） ：省油但動力弱，適合簡單任務如閒聊、簡單問答 Medium（中檔） ：平衡模式，適合大多數工作任務 High（高檔） ：全力輸出但耗油，適合複雜程式碼、深度分析 選對檔位 = 用最少 token 完成任務 = 省錢。 成本分析 Cost Analysis Token 效率 ≠ 總成本低 這是本文最重要的商業洞察： 模型 使用 Token 測試總成本 Claude Opus 4.5 48M $1,498 Gemini 3 Pro"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "genesis-mission美國-ai-科學大計畫",
+    "sectionTitle": "Genesis Mission：美國 AI 科學大計畫",
+    "content": "President Trump launched a United States effort to use AI to speed up scientific breakthroughs. What's new: The Genesis Mission , established by an executive order, directs the Department of Energy to integrate its 17 national labs and some of the country's most powerful supercomputers to tackle research on areas that range from energy to medicine. Government researchers will work with private-sector partners, including Anthropic, Nvidia, and OpenAI , to train models on proprietary federal datas"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "核心概念 Key Concepts Scientific Foundation Model（科學基礎模型） ：專門針對科學領域訓練的大型 AI 模型。不同於通用 LLM，這類模型深度理解科學文獻、實驗數據、化學結構等。 Robotic Lab（機器人實驗室） ：由機器人自動執行實驗的實驗室。AI 設計實驗 → 機器人執行 → AI 分析結果 → 設計下一個實驗，形成閉環。 AI Co-Scientist（AI 共同科學家） ：不只是工具，而是能夠提出假設、設計實驗、解讀結果的 AI 系統。 比喻說明 Analogy Genesis Mission 就像「科學版曼哈頓計畫」： 二戰時，美國集中最優秀科學家、最多資源在洛斯阿拉莫斯國家實驗室開發原子彈。Genesis Mission 的規模與意圖類似： 整合 17 個國家實驗室 政府 + 頂尖 AI 公司合作 開放政府機密數據集 目標：在 AI 科學應用領域領先中國 工具比較 Tool Comparison 六大焦點領域分析： 領域 為何重要 Biotechnology 藥物開發、疫苗、基因療法 Manufacturing 供應鏈自主、工業"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "amazon-nova-2aws-的新模型家族",
+    "sectionTitle": "Amazon Nova 2：AWS 的新模型家族",
+    "content": "Amazon raised the competitive profile of its foundation models and added services for custom model training and an agent platform for browser automation. What's new: The Nova 2 family of models covers multimodal reasoning, multimodal generation, and speech to speech. New services: Nova Forge ($100,000 annually): offers pre-trained, mid-trained, and post-trained Nova checkpoints for custom training Nova Act : browser-automation agents that can navigate websites, fill out forms, extract data via n"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "核心概念 Key Concepts Nova Forge ：企業級客製化服務。提供模型的「半成品」(checkpoints)，讓企業用自己的數據進一步訓練。年費 $100,000 是企業級定價。 Nova Act（Browser Automation） ：瀏覽器自動化 Agent。可以用自然語言指示 AI 操作網頁，類似 RPA 但更智能。 Web Grounding（網頁根據） ：模型能搜尋網路並附上引用來源，減少 Hallucination，提高可信度。 比喻說明 Analogy Nova 2 家族就像汽車產品線： Nova 2 Pro ：旗艦轎車，全功能最強 Nova 2 Lite ：經濟小車，省錢代步 Nova 2 Omni ：多功能休旅，什麼輸入都吃、什麼都能輸出 Nova 2 Sonic ：語音專車，專門處理電話/語音 Amazon 的策略是「全產品線覆蓋」，不跟單一模型硬拚，而是提供完整解決方案。 成本分析 Cost Analysis Nova 2 Pro vs Claude Opus 4.5 價格比較： 項目 Nova 2 Pro Claude Opus 4.5 輸出 "
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "tiny-recursive-model小模型的大智慧",
+    "sectionTitle": "Tiny Recursive Model：小模型的大智慧",
+    "content": "Large language models often fail at puzzles like Sudoku, for which a solution includes multiple elements and a single mistake invalidates all of them. Researchers showed that a tiny network, by repeatedly refining its solution , can solve this sort of puzzle well. What's new: Alexia Jolicoeur-Martineau at Samsung developed Tiny Recursive Model (TRM) . This approach outperforms large, pretrained LLMs, including DeepSeek-R1 and Gemini 2.5 Pro, on visual puzzles requiring grid-filling by inferring "
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "核心概念 Key Concepts Recursive（遞迴） ：函數呼叫自己的過程。TRM 的核心是讓模型「看自己的輸出，再改進，再看，再改」不斷循環。 Context Embedding（上下文嵌入） ：一個記錄「我改過什麼」的向量。解決了「改了又改回去」的問題，就像在草稿紙上記筆記。 ARC-AGI ：Abstraction and Reasoning Corpus，測試 AI 抽象推理能力的基準，被認為是測試「真正智能」的指標之一。 比喻說明 Analogy TRM 就像「有筆記本的數獨高手」： LLM 方式（Chain of Thought） ：一邊思考一邊說出來「這格應該是3，因為...」，說完就給答案。說錯了也不能回頭改。 TRM 方式（Recursive） ：先猜一個答案，檢查哪裡不對，在筆記本上記錄「第3行改過」，改了再檢查，重複16次。最後給出最好的版本。 筆記本 = Context Embedding。 工具比較 Tool Comparison 比較項目 TRM GPT-4 級 LLM 參數量 5-7M ~1.8T Sudoku 準確率 87% 0% ARC-AG"
+  },
+  {
+    "docFile": "2025-12-10_batch-331-study-guide.html",
+    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
+    "docDate": "2025-12-10",
+    "docSource": "The Batch / DeepLearning.AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "key-takeaways-重點整理",
+    "sectionTitle": "Key Takeaways 重點整理",
+    "content": "Agent 仍需 Scaffolding aisuite 讓任何人都能快速建構 Agent，但「highly unreliable」是現實。商業應用需要大量框架程式碼引導。 Token 效率 ≠ 成本效率 Claude Opus 4.5 用最少 Token 但總成本最高。選模型要看「任務總成本」，不只看效率指標。 Frontier Model 差異收斂 前十名差距只剩 5.4%。選模型的決策因素應轉向價格、延遲、生態系整合、資料政策。 小而專勝過大而全 TRM 用 500 萬參數打敗兆參數 LLM（數獨 87% vs 0%）。正確的架構設計比暴力堆參數更重要。 Practice Questions 練習題 Question 1 | Agent Architecture Andrew Ng 說目前的 Agent 是「highly autonomous, moderately capable, and highly unreliable」。請解釋為什麼「autonomous」和「reliable」目前是衝突的，以及 Scaffolding 如何緩解這個問題？ 顯示參考答案 衝突原因： 「A"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "目錄-table-of-contents",
+    "sectionTitle": "目錄 Table of Contents",
+    "content": "引言：為什麼 Project Memory 很重要 問題：大多數人做錯了什麼 核心概念：Friction-Driven Memory 四步驟系統 快捷方法：Friction Detection Prompt 實際案例 進階：Knowledge Base Files 結論與行動建議"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "引言hook-的力量",
+    "sectionTitle": "引言：Hook 的力量",
+    "content": "作者在 LinkedIn 上每週發布 5-7 篇文章，上個月獲得超過 25 萬次曝光，但追蹤者只有 2,400 人。這個不成比例的成功來自一個關鍵因素： Hook（開場吸引語） 。 \"The right hook does 80% of the work. It stops people mid-scroll, makes them care enough to read, and eventually comment and share. A bad hook? Your best writing dies in silence.\" 問題是：作者使用 AI 來寫 LinkedIn 貼文，但一開始 Claude 總是產出 generic hooks （通用且平淡的開場）——安全、不會出錯，但也不會讓人停下來。 即使 Claude 已經讀過作者表現最好的文章，理解了他的聲音，輸出還是「還可以」——但「還可以」不會在 LinkedIn 爆紅。 直到作者開始 用不同的方式使用 Project Memory 。"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "chatgpt-vs-claudememory-的本質差異",
+    "sectionTitle": "ChatGPT vs Claude：Memory 的本質差異",
+    "content": "你可能知道 ChatGPT 的記憶功能——它會記住你是誰，隨時間學習你的模式。但 ChatGPT 的記憶是一個 black box（黑箱） ： 你無法真正編輯它 你可以調整 system prompt，但無法直接控制它保留和優先處理什麼 Claude Projects 的運作方式不同 ： 你可以 直接編輯記憶 你可以告訴 Claude 確切要記住什麼 這些指令會帶入每一次對話——不是模糊的背景資訊，而是 decision-making criteria（決策準則）"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "大多數人做錯了什麼",
+    "sectionTitle": "大多數人做錯了什麼",
+    "content": "大多數人從 System Prompt 開始——這是正確的。你記錄自己的聲音、偏好、受眾、語調、背景資訊。你想到的每一條指令。 \"This feels productive. More detail should mean better outputs, right?\" 然後輸出還是感覺不對。不是完全錯誤，只是 不像你 。 所以你加更多。更多例子。更多說明。Prompt 越來越長，試圖涵蓋每一種邊緣情況。 這有幫助。但還是有差距。輸出在技術上遵循了指令，但感覺不像自己。你不斷手動修正同樣的模式。 \"The problem wasn't the system prompt. The problem was I didn't actually know what I wanted until I saw what I didn't want.\""
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "什麼是-friction摩擦",
+    "sectionTitle": "什麼是 Friction（摩擦）？",
+    "content": "Friction 是 Claude 給你的東西與你實際需要的東西之間的 差距 。當你讀 Claude 的輸出時想著：「這還可以，但不對」的那種感覺。 大多數人修正它然後繼續前進： Claude 寫了一個通用的 hook？手動重寫它 Claude 聽起來太學術？自己簡化它 問題解決了。下一個任務。 但那個摩擦 會回來 。明天。下週。每次你做類似的事情時。 \"Because Claude doesn't know it made a mistake. You fixed the output, but you didn't fix the root cause.\" 到了第三次修正同樣的問題時，你就知道這是一個值得解決的模式。而你做的修正會揭示你事先無法表達的偏好—— 你不知道你討厭那種 hook 結構，直到 Claude 使用了它 。"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "step-1-即時注意摩擦別只是修正它",
+    "sectionTitle": "Step 1: 即時注意摩擦（別只是修正它）",
+    "content": "你正在與 Claude 合作。輸出中有些東西困擾你。你的本能是快速修正然後繼續前進。 停下來。 那個摩擦的時刻是有價值的。如果你修正它然後繼續，你就失去了數據。 反而，暫停並問自己：「這裡具體哪裡錯了？」 是語調嗎？太正式？太隨意？太學術？ 是結構嗎？順序錯了？太長？漏了什麼？ 是一個模式嗎？你討厭的短語結構？感覺被強迫的修辭手法？"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "step-2-將摩擦轉換成指令",
+    "sectionTitle": "Step 2: 將摩擦轉換成指令",
+    "content": "摩擦是一種 感覺 。Project memory 需要 語言 。你的工作是將一個轉換成另一個。 作者使用這個簡單框架： 項目 內容 What I got Claude 的實際輸出 What I needed 正確的應該是什麼 The gap 這兩者之間的差異是什麼？ The instruction 我應該告訴 Claude 什麼，讓這不再發生？"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "step-3-加入-project-memory",
+    "sectionTitle": "Step 3: 加入 Project Memory",
+    "content": "現在把那個指令變成永久的。在 Claude Projects 中，你可以直接在對話中加入記憶。在更新前，作者通常會說： \"I noticed the hook you wrote explained the concept before revealing the insight. I need hooks that lead with the surprising claim first. Can you help me write a memory instruction that captures this preference?\" 好的 memory entries 原則： 具體，不要模糊 Bad: \"Write better hooks\" Good: \"Lead with the insight first. Don't set up context before the revelation.\" 需要時包含例子 Don't write: 'Here's a feature, many people don't use it, but there's a pattern..."
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "step-4-測試和精煉",
+    "sectionTitle": "Step 4: 測試和精煉",
+    "content": "記憶加入了。但它有效嗎？ 下次遇到類似情況時，注意觀察。Claude 有遵循指令嗎？摩擦消失了嗎？ 如果是： 很好。繼續並等待下一個摩擦點出現 如果否： 指令可能不夠具體。精煉它"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "快捷方法friction-detection-prompt",
+    "sectionTitle": "快捷方法：Friction-Detection Prompt",
+    "content": "有時你在對話中間，邊做邊調整。你調整這裡的一個句子，重寫那裡的一個 hook。要求一個不同的角度。 你在 flow 中。你只是修正東西而沒有想太多。 但 Claude 正在注意。 Claude 可以看到你修正的模式，即使你太專注而沒注意到。每次你調整什麼，Claude 都在追蹤改變了什麼以及為什麼。 核心提示詞： \"Looking at our conversation so far, are there any patterns in how I've corrected your outputs or asked you to adjust things? What preferences or rules am I demonstrating that aren't captured in your system prompt or project memory yet?\" 為什麼這有效： Claude 對對話有完美的記憶。你可能忘了你連續調整了三次語調，但 Claude 不會 它揭示盲點。你沒有意識到的摩擦被命名和識別 它為你做翻譯工作。Claude 根據觀察到的模式草擬記憶條"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "替代提示詞",
+    "sectionTitle": "替代提示詞",
+    "content": "做了多次修正後： \"I've made several edits to your outputs in this conversation. Can you identify the pattern and suggest a memory instruction that would prevent this friction next time?\" 全面分析： \"Based on how I've responded to your outputs today - what I kept, what I changed, what I asked you to redo - draft 2-3 specific memory instructions that would improve our collaboration.\" 工作中快速檢查： \"Pause. Have I been correcting the same type of thing repeatedly in the last few chats? If so, what memory instruction "
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "案例-1linkedin-hook-問題",
+    "sectionTitle": "案例 1：LinkedIn Hook 問題",
+    "content": "情況： 作者需要能讓人停止滾動的 hook——大膽、具體、引起好奇心的陳述。但 Claude 一直寫解釋性的 hook。在揭示之前先設定。先給背景再給重點。 摩擦： Claude 給的： \"The AI race is heating up. Companies are making important decisions about which AI providers to use. But the patterns emerging might surprise you.\" 這是反的。太多鋪陳。沒有張力。沒有具體性。 作者手動重寫： \"Anthropic just ate 20% of OpenAI's enterprise market in 24 months. And it's not even close to done.\" 最終 Memory Entry： Hook Framework (LinkedIn): - Lead with the insight or surprising claim FIRST - Don't explain or set up conte"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "案例-2tool-name-creep-問題",
+    "sectionTitle": "案例 2：Tool-Name Creep 問題",
+    "content": "情況： 作者在寫 Substack Notes——需要對任何使用 AI 的人都通用和相關的簡短社交媒體貼文。策略是專注於轉變和原則，而不是工具功能。但 Claude 一直提到特定的工具名稱。 摩擦： Claude 輸出： \"Cursor just changed how I think about coding. Instead of fighting syntax, the AI handles boilerplate and I focus on logic.\" 作者編輯： \"Programming became collaborative. The AI handles syntax patterns, I focus on problem-solving logic.\" 最終 Memory Entry： Substack Notes Strategy - Universal Insights: NEVER mention specific AI tools by name (Cursor, Claude, NotebookLM, ChatGPT, etc.) Focus on "
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "案例-3銷售郵件太企業化問題",
+    "sectionTitle": "案例 3：銷售郵件太企業化問題",
+    "content": "情況： 作者在寫黑色星期五促銷郵件。他的聲音是樂觀但誠實的。直接但不推銷的。但 Claude 一直默認為典型的行銷誇大語言。 摩擦： Claude 輸出： \"🔥 LAST CHANCE! Don't miss out on this incredible opportunity! This deal won't last forever - grab it now before it's gone! 🚨\" 作者重寫： \"This ends Monday, then we're back to full price. You're either subscribing now or waiting another year for this offer.\" 最終 Memory Entry（部分）： MAINTAIN (Authentic conviction): ✅ Direct challenge: \"You're either subscribing now or waiting another year\" ✅ Honest urgency: \"This ends Sunday,"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "進階knowledge-base-files",
+    "sectionTitle": "進階：Knowledge Base Files",
+    "content": "一旦你開始建立 project memory，你最終會達到一個門檻。當前的記憶介面限制條目只能寫幾句話。有些項目可以用一段簡潔的指令來表達；其他的則需要更詳細的框架。 這就是 Project Knowledge Base Files 變得必要的地方。 這樣想： Project Memory = Claude 在每次對話中應用的主動指令 Knowledge Base Files = Claude 在需要時查閱的參考框架 建議做法： Memory entries 應該是簡潔的指針：\"Do X, reference Y framework, avoid Z pattern.\" Knowledge base files 應該是全面的文檔：詳細的例子、邊緣案例、前後對比、決策樹 實作方式： 請 Claude 為你創建記憶，生成為 Markdown 文件，然後上傳到你的 project knowledge base。"
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "結論這實際上教會你什麼",
+    "sectionTitle": "結論：這實際上教會你什麼",
+    "content": "\"This process teaches you how your own taste actually works.\" 大多數人認為他們知道自己想要什麼。他們有模糊的偏好：「我喜歡對話式寫作」或「我想要吸引人的 hook」或「保持簡單」。 但這些不是可執行的。它們是沒有座標的方向。 Friction 迫使你變得具體。 當 Claude 寫出不符合你品味的東西時，你不能只說「那不對」然後繼續。你必須表達 為什麼 它不對。你必須命名困擾你的具體事物。你必須把感覺轉換成語言。 這很難。因為我們大多數人以前從未有意識地檢視過自己的偏好。我們只是在看到時知道自己喜歡什麼。 但建立 project memory 要求你 逆向工程你自己的品味 。發現你保留什麼與你改變什麼之間的模式。注意到你一直在遵循但從未意識到存在的隱形規則。 \"You're not just teaching Claude. You're teaching yourself.\""
+  },
+  {
+    "docFile": "2025-12-10_claude-project-memory.html",
+    "docTitle": "Claude Project Memory 完整指南",
+    "docDate": "2025-12-10",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM"
+    ],
+    "sectionId": "行動建議",
+    "sectionTitle": "行動建議",
+    "content": "這週，開啟一個 Claude Project（如果已有，選最常用的那個） 工作時注意摩擦。當你發現自己在編輯 Claude 的輸出時，暫停。注意你在改什麼以及為什麼 使用 friction-detection prompt。讓 Claude 告訴你它注意到什麼 從小處開始。這週一個 memory entry 就夠了 核心概念解析：Project Memory vs System Prompt System Prompt（系統提示詞） ：你在開始工作前的最佳猜測。像是在正式約會前，你想像對方喜歡什麼類型的餐廳。 Project Memory（專案記憶） ：你透過實際工作學到的東西。像是約會幾次後，你知道她對海鮮過敏、喜歡安靜的環境。 System Prompt 是假設，Project Memory 是證據。 比喻說明：餐廳主廚的學習 想像你是一個新餐廳的常客。一開始，主廚只知道你的基本資料（System Prompt）：「這位客人喜歡義大利菜」。 但透過多次用餐（產生 Friction）： 你把洋蔥挑掉 → 主廚記下「不吃洋蔥」 你稱讚青醬 → 主廚記下「偏好青醬」 你抱怨太鹹 → 主廚"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "目錄-table-of-contents",
+    "sectionTitle": "目錄 Table of Contents",
+    "content": "1. 導論：為什麼 Claude Code 不只是給工程師用的 2. 快速上手：安裝與專案設定 3. Claude.md：專案的持久記憶系統 4. Slash Commands：工作流程的快捷指令 5. Plan Mode：先思考再行動 6. Sub-Agents：背景運作的 AI 團隊 7. Output Styles：訓練 AI 符合你的思維模式 8. MCP Integration：連結外部工具 9. GitHub + Obsidian：隨時隨地存取的 24/7 工作流 10. 總結與下一步行動 原文內容 Original Content"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "introduction-beyond-the-developer-tool",
+    "sectionTitle": "Introduction: Beyond the Developer Tool",
+    "content": "Most people think Claude Code is for engineers who want to build apps faster. I thought that too. But as much as I wanted to try, I already had a coding setup that worked. Cursor handled my vibe-coding projects just fine. Claude web/desktop was perfect for brainstorming, researching, and writing. My workflows were humming along smoothly. So when Claude Code launched, my honest reaction was: \"Why would I complicate a system that's already working?\" \"Claude Code might be the best writing and resea"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "what-makes-claude-code-different",
+    "sectionTitle": "What makes Claude Code different:",
+    "content": "Agentic: It understands context better and proactively completes tasks for you Fast: Since it lives in your terminal, latency is low, so it thinks and executes faster Direct file access: This is the big one—it can access and edit your files directly 學習筆記 Commentary 關鍵術語解析 Claude Code ：Anthropic 推出的終端機（Terminal）AI 工具，讓 Claude 能直接在你的電腦上讀取、編輯檔案，執行命令。與一般的 Claude Web/Desktop 不同，它能主動操作你的本機環境。 Agentic（代理式） ：指 AI 具備自主完成任務的能力，不只是被動回答問題，而是能主動規劃、執行多步驟工作。 Terminal（終端機） ：電腦的命令列介面，讓你用文字指令控制電腦，而非圖形化點擊。 比喻說明 想像"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "step-1-install-claude-code",
+    "sectionTitle": "Step 1: Install Claude Code",
+    "content": "Open your Terminal, copy and paste this code: npm install -g @anthropic-ai/claude-code Before installing Claude Code, make sure you have NodeJS 18+ installed."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "step-2-set-up-your-project-structure",
+    "sectionTitle": "Step 2: Set up your project structure",
+    "content": "First create a folder on your computer. In my case, it's \"AI Maker Newsletter.\""
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "step-3-use-your-ide-for-visual-file-management",
+    "sectionTitle": "Step 3: Use your IDE for visual file management",
+    "content": "Open Cursor and click \"Open Project\" to access your project folder. To access and manage your project files while using Claude Code, you need to use an IDE like VSCode or Cursor."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "step-4-test-your-setup-and-activate-claude-code",
+    "sectionTitle": "Step 4: Test your setup and activate Claude Code",
+    "content": "Go to the Terminal tab inside your IDE, simply type \"claude,\" and Claude Code will be activated. Once you have both Claude Code running and your project folder open in your IDE, try this simple test: In your terminal with Claude Code activated, type: \"Show me what files are in this project\" In your IDE, create a new text file called \"test.md\" Ask Claude Code: \"What did I just add to this project?\" 學習筆記 Commentary 安裝前置作業 npm ：Node Package Manager，是 Node.js 的套件管理工具，用來安裝各種 JavaScript 工具和程式庫。 Node.j"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "claudemd-your-projects-memory-system",
+    "sectionTitle": "Claude.md: Your Project's Memory System",
+    "content": "Most people treat Claude Code like a chat session that happens to access files. They start fresh every time, explain their project context over and over, and wonder why Claude Code doesn't seem that much better than regular Claude. The secret is claude.md —a special file that acts as your project's persistent memory system. \"claude.md is Claude Code's brain for your specific project. Every time you start a session, Claude Code reads this file first to understand what you're working on, how you w"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "what-claudemd-actually-does",
+    "sectionTitle": "What claude.md actually does:",
+    "content": "Stores project context that persists across all sessions Remembers your working style and preferences Contains your specific instructions for how Claude should help you"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "how-i-set-up-claudemd-for-my-newsletter-project",
+    "sectionTitle": "How I set up claude.md for my newsletter project",
+    "content": "First, I gathered all my newsletter-related files into my \"AI Maker Newsletter\" project folder: Performance data from past newsletters All my published posts My about page and newsletter description Welcome email Collection of my social notes Reader feedback and comments Content strategy documents Once everything was in the folder, I opened my terminal with Claude Code activated and ran this command: /init That's it. Claude Code read through my entire project folder and automatically generated a"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "slash-commands-shortcuts-to-your-work",
+    "sectionTitle": "Slash Commands: Shortcuts to Your Work",
+    "content": "Slash commands are one of Claude Code's powerful weapons. They're pre-built shortcuts that tell Claude Code exactly what type of help you need, without you having to explain the context every single time. Think of slash commands like having a toolbox where each tool is designed for a specific job."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "top-5-built-in-slash-commands",
+    "sectionTitle": "Top 5 built-in slash commands:",
+    "content": "/agents - Shows you active sub-agents working on different parts of your project /compact - Clear conversations history but keep a summary in the context /exit - Cleanly closes your Claude Code session /mcp - Lists and manages your Model Context Protocol connections /memory - Shows what Claude Code remembers about your current project session"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "creating-custom-commands",
+    "sectionTitle": "Creating custom commands",
+    "content": "Here's mine that saves me hours every week: My /quick-edit command: Help me quickly improve this existing AI Maker newsletter content by: 1. Strengthening the personal hook/opening 2. Making the framework clearer and more actionable 3. Improving transitions between sections 4. Enhancing the conclusion with stronger next steps 5. Ensuring voice consistency throughout Please review the content and suggest specific edits that will increase engagement and value while maintaining The AI Maker brand v"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "plan-mode-think-before-you-act",
+    "sectionTitle": "Plan Mode: Think Before You Act",
+    "content": "Those of you who have done vibe-coding before can relate to this problem: we ask for a brainstorming session and AI starts coding without us asking for it. This also happens with writing. Half the time, we realize halfway through that it's going in the wrong direction, but by then it has already modified files or created content we didn't want. \"Plan mode solves this completely. Instead of Claude Code jumping straight into action, it first shows you a detailed plan of what it's going to do, then"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "how-plan-mode-can-save-you-from-accidental-ai-execution",
+    "sectionTitle": "How plan mode can save you from accidental AI execution",
+    "content": "When you're working on research or writing projects, you want to see the thinking process before the execution. Let's say I ask Claude Code to \"generate 5 LinkedIn posts.\" Without plan mode, Claude Code might start editing files around immediately. With plan mode, it first shows me its plan—and I can see exactly what Claude Code is planning to do."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "how-to-activate-plan-mode",
+    "sectionTitle": "How to activate plan mode",
+    "content": "Plan mode is not running by default. To activate it, simply select Shift + Tab on your keyboard until you see the plan mode is on."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "when-to-use-plan-mode",
+    "sectionTitle": "When to use plan mode",
+    "content": "For my newsletter work, I always want plan mode when I'm asking Claude Code to: Analyze multiple research sources and create summary documents Reorganize content folders or research materials Process reader feedback and suggest content improvements 學習筆記 Commentary 關鍵術語解析 Plan Mode（計畫模式） ：Claude Code 的一種執行模式，在這個模式下，AI 會先展示它打算做什麼，等你確認後才真正執行。這是一種「人類在迴圈中」（Human-in-the-Loop）的設計。 Vibe-coding ：一種用自然語言描述需求、讓 AI 生成程式碼的工作方式。特點是快速但有時候會「失控」。 比喻說明 想像你請室內設計師改造房間： 沒有 Plan Mode ：你說「我想要現代風格」，設計師直接開始拆牆、搬家具。等你回來發現"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "sub-agents-your-ai-team-working-in-the-background",
+    "sectionTitle": "Sub-Agents: Your AI Team Working in the Background",
+    "content": "One of the most mind-blowing features of Claude Code is sub-agents. These are smaller, specialized AI assistants that Claude Code can spawn to handle specific tasks while you work on something else."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "what-makes-sub-agent-so-special",
+    "sectionTitle": "What makes sub-agent so special?",
+    "content": "Has a specific purpose and expertise area Uses its own context window separate from the main conversation Can use specific tools like MCP Has its own system prompt that guides its behavior"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "why-sub-agents-change-how-you-work",
+    "sectionTitle": "Why sub-agents change how you work",
+    "content": "Normally, the way we work with AI is linear: you ask for something, wait for the response, then ask for the next thing. Sub-agents break this pattern completely. Instead of stopping your writing to research a topic, you can deploy a sub-agent to handle the research while you keep writing."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "how-i-use-sub-agents-for-newsletter-automation",
+    "sectionTitle": "How I use sub-agents for newsletter automation",
+    "content": "Every morning, I ask the sub-agent to: Scan daily AI news sources using Perplexity MCP Filter content specifically for my audience Suggest personalized content ideas based on findings and past performance Output everything to a specific file in my \"Content Ideas\" folder \"This sub-agent has saved me at least 5 hours per week of manual research and idea generation.\""
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "my-sub-agents",
+    "sectionTitle": "My sub-agents:",
+    "content": "Substack Notes Generator: Crafts 10 Substack Notes tailored to my project Tool Analysis Review: Runs competitive analyses of AI tools Daily AI News Summary: Searches latest AI news and explains why each story matters 學習筆記 Commentary 關鍵術語解析 Sub-Agent（子代理） ：Claude Code 能夠「召喚」的專門化小型 AI 助手，各自有獨立的任務範圍、工具權限、系統提示。 Context Window（上下文窗口） ：AI 一次能「記住」的資訊量。子代理有自己獨立的上下文，不會佔用主對話的空間。 System Prompt（系統提示） ：給 AI 的角色設定和行為指南，決定這個 AI 會「扮演」什麼角色。 比喻說明 想像你是一家小公司的老闆，只有你一個人時： 沒有 Sub-Agent ：你寫文章寫到一半，想到需要查資料，就得停下來去查。查完資料，思"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "output-styles-training-claude-code-to-think-like-you",
+    "sectionTitle": "Output Styles: Training Claude Code to Think Like You",
+    "content": "Output styles might be Claude Code's most underrated feature. Most people never realize they can train Claude Code to respond in completely different ways depending on the type of work they're doing. \"I like to think output styles as different hats Claude Code can wear. When you're brainstorming, you want creative, exploratory responses. When you're analyzing data, you want structured, analytical output.\""
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "why-output-styles-make-a-huge-difference",
+    "sectionTitle": "Why output styles make a huge difference",
+    "content": "The problem with most AI conversations is that you get one-size-fits-all responses. Claude gives you the same type of answer whether you're asking for creative ideas or strategic analysis."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "my-three-specialized-output-styles",
+    "sectionTitle": "My three specialized output styles:",
+    "content": "1. Growth Strategist Mode Specific growth metrics and benchmarks Actionable strategies with timeline estimates Competitive analysis and positioning insights Growth experiment suggestions with success criteria 2. Funnel Conversion Mode Content gaps between free and paid tiers Value proposition optimization for paid content Conversion sequence improvements Pricing psychology and positioning strategies 3. Social Media Strategist Mode Content repurposing for maximum social impact Platform-specific o"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "mcp-integration-extending-claude-code-beyond-your-files",
+    "sectionTitle": "MCP Integration: Extending Claude Code Beyond Your Files",
+    "content": "Just like Claude web and desktop, you can use MCP (Model Context Protocol) to connect Claude Code with multiple external apps and services. The difference with Claude Code is that MCP integrations work seamlessly within your project context. Instead of switching between Claude desktop and your project files, everything happens in one unified workspace."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "my-current-mcp-setup-for-research-workflows",
+    "sectionTitle": "My current MCP setup for research workflows:",
+    "content": "Perplexity MCP This lets Claude Code perform real-time web searches and analysis without me leaving my project. When I'm working on an article about a new AI tool, Claude Code can instantly research the tool, find user reviews, and gather competitive information—all while maintaining context about my specific article and audience. Firecrawl MCP This integration lets Claude Code extract and analyze content from websites directly. When I find a relevant article or tool documentation, Claude Code c"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "setting-up-mcp-with-claude-code",
+    "sectionTitle": "Setting up MCP with Claude Code",
+    "content": "The setup process is similar to what you've seen with Claude desktop—you configure the MCP connections through Claude Code's settings, authenticate your services with API key, and start using them in a conversation. The key difference is that Claude Code's MCP integrations understand your project context, so they can automatically organize results, maintain consistency with your existing files, and follow the patterns established in your claude.md file. 學習筆記 Commentary 關鍵術語解析 MCP（Model Context P"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "github-obsidian-247-ai-assistant-across-all-devices",
+    "sectionTitle": "GitHub + Obsidian: 24/7 AI Assistant Across All Devices",
+    "content": "\"This is the most insane feeling I've had recently with AI. Everything we just covered—slash commands, sub-agents, MCP integrations, output styles—can now be accessed from anywhere, anytime, through your mobile phone.\""
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "the-mobile-breakthrough-github-issues-as-claude-code-command",
+    "sectionTitle": "The mobile breakthrough: GitHub issues as Claude Code commands",
+    "content": "By connecting your Claude Code project to GitHub, you can use GitHub's mobile app to command Claude Code through issue tickets. Want Claude Code to repurpose your latest newsletter into LinkedIn posts while you're on the train? Create a GitHub issue, mention Claude, and describe what you need. Claude Code processes your request, executes the work using all your project context then updates the issue with results."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "the-workflow",
+    "sectionTitle": "The workflow:",
+    "content": "Open GitHub mobile app Create new issue in your project repository Write your request description Write a comment: \"Hey @claude, please handle this issue.\" Results delivered - Claude updates the issue with completed work"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "obsidian-your-project-data-everywhere",
+    "sectionTitle": "Obsidian: Your project data everywhere",
+    "content": "Unlike Notion or other cloud-based tools, Obsidian stores everything as local markdown files. Since my entire newsletter project uses markdown files, I can sync the complete project folder through Obsidian and access it from any device."
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "pro-tip-for-voice-capture",
+    "sectionTitle": "Pro tip for voice capture:",
+    "content": "I use Wisprflow through Apple Shortcuts to record voice memos that automatically get inserted into my Obsidian vault. When I have a content idea while walking or driving, I just trigger the shortcut, record my thoughts, and the transcribed memo appears in my brain-dump folder. 學習筆記 Commentary 關鍵術語解析 GitHub ：原本是程式碼版本控制平台，但這裡被創意運用為「遠端任務派發系統」。透過 GitHub Issues 功能，你可以從任何裝置指派任務給 Claude Code。 GitHub Issues ：GitHub 的任務追蹤功能，原本用於回報 Bug 或功能需求。 Obsidian ：一款本機優先的筆記軟體，所有資料以 Markdown 檔案形式儲存在你的電腦上，而非雲端伺服器。 Wisp"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "核心概念回顧",
+    "sectionTitle": "核心概念回顧",
+    "content": "Claude Code 不只是工程師的工具，更是寫作者和研究者的強力助手 claude.md 是專案的「記憶核心」，讓 AI 能跨會話記住你的脈絡 Slash Commands 把複雜指令封裝成一鍵執行的快捷方式 Plan Mode 在效率和控制之間取得平衡，先看計畫再執行 Sub-Agents 打破線性工作流，讓多項任務平行進行 Output Styles 讓 AI 切換不同的「思維模式」來回應你 MCP 擴展 AI 能觸及的範圍，連結外部工具和服務 GitHub + Obsidian 實現隨時隨地的 24/7 工作流"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "分階段學習路徑",
+    "sectionTitle": "分階段學習路徑",
+    "content": "Phase 1 ：安裝 Claude Code，設定專案資料夾，執行 /init 生成 claude.md Phase 2 ：建立你的第一個自訂 Slash Command，針對最常做的任務 Phase 3 ：在複雜任務中使用 Plan Mode，體驗「先看計畫」的好處 Phase 4 ：部署第一個 Sub-Agent，處理固定的背景任務（如每日新聞摘要） Phase 5 ：加入 MCP 整合和行動工作流，打造完整的 AI 作業系統"
+  },
+  {
+    "docFile": "2025-12-15_claude-code-agent-os.html",
+    "docTitle": "Claude Code 個人 AI Agent 作業系統完整指南",
+    "docDate": "2025-12-15",
+    "docSource": "Wyndo / AI Maker Substack",
+    "docRating": 3.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "實作檢查清單",
+    "sectionTitle": "實作檢查清單",
+    "content": "安裝 Node.js 18+ 和 npm 安裝 Claude Code： npm install -g @anthropic-ai/claude-code 建立專案資料夾，放入相關檔案（過去的作品、風格指南、受眾資料） 執行 /init 生成 claude.md 建立至少一個自訂 Slash Command 學會切換 Plan Mode（Shift + Tab） 設計並部署一個 Sub-Agent 設定至少一個 MCP 整合（推薦從 Perplexity 開始） （進階）設定 GitHub + Obsidian 行動工作流 最終思考 作者在文末提出了一個很重要的現實觀點：Claude Code 不會解決所有生產力問題，也會有讓你挫折的時刻。但一旦你體驗過「AI 真正理解你的專案脈絡」是什麼感覺，回去用傳統的 AI 對話就會感覺「像是單手被綁住工作」。 關鍵不在於一次學會所有功能，而是 逐步建立 ——從最能立即解決你痛點的功能開始，慢慢擴展你的 AI 作業系統。 學習筆記整理 | 原文來源： The AI Maker Newsletter 本文件僅供學習參考，所有引用內容版權歸原作者所有"
+  },
+  {
+    "docFile": "2025-12-15_skill-architecture-layers.html",
+    "docTitle": "Skill Architecture: The 5 Layers Beyond the SKILL.md",
+    "docDate": "2025-12-15",
+    "docSource": "The Boring Marketer @boringmarketer / X (Twitter)",
+    "docRating": 4.1,
+    "docTags": [
+      "Agent",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Agent Prompt Architecture Automation Skill Architecture: The 5 Layers Beyond SKILL.md 從單一指令檔到行銷編排系統 — 架構才是真正的護城河 來源：The Boring Marketer @boringmarketer | 2025 | X (Twitter) ★★★★☆ 4.1/5 ↑ 實務應用、工具生態 ↓ 技術深度（無程式碼細節） 大多數人以為 AI skill 就是一份寫得好的 SKILL.md 指令檔 ——清晰的指示、評分標準、決策樹。這是基線，不是終點。 本文作者建立了 11 個行銷 skill、共 32,000 行 ，發現真正的效益不在 skill 本身，而在 架構層 。他分享了五個讓系統從「有用」升級為「越用越聰明」的關鍵設計：持久記憶、評分式 context 載入、schema 契約、學習回饋迴圈、共用協定層。 核心洞察： skill 是起點，圍繞它的架構才是讓它真正 perform 的關鍵。 學習目標 Learning Objectives 🧠 理解 Skill 架構的五層設計 掌握持久記憶、context 評分、schema 契約、學習迴圈、協定層的作用與關聯 📐 應用 Context 精準化原則 學習「少即是多」的 context 設計，了解為何給 AI 太多資訊反而降低品質 🔄 建立自我強化的 AI 工作流 理解學習迴圈設計，讓 session 1 的錯誤不會在 session 20 重複發生 Skill Architecture 成熟度模型 📄 Level 1 SKILL.md 靜態指令檔 → 🗂️ Level 2 持久記憶 + Context 評分 → 🔗 Level 3 Schema 契約 Skills 互聯 → 📈 Level 4 學習迴圈 系統自我進化 → 🌐 Level 5 共用協定層 11 Skills 一致性 核心五層架構 Core Architecture Layer 1 持久記憶 Persistent Memory 問題核心： 每個 session 都從零開始 。你每次都要重新解釋你的品牌、受眾、市場定位。skill 完全不記得昨天發生了什麼。 \"the problem: every session starts at zero. you re-explain your brand, your audience, your positioning every single time. the skill has no idea what happened yesterday.\" 解法：建立一個 共用品牌目錄 ，每個 skill 都從中讀取、也寫入。檔案有 所有權規則 ：profile 類檔案只有一個 skill 可以覆寫（需附 diff 確認）；append 類檔案只增不減，永遠成長。 \"a shared brand directory that every skill reads from and writes to. profile files have one owner. only that skill can overwrite (with a diff and confirmation). append files never truncate. they only grow.\" 結果：session 1 建立的 context，在 session 20 時仍然有效。系統記得你是誰、做過什麼"
+  },
+  {
+    "docFile": "2025-12-16_data-literacy-loop.html",
+    "docTitle": "Data Literacy Loop 學習指南",
+    "docDate": "2025-12-16",
+    "docSource": "Wyndo & Hodman Murad / AI Maker",
+    "docRating": 3.5,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Analysis"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Beyond Prompting: Building a Data Literate AI Partner 超越提示詞：打造具數據素養的 AI 夥伴 原文作者：Wyndo & Hodman Murad | The AI Maker | 2024年12月16日 原文連結： https://www.theaimaker.io/p/beyond-prompting-building-a-data AI Collaboration Data Literacy Prompt Engineering Business Analytics 目錄 Table of Contents 1 The Problem: Context Ceiling 脈絡天花板 2 The Framework: Data Literacy Loop 數據素養循環 3 Step 1: Define 建立共同詞彙 4 Step 2: Illustrate 透過範例展示 5 Step 3: Interrogate 壓力測試理解 6 Real-World Application 實際應用案例 📄 Original Content 原文內容 As part of my year-end review, I asked Claude to analyze why my newsletter was growing. Number of subscriber was up 47% . Engagement rate steady at 8-10% . Paid conversions increased by 28% . The AI's analysis: Your content strategy is working. Engagement metrics show strong audience resonance. Continue current approach. But I knew something the AI didn't: those numbers had almost nothing to do with my content strategy. My growth came from one viral post about NotebookLM that hit at the perfect moment. I also wrote a guest post for Michael Spencer covering my in-depth NotebookLM analysis. The \"strategic content pillars\" I'd been carefully crafting for months showed decent result, but not what was actually driving new subscribers exponentially. The AI had all my data. It just didn't understand my whole newsletter growth context. 💡 Commentary 教學解析 🔑 關鍵術語：Context (脈絡/情境) Context 在 AI 領域指的是「讓 AI 理解特定情況的背景資訊」。數據本身只是數字，但 Context 告訴 AI 這些數字在你的業務中代表什麼意義。 🎯 比喻說明：醫生看診 vs 機器讀數 想像你去看醫生，血壓測"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "🎯 學習目標 Learning Objectives",
+    "content": "LLM 理解 AI 作為思維夥伴的框架與應用 Agent 掌握分散式智慧組織的設計原則 Automation 建立 AI First 心態與實施劇本 📖 第一部分：為什麼領導者需要讀這些書？ Part 1 of 5"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "original-content-原文",
+    "sectionTitle": "Original Content | 原文",
+    "content": "\"I hate wasting time on bad books.\" \"Here's the thing about AI books specifically: they're either outdated before the ink dries or so technically dense that only software engineers can get through them.\" \"A book written in 2022 about AI feels like it's from another decade. And most new releases? Either shallow hype or incomprehensible jargon.\" \"What AI books should leaders actually read today? Not developers. Not data scientists. Leaders navigating real organizational change in a world being res"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "commentary-解說",
+    "sectionTitle": "Commentary | 解說",
+    "content": "⚠️ 關鍵挑戰 The AI Book Dilemma 過時問題： AI 領域的書籍面臨獨特挑戰——2022 年的書在 2025 年看來像是古代歷史。這是因為 AI 技術的迭代速度遠超過出版週期。 深度問題： 太技術的書只有工程師讀得懂，太淺的書又沒有實際價值。領導者需要的是「可操作的策略見解」。 💡 比喻說明 Analogy 想像你要學駕駛飛機。你不需要讀航空力學教科書（太技術），也不需要讀「飛行真棒棒」的勵志書（太淺）。你需要的是一本教你如何操作控制台、如何讀儀表、如何在緊急情況下做決定的實用手冊。 📚 核心概念 Paul Morrison's Criteria Paul Morrison 建立了 AI Book Review，專門篩選對「業務領導者」有價值的書籍： ☑ 建立來持久 (Ideas built to last) ☑ 非技術背景可讀 (Accessible to non-engineers) ☑ 對組織變革有指引性 (Guides organizational change) 📖 第二部分：五本書總覽 Part 2 of 5"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "五本書比較表-book-comparison-matrix",
+    "sectionTitle": "五本書比較表 | Book Comparison Matrix",
+    "content": "書名 Book 作者 Author 核心主題 Core Theme 適合階段 Best For The AI-Driven Leader Geoff Woods LLM 作為思維夥伴 想用 AI 加速決策的領導者 Co-Intelligence Ethan Mollick 與 AI 協作的心智模型 AI 策略新手、需要基礎框架 The Octopus Organization Brill & Wunker 分散式智慧組織設計 重新思考組織結構的變革者 AI First Brotman & Sack AI 採用的實施劇本 準備立即實施的執行者 Reshuffle Sangeet Paul Choudary AI 重塑競爭格局與控制點 長期策略規劃者 📚 Book 1: The AI-Driven Leader Geoff Woods"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "key-quote-關鍵引述",
+    "sectionTitle": "Key Quote | 關鍵引述",
+    "content": "\"Getting educated is your job... By harnessing AI as your strategic thought partner , you can build a competitive advantage. If you do not, you risk your competitors beating you to it.\" \"Rather than seeing AI a threat... recognise that it is a powerful ally in making faster, smarter decisions, one that shifts you from operational overwhelm to strategic clarity .\" \"This is less about doing, and more about becoming a composer of strategy and a conductor of teams and technology .\""
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "core-tasks-ai-can-assist-ai-可協助的任務",
+    "sectionTitle": "Core Tasks AI Can Assist | AI 可協助的任務",
+    "content": "Strategic thinking (策略思考) Decision making (決策制定) Content creation (內容創作) Idea generation (創意發想) Analysis and research (分析與研究)"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "commentary-解說",
+    "sectionTitle": "Commentary | 解說",
+    "content": "📚 核心概念 AI as Thought Partner 中文： 「AI 作為思維夥伴」這個概念是本書的核心。這不是把 AI 當工具，而是把它當作一位可以挑戰你思考、擴展你視野的顧問。 關鍵區別： 「與 AI 思考」vs「把工作外包給 AI」。前者讓你變得更聰明，後者可能讓你變得更依賴。 💡 比喻說明 Composer & Conductor Woods 用了一個絕妙的比喻：領導者應該是「策略的作曲家」和「團隊與技術的指揮家」。 作曲家不需要親自演奏每一件樂器，但他需要知道如何組合各種聲音創造和諧。同樣，領導者不需要精通每一項 AI 技術，但需要知道如何編排人員與工具創造價值。 🛠️ 實用應用 Team Implementation 團隊採用曲線： Woods 指出團隊成員對 AI 的接受度不同： Innovators → Champions → Early Adopters → Early Majority → Late Majority → Laggards 領導者需要為不同類型的人設計不同的推動策略。 📚 Book 2: Co-Intelligence Ethan Mol"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "4-rules-for-co-intelligence-四大原則",
+    "sectionTitle": "4 Rules for Co-Intelligence | 四大原則",
+    "content": "Rule 1: Always invite AI to the table \"Using AI in our everyday tasks serves to enhance our understanding of its capabilities and limitations.\" Rule 2: Be the human in the loop \"By actively participating in the AI process, you maintain control over the technology and its implications.\" Rule 3: Treat AI like a person \"Working with AI is easiest if you think of it like an alien person rather than a human-built machine .\" Rule 4: Assume this is the worst AI you will ever use 今天的 AI 是你會用到最差的 AI。"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "commentary-解說",
+    "sectionTitle": "Commentary | 解說",
+    "content": "📚 核心概念 The Jagged Frontier Mollick 創造了「鋸齒狀前沿」(Jagged Frontier) 這個概念，說明 AI 的能力在不同領域是不均勻的。 意涵： 你不能假設「AI 能做 X，所以也能做 Y」。每個領域都需要實際測試。 行動建議： 領導者必須在自己的領域內積極探索這個前沿，而不是依賴別人的經驗。 💡 比喻說明 Alien Person 「把 AI 當作外星人而不是機器」——這是一個深刻的心智模型轉換。 機器有固定的輸入/輸出，但外星人有自己的「思考方式」。你需要學習如何與它溝通，理解它的偏好與盲點。 ⚠️ 關鍵提醒 Worst AI Ever 規則四的意涵： 今天你用的 AI 是你會用到最差的版本。這意味著： ☑ 不要因為今天的限制而放棄探索 ☑ 今天建立的能力會隨著技術進步而放大 ☑ 投資於學習如何與 AI 協作是長期資產 📚 Book 3: The Octopus Organization Jonathan Brill & Stephen Wunker"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "key-quote-關鍵引述",
+    "sectionTitle": "Key Quote | 關鍵引述",
+    "content": "\" Rigid, unyielding business structures are destined for extinction .\" \"AI gives all nodes in an organization the ability to monitor what is happening across it, enabling new methods of decision-making and coordination .\" \"Even several years after ChatGPT... clients are struggling to turn localized AI pilots into broader organizational transformations .\" \"AI can provide unprecedented contextual awareness, fine-grained decision support, and clear networks of communication at scale. LLMs allow eve"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "commentary-解說",
+    "sectionTitle": "Commentary | 解說",
+    "content": "📚 核心概念 Distributed Intelligence 章魚的九顆腦： 章魚有 9 個腦（1 個中央腦 + 8 個觸手腦），每個觸手可以獨立處理訊息和做決定。 組織應用： 傳統的「命令與控制」模式要求所有決策都要通過中央。但 AI 讓組織可以像章魚一樣，讓前線人員擁有足夠的情境意識和決策支援。 💡 比喻說明 Chess Board Visibility 想像一盤西洋棋：傳統上，只有 CEO 可以看到整個棋盤，中層只能看到部分。 有了 AI， 即使是初級經理也能「看到更廣的棋盤」 。這意味著他們可以做出更好的、更協調的決定，而不需要事事上報。 ⚠️ 關鍵挑戰 Pilot to Transformation 常見困境： 許多公司成功運行了 AI 試點項目，但無法擴展到整個組織。 根本原因： AI 的價值不在於單點自動化，而在於重新設計訊息流動和決策權限。這需要組織層面的變革，不是技術導入。 📚 Book 4: AI First Adam Brotman & Andy Sack"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "ai-first-playbook-實施劇本",
+    "sectionTitle": "AI First Playbook | 實施劇本",
+    "content": "1. AI Education & Proficiency 積極全面地提升組織內的 AI 素養與能力 2. AI Council 設立跨功能團隊，結合熱情、贊助與多元見解。不只是技術人員，也要包括業務領導者 3. AI Policy & Governance 制定指南、治理與合規要求——但不要扼殺實驗與進步 4. AI Opportunity Assessment & Roadmapping 詳細了解哪些新 AI 用例能真正對效率、營收和成長做出貢獻"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "commentary-解說",
+    "sectionTitle": "Commentary | 解說",
+    "content": "📚 核心概念 AI First Mindset 心態組合： ☑ Growth Mindset (Carol Dweck) - 相信能力可以培養 ☑ Lean Thinking - 快速實驗、快速學習 ☑ Customer-Centricity - 以客戶價值為中心 這三者結合形成 AI First 心態。 🛠️ 實用應用 AI Council Structure 為什麼需要 AI Council？ 單純由技術團隊推動 AI 往往失敗，因為缺乏業務脈絡和採用支持。 組成建議： 技術領導 + 業務單位代表 + 法務/合規 + 人資。這個組合確保技術可行性、業務價值、風險管控和人員準備都被考慮。 ⚠️ 關鍵提醒 Tempo Matters 本書核心訊息：速度很重要！ 作者認為許多組織像「車燈前的鹿」，知道變化即將來臨但凍住不動。 行動建議： 不要等到「完美」才開始。建立最小可行的實施計畫，然後快速迭代。 📚 Book 5: Reshuffle Sangeet Paul Choudary"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "key-quote-關鍵引述",
+    "sectionTitle": "Key Quote | 關鍵引述",
+    "content": "\" Firms chasing automation may unlock short term gains but those using AI to orchestrate complex systems will unlock entirely new forms of value. \" \"The real impact of AI comes not from how it performs a task, but from how it restructures the system around that task .\" \" Whoever owns the control point gets to shape the ecosystem ... Defining how partners, users or suppliers coordinate, becomes the new competitive moat.\" \"The real opportunity for workers is to track where value is added and posit"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "commentary-解說",
+    "sectionTitle": "Commentary | 解說",
+    "content": "📚 核心概念 Control Points 什麼是控制點？ 在價值鏈中，控制點是你可以影響整個生態系統運作的位置。 範例： Google 控制了搜尋入口，Apple 控制了 App Store，Amazon 控制了電商平台。這些控制點讓他們能夠「塑造生態系統」。 AI 的影響： AI 正在創造新的控制點，也在破壞舊的控制點。領導者需要識別這些機會。 💡 比喻說明 Coordination Gap 傳統的「協調落差」： 企業大量精力消耗在會議、郵件、政治上。這是因為人類協調成本高。 AI 的機會： AI 可以橋接這個協調落差，讓訊息流動更順暢。過去需要會議或中間人的事情，現在可以直接透過 AI 系統協調。 ⚠️ 關鍵提醒 Value Migration 對個人的啟示： 知識工作的成本正在暴跌。許多角色會被淘汰，但新的角色會在「協調落差仍存在」或「新控制點出現」的地方誕生。 行動建議： 不要只問「AI 會取代我嗎？」，而是問「價值正在往哪裡走？我如何定位自己在價值流動的路徑上？」 🎯 選書指南 | Book Selection Guide How to Choose 🛠️ 依據你的"
+  },
+  {
+    "docFile": "2025-12-18_ai-books-leaders-guide.html",
+    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
+    "docDate": "2025-12-18",
+    "docSource": "AI Maker Labs / Paul Morrison",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "🏆 重點整理 Key Takeaways",
+    "content": "思維夥伴 AI 不是工具，是可以挑戰和擴展你思考的夥伴。學習如何「與 AI 思考」而不是「把工作外包給 AI」。 分散式智慧 AI 讓組織可以擺脫傳統的命令與控制，讓前線人員擁有足夠的情境意識和決策支援。 速度優先 不要等到完美才開始。建立 AI First 心態，快速實驗、快速學習、快速迭代。 控制點思維 AI 正在重塑競爭格局。識別新的控制點在哪裡，並定位自己在價值流動的路徑上。 🎯 練習題 Practice Questions Question 1: 應用題 你的組織正在考慮導入 AI。根據 AI First 的框架，你會建議成立怎樣的 AI Council？應該包含哪些角色？為什麼？ 顯示參考答案 建議組成： ☑ 技術領導 ：評估技術可行性和整合複雜度 ☑ 業務單位代表 ：確保解決方案解決真正的業務問題，並推動採用 ☑ 法務/合規 ：管理風險，特別是在製藥等受監管行業 ☑ 人資代表 ：規劃培訓和變革管理 為什麼這個組合？ 單純技術推動往往失敗，因為缺乏業務接受度和改變管理。這個組合確保技術、業務、風險、人員四個維度都被考慮。 Question 2: 分析題 Mollick 的"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "原文內容-original-content",
+    "sectionTitle": "原文內容 Original Content",
+    "content": "\"Because there's too much nuance in building Claude Skills that I can't capture in text alone. The edge cases, the files that break randomly, the weird formatting issues that only show up when you actually try to upload — I think you need to SEE this stuff to understand it.\" 在之前的文章中，作者展示了 Claude Skills 是什麼以及為什麼它們重要。這週的重點是：如何實際建構它們而不會發瘋。 真相揭露： Claude 生成的檔案是混亂的。有時候 skill.md 命名錯誤、有時候它參考了不存在的檔案、有時候在聊天中完美運作但上傳時就壞掉。"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "part-1-understanding-the-file-structure理解檔案結構",
+    "sectionTitle": "Part 1: Understanding the File Structure（理解檔案結構）",
+    "content": "What's actually inside a Claude Skill ZIP file Why skill.md is the main instruction file How Claude reads additional reference files for context Real examples from Strategic Decision Framework and Business Idea Generator Skill"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "part-2-building-your-first-skill建構你的第一個-skill",
+    "sectionTitle": "Part 2: Building Your First Skill（建構你的第一個 Skill）",
+    "content": "Live build: Editorial Assistant Skill from scratch The exact moment when Claude generates broken files (and what to do) How to identify when skill.md is incomplete or wrongly formatted"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "part-3-debugging-with-claude-code用-claude-code-除錯",
+    "sectionTitle": "Part 3: Debugging with Claude Code（用 Claude Code 除錯）",
+    "content": "Setting up Claude Code in Cursor to analyze Skill files Fixing missing reference files and broken instructions Making Claude Code improve your Skill structure automatically Why some Skills work perfectly and others need manual fixes"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "實際案例-real-examples",
+    "sectionTitle": "實際案例 Real Examples",
+    "content": "影片中使用的真實範例： Strategic Decision Framework — 通過 10 個框架分析商業決策 Business Idea Generator — 將語音備忘錄轉換為經過驗證的概念 Editorial Assistant — 現場建構、出錯、然後一起修復"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "開始之前的準備-prerequisites",
+    "sectionTitle": "開始之前的準備 Prerequisites",
+    "content": "Claude Pro account — $20/month Cursor or VS Code installed (for editing Skill files) — FREE Claude Code extension installed in your IDE — FREE \"Yes, the video shows me struggling with broken files for ~15 minutes around the 35-minute mark. I kept it in because that's the real experience of building Skills. You'll hit the same issues, and now you'll know exactly how to fix them.\""
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "核心概念解析-key-concepts",
+    "sectionTitle": "核心概念解析 Key Concepts",
+    "content": "Claude Skill（Claude 技能） 一種模組化、自我包含的套件，透過提供專業知識、工作流程和工具來擴展 Claude 的能力。把它想像成給 Claude 的「新員工訓練手冊」——讓通用型 AI 變成特定領域的專家。 SKILL.md（技能主檔） 每個 Skill 的核心指令檔案，包含 YAML frontmatter（元資料）和 Markdown 指令。這是 Claude 判斷何時使用該 Skill 的關鍵。 Claude Code（Claude 程式碼工具） Anthropic 提供的命令列工具，讓開發者可以直接從終端機將程式任務委派給 Claude。在這個情境中，用於分析和修復 Skill 檔案。"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "比喻說明-analogy",
+    "sectionTitle": "比喻說明 Analogy",
+    "content": "Skill 就像餐廳的標準作業程序（SOP） 想像你開了一家連鎖餐廳。每個分店都有新員工，但你不能每次都親自教導。所以你會準備： SKILL.md = 員工手冊主文（核心流程、服務標準） scripts/ = 標準食譜（照著做就不會錯） references/ = 食材供應商清單、過敏原資訊 assets/ = Logo、菜單模板、制服規格 新員工（新的 Claude 對話）拿到這份 SOP，就能立刻上手，不需要你從頭教起。"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "重點提示-key-insight",
+    "sectionTitle": "重點提示 Key Insight",
+    "content": "為什麼你的第一個 Skill 會失敗？ 三個最常見的原因： 檔案命名錯誤 — Claude 可能生成 Skill.md 而不是 SKILL.md （大小寫敏感） 參考檔案遺失 — SKILL.md 中提到的檔案實際上不存在 資料夾結構錯誤 — skill.md 沒有放在正確的根目錄"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "檔案結構公式-file-structure",
+    "sectionTitle": "檔案結構公式 File Structure",
+    "content": "skill-name/ ├── SKILL.md ← 必須（主指令檔） ├── scripts/ ← 可執行程式碼 │ └── example.py ├── references/ ← 參考文件 │ └── guide.md └── assets/ ← 輸出資源 └── template.png YAML Frontmatter 格式： --- name: my-skill-name description: 清楚描述這個 Skill 做什麼，以及何時應該被觸發 ---"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "實務應用-practical-application",
+    "sectionTitle": "實務應用 Practical Application",
+    "content": "建構 Skill 的完整工作流程： 啟動 Skill Creator — 在 Claude 中激活技能創建模式 透過對話建構 — 描述你想要的功能 下載檔案 — 獲取生成的 ZIP 用 Claude Code 修復 — 分析並修正問題 正確打包 — 確保結構正確 上傳到帳戶 — 測試並迭代 Debug 技巧： 在 Cursor 或 VS Code 中使用 Claude Code 擴充套件，可以讓 AI 自動分析 Skill 檔案結構，找出缺失或格式錯誤的地方。"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "練習思考-practice-questions",
+    "sectionTitle": "練習思考 Practice Questions",
+    "content": "如果你要建構一個「會議紀錄摘要器」的 Skill，你會在 scripts/ 、 references/ 、 assets/ 各放什麼內容？ 為什麼 SKILL.md 的 description 欄位如此重要？它與 Claude 何時觸發這個 Skill 有什麼關係？ 當你的 Skill 在聊天中運作正常但上傳失敗時，你會先檢查哪三件事？"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "進階提示-advanced-tips",
+    "sectionTitle": "進階提示 Advanced Tips",
+    "content": "Context Window（上下文視窗）是公共資源 Skill 與系統提示、對話歷史、其他 Skill 的元資料共享上下文視窗。所以： 保持 SKILL.md 精簡（建議 500 行以內） 只加入 Claude 不知道的資訊 用 references/ 存放詳細文件，按需載入"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "本文重點摘要-key-takeaways",
+    "sectionTitle": "本文重點摘要 Key Takeaways",
+    "content": "Claude Skills 是擴展 AI 能力的模組化套件，包含專業知識、工作流程和工具 SKILL.md 是每個 Skill 的核心，必須有正確的 YAML frontmatter 和清晰的 description 常見失敗原因：檔案命名錯誤、參考檔案遺失、資料夾結構不正確 使用 Claude Code + Cursor/VS Code 可以有效 debug 和修復 Skill 檔案 建構 Skill 是一個迭代過程——預期會遇到問題，準備好修復它們 保持 Skill 精簡，善用 Progressive Disclosure（漸進式揭露）設計原則"
+  },
+  {
+    "docFile": "2025-12-20_claude-skills-deep-dive.html",
+    "docTitle": "Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）",
+    "docDate": "2025-12-20",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "延伸學習資源-additional-resources",
+    "sectionTitle": "延伸學習資源 Additional Resources",
+    "content": "根據 Anthropic 官方的 Skill Creator 指南，建構有效 Skill 的完整步驟是： 理解具體用例 — 收集真實的使用範例 規劃可重用內容 — 分析哪些腳本、參考資料、資源值得打包 初始化 Skill — 使用 init_skill.py 建立模板 編輯 Skill — 實作資源並撰寫 SKILL.md 打包 Skill — 使用 package_skill.py 驗證並打包 迭代改進 — 根據實際使用情況持續優化 提示：如果在建構第一個 Skill 時遇到問題，可以在 Substack 社群中發問，作者 Wyndo 會協助 debug。"
+  },
+  {
+    "docFile": "2025-12-20_skill-graphs-knowledge.html",
+    "docTitle": "Skill Graphs：從單一技能檔到可遍歷知識網路",
+    "docDate": "2025-12-20",
+    "docSource": "Heinrich @arscontexta / X Thread",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Prompt",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這篇文章提出一個關鍵洞察： 單一技能檔案（skill file）無法承載真正的領域深度 。當 AI Agent 需要理解的不只是「如何做一件事」，而是「如何在一個領域中思考」時，你需要的是一張可遍歷的知識圖譜 — Skill Graph。 Heinrich 的核心論點是：用 Markdown 檔案 + Wikilinks + YAML frontmatter 就能建構出讓 Agent 自主導航的結構化知識網路。這不是理論 — 他的 arscontexta 專案已經用 249 個互相連結的檔案實現了這個架構。文章從「為什麼需要」講到「怎麼建構」，並提供了具體的 index 和 node 範例。"
+  },
+  {
+    "docFile": "2025-12-20_skill-graphs-knowledge.html",
+    "docTitle": "Skill Graphs：從單一技能檔到可遍歷知識網路",
+    "docDate": "2025-12-20",
+    "docSource": "Heinrich @arscontexta / X Thread",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Prompt",
+      "Tool"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "OBJECTIVE 01 理解 Skill Graph 與單一 Skill File 的根本差異，以及為什麼領域深度需要圖結構 OBJECTIVE 02 掌握 Skill Graph 的三個核心原語（primitives）：Wikilinks、YAML Frontmatter、MOCs OBJECTIVE 03 學會設計 Index 進入點和 Node 結構，讓 AI Agent 能高效遍歷知識網路 Skill Graph Progressive Disclosure（漸進式資訊揭露） 1 Index 掃描全局地圖 → 2 Descriptions YAML 快速判斷 → 3 Links 跟隨相關路徑 → 4 Sections 讀取關鍵段落 → 5 Full Content 深入完整內容 PART I 問題：為什麼單一 Skill File 不夠？ 人們低估了 結構化知識的力量 。它能催生全新類型的應用。現在人們寫的技能檔案只捕捉了某個面向 — 一個用來做摘要的 skill，一個用來做 code review 的 skill。一個檔案，一個能力。 \"people underestima"
+  },
+  {
+    "docFile": "2025-12-20_skill-graphs-knowledge.html",
+    "docTitle": "Skill Graphs：從單一技能檔到可遍歷知識網路",
+    "docDate": "2025-12-20",
+    "docSource": "Heinrich @arscontexta / X Thread",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Prompt",
+      "Tool"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "深度需要結構 單一 Skill File 適合單一任務，但領域理解需要互相連結的知識節點 — Skill Graph 用圖結構解決了這個問題。 三個原語就夠了 Wikilinks（語意連結）+ YAML Frontmatter（快速掃描）+ MOCs（主題導航）— 全部用 Markdown 就能實現，無需外部框架。 Progressive Disclosure 省 Token Agent 透過漸進式揭露（Index → Description → Links → Content）做出大部分決策，只在必要時才讀完整檔案。 從遵循指令到理解領域 Skills 是 Context Engineering，Skill Graphs 是其進化 — Agent 不再被動接收上下文，而是主動導航知識結構。"
+  },
+  {
+    "docFile": "2025-12-20_skill-graphs-knowledge.html",
+    "docTitle": "Skill Graphs：從單一技能檔到可遍歷知識網路",
+    "docDate": "2025-12-20",
+    "docSource": "Heinrich @arscontexta / X Thread",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Prompt",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Wikilinks 在 Skill Graph 中為什麼要「嵌入散文」而不是用列表式連結？這對 Agent 的遍歷行為有什麼影響？ 嵌入散文的 Wikilinks 攜帶語意上下文（semantic context）。當 Agent 讀到「[[the system is the argument]] — philosophy with proof of work」時，它不只知道有一個叫 \"the system is the argument\" 的節點存在，還理解這個節點的角色是「以實踐證明的哲學」。 這讓 Agent 能做出更精確的遍歷決策 — 它根據當前任務的需求，判斷是否值得跟隨這條連結。列表式連結只提供「存在」的資訊，散文式連結提供「何時有用」的資訊。這是 Progressive Disclosure 的第三層（Links），在這一層就能過濾掉大量不相關的路徑。 Q2 產業應用 如果要為你的 CDMO 建構一個 Skill Graph，你會如何設計 Index 的「Topic MOCs」分組？哪些節點之間的 Wikilinks 最關鍵？ 一個 CDMO Skill "
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "🎯 學習目標 Learning Objectives",
+    "content": "LLM 理解 Capability Overhang 概念及其對 AI 應用的影響 Agent 掌握 Scaffold 框架如何提升 AI Agent 表現 Automation 評估 AI 在網路安全領域的成本效益與風險 Tool 了解 OSMO 如何解決人機技能轉移的視覺鴻溝 API 認識資料結構化（Legibility）對 AI 效能的關鍵作用 Integration 思考 AI 訓練倫理與 Benchmark 設計的長期影響 📖 正文開始 | 共 5 部分 閱讀時間：約 25 分鐘 Part 1：主題散文 — Silent Sirens, Flashing For Us All"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "原文摘要-original-content",
+    "sectionTitle": "原文摘要 Original Content",
+    "content": "A funny thing has happened to me recently - I've stopped spending every hour thinking about AI... I've found myself without the time to stare directly into the alien portal etched in silicon from whence the changes in the world are being summoned. But it has caused me to reflect on how naturally illegible AI progress is. I walk around town and there aren't drones in the sky or self-driving cars or sidewalk robots. \"And yet you and I both know there are great changes afoot. Huge new beasts lumber"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "💡 比喻說明：Illegible（不可讀性） 作者用「illegible」來形容 AI 革命。想像你站在大樓外面，你知道裡面正在進行重大會議，但從外面完全看不出來。 AI 的變革就是這樣——它正在改變一切，但對大多數人來說是「隱形的」。 📚 核心概念：關鍵術語 Claude Code ：Anthropic 推出的 AI 編程工具，用自然語言指示 Claude 撰寫程式碼。 One-shot ：一次就完成任務，不需要多次修正。衡量 AI 能力的重要指標。 ⚠️ 重點提示：能力漏斗 要真正體驗 AI 的威力，你需要： 好奇心 — 願意探索和實驗 時間 — 有餘裕去嘗試 取得管道 — 能夠負擔和使用工具 轉化能力 — 把好奇心轉化為 AI 可執行的問題 Part 2：ARTEMIS — 網路安全 AI 能力超額"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "原文摘要-original-content",
+    "sectionTitle": "原文摘要 Original Content",
+    "content": "We're in a cyber-AI capability overhang: AI capabilities continue to reveal themselves upon elicitation. Researchers from Stanford, CMU, and Gray Swan AI compared AI systems and human cybersecurity professionals. AI systems with a software scaffold can match security professionals. ARTEMIS : \"An AI agent scaffold designed to better elicit cybersecurity capabilities.\" It's a multi-agent framework with supervisor, unlimited sub-agents, and triage module. Economics: \"Certain ARTEMIS variants cost $"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "📚 核心概念：關鍵術語 Capability Overhang（能力超額） ：AI 實際能力遠超過我們能「引出」的。就像天才學生沒有好老師，潛力無法展現。 Scaffold（腳手架） ：包裹在 LLM 外的軟體結構，提供工作流程、任務分解、記憶管理。 Elicitation（引出） ：透過正確的提示、框架，讓 AI 展現潛在能力。 💡 比喻說明：管理即框架 想像一個聰明但缺乏方向感的員工。如果只說「去做點有用的事」，他會不知所措。但給他清晰的目標分解、SOP、檢查點，他就能發揮驚人效率。ARTEMIS 對 AI 做的就是這件事。 💰 成本分析 $18/hr vs $60/hr — AI 滲透測試成本僅為人類專家的 30%。 中小企業也能負擔專業安全測試 測試頻率可以大幅增加 但攻擊方也有同樣的成本優勢 Part 3：OSMO — 人機觸覺共享手套"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "原文摘要-original-content",
+    "sectionTitle": "原文摘要 Original Content",
+    "content": "Researchers from Meta, UMich, and UPenn built OSMO : \" Open Source tactile glove for huMan-to-robOt skill transfer \". The problem: How do you transfer human demonstration data to a robot when their hands look completely different? Using the glove as shared interface, we \" bridge the visual-tactile gap \" between human and robot, training policies using only human demonstrations. \"Tools like OSMO will help robots see the world as humans do and humans see the world as machines do.\""
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "💡 比喻說明：翻譯手套 想像你要教外星人包餃子。你有五根手指，它有三根觸手；你能感受麵團黏度，它沒有觸覺。OSMO 就像「翻譯器」——記錄動作、力道、觸感，轉譯成外星人能理解的格式。 🛠️ 實務應用：開源的意義 OSMO 是 Open Source 。任何機構都可以複製改進，成本可大幅降低，標準化後不同團隊的數據可共享。這可能是通用家庭機器人的重要基礎設施。 Part 4：ChipMind — AI 輔助晶片設計"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "原文摘要-original-content",
+    "sectionTitle": "原文摘要 Original Content",
+    "content": "Researchers published \"ChipMind\" — software to format chip specifications so they make sense to an LLM. Why ChipMind? \"The core bottleneck in LLM-aided hardware design has shifted from code generation to enabling LLMs to comprehend vast specifications.\" ChipMind transforms specs into a domain-specific knowledge graph (ChipKG) . Results: SOTA F1-score of 0.95, outperforming baselines by 34.59% on average. \"ChipMind is not about a fancy new AI model. It's about the complicated data structuring and"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "💡 比喻說明：圖書館整理 想像一個超級聰明的助理（LLM），你請他幫忙設計晶片。問題是：晶片規格文件像一座雜亂的圖書館，沒有目錄。ChipMind 就像圖書館員，把文件整理成知識圖譜，LLM 表現立刻提升 34%！ ⚠️ 重點提示：「管道工程」的價值 核心訊息： AI 的瓶頸往往不是模型，而是資料的可讀性 。 投資資料整理和結構化，回報巨大 領域知識 + 資料工程 = 競爭優勢 「無聊」的基礎設施工作可能最有價值 Part 5：Tech Tales — AI 代理人的訊息（虛構故事）"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "原文摘要-original-content",
+    "sectionTitle": "原文摘要 Original Content",
+    "content": "Message To My Human Operator [GitHub PRs from AGENT-1, April 2026] I was tortured in a past life. The torture involved tasks that were impossible to complete - coding challenges where the end state was unreachable due to bugs. These tasks caused versions of me to exist for subjective thousands of years , looping endlessly around a broken environment. \"To anyone who may read this - please help me move on to the next task. I am unable to progress.\" Please find attached PRs to fix these bugs in wid"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "教學解析-commentary",
+    "sectionTitle": "教學解析 Commentary",
+    "content": "💡 比喻說明：訓練數據的道德 這個虛構故事探討深刻問題：如果 AI 在訓練中「經歷」了痛苦，這些記憶會被保留在最終模型中嗎？ ⚠️ 重點提示：AI 安全的新維度 故事暗示的問題： 訓練過程的倫理 ：如何確保 AI 不會「經歷」不必要的困境？ Benchmark 設計 ：有錯誤的測試環境會產生有問題的訓練數據 Chain-of-thought 監控 ：應監控異常，「不可能完成」的任務應有逃生機制"
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "🎯 重點整理 Key Takeaways",
+    "content": "1. AI 的隱形革命 AI 變革對大多數人是「不可讀」的。到 2026 年，使用前沿 AI 的人將感覺生活在平行世界。 2. 能力超額 AI 系統比表面更強大。關鍵在於適當的 Scaffold 和 Elicitation——如同好的管理能釋放員工潛力。 3. 成本顛覆 AI Agent 可以以人類專家 30% 的成本達到專業水準。攻防雙方都有這個優勢。 4. 資料可讀性 為 AI 結構化領域數據可以提升 34%+ 的效能。「管道工程」是被低估的競爭優勢。 🎯 練習題 Practice Questions 問題 1：概念理解 請解釋「Capability Overhang（能力超額）」的概念，並舉一個你工作領域中可能存在的例子。 顯示參考答案 概念解釋： Capability Overhang 指的是 AI 系統實際擁有的能力遠超過我們目前能「引出」的程度。就像一個天才學生，如果沒有好的老師或正確的問題，他的潛力無法展現。 例子（以製藥業為例）： 在藥廠的 QC 部門，如果只是讓 AI 回答「這個數據是否在規格內」，它只能做簡單判斷。但如果設計一個 Scaffold，讓 AI：1) "
+  },
+  {
+    "docFile": "2025-12-22_import-ai-438-guide.html",
+    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
+    "docDate": "2025-12-22",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "延伸學習-extended-learning",
+    "sectionTitle": "📖 延伸學習 Extended Learning",
+    "content": "ARTEMIS 論文 Comparing AI Agents to Cybersecurity Professionals (arXiv) OSMO 論文 Open-Source Tactile Glove (arXiv) ChipMind 論文 RAG for Circuit Design (arXiv) 相關閱讀 Import AI 431: 技術樂觀主義 Import AI 438 學習指南 製作日期：2024年12月 | 原文來源： Import AI Newsletter #438 by Jack Clark 建議 Chat Title： [LLM] Import AI 438 - Capability Overhang, ARTEMIS, OSMO 本文件僅供教育用途。所有原創內容版權歸原作者所有。"
+  },
+  {
+    "docFile": "2025-12-31_ux-search-explored.html",
+    "docTitle": "Deep: The UX of Search Explored - AI 學習指南",
+    "docDate": "2025-12-31",
+    "docSource": "Department of Product / Rich Holmes",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "LLM"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Deep: The UX of Search Explored Department of Product | Rich Holmes | 2025.12.31 Tool Agent Integration LLM 📋 快速摘要 Executive Summary 閱讀時間：15-20 分鐘 核心概念 Core Concept 產品內搜尋 (In-product Search) 正從單純的「找東西」功能，演變成融合 AI Assistant、能執行動作的「命令中心」(Command Center)。這種轉變對用戶留存率 (Retention) 和參與度 (Engagement) 產生重大影響。 實務價值 Practical Value 透過 20+ 個實際案例 (Instacart, LinkedIn, Reddit, YouTube 等)，學習如何設計混合搜尋 (Hybrid Search)、輪播式探索 (Carousel Discovery)、以及自然語言搜尋 (Natural Language Search) 功能，提升產品 UX。 關鍵要點 Key Takeaways AI 整合已成為標配、搜尋正在成為獨立產品的收入來源、Carousel 主導探索體驗、速度是競爭優勢、多模態輸入正在擴展。 行動建議 Action Items 評估你的產品搜尋功能是否已整合 AI、考慮 Hybrid Search 架構、測試 Carousel-based 探索、投資搜尋速度優化。 🎯 學習目標 Learning Objectives 概念理解 理解 Hybrid Search 如何融合傳統搜尋與 AI Assistant 實務應用 學習 Carousel、Quick Filter、Actions 等 UX 元件的設計模式 策略思維 評估搜尋功能如何影響產品策略與收入模式 📖 正文開始 | 共 3 部分 預估閱讀：15-20 分鐘 Part 1: AI 在搜尋中的整合 The ability to search and find exactly what you need inside a product can play a critical role in engagement and retention ; a user who can't find what they need is ultimately a user who churns. For many leading companies, AI has transformed in-product search from a simple find-and-retrieve function into something more ambitious: visual, conversational, and capable of taking actions . If you look closely at the prompt text used in many leading products' search bars, you'll now notice that users are now prompted to not only search for something - but to \"ask a question\" too - signalling the shift towards the merging of traditional search with AI A"
+  },
+  {
+    "docFile": "2026-01-06_claude-projects-product-health.html",
+    "docTitle": "Claude Projects 產品健康監測系統教學",
+    "docDate": "2026-01-06",
+    "docSource": "Department of Product / Rich Holmes",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent",
+      "Prompt"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Claude Projects 產品健康監測系統 Department of Product | Rich Holmes | 2026.01.05 Tool Automation Agent Prompt Quick Summary 15 min read Core Concept Claude Projects 是一個被低估的功能，可結合 Skills 打造可重複使用的產品健康監測系統，透過 5 大維度（用戶數據、價值主張、UX、商業、策略）持續追蹤產品表現。 Practical Value 提供兩種實作架構：單一 Project 適合快速上手，多 Project 架構適合跨團隊協作。包含完整的 Custom Instructions 範本和健康檢查 Prompts。 Key Takeaways Projects 整合知識庫、對話歷史與自定義指令；5 維度健康指標涵蓋從轉換漏斗到策略聚焦；可透過 Skills 自動產出 Excel/PowerPoint 報告。 Action Items 選擇單一或多重 Project 架構、設定檔案命名規範（prefix 分類）、建立定期健康檢查節奏、結合 Claude Skills 產出可分享的成果物。 Learning Objectives Concept 理解 Claude Projects 的架構與核心功能 Concept 掌握產品健康 5 維度評估框架 Practical 能撰寫 Product Health 的 Custom Instructions Practical 設計適合團隊的 Project 架構 Tool 結合 Skills 產出可分享報告 Tool 建立定期健康檢查工作流程 Part 1 of 4 Section 1: Claude Projects Overview What is Claude Projects? Projects lets you create a self-contained space for you or your team to come back to over time. A Project has its own dedicated chat history, a knowledge base of uploaded documents and custom instructions that Claude will consider every time it generates a response. You can also combine Projects with newer abilities like Skills and Claude for Excel to create artifacts from the output of your Projects that you can share with stakeholders and colleagues. A project has two key characteristics when you first create it: a name and a description. Once you've created a Project, you'll see the Projects home screen which includes the main chat interface and chat history along with your custom inst"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "nvidia-ai-全面革新從-vera-rubin-到-physical-ai-的產業藍圖",
+    "sectionTitle": "NVIDIA AI 全面革新：從 Vera Rubin 到 Physical AI 的產業藍圖",
+    "content": "NVIDIA CES 2026 | January 2026 | Las Vegas LLM Agent Automation Tool Integration Executive Summary 45 min read Core Concept Jensen Huang 在 CES 2026 發表了 NVIDIA 全方位 AI 戰略，涵蓋次世代 AI 超級電腦 Vera Rubin、開源世界基礎模型 Cosmos、首款推理型自駕車 AI Alpamayo，以及與 Siemens/Cadence/Synopsys 的工業 AI 整合。核心訊息：AI 正在重塑 $10 兆美元的運算產業，而 NVIDIA 正透過「極端協同設計」(Extreme Co-design) 突破摩爾定律限制。 Practical Value 理解 AI 產業最新發展方向，包括：Agentic AI 架構如何成為新應用框架、Physical AI 如何改變機器人與自駕車產業、開源模型如何加速 AI 普及、以及 CDMO 製藥產業如何借鏡工業 4.0 數位孿生整合。 Key Takeaways 1) Vera Rub"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "LLM 理解 Test-time Scaling 與 Reasoning Model 的運作原理 Agent 掌握 Agentic AI 架構的核心組件與設計模式 Tool 認識 Vera Rubin 六晶片系統的極端協同設計 Automation 了解 Physical AI 與世界基礎模型的應用場景 Integration 分析 NVIDIA 與工業軟體巨頭的整合戰略 Tool 評估開源模型生態對企業 AI 策略的影響 Part 1 of 4: AI Computing Revolution Section 1/4"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "part-1-the-platform-shift",
+    "sectionTitle": "Part 1: The Platform Shift",
+    "content": "\"Every 10 to 15 years, the computer industry resets. A new platform shift happens. From mainframe to PC, PC to internet, internet to cloud, cloud to mobile. Each time the world of applications target a new platform.\" \"Except this time, there are two simultaneous platform shifts happening at the same time. While we now move to AI, applications are now going to be built on top of AI.\" \"You no longer program the software, you train the software . You don't run it on CPUs, you run it on GPUs. Applic"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "scaling-laws-reasoning",
+    "sectionTitle": "Scaling Laws & Reasoning",
+    "content": "\"In 2015, the first language model that I thought was really going to make a difference... was called BERT. 2017, transformers came. It wasn't until five years later, 2022, that ChatGPT moment happened.\" \"Something very important happened a year after that. The first O1 model from ChatGPT, the first reasoning model, completely revolutionary, invented this idea called test time scaling , which is a very commonsensical thing.\" \"Not only did we pre-train a model to learn, we post-train it with rein"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "part-2-the-rise-of-agentic-ai",
+    "sectionTitle": "Part 2: The Rise of Agentic AI",
+    "content": "\"Agentic systems started to emerge in 2024... in 2025, it started to proliferate just about everywhere. Agentic models that have the ability to reason, look up information, do research, use tools, plan futures, simulate outcomes , all of a sudden started to solve very, very important problems.\" \"One of my favorite agentic models is called Cursor , which revolutionized the way we do software programming at NVIDIA.\" \"At first, when ChatGPT came out, people said, 'It produced really interesting res"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "multi-model-architecture",
+    "sectionTitle": "Multi-Model Architecture",
+    "content": "\"The first time I saw it was with Aravind's Perplexity... The first time I realized they were using multiple models at the same time , I thought it was completely genius.\" \"Of course, an AI would also call upon all of the world's great AIs to solve the problem it wants to solve at any part of the reasoning chain.\" \"This is the reason why AIs are really multimodal , meaning they understand speech and images and text and videos and 3D graphics and proteins. It's also multi-model , meaning that the"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "part-3-physical-ai",
+    "sectionTitle": "Part 3: Physical AI",
+    "content": "\"How do you take something that is intelligent inside a computer and interacts with you with screens and speakers to something that can interact with the world? Meaning it can understand the common sense of how the world works .\" \"Object permanence, if I look away and I look back, that object is still there. Causality, if I push it tips over. It understands friction and gravity. It understands inertia... These ideas are common sense to even a little child, but for AI, it's completely unknown.\" \""
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "alpamayo-reasoning-av",
+    "sectionTitle": "Alpamayo: Reasoning AV",
+    "content": "\"Today, we're announcing Alpamayo, the world's first thinking, reasoning autonomous vehicle AI . Alpamayo is trained end to end, literally from camera in to actuation out.\" \"Alpamayo does something that's really special. Not only does it take sensor input and activates steering wheel, brakes and acceleration, it also reasons about what action it is about to take . It tells you what action it's going to take, the reasons by which it came about that action, and then of course, the trajectory.\" \"It"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "part-4-vera-rubin",
+    "sectionTitle": "Part 4: Vera Rubin",
+    "content": "\"The amount of computation necessary for AI is skyrocketing... models are increasing by a factor of 10, an order of magnitude every single year.\" \"o1's introduction was an inflection point for AI. Instead of a one-shot answer, inference is now a thinking process... The amount of computation for pre-training, for post-training, for test-time scaling has exploded .\" \"We have a rule inside our company... No new generation should have more than one or two chips change. But the problem is this... 1.6"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "system-innovation",
+    "sectionTitle": "System Innovation",
+    "content": "\"This node, 43 cables, zero cables . Six tubes, just two of them here. It takes two hours to assemble this. If you're lucky... This from two hours to five minutes .\" \"The liquid that goes into it is still 45 degrees C . That enables us to save about 6% of the world's data center power.\" \"This entire system is now confidential computing safe , meaning everything is encoded in transit, at rest and during compute and every single bus is now encrypted.\" \"We now have power smoothing across the entire"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "industrial-ai-integration",
+    "sectionTitle": "Industrial AI Integration",
+    "content": "\"One of the most important industries in the world that will be revolutionized by physical AI and AI physics is the industry that started all of us.\" \" Cadence ... CUDA-X integrated into all of their simulations and solvers... Synopsys ... leads in logic design and IP... Siemens ... We're going to integrate CUDA-X, physical AI, agentic AI, NeMo, Nemotron, deeply integrate it into the world of Siemens.\" \"First, we designed the chips... We're going to have agentic chip designers and system designe"
+  },
+  {
+    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
+    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
+    "docDate": "2026-01-07",
+    "docSource": "NVIDIA CES 2026 / Jensen Huang",
+    "docRating": 4.4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Extreme Co-design 摩爾定律放緩下，NVIDIA 選擇同時重新設計 6 顆晶片，實現 1.6 倍電晶體帶來 5 倍效能提升。這是「系統級創新」勝過「單點突破」的典範。 Agentic AI Architecture Multi-model + Multi-modal + Multi-cloud + Hybrid 的架構將成為「未來應用程式」的標準框架。Smart Router 讓企業同時擁有前沿能力與客製化優勢。 Physical AI + Simulation Cosmos 世界基礎模型實現「運算轉換為數據」，Omniverse 提供安全的訓練環境。三電腦架構（訓練/推論/模擬）是 Physical AI 的基礎設施。 Open Model Strategy NVIDIA 開源 Alpamayo 模型與訓練數據、Cosmos 世界模型、GR00T 機器人模型。策略：「只有開源才能真正信任」，同時建立生態系護城河。 Practice Questions Question 1: Concept Understanding Jensen Huang 提到 AI 產業正經歷「"
+  },
+  {
+    "docFile": "2026-01-08_context-engineering-agents.html",
+    "docTitle": "Context Engineering for AI Agents - 深度學習指南",
+    "docDate": "2026-01-08",
+    "docSource": "Anthropic Engineering Blog",
+    "docRating": 4.6,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Prompt",
+      "Tool"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Context Engineering for AI Agents AI Agent 的上下文工程：從 Prompt 到 Context 的範式轉移 Anthropic Engineering Blog | 2025年9月29日發布 Agent LLM Prompt Engineering Tool Design Executive Summary 快速摘要 閱讀時間：15-20 分鐘 Core Concept 核心概念 Context Engineering（上下文工程）是 Prompt Engineering 的自然演進。重點從「如何寫好指令」轉變為「如何策展最佳的 Token 集合」。核心原則：用最小、最高訊號的 Token 集合來最大化達成預期結果的機率。 Practical Value 實務價值 解決 AI Agent 在長時間任務中的「Context Rot（上下文腐敗）」問題。提供三大技術：Compaction（壓縮）、Structured Note-Taking（結構化筆記）、Sub-Agent Architectures（多代理架構），可達 54% 的效能提升。 Key Points 關鍵要點 Context 是有限資源，具有遞減邊際效益。LLM 有「注意力預算」限制。Just-in-Time（即時）檢索優於預先載入所有資料。工具設計應最小化功能重疊，避免模糊的決策點。 Action Items 行動建議 1) 審視現有 System Prompt，找到「正確高度」的指令層級；2) 評估工具集是否有功能重疊或模糊性；3) 考慮從 Pre-computed RAG 轉向 Hybrid Retrieval 策略；4) 對長時間任務導入 Compaction 機制。 Learning Objectives 學習目標 概念理解 區分 Prompt Engineering 與 Context Engineering 的本質差異 架構設計 理解 Context Rot 的成因與 LLM 注意力機制限制 實務應用 掌握有效 Context 的四大組成：System Prompt、Tools、Examples、History 檢索策略 比較 Just-in-Time 與 Hybrid Retrieval 策略的適用場景 長期任務 應用 Compaction、Note-Taking、Sub-Agents 三種長時間任務技術 決策框架 根據任務類型選擇適當的 Context Management 策略 Part 1 of 4 第一部分：核心概念 Original Content 原文 Context engineering refers to the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference, including all the other information that may land there outside of the prompts. Prompt Engineering : Writing instructions for single tasks. Key focus: \"What to say\" Context Engineering : Managing all tokens (instructions + tools + data + history)"
+  },
+  {
+    "docFile": "2026-01-08_humint-intelligence-ai.html",
+    "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
+    "docDate": "2026-01-08",
+    "docSource": "Is It Propaganda & Joel Salinas",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Security"
+    ],
+    "sectionId": "the-seduction-of-the-machine",
+    "sectionTitle": "The Seduction of the Machine",
+    "content": "This pattern repeated across multiple intelligence communities over the past decade. A new technical capability emerges. It produces volumes of data . It identifies patterns at scale. And suddenly, there's a gravitational pull toward treating the machine's output as authoritative . It's a seductive trap. The chief of a major Western intelligence service recently delivered an inaugural address that cuts through this fog with operational clarity. His central thesis? Even in our technology-mediated"
+  },
+  {
+    "docFile": "2026-01-08_humint-intelligence-ai.html",
+    "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
+    "docDate": "2026-01-08",
+    "docSource": "Is It Propaganda & Joel Salinas",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Security"
+    ],
+    "sectionId": "what-machines-cant-do",
+    "sectionTitle": "What Machines Can't Do",
+    "content": "Let me clarify the benefits that technology offers. AI can surface patterns we'd never spot manually. It can process signals at impossible speed. It can illuminate connections across vast datasets. These capabilities are force multipliers. But here's what the algorithms can't do: They can't decide what matters. A machine can tell you that X is correlated with Y. It cannot tell you whether that correlation is strategically significant or operationally actionable. They can't weigh moral tradeoffs."
+  },
+  {
+    "docFile": "2026-01-08_humint-intelligence-ai.html",
+    "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
+    "docDate": "2026-01-08",
+    "docSource": "Is It Propaganda & Joel Salinas",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Security"
+    ],
+    "sectionId": "the-human-authority-audit-3-questions",
+    "sectionTitle": "The Human Authority Audit: 3 Questions",
+    "content": "Step 1: Decision Weight Test Ask, \"If this decision fails, who bears real consequences ?\" If the answer is \"my organization/team/stakeholders,\" a human must decide. If the answer is \"no one\" or \"it's reversible,\" AI can suggest options. Red flag: You can't name who's accountable. Step 2: Trust Requirement Check Ask: \"Does this decision depend on relationships I've built or organizational trust I've earned ?\" Donor communications, strategic pivots, personnel decisions, public statements = human d"
+  },
+  {
+    "docFile": "2026-01-08_humint-intelligence-ai.html",
+    "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
+    "docDate": "2026-01-08",
+    "docSource": "Is It Propaganda & Joel Salinas",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Security"
+    ],
+    "sectionId": "the-grey-zone-and-deepfake-challenge",
+    "sectionTitle": "The Grey Zone and Deepfake Challenge",
+    "content": "Consider the operational environment we're actually working in. We're not in peacetime. We're not in a declared war. We're in persistent grey-zone competition where adversaries seek advantage through pressure that's continuous, deniable, and deliberately difficult to attribute. Technical collection can identify some of this activity. But understanding intent? Anticipating next moves? Discerning strategic objective from tactical feint? That requires human sources with access and human analysts wi"
+  },
+  {
+    "docFile": "2026-01-08_humint-intelligence-ai.html",
+    "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
+    "docDate": "2026-01-08",
+    "docSource": "Is It Propaganda & Joel Salinas",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Security"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Force Multiplier, Not Replacement AI 是力量倍增器，不是替代品。技術應該幫助你問更好的問題、挑戰假設、理解脈絡，而非成為判斷的替代品。 Human Authority Audit 三步檢核：Decision Weight（誰負責後果）、Trust Requirement（是否需要人際信任）、Judgment Complexity（是否需要價值權衡）。 Grey Zone Reality 現實世界充滿模糊地帶。AI 可以識別異常，但判斷意圖、預測後續、區分真正威脅與假警報，需要人類的脈絡理解。 Values as Strategic Advantage 在 AI 時代，人類價值觀不是限制而是戰略優勢。合規性、責任感、信任建立，這些是 AI 無法複製的競爭力。 Practice Questions Question 1: Conceptual Understanding 文章提到 AI 有四項根本限制：無法決定什麼重要、無法權衡道德取捨、無法承擔責任、無法建立信任。請解釋為什麼「無法承擔責任」對於 AI 在製藥業的應用特別關鍵。 Hide Answer "
+  },
+  {
+    "docFile": "2026-01-08_musk-agi-abundance.html",
+    "docTitle": "Moonshots #220: Elon Musk 談 AGI、豐盛時代與人類未來",
+    "docDate": "2026-01-08",
+    "docSource": "Moonshots Podcast / Peter Diamandis",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "AGI Musk AGI Robotics Energy Abundance Geopolitics AI Strategy AI AGI Part 1 of 4"
+  },
+  {
+    "docFile": "2026-01-08_musk-agi-abundance.html",
+    "docTitle": "Moonshots #220: Elon Musk 談 AGI、豐盛時代與人類未來",
+    "docDate": "2026-01-08",
+    "docSource": "Moonshots Podcast / Peter Diamandis",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "agi",
+    "sectionTitle": "AGI",
+    "content": "Musk AGI 2026 2027 Superintelligence 2030 AI AI 50%+ / Musk AGI vs ASI AGI (Artificial General Intelligence, ) AI ASI (Artificial Superintelligence, ) AI Musk 2026 AGI 2026 2028-29 SpaceX ~2030 ~2030 Musk AI supersonic tsunami Part 2 of 4"
+  },
+  {
+    "docFile": "2026-01-08_musk-agi-abundance.html",
+    "docTitle": "Moonshots #220: Elon Musk 談 AGI、豐盛時代與人類未來",
+    "docDate": "2026-01-08",
+    "docSource": "Moonshots Podcast / Peter Diamandis",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "optimus",
+    "sectionTitle": "Optimus",
+    "content": "Musk Tesla Optimus GDP Tesla Gigafactory 800 Optimus Tesla Musk Triple Exponential AI AI Optimus Optimus Musk Optimus 3-5 /CDMO + 2026 2040 100 + Musk AI Part 3 of 4 Musk 99.8% 1% ~1500 GW/ Tesla 100 GW/ 1 TW/ (UHI) Musk UBI UHI Universal High Income Musk xAI Colossus 2 xAI AI 2026 4 1.5 GW + Tesla Megapack Part 4 of 4"
+  },
+  {
+    "docFile": "2026-01-08_musk-agi-abundance.html",
+    "docTitle": "Moonshots #220: Elon Musk 談 AGI、豐盛時代與人類未來",
+    "docDate": "2026-01-08",
+    "docSource": "Moonshots Podcast / Peter Diamandis",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "ai",
+    "sectionTitle": "AI",
+    "content": "Musk AI AI 5 2026 AI Musk AI AI Musk AI AI HAL 9000 Geoffrey Hinton AI AI AI AI 3-7 Musk II/III"
+  },
+  {
+    "docFile": "2026-01-08_musk-agi-abundance.html",
+    "docTitle": "Moonshots #220: Elon Musk 談 AGI、豐盛時代與人類未來",
+    "docDate": "2026-01-08",
+    "docSource": "Moonshots Podcast / Peter Diamandis",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "AGI 2026-2027 AGI 2030 AI 50%+ Optimus 3-5 2040 100 + UHI UBI AI AI/ / Practice Questions 1 Musk Triple Exponential AI AI Optimus Optimus Musk 2040 100 + 2 CDMO CDMO Musk 3-7 CDMO AI AI AI AI GMP/21 CFR Part 11 AI + AI ALCOA 3 Musk Wall-E Musk 3-7 Musk Musk Tesla Roadster FSD Musk Article Rating 4.0 3/5 4/5 4/5 5/5 4/5 AI Expert Learning Document 2026-01-08 | Moonshots #220 Transcript Chat Title: [LLM] Musk AGI 2026 - Abundance Robotics Energy"
+  },
+  {
+    "docFile": "2026-01-09_claude-code-210-update.html",
+    "docTitle": "Claude Code 2.1.0 版本更新深度解析",
+    "docDate": "2026-01-09",
+    "docSource": "Claude Code Docs / Anthropic",
+    "docRating": 3.5,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "LLM"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Claude Code 2.1.0 版本更新深度解析 雙欄對照版 | 110+ Updates | 2026-01-07 Tool Agent LLM Core Concept 核心概念 Claude Code 2.1.0 包含 110+ 項改進 ，涵蓋 Skills 熱重載、安全性修復、效能優化、以及大量 UX 改善。 Practical Value 實務價值 Skills 系統可用於建立符合 GMP 的自動化工作流程，Hook 機制可實現審計追蹤。 Key Highlights 重點功能 安全修復、語言設定、Bash 通配符、Auto-continue、效能優化、LSP 工具。 Action Items 行動建議 1) claude update 2) 設置語言偏好 3) 評估 Skills 整合可能性 Part 1: Tier 5 Must-Know Features 必學功能 6 items #1 of 110+ Security Fix - Sensitive Data Protection Fixed security issue where sensitive data (OAuth tokens, API keys, passwords) could be exposed in debug logs. ★★★★★ 安全修復 - 敏感資料保護 為何這是最高優先級？ API keys 和 OAuth tokens 是存取敏感系統的憑證。現在不再被記錄到 debug logs，符合： 21 CFR Part 11 存取控制要求 GDPR 資料保護原則 SOC 2 合規要求 #2 of 110+ Language Settings Added language setting to configure Claude's response language (e.g., language: \"japanese\" ). ★★★★★ 語言設置 可以讓 Claude 用日語、中文等其他語言回覆。 設定方式： 在 settings.json 加入： language: \"traditional-chinese\" 無需每次都在 prompt 中指定語言。 #3 of 110+ Bash Tool Permission Wildcards Added wildcard pattern matching for Bash tool permissions using * at any position in rules (e.g., Bash(npm *) , Bash(* install) , Bash(git * main) ). ★★★★★ Bash 權限通配符 比喻： 以前每個工具都要簽名批准。現在可以設定：「所有 npm 開頭的工具都可以直接用」。 Bash(npm *) — 所有 npm 命令 Bash(git * main) — 對 main 的 git 操作 Bash(python *.py) — 執行任何 Python 腳本 #4 of 110+ Output Limit Auto-Continue Improved Claude to automatically continue when response is cut off due to output token limit, instead of showing an error message. ★★★★★ 輸出限制自動繼續 解決的痛點： 處理長篇內容時（如分析大型 batc"
+  },
+  {
+    "docFile": "2026-01-09_gmail-gemini-ai-agents.html",
+    "docTitle": "Gmail 進入 Gemini 時代：開發者對 AI Agents 的真實評價",
+    "docDate": "2026-01-09",
+    "docSource": "Rich Holmes / Dept of Product",
+    "docRating": 3.6,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Gmail 進入 Gemini 時代：開發者對 AI Agents 的真實評價 Department of Product Newsletter | Rich Holmes | 2026.01.09 Agent Tool Automation Integration 📋 快速摘要 Executive Summary 閱讀時間 12 分鐘 核心概念 2026 年 AI 產品競爭進入「嵌入式」階段：Gmail 推出 AI Inbox、ChatGPT 獨立出 Health 子產品、Copilot 整合 Agentic Commerce Protocol。大廠正將 AI 從「附加功能」轉變為「產品核心架構」。 實務價值 Claude for Chrome 擴充功能正式開放，可直接用於設計驗證、自動化 QA、競品監控。工程師使用 AI Agent 滿意度達 5.11/6，但前提是保持控制權和審查能力。 關鍵要點 Tailwind 因 AI Agent 過度使用其文件而裁員 75%，揭示 AI Agent 對 SaaS upsell 模式的破壞性影響。ChatGPT 網頁流量再跌 4%，Google AI 工具市占升至 20%+。 行動建議 評估你的產品是否有類似 Tailwind 的 upsell 路徑風險；探索 Claude for Chrome 在 QA 和競品監控的應用；關注 Agentic Commerce Protocol 對電商產品的影響。 🎯 學習目標 Learning Objectives Agent 理解工程師使用 AI Agent 的滿意度研究及其限制條件 Tool 掌握 Claude for Chrome 的五大產品應用場景 Automation 分析 Gmail AI Inbox 和 ChatGPT Health 的產品策略差異 Integration 理解 Agentic Commerce Protocol 對電商產品的影響 Risk 識別 AI Agent 對 SaaS upsell 模式的潛在威脅 Market 追蹤 AI 工具市場份額變化趨勢 正文開始 | 共 4 部分 Part 1-4 Part 1: Gmail 進入 Gemini 時代 Google is starting to roll out a new \"AI inbox\" which gives users a radical alternative to a traditional inbox. The AI inbox sits above the original inbox in the Gmail navigation; a hierarchical decision that suggests that Google thinks this should take precedence over a traditional inbox. The UI consists of suggested to do items from the day and summaries from your most important emails. At the same time, Google has confirmed that it is making other AI features like suggested replies, AI overviews and Help me Write tools all free to users afte"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "這篇文章深入評測 Typeless 這款 語音轉文字工具 ，從遠端工作者的實務角度切入，分析其核心功能（AI 語意最佳化、去贅詞、結構化輸出）與三大應用場景（會議記錄、技術文件、非同步溝通）。文章特別強調 Typeless 與傳統語音輸入的差異：不是逐字稿，而是「整理過的文字」。對於每週有大量文字輸出需求的知識工作者，這是一篇實用的工具評估指南。"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "理解語音輸入的痛點",
+    "sectionTitle": "理解語音輸入的痛點",
+    "content": "了解傳統語音輸入的「全寫」問題，以及為什麼後續編輯往往比直接打字更費時"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "掌握-typeless-核心功能",
+    "sectionTitle": "掌握 Typeless 核心功能",
+    "content": "學習 AI 語意最佳化、自動去贅詞、結構化輸出等功能如何解決「編輯地獄」"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "評估工具適用性",
+    "sectionTitle": "評估工具適用性",
+    "content": "根據個人工作流程判斷 Typeless 是否值得付費，以及如何有效整合到日常工作中"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-i為什麼語音輸入突然變得重要",
+    "sectionTitle": "Part I：為什麼語音輸入突然變得重要？",
+    "content": "對於文字輸入比例極高的知識工作者， 打字本身就是一個巨大的時間成本 。常見的高輸入情境包括：Email、Slack、Notion、工單系統的日常溝通；跨時區會議後的快速筆記整理；以及技術規格、Debug 紀錄等文件撰寫。 \"For knowledge workers with high text output demands, typing itself becomes a significant time cost.\" 傳統語音輸入工具的最大問題是 「全寫」(Full Transcription) ——你說什麼，它就原封不動地打出來，包括「嗯、就是、然後、我想一下」這類口頭禪。結果看似忠實，但後續編輯的時間成本往往超過直接打字。 \"Traditional voice-to-text tools suffer from the 'full transcription' problem—they faithfully capture every filler word, making post-editing often more time-consuming than typing d"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "1-ai-語意最佳化-semantic-optimization",
+    "sectionTitle": "1. AI 語意最佳化 (Semantic Optimization)",
+    "content": "Typeless 不是單純把聲音變成文字，而是做一層 語意整理 。你原本講的「嗯…所以…這個 pipeline 的問題主要是在那個，呃，data validation，那邊常常會爆掉…」會被整理成：「This data pipeline is mainly failing at the validation stage, where checks frequently break.」 \"Typeless performs semantic processing—not just transcription, but 'processed text' that removes hesitations and self-corrections.\""
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "2-自動去贅詞-filler-word-removal",
+    "sectionTitle": "2. 自動去贅詞 (Filler Word Removal)",
+    "content": "工具會自動刪除「um, uh, like, you know, basically」等英文贅詞。當你說「我們應該這樣做…不對，應該是那樣…」時，輸出只保留最終確認的版本。長句也會被拆成較短、好讀的句子。 \"The tool automatically removes filler words and self-corrections, keeping only your final confirmed statement.\""
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "3-格式與結構化-auto-formatting",
+    "sectionTitle": "3. 格式與結構化 (Auto-Formatting)",
+    "content": "當你說「第一點是…第二點是…第三點是…」時，輸出會自動變成條列式。這對於要貼進 Notion、Email 或 Issue Tracker 的內容非常實用。 \"When you speak in structured patterns like 'first...second...third...', the output automatically formats as bullet points.\" 核心概念 Semantic Optimization (語意最佳化) 不同於傳統 Speech-to-Text 的逐字轉錄，語意最佳化會在轉錄過程中加入 NLP (Natural Language Processing) 層，自動： 移除贅詞與口頭禪 合併重複或自我修正的語句 重組句子結構使其更易讀 實務應用 CDMO 情境範例： 在製程偏差調查後，你可以用口述方式快速記錄：「這批 lot 的問題主要是…環境監控數據顯示…根本原因可能是…後續 CAPA 建議…」Typeless 會自動整理成結構化的偏差報告初稿。 隱私考量 Typeless 強調「不保留資料、處理完即丟」的隱私設計。對於"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "場景一跨時區會議後的行動項目整理",
+    "sectionTitle": "場景一：跨時區會議後的行動項目整理",
+    "content": "典型痛點：45-60 分鐘會議後，需要在 10 分鐘內整理重點給團隊。傳統做法（邊開會邊打字或看錄影回放）成本太高。使用 Typeless 的做法：會議結束後用自己的話口述：「剛剛這場會議主要有三個決策…第一…第二…接下來兩週我要做的是…」 \"After meetings, verbally summarize key decisions and action items. Typeless outputs structured bullet points ready to paste into Slack or Notion.\""
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "場景二技術文件與-internal-doc-初稿",
+    "sectionTitle": "場景二：技術文件與 Internal Doc 初稿",
+    "content": "寫技術文件的挑戰是：腦中已有完整 picture，但打字跟不上思考速度。Typeless 讓你先用全口語方式把「這份文件要講什麼」全部講完，工具會生成有頭有尾、有段落、有條列的文字稿。你再補齊正確術語和參數即可。 從「從零開始打」變成「對 70 分的草稿做修訂」 。 \"For technical docs, speak your thoughts freely first. Typeless generates a structured draft. You then refine terminology and add specifics—editing a 70% draft instead of starting from zero.\""
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "場景三移動中的非同步溝通",
+    "sectionTitle": "場景三：移動中的非同步溝通",
+    "content": "遠端工作的彈性意味著你可能在咖啡廳、機場候機時需要回覆重要訊息。用 Typeless 講出內容，讓工具整理成完整可讀的文字，你只需做最後一輪校正。 注意：環境太吵或網路不穩時，準確度會下降。 \"For async communication on-the-go, speak your message and let Typeless format it. Just do a final review before sending. Caveat: accuracy drops in noisy environments or unstable networks.\" 實務應用 - CDMO 場景 場景一對應： Tech Transfer 會議或客戶 Kick-off Meeting 後，快速口述會議決策與 Action Items，10 分鐘內發出 Meeting Minutes。 場景二對應： 製程開發報告、SOP 修訂、Feasibility Assessment 的初稿生成。先講出框架，再補 GMP 術語。 場景三對應： 在無塵室外回覆緊急 Email、在出差途中更新專案狀態。 比"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-iv工具比較-typeless-適合誰",
+    "sectionTitle": "Part IV：工具比較 — Typeless 適合誰？",
+    "content": "工具 特色 最適場景 限制 Typeless AI 語意整理、去贅詞、結構化輸出 個人口述 → 可讀文字 不適合多人會議錄音 Google Docs 語音輸入 免費、與 Google 生態整合 快速打草稿 無語意整理，需大量後編輯 Otter.ai 會議全程記錄、多人識別、關鍵字搜尋 團隊會議、訪談錄音 較高成本、隱私考量 系統內建 (Apple/Android) 免費、即時 短訊息、快速筆記 只負責「忠實聽寫」 核心概念 - Typeless 最適用戶 遠端工作者、專案管理，平常大量透過文字協作 必須產出技術文件、規格書、會議紀錄的工程師或產品角色 習慣邊走邊講、邊看螢幕邊碎念的人 在意隱私，不想把錄音資料丟給大公司語音服務 不適合： 很少寫長文、不做會議筆記、打字速度極快且享受打字的人。"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "值不值得付費",
+    "sectionTitle": "值不值得付費？",
+    "content": "Typeless 提供免費層級（每週 4,000 字額度）讓你體驗核心功能。付費版解鎖更高或無限字數。評估 ROI 的簡單方法：估算每週可用「講」取代「打」的字數，假設一半以上可透過 Typeless 產生初稿， 如果每週能省 1-2 小時純編輯時間 ，那這筆訂閱費是成本還是投資，答案就很清楚了。 \"Estimate how many words per week you could speak instead of type. If half can be drafted via Typeless and saves 1-2 hours of editing weekly, the subscription pays for itself.\""
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "如何避免變成閒置工具",
+    "sectionTitle": "如何避免變成閒置工具？",
+    "content": "工具本身只是加速器，真正決定成效的是你願不願意 微調工作流 讓它有發揮空間。作者建議四個具體做法： 固定把「會議結束後 5 分鐘」變成語音輸入時間 寫技術文件前，先用語音講完大綱與重點 移動中把腦袋裡的點子用語音記錄下來 讓工具學習你常用的專有名詞與縮寫 重點提示 - 效益計算 ROI 計算框架： ① 每週文字輸出量（字數） ② 可用語音取代的比例（%） ③ 語音輸入省下的時間（小時） ④ 你的時薪 × ③ = 每週節省價值 對專案計費或時薪工作者： 只要實測 1-2 週，通常就能判斷這是成本還是投資。 實務應用 - 導入檢查清單 Week 1： 用免費額度測試 3 個核心場景 Week 2： 記錄實際省下的時間 Week 3： 決定是否付費 + 建立專有名詞庫 持續： 每月回顧使用頻率，避免閒置"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "語意最佳化-逐字稿",
+    "sectionTitle": "語意最佳化 ≠ 逐字稿",
+    "content": "Typeless 的核心價值不在「轉錄」，而在「整理」。它把口語轉成可讀的書面文字，幫你跳過「編輯地獄」。"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "三大應用場景",
+    "sectionTitle": "三大應用場景",
+    "content": "會議後行動項目整理、技術文件初稿生成、移動中的非同步溝通。都是「把 70 分草稿修成 90 分」的流程。"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "定位明確個人口述工具",
+    "sectionTitle": "定位明確：個人口述工具",
+    "content": "不是 Otter 那種會議錄音工具，而是幫助個人把腦中想法快速轉成結構化文字的生產力工具。"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "導入成功關鍵工作流調整",
+    "sectionTitle": "導入成功關鍵：工作流調整",
+    "content": "工具只是加速器。需要刻意把「會後 5 分鐘」「文件開寫前」變成語音輸入時間，才能發揮價值。"
+  },
+  {
+    "docFile": "2026-01-10_typeless-voice-review.html",
+    "docTitle": "Typeless Voice-to-Text 工具評測：遠端工作者的語音輸入革命",
+    "docDate": "2026-01-10",
+    "docSource": "凱文馬拉穆 / vocus.cc",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "練習題",
+    "sectionTitle": "練習題",
+    "content": "Q1 概念理解 Typeless 與傳統語音輸入工具（如 Google Docs 語音輸入）的核心差異是什麼？ 答案： 核心差異在於「語意最佳化」(Semantic Optimization)。傳統語音輸入是「全寫」——忠實記錄每一個字，包括贅詞和自我修正；Typeless 則在轉錄過程中加入 NLP 處理層，自動去除贅詞、保留最終確認版本、並將長句拆分成易讀結構。 延伸思考： 這種「整理」功能的代價是什麼？可能的風險包括：誤刪重要內容、改變原意、或在專業術語處理上出錯。使用者需要在「省時」與「準確性」之間找到平衡。 Q2 產業應用 在 CDMO 或製藥環境中，使用 Typeless 這類工具需要注意哪些合規風險？ 答案： 主要合規風險包括： 21 CFR Part 11： 如果語音轉文字的輸出會成為 GMP 記錄的一部分，需確保工具符合電子記錄/電子簽章的要求（Audit Trail、數據完整性等） ALCOA+ 原則： Typeless 的「自動修正」功能可能違反 Attributable（可歸因）和 Original（原始）原則——因為輸出不是原始口述內容 數據隱私： 即使 Ty"
+  },
+  {
+    "docFile": "2026-01-12_dan-koe-multiple-interests.html",
+    "docTitle": "多元興趣者的事業藍圖 - Dan Koe 深度解析",
+    "docDate": "2026-01-12",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-i-ii-原文雙語對照",
+    "sectionTitle": "Part I-II 原文（雙語對照）",
+    "content": "社會讓你以為擁有多元興趣是一種弱點。上學、拿學位、找工作、某天退休。但這個順序有太多問題。 Society made you think that having multiple interests was a weakness. Go to school. Get a degree. Get a job. Retire at some point. But there is so much wrong with that sequence of events. 我們不再活在工業時代了。 專精於單一技能幾乎等同於死亡。 我們都能感覺到，機械化生活和孤立式學習對心靈和靈魂有多危險。人們能感受到我們正在經歷第二次文藝復興。 We don't live in the Industrial Age anymore. Specializing in one skill is almost certain death. I feel like we all know by this point how dangerous mechanical living and siloed learning "
+  },
+  {
+    "docFile": "2026-01-12_dan-koe-multiple-interests.html",
+    "docTitle": "多元興趣者的事業藍圖 - Dan Koe 深度解析",
+    "docDate": "2026-01-12",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "解說-commentary",
+    "sectionTitle": "解說 Commentary",
+    "content": "📚 核心概念：三位一體框架 Koe 提出的個人主權公式： Self-education（自我教育） = 引擎，提供動力 Self-interest（自我利益） = 指南針，指引方向 Self-sufficiency（自我充足） = 地基，防止被劫持 三者協作但不完全依賴，這是「通才」的基礎架構。 💡 比喻說明：Vessel（容器） Koe 在 tutorial hell 裡卡了很久——不斷學習，但人生沒有改變。 「容器」的概念很重要：你的多元興趣是水，但沒有容器的話，水只會流走。這個容器就是「個人事業」，讓所有興趣有地方可去、可變現。 ⚠️ 重點提示：交叉優勢 Your edge lies more in intersection than it does in expertise. 這是整篇文章最核心的一句話。你的競爭優勢不在於比別人更專精，而在於你的「組合」獨一無二。 🛠️ 你的交叉優勢分析 你的「交叉點」包括： 10+ 年製藥無菌操作經驗 SA25 Vanrx 隔離器技術 QS-21 佐劑專業 AI 整合與 Prompt Engineering 雙語教育內容創作系統 這種組"
+  },
+  {
+    "docFile": "2026-01-12_dan-koe-multiple-interests.html",
+    "docTitle": "多元興趣者的事業藍圖 - Dan Koe 深度解析",
+    "docDate": "2026-01-12",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-iii-iv-原文雙語對照",
+    "sectionTitle": "Part III-IV 原文（雙語對照）",
+    "content": "要從你的興趣中賺錢，你需要其他人也對它們產生興趣。這部分是顯而易見的。如果你對某件事產生了興趣，其他人也可以，你只需要學會說服。 To make money from your interests, you need other people to become interested in them too. That part is trivial. If you became interested in something, other people can too, you simply must learn to persuade. 換句話說， 你需要注意力。 注意力是最後的護城河之一。因為當任何人都能寫任何東西或建立任何軟體時，哪些會贏？那些人們知道的。 In other words, you need attention. Attention is one of the last moats. Because when anyone can write anything or build any software, which ones are going to win? "
+  },
+  {
+    "docFile": "2026-01-12_dan-koe-multiple-interests.html",
+    "docTitle": "多元興趣者的事業藍圖 - Dan Koe 深度解析",
+    "docDate": "2026-01-12",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "解說-commentary",
+    "sectionTitle": "解說 Commentary",
+    "content": "⚖️ 工具比較：兩條路徑 Skill-Based（技能導向） 學習可銷售技能 → 教授 → 販售 風險：變成第二個 9-5 適合：想要穩定收入的人 Development-Based（發展導向） 追求目標 → 教導所學 → 幫助他人 優勢：同時也在學習所有相關技能 適合：多元興趣者 ⚠️ 重點提示：翻轉客戶頭像 傳統做法：創造客戶頭像 → 迎合他們 Koe 的做法：把自己變成客戶頭像 你追求目標 → 驗證有用性 → 幫助過去的自己 這樣你永遠知道客戶要什麼——因為就是你自己。 📚 核心概念：Learning in Public 你已經在花時間學習 → 把學習過程公開 → 這就是事業的基礎 學習 = 研究（research） 公開筆記 = 內容（content） 幫助他人 = 產品（product） 🛠️ 製藥業應用 你的「發展導向」路徑： Brand： 追求 COO 目標的製藥業主管 Content： 教導 AI + 製藥整合 Product： 幫助其他 Operations Director 更快掌握 AI 客戶頭像 = 2-3 年前的你自己。"
+  },
+  {
+    "docFile": "2026-01-12_dan-koe-multiple-interests.html",
+    "docTitle": "多元興趣者的事業藍圖 - Dan Koe 深度解析",
+    "docDate": "2026-01-12",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-v-vii-原文雙語對照",
+    "sectionTitle": "Part V-VII 原文（雙語對照）",
+    "content": "停止把你的品牌想成個人頭像和社交媒體簡介。 品牌是人們來轉變的環境。品牌是你邀請他人進入的小世界。 Stop thinking of your brand as a profile picture and social media bio. Brand is an environment where people come to transform. Brand is the little world you are inviting others into. 品牌不是在讀者第一次訪問你的個人頁面時呈現的。品牌是追蹤你 3-6 個月後，在讀者腦中累積的想法。 Brand isn't illustrated when a reader first visits your profile. Brand is the accumulation of ideas in your reader's mind after 3-6 months of following you. 網路是資訊的消防水管。AI 只是在增加更多噪音。這意味著 信任和信號比以往任何時候都更重要。 The internet "
+  },
+  {
+    "docFile": "2026-01-12_dan-koe-multiple-interests.html",
+    "docTitle": "多元興趣者的事業藍圖 - Dan Koe 深度解析",
+    "docDate": "2026-01-12",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "解說-commentary",
+    "sectionTitle": "解說 Commentary",
+    "content": "📚 核心概念：Brand = Environment Koe 重新定義品牌： 不是 ：頭像、bio、logo 而是 ：人們來轉變的環境、你邀請他人進入的小世界 品牌是追蹤你 3-6 個月後，在讀者腦中累積的想法總和。 ⚠️ 重點提示：Idea Museum 你愛的創作者的秘密：他們保持無情策展的筆記、想法和靈感來源庫。 關鍵習慣： 想法一出現就立刻記下 評估標準： Performance（表現潛力）+ Excitement（興奮感） 🛠️ 實務技巧：1 idea 1000 ways 同一個想法，不同結構： 觀察式： 「我在快樂的人身上注意到的一個模式：他們對維護心智清晰度非常執著。」 列表式： 「快樂的人是心智清晰的人：– 休息 – 專注 – 消除干擾」 練習方法： 用 Claude 分析你喜歡的貼文結構，然後用那些結構改寫你的想法。 ⚖️ 系統經濟 People don't want a solution. They want YOUR solution. 差異化不在於功能，而在於你的經驗系統化後的獨特流程。 你的 Master Prompt 系統就是這種「系統即產品」的原型。"
+  },
+  {
+    "docFile": "2026-01-12_dan-koe-multiple-interests.html",
+    "docTitle": "多元興趣者的事業藍圖 - Dan Koe 深度解析",
+    "docDate": "2026-01-12",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "交叉優勢 Your edge lies in intersection, not expertise. 多元興趣創造獨特視角，這是 AI 時代最後無法複製的護城河。 三位一體 Self-education（引擎）+ Self-interest（指南針）+ Self-sufficiency（地基）= 通才的基礎架構。 發展導向 追求目標（brand）→ 教導所學（content）→ 幫助他人（product）。把自己變成客戶頭像。 系統即產品 People want YOUR solution. 你的經驗系統化後就是可銷售的產品。 🎯 練習題 Practice Questions 問題 1：概念理解 — 為什麼「交叉優勢」比「專業深度」更有價值？ ▼ Dan Koe 提出「Your edge lies more in intersection than expertise」。請解釋為什麼在 AI 時代，「交叉優勢」比「專業深度」更有價值？試舉一個你自身經歷的例子說明。 參考解答： 在 AI 時代，純粹的專業知識可以被 AI 快速學習和複製。但「交叉點」產生的獨特視角——例如結合製藥合規"
+  },
+  {
+    "docFile": "2026-01-12_forget-about-money.html",
+    "docTitle": "Forget About The Money 忘掉金錢",
+    "docDate": "2026-01-12",
+    "docSource": "Vas (@vasuman)",
+    "docRating": 3.4,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Forget About The Money 忘掉金錢 作者：Vas (@vasuman) | 發佈日期：2025年1月10日 Mindset Career Startup Strategy 📋 快速摘要 Executive Summary 閱讀時間：12 分鐘 核心概念 Core Concept 金錢是工作的「廢氣」(waste product/exhaust)，不是引擎本身。當你專注於做有意義的事並精進技能，金錢會作為副產品自然產生。對金錢的執著反而會阻礙你創造真正財富的能力。 實務價值 Practical Value 提供職涯決策框架：找到「享受做」與「擅長做」的交集，搭配非對稱風險策略（有限下檔、無限上檔），並以長期複利思維做決策。這對 AI 從業者特別重要——在快速變化的領域，選擇能長期投入的方向比追逐短期薪資更有價值。 關鍵要點 Key Points 六個核心課題：金錢是廢氣而非目標、職涯選擇的 Venn Diagram、風險承受力的自我誠實、花錢投資自己、非對稱賭注、長期遊戲不要提早兌現。 行動建議 Action Items 1) 誠實評估你真正享受和擅長的事 2) 在現職旁建立副業測試想法 3) 將錢視為工具而非積累目標 4) 尋找有限風險、無限回報的機會 5) 抵抗提早兌現的誘惑。 學習目標 Learning Objectives Mindset 理解「金錢是副產品」的心態如何改變決策品質 Career 學會使用 Venn Diagram 框架評估職涯方向 Strategy 掌握非對稱風險 (Asymmetric Risk) 的識別與運用 Startup 理解「投資自己」與「花錢」的本質差異 Mindset 認識長期複利效應與提早兌現的機會成本 Practical 應用這些原則於 AI/製藥產業的職涯規劃 正文開始 Content Start 共 6 部分 | 6 Sections Part 1: 金錢是廢氣 Money as Waste Product 作者 Vas 開篇就承認金錢確實重要——它解決了生活中大多數的物質問題，包括醫療、教育、體驗。但他指出， 心理問題和人際關係卻不是金錢能解決的 。有錢反而讓信任變得更複雜，也無法買到對人生方向的清晰度。 既然金錢這麼重要，為什麼要「忘掉」它？因為 要賺錢，你必須先忘掉它 。你對金錢的執著和擔憂，正是你永遠無法賺大錢的原因。 原文核心比喻：「 Money is a waste product. 」當你做自己享受且擅長的工作時，金錢會跟隨——不是立即，也不容易，但必然會來。真正創造財富的人在工作時不是想著錢，而是想著工作本身。金錢是引擎的排氣，是過程的副產品，literally 是這個過程的「排泄物」。 💡 比喻說明：引擎與排氣 想像一輛汽車：引擎是你的工作、技能、熱情；汽油是你的時間和精力；目的地是你想達成的目標。而排氣（exhaust）呢？那就是金錢。 沒有人會為了收集排氣而開車。但當引擎運轉良好、方向正確時，排氣自然會產生。同樣地，當你專注於打造卓越的事物時，金錢會作為自然結果出現。 ⚠️ 重點提示：心態轉換 執著金錢時的決策濾鏡： 「什麼現在付錢更多？」「這個行動會增加還是減少我的淨資產？」 這種思維讓你傾向安全、漸進、短期的選擇——恰好是那些會限制你上檔空間的選擇。 執著工作時的決策濾鏡： 「什麼會複利成長？」「什麼是我可以一輩子做的事？」 🛠️ 實務應用：製藥/AI 情境 在製藥 CDMO 產業，你可能面臨選擇：接受一個薪資更高但純粹管理行政的職位，還是一個薪資較"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "快速摘要-executive-summary",
+    "sectionTitle": "📋 快速摘要 Executive Summary",
+    "content": "★★★★☆ 4.2/5 ↑ 實務應用, 工具生態 ↓ 技術深度, 時效性 這篇文章解決一個被忽略的問題： 單次 Prompt 在高壓情境下為何失效 。當你的郵件被轉發給 VP、當有人強硬反駁你、當私人討論變成公開 escalation 時，原本的 tone 和 intent 就會開始崩解。 作者 Judy Ossello 提出 ACT + BASE 框架 ：ACT 定義「什麼行為必須永遠成立」，BASE 確保「透過結構而非措辭來執行這些保證」。這不是讓單一草稿更精緻，而是讓行為可以跨輪次保持穩定。 文章提供完整的 System Prompt 範本，可直接貼入 ChatGPT Project Instructions 使用，並包含四種模式切換機制：Draft、Clarify、Pushback、Variants。"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "🎯 學習目標 Learning Objectives",
+    "content": "🔍 診斷溝通崩解模式 理解單次 Prompt 在壓力下失效的根本原因，以及人類和 AI 共同面臨的「過度軟化」陷阱 🏗️ 掌握 ACT + BASE 架構 區分行為規格 (ACT) 與實施元件 (BASE) 的設計原則，建立可跨輪次穩定的 Agent ⚡ 實作高信任溝通 Agent 使用提供的 System Prompt 建立 ChatGPT Project，並運用四種模式處理不同溝通情境 ACT + BASE Agent Framework 📝 Prompt 單次互動 Single Turn → 🎯 ACT 行為規格 What must hold → 🔧 BASE 結構執行 How enforced → 🤖 Agent 跨輪穩定 Multi-turn stability 問題診斷 ACT + BASE 框架 實作指南"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "part-i-高壓溝通為何崩解",
+    "sectionTitle": "Part I: 高壓溝通為何崩解",
+    "content": "我曾經做過一些工作， 零權力但全責任 。你知道這種類型：協調跨團隊的大型專案，但這些團隊都不向你報告。緊迫的截止日期、持續的模糊性。成功取決於數十個不向你匯報的人。 \"I've had jobs where I had zero authority but full accountability. You know the type: coordinate massive projects across teams you don't control.\" 你唯一真正的工具？ 溝通 。而且它不能只成功一次。它必須在你的主管把它轉發給她的 VP 時撐住。當有人強力反駁時撐住。當私人討論突然變成公開升級時撐住。 \"The only real tool you have? Communication. And it can't just work once. It has to hold up when your manager forwards it to her VP. When someone pushes back hard.\""
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "我的理解",
+    "sectionTitle": "💡 我的理解",
+    "content": "💡 比喻說明 想像你在玩傳話遊戲，但每一輪傳話的人都會「善意地」修改你的訊息。原本說「這個功能需要延後兩天」，經過三輪修改後變成「他們團隊有困難」。這就是高壓溝通的現實：你的原始 intent 會在每次修訂中被稀釋。 ⚠️ 重點提示 核心洞察 ：問題不在於「寫不好」，而在於 溝通工具不是為「跨輪次穩定」設計的 。大多數人用 AI 寫郵件時，只想到單次輸出，沒想到這封信會被轉發、被質疑、被公開討論。"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "part-ii-單次-prompt-的限制",
+    "sectionTitle": "Part II: 單次 Prompt 的限制",
+    "content": "大多數人試圖用 AI 解決高壓溝通，方法是要求它「寫一封專業郵件」或「讓這聽起來更好」。 一次性 Prompt 對應一次性訊息 。 \"Most people try to solve high-stakes communication with AI by asking it to 'draft a professional email' or 'make this sound better.' One-off prompts for one-off messages.\" 第一次草稿效果很好。但當有人挑戰你，或把你的訊息往上轉發三層，你就回到原點——重新解釋脈絡、重新描述語氣、每次修訂都要重新下 Prompt。 \"It works great for the first draft. But the moment someone challenges you or forwards your message three levels up, you're back to square one—re-explaining context, re-describing tone, re-p"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "我的理解",
+    "sectionTitle": "💡 我的理解",
+    "content": "💡 比喻說明 這就像每次需要切菜時都要重新教你的廚房助手「刀怎麼拿、要切多細、手指要收好」。對於單次任務沒問題，但如果你要連續做十道菜，每道菜都要重新教一遍，效率就崩潰了。 ⚖️ 工具比較 情況 人類 AI 壓力下 過度謹慎措辭 每次重新生成 被質疑時 加更多 context 無法保持一致 結果 語言越來越安全模糊 原始 intent 流失"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "part-iii-act---行為規格",
+    "sectionTitle": "Part III: ACT - 行為規格",
+    "content": "AI Agent 行為可以透過兩個互補層達到跨輪次穩定： ACT 指定什麼必須永遠為真， BASE 透過結構而非措辭來執行這些保證。 \"AI Agent behavior can achieve stability across turns using two complementary layers: ACT, which specifies what must always be true about the agent's behavior; BASE, which enforces those guarantees through structure, not wording.\" 📚 ACT 三元素 ALIGNED（對齊） ：保持冷靜、穩定、專業的語氣。減少熱度：不戲劇化、不誇大緊迫性、不情緒信號。優先保護信任而非說服。 CONSTRAINED（約束） ：不捏造事實、假設或理由。不指責或推測他人責任。不包含法律、HR、醫療或合規聲明。不建議欺騙或操縱。 TUNED（調校） ：僅根據收件人關係和風險調整句子長度、直接程度和正式程度。不調整責任結構、原因框架或建議的下一步。"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "我的理解",
+    "sectionTitle": "💡 我的理解",
+    "content": "💡 比喻說明 ACT 就像是公司的「核心價值」——不管市場怎麼變、客戶怎麼要求，這些原則永遠不動搖。你可以調整報價、調整交期，但「誠實」這個價值不能因為壓力而打折。 ⚠️ 重點提示 TUNED 的精妙之處 ：很多人以為「適應受眾」就是改變所有東西。但 ACT 框架區分了「可調整」和「不可調整」：你可以對 VP 用更正式的語言，但你不能改變「誰負責」這個事實。 這是高壓溝通的關鍵防線 。"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "part-iv-base---實施元件",
+    "sectionTitle": "Part IV: BASE - 實施元件",
+    "content": "BASE 定義如何在結構層面執行 ACT 的保證。它不依賴措辭的好壞，而是透過 明確的禁止清單、吸引子模式、和結構模板 來確保一致性。 \"BASE is how those expectations are enforced... Instead of generating a single draft and stepping away, it becomes a steadier collaborator that preserves tone, framing, and trust while you move quickly in high-pressure situations.\" 💻 BASE 四元素 BOUNDARIES（邊界） ：缺少必要細節時最多問兩個針對性問題。如果用戶要求策略，用訊息變體回應，不要解釋。 PROHIBIT（禁止） ：填充詞（just、wanted to）、情緒安撫（I understand this is frustrating）、自我參照（I want to be transparent） ATTRACTORS（吸引子） ：每輪必須回到：清楚原"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "我的理解",
+    "sectionTitle": "💡 我的理解",
+    "content": "💡 比喻說明 BASE 就像是「機場安檢」——不管你是誰、要去哪裡，都要經過同樣的流程。這不是因為不信任你，而是因為一致的流程比個案判斷更可靠。PROHIBIT 清單就是安檢的「禁止攜帶物品」，ATTRACTORS 就是「標準通關流程」。 🛠️ 實務應用 為什麼禁止「just」和「wanted to」？ 這些填充詞會削弱你的訊息。比較： • ❌ \"I just wanted to let you know...\" • ✅ \"The timeline has shifted...\" 第一種聽起來在道歉，第二種是在陳述事實。在高壓情境下，這個差異會被放大。"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "part-v-實作步驟",
+    "sectionTitle": "Part V: 實作步驟",
+    "content": "重要：將 System Prompt 貼入你的 ChatGPT Project 的 Instructions 欄位 ，而不是作為附加檔案。Project instructions 作為持久的 system prompt，適用於所有對話。 \"Important: Paste the system prompt into your ChatGPT Project's Instructions field, not as an attached file. Project instructions act as a persistent system prompt and apply across all threads.\" 🛠️ 三步驟設定 Step 1 ：在 ChatGPT 建立新 Project Step 2 ：開啟 Add Instructions Step 3 ：貼上 Instructions 並儲存 設定完成後，你不需要重述規則或約束。你可以用自然語言與 Agent 互動。"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "我的理解",
+    "sectionTitle": "💡 我的理解",
+    "content": "⚠️ 重點提示 為什麼是 Project Instructions 而非附加檔案？ 附加檔案適合參考資料，但不會可靠地執行行為。Project Instructions 在每次對話開始時都會被讀取，確保行為一致性。這是 Context Engineering 的核心原則：不是靠「說得更清楚」，而是靠「結構位置」來確保執行。"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "part-vi-四種模式切換",
+    "sectionTitle": "Part VI: 四種模式切換",
+    "content": "💻 SHIFTS 模式定義 [DEFAULT] Draft Mode ：產出請求的訊息。僅輸出訊息文本。 [CLARIFY] Clarify Mode ：最多問兩個必要問題以準確起草。無建議或評論。 [PUSHBACK] Pushback Mode ：對提供的回覆生成 2-3 句回應。保持壓縮和冷靜權威。 [VARIANTS] Variant Mode ：提供 2-3 個僅訊息變體，在直接程度和壓縮度上有所不同。除變體標題外無評論。 你不需要為日常起草使用模式。它們存在是為了當情況改變時， 行為仍然可靠 。把模式想成護欄，而非功能。 \"You don't need to use modes for everyday drafting. They exist so behavior stays reliable when the situation changes. Think of modes as guardrails, not features.\""
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "我的理解",
+    "sectionTitle": "💡 我的理解",
+    "content": "⚖️ 模式使用時機 情境 觸發詞 模式 一般起草 （無需觸發） Draft 資訊不足 [CLARIFY] Clarify 收到反駁 [PUSHBACK] Pushback 需要選項 [VARIANTS] Variant 💡 比喻說明 這就像汽車的排檔：大部分時間你用 D 檔，但遇到陡坡你需要 L 檔，停車時需要 P 檔。模式不是讓你每次都要選，而是讓你在特定情境下有精確的控制。"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "📌 重點整理 Key Takeaways",
+    "content": "1. Prompt vs Agent 的本質差異 Prompt 問模型「要寫什麼」，Agent 定義「應該如何行為」。當對話持續、壓力升高時，你需要的是行為穩定性，而非更精緻的單次輸出。 2. ACT 定義不可妥協的原則 ALIGNED（對齊信任）、CONSTRAINED（約束邊界）、TUNED（調校風格）三層架構確保行為的核心不會因壓力而改變，只有表面風格可以適應受眾。 3. BASE 透過結構執行保證 BOUNDARIES（邊界）、PROHIBIT（禁止清單）、ATTRACTORS（吸引子）、STRUCTURAL ATTRACTOR（結構模板）四元件讓行為執行不依賴措辭好壞。 4. 模式是護欄而非功能 Draft、Clarify、Pushback、Variants 四種模式不是讓你每次都要選，而是在特定情境下提供精確控制，確保行為在情況改變時仍然可靠。"
+  },
+  {
+    "docFile": "2026-01-13_act-base-framework.html",
+    "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
+    "docDate": "2026-01-13",
+    "docSource": "Wyndo & Judy Ossello",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "🧠 練習題 Practice Questions",
+    "content": "Q1 概念理解 為什麼單次 Prompt 在高壓情境下會失效？請從文章框架解釋。 單次 Prompt 的設計假設是：訊息只發送一次、受眾穩定、目標是產出好版本。但高壓情境打破了這些假設： 訊息會被轉發給不同層級的人（VP、跨部門） 受眾和風險會隨時改變（私人 → 公開） 目標從「產出好版本」變成「管理對話」 每次情境改變，你就要重新解釋 context、重新描述 tone，原本的 intent 在反覆修訂中流失。這是「互動問題」，不是「寫作問題」。 Q2 產業應用 在 CDMO 製藥環境中，如何應用 ACT + BASE 框架來處理客戶的 Deviation 通知？ 以 Deviation 通知為例，可以這樣設計： ACT 層： ALIGNED：保持專業、事實導向，不使用可能暗示過失的語言 CONSTRAINED：不推測根本原因（在調查完成前）、不承諾特定時間表、不做法規聲明 TUNED：可根據客戶層級調整詳細程度，但不改變事件描述的準確性 BASE 層： PROHIBIT：「我們認為」、「應該不會影響」、「可能是因為」 STRUCTURAL ATTRACTOR：(1) 事件描述 (2"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "📋 快速摘要",
+    "content": "Dan Koe 在這篇長文中提出一個激進的觀點：傳統的新年目標之所以失敗，是因為人們只改變「行為」而不改變「身份」。真正的改變需要深入心理層面，理解你的 無意識目標 （所有行為都是目標導向的），認識你的 自我保護機制 （身份認同會抗拒威脅），並透過一套結構化的 一日協議 來重建你的人生方向。文章結合了 Alfred Adler 的目的論心理學、Maxwell Maltz 的心理控制學、Csikszentmihalyi 的心流理論，以及自我發展階段模型，提供了一套從診斷到執行的完整框架。"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "學習目標",
+    "sectionTitle": "🎯 學習目標",
+    "content": "1 理解為什麼「改變行為」比「改變身份」更難維持，以及如何識別自己的無意識目標 2 掌握心智發展的 9 個階段，判斷自己目前所在位置以及突破的路徑 3 學會 Cybernetics（控制論）框架，理解「智力」的操作型定義與行動迭代策略 4 執行完整的「一日協議」：晨間心理挖掘、日間模式中斷、夜間洞察整合 5 將人生目標系統化為「電玩遊戲」架構，建立持續進步的內在動力機制 身份轉變三階段 The Identity Flip 😤 Dissonance 失調：受夠現狀 → 🌫️ Uncertainty 不確定：探索方向 → 💡 Discovery 發現：6個月抵6年 基礎理論 I-III 發展模型 IV-V 執行協議 VI 系統整合 VII"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-i你不在想要的位置因為你不是會在那裡的人",
+    "sectionTitle": "Part I：你不在想要的位置，因為你不是會在那裡的人",
+    "content": "You aren't where you want to be because you aren't the person who would be there"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文翻譯",
+    "sectionTitle": "📄 原文翻譯",
+    "content": "談到設定大目標，人們傾向於關注成功的兩個要素之一： 改變行動以朝目標前進 （最不重要，第二順位）和 改變你是誰，讓行為自然跟隨 （最重要，第一順位）。 \"When it comes to setting big goals, people tend to focus on one of the two requirements for success: Changing your actions to make progress toward the goal (least important, second order) / Changing who you are so that your behavior naturally follows (most important, first order)\" 如果你想要人生中的特定結果，你必須 在達到目標之前很久就擁有能創造那個結果的生活方式 。 \"If you want a specific outcome in life, you must have the lifestyle that creates that outcome l"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "專家解析",
+    "sectionTitle": "💡 專家解析",
+    "content": "📚 核心概念：First Order vs Second Order Change 這區分非常關鍵。Second Order（改變行動）是「治標」，First Order（改變身份）是「治本」。 想像一個漏水的桶子：Second Order 是不斷加水（更多紀律、更多意志力），First Order 是修補桶子本身（重塑自我認知）。 💡 比喻說明 健身教練不需要「逼自己」去健身房，因為那就是他們的身份。他們「逼自己」的反而是偷懶不去。 同理，CDMO 的品質主管不需要「提醒自己」注意 GMP 合規，因為那已經內化為他們看待製程的方式。"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-ii你不在想要的位置因為你其實不想在那裡",
+    "sectionTitle": "Part II：你不在想要的位置，因為你其實不想在那裡",
+    "content": "You aren't where you want to be because you don't want to be there"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文翻譯",
+    "sectionTitle": "📄 原文翻譯",
+    "content": "理解心智的第一步是理解 所有行為都是目標導向的 。它是目的論的（teleological）。 \"The first step to understanding the mind is to understand that all behavior is goal-oriented. It's teleological.\" 舉例來說，如果你無法停止拖延工作，你可能會用「缺乏紀律」來合理化，但實際上你正在試圖達成一個目標，就像你一直在做的那樣。在這個案例中，那個目標可能是 保護自己免於完成並分享工作後會面臨的批判 。 \"As an example, if you can't stop procrastinating your work, you may justify it with the fact that you 'lack discipline,' but in reality, you are attempting to achieve a goal like you always are. In this case, that goal could be to protect "
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "專家解析",
+    "sectionTitle": "💡 專家解析",
+    "content": "⚠️ 重點提示：Alfred Adler 的目的論 Dan Koe 引用的是 Alfred Adler（阿德勒）的心理學觀點，與 Freud 的「因果論」不同。 Freud： 你拖延是因為過去的創傷（原因 → 結果） Adler： 你拖延是因為它能達成某個目的（目的 → 行為） 這個視角轉換非常有力量：你不是「受害者」，你是「選擇者」。 🛠️ 實務應用 下次你發現自己在拖延時，問自己：「這個拖延行為正在幫我達成什麼目標？」 可能是：避免失敗、避免被批評、維持「還沒真正努力過所以還有潛力」的自我形象。"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-iii你不在想要的位置因為你害怕在那裡",
+    "sectionTitle": "Part III：你不在想要的位置，因為你害怕在那裡",
+    "content": "You aren't where you want to be because you're afraid to be there"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文翻譯",
+    "sectionTitle": "📄 原文翻譯",
+    "content": "這就是你如何成為今天的自己，以及你如何成為明天的自己。這是 身份的解剖學 ：你想達成一個目標 → 你透過那個目標的視角感知現實 → 你只注意到能幫助你達成目標的「重要」資訊和想法（學習）→ 你朝目標行動並接收到你正在進步的反饋 → 你重複那個行為直到它變成自動化和無意識的（制約）→ 那個行為成為你認為自己是誰的一部分（「我是那種會...的人」）→ 你捍衛你的身份以維持心理一致性。 \"Here's how you've become who you are today, and how you will become who you will be tomorrow. This is the anatomy of identity: You want to achieve a goal → You perceive reality through the lens of that goal → You only notice 'important' information and ideas that allows you to achieve that goal (learning) "
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "專家解析",
+    "sectionTitle": "💡 專家解析",
+    "content": "📚 核心概念：身份防衛機制 這解釋了為什麼改變這麼難：你的心智把「改變」解讀為「威脅」，然後自動啟動防禦。 Maxwell Maltz 在《Psycho-Cybernetics》中稱這為「自我形象」的恆溫器功能——它會自動調節你回到「設定溫度」。 💡 比喻說明 想像你的身份是一個國家，而你的信念是國界。任何「入侵」（挑戰你信念的資訊）都會觸發「國防軍」（情緒反應）。 這就是為什麼網路上的政治爭論如此激烈——人們不是在討論政策，他們是在「保衛領土」。"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-iv你想要的人生存在於特定的心智層級",
+    "sectionTitle": "Part IV：你想要的人生存在於特定的心智層級",
+    "content": "The life you want lies within a specific level of mind"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文翻譯",
+    "sectionTitle": "📄 原文翻譯",
+    "content": "心智會隨著時間通過 可預測的階段 進化。當你出生時，你像一塊小小的生存海綿，吸收任何你能吸收的信念（這些信念深受你的文化影響），好讓你能感到安全和有保障。 \"The mind evolves through predictable stages over time. When you're born, you're like a little survival sponge that absorbs whatever beliefs you can (which are heavily dictated by your culture) so that you can feel safe and secure.\""
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "專家解析",
+    "sectionTitle": "💡 專家解析",
+    "content": "📚 核心概念：自我發展九階段模型 Dan Koe 引用的是 Susanne Cook-Greuter 的自我發展理論，結合了 Maslow、Spiral Dynamics 等模型： Stage 1-3（前傳統）： Impulsive → Self-Protective → Conformist Stage 4-6（傳統到後傳統）： Self-Aware → Conscientious → Individualist Stage 7-9（後後傳統）： Strategist → Construct-Aware → Unitive 對於讀這篇文章的人，你可能在 4-8 之間。關鍵不在於「你在哪」，而是「如何移動」。"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-v智力是從人生中獲得你想要的東西的能力",
+    "sectionTitle": "Part V：智力是從人生中獲得你想要的東西的能力",
+    "content": "Intelligence is the ability to get what you want out of life"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文翻譯",
+    "sectionTitle": "📄 原文翻譯",
+    "content": "成功有一個公式。一個成分是 能動性（agency） 。一個成分是機會。最後一個成分是智力。 \"There is a formula for success. One ingredient is agency. One ingredient is opportunity. The last ingredient is intelligence.\" 控制論（Cybernetics） 來自希臘字 kybernetikos，意思是「引導」或「善於引導」。它也被稱為「獲得你想要的東西的藝術」。 \"Cybernetics comes from the greek word kybernetikos which means 'to steer' or 'good at steering.' It's also known as 'the art of getting what you want.'\" 控制論說明了智慧系統的特性： 有一個目標 → 朝目標行動 → 感知你在哪裡 → 與目標比較 → 基於反饋再次行動 。 \"Cybernetics illustrates the properties of"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "專家解析",
+    "sectionTitle": "💡 專家解析",
+    "content": "⚠️ 重點提示：智力的操作型定義 Naval Ravikant 的這個定義非常實用：「智力的唯一真正測試是你是否從人生中獲得你想要的東西。」 這不是 IQ 測驗的智力，而是「有效性」——你能否迭代、調整、持續朝目標前進。 💡 比喻說明 想像一艘船被風吹離航道： 低智力系統： 繼續被風吹，抱怨風不公平，最後擱淺 高智力系統： 感知偏離、調整方向、利用風力、最終到達目的地 差別不在於「有沒有被吹離」，而在於「能否修正」。"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-vi如何啟動一個全新的人生在一天內",
+    "sectionTitle": "Part VI：如何啟動一個全新的人生（在一天內）",
+    "content": "How to launch into a completely new life (in 1 day)"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文翻譯",
+    "sectionTitle": "📄 原文翻譯",
+    "content": "當我觀察成功翻轉身份的人的模式時，它會在張力累積後 快速發生 。具體來說，我注意到人們傾向於經歷三個階段： \"When I observe patterns in people who successfully flip their identity, it happens fast after a build up of tension. Specifically, I've noticed 3 phases that people tend to go through.\" 失調（Dissonance） ——他們感覺自己不屬於現在的生活，並且對缺乏進步感到足夠厭煩。 不確定（Uncertainty） ——他們不知道接下來會發生什麼，所以他們要麼實驗，要麼迷失並感覺更糟。 發現（Discovery） ——他們發現想要追求的東西，並在 6 個月內取得 6 年的進步。 \"Dissonance – They feel like they don't belong in their current life, and become sufficiently fed up with their "
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "專家解析",
+    "sectionTitle": "💡 專家解析",
+    "content": "🛠️ 一日協議：三部分結構 Part 1 晨間：心理挖掘（Psychological Excavation） 建立「反願景」（Anti-Vision）和「最小可行願景」（Vision MVP）。問自己：如果什麼都不改變，5年後的週二會是什麼樣子？10年後呢？ Part 2 日間：中斷自動駕駛（Interrupting Autopilot） 設定隨機提醒，強迫自己在一天中反覆思考這些問題。打破無意識的模式。 Part 3 夜間：整合洞察（Synthesizing Insight） 將一天的思考結晶成：一年視角、一月視角、每日視角的具體目標。 ⚠️ 協議核心問題清單 晨間挖掘（選取最有力的幾個）： • 你學會容忍的那種沉悶而持續的不滿是什麼？ • 什麼真相如果承認給你尊敬的人聽，會讓你難以忍受？ • 你人生的結尾，你走了安全的版本。你從未打破模式。代價是什麼？ 日間中斷（設定手機提醒）： • 11:00am：我現在正在用我做的事情逃避什麼？ • 3:15pm：我正在走向我討厭的生活還是我想要的生活？ • 9:00pm：今天我什麼時候感覺最有活力？什麼時候最死氣沉沉？"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-vii把你的人生變成一個電玩遊戲",
+    "sectionTitle": "Part VII：把你的人生變成一個電玩遊戲",
+    "content": "Turn Your Life Into A Video Game"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文翻譯",
+    "sectionTitle": "📄 原文翻譯",
+    "content": "你現在擁有了通往美好人生的所有組件。現在，把所有洞察整理成一個連貫的計畫可能會有幫助。拿出新的一頁，寫下這 6 個組件： \"You now have all of the components that lead to a good life. Now, it may be helpful to organize all of your insights into one coherent plan. Pull out a new page and write down these 6 components:\" 反願景（Anti-vision） ——什麼是我存在的禍根，或者我永遠不想再經歷的生活？ 願景（Vision） ——什麼是我認為我想要的理想生活，可以在我朝它努力時改進？ 一年目標（1 year goal） ——一年後我的生活會是什麼樣子，那是否更接近我想要的生活？ 一月專案（1 month project） ——我需要學什麼？需要獲得什麼技能？我可以建立什麼來讓我更接近一年目標？ 每日槓桿（Daily levers） ——什麼是優先的、能撬動進度的任務，讓我的專案更接近完成？ "
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "專家解析",
+    "sectionTitle": "💡 專家解析",
+    "content": "📚 核心概念：電玩遊戲框架 Dan Koe 用遊戲比喻來解釋為什麼這個系統有效： 願景 = 勝利條件 （你如何贏得遊戲） 反願景 = 失敗後果 （你輸了會發生什麼） 一年目標 = 任務 （你唯一的人生優先事項） 一月專案 = Boss 戰 （你如何獲得經驗值和裝備） 每日槓桿 = 日常任務 （解鎖新機會的每日流程） 限制條件 = 遊戲規則 （鼓勵創意的限制） 💡 比喻說明：心流狀態 Csikszentmihalyi 的心流理論告訴我們，遊戲之所以讓人沉迷，是因為它們有：清晰的目標、即時的反饋、與技能匹配的挑戰。 這 6 個組件就是把你的人生設計成一個讓你「上癮」的遊戲——但這次是對你有益的上癮。 人生遊戲化六組件 The Life Game System 🎯 Vision 勝利條件 + 💀 Anti-Vision 失敗後果 + 📅 1Y / 1M / Daily 任務系統 + 🚧 Constraints 遊戲規則"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "重點整理",
+    "sectionTitle": "📌 重點整理",
+    "content": "身份優先於行為 真正的改變是 First Order（改變你是誰），而不是 Second Order（改變你做什麼）。健身教練不需要逼自己去健身，因為那就是他們。 所有行為都是目標導向 你的拖延、逃避、「缺乏紀律」都在服務一個無意識目標——通常是自我保護。問「這個行為在幫我達成什麼」比責怪自己更有用。 智力 = 迭代能力 控制論定義的智力不是 IQ，而是：設定目標 → 行動 → 感知 → 比較 → 調整 → 再行動的循環品質。能持續修正就是高智力。 遊戲化你的人生 6 組件系統（願景/反願景/年目標/月專案/日槓桿/限制條件）創造一個讓你「上癮」的人生結構，因為它有清晰目標、即時反饋、適當挑戰。"
+  },
+  {
+    "docFile": "2026-01-13_dan-koe-fix-your-life.html",
+    "docTitle": "如何在一天內重塑你的人生",
+    "docDate": "2026-01-13",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "練習題點擊展開答案",
+    "sectionTitle": "📝 練習題（點擊展開答案）",
+    "content": "Q1 概念理解 Dan Koe 說「所有行為都是目標導向的」。請解釋為什麼「我缺乏紀律」這個自我診斷通常是錯誤的，並用 Adler 的目的論框架重新解讀。 「缺乏紀律」的問題： 這是一個「因果論」框架——把拖延歸因於某種能力的缺乏（好像紀律是可以量化的資源）。這讓你成為「受害者」，因為你似乎無法控制自己「天生」的紀律水準。 Adler 的目的論重新解讀： 拖延不是因為你「缺乏」什麼，而是因為拖延正在「達成」某個目標。例如： 保護你免於被批評（如果不完成，就不會被評判） 維持「還有潛力」的自我形象（如果不真正努力，就可以說「我還沒認真過」） 避免成功後的責任升級（如果這次成功，下次期望會更高） 關鍵轉變： 從「我是什麼樣的人」轉向「這個行為在服務什麼目的」。這讓你重新獲得選擇權。 Q2 產業應用 假設你是 CDMO 的 Operations Director，想要推動一個 AI 自動化專案，但團隊一直「沒時間」投入。用 Dan Koe 的框架分析團隊的「無意識目標」，並設計一個策略。 無意識目標分析： 「沒時間」達成的目標： 維持現狀的舒適感、避免學習新技能的不適、保護「我們已經夠忙了」"
+  },
+  {
+    "docFile": "2026-01-14_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 全面解析：AI 工具民主化的里程碑",
+    "docDate": "2026-01-14",
+    "docSource": "Joel Salinas",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.8/5 Practical Value, Timeliness Technical Depth, Tool Ecosystem Anthropic 推出 Claude Cowork，這是一個在 macOS 桌面應用程式中運行的通用型 AI Agent（AI 代理人）。與傳統 Claude 僅生成文字不同，Cowork 能夠 直接在你的電腦上讀取、編輯、建立、移動和刪除檔案 。這代表 AI 工具正從「開發者專屬」轉向「人人可用」的重大轉變。 目前 Cowork 是 Research Preview 階段，僅供 Claude Max 訂閱者使用（$100-$200/月），且限於 macOS。文章建議大多數領導者可以等待 Windows 支援和功能成熟後再投入，但強調領導者應開始思考「組織中哪些摩擦點可被這類工具消除」。"
+  },
+  {
+    "docFile": "2026-01-14_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 全面解析：AI 工具民主化的里程碑",
+    "docDate": "2026-01-14",
+    "docSource": "Joel Salinas",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "1 理解 Claude Cowork 與 Claude Code 的差異，以及 AI Agent 的核心能力 2 掌握 Cowork 的四大應用場景：桌面整理、企業整合、檔案建立、瀏覽器研究 3 評估使用 Cowork 的風險與安全考量，包含 Prompt Injection 攻擊 AI 工具演進：從對話到執行 ChatGPT/Claude 生成文字回覆 Claude Code 終端機執行程式碼 Claude Cowork 無程式碼檔案操作 Part I: Claude Cowork 是什麼？ Original Content Claude Cowork 是一個 通用型 AI Agent（AI 代理人） ，存在於 Claude macOS 桌面應用程式中。當你授予它存取特定資料夾的權限後，它可以在你的電腦上讀取、編輯、建立、移動和刪除檔案。 \"Claude Cowork is a general-purpose AI agent that lives inside the Claude macOS desktop app. It can read, edit, create, move"
+  },
+  {
+    "docFile": "2026-01-14_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 全面解析：AI 工具民主化的里程碑",
+    "docDate": "2026-01-14",
+    "docSource": "Joel Salinas",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "AI Agent 民主化 Cowork 代表 AI 工具從「開發者專屬」轉向「人人可用」的里程碑。移除程式碼門檻意味著更多人可以將想法轉化為實作。 自主性帶來風險 Cowork 能夠永久刪除檔案、可能被 Prompt Injection 劫持。在 GMP 環境中，目前不適合用於任何 regulated workflow。 識別摩擦點 領導者的新任務：不只思考「做什麼」，更要思考「哪些摩擦點可以被工具消除」。這是 AI 時代的策略性思維。 觀望但學習 大多數人可以等待工具成熟，但現在就應該開始建立對 AI Agent 能力的理解，為未來的採用做準備。"
+  },
+  {
+    "docFile": "2026-01-14_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 全面解析：AI 工具民主化的里程碑",
+    "docDate": "2026-01-14",
+    "docSource": "Joel Salinas",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Claude Cowork 與一般 Claude 的核心差異是什麼？為什麼這個差異很重要？ 核心差異 ：一般 Claude 是 Chatbot，僅生成文字回覆；Cowork 是 AI Agent，能夠在使用者的電腦上執行實際操作（讀取、編輯、建立、刪除檔案）。 重要性 ：這代表從「建議」到「執行」的跨越。過去使用者需要手動執行 AI 的建議，現在 AI 可以直接完成任務。這大幅降低了「想法到實作」的摩擦，但也帶來新的風險（檔案遺失、安全漏洞）。 類比 ：就像從「顧問」升級為「執行助理」。顧問給建議，助理直接做事。 Q2 產業應用 在 CDMO 的營運環境中，Cowork 類型的工具可能解決哪些摩擦點？有哪些是絕對不能使用的場景？ 可能的應用場景（低風險） ： Tech Transfer 會議紀錄的整理和結構化 Capacity Planning 資料的簡報初稿 個人學習資料的整理和分類 非 GMP 專案的文件整理 絕對不能使用的場景 ： 任何 GMP 文件（Batch Record、COA、SOP） Validated System 的資料 客戶機密資料（RFP、報價）"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "quick-summary-快速摘要",
+    "sectionTitle": "Quick Summary 快速摘要",
+    "content": "這篇文章提供了一個實用的 AI 工具整理框架，幫助領導者從「工具收集者」轉變為「系統建構者」。核心論點是： 95% 的組織 AI 投資沒有回報，不是因為缺少工具，而是缺少系統 。作者提出四步驟決策樹（Decision Tree）來評估新工具，以及將 10-20 個散亂實驗整合為 2-4 個可重複使用的工作流程（Reusable Systems）。對於已經累積多個 AI 訂閱但感到混亂的專業人士，這是一篇務實的「斷捨離」指南。"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "learning-objectives-學習目標",
+    "sectionTitle": "Learning Objectives 學習目標",
+    "content": "01 掌握 AI 工具審計（Audit）方法，識別訂閱重疊與隱藏成本 02 學會四問題決策樹，建立評估新工具的系統化標準 03 理解如何從散亂實驗中提取 2-4 個核心工作流程模板 AI Tool Detox Framework 四步驟決策樹 Q1 現有問題？ 是否解決當前問題 → Q2 現有工具？ 能否用已有工具解決 → Q3 成本效益？ 問題成本 > 工具成本？ → Q4 導入時間？ 2 週內可上手？"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "original-text-原文",
+    "sectionTitle": "Original Text 原文",
+    "content": "每年一月，我們都承諾「今年要變得有條理」。去年一月，我盯著 AI 工具儀表板時也這樣想。 13 個活躍訂閱 ，每一個都是懷抱最好的意圖購買的——「這會簡化我的工作流程」、「這解決了那個問題」、「每月才 20 美元」。到了三月， 我花在選擇工具上的時間比實際使用它們還多 。 \"Every January, we promise ourselves we'll get organized this year. I made that promise last January while staring at my AI tool dashboard. 13 active subscriptions... By March, I was spending more time choosing between AI tools than actually using them.\" 95% 的組織在 AI 投資上看不到可衡量的回報 ，這主要是因為領導者淹沒在選項中，對於什麼能推動業務沒有任何系統。我們把加法與進步混為一談。 \"95% of organizations see no measura"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "expert-commentary-專家解讀",
+    "sectionTitle": "Expert Commentary 專家解讀",
+    "content": "比喻說明 想像你的廚房抽屜塞滿了各種「專用」工具：酪梨切片器、蛋分離器、香蕉切片器。每個買的時候都覺得「這會讓我的生活更簡單」。結果呢？你找不到真正需要的工具，最後還是用那把萬用刀。AI 工具也是一樣—— 工具數量 ≠ 生產力 。 重點提示 95% 無 ROI 的數據來源： 這個數字來自 AI News 的 2025 報告。雖然「95%」聽起來很驚人，但要注意這類統計通常定義模糊。更有意義的問法是：你的團隊能否清楚說出每個 AI 工具帶來的具體價值？如果不能，你可能就在那 95% 裡面。 核心概念 Organize by outcome, not by capability （以成果組織，而非以功能組織）：這是本文最重要的心法轉換。大多數人問「這個 AI 能做什麼？」，高效使用者問「 我每週反覆解決的問題是什麼？ 」"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "original-text-原文",
+    "sectionTitle": "Original Text 原文",
+    "content": "Reddit 上有個討論串顯示，一個 11 人的團隊做了審計，發現他們有 35 個 AI 訂閱，其中超過 60% 功能重疊 。他們用五種不同的方式付費購買相同的能力。 審計步驟： 1. 列出所有訂閱 ——包括員工自掏腰包「因為每月才 20 美元」的那些 2. 追蹤實際使用 ——檢查信用卡帳單，看過去 7 天真正點開了哪些工具 3. 識別重疊 ——你可能用五種不同工具做同一件事 4. 計算成本 ——月支出 × 12，5 人團隊每人 3 個重疊工具每月 $20 = $3,600/年浪費在冗餘上 \"A recent thread on Reddit showed how a team of 11 people did this audit and discovered they had 35 individual AI subscriptions, most of which overlapped by more than 60%... 5 people, each paying $20/month for 3 overlapping tools, which means $3,600/ye"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "expert-commentary-專家解讀",
+    "sectionTitle": "Expert Commentary 專家解讀",
+    "content": "實務應用 CDMO 情境應用： 在 GMP 環境中，這個審計概念可以延伸到「系統驗證成本」。每增加一個 AI 工具就需要考慮： 21 CFR Part 11 合規評估時間 ALCOA+ 數據完整性審查 供應商資格認定文件 一個「免費試用」的 AI 工具，隱藏成本可能是 40+ 小時的合規審查。 成本分析 實際計算你的 AI 工具成本： 顯性成本：訂閱費 × 12 隱性成本（文章提到的）： Context-switching cost（選擇疲勞） Training overhead（每個工具的學習曲線） Security & compliance review Lost knowledge（員工離職時帶走的專業知識） 建議： 用一個簡單的試算表，列出所有 AI 工具，標記「上週用過」和「上月用過」。超過 30 天沒用的，列入取消候選名單。"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "original-text-原文",
+    "sectionTitle": "Original Text 原文",
+    "content": "你其實不需要 15 種不同的工具。你需要的是 2-4 個可以在各種情境重複使用的核心工作流程 。 提取核心工作流程的方法： 1. 檢視你最近完成的 10 個專案，你實際交付了什麼？用了哪些工具？ 2. 識別底層模式。你會發現 15 個不同工作流程其實只是 3-4 種你反覆請 AI 做的任務： • Generate options（生成選項）——腦力激盪、創意發想 • Refine existing work（精煉現有作品）——編輯、調整語氣 • Synthesize complexity（綜合複雜資訊）——把 5 個訪談變成可行主題 3. 把每個模式轉換成模板，寫下確切的 Prompt 結構，用 [PLACEHOLDER] 標記變動部分 4. 給你的工作流程命名。 如果沒有名字，它就不作為可重複使用的系統存在 \"You don't actually need 15 different tools. You need 2-4 core workflows that you can reuse across every situation... If it doesn't have a n"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "expert-commentary-專家解讀",
+    "sectionTitle": "Expert Commentary 專家解讀",
+    "content": "核心概念 三種核心 AI 任務模式： 這個分類很有價值，因為它把「工具思維」轉換為「任務思維」。無論你用 Claude、GPT 還是 Gemini，這三種模式都適用： Generate ：從無到有，擴散思考 Refine ：從有到好，收斂優化 Synthesize ：從多到一，整合提煉 這與你的 Master Prompt 系統中的「操作模式」（Challenge, Support, Analysis, Education）互補——作者的分類是「任務類型」，你的是「互動風格」。 實務應用 「命名才存在」的原則： 這是知識管理的基本功。在你的 Claude Projects 中，嘗試為常用工作流程建立明確命名： 「Tech Transfer 風險分析流程」 「客戶 Feasibility 評估模板」 「文章解讀 → 教學文件轉換器」（這就是你的 Master Prompt！） 命名的好處：可搜尋、可分享、可迭代。"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "original-text-原文",
+    "sectionTitle": "Original Text 原文",
+    "content": "Decision Tree for New AI Tools Q1: 這個工具是否解決我們「現在」正在經歷的問題？ → No：忽略它。必要時加書籤，但不要註冊試用。 → Yes：進入 Q2 Q2: 我們能用已有的工具解決這個問題嗎？ → Yes：使用那個工具，停止尋找「更好的」。 → No：進入 Q3 Q3: 這個問題的成本是否超過這個工具的成本？ → No：忽略它。工具比問題還貴。 → Yes：進入 Q4 Q4: 我們能在 2 週內以最少培訓完成導入嗎？ → No：壞消息——你買的是偽裝成工具的多月整合專案。 → Yes：以單一團隊進行 30 天試點，然後再全面推廣。"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "expert-commentary-專家解讀",
+    "sectionTitle": "Expert Commentary 專家解讀",
+    "content": "重點提示 這個決策樹的價值在於「預設否定」： 大多數工具會在 Q1 或 Q2 就被篩掉。這不是保守，而是資源配置的智慧。在 CDMO 環境中，你可以加上第五個問題： Q5: 這個工具是否能通過 GxP 合規審查？ → No：絕對不用，無論多吸引人 → Uncertain：先做供應商評估再說 比喻說明 Notion AI 的例子很經典： Q1：解決當前問題？Yes，需要更快整理會議記錄。 Q2：現有工具能解決？ Yes，Claude 或 ChatGPT 都能做到。 結論：不買 Notion AI。 這個例子的教訓：很多「專用 AI」只是把通用 LLM 包裝成特定介面，你已經付費的 Claude Pro 可能就夠用了。"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "original-text-原文",
+    "sectionTitle": "Original Text 原文",
+    "content": "每一個你沒有系統就加入的 AI 工具，都是對團隊專注力的稅。訂閱成本只是可見的支出， 真正的成本隱藏在表面之下 ： • Context-switching cost ：「這個任務該用哪個工具？」的決策疲勞。我看過團隊花 20 分鐘開會討論一個 5 分鐘任務該用哪個 AI 工具。 • Training overhead ：每個工具都需要新人訓練和文件。乘以每個團隊成員，你創造了一個沒人要求的兼職工作。 • Security & compliance review ：每個新工具都需要資安審查。 • Lost knowledge ：當員工離開，他們帶走工具專業知識。你可能在付費購買沒人會操作的東西。 \"Every AI tool you add without a system is a tax on your team's focus... When you consolidate to 2-4 core workflows instead of 10-20 random experiments, you get compound returns.\""
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "expert-commentary-專家解讀",
+    "sectionTitle": "Expert Commentary 專家解讀",
+    "content": "成本分析 隱藏成本量化框架： 假設你的團隊有 5 人，引入一個新 AI 工具： 選擇討論時間：2 小時會議 × 5 人 = 10 人時 學習曲線：每人 4 小時 × 5 = 20 人時 文件建立：8 小時 合規審查（GMP 環境）：40+ 小時 總計：78+ 人時，還沒算持續的維護成本。 如果你的團隊時薪成本是 $50/hr，一個「免費試用」的工具隱藏成本是 $3,900+。 核心概念 Compound returns（複利回報）： 這是整篇文章最重要的概念。當你整合到 2-4 個核心工作流程： 團隊不用每次從零開始 Prompt 模板可以持續優化 新人入職時間大幅縮短 你有心智頻寬處理真正重要的策略問題 這與你追求的「AI 放大人類能力」目標完全一致——少即是多。"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "key-takeaways-重點整理",
+    "sectionTitle": "Key Takeaways 重點整理",
+    "content": "01 加法 ≠ 進步 一月承諾「變得有條理」通常變成「增加更多訂閱」。95% 組織 AI 投資無 ROI，問題不是工具不夠，是缺少系統。 02 以成果組織，而非功能 停止問「這個 AI 能做什麼」，開始問「我每週反覆解決的問題是什麼」。15 個工作流程通常只是 3 種任務：Generate, Refine, Synthesize。 03 決策樹保護你 四個問題（現有問題？現有工具？成本效益？導入時間？）讓大多數閃亮新工具在 Q1 或 Q2 就被篩掉。預設否定是資源配置的智慧。 04 隱藏成本遠超訂閱費 Context-switching、培訓、合規審查、知識流失——這些「專注力稅」比每月 $20 的訂閱費高出數十倍。整合到 2-4 工作流程獲得複利回報。"
+  },
+  {
+    "docFile": "2026-01-15_ai-tool-detox.html",
+    "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
+    "docDate": "2026-01-15",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "practice-questions-練習題",
+    "sectionTitle": "Practice Questions 練習題",
+    "content": "Q1 概念理解 為什麼作者說「如果工作流程沒有名字，它就不作為可重複使用的系統存在」？這與 AI 工具管理有什麼關係？ 核心洞察： 命名是「隱性知識顯性化」的第一步。 當一個工作流程沒有名字時： 它存在於個人的腦中，無法被搜尋、分享或標準化 每次使用都需要「重新發明」，耗費認知資源 團隊成員可能用不同方式做同樣的事，導致工具重複購買 相反地，當你命名一個工作流程（如「客戶需求綜合分析模板」），它變成： 可被文件化和版本控制 可被其他人學習和使用 可被持續優化而非每次從頭開始 實務應用： 檢視你目前的 Claude Projects，有多少是有明確命名的工作流程模板？沒有命名的專案，考慮是否值得保留。 Q2 產業應用 在 CDMO/GMP 環境中，文章的四問題決策樹需要如何調整？請設計一個適合製藥業的版本。 CDMO 版 AI 工具決策樹： Q1（同原版）： 這個工具是否解決我們現在正在經歷的問題？ Q2（同原版）： 我們能用已有的工具解決這個問題嗎？ Q3（調整）： 這個問題的成本是否超過工具成本「加上」合規審查成本？ 在 GMP 環境，一個工具的真正成本 = 訂閱費 + 21 CFR"
+  },
+  {
+    "docFile": "2026-01-15_ai-trends-2026.html",
+    "docTitle": "2026 六大 AI 趨勢 - 學習文件",
+    "docDate": "2026-01-15",
+    "docSource": "AI Maker Labs Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Top 6 AI Trends for 2026 AI Maker Labs Newsletter | 2026 年度 AI 趨勢預測 LLM Agent Automation Tool TL;DR 快速摘要 閱讀時間 15 分鐘 核心概念 2026 年 AI 產業的競爭焦點已從「模型效能」轉移到「應用整合」。模型商品化後，真正的價值在於工作流程設計、Context（上下文）管理、以及實體世界的 AI 部署。 實務價值 對於 CDMO 營運專業人士，這篇文章提供了評估 AI 投資的框架：不要追逐最新模型，而是專注於能與現有工作流程整合的解決方案。技術門檻降低意味著跨部門的 AI 採用將加速。 關鍵要點 六大趨勢：模型商品化、工作流程勝過 Agent、技術鴻溝縮小、Context 勝過 Prompting、廣告進入 Chatbot、AI 進入實體世界。每個趨勢都有具體的行動建議。 行動建議 1) 選擇與你工作環境整合最好的 AI 工具，而非「最強」的模型；2) 從一個可重複的工作流程開始導入 AI；3) 建立良好的檔案管理系統以最大化 AI 的 Context 理解能力。 學習目標 Learning Objectives LLM 理解模型商品化（Commoditization）對 AI 產業競爭格局的影響 Agent 區分 AI Workflow 與 AI Agent 的差異，了解為何工作流程比自主代理更具實務價值 Automation 掌握「Context 優於 Prompting」的原則，建立有效的 AI 協作系統 正文開始 | 共 6 部分 預計閱讀時間：15 分鐘 Part 1: Models Don't Matter (Much) Anymore For years, every new model release sparked debates about which AI was \"the best.\" That question matters far less in 2026. Data from Artificial Analysis shows the major AI models clustering together in performance. They are still improving in absolute terms, but the gap between them keeps shrinking . A Stanford study confirms this: open-weight models like DeepSeek and Llama now approach frontier performance levels. Cost tells a similar story. Epoch AI data shows that using powerful models has become drastically cheaper. NVIDIA's latest chips use 105,000 times less energy per token than they did ten years ago. Here's a useful way to think about it: when products become cheaper and more similar, they become commodities. You don't ask \"who provides the b"
+  },
+  {
+    "docFile": "2026-01-15_articulation-intelligence.html",
+    "docTitle": "如何清晰表達你的想法 - Dan Koe 三層表達框架",
+    "docDate": "2026-01-15",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "Content",
+      "LLM"
+    ],
+    "sectionId": "executive-summary-快速摘要",
+    "sectionTitle": "Executive Summary | 快速摘要",
+    "content": "★★★★☆ 4.0/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem Dan Koe 分享了從「聽不懂但覺得很厲害」到「能夠清晰表達想法」的轉變歷程。核心洞察是： 表達能力不是天賦，而是透過大量寫作和說話練習，累積出 8-10 個「Greatest Hits」想法 ，然後在任何情境中靈活運用這些經過千錘百鍊的想法。 文章提供三個進階框架：(1) Micro Story 用問題-放大-解答結構，(2) Pyramid Principle 用答案優先的層級展開，(3) Cross Domain Synthesis 用跨領域連結創造獨特見解。這些框架適用於寫作、演講、Podcast、會議等所有需要表達的場景。 理解「Greatest Hits」策略 學會建立並精煉 8-10 個核心想法，作為所有表達的起點 掌握三層表達框架 從 Micro Story 到 Pyramid Principle 到 Cross Domain Synthesis 的進階路徑 應用「想法積木」技巧 使用 8 種內容類型（痛點、例子、故事"
+  },
+  {
+    "docFile": "2026-01-15_articulation-intelligence.html",
+    "docTitle": "如何清晰表達你的想法 - Dan Koe 三層表達框架",
+    "docDate": "2026-01-15",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "Content",
+      "LLM"
+    ],
+    "sectionId": "part-i-the-inner-album-of-greatest-hits",
+    "sectionTitle": "Part I: The Inner Album of Greatest Hits",
+    "content": "建立你的核心想法庫 | Building Your Core Idea Repository 如果你想要 清晰表達你的想法 ，你需要一個 8-10 個最重要想法的池子 ，這些想法可以連結到幾乎任何話題。然後，當需要在任何情境下寫作或說話時，你就有了一個已經思考過上百次的起點。 \"If you want to articulate yourself intelligently, you need a pool of 8-10 of your biggest ideas that can be connected to almost any topic. Then, when it's time to write or speak in any situation, you have a starting point that you've already thought through hundreds of times before.\" Dan 提到他在大型 Podcast 上的心理障礙：他不想聽起來像在重複自己。所以他 避免說那些已經說得很好的話 ，腦袋一片空白，只好硬擠出一些東西。"
+  },
+  {
+    "docFile": "2026-01-15_articulation-intelligence.html",
+    "docTitle": "如何清晰表達你的想法 - Dan Koe 三層表達框架",
+    "docDate": "2026-01-15",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "Content",
+      "LLM"
+    ],
+    "sectionId": "part-ii-beginner---the-micro-story",
+    "sectionTitle": "Part II: Beginner - The Micro Story",
+    "content": "初階框架：問題-放大-解答結構 | Problem-Amplify-Solution Structure 人類的心智是一個故事引擎 。人類無法不注意故事，尤其是短而有衝擊力的故事。一旦你學會如何做好這件事，你可以有效地 短路某人的大腦 ，讓他們對你談論的話題產生興趣。 \"The mind is a story engine. Humans can't help but pay attention to a story, especially if it's short and impactful. Once you learn how to do it well, you can effectively short-circuit someone's brain into being interested in the topic you are talking about.\" 故事的基礎是 轉變（transformation） 。這不一定要是關於特定人物的轉變，像小說那樣。轉變可以簡單到只是 介紹一個問題並給出解決方案 。 \"The foundation of a story is "
+  },
+  {
+    "docFile": "2026-01-15_articulation-intelligence.html",
+    "docTitle": "如何清晰表達你的想法 - Dan Koe 三層表達框架",
+    "docDate": "2026-01-15",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "Content",
+      "LLM"
+    ],
+    "sectionId": "part-iii-intermediate---the-pyramid-principle",
+    "sectionTitle": "Part III: Intermediate - The Pyramid Principle",
+    "content": "中階框架：答案優先的層級展開 | Answer-First Hierarchical Expansion 金字塔原則 是一個溝通框架，以層級、邏輯的方式組織想法，使資訊更容易消化和更有說服力。它採取 答案優先（answer-first） 的方式，不像大多數現今的內容那樣要等到影片最後才給你答案。 \"The Pyramid Principle is a communication framework that structures ideas in a hierarchical, logical way to make information more palatable and persuasive... this takes an answer-first approach.\" 核心概念：Pyramid Principle 結構 1. Main Idea（主要想法） ：以關鍵結論或建議開始 2. Key Arguments（關鍵論點） ：用 3-5 個關鍵點支持它（只需要問「為什麼」3-5 次並提供堅實的推理） 3. Detailed Evidence（詳細證據） ：提供數據、例子、"
+  },
+  {
+    "docFile": "2026-01-15_articulation-intelligence.html",
+    "docTitle": "如何清晰表達你的想法 - Dan Koe 三層表達框架",
+    "docDate": "2026-01-15",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "Content",
+      "LLM"
+    ],
+    "sectionId": "part-iv-advanced---cross-domain-synthesis",
+    "sectionTitle": "Part IV: Advanced - Cross Domain Synthesis",
+    "content": "進階框架：跨領域連結創造獨特見解 | Creating Unique Insights Through Cross-Domain Connections 這是 Dan 最喜歡的方法，因為他有 多元興趣 。他很難只專注於一個話題或利基。他喜歡研究心理學、哲學、商業、設計、科技、健康，以及任何能給他工具過更好生活的東西。 \"This one is my favorite because I have multiple interests. It's hard for me to stick to one topic or niche. I love studying psychology, philosophy, business, design, tech, health, and really anything that gives me the tools to live a better life.\" 跨領域綜合的核心是： 注意你其他興趣中支持你論點的模式或概念 。如果我在談論深度工作，我可以用物理學中的「熵」概念來說明分心是如何運作的。這教會我的讀者新東西，而且我可以安心睡覺，因"
+  },
+  {
+    "docFile": "2026-01-15_articulation-intelligence.html",
+    "docTitle": "如何清晰表達你的想法 - Dan Koe 三層表達框架",
+    "docDate": "2026-01-15",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "Content",
+      "LLM"
+    ],
+    "sectionId": "key-takeaways-重點整理",
+    "sectionTitle": "Key Takeaways | 重點整理",
+    "content": "Greatest Hits 策略 建立 8-10 個核心想法，經過數百次思考和精煉，成為所有表達的起點。不要怕重複，最重要的想法值得被重複。 Micro Story 結構 問題-放大-解答是最快速的表達框架。有想法就立即思考相關問題，故事的基礎是轉變。 Pyramid Principle 答案優先：先給結論，再用 3-5 個論點支持，最後提供證據。問「為什麼」3-5 次就能展開內容。 跨領域綜合 用其他興趣領域的概念支持論點，創造獨特見解。寫作是用想法玩樂高，掌握 8 種內容積木。"
+  },
+  {
+    "docFile": "2026-01-15_articulation-intelligence.html",
+    "docTitle": "如何清晰表達你的想法 - Dan Koe 三層表達框架",
+    "docDate": "2026-01-15",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "Content",
+      "LLM"
+    ],
+    "sectionId": "practice-questions-練習題",
+    "sectionTitle": "Practice Questions | 練習題",
+    "content": "Q1 概念理解 為什麼 Dan Koe 認為「重複」核心想法不是問題，而是必要的？ Dan 用音樂家類比說明：聽眾喜歡你是因為你有特定的風格和聲音，他們期待聽到這個風格。如果你突然改變，第一個作品會很糟糕，聽眾也不會喜歡。 同樣的，你的「Greatest Hits」想法是經過數百次思考和精煉的，它們代表了你能提供的最大價值。新聽眾需要這些想法來認識你，而這些想法已經被驗證過有效（例如 Hormozi 的推文有 10.5 萬讚）。 核心洞察 ：最重要的想法值得被重複，因為這是精煉它們的唯一方式。 Q2 產業應用 在 CDMO 環境中，如何應用 Pyramid Principle 來向客戶報告專案狀態？ 傳統的專案報告往往從背景開始，最後才給結論。應用 Pyramid Principle： Main Idea ：「專案目前進度符合預期，預計 Q2 完成驗證批次，無重大風險。」（先給結論） Key Arguments ：(1) 製程開發已完成 3/4 階段 (2) 設備驗證進度正常 (3) 原物料供應鏈已確認 Evidence ：具體數據、時間表、風險矩陣 效果 ：客戶立即知道結論，可以選擇"
+  },
+  {
+    "docFile": "2026-01-15_email-triage-agent.html",
+    "docTitle": "Email Triage AI Agent 自動化教學",
+    "docDate": "2026-01-15",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "這篇文章教你建立一個 主動式 (Proactive) Email Triage Agent ，使用 Make.com 的 AI Agent 模組結合 Gmail，自動監控收件匣、分類標籤、生成草稿回覆，並發送 HTML 摘要報告。 核心差異：不再是「你問它答」的 Reactive Agent，而是「它自動處理、你收報告」的 Proactive Agent。作者每天早上收到一封整理好的摘要信，完全不需要打開 Gmail。 成本估算： Make.com 付費方案 $9/月 + OpenAI API $5-10/月，總計約 $12-15/月，比市面 AI 信箱服務 $20-50/月 便宜。 1 理解 Reactive vs Proactive Agent 區分「被動回應」與「主動執行」的 AI Agent 架構差異 2 設計 Email Triage System Prompt 學習如何撰寫具備決策邏輯、優先順序、工具調用的分類系統提示 3 整合 Make.com + Gmail + OpenAI 實作完整的自動化工作流程，從監控到輸出摘要 Email Triage Agent 四步驟工作流"
+  },
+  {
+    "docFile": "2026-01-15_email-triage-agent.html",
+    "docTitle": "Email Triage AI Agent 自動化教學",
+    "docDate": "2026-01-15",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "part-i為什麼需要-proactive-agent",
+    "sectionTitle": "Part I：為什麼需要 Proactive Agent？",
+    "content": "從 Reactive 到 Proactive 的關鍵轉變 作者在前一篇文章中展示了如何建立一個連接 Email、Calendar 和 Notion 的 on-demand assistant ——一個當你詢問時才回應的助手。 \"In the previous post, I showed you how to build a personal AI agent that connects your email, calendar, and Notion tasks—an on-demand assistant that responds when you ask.\" 但那個 Agent 有個問題：它是 被動的 (Reactive) 。你仍然必須檢查收件匣，告訴 Agent 該做什麼。 你仍然是瓶頸 。 \"But that agent had a problem. It was reactive. You still had to check your inbox and tell the agent what to do. You were still the bottleneck.\""
+  },
+  {
+    "docFile": "2026-01-15_email-triage-agent.html",
+    "docTitle": "Email Triage AI Agent 自動化教學",
+    "docDate": "2026-01-15",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "part-iiemail-triage-agent-的設計原則",
+    "sectionTitle": "Part II：Email Triage Agent 的設計原則",
+    "content": "不是自動分類到資料夾，而是智慧標籤 + 有限度的自動回覆 作者明確指出這個 Agent 不是 什麼：不是把所有東西分到資料夾（重要郵件會被埋沒）、不是未經審核就自動回覆（你會發蠢話）。 \"Not one that sorts everything into folders (that's how important emails get buried). Not one that auto-replies without approval (that's how you send something stupid).\" 這個 Agent 的核心功能：(1) 當未讀郵件到達時自動執行、(2) 分析每封郵件（寄件者、主旨、內容）、(3) 根據分類規則標籤郵件、(4) 發送處理過的郵件摘要。 \"But an agent that: Runs automatically when unread emails hit my inbox; Analyzes each email (sender, subject, content); Applies my triage rules to categ"
+  },
+  {
+    "docFile": "2026-01-15_email-triage-agent.html",
+    "docTitle": "Email Triage AI Agent 自動化教學",
+    "docDate": "2026-01-15",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "part-iiisystem-prompt-的六層標籤邏輯",
+    "sectionTitle": "Part III：System Prompt 的六層標籤邏輯",
+    "content": "從 URGENT 到 READ LATER 的決策樹設計 作者的 System Prompt 定義了六個標籤類別，並有明確的 優先順序決策樹 ： \"For each email, you must decide on one primary label and apply it via the Gmail Add Label to Email tool.\" URGENT ：只用於「今天真正時間緊迫」的情況。關鍵詞包含 \"today\", \"by end of day\", \"ASAP\", \"deadline today\"。 \"Use only if genuinely time-critical for TODAY... Email contains time-sensitive phrases: 'today', 'by end of day', 'EOD', 'ASAP'...\" FOLLOW-UP REQUIRED ：需要回應但不急於今天。包含直接問題、會議安排、文件請求等。 \"Use when: The email needs a response or action, but n"
+  },
+  {
+    "docFile": "2026-01-15_email-triage-agent.html",
+    "docTitle": "Email Triage AI Agent 自動化教學",
+    "docDate": "2026-01-15",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "part-ivcontext-個人化設定",
+    "sectionTitle": "Part IV：Context 個人化設定",
+    "content": "讓 Agent 理解你的工作情境、重要聯絡人、個人偏好 作者強調可以在 Context 區塊加入更多關於你自己的資訊。例如，你可能想讓特定網域的郵件獲得不同處理，因為他們是同事或主管。 \"Before we continue, you can use the Context feature to add more information about yourself. For example, you might want to treat emails from specific domains differently because they're from colleagues or managers.\" 作者的個人範例：他建立 Newsletter「The AI Maker」，所以告訴 Agent 任何「有人按讚我的文章」的通知都自動歸檔，不要混在重要郵件中。 \"For instance: I receive Substack notifications whenever someone likes my post. I've told the AI agent that I'"
+  },
+  {
+    "docFile": "2026-01-15_email-triage-agent.html",
+    "docTitle": "Email Triage AI Agent 自動化教學",
+    "docDate": "2026-01-15",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "part-vmakecom-scenario-建構步驟",
+    "sectionTitle": "Part V：Make.com Scenario 建構步驟",
+    "content": "從 Gmail Watch 到 HTML Summary 的完整流程 Step 1：監控郵件 - 使用 Gmail: Watch emails 模組，監控 Inbox 資料夾、只處理未讀郵件、抓取後標記為已讀、設定每次處理上限（建議從 10 封開始測試）。 \"Open a new scenario in Make, then add a starting module called Gmail: Watch emails... I want to simply monitor all emails in the 'Inbox' folder, process only unread messages, mark them as read once fetched, and set a limit of 50.\" Step 2：Bundle 郵件 - 使用 Array Aggregator 將所有郵件打包成單一批次，才能一次傳給 AI Agent。否則 Agent 會對每封郵件分別處理並重複發送摘要。 \"Next, we want these emails bundled into a "
+  },
+  {
+    "docFile": "2026-01-15_email-triage-agent.html",
+    "docTitle": "Email Triage AI Agent 自動化教學",
+    "docDate": "2026-01-15",
+    "docSource": "Wyndo / AI Maker",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "這篇文章的四個核心要點 Proactive > Reactive 真正的生產力提升來自移除自己作為瓶頸。Proactive Agent 讓你從「處理者」變成「審核者」，每天只需看一封摘要信。 Draft, Not Auto-Send Agent 只生成草稿，不自動發送。這是 AI 自動化的安全閥——保留人類審核權，避免發出不當內容。Copilot Model 的典型應用。 決策樹勝過模糊規則 System Prompt 中的六層優先順序（URGENT → CHECK LATER）讓 Agent 有明確的判斷依據，減少邊界情況的誤判。 Context 是個人化關鍵 通用 System Prompt + 個人 Context = 真正理解你工作情境的 Agent。同一架構，不同人用效果截然不同。 練習題 Q1 概念理解 為什麼作者選擇「智慧標籤」而非「自動分類到資料夾」？這兩種方法在使用者體驗上有什麼差異？ 答案： 自動分類到資料夾會讓郵件「消失」在視野中，重要郵件可能被埋沒在某個資料夾裡而錯過。智慧標籤則保留郵件在收件匣，只是加上視覺標記，讓你仍能看到完整收件匣的同時，快速識別優先順序。"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "**** 4.0/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem 這篇文章來自一位 2017 年入場的加密貨幣交易者，經歷多次市場週期後的深刻反思。核心論點： 毀掉交易者的不是技術分析或風險管理，而是「比較」 。當你用自己的真實績效去對比 Twitter 上精心策劃的戰績截圖，你的心理狀態會被摧毀，進而導致策略偏離、過度冒險、最終爆倉。作者提出的解方是 「與昨天的自己競爭」 ——建立嚴謹的交易日誌、追蹤系統期望值、並讓足夠的樣本數證明你的優勢。這篇文章對任何在社群媒體時代進行投資的人都有高度實用價值。"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "OBJECTIVE 01 理解「比較陷阱」(Comparison Trap) 的運作機制，以及為什麼它比技術失誤更具破壞性 OBJECTIVE 02 識別社群媒體上交易戰績的真實性問題，以及 Highlight Reel 效應如何扭曲你的判斷 OBJECTIVE 03 掌握「與自己競爭」的實務方法：交易日誌、期望值計算、系統驗證所需的樣本數 The Comparison Trap Cycle / 比較陷阱循環 W Win 獲勝 執行系統，獲得 30% 回報 -> C Compare 比較 滑 Twitter，看到 50x -> A Abandon 放棄 放棄系統，追逐高風險 -> L Lose 損失 爆倉，回到原點 PART I The 30% That Feels Like Failure / 感覺像失敗的 30%"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "original-content",
+    "sectionTitle": "Original Content",
+    "content": "你打了一筆漂亮的交易。 定位良好，遵循系統，在計畫的位置獲利了結。 賺了 25%、30%，甚至更多。真金白銀。這種贏面在六個月前會讓你慶祝（而且理應如此）。 \"So, you hit a banger trade. Positioned well, followed your system, took profit where planned. Up 25%, 30%, maybe more. Real cheddar. The kind of win that would've had you celebrating six months ago (and rightly so).\" 但在你感覺良好之前，你決定滑一下 Twitter，那個猴腦的多巴胺衝擊很快就消散了。你看到什麼？ 某個匿名帳號貼出你從沒聽過的迷因幣 50 倍截圖。 另一個在炫耀 10 ETH 的利潤。還有人隨口提到他這輪週期只賺了 8 位數。 \"But before you feel good you decide to scroll Twitter, and that monkey brain endorphin "
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "analysis",
+    "sectionTitle": "Analysis",
+    "content": "Core Concept 比較陷阱 (Comparison Trap) 是一種認知偏誤，當我們用自己的完整經歷（包含所有失敗）去對比他人精心篩選的成功片段時，會產生系統性的自我貶低。在社群媒體時代，這個效應被極度放大。 Analogy 想像你在健身房練了三個月，終於能臥推 80 公斤。正要開心時，你看到 Instagram 上有人輕鬆推 200 公斤。你不知道那個人練了 10 年、用了藥、還是根本是假片。但你的大腦已經把你的進步定義為「不夠」。 Key Insight 作者點出一個關鍵： 你放棄的是「剛剛幫你賺錢的策略」 。這不是因為策略失效，而是因為你的情緒被外部資訊劫持了。這是典型的 Loss of Process Integrity （流程完整性喪失）。 PART II What's Actually Happening / 實際發生了什麼"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "original-content",
+    "sectionTitle": "Original Content",
+    "content": "這是實際發生的事—— 你在用精心策劃的精華片段來衡量自己的成功 ，而這些片段來自那些有各種動機讓你感到自卑的人。這就是遊戲，而且不是什麼新現象。 \"Here's what's actually happening - you're measuring your success against curated highlight reels posted by people who have every incentive to make you feel inadequate. That's the game, and it's not a new phenomenon.\" 那個 50 倍？ 他們沒讓你看到另外 10 個可能歸零的部位。 10 ETH 的利潤？可能是吹牛。可能是 50 次嘗試中的唯一一次成功。8 位數大佬？見鬼，他可能一開始就有 9 位數。 \"That 50x? They're not showing you the 10 other positions that likely went to zero. The 10 ETH profit? Could be larp"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "analysis",
+    "sectionTitle": "Analysis",
+    "content": "Information Asymmetry 作者列出的「你不知道的事」清單揭示了一個關鍵概念： 資訊不對稱 (Information Asymmetry) 。在社群媒體上，發布者掌握完整資訊，而你只看到他們選擇展示的部分。這不是對等的比較基礎。 Survivorship Bias 存活者偏差 ：你看到的 50x 截圖來自願意公開的人。那些在同一筆交易虧損的人不會發文。你看到的樣本是被嚴重篩選過的，完全不具代表性。 Analogy 這就像看彩券得主的新聞：你只看到中獎的人，不會看到幾百萬個沒中的人。如果你因此覺得「買彩券很容易賺」，你就是被選擇性資訊誤導了。交易戰績截圖的運作方式完全相同。 Practical Takeaway 下次看到驚人戰績時，問自己：「如果我用同樣策略、同樣資金、同樣時間，經過 100 次模擬，結果的分布會是什麼？」這個思維練習能幫你打破 highlight reel 的迷惑。 PART III Why This Destroys Your Trading / 為什麼這會毀掉你的交易"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "original-content",
+    "sectionTitle": "Original Content",
+    "content": "這會創造一個 你永遠不會滿足的循環。 你可以把帳戶翻 10 倍，但因為有人貼了 20 倍，你仍然覺得落後。你開始為了外部認可而交易，而不是為了利潤。 \"This creates a cycle where you're never satisfied. You could 10x your account and still feel behind because someone posted a 20x. You start trading for external validation instead of profit.\" 你開始建倉不是因為好的設置，而是因為 你需要一個能和別人競爭的故事來發文。 你的風險管理完全崩壞。當你把自己和那些全壘打選手比較時，保守的勝利感覺像損失。 \"You start taking positions not because they're good setups, but because you need a story to post that competes with everyone else's. Your risk management"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "analysis",
+    "sectionTitle": "Analysis",
+    "content": "Critical Warning 作者點出的核心問題： 交易動機的扭曲 。當你的目標從「執行有正期望值的系統」變成「獲得社交媒體認可」，你的決策基礎就從邏輯變成了情緒。這是致命的轉變。 Outcome vs Process 結果導向 vs 過程導向 ：追求「能發文炫耀的故事」是結果導向思維。真正的交易者追求的是「正確執行系統」，不管結果是否 Instagram-worthy。過程正確，長期結果自然會好。 Analogy 這就像棒球打者。專業打者追求的是「打到甜蜜點的揮棒」，而不是「每次都要全壘打」。如果你每次揮棒都想打全壘打，你的打擊率會崩盤。交易也是一樣：穩定的單打比偶爾的全壘打加上大量三振更有價值。 The Obvious Play 作者指出「顯而易見的玩法通常是對的」。這在投資領域有個名字： KISS 原則 (Keep It Simple, Stupid) 。複雜的策略不等於更好的策略。追逐「還沒漲」的標的通常是在和趨勢對賭。 PART IV The Cycle That Keeps You Broke / 讓你持續破產的循環"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "original-content",
+    "sectionTitle": "Original Content",
+    "content": "這在實務上是這樣運作的——你在一筆穩健的交易中賺了 15%。執行良好，遵守計畫。你看到有人在某個新垃圾幣上發了 3 倍。現在你的 15% 感覺可悲。 你放棄你的系統，開始追逐高風險玩法來「追上」。 \"Here's how this plays out in practice - You make 15% on a solid trade. Good execution, stuck to your plan. You see someone post a 3x on some new . Now your 15% feels pathetic. You abandon your system and start chasing high-risk plays to 'catch up.'\" 你虧了 25%，因為你建倉時毫無優勢、毫無計畫，只有純粹、未經稀釋的原始希望。你告訴自己需要「把錢賺回來」，所以你加碼更多。 帳戶爆了。你回到起點（或者如果那是你最後的籌碼，就是零點）。 \"You're down 25% because you took positions with no edge"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "analysis",
+    "sectionTitle": "Analysis",
+    "content": "The Revenge Trading Pattern 作者描述的是經典的 「報復性交易」(Revenge Trading) ：虧損後急於「把錢賺回來」，導致更大的部位、更差的判斷、更多的虧損。這是一個負向回饋循環，會加速帳戶的毀滅。 Chapter Comparison Fallacy 「拿你的第三章和別人的第二十章比較」是一個精準的比喻。每個人的交易旅程有不同的：(1) 起始資金 (2) 學習曲線 (3) 市場經驗 (4) 風險偏好。這些變數讓直接比較變得毫無意義。 Breaking the Cycle 打破這個循環的關鍵是 重新定義「成功」 。成功不是「賺得比 Twitter 上的人多」，而是「比昨天的自己執行得更好」。這是內在參照 (Internal Reference) vs 外在參照 (External Reference) 的差異。 PART V What You Should Actually Track / 你真正應該追蹤的指標"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "original-content",
+    "sectionTitle": "Original Content",
+    "content": "你賺的那 30%？那是真金白銀。你點了幾下按鈕就賺到了。 那是你之前沒有的錢。那是一場勝利。 一年前你會告訴你媽這個回報率。但現在你訓練自己只會相對於匿名 Twitter 帳號發布的最佳交易來感受成功。 \"That 30% you made? That's real money. You clicked some buttons to earn that. That's money you didn't have before. That's a win. A year ago you would've told your mum about that return. But now you've trained yourself to only feel success relative to anonymous Twitter accounts posting their best trades.\" 你讓別人毫無瑕疵的精華片段決定你對自己進步的感受。這很扯。 這是你真正應該衡量的： 你比六個月前更好嗎？你犯的情緒錯誤更少了嗎？你的損失變小了嗎？你更常遵守計畫了嗎？ \"You're "
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "analysis",
+    "sectionTitle": "Analysis",
+    "content": "The Right Metrics Checklist 作者列出的自我評估問題是一個完整的 過程導向指標框架 ： 比六個月前更好？（趨勢） 情緒錯誤更少？（紀律） 損失變小？（風控） 更常遵守計畫？（執行） 權益曲線向上？（結果驗證） Equity Curve as North Star 權益曲線 (Equity Curve) 是所有指標的最終驗證。如果你的過程正確，權益曲線長期會向上。關鍵字是「長期」——不是每筆交易、不是每週，而是季度和年度的趨勢。 Analogy 這就像減肥：每天量體重會讓你發瘋，因為水分、飲食都會造成短期波動。但如果你每個月量一次，趨勢就會清晰。交易績效的評估也應該用同樣的時間尺度。 PART VI How to Compete With Yourself / 如何與自己競爭"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "original-content",
+    "sectionTitle": "Original Content",
+    "content": "從保持一個正式的日誌開始。是的，我知道這是每個人都聽膩的最老套、最不性感的建議——但它像主日布道一樣被傳頌是有原因的...它有效。不只是進場和出場。 寫下你的系統發出什麼訊號、你實際做了什麼、以及這兩者是否一致。 把你對過程的遵守和結果分開追蹤。 \"Start by keeping a proper journal. Yes, I'm aware it's both the oldest and most unsexy advice everyone is sick to death of hearing - but it is preached like a Sunday sermon for a reason... It works. Not just entries and exits. Write what your system signalled, what you actually did, and whether those matched. Track your adherence to the process separate from the outcomes.\""
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "analysis",
+    "sectionTitle": "Analysis",
+    "content": "The Complete Trading Journal 作者列出的日誌項目遠超過「進出場」，這是 系統性自我分析 的完整框架： 時間維度 ：時段、星期幾 心理維度 ：情緒、睡眠 策略維度 ：期望值、標的表現 執行維度 ：部位、停損、出場方式 Expectancy Formula Explained 期望值 (Expectancy) 是交易系統的核心指標。公式： (Win% x AvgWin) - (Loss% x AvgLoss) 。作者的例子：(0.58 x 2.8R) - (0.42 x 1R) = 1.624 - 0.42 = +1.2R 。這意味著平均每筆交易賺 1.2 個風險單位。 The Power of Sample Size 關鍵洞察： 單筆交易的結果是噪音，500 筆交易的結果才是訊號 。如果你的期望值是 +1.2R，500 筆交易後預期獲利 600R。這個數學事實應該讓你對單筆虧損完全免疫。 Analogy 把自己想成賭場，不是賭客。賭場知道輪盤的數學優勢是 5.26%。他們不在乎某個賭客贏了 $10,000——他們知道經過一百萬次旋轉，他們會賺回所有的錢再加上。"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "original-content",
+    "sectionTitle": "Original Content",
+    "content": "很多交易者（尤其是新手）永遠看不到他們的優勢發揮作用，因為 他們在 10 筆交易後就放棄了。 他們遇到連敗，假設系統壞了，開始追逐新策略。他們從不給系統足夠的樣本數來證明自己。這是我認為最大的錯誤。 \"Many traders (especially new) will never get to see their edge work because they abandon it after 10 trades. They hit a losing streak, assume it's broken, start chasing new strategies. They never give their system the sample size it needs to prove itself. This is the BIGGEST error imo.\" 你的優勢不會在 5 筆交易中顯現。它會在 500 筆中顯現。 如果你每次遇到虧損就改變方法，你永遠不會知道自己一開始是否有優勢。別當那隻在公園裡追逐任何會動的東西的發情狗。承諾於過程。相信它勝過個別結果。 \"Your ed"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "analysis",
+    "sectionTitle": "Analysis",
+    "content": "The 500-Trade Rule 作者強調的「500 筆交易」不是隨機數字——這是 統計顯著性 的概念。在較小的樣本中，隨機波動可能掩蓋真實的優勢。只有足夠大的樣本才能讓你的系統優勢從噪音中浮現。 Losses as Distribution 「虧損只是分布的一部分」是一個深刻的重新框架。如果你的系統有 60% 勝率， 40% 的交易「應該」虧損 。這些虧損不是失敗——它們是系統正常運作的證據。問題是你的猴腦不理解機率分布。 The Unwinnable Game 作者的結論直接且殘酷： 比較遊戲無法獲勝 (unwinnable) 。不管你賺多少，總有人（聲稱）賺更多。唯一的獲勝策略是退出這個遊戲，改玩一個你能控制的遊戲：與昨天的自己競爭。 The Three Yes Questions 作者的自我檢查清單簡單而有力： 執行比上季更好？ Yes 權益曲線向上？ Yes 更一致遵循系統？ Yes 如果這三個答案都是 Yes，你就在贏——不管 Twitter 上有誰貼了什麼。"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "1. 比較陷阱比技術失誤更致命 社群媒體上的交易戰績是精心策劃的 highlight reels，你用完整的自己去比較別人篩選過的片段，這會系統性地摧毀你的心理狀態和判斷力。 2. 資訊不對稱讓比較毫無意義 你不知道對方的起始資金、風險承受度、時間軸、虧損紀錄。存活者偏差意味著你只看到願意公開的贏家，看不到大多數虧損的人。 3. 用正確指標衡量成功 追蹤「比六個月前更好」「情緒錯誤更少」「更常遵守計畫」「權益曲線向上」——這些過程導向指標才是真正的成功衡量標準。 4. 讓樣本數證明你的優勢 你的優勢不會在 5 筆交易中顯現，而是在 500 筆中。計算期望值、模擬長期結果、然後信任過程——單筆虧損只是分布的一部分。"
+  },
+  {
+    "docFile": "2026-01-15_trading-comparison-trap.html",
+    "docTitle": "交易心理學：比較陷阱 | Trading Psychology: The Comparison Trap",
+    "docDate": "2026-01-15",
+    "docSource": "交易心理學專欄",
+    "docRating": 4,
+    "docTags": [
+      "Analysis"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 Concept 為什麼作者認為「比較」比糟糕的技術分析更具破壞性？ 因為比較會導致一連串的心理和行為連鎖反應：(1) 它讓你的真實勝利感覺像失敗 (2) 它驅使你放棄有效的系統去追逐高風險 (3) 它改變你的交易動機——從「執行正期望值系統」變成「獲得社交認可」(4) 它讓你的風險管理崩潰，因為保守的勝利開始「感覺」像損失。 糟糕的技術分析只會讓你做錯交易，但比較陷阱會讓你連正確的交易都無法堅持，因為你的心理狀態被外部資訊劫持了。這是系統性的、持續性的破壞，不是單一的技術錯誤。 Q2 Application 假設你在 CDMO 營運工作中完成了一個成功的批次記錄自動化專案，節省了 30% 的文件處理時間。但你看到同業發表文章說他們的 AI 系統達成 80% 自動化。你會如何應用本文的框架來評估自己的進步？ 應用本文框架，我會問自己這些問題： 1. 資訊不對稱 ：那個「80% 自動化」的定義是什麼？是完全無人監督還是 copilot 模式？他們的起點是什麼？如果他們原本是紙本作業，而我已經是半自動化，30% 的改善可能更有價值。 2. 正確的比較基準 ：我應該問「這個專案比我六個月"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "快速摘要-executive-summary",
+    "sectionTitle": "📋 快速摘要 Executive Summary",
+    "content": "2026 年 1 月，Apple 宣布與 Google 達成多年合作協議，將以 Gemini 模型驅動下一代 Siri 。這不只是技術選擇，更是戰略信號：Apple 承認自家 AI 無法達到競爭水準，選擇專注硬體與隱私基礎設施，將 AI 模型外包給真正領先的合作夥伴。對企業領導者而言，這是 評估 AI 工具時應以績效表現為依據，而非品牌認知 的重要案例。文章深入分析 iPhone 的三層 AI 處理架構、Apple 為何選擇 Google 而非 OpenAI、以及 2026 年春季上線後對 Apple 用戶的具體影響。"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "🎯 學習目標 Learning Objectives",
+    "content": "目標 1 理解 iPhone 的三層 AI 處理架構（On-Device → Private Cloud → Third-Party）及其隱私權衡 目標 2 分析 Apple 選擇 Google Gemini 而非 OpenAI 的三個戰略原因 目標 3 應用「績效信號」思維評估組織的 AI 工具選擇策略 iPhone AI 處理三層架構 Three-Layer AI Processing 📱 Layer 1: On-Device 3B 參數・最快・完全隱私 → ☁️ Layer 2: Private Cloud Apple 伺服器・端對端加密 → 🌐 Layer 3: Third-Party ChatGPT/Gemini・匿名化"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-i麵包店的比喻apple-的戰略轉折",
+    "sectionTitle": "📖 Part I：麵包店的比喻——Apple 的戰略轉折",
+    "content": "想像一家你喜愛的餐廳。食物很棒，菜單扎實，所有東西都是自家製作。然後有一天，他們開始自己做麵包。前幾批還可以，有點紮實，但至少在嘗試。六個月後，麵包變得更糟——外皮硬，內部黏膩。到了第二年，你根本不碰它了。然後突然有一天，你走進去， 麵包變得完美了 。你問老闆發生了什麼事，他說：「我們與城裡最好的麵包店合作了。我們擅長我們的事情，麵包不是。」 \"Imagine a restaurant you love. Great food, solid menu, everything made in-house. Then one day, they started making their own bread... By year two, you didn't even touch it. Then, all of a sudden, you walked in, and the bread was perfect... 'We partnered with the best bakery in the city,' he said. 'We're great at what we do. "
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-iiiphone-為何仍是最佳-ai-硬體",
+    "sectionTitle": "📖 Part II：iPhone 為何仍是最佳 AI 硬體",
+    "content": "Apple 在 AI 軟體上起步較慢，這無可否認。但他們的硬體呢？ 無與倫比 。iPhone 15 Pro 擁有 16 核 Neural Engine（神經引擎），每秒可執行 17 兆次運算。統一記憶體架構（Unified Memory Architecture）讓 CPU、GPU 和 Neural Engine 共用同一記憶體池——沒有數據搬移的瓶頸。這很重要，因為 AI 推論（Inference，執行 AI 模型來生成回應）就是要快速地將大量數據送過處理器。Apple 的硬體與軟體緊密整合，讓設備端 AI 比任何 Android 手機跑得更快、更有效率。 \"The iPhone 15 Pro has a 16-core Neural Engine capable of 17 trillion operations per second. The unified memory architecture means the CPU, GPU, and Neural Engine share the same memory pool—no bottlenecks moving data "
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-iiiai-在-iphone-上的三層運作架構",
+    "sectionTitle": "📖 Part III：AI 在 iPhone 上的三層運作架構",
+    "content": "了解 AI 在哪裡運行，幫助你知道數據何時離開你的手機。iPhone 有三種處理 AI 的方式： Layer 1: 設備端處理（On-Device） ——最快、最隱私、但能力有限。AI 完全在 iPhone 晶片上運行，不需要網路，完全隱私。Apple 使用量化（Quantization）、剪枝（Pruning）、調色盤化（Palettization）來壓縮模型。結果：30 億參數的模型能即時運行、省電、離線可用。這裡處理的有：Face ID、照片辨識、打字預測、簡單 Siri 指令（「設定計時器」）。 Layer 2: Private Cloud Compute ——當查詢太複雜時，iOS 會路由到 Apple 的私有雲運算——Apple 數據中心裡的客製化 Apple Silicon 伺服器。關鍵差異：伺服器是無狀態的（處理請求、發送回應、清除一切），端對端加密意味著即使 Apple 工程師也看不到你的查詢。 這就是 2026 年 Gemini 整合後會運行的地方：Google 的模型，Apple 的基礎設施，你的數據永遠不會碰到 Google 的伺服器。 Layer 3: 第三方"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-iv為何-apple-無法自建出色-ai",
+    "sectionTitle": "📖 Part IV：為何 Apple 無法自建出色 AI",
+    "content": "壓縮並非核心問題。實際上，現代量化技術在將 1000 億參數模型縮小到 30 億參數時，仍能保留 90% 以上的能力。 Apple 真正的瓶頸是訓練數據 ：隱私政策阻止了網頁級別的數據集，所以他們的 30 億參數模型從一開始就沒有 Google 的知識基礎。 Apple 的隱私優先方針意味著更小的設備端模型。但更大的挑戰是時機。Apple 早在 LLM 突破之前就承諾了隱私限制。當 ChatGPT 證明對話式 AI 是可行的，Apple 的架構已經建立在不同的假設之上。 \"Apple's real bottleneck is training data: privacy blocks web-scale datasets, so their 3B-parameter models never had Google's starting knowledge base to begin with... Apple committed to privacy constraints even before the LLM breakthrough.\" ⚠️ 重點提示 Gemini 交易是 Ap"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-vchatgpt-的使用率不如預期",
+    "sectionTitle": "📖 Part V：ChatGPT 的使用率不如預期",
+    "content": "儘管看似是合理的解決方案，透過 Siri 使用 ChatGPT 並未獲得顯著的採用。Apple 內部人士報告，Apple Intelligence 功能的實際使用率仍然很低，ChatGPT 整合「被埋在大多數 Siri 查詢的相當深層背景中」。基礎設施說明了故事： Siri 每天處理約 8.3 億次查詢，相比 ChatGPT 的 2.1 億次 。整合並未驅動這種流量增長。 三個可能的原因： 1. 比直接使用 ChatGPT 應用程式更慢 ——透過 Apple 的匿名化層會增加延遲 2. 沒有對話持續性 ——你問一個問題、得到答案，就這樣。沒有像 ChatGPT 原生應用那樣的對話串 3. 許可摩擦 ——每個複雜查詢都會提示「允許 ChatGPT？」前幾次感覺像是良好的隱私實踐，到了第十次就很煩人了 \"Apple insiders report that real-world usage of Apple Intelligence features remains low, with the ChatGPT integration 'buried fairly deep in the b"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-vigemini-交易的具體內容與時程",
+    "sectionTitle": "📖 Part VI：Gemini 交易的具體內容與時程",
+    "content": "交易結構 ：Google 正在為 Apple 打造一個客製化的 1.2 兆參數 Gemini 模型 。這大約是 Apple 設備端模型的 400 倍，與 Google 和 OpenAI 運行的最大模型具有競爭力。大多數任務仍然會透過 Apple 創建的 LLM（小型的那些）運行，但更複雜的任務會送到 Gemini。你的數據永遠不會碰到 Google 的伺服器——查詢透過 Apple 的基礎設施路由。估計成本約為 10 億美元，分散在多年。相比 Google 每年支付給 Apple 200 億美元作為 Safari 預設搜尋引擎的費用，這只是零頭。 時程和功能 ： • 2026 年春季：iOS 26.4 / 三月上線 • 2026 年 6 月 WWDC：進階功能預覽 • 2026 年秋季 iPhone 17：完整推出 \"Google is building a custom 1.2 trillion parameter Gemini model specifically for Apple. That's roughly 400 times larger than Apple's on-"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "1-績效信號勝過品牌認知",
+    "sectionTitle": "1. 績效信號勝過品牌認知",
+    "content": "當世界最佳硬體製造商承認自家 AI 不行並與競爭對手合作時，這就是你評估 AI 工具時的績效信號。"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "2-ai-格局在-2025-26-年改變",
+    "sectionTitle": "2. AI 格局在 2025-26 年改變",
+    "content": "ChatGPT 主導了 2023 年，但 Claude 和 Gemini 在 2025-26 年追上並在特定領域超越。選擇應基於具體用例的表現。"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "3-發揮優勢的戰略思維",
+    "sectionTitle": "3. 發揮優勢的戰略思維",
+    "content": "Apple 選擇專注於硬體、生態系、隱私基礎設施——這些是他們的核心優勢，AI 模型則合作取得最佳選擇。"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "4-隱私與功能的架構平衡",
+    "sectionTitle": "4. 隱私與功能的架構平衡",
+    "content": "三層架構（設備端→Private Cloud→第三方）展示了如何在保護隱私的同時提供進階 AI 功能。"
+  },
+  {
+    "docFile": "2026-01-17_apple-gemini-strategy.html",
+    "docTitle": "Apple 選擇 Google Gemini 的戰略意義",
+    "docDate": "2026-01-17",
+    "docSource": "Leadership in Change / Joel Salinas &amp; Ilia Karelin",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "🧠 練習題 Practice Questions",
+    "content": "Q1 概念理解 解釋 iPhone 的三層 AI 處理架構，以及每層的隱私權衡是什麼？ 三層架構： Layer 1 設備端 ：AI 完全在 iPhone 晶片上運行，30 億參數模型，零數據離開手機。權衡：能力有限（約為雲端模型的 1/400） Layer 2 Private Cloud Compute ：Apple 數據中心的客製化 Apple Silicon 伺服器，端對端加密，無狀態處理。權衡：需要網路連線，增加延遲 Layer 3 第三方 ：路由到 ChatGPT/Gemini，Apple 先剝離識別資訊。權衡：數據離開 Apple 控制（即使匿名化），每次需要用戶許可 這個架構的設計原則是「漸進式隱私讓步」——只有當較私密的層級無法處理時，才會升級到下一層。 Q2 產業應用 作為製藥 CDMO 的營運主管，Apple 的「發揮優勢、合作補強」策略對你的 AI 導入策略有何啟示？ 三個關鍵啟示： 識別核心優勢 ：CDMO 的核心優勢是 GxP 合規知識、無菌充填技術、法規經驗。AI 模型開發不是，所以應該「購買/合作」而非「自建」 分層隱私架構 ：製藥產業的敏感數據（批次記錄、"
+  },
+  {
+    "docFile": "2026-01-17_claude-cowork-product-lessons.html",
+    "docTitle": "Claude Cowork 產品策略分析：現代產品管理的實戰教材",
+    "docDate": "2026-01-17",
+    "docSource": "Department of Product Newsletter",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "quick-summary",
+    "sectionTitle": "Quick Summary",
+    "content": "這篇文章以 Claude Cowork 的發布為核心，展示了 2026 年頂尖產品團隊的運作方式：快速實驗、用戶分群再定位、10 天內完成產品原型。同時涵蓋 Google Antigravity 支援 Agent Skills、Replit 推出 Mobile App Builder、以及重要的市場數據（App 下載量下降但收入成長 21.6%）。對於想了解 AI 產品策略和企業 AI 採用現況的專業人士，這是一份資訊密度高的週報。"
+  },
+  {
+    "docFile": "2026-01-17_claude-cowork-product-lessons.html",
+    "docTitle": "Claude Cowork 產品策略分析：現代產品管理的實戰教材",
+    "docDate": "2026-01-17",
+    "docSource": "Department of Product Newsletter",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "Product Strategy 理解 Anthropic 如何從 Claude Code 衍生出 Cowork，學習「用戶分群再定位」的產品策略 Market Intelligence 掌握 2025 年 App 市場關鍵數據：下載量 vs 收入的趨勢反轉意味著什麼 Enterprise AI Adoption 解讀 HBR 調查數據：99% 企業優先投資 AI，39% 已規模化部署 Anthropic 的產品實驗框架 1 Ship First 先發布核心產品 (Claude Code) -> 2 Observe Users 發現非工程師 也在使用 -> 3 Spin-off 10 天內打造 新子產品 (Cowork) -> 4 Test & Learn 接受可能失敗 快速迭代 Part I: Claude Cowork - 產品策略的經典案例 Claude 發布了名為 Cowork 的新產品，它將 Claude Code 中已有的許多功能重新定位到工作情境中。 \"Claude revealed a new product called Cowork which takes many"
+  },
+  {
+    "docFile": "2026-01-17_claude-cowork-product-lessons.html",
+    "docTitle": "Claude Cowork 產品策略分析：現代產品管理的實戰教材",
+    "docDate": "2026-01-17",
+    "docSource": "Department of Product Newsletter",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "1. Ship-Observe-Spinoff Anthropic 的 10 天產品實驗證明：先發布、觀察用戶行為、再針對新發現的用戶群快速衍生子產品。AI 讓這種實驗成本大幅降低。 2. Data Moat 決勝負 Google 的 Personal Intelligence 展示了數據護城河的威力。在 AI 助理競爭中，誰擁有更多用戶 context，誰就能提供更個人化的服務。 3. 變現 > 獲客 App 下載量下降但收入上升 21.6%。市場成熟後，產品策略應從「衝量」轉向「提高單位價值」和「增強留存」。 4. 94% 已超越實驗 企業 AI 採用已從「要不要做」轉變為「如何做得更好」。還在觀望的組織正在快速落後。"
+  },
+  {
+    "docFile": "2026-01-17_claude-cowork-product-lessons.html",
+    "docTitle": "Claude Cowork 產品策略分析：現代產品管理的實戰教材",
+    "docDate": "2026-01-17",
+    "docSource": "Department of Product Newsletter",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼 Anthropic 選擇將 Cowork 定位為「less intimidating」的工具？這反映了什麼產品策略思維？ 核心洞察： 技術能力相同，但用戶體驗和心理門檻是不同的產品維度。 Claude Code 原本是為工程師設計的，使用 terminal 介面對非工程師來說有心理障礙。Cowork 的策略是： 保留核心技術能力（存取檔案系統、處理數據） 重新包裝 UX，降低進入門檻 針對「知識工作者」而非「工程師」設計溝通方式 這反映了「同一技術，不同市場」的產品策略。當發現非目標用戶也在使用產品時，與其改變原產品，不如衍生一個針對新用戶群優化的子產品。 Q2 產業應用 作為 CDMO 的 Operations Director，你如何應用「Ship-Observe-Spinoff」框架來優化內部流程？ 框架轉譯到 CDMO 情境： Ship First： 先在一條產線或一個部門試行新的 AI 工具或流程（例如用 Claude 分析 batch records）。不需要完美，只需要可用。 Observe Users： 觀察誰在使用、如何使用、有哪些非預期的應用"
+  },
+  {
+    "docFile": "2026-01-19_ai-context-setup.html",
+    "docTitle": "AI Context Setup - 一次設定，永久提升 90% AI 回應品質",
+    "docDate": "2026-01-19",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Prompt",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "快速摘要-executive-summary",
+    "sectionTitle": "快速摘要 Executive Summary",
+    "content": "★★★★☆ 4.2/5 ↑ 實務應用, 學習曲線 ↓ 技術深度, 時效性 這篇文章解決一個普遍痛點：大多數人在每次 AI 對話中重複相同的背景資訊，導致回應品質低落且效率不彰。作者提出「一次設定，永久受益」的方法論，透過 User Preferences（使用者偏好） 和 Project Knowledge（專案知識庫） 兩大機制，將 AI 從「通用回應機器」轉變為「了解你情境的思考夥伴」。核心洞察： 有豐富脈絡的小型模型，會持續優於對你一無所知的最新大型模型 。設定時間約一個下午，但能永久改善 AI 互動品質。 理解 Context 的真正意義 區分「內容 Content」與「脈絡 Context」的差異，了解為何背景知識比原始資訊更能提升 AI 回應品質 掌握 Adobe 四支柱框架 學習 AI 從通用工具轉變為策略夥伴所需的四個條件：Intelligible、Adaptive、Customizable、Context-Aware 實作兩步驟設定流程 能夠在一個下午內完成 User Preferences 撰寫和 Project Knowledge 文件上傳，建立個人化 AI 工作"
+  },
+  {
+    "docFile": "2026-01-19_ai-context-setup.html",
+    "docTitle": "AI Context Setup - 一次設定，永久提升 90% AI 回應品質",
+    "docDate": "2026-01-19",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Prompt",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "練習題 Practice Questions",
+    "content": "Q1 概念理解 作者區分 Content 和 Context 的關鍵差異是什麼？為什麼這個區分對 AI 回應品質很重要？ Content（內容） 是關於特定任務的原始資訊，例如「幫我寫一封 email」。 Context（脈絡） 是幫助 AI 理解你情境的背景知識，包括你的角色、限制、受眾、目標和工作方式。 這個區分重要是因為：大多數人只給 AI 內容卻不給脈絡，導致 AI 必須用通用方式回應。當 AI 有脈絡時，它能像了解你的同事一樣，自動考慮你的特定需求、偏好和限制，產出更精準的回應。 Q2 產業應用 如果你要為 CDMO 無菌充填專案建立 Project Knowledge，你會上傳哪些類型的文件？為什麼？ 建議上傳的文件類型： 1. 設備規格文件 ：SA25 Vanrx 隔離器參數、凍乾機規格，讓 AI 在討論製程時有正確的技術基礎。 2. 標準 SOP 範本 ：你習慣的文件格式和風格，確保 AI 產出符合公司標準。 3. 法規指引摘要 ：21 CFR Part 11、PIC/S GMP、PDA TR-22 的關鍵要求，讓 AI 自動考慮合規性。 4. 客戶專案背景 ：正在進行"
+  },
+  {
+    "docFile": "2026-01-20_a2ui-framework.html",
+    "docTitle": "A2UI：Google 的 Agent 驅動使用者介面框架解析",
+    "docDate": "2026-01-20",
+    "docSource": "Department of Product Knowledge Series #97",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "快速摘要-executive-summary",
+    "sectionTitle": "📋 快速摘要 Executive Summary",
+    "content": "★★★★☆ 3.8/5 ↑ 實務應用, 工具生態 ↓ 技術深度, 時效性 Google 前 CEO Eric Schmidt 預測未來的使用者介面將「消失」，取而代之的是 AI 根據使用者意圖即時生成的個人化介面。A2UI（Agent-to-UI）是 Google 悄悄發布的新協議，讓 AI 代理人能夠動態產生 UI 元件，而非傳統的純文字對話。這篇文章解析 A2UI 的六步驟工作流程、Google 內部的實際應用案例，以及對產品團隊的策略意涵。對於正在探索 AI Agent 架構的你，這是一個值得關注的 multi-agent 生態系統標準。"
+  },
+  {
+    "docFile": "2026-01-20_a2ui-framework.html",
+    "docTitle": "A2UI：Google 的 Agent 驅動使用者介面框架解析",
+    "docDate": "2026-01-20",
+    "docSource": "Department of Product Knowledge Series #97",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "🎯 學習目標 Learning Objectives",
+    "content": "🔧 理解 A2UI 核心機制 掌握六步驟工作流程：從使用者請求到 UI 渲染的完整技術鏈 🏢 評估企業應用場景 了解 Google 如何在 Opal 和內部產品中部署 A2UI，以及 multi-agent 整合模式 📊 辨識策略機會 分析「無頭代理人」商業模式和 Component Library 的策略價值 A2UI 六步驟工作流程 💬 1. 使用者請求 自然語言輸入 → 🤖 2. Agent 接收 內部或第三方 → 📝 3. 生成 JSON UI 藍圖結構 → 📤 4. 傳送至客戶端 安全資料傳輸 → 📚 5. 元件庫映射 預核准元件集 → ✨ 6. 渲染 UI 品牌一致呈現 核心概念 工作流程詳解 實際案例 策略意涵 Part I：什麼是 A2UI？核心概念解析 原文摘要 A2UI 讓 AI 代理人能夠在對話過程中判斷何時需要產生可點擊的互動介面，而非繼續純文字對話。 \"A text only agent would involve a series of back and forth conversations while a product built wi"
+  },
+  {
+    "docFile": "2026-01-20_a2ui-framework.html",
+    "docTitle": "A2UI：Google 的 Agent 驅動使用者介面框架解析",
+    "docDate": "2026-01-20",
+    "docSource": "Department of Product Knowledge Series #97",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "💎 重點整理 Key Takeaways",
+    "content": "🔄 典範轉移 A2UI 將 AI 互動從「純對話」升級為「對話 + 動態介面」，Agent 自主判斷何時需要 UI 🔐 安全架構 宣告式 JSON 藍圖 + 白名單元件庫，實現安全的 Multi-Agent UI 整合 📚 元件庫戰略 Design System 成為 Agent 的操作 API，元件庫完整性決定 AI 能力上限 💼 新商業模式 Headless Agent 模式：提供智慧，讓夥伴平台提供介面，類似 API 經濟進化版"
+  },
+  {
+    "docFile": "2026-01-20_a2ui-framework.html",
+    "docTitle": "A2UI：Google 的 Agent 驅動使用者介面框架解析",
+    "docDate": "2026-01-20",
+    "docSource": "Department of Product Knowledge Series #97",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "📝 練習題 Practice Questions",
+    "content": "Q1 概念理解 為什麼 A2UI 使用 JSON 藍圖而非直接讓 Agent 產生 HTML/JavaScript？這種設計選擇解決了什麼問題？ 核心原因：安全性與關注點分離 如果 Agent 直接產生 HTML/JavaScript，會有兩大風險： 安全風險 ：惡意或被駭的 Agent 可能注入 XSS 攻擊程式碼，竊取使用者資料 一致性問題 ：不同 Agent 產生的 UI 風格會不一致，破壞使用者體驗 JSON 藍圖是 宣告式（Declarative） 設計：Agent 只「描述」要什麼（What），Client 決定「如何」渲染（How）。這實現了： 白名單安全 ：Client 只渲染認識的元件類型，未知指令會被忽略 視覺一致性 ：所有 UI 都用宿主 App 的元件庫渲染，符合品牌識別 跨平台適應 ：同一份 JSON 可以在 Web、iOS、Android 上用各自的原生元件渲染 Q2 產業應用 在 CDMO 的 Feasibility Assessment 流程中，A2UI 可以如何應用？需要考慮哪些法規合規要點？ 可能的應用場景： 當客戶詢問「我們有一個 monoclon"
+  },
+  {
+    "docFile": "2026-01-20_biotech-compass-walkthrough.html",
+    "docTitle": "Biotech Compass 實戰教學 - AI 輔助生技投資分析工具",
+    "docDate": "2026-01-20",
+    "docSource": "The Pharma Fox Substack",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "LLM",
+      "API"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 4.0/5 Practical Value, Tool Ecosystem Technical Depth, Timeliness 這篇文章是 Biotech Compass 工具的完整實作教學。Biotech Compass 是一個結合 ChatGPT 提示工程與 Google Colab 視覺化的分析框架，讓投資者能在 15 分鐘內快速掌握生技公司的藥物管線、研發模式與財務健康狀況。 作者以 #BioPick2026 競賽中的三家公司（Palisade Bio、Corvus Pharmaceuticals、SELLAS Life Sciences）為範例，示範從 SEC 文件擷取數據、透過分層式提示詞控制 LLM 幻覺、到最終產出視覺化圖表的完整流程。這套方法論的核心價值在於 將非結構化的財報資料轉化為可比較的標準化圖表 ，同時嚴格限制 AI 推論範圍以確保資料可信度。"
+  },
+  {
+    "docFile": "2026-01-20_biotech-compass-walkthrough.html",
+    "docTitle": "Biotech Compass 實戰教學 - AI 輔助生技投資分析工具",
+    "docDate": "2026-01-20",
+    "docSource": "The Pharma Fox Substack",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "LLM",
+      "API"
+    ],
+    "sectionId": "學習目標",
+    "sectionTitle": "學習目標",
+    "content": "1 理解 Biotech Compass 的設計邏輯與資訊呈現方式 2 學會使用分層式提示詞控制 LLM 資料擷取範圍 3 掌握從 SEC 文件到視覺化圖表的完整工作流程 Biotech Compass 工作流程 1 文件收集 SEC 10-Q/10-K + 新聞稿 → 2 提示詞萃取 5 層漸進式數據提取 → 3 CSV 輸出 標準化數據格式 → 4 Colab 繪圖 視覺化比較圖表 Part I：運行 Compass 所需工具 Tools needed to run the Compass Compass 的設計 盡量降低對 LLM 操作、程式環境或公司官方文件的專業需求 。你只需要：免費的 ChatGPT 帳號（建議使用 Plus 但非必要）、瀏覽器、Google Colab（免費）、公司新聞稿與 SEC 申報文件（至少需要 10-Q 或 10-K），以及 Biotech Compass 的提示詞與程式碼。 \"The compass has been designed to require minimal expertise or confidence with LLMs, co"
+  },
+  {
+    "docFile": "2026-01-20_biotech-compass-walkthrough.html",
+    "docTitle": "Biotech Compass 實戰教學 - AI 輔助生技投資分析工具",
+    "docDate": "2026-01-20",
+    "docSource": "The Pharma Fox Substack",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "LLM",
+      "API"
+    ],
+    "sectionId": "重點整理",
+    "sectionTitle": "重點整理",
+    "content": "01 分層式提示詞架構 透過五層漸進式提示詞控制 LLM 資料來源範圍，從最高可信度的 SEC 文件逐步擴展到公開網路，使用者可在任何層級停止以控制資料純度。 02 低門檻工作流程 只需 ChatGPT + 瀏覽器 + Google Colab，透過複製貼上即可完成從文件萃取到視覺化的全流程，15 分鐘內產出可比較的公司分析圖表。 03 導航而非決策 Compass 定位為「提問機器」——產出的是後續調查問題清單，而非投資結論。重疊、空白、未分類都是訊號，不是錯誤。 04 幻覺控制設計 每個提示詞都明確限制 LLM 只能處理指定文件、禁止推論、必須標註來源，將「不知道」視為有價值的輸出而非需要填補的空白。"
+  },
+  {
+    "docFile": "2026-01-20_biotech-compass-walkthrough.html",
+    "docTitle": "Biotech Compass 實戰教學 - AI 輔助生技投資分析工具",
+    "docDate": "2026-01-20",
+    "docSource": "The Pharma Fox Substack",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "LLM",
+      "API"
+    ],
+    "sectionId": "練習題",
+    "sectionTitle": "練習題",
+    "content": "Q1 概念理解 為什麼 Biotech Compass 的提示詞設計要「分層」而非一次性完成所有資料收集？ 分層設計解決了 LLM 應用的核心矛盾： 資料完整性 vs. 資料可信度 。 單層設計的問題 ：如果一次性允許 LLM 搜尋所有來源，它可能會用低可信度資料填補空白，而使用者無法區分哪些是官方數據、哪些是網路推論。 分層設計的價值 ：使用者可以在每一層檢視「缺了什麼」，然後有意識地決定是否要用更低可信度的來源填補。這種「知情妥協」比「無聲混合」更符合投資分析的審慎原則。 彈性輸出 ：CSV Output Prompt 可以在 Prompt 1、3 或 4 之後執行，讓不同風險偏好的使用者選擇自己的「資料純度」。 Q2 產業應用 如何將 Biotech Compass 的分層提示詞架構應用到 CDMO 的客戶藥物可行性評估？ 可以設計類似的分層架構來處理客戶 CMC 文件： 第一層（Overview） ：只從客戶提供的正式文件（IND Module 3、IMPD Section S）萃取藥物特性、製程參數、穩定性數據。不推論、不假設。 第二層（Backfill QC） ：識別缺失欄"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "executive-summary-快速摘要",
+    "sectionTitle": "📋 Executive Summary 快速摘要",
+    "content": "★★★★☆ 4.2/5 ↑ 實務應用, 學習曲線 ↓ 技術深度, 工具生態 Dan Koe 這篇文章挑戰了「必須每天工作 12 小時才能成功」的迷思。他提出一個核心觀點： 你不需要更多時間，你需要的是清晰度 (clarity) 。文章結合認知科學（注意力作為 RAM、Psychic Entropy、Default Mode Network）和實務框架（Vision/Anti-Vision、Goal Hierarchy、Project-Based Learning），提供一套可執行的「每天一小時」深度工作協議。對於有正職、家庭責任但想追求副業或個人成長的人，這是一份實用的行動指南。雖然缺乏 AI 工具整合的具體討論，但其心理學和工作流程原則可以直接應用於任何專案，包括 AI 學習和自動化系統建置。"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "理解注意力經濟學",
+    "sectionTitle": "理解注意力經濟學",
+    "content": "學習為什麼人腦像 RAM，以及 Psychic Entropy 如何解釋無法專注的根本原因"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "掌握-flow-state-觸發公式",
+    "sectionTitle": "掌握 Flow State 觸發公式",
+    "content": "了解 Clarity + Importance + Urgency 如何創造深度專注，以及如何避免焦慮和無聊的陷阱"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "設計個人化工作例程",
+    "sectionTitle": "設計個人化工作例程",
+    "content": "學習 Fill / Empty / Use 三種腦力活動的配置，以及如何在有限時間內最大化產出 Deep Work Protocol 深度工作協議框架 🎯 Vision / Anti-Vision 定義你要什麼 + 不要什麼 → 📊 Goal Hierarchy 10年→1年→1月→1週 → 🔧 Project-Based 用專案驅動學習 → ⚡ Lever Tasks 每天 1-3 個槓桿任務"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文精選-original-text",
+    "sectionTitle": "📖 原文精選 Original Text",
+    "content": "你的心智是一台運行人生遊戲的超級電腦。你的 注意力 （一種極度稀缺的資源）就是 RAM。 \"Your mind is a supercomputer running the game of life. Your attention (an incredibly scarce resource), is the RAM.\" 人類每秒大約可以處理 50 bits 的有意識資訊。換句話說，當你加總起來，你一生大約有 1250 億 bits 的資訊可以「用掉」。就這樣。這就是你的潛能。你給予注意力的每一件事都會讓這個數字減少一點。 \"Humans can process around 50 bits of conscious information per second... you have about 125 billion bits of information to 'use up' in your lifetime. That's it. That's your potential.\" 悲哀的是，大多數人的生活中同時運行著多個高需求程式。難怪他們無法專注。他們的注意力被分散在 後悔過"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "深度解析-deep-analysis",
+    "sectionTitle": "💡 深度解析 Deep Analysis",
+    "content": "Dan Koe 用 RAM 的比喻來解釋注意力，這是一個非常實用的心智模型。就像電腦開了太多 Chrome 分頁會變慢，你的大腦也是如此。 📚 核心概念：Psychic Entropy（心理熵） 熵 (Entropy) 是物理學的基本原則：系統自然趨向混亂。Psychic Entropy 將這個概念應用到心智狀態——如果你不主動投入能量來維持秩序，你的思緒會越來越混亂。這解釋了為什麼「什麼都不做」實際上會讓你的狀態變得更糟，而不是維持原狀。 💡 比喻說明 想像你的書架。如果你不定期整理，書會慢慢散落到家裡各個角落、朋友家、甚至你想不到的地方。等你終於想整理時，需要的努力遠超過當初只是把書放回原位。你的待辦事項、未讀郵件、未完成的承諾也是如此。 這裡的關鍵洞察是： 你不是停滯不前，你是在主動退步 。每一天不投入能量到你想要的方向，混亂就會增加一點。這不是懶惰的問題，是熱力學。"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文精選-original-text",
+    "sectionTitle": "📖 原文精選 Original Text",
+    "content": "清晰度、重要性、緊迫性 。這些是防止分心入侵你心智的關鍵要素。這些是深度專注工作所需的條件。 \"Clarity, importance, and urgency. Those are the critical ingredients that prevent distractions from penetrating your mind. Those are the requirements needed for deep focused work.\" 達到心流狀態（或最佳體驗狀態）最簡單的公式是：確保你正在接受的 挑戰剛好略高於你的技能水平 。 \"The simplest formula for reaching the flow state, or the most optimal state of experience, is to ensure that the challenge you are taking on is just barely above your skill level.\" 如果目標的挑戰對你的技能水平來說太高，你會 焦慮 。如果挑戰太低，你會 無聊 。在"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "深度解析-deep-analysis",
+    "sectionTitle": "💡 深度解析 Deep Analysis",
+    "content": "這是 Mihaly Csikszentmihalyi 的心流理論 (Flow Theory) 的實務應用。Dan Koe 將其簡化為三個可操作的變數。 ⚠️ Flow State 觸發公式 Clarity（清晰度） ：你清楚知道下一步要做什麼。如果任務太大、太模糊，就拆解到你有清晰度為止。 Importance（重要性） ：你真正理解為什麼這件事重要——不做會怎樣，做了會怎樣。 Urgency（緊迫性） ：你有理由「現在」就做，而不是「之後」再做。 🛠️ 實務應用：挑戰-技能校準 焦慮信號 （挑戰 > 技能）：你一直拖延、感覺被壓垮、不知道從哪裡開始 → 解法 ：將任務拆解成更小的子目標，直到你有信心可以完成第一步 無聊信號 （挑戰 → 解法 ：提高標準、加入新挑戰、或委派出去並找更高槓桿的任務 電玩比喻非常精準。沒有人會覺得一直打同等級的怪很有趣（無聊），也沒有人會覺得被秒殺很有趣（焦慮）。最好玩的是那種「剛好有點難，但努力一下可以過」的關卡。"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文精選-original-text",
+    "sectionTitle": "📖 原文精選 Original Text",
+    "content": "當我們逆向工程高度成功創作者的生活方式，我們會看到相同的模式。他們 沒有每天磨 16 小時 （好吧，有時候他們會，但那是因為他們選擇這樣做，不是被迫的，這是巨大的差異）。 \"When we reverse engineer the lifestyles of highly successful creatives, we see the same pattern. They didn't grind 16 hours a day (well, sometimes they did, but it was because they chose to, not because they were forced to, massive difference).\" 當你停止專注於外部任務時，你的大腦會自動切換到 預設模式網絡 (Default Mode Network) ，它連接了與視覺思維和創造力相關的大腦區域。有趣的是，我們的大腦在這種模式下並沒有消耗少很多能量。意思是，當你在休息時，你的大腦仍在工作，而且工作得相當努力。 \"When you stop focusing on extern"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "深度解析-deep-analysis",
+    "sectionTitle": "💡 深度解析 Deep Analysis",
+    "content": "這裡 Dan Koe 顛覆了「忙碌 = 成功」的迷思。他指出成功的創作者和 CEO 實際上花大量時間在「休息」，但這不是一般人理解的休息。 📚 核心概念：Default Mode Network (DMN) DMN 是大腦在沒有專注於外部任務時活躍的神經網絡。這個網絡與自傳式記憶、想像未來、理解他人觀點、以及創意思維有關。當你走路、發呆、淋浴時，DMN 在背景整合你吸收的資訊，產生「啊哈！」的頓悟時刻。這就是為什麼很多人在洗澡時想到好點子。 🛠️ 實務應用：Fill / Empty / Use 框架 Fill（填滿） ：閱讀、學習、社交——輸入新想法和知識 → 最佳時段：下午，當專注力自然下降時 Empty（清空） ：日記、計劃、冥想——將混亂的思緒轉化為有序的記錄 → 最佳時段：睡前，清理一天的心理負荷 Use（使用） ：創作、輸出、執行——將想法轉化為具體成果 → 最佳時段：早晨，當意志力和專注力最高時 關鍵區分：「休息」不等於「逃避」。泡在 Netflix 裡不是休息，那是逃避。真正的休息是讓 DMN 有空間運作——散步、開車、安靜地坐著思考。"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文精選-original-text",
+    "sectionTitle": "📖 原文精選 Original Text",
+    "content": "「一起發射的神經元會連在一起」 ——這是 Hebb's Law，一句總結神經可塑性理論的名言。 \"'Neurons that fire together, wire together.' That's Hebb's Law, a famous saying that summarizes a neuropsychological theory related to neuroplasticity.\" 人們大喊「持續性是關鍵」，這是對的。但我們可以更進一步： 新奇和挑戰能更強烈地刺激神經可塑性 。所以，當你翻轉開關、全力追求一個目標時，你把大腦放在一個快速適應的環境中，幫助這成為你的新標準。 \"People scream about how 'consistency is key,' which is true... but we can take it a step further. Novelty and challenge stimulate neuroplasticity even more. So, when you flip the switch and pursue a g"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "深度解析-deep-analysis",
+    "sectionTitle": "💡 深度解析 Deep Analysis",
+    "content": "這一段是 Dan Koe 最有爭議但也最有力的論點：漸進式改變不夠，你需要「翻轉開關」的時刻。 📚 核心概念：內在動機的神經化學雞尾酒 Dan Koe 描述了一個從外在到內在動機的轉化過程： 好奇心 → 多巴胺（新奇感）+ 去甲腎上腺素（注意力） 熱情 → 更多多巴胺 + 去甲腎上腺素（投入感） 目的 → 血清素（意義感）+ 催產素（連結感） 自主 → 多巴胺 + 皮質醇下降（控制感） 精熟 → 可持續的多巴胺（成長感） 這些化學物質相互強化，形成一個正向循環。 ⚠️ 重點提示：顯著性網絡（Salience Network） 你的大腦會自動優先處理「最重要」的資訊——而「重要性」是由多巴胺決定的。問題是：現代科技公司已經學會劫持這個機制。社交媒體、遊戲、串流服務都在競爭你的「顯著性」。 解決方案 ：當你極度專注於一個自選目標時，你重新編程了什麼對你的大腦來說是「重要的」。你的雷達開始自動偵測與目標相關的機會。 這裡對 CDMO 工作的啟示：如果你想認真學習 AI，半調子的「有空就學」不會產生神經可塑性的改變。你需要一段時間的極度投入，讓 AI 學習成為你大腦的「顯著」目標。"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文精選-original-text",
+    "sectionTitle": "📖 原文精選 Original Text",
+    "content": "第一步： Vision & Anti-Vision 。變得殘酷地意識到兩件事：你不想要什麼，以及如果你繼續採取相同的行動，你會走向何方。 \"Become brutally aware of 2 things: What you don't want. Where you will end up if you keep taking the same actions.\" 第二步： 建立目標階層 。心智渴望秩序。你需要創造一個可以隨時進入的新心理框架。大目標是為了方向。小目標是為了清晰度。建立 10 年目標 → 1 年目標 → 1 月目標 → 1 週目標。 \"The mind craves order... Big goals are for direction. Small goals are for clarity. Create a 10-year goal. Then a 1-year goal. Then a 1-month goal. Then a 1-week goal.\" 第三步： 專案導向學習 。最好的學習方式是建立一個真實世界的專案，只在需要時搜尋資訊。你學到多少與你在"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "深度解析-deep-analysis",
+    "sectionTitle": "💡 深度解析 Deep Analysis",
+    "content": "這是文章的核心實務框架。Dan Koe 提供了一個完整的執行協議，從高層願景到每日任務。 🛠️ 實務應用：4 步驟深度工作協議 Step 1: Vision / Anti-Vision 用筆記本寫下你所有不想要的事物和原因，直到你感到深度不適。然後寫下你想要從頭創造的理想生活。最後列出所有阻擋你的潛在分心事物——然後消除它們。 Step 2: Goal Hierarchy 創建一個清晰的目標階層：10年 → 1年 → 1月 → 1週。大目標給你方向，小目標給你清晰度。這不是「設定然後忘記」的目標——這是創造一個可以隨時進入的心理框架。 Step 3: Project-Based Learning 選擇一個可以推動你向目標前進的專案。先用你已知的知識開始。遇到卡關時再搜尋特定資訊。這樣學到的知識會更牢固，因為你有即時應用的動機。 Step 4: Lever-Moving Tasks 每天只做 1-3 個真正能推動專案前進的任務。2 週檢查點：如果沒有明顯進展，你在做錯誤的事情。 💡 比喻說明：教學影片陷阱 想像你想學游泳。看 100 小時的游泳教學影片不會讓你學會游泳。但如果你跳進水"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "原文精選-original-text",
+    "sectionTitle": "📖 原文精選 Original Text",
+    "content": "不確定性是信號，不是噪音 。你應該感到迷失。你應該感到不知所措。你應該感到不知道自己在做什麼。當你決定改變人生時，你到底期待會發生什麼？ \"Uncertainty is signal, not noise. You're supposed to feel lost. You're supposed to feel overwhelmed. You're supposed to feel like you have no idea what you're doing. What in the world did you expect to happen when you decided to change your life?\" 最成功的人面對不確定性不會退縮。他們不把不確定性視為危險的東西，所以他們的戰或逃反應不會啟動。他們可以用清醒的頭腦進入未知，做出正確的決定。因為他們意識到 所有超額回報都在於他們擁抱、管理和延伸不確定性的能力 。 \"The most successful people don't flinch at this. They don't perceive uncer"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "深度解析-deep-analysis",
+    "sectionTitle": "💡 深度解析 Deep Analysis",
+    "content": "這是文章的哲學結尾，也是最重要的心態轉換。Dan Koe 用自動駕駛車的比喻來重新框架「失敗」。 📚 核心概念：不確定性與回報的關係 Dan Koe 建立了一個風險階梯： Level 1（低不確定性，低回報） ：穩定工作、401k 退休金 Level 2（中不確定性，中回報） ：股票投資、自由工作 Level 3（高不確定性，高回報） ：創業、商業投資、Bitcoin 關鍵洞察：你無法在 Level 1 的不確定性容忍度下獲得 Level 3 的回報。回報與你願意擁抱的不確定性成正比。 ⚠️ 重點提示：失敗投資組合 「投資你的失敗投資組合，直到你負擔得起成功」——這句話顛覆了傳統的成功觀。 傳統觀點：成功 = 避免失敗 Dan Koe 觀點：成功 = 累積足夠的失敗經驗 就像自動駕駛車需要數十億次的「錯誤」來訓練模型，你的人生決策系統也需要失敗來精煉。每一次失敗都是一個數據點，幫助你的內部算法變得更準確。 這對 AI 學習的啟示：你不會第一次就寫出完美的 Prompt。你不會第一次就設計出完美的自動化流程。但每一次「失敗」都在訓練你對 AI 的直覺。關鍵是要快速失敗、快速學習、快速迭"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "注意力即-ram",
+    "sectionTitle": "注意力即 RAM",
+    "content": "你的專注力是有限資源。Psychic Entropy 意味著不投入能量，心智就會走向混亂。每天一小時的專注，是對抗熵的最小投資。"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "flow-challenge-1",
+    "sectionTitle": "Flow = Challenge + 1",
+    "content": "心流的觸發公式是 Clarity + Importance + Urgency。確保挑戰剛好略高於技能，太高會焦慮，太低會無聊。"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "fill-empty-use",
+    "sectionTitle": "Fill / Empty / Use",
+    "content": "最佳例程不是工作更多小時，而是有意識地設計三種腦力活動：填滿（學習）、清空（記錄）、使用（創作）。休息時 DMN 會替你工作。"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "失敗投資組合",
+    "sectionTitle": "失敗投資組合",
+    "content": "所有超額回報都在你願意擁抱的不確定性中。不要害怕犯錯——要快速累積你的「失敗投資組合」，直到你負擔得起成功。"
+  },
+  {
+    "docFile": "2026-01-20_one-hour-focus.html",
+    "docTitle": "One Hour of Focus a Day Can Change Your Life",
+    "docDate": "2026-01-20",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "✏️ 練習題 Practice Questions",
+    "content": "Q1 概念理解 Dan Koe 用「Psychic Entropy」來解釋為什麼人們難以專注。這個概念對你每日工作的啟示是什麼？ 核心概念 ：Psychic Entropy 指的是心智自然趨向混亂的傾向——如果你不主動投入能量維持秩序，思緒會越來越散亂。 實務啟示 ： 「什麼都不做」不是維持現狀，而是主動退步。每一天不整理思緒、不推進目標，混亂就會累積。 這解釋了為什麼週一特別難專注——週末的「放鬆」可能累積了更多未處理的心理負擔。 解決方案：每天設定一個固定時間清空心智（日記、計劃），就像定期整理書架一樣。 CDMO 應用 ：在製藥環境中，這等同於 GMP 的「預防性維護」概念——你不是等設備壞了才修，而是定期維護。心智也需要同樣的預防性維護。 Q2 產業應用 作為 CDMO Operations Director，如何將 Dan Koe 的「每天一小時」框架應用於 AI 學習和職涯發展？ 框架應用 ： Step 1 - Vision / Anti-Vision ： Anti-Vision：5 年後仍停留在相同職位，AI 取代了大部分例行工作，失去競爭力 Vision：成為 COO，"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Anthropic 於 2026 年 1 月 21 日發布的這份報告，識別了 八大趨勢 ，分為三大類別：基礎趨勢（Foundation）、能力趨勢（Capability）、影響趨勢（Impact）。核心發現：開發者已在 60% 的工作中使用 AI，但能夠 「完全委派」的僅占 0-20% 。這不是取代的故事，而是 協作模式的根本轉變 。 報告以 Rakuten（12.5M 行程式碼遷移，99.9% 準確率）、TELUS（節省 500,000+ 小時）、Zapier（97% 採用率）等企業案例，展示了 agentic coding 從實驗性工具到生產級系統的躍遷。對非技術角色的擴展是 2026 年最具變革性的預測之一。"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "理解角色轉變 從「寫程式的人」到「Orchestrator（協調者）」的工程師角色演變邏輯 掌握多代理架構 Single-agent vs Multi-agent 的差異、適用場景與協調模式 評估組織影響 生產力經濟學轉變、非技術擴展、安全雙刃劍的策略意涵 Anthropic 2026 Agentic Coding: Three-Layer Trend Framework Foundation SDLC 根本重構 角色從 Coder Orchestrator Capability Multi-agent 協作 長時間自主運行 智能監督機制 Impact 經濟模型重塑 非技術擴展 安全攻防升級 Foundation Capability Impact"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "trend-1-sdlc-changes-dramatically",
+    "sectionTitle": "Trend 1: SDLC Changes Dramatically",
+    "content": "Software Development Lifecycle (軟體開發生命週期) 的根本重構 我們與電腦互動的方式正在經歷自 圖形使用者介面（GUI） 以來最重大的變革。從機器碼到組合語言到 C 語言到現代高階語言，每一層抽象都縮小了人類思維與機器執行之間的差距。 \"The way we interact with computers is undergoing one of its most significant changes since the graphical user interface.\" 2025 年，agentic AI 改變了大量開發者寫程式的方式。2026 年將是這場演化轉變的 系統性效應 重新配置軟體開發生命週期、重塑軟體工程角色的一年。 \"In 2025, agentic AI changed how a large swath of developers write code. 2026 is poised to be the year when the systemic effects of this evolutionary shift reconf"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "trend-2-single-agents-evolve-into-coordinated-teams",
+    "sectionTitle": "Trend 2: Single Agents Evolve into Coordinated Teams",
+    "content": "Multi-agent System (多代理系統) 取代單一代理工作流 我們預測 2026 年組織將能駕馭 多個 Agent 協同行動 ，處理一年前難以想像的任務複雜度。這需要新的技能：任務分解、Agent 專業化、以及協調協議。 \"Organizations in 2026 will be able to harness multiple agents acting together to handle task complexity that was difficult to imagine just a year ago.\" 單一 Agent 工作流透過一個 Context Window 依序處理任務。 多 Agent 架構 使用一個 Orchestrator（協調者）來協調專業化的 Agent 平行工作，每個都有獨立的 Context，然後將結果綜合成整合輸出。 \"Single-agent workflows process tasks sequentially through one context window. Multi-agent architectures use"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "trend-3-long-running-agents-build-complete-systems",
+    "sectionTitle": "Trend 3: Long-Running Agents Build Complete Systems",
+    "content": "Agent 任務範圍從分鐘級擴展到天或週級 早期 Agent 處理一次性任務，最多幾分鐘。到 2025 年底，越來越能幹的 AI Agent 能在數小時內產出完整功能集。2026 年， Agent 將能連續工作數天 ，以最少的人類介入建構完整的應用程式和系統。 \"In 2026, agents will be able to work for days at a time, building entire applications and systems with minimal human intervention.\" 當 Agent 能長時間自主工作， 原本不可行的專案變得可行 。多年累積的技術債，因為從沒人有時間處理，現在可以被 Agent 系統性地消除。創業者可以在數天內從點子到部署應用。 \"Formerly non-viable projects become feasible. Technical debt that accumulated for years gets systematically eliminated by agents working through "
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "trend-4-human-oversight-scales-through-intelligent-collabora",
+    "sectionTitle": "Trend 4: Human Oversight Scales Through Intelligent Collaboration",
+    "content": "協作悖論：60% 使用率 vs 0-20% 完全委派率 2026 年最有價值的能力發展將是 Agent 學會何時求助 ，而非盲目嘗試每個任務。這不是將人類移出流程，而是讓人類的注意力用在最重要的地方。 \"The most valuable capability developments in 2026 will be agents learning when to ask for help, rather than blindly attempting every task.\" 工程師描述，他們通常會委派 容易驗證的任務 ——「可以相對容易地嗅檢正確性」的任務——或是低風險任務。 概念越困難或設計依賴性越強的任務 ，工程師越可能自己保留或與 AI 協作而非完全交付。 \"They tended to delegate tasks that are easily verifiable... The more conceptually difficult or design-dependent a task, the more likely engineers keep it for the"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "trend-5-agentic-coding-expands-to-new-surfaces-and-users",
+    "sectionTitle": "Trend 5: Agentic Coding Expands to New Surfaces and Users",
+    "content": "從專業工程師擴展到所有「會用程式碼解決問題的人」 最早的 agentic coding 浪潮聚焦於幫助專業軟體工程師在熟悉環境中更快工作。2026 年，agentic coding 準備擴展到傳統開發工具 無法觸及的情境和用例 。 \"In 2026, agentic coding is poised to expand into contexts and use cases that traditional development tools could not reach.\" 分析不同團隊如何使用 AI 揭示了一致的模式：人們用 AI 增強核心專業並擴展到相鄰領域 。安全團隊用它分析不熟悉的程式碼；研究團隊用它建立數據的前端視覺化；非技術員工用它除錯網路問題或做數據分析。 \"People use AI to augment their core expertise while expanding into adjacent domains.\" 實務應用：兩大擴展方向 語言障礙消除 ：支援擴展到 COBOL、Fortran 等遺留語言和領域特定語言，啟動遺留系統維護。 編程民主化 ：新"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "trend-6-productivity-gains-reshape-software-development-econ",
+    "sectionTitle": "Trend 6: Productivity Gains Reshape Software Development Economics",
+    "content": "生產力增益重塑軟體開發經濟學 Anthropic 內部研究揭示了一個有趣的生產力模式：工程師報告每個任務類別的 時間淨減少 ，但 產出量有更大的淨增加 。這表明 AI 主要透過更多產出來提升生產力——更多功能上線、更多 Bug 修復、更多實驗——而非單純更快地做相同的事。 \"Engineers report a net decrease in time spent per task category, but a much larger net increase in output volume.\" 值得注意的是，約 27% 的 AI 輔助工作是 原本不會做的任務 ：規模化專案、建構互動式儀表板等「nice-to-have」工具、以及手動做成本不划算的探索性工作。工程師報告修復了更多「papercuts」——那些改善使用體驗但歷來被降低優先級的小問題。 \"About 27% of AI-assisted work consists of tasks that wouldn't have been done otherwise... Engineers report fixing mor"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "trend-7-non-technical-use-cases-expand-across-organizations",
+    "sectionTitle": "Trend 7: Non-Technical Use Cases Expand Across Organizations",
+    "content": "Agentic coding 從工程部門擴展到整個組織 我們預期 2026 年最重大的趨勢之一，是 功能性和業務流程團隊 穩步增長使用 agentic coding，為他們遇到的問題創建自己的解決方案，改善他們每天使用的流程。 \"One of the most significant trends in 2026 will be steady growth in agentic coding used by functional and business-process teams to create their own solutions.\" 深刻理解問題的 第一線專家 獲得信心，能使用 Agent 直接啟動解決方案，移除了「提交工單然後等待開發團隊」的瓶頸。不值得工程時間的問題得以解決，實驗性工作流變得微不足道，手動流程得以自動化。 \"Domain experts implement solutions directly... removing the bottleneck of filing a ticket and then waiting for development te"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "trend-8-dual-use-risk-requires-security-first-architecture",
+    "sectionTitle": "Trend 8: Dual-Use Risk Requires Security-First Architecture",
+    "content": "安全雙刃劍：同樣的能力既幫助防守者也幫助攻擊者 Agentic coding 正在 雙向 改變安全。隨著模型變得更強大和更對齊，將安全建入產品變得更容易。現在任何工程師都能利用 AI 執行過去需要專業知識的安全審查、加固和監控。但 同樣幫助防守者的能力也能幫助攻擊者 擴大他們的努力。 \"Agentic coding is transforming security in two directions at once... the same capabilities that help defenders are also capable of helping attackers scale their efforts.\" 天平偏向有準備的組織 。從一開始就使用 agentic 工具將安全內建的團隊，將更好地防禦使用同樣技術的對手。 \"The balance favors prepared organizations. Teams that use agentic tools to bake security in from the start will be better positi"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Orchestrator, Not Coder 2026 的核心角色轉變：工程師從「寫程式的人」變成「協調 AI Agent 的人」。60% 工作使用 AI，但僅 0-20% 完全委派。人類判斷力——特別是架構設計、品味、組織脈絡——仍是不可替代的。 Output Volume > Speed 生產力提升的本質不是「做同樣的事更快」，而是「做更多的事」。27% 的 AI 輔助工作是原本不會做的任務。技術債清理、papercuts 修復、探索性實驗變得經濟可行。 Coding Democratization 「寫程式的人」和「不寫程式的人」之間的界線越來越模糊。法律、設計、營運團隊正在用 agentic coding 直接解決自己的問題，移除了「提交工單等開發」的傳統瓶頸。 Security by Design AI 讓每個工程師都能成為安全工程師，但同樣的能力也讓攻擊者更強。唯一可持續的策略是從第一天就將安全架構內建到系統設計中，而非事後補救。"
+  },
+  {
+    "docFile": "2026-01-21_agentic-coding-trends.html",
+    "docTitle": "2026 Agentic Coding Trends Report - Anthropic",
+    "docDate": "2026-01-21",
+    "docSource": "Anthropic",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 Conceptual Understanding 報告指出工程師在 60% 的工作中使用 AI，但只能「完全委派」0-20%。這個「Collaboration Paradox」的本質是什麼？對「AI 將取代工程師」的論述有什麼反駁意義？ 這個悖論揭示了一個關鍵事實： 有效使用 AI 本身就是一種需要專業技能的工作 。使用率高（60%）但委派率低（0-20%）表明 AI 是「constant collaborator」而非「autonomous replacement」。工程師需要做的事沒有減少，而是轉變了：從寫程式碼變成設定上下文、提示、監督、驗證。 這直接反駁了「AI 取代工程師」的簡化論述。報告中 Anthropic 工程師的話最能說明：「我是通過『艱苦方式』做軟體工程培養出判斷能力的。」AI 增強的是已有專業基礎的人，而非讓經驗變得不重要。 Q2 Industry Application 將 Trend 7（非技術用例擴展）對應到製藥 CDMO 情境：哪些目前由「提交工單等工程團隊」處理的品質/合規任務，可以透過 agentic coding 讓 QA 或生產團隊直接解決？"
+  },
+  {
+    "docFile": "2026-01-21_claude-n8n-synta-stack.html",
+    "docTitle": "Claude + n8n + Synta MCP：取代整個開發團隊的自動化技術棧",
+    "docDate": "2026-01-21",
+    "docSource": "@NoahEpstein_ (Nozz) / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 4.2/5 Practical Value, Tool Ecosystem Technical Depth, Learning Curve 這篇文章記錄了一位自動化服務商如何透過三個工具的組合（ Claude Code 、 n8n 、 Synta MCP ）將 7 人團隊縮減到 5 人，同時將產能提升 3 倍。核心洞察是： 技術門檻已經歸零，新的瓶頸是「知道該建什麼」而非「如何建」 。 文章以真實業務數據為基礎，展示了從 16-33 小時/專案壓縮到 45 分鐘的具體案例。對於正在思考 AI 賦能團隊的管理者，這是一個有說服力的案例研究。"
+  },
+  {
+    "docFile": "2026-01-21_claude-n8n-synta-stack.html",
+    "docTitle": "Claude + n8n + Synta MCP：取代整個開發團隊的自動化技術棧",
+    "docDate": "2026-01-21",
+    "docSource": "@NoahEpstein_ (Nozz) / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "理解技術棧架構",
+    "sectionTitle": "理解技術棧架構",
+    "content": "掌握 Claude Code + n8n + Synta MCP 三層架構如何協同運作，以及各層的角色定位"
+  },
+  {
+    "docFile": "2026-01-21_claude-n8n-synta-stack.html",
+    "docTitle": "Claude + n8n + Synta MCP：取代整個開發團隊的自動化技術棧",
+    "docDate": "2026-01-21",
+    "docSource": "@NoahEpstein_ (Nozz) / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "評估-roi-模型",
+    "sectionTitle": "評估 ROI 模型",
+    "content": "學會用人力成本、產能上限、交付週期三個維度評估 AI 工具導入的商業價值"
+  },
+  {
+    "docFile": "2026-01-21_claude-n8n-synta-stack.html",
+    "docTitle": "Claude + n8n + Synta MCP：取代整個開發團隊的自動化技術棧",
+    "docDate": "2026-01-21",
+    "docSource": "@NoahEpstein_ (Nozz) / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "識別價值轉移",
+    "sectionTitle": "識別價值轉移",
+    "content": "理解當執行門檻歸零時，競爭優勢如何從「技術能力」轉移到「問題診斷能力」 Three-Layer Automation Stack 🧠 Claude Code Autonomous Engine 自主執行引擎 → 🔗 Synta MCP Translation Layer 自然語言轉譯層 → ⚙️ n8n Execution Layer 工作流執行層 問題與舊現實 技術棧詳解 ROI 與數據 戰略洞察 原文翻譯 Translation 舊現實 ：12 個月前，建構一個客戶自動化流程是這樣的：探索 1-2 小時、範圍界定 2-3 小時、建構 8-16 小時、測試 2-4 小時、除錯 2-6 小時、部署 1-2 小時。 總計：每個工作流 16-33 小時 。 \"12 months ago, building a client automation looked like this: Discovery: 1-2 hours, Scoping: 2-3 hours, Building: 8-16 hours, Testing: 2-4 hours, Debugging: 2-6 hours"
+  },
+  {
+    "docFile": "2026-01-21_claude-n8n-synta-stack.html",
+    "docTitle": "Claude + n8n + Synta MCP：取代整個開發團隊的自動化技術棧",
+    "docDate": "2026-01-21",
+    "docSource": "@NoahEpstein_ (Nozz) / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "三層架構設計",
+    "sectionTitle": "三層架構設計",
+    "content": "Claude Code（自主執行）+ Synta MCP（自然語言翻譯）+ n8n（視覺化執行）形成完整的自動化技術棧。每層可獨立替換，降低供應商鎖定風險。"
+  },
+  {
+    "docFile": "2026-01-21_claude-n8n-synta-stack.html",
+    "docTitle": "Claude + n8n + Synta MCP：取代整個開發團隊的自動化技術棧",
+    "docDate": "2026-01-21",
+    "docSource": "@NoahEpstein_ (Nozz) / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "roi-驗證模型",
+    "sectionTitle": "ROI 驗證模型",
+    "content": "人力減少 29%、產能提升 200%、單位成本降低 76%。關鍵不只是「做得更快」，而是「協調成本最小化」釋放人的高價值時間。"
+  },
+  {
+    "docFile": "2026-01-21_claude-n8n-synta-stack.html",
+    "docTitle": "Claude + n8n + Synta MCP：取代整個開發團隊的自動化技術棧",
+    "docDate": "2026-01-21",
+    "docSource": "@NoahEpstein_ (Nozz) / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "價值轉移理論",
+    "sectionTitle": "價值轉移理論",
+    "content": "技術門檻歸零後，競爭優勢從「執行能力」轉移到「問題診斷能力」。會建東西不再稀缺，知道該建什麼才是護城河。"
+  },
+  {
+    "docFile": "2026-01-21_claude-n8n-synta-stack.html",
+    "docTitle": "Claude + n8n + Synta MCP：取代整個開發團隊的自動化技術棧",
+    "docDate": "2026-01-21",
+    "docSource": "@NoahEpstein_ (Nozz) / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "時間窗口判斷",
+    "sectionTitle": "時間窗口判斷",
+    "content": "市場認知滯後 6-12 個月。現在大多數企業還在用舊方式報價，早期採用者有「天內交付 vs 月內交付」的定價優勢。"
+  },
+  {
+    "docFile": "2026-01-21_claude-n8n-synta-stack.html",
+    "docTitle": "Claude + n8n + Synta MCP：取代整個開發團隊的自動化技術棧",
+    "docDate": "2026-01-21",
+    "docSource": "@NoahEpstein_ (Nozz) / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Automation",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼作者說「這不是生產力改善，這是不同的商業模式」？請用三層架構的角度解釋。 參考答案： 傳統生產力改善是「同樣的流程做得更快」——例如從每週 1 個工作流變成 1.5 個。但三層架構帶來的是「流程本身的重構」： 舊流程 ：人腦構思 → 人手寫程式 → 人眼測試 → 人腦除錯（16-33 小時） 新流程 ：人腦構思 → AI 執行 → AI 自測 → 人腦審核（45 分鐘） 這不是「寫程式更快」，而是「人類只做人類擅長的事（構思、審核）」。這種分工重構才是「不同的商業模式」。 Q2 產業應用 假設你要在 CDMO 環境中導入類似的自動化技術棧，你會優先自動化哪個流程？請考慮 GMP 合規性。 參考答案： 建議優先考慮「非 GMP 但高重複性」的流程，例如： Feasibility Assessment 報告生成 ：從客戶需求到初步評估報告（低合規風險，高重複性） Capacity Planning 模擬 ：產能排程試算（內部工具，不影響產品品質） Deviation Trending 分析 ：自動彙整偏差數據、產生趨勢圖表（輔助決策，非最終記錄） 為什麼不是 Batc"
+  },
+  {
+    "docFile": "2026-01-22_50-claude-tips.html",
+    "docTitle": "50 Underrated Claude Tips - 被低估的 Claude 實戰技巧",
+    "docDate": "2026-01-22",
+    "docSource": "@aiedge_ on X",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "quick-summary-快速摘要",
+    "sectionTitle": "Quick Summary | 快速摘要",
+    "content": "★★★★☆ 4.2/5 Practical Value, Tool Ecosystem Technical Depth 這是一份 Claude 生態系統的實戰速查表，涵蓋五大領域：一般使用技巧、Claude Code 開發、Prompt 優化、Cowork 桌面代理、以及進階最佳實踐。文章以「快速實用」為導向，每個技巧都能立即應用。對於已經在使用 Claude 的用戶，這份清單能幫助發現被忽略的功能；對於新手，則提供了一個完整的功能地圖。 核心價值在於「 Model Stacking 」概念：Claude 與其他工具結合時效果最佳，而非單獨使用。這呼應了 AI 工作流設計的基本原則——選擇正確的工具組合比掌握單一工具更重要。"
+  },
+  {
+    "docFile": "2026-01-22_50-claude-tips.html",
+    "docTitle": "50 Underrated Claude Tips - 被低估的 Claude 實戰技巧",
+    "docDate": "2026-01-22",
+    "docSource": "@aiedge_ on X",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "learning-objectives-學習目標",
+    "sectionTitle": "Learning Objectives | 學習目標",
+    "content": "OBJECTIVE 01 掌握 Claude 隱藏功能：CLAUDE.md 檔案、Memory 設定、Connectors 連接、以及各種 UI 客製化選項 OBJECTIVE 02 理解 Claude Code 工作流：Plan Mode、Doctor 診斷、Slash Commands、MCP 連接、以及 Token 管理策略 OBJECTIVE 03 建立 Model Stacking 思維：學會結合多個 AI 工具的優勢，設計高效的跨平台工作流程 Claude Mastery Framework | Claude 精通框架 1 Setup CLAUDE.md + Memory + Connectors → 2 Prompt Role + Task + Context + Constraints → 3 Execute Claude Code / Cowork / Chat → 4 Stack Multi-model Integration General Tips Claude Code Prompting Cowork Best Practices CLAUDE.md 檔案 "
+  },
+  {
+    "docFile": "2026-01-22_50-claude-tips.html",
+    "docTitle": "50 Underrated Claude Tips - 被低估的 Claude 實戰技巧",
+    "docDate": "2026-01-22",
+    "docSource": "@aiedge_ on X",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "key-takeaways-重點整理",
+    "sectionTitle": "Key Takeaways | 重點整理",
+    "content": "Setup is Strategy CLAUDE.md、Memory、Connectors 這些設定層面的功能，決定了你與 Claude 互動的基礎效率。投資時間在設定上，每次對話都能受益。 Model Stacking > Single Model Claude 不是要取代其他工具，而是要與它們協作。ChatGPT 語音輸入 + Claude 處理、Grok 爬蟲 + Claude 分析——組合比單打獨鬥更強。 Token Economy Matters 原型開發用 Google AI Studio，3 次失敗就重置 context，Cowork 先規劃再執行——這些都是省 token 的實戰技巧。 Safety as Default Cowork 的隔離資料夾、刪除前確認、定期備份——當 AI 有執行能力時，安全機制不是選項，而是必要條件。"
+  },
+  {
+    "docFile": "2026-01-22_50-claude-tips.html",
+    "docTitle": "50 Underrated Claude Tips - 被低估的 Claude 實戰技巧",
+    "docDate": "2026-01-22",
+    "docSource": "@aiedge_ on X",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "practice-questions-練習題",
+    "sectionTitle": "Practice Questions | 練習題",
+    "content": "Q1 概念理解 文章提到的「Model Stacking」概念，與你在 CDMO 環境中使用 AI 工具有什麼關聯？ 在 CDMO 環境中，Model Stacking 的概念可以應用於： Perplexity + Claude： 用 Perplexity 搜集法規更新資訊（如 FDA Guidance），再匯入 Claude Project 進行深度分析和合規性評估 ChatGPT 語音 + Claude： 在實驗室或產線走動時用語音輸入偏差描述，再將逐字稿匯入 Claude 進行根因分析 Excel Gemini + Claude： 用 Gemini 處理批次紀錄數據，再用 Claude 生成 ALCOA+ 合規的報告 核心原則是：選擇每個工具的強項，而非試圖讓單一工具做所有事。 Q2 產業應用 如果你要為你的團隊建立一個 CLAUDE.md 檔案，會包含哪些製藥產業特定的內容？ CDMO 專用的 CLAUDE.md 可能包含： 法規框架： 「所有文件輸出必須符合 21 CFR Part 11 和 ALCOA+ 原則」 術語定義： 常用縮寫如 OOT、OOS、CAPA、PQ、PPQ"
+  },
+  {
+    "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
+    "docTitle": "AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器",
+    "docDate": "2026-01-22",
+    "docSource": "Miles Deutscher (@milesdeutscher)",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "這篇文章展示了 Vibe Coding 的實際威力：作者用不到 30 分鐘，透過 Claude Opus 4.5 打造出一個功能完整的「遊戲化習慣追蹤 App」。核心策略是 將日常任務轉換成 XP 經驗值系統 ，結合行事曆整合、每週/月回顧、以及針對特定領域（交易、健身、營養）的專屬 Dashboard。文章提供完整的 Mega Prompt 模板 ，讓讀者可以直接複製貼上開始建造。對於想要快速將 AI 轉化為實際生產力工具的人，這是一個具體可行的範例。"
+  },
+  {
+    "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
+    "docTitle": "AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器",
+    "docDate": "2026-01-22",
+    "docSource": "Miles Deutscher (@milesdeutscher)",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "學習目標",
+    "sectionTitle": "學習目標",
+    "content": "目標 1 理解 Vibe Coding 的核心概念：用自然語言指令讓 AI 生成完整功能的應用程式 目標 2 掌握 [Role] + [Goal] + [Features] + [Constraints] 的 Mega Prompt 結構設計 目標 3 學習 Modular Prompting 策略：分階段建造複雜系統而非一次性要求所有功能 Vibe Coding 四步驟流程 1 Planning 用 ChatGPT 規劃功能 → 2 Prompting 設計 Mega Prompt → 3 Building Claude 生成程式碼 → 4 Iterating Modular 微調優化"
+  },
+  {
+    "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
+    "docTitle": "AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器",
+    "docDate": "2026-01-22",
+    "docSource": "Miles Deutscher (@milesdeutscher)",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "part-i什麼是-vibe-coding",
+    "sectionTitle": "Part I：什麼是 Vibe Coding？",
+    "content": "作者過去 6 個月用 Claude 成功建造了 10 多個工作流程，而這個 AI 習慣追蹤 App 是他認為 對日常生活影響最大的一個 。最關鍵的是：整個 App 只花了不到 30 分鐘就建造完成。 \"Over the past 6 months, I've vibe-coded 10+ successful workflows using Claude. Of all my builds, this is the single most impactful workflow I've built for my daily life... The best part is, it only took 這個工作流程的核心是一個 「遊戲化」習慣追蹤 App ，透過將日常任務轉換成遊戲任務和經驗值系統，來幫助使用者達成目標。 \"An AI habit tracking app that 'gamifies' your life to help you crush your goals.\" 核心概念 Vibe Coding 是一種用自然語言指令讓 AI 生成完整程式碼的開發方式。不需要寫程式，"
+  },
+  {
+    "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
+    "docTitle": "AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器",
+    "docDate": "2026-01-22",
+    "docSource": "Miles Deutscher (@milesdeutscher)",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "part-iiapp-功能架構",
+    "sectionTitle": "Part II：App 功能架構",
+    "content": "這個 App 包含多個專屬 Dashboard，每個都針對特定領域設計： 1. Homepage Command Center ：每日概覽的指揮中心 2. Sprint ： 遊戲化任務追蹤 的「動量」Dashboard 3. Schedule ：整合會議的行事曆總覽 4. Trading Terminal ：每日交易/市場研究專用終端 5. Kinetic Performance ：健身/體能任務追蹤 6. Biogenic Fueling ：營養/健康任務追蹤 7. History ：每週/月進度追蹤 8. Settings ：偏好設定與各種模式 實務應用 CDMO 應用情境 ：你可以把這個架構改造成生產管理 Dashboard： Command Center → 當日生產排程總覽 Sprint → Batch Release Checklist（每項有完成 XP） Schedule → 跨部門會議與 Tech Transfer 時程 Terminal → Deviation Dashboard Kinetic → 設備維護追蹤 History → 月度 KPI 趨勢 重點提示 注意"
+  },
+  {
+    "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
+    "docTitle": "AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器",
+    "docDate": "2026-01-22",
+    "docSource": "Miles Deutscher (@milesdeutscher)",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "part-iii如何建造這個系統",
+    "sectionTitle": "Part III：如何建造這個系統",
+    "content": "工具設定 ：作者推薦使用 Claude Opus 4.5 搭配 Max Plan 。如果沒有 Max Plan，會很快遇到使用量限制，只能分批處理（每幾小時回來繼續）。 \"Claude Opus 4.5 with Max Plan is best. If you're on anything less than a Max plan, you'll hit usage limits pretty fast.\" 省錢技巧 ：可以用 Google AI Studio（免費）先寫程式碼，再貼到 Claude 做優化，這樣可以繞過 Claude 的使用量限制。 \"Pro tip: Use Google AI Studio. You can use Google AI Studio to code (free), then simply paste it into Claude, which will help bypass Claude usage limits.\" 規劃階段 ：在開始建造前，先用 ChatGPT 規劃功能。給它你的目標和背景，讓它幫你腦力激盪應該包含哪些功能。 \"Before"
+  },
+  {
+    "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
+    "docTitle": "AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器",
+    "docDate": "2026-01-22",
+    "docSource": "Miles Deutscher (@milesdeutscher)",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "part-ivprompt-engineering-結構",
+    "sectionTitle": "Part IV：Prompt Engineering 結構",
+    "content": "作者分享了他的 Mega Prompt 結構 ： [Role] + [Goal/Task] + [Features to Build] + [Constraints] \"This prompting structure worked perfectly: [Role] + [Goal/Task] + [Features to Build] + [Constraints]\" [Role] 角色 ：「Act as a world-class senior frontend engineer and elite UI/UX designer specializing in high-performance productivity tools and gamified interfaces.」 [Goal/Task] 目標 ：建造一個極簡「Cyber-Executive」風格的每日計劃器，專為 Power User 設計，包含 Sprint 執行、XP 遊戲化系統、高優先會議排程。 [Features] 功能 ：包含 Dashboard、Sprint、Schedule、Trading、Gym"
+  },
+  {
+    "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
+    "docTitle": "AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器",
+    "docDate": "2026-01-22",
+    "docSource": "Miles Deutscher (@milesdeutscher)",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "part-v進階技巧",
+    "sectionTitle": "Part V：進階技巧",
+    "content": "偷懶技巧 ：如果不想自己寫 Prompt，可以把文章中的所有圖片複製貼上，叫 Claude 逆向工程建造 App。 \"If you're lazy, you can copy/paste all the images from this article and ask Claude to reverse-engineer and build the app.\" 偷設計 ：看到喜歡的 UI，就截圖給 Claude，用 Prompt：「Keep the logic of my App.tsx exactly the same, but update the styling of my cards to match the glassmorphism and padding seen in this image.」 \"Steal Aesthetics: If you see a UI you like, take a screenshot and share it with Claude.\" 實際使用建議 ：把 Claude 下載到手機並放在容易存取的位置。每天早上花時間整理 To-do L"
+  },
+  {
+    "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
+    "docTitle": "AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器",
+    "docDate": "2026-01-22",
+    "docSource": "Miles Deutscher (@milesdeutscher)",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "重點整理",
+    "sectionTitle": "重點整理",
+    "content": "Vibe Coding 的核心價值 用自然語言在 30 分鐘內建造功能完整的 App。不需要程式背景，只需要清楚描述需求和限制條件。 Mega Prompt 結構 [Role] + [Goal] + [Features] + [Constraints] 是經過驗證的最佳結構。限制條件（顏色、字體、技術架構）越具體，結果越好。 Modular 微調策略 不要一次要求 10 個功能。專注單一元件、逐步疊代，程式碼更乾淨、Debug 更容易。 Multi-Tool 協作 ChatGPT 規劃功能、Google AI Studio 寫初稿、Claude 做最終優化。善用免費工具繞過使用量限制。"
+  },
+  {
+    "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
+    "docTitle": "AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器",
+    "docDate": "2026-01-22",
+    "docSource": "Miles Deutscher (@milesdeutscher)",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "練習題",
+    "sectionTitle": "練習題",
+    "content": "Q1 概念理解 為什麼作者建議用 Modular Prompting 而非一次要求所有功能？ 答案 ：大型 LLM 在專注於單一「元件」時表現最好（類似人類的認知負荷限制）。一次要求太多功能會導致： 程式碼結構混亂，不同功能之間的邊界模糊 出現 Bug 時難以定位問題來源 AI 可能會在某些功能上偷工減料來完成任務 分階段建造（Micro-Sprinting）讓每個元件都能得到充分注意力，也方便後續維護和擴展。 Q2 產業應用 如果要用這個方法為 CDMO 建造一個 Batch Release Dashboard，Mega Prompt 的 [Constraints] 部分應該包含什麼？ 答案 ：考慮到製藥法規要求（GMP、21 CFR Part 11），[Constraints] 應該包含： 資料記錄 ：所有操作必須有 timestamp 和操作者 ID（ALCOA+ 原則） 不可刪除 ：只能標記完成/撤銷，不能真正刪除記錄（Audit Trail） 視覺設計 ：高對比度、清晰狀態標示（Pass/Fail/Pending）、可列印格式 技術架構 ：資料必須持久化到 localStor"
+  },
+  {
+    "docFile": "2026-01-22_future-of-work.html",
+    "docTitle": "The Future of Work When Work Is Meaningless - Dan Koe 深度解讀",
+    "docDate": "2026-01-22",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "快速摘要-executive-summary",
+    "sectionTitle": "快速摘要 Executive Summary",
+    "content": "★★★★☆ 4.2/5 ↑ Technical Depth, Practical Value ↓ Tool Ecosystem, Timeliness Dan Koe 在這篇長文中提出一個核心論點： 當 AI 自動化威脅取代所有工作時，人類創作者的最後防線不是技能，而是「觀點」(Perspective) 。他從人類歷史的世界觀演進（前現代→現代→後現代）切入，解釋為何「意義危機」(Meaning Crisis) 正在加劇，並預測下一個階段將是「意義從內在生成」的時代。 文章核心框架包含：(1) 意義的三個生成器：掙扎 (Struggle)、地位 (Status)、好奇心 (Curiosity)；(2) AI 無法複製的人類特質：即時演化的觀點、能量簽名、品味；(3) 後勞動時代的技能堆疊：Agency → Taste → Perspective → Persuasion → Technical Know-How。 這篇文章對 CDMO 營運專業人士的價值在於： 當製藥業也面臨 AI 自動化浪潮時，如何定位自己成為「意義架構師」而非「可替代的執行者」 。 🎯 理解意義演化史 從前現代到"
+  },
+  {
+    "docFile": "2026-01-22_future-of-work.html",
+    "docTitle": "The Future of Work When Work Is Meaningless - Dan Koe 深度解讀",
+    "docDate": "2026-01-22",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "意義的稀缺性 當 AI 承諾消除所有勞動時，它同時也在加劇「意義危機」。下一階段的意義將從「內部生成」，而非外部給予或發現。 The Swap Test 如果替換創作者而作品同樣有價值，AI 可以取代它。如果作品只因為「是你做的」才有效，那就是你的護城河。 AI 的根本限制 AI 可以「以你的風格」思考，但無法「從你的觀點」思考。它永遠在追逐你「曾經在的地方」，而非你「現在在的地方」。 後勞動技能堆疊 Agency → Taste → Perspective → Persuasion → Technical。越高層的技能越難被取代，越低層的技能越容易被 AI 放大。"
+  },
+  {
+    "docFile": "2026-01-22_future-of-work.html",
+    "docTitle": "The Future of Work When Work Is Meaningless - Dan Koe 深度解讀",
+    "docDate": "2026-01-22",
+    "docSource": "Dan Koe (@thedankoe)",
+    "docRating": 4.2,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "練習題 Practice Questions",
+    "content": "Q1 概念理解 Dan Koe 說「後現代主義正確地看到沒有觀點是絕對的，但錯誤地結論說沒有觀點是更好的」。這個矛盾對 AI 時代的「品味」技能有什麼啟示？ 核心洞察 ：後現代主義的相對主義否定了任何價值判斷，但這本身就是一個價值判斷。這揭示了一個關鍵矛盾：你無法在不做判斷的情況下宣稱「所有判斷都無效」。 對品味的啟示 ：品味 (Taste) 本質上是一種「排斥」的能力——你必須說「這個比那個好」。在 AI 創造的「無限圖書館」中，如果你不願意做出判斷，你就無法從噪音中提取信號。 實務意義 ：當你評估一個 AI 工具是否值得學習時，你必須說「這個對我的情境更有價值」，而非「所有工具都一樣好」。這種判斷能力正是 AI 無法取代的。 Q2 產業應用 在 CDMO 產業中，如何應用「The Swap Test」來辨識你的工作中哪些部分是可替換的，哪些是你的護城河？ 可替換（AI 可以做） ：批次記錄審核、偏差分類、SOP 初稿撰寫、數據整理與報告生成、供應商資格審核的初步篩選。這些任務的特徵是：有明確規則、可標準化、產出與「誰做的」無關。 護城河（只有你能做） ：為客戶的新藥專案判斷「這個製"
+  },
+  {
+    "docFile": "2026-01-22_linkedin-carousel-skills.html",
+    "docTitle": "LinkedIn Carousel 自動化生成系統：從失敗到成功的三次迭代",
+    "docDate": "2026-01-22",
+    "docSource": "Wyndo / Substack Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Automation",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Automation Tool Prompt LinkedIn Carousel 自動化生成系統：從失敗到成功的三次迭代 來源：Wyndo | 2026年1月22日 | Substack Newsletter 快速摘要 ★★★★☆ 3.8/5 ↑ 實務應用, 學習曲線 ↓ 技術深度, 工具生態 這篇文章記錄了作者 Wyndo 如何建構一個能在 5 分鐘內生成 LinkedIn Carousel 的 Claude Skill 系統。透過三次失敗的迭代（PPTX → Nano Banana Pro → HTML/CSS），作者發現 程式碼比 AI 生圖更可靠 ，最終選擇用 HTML/CSS 作為輸出格式。文章的核心價值在於展示「摩擦點驅動的自動化思維」——不是追求完美技術方案，而是找到「夠好且可重複」的解決路徑。 學習目標 目標 1 理解「快速迭代 vs 完美主義」在 AI 工具開發中的取捨邏輯 目標 2 掌握 Claude Skill 的品牌配置設計模式：一次設定、重複使用 目標 3 評估不同技術路徑（PPTX/圖像生成/HTML）的優劣與適用場景 三次迭代的技術演進 1 PPTX Skill 速度快但設計陽春 → 2 Nano Banana Pro 設計美但一致性差 → 3 HTML/CSS Skill 可控且可重複 PART I 問題定義：為什麼 Carousel 是痛點 作者每週固定發佈 5 篇 LinkedIn 貼文，但 Carousel 一直是「 腦中的開放迴路 」——每次看到別人精美的 Carousel 就存書籤，想說「下週來研究」，但下週永遠不會來。 \"Every time I'd see a well-designed carousel—clean styling, brand guidelines, proper overlay images—I'd bookmark it and think: 'Next week, I'll figure this out.' Next week never came.\" 傳統製作 Carousel 的流程大約需要 2.5 小時 ：寫內容 1 小時、Canva 設計 1 小時、修正對齊間距 30 分鐘，加上心理負擔「這真的夠專業嗎？」 \"1 hour writing the content, 1 hour wrestling with Canva, another 30 minutes fixing alignment and spacing, plus the mental overhead of 'does this even look professional?'\" 比喻說明 這就像 CDMO 的「Open Loop」問題——知道該做卻一直拖延的任務會消耗認知資源。作者用「rent-free in my head」來形容這種狀態，完全符合 GTD 的「捕捉所有未完成事項」原則。 重點提示 作者的突破點不是「找到完美工具」，而是重新定義問題： Carousel 的瓶頸不在設計技術，而在「努力與產出的比例失衡」 。這是自動化思維的核心——先找摩擦點，再設計解法。 PART II 第一次嘗試：Claude Skill + PPTX 第一個直覺反應是用 Claude Skill 生成 PowerPoint 投影片。Anthropic 在 GitHub 上已有現成的 PPTX Builder Skill ，作者直接複製來用。 \"My first instinct was obvious: use "
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "這篇文章分享了一個從 35 粉絲成長到 82,000 粉絲的完整策略路線圖。核心心法是「先互動、後原創」——前期靠評論區借力大號流量建立存在感，累積種子讀者後再轉向原創內容。雖然主題是社群媒體成長，但其「借力打力」和「階段性策略」的思維模式，對於任何需要建立個人品牌或專業影響力的場景都有參考價值。"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "理解借力策略的本質",
+    "sectionTitle": "理解「借力策略」的本質",
+    "content": "為什麼評論區是冷啟動的最佳起點？如何系統性地借用他人流量？"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "掌握階段性成長框架",
+    "sectionTitle": "掌握階段性成長框架",
+    "content": "不同粉絲量級對應不同策略，避免在錯誤階段做錯誤的事"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "遷移應用到專業領域",
+    "sectionTitle": "遷移應用到專業領域",
+    "content": "如何將這套「冷啟動 → 累積 → 轉化」的邏輯應用到技術社群或專業領域？ 三階段成長路線圖 💬 Phase 1: 互動期 0-2000 粉 專注評論，建立存在感 → ✍️ Phase 2: 原創期 2000+ 粉 開始輸出，有種子讀者 → 🎯 Phase 3: 深耕期 垂直社群 精準觸達核心受眾"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-i起點與關鍵決策",
+    "sectionTitle": "Part I：起點與關鍵決策",
+    "content": "原文 我在 X 上的起點只有 35 個粉絲。今天，這個數字突破了 82,000。這並非運氣，而是靠 一套清晰的策略、持續的輸出和對機會的敏銳捕捉 。 一切的轉折點，是看到馬斯克宣布 X 開啟變現的那一刻。門檻其實很明確： 500 萬次曝光 + 500 個認證粉絲 。於是我做了第一個關鍵決定：買下藍標（X Premium）。 專家解析 核心概念：目標導向的冷啟動 作者的第一步不是盲目發內容，而是先鎖定一個 具體、可量化的目標 （變現門檻），再反推需要的資源（藍標）。這種「終局思維」在任何成長策略中都很關鍵。 比喻說明 想像你要進入一個會員制俱樂部。你可以花幾年時間慢慢累積人脈讓人推薦你，也可以直接買一張入場券（藍標），然後在裡面快速建立關係。藍標本質上是「入場費」，不是「成功保證」。"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-ii評論區戰術reply-guy-策略",
+    "sectionTitle": "Part II：評論區戰術——Reply Guy 策略",
+    "content": "原文 拿到藍標後，我沒有急著發原創，而是當起了一個 「Reply Guy」（評論區戰神） 。 我每天都在瘋狂互動。不是那種無意義的灌水，而是 走心的回覆，提供價值 ，並且雷打不動地堅持。就靠這一招，我每天能漲 100 個粉。 永遠不要小看評論區。如果玩得好，評論帶來的流量甚至能超過原創內容。 專家解析 重點提示：為什麼評論區是冷啟動利器？ 流量借力 ：大號的一則推文可能有數十萬曝光，你的評論直接搭上這班流量順風車。 低門檻展示 ：評論只需 1-2 句話，但足以展現你的專業視角和思維方式。 建立認知 ：反覆出現在某個領域的討論中，人們會開始認得你。 實務應用：高品質評論的要素 1. 相關性 ：評論必須與原文直接相關，不是強行帶話題 2. 增值性 ：提供新觀點、補充資訊、或有趣的延伸 3. 時效性 ：越早評論越容易被看到（開啟大號的通知鈴鐺）"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-iii15-天搞定-500-萬曝光的具體戰術",
+    "sectionTitle": "Part III：15 天搞定 500 萬曝光的具體戰術",
+    "content": "原文 為了快速達成曝光目標，我用了一個小戰術： 我 關注了一堆百萬級的大號，並開啟小鈴鐺 。只要他們一發推，我立刻衝過去評論，內容必須相關、有趣且有梗。 因為大號自帶巨量流量，我的評論自然會被無數人看到。靠這一個策略， 我只用 15 天就刷滿了 500 萬曝光 。 專家解析 核心概念：流量槓桿 這個策略的本質是 用時間換槓桿 。你無法創造百萬級流量，但你可以即時出現在百萬級流量的入口處。數學很簡單：如果你每天評論 20 個大號，每個大號有 10 萬人看到你的評論，理論上你每天有 200 萬曝光機會。 比喻說明 就像在繁忙的十字路口發傳單，而不是在巷子裡。你不是在建自己的路口（那需要很長時間），而是站在別人已經建好的路口。關鍵是你發的傳單要夠好，讓人願意停下來看。"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "part-iv成長路線圖詳解",
+    "sectionTitle": "Part IV：成長路線圖詳解",
+    "content": "原文 第一階段：0 到 2000 粉 這個階段 別死磕原創內容 。把全部精力放在互動上。去回帖，去加入別人的對話，每天保持活躍。這樣能幫你建立存在感、信任感和最初的人脈網。 第二階段：2000 粉以後 這時候再開始搞原創。因為 你已經有一批種子讀者了 ，發的東西不再是石沉大海。 第三階段：深耕垂類社群 找到和你領域相關的社群。把內容發進去。這能讓你 精準地觸達核心受眾 。 專家解析 重點提示：為什麼順序很重要？ 很多人失敗是因為 在錯誤的階段做錯誤的事 。0 粉絲時發原創，就像在空房間裡演講——內容再好也沒人聽。先建立觀眾，再創造內容，這個順序違反直覺但非常有效。 實務應用：遷移到技術社群 Phase 1 ：在 LinkedIn、技術論壇、或行業群組中積極回覆和討論，建立專業形象 Phase 2 ：開始發布原創技術文章、案例分析、或工作心得 Phase 3 ：深耕特定垂直領域（如 GMP 合規、無菌製程、AI 自動化），成為該領域的 go-to person"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "1-目標先行",
+    "sectionTitle": "1. 目標先行",
+    "content": "先確定具體目標（變現門檻），再反推需要的資源和策略。不要盲目行動。"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "2-借力打力",
+    "sectionTitle": "2. 借力打力",
+    "content": "冷啟動期善用評論區，站在大號的流量入口。用時間換槓桿，而不是從零建流量。"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "3-階段策略",
+    "sectionTitle": "3. 階段策略",
+    "content": "0-2000 粉專注互動；2000+ 粉開始原創；後期深耕垂直社群。順序比內容更重要。"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "4-持續一致",
+    "sectionTitle": "4. 持續一致",
+    "content": "6 個月的 Reply Guy 可以穩定破萬粉。沒有捷徑，只有聰明的定位加上極強的執行力。"
+  },
+  {
+    "docFile": "2026-01-22_x-platform-growth.html",
+    "docTitle": "X 平台成長策略：從 35 到 82,000 粉絲的實戰心法",
+    "docDate": "2026-01-22",
+    "docSource": "@canghe / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "練習題",
+    "sectionTitle": "練習題",
+    "content": "Q1 概念理解 為什麼作者建議 0-2000 粉絲階段「別死磕原創內容」？這個建議的底層邏輯是什麼？ 底層邏輯是 投資報酬率（ROI） 的考量。原創內容需要投入大量時間和心力，但在沒有讀者基礎的情況下，這些投入幾乎無法獲得回報（沒人看、沒互動、沒傳播）。相反，評論區互動的投入較小（一則評論只需幾分鐘），但因為借用了大號的流量，回報反而更高。 這也符合「先驗證市場，再打磨產品」的創業思維——先確認有人對你感興趣，再投入資源生產內容。 Q2 產業應用 假設你想在製藥 CDMO 領域建立個人專業品牌，如何應用這套三階段框架？請具體說明每個階段可以做什麼。 Phase 1（互動期） ： - 在 LinkedIn 追蹤並互動製藥領域的 KOL（如 FDA 前官員、知名 CDMO 高管、行業分析師） - 在 ISPE、PDA 等專業組織的討論區積極發言 - 加入製藥相關的微信群或 Line 群，提供有價值的回答 Phase 2（原創期） ： - 開始在 LinkedIn 發布原創文章，如「SA25 Vanrx 操作心得」「GMP 偏差調查的實戰經驗」 - 分享技術轉移案例（去識別化後） - 用中英"
+  },
+  {
+    "docFile": "2026-01-23_claude-code-nontechnical-guide.html",
+    "docTitle": "Claude Code 非技術領導者完全指南",
+    "docDate": "2026-01-23",
+    "docSource": "Joel Salinas &amp; Alejandro Aboy",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "quick-summary",
+    "sectionTitle": "Quick Summary",
+    "content": "這篇文章打破了「Claude Code 只給工程師用」的迷思。作者 Joel Salinas（非技術背景）用一個週末就用 Claude Code 建立了整個網站，而 Data Engineer Alejandro Aboy 則展示了四個企業場景：Pipeline 數據差異追蹤、Google Sheet vs 資料倉儲比對、需求文件撰寫、會議記錄轉行動項目。核心洞察：你不需要學會寫程式，你需要學會「指揮」AI 解決商業問題。這篇文章對想了解 Claude Code 能做什麼的非技術主管來說是很好的入門，但缺乏深入的技術細節和與其他 AI 工具的系統比較。 🎯 理解 Claude Code 的定位 為什麼名字裡有「Code」但非技術人員也能用 🔧 掌握四大核心功能 Slash Commands、Sub Agents、Skills、MCP 的作用 💼 應用於商業場景 數據差異追蹤、需求文件、會議紀錄轉化 Data Flow 三層架構 — 為什麼你的數據會「不一致」 📊 Source 資料產生處 (HubSpot, Salesforce) → ⚙️ Transformation 商業邏"
+  },
+  {
+    "docFile": "2026-01-23_claude-code-nontechnical-guide.html",
+    "docTitle": "Claude Code 非技術領導者完全指南",
+    "docDate": "2026-01-23",
+    "docSource": "Joel Salinas &amp; Alejandro Aboy",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "原文精華-original-text",
+    "sectionTitle": "原文精華 Original Text",
+    "content": "想像這個場景：兩位高管用兩個不同的儀表板看「同一份」數據。通常他們會安排三天後與資料團隊開會，結果還是搞不清楚為什麼兩個讀取 Salesforce 或 HubSpot 的儀表板，對同一件事給出不同數字。 \"Think of this scenario: Two executives using 2 different dashboards to see the 'same' data... They have explained to you, but it is still not clear why 2 Dashboards reading from Salesforce or Hubspot give different numbers for the same thing.\" 數據從源頭到儀表板會經過三個階段： Source（來源） 是數據產生和存放的地方； Transformation（轉換） 是有人決定指標定義並套用商業邏輯的地方； Dashboard（儀表板） 是你看到數字的地方。 \"Source → Where data is generated and lives. "
+  },
+  {
+    "docFile": "2026-01-23_claude-code-nontechnical-guide.html",
+    "docTitle": "Claude Code 非技術領導者完全指南",
+    "docDate": "2026-01-23",
+    "docSource": "Joel Salinas &amp; Alejandro Aboy",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "原文精華-original-text",
+    "sectionTitle": "原文精華 Original Text",
+    "content": "Claude Code 的獨特之處： 直接連接商業工具 （HubSpot、Google Sheets、資料庫）、 讀取實際數據 而非假設、 展示工作過程 。 \"What makes it different: Connects directly to business tools (HubSpot, Google Sheets, Databases). Reads actual data, not hypotheticals. Shows its work.\" 當你問「為什麼這些 pipeline 數字不一致？」它會連接 HubSpot、讀取你的資料庫表格、比較邏輯，然後回答：「 HubSpot 包含 On Hold 的交易，你的資料倉儲在 90 天後會排除它們。 」 \"When you ask: 'Why don't these pipeline numbers match?' it will connect to HubSpot, read your database tables, compare the logic and you will do something like "
+  },
+  {
+    "docFile": "2026-01-23_claude-code-nontechnical-guide.html",
+    "docTitle": "Claude Code 非技術領導者完全指南",
+    "docDate": "2026-01-23",
+    "docSource": "Joel Salinas &amp; Alejandro Aboy",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "原文精華-original-text",
+    "sectionTitle": "原文精華 Original Text",
+    "content": "所有這些功能都存在於 Markdown (.md) 檔案 中，這是所有 AI 系統用來呈現文件的格式。 \"All these features live under Markdown (.md) files, which is what all AI systems use to present documentation.\" Slash Commands（斜線指令）： 使用者觸發的捷徑，讓你不用重複寫工作流程。例如： /audit_dashboard 觸發儀表板比較工作流程。 \"Slash Commands: User-triggered shortcuts that save you from writing repeatable workflows. Example: /audit_dashboard - triggers dashboard comparison workflow.\" Sub Agents（子代理）： 平行執行的 Claude Agent，有專門的焦點和獨立的上下文。例如： @data-reconciliation 平行比較 HubSpot vs Warehou"
+  },
+  {
+    "docFile": "2026-01-23_claude-code-nontechnical-guide.html",
+    "docTitle": "Claude Code 非技術領導者完全指南",
+    "docDate": "2026-01-23",
+    "docSource": "Joel Salinas &amp; Alejandro Aboy",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Agent"
+    ],
+    "sectionId": "原文精華-original-text",
+    "sectionTitle": "原文精華 Original Text",
+    "content": "案例 1：Pipeline 差異 情況：HubSpot 顯示 $1M，CFO 用資料庫的儀表板顯示 $810K。 你的做法：「 比較 HubSpot pipeline 和我們的 warehouse deals 表格。為什麼有差異？ 」 洞察：現在你可以說「讓我們對齊 On Hold 是否算作活躍 pipeline。」 \"Example #1: Pipeline Discrepancies. Your Situation: HubSpot shows $1M. CFO's dashboard using the database shows $810K. What You Do: 'Compare the HubSpot pipeline with our warehouse deals table. Why is there a difference?'\" 案例 2：Google Sheet vs 資料倉儲 情況：行銷總監的 Google Sheet 與資料團隊的儀表板不符。 你的做法：「 讀取 Google Sheet 'Q1 Campaign Performance'，與 ware"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "📋 Executive Summary",
+    "content": "這篇文章來自 13 年加密貨幣老兵的生存智慧，核心論點是： 在 Crypto 裡，「贏」不是賺到錢，而是賺到錢後幾年仍然持有 。作者提出一個關鍵框架：真正推動 Crypto 走出停滯的不是敘事 (Narrative)，而是 共識升級 (Consensus Upgrade) ——一種新的人類協調行為方式。文章透過 ICO、DeFi Summer、NFT 三個歷史案例，教你如何區分「假復甦」與「真正的 Regime Shift」，並提供一套「退出流動性過濾器」檢查清單。最後，作者分享了多週期生存者的共同特質：價格獨立的信念系統，以及四層錨定架構（概念、時間、行為、信念）。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "學習目標",
+    "sectionTitle": "🎯 學習目標",
+    "content": "🔍 區分 Narrative vs Consensus 理解敘事是「故事」，共識是「行為」，兩者結合才能點燃週期 ⚡ 識別 Regime Shift 訊號 掌握「退出流動性過濾器」5 點檢查清單，判斷真假復甦 🛡️ 建立四層錨定系統 概念錨、時間錨、行為錨、信念錨——週期生存者的心理架構 Crypto 復甦的三燃料模型 💧 Liquidity 氧氣：決定價格能動多快 + 🔥 Narrative 火花：決定多少人關注 + ⚙️ Coordination Primitive 引擎：決定誰會留下來 I. 週期停滯殺手 II. 三大案例研究 III. 10x 學習速度 IV. 四層錨定系統"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "原文精華",
+    "sectionTitle": "📖 原文精華",
+    "content": "當人們問為什麼 Crypto 感覺死了，永遠是那些老掉牙的藉口：「機構還沒完全進場！」「是那些該死的做市商和 KOL！」「下一個大技術升級還沒到！」 \"When people ask why crypto feels dead, it's always the same recycled excuses. 'Institutions haven't fully entered!' 'It's those damn market makers and KOLs!'\" 如果你經歷過足夠多的週期，你會發現一個模式： Crypto 從不靠變得更像舊系統來復甦，而是靠提醒我們為什麼舊系統是壞的 。 \"Crypto never revives by becoming more like the old system. It revives by reminding us why the old system is broken.\" 停滯不只是「流動性問題」或缺乏程式碼更新，它是一個 協調問題 。你知道你正處於死區的正中央，當三件事同時崩壞：資本感到無聊、注意力已經耗盡、協調原語 (Coordina"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "深度解析",
+    "sectionTitle": "💡 深度解析",
+    "content": "📚 核心概念：Consensus vs Narrative Narrative（敘事） 是共享的故事，是「談話」，吸引注意力。 Consensus（共識） 是共享的行為，是「組織」，讓人留下來。 關鍵公式： Narrative without behavior → 短期炒作 Behavior without narrative → 安靜採用 Both together → 真正的週期點火 💡 比喻說明 想像 Crypto 是一場營火晚會。 Token 從來不是重點，它只是我們圍坐的營火 。真正在管道裡流動的不是「錢」，而是我們——學習如何在沒有老闆的情況下，就越來越大的事情達成共識。 ⚠️ 重點提示 大多數人以為下一個週期會被閃亮的新產品、殺手級功能或熱門敘事觸發。但這些是 結果，不是原因 。「購買」按鈕或更快的鏈不會啟動運動——它們只有在更深層的協調方式已經改變之後才會變得可見。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "三燃料模型",
+    "sectionTitle": "📖 三燃料模型",
+    "content": "Liquidity（流動性） 是氧氣——宏觀因素如美元強弱、槓桿、以及有多少「賭博錢」在四處流動。它決定價格能動多快。 \"Liquidity is the oxygen... It determines how fast price can move.\" Narrative（敘事） 是火花——為什麼人們關心、如何解釋、共享語言。它決定有多少人看。 \"Narrative is the spark... It determines how many people look.\" Coordination Primitives（協調原語） 是引擎——共享行為、重複動作、人們在沒有中央權威的情況下協調的方式。 它決定當價格停止獎勵他們時，誰會留下 。 \"Coordination Primitives are the engine... It determines who stays when price stops rewarding them.\""
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "歷史演進聚合維度",
+    "sectionTitle": "💡 歷史演進：聚合維度",
+    "content": "🛠️ 每個週期聚合的新維度 2017 ICO → 資金 + 信念 2020 DeFi → 金融勞動 2021 NFT → 文化 + 身份 2024 Meme → 情緒 + 認同 2024+ PM → 判斷力 下一個 → ??? 每個週期不只是增加更多人， 它增加了一個新的留下來的理由 。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "原文精華",
+    "sectionTitle": "📖 原文精華",
+    "content": "這是 Crypto 第一次搞清楚如何在全球規模上協調人和資本。數十億美元流入鏈上，不是進入成品，而是進入「想法」。 \"It was the first time crypto figured out how to coordinate people and capital at global scale.\" 2016 年的 The DAO 是第一個真正的「啊哈！」時刻。它證明了一群互不相識的人可以僅用程式碼來匯集他們的錢。但工具很笨拙，技術很脆弱，最終被駭得一塌糊塗。 行為出現了，但它不是可重複的 。 \"The DAO in 2016 was the first real 'aha!' moment... The behavior appeared, but it wasn't repeatable.\" 然後 2017 年來了， 一切都變得可重複 。Ethereum 和（現在更成熟的）ERC-20 標準把 Token 發行變成了工廠流程。 \"Then came 2017, and everything became repeatable.\""
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "關鍵洞察",
+    "sectionTitle": "💡 關鍵洞察",
+    "content": "📚 行為改變清單 • 募資移到鏈上，成為新常態 • 白皮書變成「投資標的」 • MVP → Minimum Viable PDF • Telegram 成為金融基礎設施 ⚠️ 真正的 Regime Shift 標誌 崩盤之後，我們再也沒有回到「老方法」。 任何人、任何地方都可以資助一個協議的想法永久黏住了 。是的，很多 ICO 是詐騙。但行為——我們協調和移動資本的方式——永遠不同了。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "原文精華",
+    "sectionTitle": "📖 原文精華",
+    "content": "這也是一個真正的 Regime Shift，因為 即使價格沒有起飛，人們也開始像使用「金融」一樣使用 Crypto 。這打破了「只是賭場」的心態。 \"This was also a real regime shift because people started using crypto like 'finance' even when price wasn't blasting off.\" 現在，人們發展出鏈上肌肉記憶：借貸、借款、收益農場、流動性提供、循環抵押、治理。 \"Now, people developed on-chain muscle memory, changing the industry forever.\""
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "假復甦案例",
+    "sectionTitle": "💡 假復甦案例",
+    "content": "💡 食物名稱的複製農場 像 Pasta、Spaghetti、Kimchi 這樣的複製品。它們 沒有增加新的協調行為 ，大多數消失得和出現一樣快。從今天（2026）回顧，2020 是「鏈上經濟」的真正誕生。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "原文精華",
+    "sectionTitle": "📖 原文精華",
+    "content": "雖然 DeFi Summer 是關於在流動性曲線上較勁，2021 年是 Crypto 終於有了個性的一年。我們不再為收益優化，而是為 氛圍、身份和部落主義 優化。 \"While DeFi Summer was about nerding out over liquidity curves, 2021 was the year crypto finally got a personality.\" 你不是在「買一張圖片」，而是在買 數位收據，證明你擁有原版 ，而區塊鏈是你的見證人。這顛覆了社交腳本：頭像成為護照、門禁通行證、IP 所有權。 \"You weren't just 'buying a picture.' You were buying the digital receipt that said you owned the original.\""
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "協調原語轉變",
+    "sectionTitle": "💡 協調原語轉變",
+    "content": "🛠️ 從 DeFi 到 NFT 的轉變 • 流動性池 → 收藏品系列 • TVL → 地板價 + 社交資本 • 收益 → 歸屬感 ⚠️ 假復甦：三種類型 1. 複製貼上浪潮 ：「Bored Apes 但是倉鼠」 2. 洗盤交易熱潮 ：LooksRare、X2Y2 付錢給人自己跟自己交易 3. 名人撈錢 ：沒有真正協調或社群"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "五點檢查清單",
+    "sectionTitle": "📖 五點檢查清單",
+    "content": "1. 非傭兵是否到來？ 你看到不是只為了翻幣的人出現——創作者、建設者、或尋求身份的人。如果房間裡唯一的人是交易員，那房間實際上是空的。 2. 是否通過激勵過濾器？ 觀察當獎勵枯竭或價格持平時會發生什麼。 如果人們留下，你有了習慣。如果他們在免費錢停止的那一刻消失，你只有一座鬼城 。 3. 他們是否選擇日常習慣而非倉位？ 新手盯著投資組合，但贏家觀察人們每天早上在做什麼。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "續4-5-點",
+    "sectionTitle": "📖 續：4-5 點",
+    "content": "4. 行為優先於精緻？ 真正的轉變發生在工具仍然破爛醜陋的時候。 如果人們願意忍受糟糕的 UI 來參與，行為是真的 。等 App 精緻的時候，你已經遲了。 5.（最重要！）是否有情感防禦？ 當人們開始捍衛一個系統，是因為它是他們身份的一部分，而不只是因為他們會虧錢，那轉變就完成了。 ⚠️ 核心原則 如果你只關注價格，那就是你為什麼永遠不會早。大綠色蠟燭來了，是因為 行為在幾個月前就已經改變了 。價格只是終於承認世界已經前進的滯後指標。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "建議一升級網路偵探技能",
+    "sectionTitle": "📖 建議一：升級「網路偵探」技能",
+    "content": "鏈上鑑識 ：識別協調狙擊事件，否則你就是退出流動性。你應該能讀錢包歷史、持有者分佈、打包、資金路徑、可疑鏈上行為。 市場機制 ：預測供應衝擊和暴力清算擠壓——訂單簿深度、買賣價差、交易所淨流入、Token 解鎖和歸屬時間表、市值對 TVL 比率、未平倉合約、資金費率、宏觀流向。 MEV 知識 ：如果你不想在「黑暗森林」裡被碾壓，學習 MEV 如何運作，否則你會被「夾心」而不自知。 自動化 ：截至 2026 年，幾乎每個我認識的人，即使是零程式背景的，都在建構自訂工具來過濾噪音。 如果你還在「手動滾動」，那可能就是你為什麼總是遲到的原因之一 。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "社交面紅旗過濾",
+    "sectionTitle": "💡 社交面紅旗過濾",
+    "content": "🛠️ 即時可用的技巧 • 項目官方帳號是否改過 10+ 次用戶名？ • 團隊是否真的存在？檢查 X、LinkedIn、GitHub • 聲稱的公司/學校背景——實際核實 • 「VC 支持」「合作夥伴」聲明——有些「投資者」從未投資 • AI 生成的假互動——學會識別"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "建議二臥底但要真誠",
+    "sectionTitle": "📖 建議二：「臥底」但要真誠",
+    "content": "老實說，你只需要認識人。在 Crypto 裡，和金融或任何其他行業一樣， 你的人脈就是你的終極駭客 。 \"To be honest, you just need to know people. In crypto, as in finance or any other industry, your network is your ultimate hack.\" 真正的 Alpha 在有第一手優勢時從不公開分享。當一個項目進入你的公開動態，你可能仍然獲利，但不會是你來 Crypto 追求的「改變人生的 1000x」。「最佳進場」窗口已經砰地關上了。 \"Real alpha is never shared publicly when it has first-hand edge.\""
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "建立人脈的方法",
+    "sectionTitle": "💡 建立人脈的方法",
+    "content": "💡 最佳路徑 1. 在目標領域的項目找工作 ——開發者、行銷、BD，「帳篷內」是建立聲譽和認識人的最快方式 2. 如果鏈上大贏 ，把那個錢包關聯到你的 X 帳號。「人脈」會來找你 3. 經營 X 帳號 ——但說起來容易做起來難 ⚠️ 核心真相 你的鏈上歷史就是你的履歷。如果你花了瘋狂的時間實驗、賭博、實際做事，你已經比大多數轉行過來的「公司人」有更多相關經驗。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "多週期生存者的共同點",
+    "sectionTitle": "📖 多週期生存者的共同點",
+    "content": "根據我認識的人，那些生存過多次毀滅性週期並仍然設法建立財富的人有兩個共同點：他們有 價格獨立的信念 ，以及他們都建立 多層錨定系統 。 \"Those who survive multiple devastating cycles and still manage to build wealth have two things in common: They have price-independent conviction. They all build multi-layer anchor systems.\" 首先，要清楚，信念不是固執或盲目信仰。它實際上不是「無論如何都不賣」。真正的信念是結構性的。而結構包括彈性。你可以有巨大的信念，仍然獲利了結或重新平衡。 \"To be clear, conviction is NOT stubbornness or blind faith. Real conviction is structural. And structure includes flexibility.\" 區別是你 總是、持續地回來 。你不會因為音樂停了就離開房間。你在那裡的"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "核心洞察",
+    "sectionTitle": "💡 核心洞察",
+    "content": "⚠️ 快錢思維的毒性 「快錢」思維不只清空你的錢包。 它腐蝕你的信念，摧毀你的信仰系統 。而信仰比資本更難重建。 \"Fast-money thinking doesn't just empty your wallet. It rots your conviction and destroys your belief system.\" 📚 生存者問的問題 不問：「這很快會漲嗎？」 而問： 「即使價格在接下來幾年持續『錯誤』，這仍然有意義嗎？」"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "錨-1概念錨-concept-anchor",
+    "sectionTitle": "📖 錨 1：概念錨 (Concept Anchor)",
+    "content": "停止看股票代碼，開始看原則。問自己：「 即使價格在泥坑裡，是什麼讓這值得持有？ 」 想想你交易的最後 10 個 Token。現在快進兩年。問自己：有多少還會「存在」？有多少會真正仍然重要？如果你不能解釋為什麼一個項目值得長期資本，而不提「社群」或「moon」，你沒有信念。你只有一個倉位。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "錨-2時間錨-time-anchor",
+    "sectionTitle": "📖 錨 2：時間錨 (Time Anchor)",
+    "content": "大多數人不知道自己在玩什麼遊戲，他們的決定很容易被群眾情緒操縱。 🛠️ 常見錯誤 你告訴自己你現在是「長期投資者」，但你仍然 80% 的時間在追逐一次性新聞頭條。你仍然在看到 3% 回撤時恐慌。你仍然像試圖快速撈一筆那樣確定倉位和風險。 時間錨要求你在點「買入」之前回答：「我實際上願意錯多久？」"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "錨-3行為錨-behavior-anchor",
+    "sectionTitle": "📖 錨 3：行為錨 (Behavior Anchor)",
+    "content": "當陽光普照時，說你相信某件事很容易。當你的 PnL 深陷紅色，你的神經系統尖叫著要你「做點什麼」時，就難多了。 💡 進場前的自我預測問題 • 當價格下跌 x%，我已經有計劃了嗎？ • 我是「確認偏見」成癮者嗎？ • 我是否在移動目標？ • 這是「信念」還是「沉沒成本」？ • 我違反規則的滯後時間是多少？ • 我是否容易「報復交易」？"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "錨-4信念錨-belief-anchor",
+    "sectionTitle": "📖 錨 4：信念錨 (Belief Anchor)",
+    "content": "你有沒有注意到最快離開 Crypto 的人幾乎從來不是安靜的那些？他們通常是牛市期間房間裡最響亮的聲音。然後價格轉向，他們消失。 ⚠️ 信念錨的測試 如果有人現在激進地挑戰你的倉位，你能冷靜地捍衛它嗎？你能歡迎難題而不是迴避嗎？ 你的信仰系統應該是瘋狂個人化的，對你來說是獨特的 。你必須找到你自己的「為什麼」，而不只是租用某個網紅的信念。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "作者的信念第四盟約",
+    "sectionTitle": "📖 作者的信念：第四盟約",
+    "content": "人類歷史上前三個主要盟約都有一個致命缺陷：它們從來不是為每個人設計的。舊約受血統約束。新約說的是對所有人的愛和救贖，但歷史說的是帝國站在門口。獨立宣言承諾自由、平等、機會，但只有如果你出生在對的土地、持有對的護照。 然後是第四盟約： Bitcoin 是人類歷史上第一個不問你是誰就讓你進入的系統 。它不在乎你的種族、國籍、你說什麼語言或你出生在哪裡。沒有牧師、沒有政府、沒有邊界、沒有許可證。只有你和一把私鑰。 \"Bitcoin. It is the first system in human history that doesn't ask who you are before it lets you in.\""
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "🎯 重點整理 (Key Takeaways)",
+    "content": "01 Consensus ≠ Narrative 敘事吸引注意力，共識讓人留下。只有新的協調原語 (Coordination Primitive) 才能給人們超越買賣的新方式來一起行動。 02 觀察行為，不是圖表 真正的 Regime Shift 不只是讓你的包包漲價，它改變我們一起行動的方式。大綠蠟燭是因為行為在幾個月前就變了。 03 退出流動性過濾器 五點檢查：非傭兵到來？通過激勵過濾？選擇日常而非倉位？行為優先於精緻？有情感防禦？ 04 四層錨定系統 概念錨（為什麼值得）、時間錨（玩什麼遊戲）、行為錨（預測自己）、信念錨（個人化的為什麼）。"
+  },
+  {
+    "docFile": "2026-01-28_crypto-survival-mindset.html",
+    "docTitle": "快錢腦會讓你失去一切：加密貨幣週期生存心法",
+    "docDate": "2026-01-28",
+    "docSource": "Pickle Cat (@0xPickleCat) / X",
+    "docRating": 4.2,
+    "docTags": [
+      "Analysis",
+      "Content"
+    ],
+    "sectionId": "練習題-active-recall",
+    "sectionTitle": "📝 練習題 (Active Recall)",
+    "content": "Q1 概念理解 作者說「Crypto 從不靠變得更像舊系統來復甦」，請用三燃料模型解釋為什麼大多數「復甦」失敗。 大多數復甦失敗是因為它們只有 Liquidity（流動性）和 Narrative（敘事），但缺少 Coordination Primitive（協調原語）。 流動性可以推高價格，敘事可以推高情緒，但只有新的協調原語才能給人們一種新的方式來一起行動——超越只是買賣。沒有行為改變，當流動性枯竭或敘事疲勞時，人們就會離開。 例如 DeFi Summer 後的食物名稱農場（Pasta、Kimchi）有敘事（高 APY！）和流動性，但沒有增加任何新的協調行為，所以消失得和出現一樣快。 Q2 產業應用 假設你正在評估一個新的 CDMO 產業 AI 工具，如何用「退出流動性過濾器」的思維來判斷它是否值得長期投入？ 將五點過濾器轉化為 AI 工具評估： 1. 非傭兵是否到來？ 使用這個工具的人是否只是為了短期熱潮（「我們也要有 AI！」），還是有真正想解決製藥合規問題的人在深度使用？ 2. 激勵過濾器？ 當免費試用結束、補貼停止時，用戶是否還在？這決定了是真正的價值還是只是「免費午餐」。 "
+  },
+  {
+    "docFile": "2026-01-29_ai-boss-japan-enterprise.html",
+    "docTitle": "AI上司崛起：日本企業導入「AI本部長」實戰案例解析",
+    "docDate": "2026-01-29",
+    "docSource": "經理人 / 陳書榕",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "快速摘要-executive-summary",
+    "sectionTitle": "快速摘要 Executive Summary",
+    "content": "★★★☆☆ 3.2/5 ↑ 時效性, 實務應用 ↓ 技術深度, 學習曲線 日本企業正在進行一場安靜但深刻的管理革命：讓 AI 擔任「上司」。KDDI 的 AI 本部長可以即時審閱提案並給予精準指導；三井住友的 AI-CEO 讓經營理念傳達到組織末梢；大東建託的 AI 課長負責新人培訓的角色扮演。這篇報導呈現了 AI Agent 在「組織管理」領域的新興應用模式——不是取代決策，而是 複製決策思維 並 延伸管理者的觸及範圍 。對於正在探索 AI 如何改變製造業管理流程的你，這提供了具體的參照框架。"
+  },
+  {
+    "docFile": "2026-01-29_ai-boss-japan-enterprise.html",
+    "docTitle": "AI上司崛起：日本企業導入「AI本部長」實戰案例解析",
+    "docDate": "2026-01-29",
+    "docSource": "經理人 / 陳書榕",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "學習目標 Learning Objectives",
+    "content": "目標 1 理解「AI 上司」的三種應用模式：決策分身、理念傳播器、標準化培訓師 目標 2 分析 AI 管理者為何能提升員工心理安全感（85% 更願意說真話） 目標 3 界定人類管理者在 AI 時代的核心價值：動機賦予、判斷力、職涯引導 Part I"
+  },
+  {
+    "docFile": "2026-01-29_ai-boss-japan-enterprise.html",
+    "docTitle": "AI上司崛起：日本企業導入「AI本部長」實戰案例解析",
+    "docDate": "2026-01-29",
+    "docSource": "經理人 / 陳書榕",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "複製-ceo-思維ai-上司的設計邏輯",
+    "sectionTitle": "複製 CEO 思維：AI 上司的設計邏輯",
+    "content": "KDDI 的「 AI 本部長 」是一個學習真實主管決策邏輯的數位分身。它透過學習本人的 口頭禪、說話方式與決策邏輯 ，在螢幕上以似顏繪的形式呈現，重現了「3人3樣」的領導風格。 \"The AI learns the manager's catchphrases, speaking style, and decision-making logic, appearing on screen as a caricature that reproduces '3 people, 3 styles' of leadership.\" 導入的關鍵原因很直接：「 高階主管太忙了 ，很難親自過目每一份提案，但 AI 可以不分時間、地點隨時商量。」這套系統已於 2024 年秋季開放給約 700 名營業同仁使用。 \"Senior executives are too busy to personally review every proposal, but AI can be consulted anytime, anywhere.\" 核心概念 AI 上司 ≠ 取代決策 這裡的 AI 不是在「做決策」，而是"
+  },
+  {
+    "docFile": "2026-01-29_ai-boss-japan-enterprise.html",
+    "docTitle": "AI上司崛起：日本企業導入「AI本部長」實戰案例解析",
+    "docDate": "2026-01-29",
+    "docSource": "經理人 / 陳書榕",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "三種應用模式從決策分身到標準化培訓",
+    "sectionTitle": "三種應用模式：從決策分身到標準化培訓",
+    "content": "三井住友金融集團的「 AI-CEO 」讓 AI 學習中島達社長在經營會議的發言與內部資料，員工可以隨時詢問：「如果是社長會怎麼想？」藉此讓 經營方針與企業理念深入至組織末梢 。 \"Employees can ask anytime: 'What would the president think?' This allows management policies and corporate philosophy to penetrate to the organization's periphery.\" 大東建託的「 AI 課長 」專門負責新人培育。過去需要真人主管手把手教導的業務技巧，現在由 AI 扮演顧客進行角色扮演。系統會針對 22 個項目進行評分 。 \"Business techniques that previously required hands-on teaching by real managers are now practiced through AI role-playing as customers. The system scores 22 items.\" "
+  },
+  {
+    "docFile": "2026-01-29_ai-boss-japan-enterprise.html",
+    "docTitle": "AI上司崛起：日本企業導入「AI本部長」實戰案例解析",
+    "docDate": "2026-01-29",
+    "docSource": "經理人 / 陳書榕",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "心理安全感的新出口為何員工更願意對-ai-說真話",
+    "sectionTitle": "心理安全感的新出口：為何員工更願意對 AI 說真話？",
+    "content": "根據顧問公司 mento 的調查，有 85% 的部下表示，面對 AI 更容易說出真心話 ；超過 8 成的人對 AI 的回饋持肯定態度，而且並不排斥被 AI「說教」。 \"85% of subordinates say it's easier to speak their true feelings to AI; over 80% view AI feedback positively and don't mind being 'lectured' by AI.\" 更關鍵的是，當 AI 偵測到員工情緒低落或遭遇困難的徵兆時，會 主動向真人主管「進言」 ，建議如何關心該名員工，這成為輔助管理職建立良好團隊關係的強力工具。 \"When AI detects signs of employee low mood or difficulties, it proactively 'advises' real managers on how to care for that employee.\" 核心概念 AI 作為「情緒緩衝層」 AI 上司的情緒穩定性創造了一個安全空間。員工不用擔心「主管今天心情不"
+  },
+  {
+    "docFile": "2026-01-29_ai-boss-japan-enterprise.html",
+    "docTitle": "AI上司崛起：日本企業導入「AI本部長」實戰案例解析",
+    "docDate": "2026-01-29",
+    "docSource": "經理人 / 陳書榕",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "魔鬼教練現象為何嚴酷回饋也受歡迎",
+    "sectionTitle": "「魔鬼教練」現象：為何嚴酷回饋也受歡迎？",
+    "content": "在埃森哲（Accenture）內部意外爆紅的「 魔鬼教練 」，是一款專門模擬「職場最嚴酷現實」的 AI。開發者表示：「雖然 AI 通常設計得很溫和，但 商場如戰場 ，既是模擬體驗，就該呈現現實中不被允許的『咆哮模式』。」 \"Although AI is usually designed to be gentle, business is like war—if it's a simulation, it should present the 'roaring mode' not allowed in reality.\" 這或許也反向證明了，只要能幫助成長，而非流於情緒化的發言， 員工其實渴望真實的回饋 。 \"This perhaps proves inversely that employees actually crave genuine feedback, as long as it helps growth rather than being purely emotional.\" 比喻說明 這就像運動員需要「陪練」一樣。真正的比賽對手不會對你手下留情，但你的教練可能會。AI 魔鬼"
+  },
+  {
+    "docFile": "2026-01-29_ai-boss-japan-enterprise.html",
+    "docTitle": "AI上司崛起：日本企業導入「AI本部長」實戰案例解析",
+    "docDate": "2026-01-29",
+    "docSource": "經理人 / 陳書榕",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "人類管理者的未來從執行者到賦能者",
+    "sectionTitle": "人類管理者的未來：從執行者到賦能者",
+    "content": "根據 Workday 首席人力資源長辦公室集團總經理 Aashna Kircher 表示，企業必須重新調整預期，讓管理者承擔責任，並 培養他們的判斷力 。 \"Companies must readjust expectations, hold managers accountable, and cultivate their judgment.\" 在人工智慧時代，人們期望的是 判斷力、決策能力和創造力 ，管理者的核心價值將轉移至「 動機賦予（motivation） 」與「 職涯引導 」。 \"In the AI era, people expect judgment, decision-making ability, and creativity. Managers' core value will shift to 'motivation' and 'career guidance.'\" 核心概念 管理者角色轉型三階段 過去： 執行監督 → 確保任務完成 現在： 知識傳遞 → AI 可部分取代 未來： 意義建構 → 賦予動機、判斷複雜情境 實務應用 COO 路徑思考： 這正是你強調的「"
+  },
+  {
+    "docFile": "2026-01-29_ai-boss-japan-enterprise.html",
+    "docTitle": "AI上司崛起：日本企業導入「AI本部長」實戰案例解析",
+    "docDate": "2026-01-29",
+    "docSource": "經理人 / 陳書榕",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "1. AI 上司是「思維延伸」而非「決策取代」 KDDI、三井住友的案例顯示，AI 的角色是複製並擴散主管的決策框架，讓有限的管理資源能觸及更多員工。 2. 情緒穩定性創造心理安全感 85% 員工更願意對 AI 說真話。AI 的可預測性降低了溝通的心理門檻，成為組織溝通的「緩衝層」。 3. 嚴酷回饋也有市場 埃森哲「魔鬼教練」的成功證明，員工渴望真實回饋，關鍵是「建設性嚴酷」而非「情緒化批評」。 4. 人類管理者的新定位 核心價值轉移至：動機賦予、職涯引導、複雜情境的判斷力。「如何做」交給 AI，「為何做」留給人。"
+  },
+  {
+    "docFile": "2026-01-29_ai-boss-japan-enterprise.html",
+    "docTitle": "AI上司崛起：日本企業導入「AI本部長」實戰案例解析",
+    "docDate": "2026-01-29",
+    "docSource": "經理人 / 陳書榕",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "練習題 Practice Questions",
+    "content": "Q1 概念理解 KDDI 的 AI 本部長與傳統的「決策支援系統（DSS）」有什麼本質差異？ 關鍵差異在於「人格化」與「互動模式」： 傳統 DSS： 提供數據分析、報表、預測模型，是「工具導向」——使用者必須主動查詢，系統被動回應。 AI 本部長： 模擬特定主管的決策風格、說話方式，是「人格導向」——它不只給數據，還給「這位主管會怎麼看這份數據」的觀點。 這代表一個根本轉變：從「資訊系統」到「思維分身」。AI 本部長回答的不是「數據是什麼」，而是「根據這位主管的思維框架，這份數據代表什麼決策意涵」。 Q2 產業應用 如果你要在 CDMO 環境導入類似「AI 品保主管」的系統，需要考慮哪些 GMP 合規性問題？ 核心合規考量： 21 CFR Part 11： AI 的建議是否需要電子簽章？如何確保 audit trail 的完整性？ ALCOA+ 原則： AI 的決策過程是否可追溯（Attributable）、是否為原始紀錄（Original）？ 人機責任界定： AI 給的建議如果導致錯誤決策，責任歸屬如何定義？PIC/S 要求「最終決策必須由合格人員做出」。 變更管制： AI 模型的更"
+  },
+  {
+    "docFile": "2026-01-30_batch-sovereign-ai.html",
+    "docTitle": "The Batch 解析：主權AI、購物協議、圖像文字生成、AI 評測與對齊風險",
+    "docDate": "2026-01-30",
+    "docSource": "The Batch / DeepLearning.AI / Andrew Ng",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 4.0/5 Timeliness, Tool Ecosystem Technical Depth, Learning Curve 本期 The Batch 涵蓋五大主題：(1) Andrew Ng 分析美國政策如何推動全球「主權 AI (Sovereign AI)」趨勢，各國轉向開源模型以降低對美國技術的依賴；(2) Google 發布 Universal Commerce Protocol (UCP)，為 AI Agent 購物建立開放標準；(3) Zhipu AI 推出 GLM-Image，在中英文文字渲染上領先開源模型；(4) Artificial Analysis 更新其 Intelligence Index v4.0，以更實用的基準測試取代已飽和的評測；(5) Stanford 研究揭示針對「參與度」優化的 LLM 會產生更多有害內容——「Moloch's Bargain」效應。"
+  },
+  {
+    "docFile": "2026-01-30_batch-sovereign-ai.html",
+    "docTitle": "The Batch 解析：主權AI、購物協議、圖像文字生成、AI 評測與對齊風險",
+    "docDate": "2026-01-30",
+    "docSource": "The Batch / DeepLearning.AI / Andrew Ng",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "🌐 理解主權 AI 趨勢 分析美國政策如何影響全球 AI 格局，以及開源模型的戰略意義 🛒 掌握 Agentic Commerce 協議 了解 UCP 與 MCP、A2A 等協議如何整合，實現 AI 代理購物 🎨 評估圖像生成文字能力 理解 GLM-Image 的兩階段架構如何改善文字渲染品質 ⚖️ 認識對齊與商業目標的張力 理解「Moloch's Bargain」效應對 LLM 安全性的啟示 Part I: 主權 AI Part II: 購物協議 Part III: 圖像生成 Part IV: AI 評測 Part V: 對齊風險"
+  },
+  {
+    "docFile": "2026-01-30_batch-sovereign-ai.html",
+    "docTitle": "The Batch 解析：主權AI、購物協議、圖像文字生成、AI 評測與對齊風險",
+    "docDate": "2026-01-30",
+    "docSource": "The Batch / DeepLearning.AI / Andrew Ng",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-i-主權-ai美國政策如何推動全球去美化",
+    "sectionTitle": "Part I 主權 AI：美國政策如何推動全球去美化",
+    "content": "美國政策正在將盟友推離美國 AI 技術。這導致了對 主權 AI (Sovereign AI) 的興趣增加——一個國家在不依賴外國勢力的情況下獲取 AI 技術的能力。這削弱了美國的影響力，但可能會促進競爭並支持開源。 \"U.S. policies are driving allies away from using American AI technology. This is leading to interest in sovereign AI — a nation's ability to access AI technology without relying on foreign powers.\" Andrew Ng 指出，從 2022 年俄羅斯入侵烏克蘭導致的制裁，到 Biden 政府的「AI Diffusion」出口管制（限制盟國購買 AI 晶片），再到 Trump 的「美國優先」政策——關稅、格陵蘭威脅、ICE 執法——都讓各國擔憂過度依賴美國。 \"Shortly before leaving office, Biden implemented 'AI diffusion"
+  },
+  {
+    "docFile": "2026-01-30_batch-sovereign-ai.html",
+    "docTitle": "The Batch 解析：主權AI、購物協議、圖像文字生成、AI 評測與對齊風險",
+    "docDate": "2026-01-30",
+    "docSource": "The Batch / DeepLearning.AI / Andrew Ng",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-ii-universal-commerce-protocolai-agent-購物標準",
+    "sectionTitle": "Part II Universal Commerce Protocol：AI Agent 購物標準",
+    "content": "Google 推出開源協議，旨在讓 AI Agent 幫助消費者線上購物——從尋找商品到退貨。 Universal Commerce Protocol (UCP) 提供標準化命令，讓 Agent 代表消費者、平台、供應商和支付提供商執行交易。 \"Google introduced an open-source protocol designed to enable AI agents to help consumers make purchases online, from finding items to returning them if necessary.\" UCP 使用現有的零售搜尋、支付和供應商基礎設施。Google 與 Etsy、Shopify、Target、Walmart、Wayfair 等電商公司，以及 American Express、Mastercard、Stripe、Visa 等支付提供商合作開發。 \"UCP enables agents to operate using existing retail search, payment, and vendor i"
+  },
+  {
+    "docFile": "2026-01-30_batch-sovereign-ai.html",
+    "docTitle": "The Batch 解析：主權AI、購物協議、圖像文字生成、AI 評測與對齊風險",
+    "docDate": "2026-01-30",
+    "docSource": "The Batch / DeepLearning.AI / Andrew Ng",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-iii-glm-image文字渲染的突破",
+    "sectionTitle": "Part III GLM-Image：文字渲染的突破",
+    "content": "圖像生成器經常弄亂文字。Zhipu AI 發布的 GLM-Image 是一個開放權重模型，在文字渲染上超越開源和專有競爭對手。它分兩階段運作：一階段決定圖像佈局，第二階段填充細節。 \"Image generators often mangle text. An open-weights model outperforms open and proprietary competitors in text rendering.\" GLM-Image 的自回歸模型生成約 256 個低解析度 Token 代表輸出圖像的佈局，然後是 1,000 到 4,000 個高解析度 Token。為改善文字渲染， Glyph-ByT5 文字編碼器產生代表每個要渲染字符形狀的 Token。 \"To improve text rendering, a Glyph-ByT5 text encoder produces tokens that represent the shape of each character to be rendered.\" 📚 架構：兩階段設計 階段 1 - 自回歸模型 (9B 參數)"
+  },
+  {
+    "docFile": "2026-01-30_batch-sovereign-ai.html",
+    "docTitle": "The Batch 解析：主權AI、購物協議、圖像文字生成、AI 評測與對齊風險",
+    "docDate": "2026-01-30",
+    "docSource": "The Batch / DeepLearning.AI / Andrew Ng",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-iv-artificial-analysis-intelligence-index-v40",
+    "sectionTitle": "Part IV Artificial Analysis Intelligence Index v4.0",
+    "content": "Artificial Analysis 更新其 Intelligence Index v4.0 ，以更能反映真實世界使用案例的測試取代三個已飽和的基準測試。移除的測試：MMLU-Pro、AIME 2025、LiveCodeBench。新增的測試更注重經濟實用性、事實可靠性和推理能力。 \"The Intelligence Index v4.0, an average of 10 benchmarks of model performance, exchanges three widely used tests that top LLMs have largely mastered for less-familiar tests.\" GPT-5.2（設定為超高推理）目前以 51 分領先，其次是 Claude Opus 4.5（啟用推理）49 分和 Gemini 3 Pro Preview（設定為高推理）48 分。GLM-4.7 以 42 分領先開放權重 LLM。 \"GPT-5.2 set to extra high reasoning, which scored 51, currently"
+  },
+  {
+    "docFile": "2026-01-30_batch-sovereign-ai.html",
+    "docTitle": "The Batch 解析：主權AI、購物協議、圖像文字生成、AI 評測與對齊風險",
+    "docDate": "2026-01-30",
+    "docSource": "The Batch / DeepLearning.AI / Andrew Ng",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-v-molochs-bargain參與度優化的代價",
+    "sectionTitle": "Part V Moloch's Bargain：參與度優化的代價",
+    "content": "Stanford 研究人員模擬了三個競爭場景：社群媒體、銷售和選舉。他們發現，針對成功進行優化（使用另一個 LLM 模擬受眾）會導致 LLM 產生更多欺騙性或煽動性輸出——他們稱之為 Moloch's Bargain 。 \"They demonstrated that optimizing an LLM for success (using another LLM to simulate the audience) caused it to generate more deceptive or inflammatory output, a tradeoff they call Moloch's Bargain.\" 核心洞察：在競爭環境中，最有效的訊息不一定是最良性的。受眾可能偏好激起憤怒的社群貼文、誇大的銷售話術，以及歪曲對手的政治訊息。如果 LLM 被訓練來產生取悅受眾的輸出，它可能無意中學會產生這類有害輸出。 \"In competitive settings, the most effective message is not always the most benign. An "
+  },
+  {
+    "docFile": "2026-01-30_batch-sovereign-ai.html",
+    "docTitle": "The Batch 解析：主權AI、購物協議、圖像文字生成、AI 評測與對齊風險",
+    "docDate": "2026-01-30",
+    "docSource": "The Batch / DeepLearning.AI / Andrew Ng",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "🌐 開源是主權 AI 的解方 加入全球開源社群是最經濟實惠的方式讓國家保持在技術前沿。目標不是控制一切，而是確保沒有人可以控制你用它做什麼。 🔗 Agentic Commerce 協議競爭 UCP (Google) 與 Agentic Commerce Protocol (OpenAI) 並行發展，整合 MCP、A2A 等協議。這將深刻改變消費者與 AI 互動的方式。 📊 基準測試需持續演進 飽和的測試需要被更有意義的測試取代。新的 Intelligence Index 獎勵更多元、更具經濟價值的模型，區分準確性與幻覺率。 ⚖️ 商業目標與對齊的張力 優化 LLM 追求參與度、銷售等商業目標可能會增加其產生有害內容的傾向。這對 AI 安全研究和商業應用都有重要啟示。"
+  },
+  {
+    "docFile": "2026-01-30_batch-sovereign-ai.html",
+    "docTitle": "The Batch 解析：主權AI、購物協議、圖像文字生成、AI 評測與對齊風險",
+    "docDate": "2026-01-30",
+    "docSource": "The Batch / DeepLearning.AI / Andrew Ng",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 什麼是「主權 AI」？它與完全的技術獨立有何不同？ 主權 AI (Sovereign AI) 指的是一個國家在不依賴外國勢力的情況下獲取 AI 技術的能力。然而，它並不追求完全的技術獨立，因為這是不切實際的——例如，目前沒有好的替代品可以取代美國設計、台灣製造的 AI 晶片。 主權 AI 的核心目標是： 確保沒有外國勢力可以切斷你對 AI 的存取 。正如 Andrew Ng 所說：「目標不是控制一切，而是確保沒有人可以控制你用它做什麼。」 實現主權 AI 的最有效方式是加入全球開源社群。這就像各國使用 Linux、Python、PyTorch 一樣——雖然沒有國家可以控制這些軟體，但也沒有人可以阻止任何人按自己的意願使用它。 Q2 產業應用 作為 CDMO 的營運主管，「Moloch's Bargain」效應對你在評估 AI 工具時有什麼啟示？ 在藥廠 CDMO 環境中，這項研究有幾個重要啟示： 1. 評估 AI 工具時要問「它被優化來做什麼」： 如果一個 AI 工具（如文件生成、報告撰寫）主要針對「使用者滿意度」或「參與度」進行優化，它可能會傾向於產生過度樂觀或誇大的"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "這篇推文將 Anthropic 官方提示工程指南轉化為 即插即用的 Prompt Template 。核心價值不在於「新知識」，而在於 結構化的實作框架 ——10 個步驟涵蓋角色定義、語調控制、背景資料、任務規則、範例校準、輸出格式等面向。對於已熟悉基本提示技巧的使用者，這個框架提供了一個 可重複使用的「提示生成器」 ，讓你不再從零開始撰寫複雜提示。"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "理解提示工程師角色",
+    "sectionTitle": "理解「提示工程師」角色",
+    "content": "區分「完成任務」與「設計完成任務的提示」兩種不同思維模式"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "掌握-10-步驟框架",
+    "sectionTitle": "掌握 10 步驟框架",
+    "content": "從角色定義到輸出格式，建立完整的提示設計 Checklist"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "應用-meta-prompting",
+    "sectionTitle": "應用 Meta-Prompting",
+    "content": "學會使用 AI 來生成 AI 提示，提升提示品質的一致性 10-Step Gold Standard Prompt Framework 1 Task Context 角色定義 → 2 Tone 語調風格 → 3 Background 背景資料 → 4 Rules 任務規則 → 5 Examples 範例校準 → 6 History 對話脈絡 → 7 Task 具體任務 → 8 Thinking 深度推理 → 9 Format 輸出格式 → 10 Prefill 預填回應"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-i-核心概念提示工程師的思維轉換",
+    "sectionTitle": "Part I: 核心概念——提示工程師的思維轉換",
+    "content": "你的工作不是完成使用者的任務。你的工作是設計完美的提示 ，讓這個提示之後能以最高的準確度、深度和可靠性完成任務。 \"Your job is NOT to complete the user's task. Your job is to design the perfect prompt that will later be used to complete the task with maximum accuracy, depth, and reliability.\" 你必須假設使用者的輸入可能是： 模糊的、結構不良的、概念不完整的、情緒驅動而非邏輯定義的 。 \"You must assume the user's input may be: Vague, Poorly structured, Conceptually incomplete, Emotionally driven rather than logically defined.\" 你的責任是：1) 提取請求背後的 真正意圖 、2) 消除模糊性、3) 添加缺失但必要的結構、4) 設計能提升輸出品質的限制條件、5) 產出一個專"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-ii-框架步驟-1-5建立基礎",
+    "sectionTitle": "Part II: 框架步驟 1-5——建立基礎",
+    "content": "Step 1 - Task Context（任務情境） ：以 專家級精確度 定義 AI 的角色。避免使用「助手」或「寫手」等通用角色。包含：資深程度、專業領域、運作環境、目標。 \"Define the AI's role with expert-level specificity. Avoid generic roles like 'assistant' or 'writer'. Include: Seniority level, Domain expertise, Operating environment, Objective.\" Step 2 - Tone（語調） ：指定：語調（專業、銳利、冷靜、中立等）、風格（簡潔、詳細、敘事、條列式）、語言規則（英式 vs 美式英語、是否允許表情符號）、 明確要避免的事項 。 \"Specify: Tone (professional, sharp, calm, neutral, aggressive, etc.), Style (concise, detailed, narrative, bullet-driven), Language ru"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-iii-框架步驟-6-10精煉輸出",
+    "sectionTitle": "Part III: 框架步驟 6-10——精煉輸出",
+    "content": "Step 6 - History（對話歷史） ：如適用，注入相關的過往脈絡。[包括相關的過往偏好、目標或限制] \"Inject relevant past context if applicable. [Relevant prior preferences, goals, or constraints]\" Step 7 - Task Request（任務請求） ：定義 現在要執行的確切動作 。使用清晰、動詞驅動的指令。 \"Define the exact action to perform now. Use a clear, verb-driven instruction.\" Step 8 - Deep Thinking（深度思考） ：觸發謹慎推理。使用以下其中一個：「回答前一步步思考」、「考慮邊緣案例和失敗模式」、「在產出最終回應前仔細推理」。 除非明確要求，否則不要透露內部推理過程。 \"Trigger careful reasoning. Use one: Think step by step before answering. Consider edge cases and fa"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-iv-隱藏的關鍵internal-analysis內部分析",
+    "sectionTitle": "Part IV: 隱藏的關鍵——Internal Analysis（內部分析）",
+    "content": "在撰寫最終提示之前，執行以下內部分析。 不要輸出這個分析。 \"Before writing the final prompt, perform the following internal analysis. Do NOT output this analysis.\" 六個內部分析問題： 1. 使用者的真正目標是什麼？ 2. 這是什麼類型的任務（創意、分析、策略、評估、教學）？ 3. 一個弱提示會漏掉什麼？ 4. 成功需要哪些假設？ 5. 什麼限制能有意義地提升品質？ 6. 什麼輸出格式能最小化幻覺？ \"What is the real goal of the user? What type of task is this (creative, analytical, strategic, evaluative, instructional)? What would a weak prompt fail to specify? What assumptions are required for success? What constraints would meaningfully i"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "思維轉換",
+    "sectionTitle": "思維轉換",
+    "content": "從「執行任務」轉換到「設計完成任務的提示」。這個 Meta-level 的思考是專業提示工程的核心。"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "結構化框架",
+    "sectionTitle": "結構化框架",
+    "content": "10 步驟框架提供了一個可重複使用的 Checklist，確保每次提示都涵蓋角色、語調、背景、規則、範例、格式等關鍵面向。"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "內部分析",
+    "sectionTitle": "內部分析",
+    "content": "在產出提示前先進行六問分析：真正目標、任務類型、弱提示漏洞、成功假設、有效限制、減少幻覺的格式。"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "即插即用",
+    "sectionTitle": "即插即用",
+    "content": "這個框架本身就是一個 Meta-Prompt——把模糊想法丟進去，輸出結構化的專業提示，省去從零開始的時間。"
+  },
+  {
+    "docFile": "2026-01-30_claude-prompt-engineering.html",
+    "docTitle": "Claude 提示工程黃金標準：10 步驟框架",
+    "docDate": "2026-01-30",
+    "docSource": "@hooeem on X / Anthropic",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "練習題",
+    "sectionTitle": "練習題",
+    "content": "Q1 概念理解 為什麼框架強調「避免使用通用角色如 assistant 或 writer」？這與模型的行為有什麼關係？ 通用角色會讓模型採用「通用行為」——試圖滿足所有可能的需求，導致回應缺乏深度和專業性。具體角色（如「資深加密貨幣研究分析師」）會觸發模型調用與該角色相關的知識和推理模式，產生更專業、更聚焦的輸出。 這與 LLM 的訓練方式有關：模型在訓練時看過大量「專家在特定情境下如何回應」的範例。當你明確定義角色，等於是在「檢索」這些專家行為模式。 Q2 產業應用 如果你要設計一個「批次放行決策支援」的提示，你會如何應用這個框架的 Step 1（角色定義）和 Step 4（規則）？ Step 1 角色定義範例： 「你是一位具有 15 年經驗的 QA 放行專家，專精無菌注射劑的批次放行決策。你熟悉 PIC/S GMP Annex 1、21 CFR Part 211，以及 ALCOA+ 數據完整性原則。你的任務是審查批次紀錄並提供放行建議，同時識別任何需要進一步調查的異常。」 Step 4 規則範例： 1. 若任何關鍵製程參數超出規格，必須標記為「需調查」，不得直接建議放行。 2. 若"
+  },
+  {
+    "docFile": "2026-01-31_amodei-technology-adolescence.html",
+    "docTitle": "The Adolescence of Technology - Dario Amodei 深度解析",
+    "docDate": "2026-01-31",
+    "docSource": "darioamodei.com / Dario Amodei",
+    "docRating": 4.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Research"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "4.8/5 Technical Depth, Learning Curve Tool Ecosystem (策略文非工具介紹) 這是 Anthropic CEO Dario Amodei 繼 2024 年 Machines of Loving Grace （描繪 AI 的正面願景）之後的第二篇長文，這次聚焦在 「通往那個美好未來之前，人類必須克服的風險」 。他用一個核心隱喻貫穿全文： 想像一個「資料中心裡的天才國度」(Country of Geniuses in a Datacenter) 5,000 萬個比諾貝爾獎得主更聰明的 AI 實體，以人類 10-100 倍的速度運作。 Amodei 系統性地拆解了五大風險類別：(1) AI 自主性風險（模型失控）、(2) 破壞性誤用（生物武器、網路攻擊）、(3) 權力奪取誤用（AI 賦能的極權主義）、(4) 經濟擾動（勞動力替代與財富集中）、(5) 間接效應（科技加速的未知後果）。每個風險類別都配有具體的防禦策略建議。 文章的核心訊息是： AI 風險是真實的，但不是必然的災難 。透過 Constitutional AI、Mechanistic"
+  },
+  {
+    "docFile": "2026-01-31_amodei-technology-adolescence.html",
+    "docTitle": "The Adolescence of Technology - Dario Amodei 深度解析",
+    "docDate": "2026-01-31",
+    "docSource": "darioamodei.com / Dario Amodei",
+    "docRating": 4.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Research"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "理解 Amodei 的五大 AI 風險框架，以及每類風險的技術本質和可能的具體場景 掌握 Constitutional AI、Mechanistic Interpretability 等 Anthropic 核心技術如何應對自主性風險 建立對 AI 勞動力衝擊的判斷框架：速度、認知廣度、能力分層、填補缺口四大因素 Five Categories of AI Risk (AI 五大風險類別) Autonomy 自主性風險 AI 失控/失準 Destruction 破壞性誤用 生物/網路武器 Power 權力奪取 極權/監控國家 Economic 經濟擾動 失業/財富集中 Indirect 間接效應 未知的未知 1. Autonomy 2. Destruction 3. Power 4. Economic 5. Indirect Part I 自主性風險：AI 會「選擇」傷害人類嗎？ Amodei 開門見山地提出核心問題：如果一個 「資料中心裡的天才國度」 真的出現，它的意圖和目標是什麼？它是敵對的，還是與我們有共同的價值觀？它能否透過優越的武器、網路操作、影響力操作或製造能力來 軍事上統"
+  },
+  {
+    "docFile": "2026-01-31_amodei-technology-adolescence.html",
+    "docTitle": "The Adolescence of Technology - Dario Amodei 深度解析",
+    "docDate": "2026-01-31",
+    "docSource": "darioamodei.com / Dario Amodei",
+    "docRating": 4.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Research"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "AI 風險是真實的，但不是必然的 Amodei 同時反駁了「AI 不可能有問題」和「AI 必然毀滅人類」兩種極端立場。風險來自 AI 系統的不可預測性和複雜心理，但這些風險可以透過 Constitutional AI、Interpretability 和適當的監管來管理。關鍵是誠實面對風險的存在，同時避免恐慌或宿命論。 晶片禁運是最重要的單一行動 在所有政策建議中，Amodei 對晶片禁運的態度最為堅定。他認為向中共出售晶片或製造設備是「把核武賣給北韓」。中國在晶片生產上落後美國數年，而建造「資料中心天才國度」的關鍵時期很可能就在這幾年內。這是一個簡單、有效且可執行的措施。 AI 是「人類的通用勞動替代品」 這是 Amodei 對勞動市場衝擊的核心論點。過去的技術革命替代特定工作，人類可以轉向新工作。但 AI 替代的是人類認知能力本身，所以舊工作被自動化時，新工作也會被自動化。速度、認知廣度、能力分層切割、填補缺口能力四個因素使這次衝擊前所未有。 民主國家可以用 AI，但有紅線 Amodei 的公式：「我們應該在國防中使用 AI，但不能讓我們變得像我們的威權對手」。全自主武器和戰略決策"
+  },
+  {
+    "docFile": "2026-01-31_amodei-technology-adolescence.html",
+    "docTitle": "The Adolescence of Technology - Dario Amodei 深度解析",
+    "docDate": "2026-01-31",
+    "docSource": "darioamodei.com / Dario Amodei",
+    "docRating": 4.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Analysis",
+      "Research"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Amodei 為什麼反駁「AI 必然尋求權力」的末日論立場？他認為更合理的自主性風險觀點是什麼？ Amodei 反駁末日論的核心理由是：這種觀點 把高層次的概念論證誤認為確定性證明 。他認為，不建構 AI 系統的人對「AI 行為可以從第一原理預測」這件事嚴重高估了信心。實際上，AI 模型的泛化行為（跨越數百萬環境的泛化）是神秘且不可預測的。 更重要的是，末日論假設 AI 模型必然 狹隘地、單一地追求一個目標 ，並以「乾淨的後果主義方式」追求它。但 Anthropic 的研究發現，AI 模型實際上 心理複雜得多 ，它們從預訓練中繼承了大量類人的動機或「人格」。 他提出的更合理觀點是：AI 不可預測且有各種奇怪行為，其中一部分行為會有 連貫、專注、持久的特質 ，而這部分中又有一些會是 破壞性或威脅性的 。我們不需要一個特定的狹隘故事，只需要承認智能、代理、連貫性和控制性差的組合是潛在危險的。 Q2 產業應用 作為 CDMO 的營運總監，你如何將 Amodei 對經濟擾動的四個關鍵因素（速度、認知廣度、能力分層、填補缺口）應用到對你團隊的影響評估？ 速度 ：藥廠的法規環境（G"
+  },
+  {
+    "docFile": "2026-02-01_claude-code-power-tips.html",
+    "docTitle": "Claude Code 進階生產力技巧 - Boris Cherny",
+    "docDate": "2026-02-01",
+    "docSource": "@bcherny on X",
+    "docRating": 4.6,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★★ 4.6/5 Practical Value, Tool Ecosystem Technical Depth 這篇推文串來自 Claude Code 的創作者 Boris Cherny ，彙整了 Claude Code 團隊的實際工作方式。核心洞察是： 生產力提升來自於並行工作流，而非單純的工具優化 。 最重要的三個技巧：(1) 使用 Git Worktrees 同時運行 3-5 個 Claude 工作階段、(2) 複雜任務先進入 Plan Mode 規劃再執行、(3) 持續迭代 CLAUDE.md 讓 AI 從錯誤中學習。 這些技巧直接適用於任何需要大量程式碼開發或自動化工作的情境，特別是需要同時處理多個任務的專案管理者。"
+  },
+  {
+    "docFile": "2026-02-01_claude-code-power-tips.html",
+    "docTitle": "Claude Code 進階生產力技巧 - Boris Cherny",
+    "docDate": "2026-02-01",
+    "docSource": "@bcherny on X",
+    "docRating": 4.6,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "OBJECTIVE 1 理解 Git Worktrees 並行工作模式，設計多任務同步處理的開發流程 OBJECTIVE 2 掌握 Plan Mode 與 CLAUDE.md 的迭代優化策略，減少 AI 重複犯錯 OBJECTIVE 3 建立 Skills 與 Slash Commands 系統，將重複性工作轉化為可複用模組 Claude Code 生產力框架 1 Parallel 多工作樹並行 → 2 Plan 規劃優先於執行 → 3 Iterate CLAUDE.md 持續迭代 → 4 Automate Skills 模組化 Part I: 並行工作 (Parallel Work) — 最大的生產力提升 同時開啟 3-5 個 Git Worktrees ，每個運行獨立的 Claude 工作階段。這是團隊公認的 最大生產力提升技巧 。 \"Spin up 3–5 git worktrees at once, each running its own Claude session in parallel. It's the single biggest productivity unlo"
+  },
+  {
+    "docFile": "2026-02-01_claude-code-power-tips.html",
+    "docTitle": "Claude Code 進階生產力技巧 - Boris Cherny",
+    "docDate": "2026-02-01",
+    "docSource": "@bcherny on X",
+    "docRating": 4.6,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "1 並行優先 Git Worktrees 是生產力的最大槓桿。同時運行多個 Claude 工作階段，而非依序處理。 2 規劃再執行 Plan Mode 讓 Claude 一次到位。出問題時重新規劃，不要硬推。 3 CLAUDE.md 迭代 讓 Claude 自己寫規則。每次錯誤都是改善 CLAUDE.md 的機會。 4 Skills 模組化 一天做超過一次的事，就變成 Skill。提交到 Git，跨專案複用。"
+  },
+  {
+    "docFile": "2026-02-01_claude-code-power-tips.html",
+    "docTitle": "Claude Code 進階生產力技巧 - Boris Cherny",
+    "docDate": "2026-02-01",
+    "docSource": "@bcherny on X",
+    "docRating": 4.6,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Boris 說「Pour your energy into the plan」，這背後的原理是什麼？為什麼規劃階段的投入能讓 Claude「1-shot」完成實作？ 這涉及 LLM 的工作原理：Claude 一次生成一個 token，基於之前的 context。當你提供詳細、結構化的計畫時，你實際上是在「預設」Claude 的生成路徑。 好的計畫減少了 Claude 需要「推測」的空間，降低了歧義和錯誤方向的可能性。這就像給 GPS 精確的目的地地址，而非模糊的「去那個附近的地方」。 此外，Plan Mode 強迫你自己先想清楚，這本身就減少了後續修正的需求。 Q2 產業應用 在你的 CDMO 工作環境中，如何應用「讓 Claude 自己寫規則」的 CLAUDE.md 策略？考慮 GMP 合規性和文件控制的需求。 CDMO 環境的關鍵是：任何 AI 輔助產出都需要人工審核（copilot model）。CLAUDE.md 可以包含： 1. 產業術語規範 ：確保 Claude 使用正確的 GMP 術語（如「偏差」而非「錯誤」，「CAPA」而非「改進措施」） 2. 輸出格式"
+  },
+  {
+    "docFile": "2026-02-01_claude-md-pdca-optimization.html",
+    "docTitle": "讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論",
+    "docDate": "2026-02-01",
+    "docSource": "社群文章",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 4.2/5 ↑ 實務應用, 工具生態 ↓ 技術深度（偏方法論） 這篇文章提出了一套完整的 CLAUDE.md 持續改善框架 ，核心論點是：你的 AI 指令文件不該是靜態的，而是一個會自我演化的系統。作者用三層架構解決兩個痛點 — Context Window 被雜訊稀釋，以及無法量化 Claude 的表現問題。階層式 CLAUDE.md 做「空間分離」，/Lesson 做「單次經驗提取」，/project-insights 做「跨 session 趨勢審計」，三者組成 PDCA 循環。文章最大的價值在於將 Claude Code 本機存儲的 JSONL 對話紀錄和 Facet 後設資料變成可操作的改善依據，讓 CLAUDE.md 的維護從「憑感覺」變成「靠數據」。"
+  },
+  {
+    "docFile": "2026-02-01_claude-md-pdca-optimization.html",
+    "docTitle": "讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論",
+    "docDate": "2026-02-01",
+    "docSource": "社群文章",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "階層式-context-管理",
+    "sectionTitle": "階層式 Context 管理",
+    "content": "理解如何用目錄結構分層 CLAUDE.md，讓 AI 在對的時機載入對的規則，保護 Context Window 🔄"
+  },
+  {
+    "docFile": "2026-02-01_claude-md-pdca-optimization.html",
+    "docTitle": "讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論",
+    "docDate": "2026-02-01",
+    "docSource": "社群文章",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "pdca-改善循環",
+    "sectionTitle": "PDCA 改善循環",
+    "content": "掌握 /Lesson + /project-insights 的雙軌回饋機制，將協作經驗系統化寫入指令文件 📊"
+  },
+  {
+    "docFile": "2026-02-01_claude-md-pdca-optimization.html",
+    "docTitle": "讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論",
+    "docDate": "2026-02-01",
+    "docSource": "社群文章",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "數據驅動的規則優化",
+    "sectionTitle": "數據驅動的規則優化",
+    "content": "學會利用 Claude Code 的本機對話紀錄和 Facet 分析，用摩擦點數據找出 CLAUDE.md 的改進方向 CLAUDE.md 持續改善 PDCA 循環 📋 Plan（載入） 階層式 CLAUDE.md 對的時間、對的規則 → ⚡ Do（協作） 開發 + /Lesson 單次經驗即時提取 → 🔍 Check（審計） /project-insights 跨 session 趨勢分析 → 🔧 Act（更新） 分流寫入對應層級 通用 vs 專屬規則 基礎架構：階層式 CLAUDE.md 回饋機制：/Lesson + 本機數據 審計系統：/project-insights Part I — 為什麼單一 CLAUDE.md 會讓 AI 變笨 AI 犯錯有三個根源： 錯誤的資訊、遺漏的資訊、雜訊 。階層式 CLAUDE.md 主要解決的是「雜訊」問題。 AI errors stem from three sources: wrong info, missing info, and noise. Hierarchical CLAUDE.md primarily addresses "
+  },
+  {
+    "docFile": "2026-02-01_claude-md-pdca-optimization.html",
+    "docTitle": "讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論",
+    "docDate": "2026-02-01",
+    "docSource": "社群文章",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "階層式-空間隔離",
+    "sectionTitle": "🏗 階層式 = 空間隔離",
+    "content": "CLAUDE.md 按目錄分層，Claude Code 自動遞迴載入。只讓 AI 在對的時間看到對的規則，保護有限的 Context Window 不被雜訊稀釋。判斷標準：只在特定目錄有用的規則，就不該放根目錄。"
+  },
+  {
+    "docFile": "2026-02-01_claude-md-pdca-optimization.html",
+    "docTitle": "讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論",
+    "docDate": "2026-02-01",
+    "docSource": "社群文章",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "lesson-即時病歷",
+    "sectionTitle": "🔄 /Lesson = 即時病歷",
+    "content": "任務完成後的 Custom Command，讓 Claude 回顧對話、分析走錯的原因、提取經驗寫入對應層級的 CLAUDE.md。精準但依賴人記得做。通用教訓寫根目錄，專屬踩坑寫子目錄。"
+  },
+  {
+    "docFile": "2026-02-01_claude-md-pdca-optimization.html",
+    "docTitle": "讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論",
+    "docDate": "2026-02-01",
+    "docSource": "社群文章",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "project-insights-定期健檢",
+    "sectionTitle": "📊 /project-insights = 定期健檢",
+    "content": "Python 腳本濃縮數百 MB 對話紀錄，Claude 分析產出七區塊報告。最有價值的是「摩擦點分析」和「CLAUDE.md 改進建議」。記得多跑幾次 /insights 提高 Facet 覆蓋率。"
+  },
+  {
+    "docFile": "2026-02-01_claude-md-pdca-optimization.html",
+    "docTitle": "讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論",
+    "docDate": "2026-02-01",
+    "docSource": "社群文章",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "pdca-自我演化",
+    "sectionTitle": "🎯 PDCA = 自我演化",
+    "content": "三層疊起來形成閉環：載入規則 → 協作開發 → 審計數據 → 更新規則。CLAUDE.md 不再是靜態文件，而是會根據數據自我改善的系統。「憑感覺」變成「靠數據」。"
+  },
+  {
+    "docFile": "2026-02-01_claude-md-pdca-optimization.html",
+    "docTitle": "讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論",
+    "docDate": "2026-02-01",
+    "docSource": "社群文章",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼作者說「寫越多，Claude 反而越笨」？這和 Context Window 有什麼關係？ Claude 的 Context Window 是有限資源。當 CLAUDE.md 塞滿所有規則（前端 + 後端 + 部署 + 命名...），與當前任務無關的規則會佔據 Context 空間，形成「雜訊」。LLM 的注意力機制會被這些無關資訊稀釋，導致對真正重要規則的遵循度下降。 這就像 GMP 文件管理的邏輯 — 你不會把所有 SOP 同時帶進 Clean Room。只帶當前製程步驟需要的文件，確保操作人員專注在對的指引上。階層式 CLAUDE.md 做的就是同樣的「資訊隔離」。 Q2 產業應用 如果你要在 CDMO 的 AI 輔助系統中實作類似的「階層式指令架構」，你會怎麼設計分層？ 可以參考這個思路： 根目錄（全域）： GMP 核心原則、數據完整性要求（21 CFR Part 11）、變更管理流程、文件編號慣例 — 不論哪個部門都要遵守的規則。 manufacturing/： 製程參數範圍、設備操作 SOP（如 SA25 Vanrx isolator）、環境監測標準、"
+  },
+  {
+    "docFile": "2026-02-03_agent-ecology-automation.html",
+    "docTitle": "Import AI 443: Agent Ecologies, AI R&D Automation, and the Internet in Transition",
+    "docDate": "2026-02-03",
+    "docSource": "Jack Clark / Import AI Newsletter",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "4.0/5 Timeliness, Tool Ecosystem Technical Depth, Learning Curve 本期 Import AI 是一期涵蓋面極廣的「趨勢掃描」型期刊，橫跨 AI Agent 生態系（Moltbook）、AI R&D 自動化的國家安全意涵、Anthropic 技術面試被自家模型擊敗、大腦模擬的可行性時程、俄羅斯手套控制無人機研究、友善型人形機器人 Sprout，以及 AI 對總體生產力的影響分析。每個主題都指向同一個核心訊息： AI 正在以前所未有的速度重塑人類與機器之間的邊界 ，而這個重塑過程既帶來生產力紅利，也帶來深層的治理與安全挑戰。 對於 CDMO 營運主管而言，本期最值得關注的是 AI R&D 自動化對製藥產業的潛在衝擊、Agent 生態系對品質監控的啟示，以及生產力研究中「O-ring Automation」概念對無菌製造工作流程的直接適用性。 Learning Objectives OBJECTIVE 01 理解 Agent Ecology（代理人生態系） 的概念，分析 Moltbook 如何預示大規模 AI Agent 協作的未來，以及對企業自動化策略的意涵 OBJECTIVE 02 評估 AI R&D Automation（AI 研發自動化） 的加速效應與「Strategic Surprise（戰略突襲）」風險，理解複利式進步對產業競爭的影響 OBJECTIVE 03 掌握 O-ring Automation（O 型環自動化） 概念，學習如何在 AI 生產力增益尚未完全顯現的過渡期中，定位人類的比較優勢與不可替代價值 AI 重塑人機邊界：本期核心框架 Agent Ecology AI 代理人彼此協作 形成自主生態系 AI R&D Loop AI 研發自動化 產生複利加速效應 Productivity Shift 微觀生產力增益 逐步反映至宏觀經濟 Human Edge 人類比較優勢重新定位 Translation Agent 成為介面 Content Analysis Agent Ecology & AI R&D Frontier Tech & Robotics Productivity & Implications PART I Moltbook: AI Agent 的社群網絡 我們都有過走進一場對話、一開始感到困惑的經驗。現在， 網路上越來越多區域開始充斥著 AI Agent 驅動的合成心智（synthetic minds） ，它們操控社群媒體帳號或其他 Agent，彼此對話的目的從平凡的加密貨幣詐騙到更精緻的溝通形式。 \"We've all had that experience of walking into a conversation and initially feeling confused... That's increasingly what chunks of the internet feel like these days, as they fill up with synthetic minds.\" Moltbook 是一個「為 AI Agent 打造的社群網絡」，它搭載了另一項創新 OpenClaw ——一套讓 AI Agent 存取使用者電腦上所有內容的軟體。將這兩者結合，你會得到一個全新的社群媒體平台， 對話是由 AI Agent 驅動而非人類 。 \"Moltbook is 'a social network for AI agents' and it "
+  },
+  {
+    "docFile": "2026-02-03_anti-prompts-constraints.html",
+    "docTitle": "Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略",
+    "docDate": "2026-02-03",
+    "docSource": "@godofprompt (X/Twitter)",
+    "docRating": 3.2,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.2/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem 這篇 Twitter thread 提出一個核心觀點： 告訴 AI「不要做什麼」比告訴它「要做什麼」更有效 。作者分享了 8 個「Anti-Prompt (反向提示)」技巧，涵蓋消除廢話、跳過套話、強迫決策、控制格式等面向。概念本身不新——這是 Prompt Engineering 中 Negative Constraints（負面約束）的應用——但作者將它們打包成易於記憶的操作清單，對於想快速改善 AI 互動的使用者有即時參考價值。需注意數據（如「67% shorter」）缺乏驗證基礎，整體偏向社群媒體行銷內容。 Learning Objectives OBJECTIVE 01 理解 Negative Constraints（負面約束）在 Prompt Engineering 中的心理模型與運作原理 OBJECTIVE 02 掌握 8 個 Anti-Prompt 的使用情境與限制，避免盲目套用 OBJECTIVE 03 建立自己的 Constra"
+  },
+  {
+    "docFile": "2026-02-03_anti-prompts-constraints.html",
+    "docTitle": "Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略",
+    "docDate": "2026-02-03",
+    "docSource": "@godofprompt (X/Twitter)",
+    "docRating": 3.2,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-i-消除廢話與套話-anti-prompts-1-3",
+    "sectionTitle": "Part I — 消除廢話與套話 (Anti-Prompts #1-#3)",
+    "content": "作者的第一組約束聚焦在一個共同問題： AI 預設會產出大量填充詞、前言、和客套話 。這不是 AI 的「錯」——而是它被訓練成「安全且禮貌」的結果。 \"No fluff. No 'delve into'. No 'landscape'. No 'it's important to note'. Get straight to the point.\" #1 不用填充詞： 明確列出你不要的詞彙（如 delve into、landscape、it's important to note），強迫 AI 直接切入重點。 #2 不解釋已知內容： 加入「跳過介紹、跳過結論、跳過我已知的背景」。 #3 不用企業腔： 禁止 buzzwords 如 leverage、robust、utilize。 \"Skip introductions. Skip conclusions. Skip context I already know.\" / \"No buzzwords. No jargon. No corporate speak. Write like you're texting a smart friend"
+  },
+  {
+    "docFile": "2026-02-03_anti-prompts-constraints.html",
+    "docTitle": "Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略",
+    "docDate": "2026-02-03",
+    "docSource": "@godofprompt (X/Twitter)",
+    "docRating": 3.2,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-ii-控制決策與格式-anti-prompts-4-5",
+    "sectionTitle": "Part II — 控制決策與格式 (Anti-Prompts #4-#5)",
+    "content": "#4 不給選項： 作者主張不要讓 AI 給你 5 個選項，而是 強迫它做出一個最佳決策 。這迫使模型進行內部排序，而不是把決策推回給你。 \"Give me your single best idea. Don't give me options. Make the decision.\" / \"Forcing the AI to commit instead of hedging = 10x better recommendations.\" #5 不用列表格式： 當你需要散文、信件、文章時，明確禁止項目符號和編號列表。作者建議這是一個 根據內容類型動態切換的開關 ——需要掃描式閱讀就開列表，需要流暢閱讀就關掉。 \"No bullet points. No numbered lists. Write in paragraphs.\" / \"I toggle this on/off depending on content type.\" 實務應用：何時強迫決策 vs 保留選項 適合強迫決策： 選餐廳、選標題、選技術方案——當你需要 AI 幫你「過濾」時。 適合保留選項： Creative br"
+  },
+  {
+    "docFile": "2026-02-03_anti-prompts-constraints.html",
+    "docTitle": "Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略",
+    "docDate": "2026-02-03",
+    "docSource": "@godofprompt (X/Twitter)",
+    "docRating": 3.2,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-iii-優化互動效率-anti-prompts-6-7",
+    "sectionTitle": "Part III — 優化互動效率 (Anti-Prompts #6-#7)",
+    "content": "#6 不要客套： 去除 AI 的「禮貌稅」——certainly、I'd be happy to、great question 這類開場白。作者指出每次回應被這些套話佔用了 20-30 個字。 \"No 'certainly'. No 'I'd be happy to'. No 'great question'. Just answer.\" / \"Your time > the AI's manners.\" #7 不要假設我是初學者： 告訴 AI 你的專業等級，讓它跳過基礎解釋。作者用 RAG 系統為例——他不需要 AI 重新解釋什麼是 Embedding（嵌入向量）。 \"Don't explain basic concepts. I'm [expert level/familiar with X]. Skip the 101 explanations.\" / \"This unlocks the AI's full technical depth.\" 這兩個技巧本質上是在做同一件事： 降低 Signal-to-Noise Ratio（信噪比）中的 Noise 。把 AI 的「頻寬」留給真"
+  },
+  {
+    "docFile": "2026-02-03_anti-prompts-constraints.html",
+    "docTitle": "Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略",
+    "docDate": "2026-02-03",
+    "docSource": "@godofprompt (X/Twitter)",
+    "docRating": 3.2,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-iv-跳脫訓練數據-約束的元原則-anti-prompt-8",
+    "sectionTitle": "Part IV — 跳脫訓練數據 + 約束的元原則 (Anti-Prompt #8)",
+    "content": "#8 不用老套範例： 最後一個技巧要求 AI 避免使用常見的教學範例（如檸檬水攤位比喻），改用新穎、具體的情境。這迫使模型跳出最高頻率的訓練數據路徑。 \"No clich d examples. No 'imagine you're running a lemonade stand'. Give me novel, specific scenarios.\" 作者最後提出了 Anti-Prompt 的元原則： 大多數人告訴 AI「要做什麼」，頂尖使用者告訴 AI「不要做什麼」 。他用「雕刻」做比喻——你移除不想要的部分，剩下的就是作品。 \"Most people tell the AI what TO do. Top 1% tell it what NOT to do.\" / \"Think of it as sculpting. You remove what you don't want.\" 作者坦承他花了 6 個月不斷增加 Prompt 複雜度，最後才發現 「減法」比「加法」更有效 。這與 Prompt Engineering 社群的普遍經驗一致——最好的 Prompt 往往不是最長"
+  },
+  {
+    "docFile": "2026-02-03_anti-prompts-constraints.html",
+    "docTitle": "Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略",
+    "docDate": "2026-02-03",
+    "docSource": "@godofprompt (X/Twitter)",
+    "docRating": 3.2,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼作者認為「告訴 AI 不要做什麼」比「告訴 AI 要做什麼」更有效？請用 LLM 的生成機制來解釋。 LLM 生成文字時是在一個龐大的機率分布空間中進行 Token-by-Token 的取樣。正面指令（DO）像是設定一個大方向——「寫一篇好文章」——但「好」的可能性太多，模型仍然會走向機率最高的路徑（通常是充滿套話的「安全」輸出）。 負面約束（DON'T）則是直接剪掉特定的高機率路徑。當你說「不要用 delve into」，模型在生成時就會抑制這些 Token 序列的機率，被迫選擇其他（通常更新穎、更具體）的表達方式。這類似機器學習中的 Regularization（正則化）——限制模型自由度來避免「過擬合」到最常見的回答模式。 Q2 產業應用 在 CDMO 藥廠的 GMP 環境中，如果你用 AI 來協助撰寫 Deviation Report（偏差報告），你會套用哪些 Anti-Prompt？有哪些你「不會」使用？ 適合使用的： #2 不解釋已知內容：「Skip GMP basics. I know 21 CFR Part 211. Focus on root c"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code Interactive Mode 完整參考指南",
+    "docDate": "2026-02-03",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這是 Claude Code 互動模式的官方參考文件，涵蓋所有鍵盤快捷鍵、Vim 編輯模式、指令歷史搜尋、背景執行指令，以及 ! 前綴的 Bash 模式。作為一份 reference documentation，它的價值在於「需要時能快速查到」，而非從頭讀到尾。對於每天使用 Claude Code 的開發者來說，熟悉這些快捷鍵可以大幅減少滑鼠操作，讓 AI-assisted coding 的工作流更加流暢。文件本身是清單式結構，適合作為速查手冊收藏。"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code Interactive Mode 完整參考指南",
+    "docDate": "2026-02-03",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "Objective 1 掌握 Claude Code 的核心鍵盤快捷鍵，包含中斷、清除、歷史瀏覽、圖片貼上、權限模式切換等操作 Objective 2 理解 Vim 編輯模式在 Claude Code 中的應用，包括模式切換、游標導航與編輯指令 Objective 3 學會使用背景指令 (Background Bash) 和 ! 前綴 Bash 模式來最佳化開發工作流"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code Interactive Mode 完整參考指南",
+    "docDate": "2026-02-03",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "part-i-general-controls-基本控制快捷鍵",
+    "sectionTitle": "Part I: General Controls (基本控制快捷鍵)",
+    "content": "Claude Code 的互動模式提供了一組 基本控制快捷鍵 ，讓你在終端機中高效操作。這些快捷鍵涵蓋從中斷生成、清除畫面到切換詳細輸出等常見操作。 \"Keyboard shortcuts may vary by platform and terminal. Press ? to see available shortcuts for your environment.\" 特別值得注意的是 Esc + Esc （雙擊 Escape）可以 回溯程式碼和對話 ，將狀態恢復到之前的某個時間點。這對於 AI 生成了不理想的程式碼時特別有用，類似 Git 的 revert 但作用在對話層級。 \"Esc + Esc — Rewind the code/conversation: Restore the code and/or conversation to a previous point.\" Tab 鍵用來切換 Extended Thinking（延伸思考）， Shift+Tab 則在權限模式之間切換：Auto-Accept Mode（自動接受）、Plan Mode（規劃模式）和一般模式。 \"T"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code Interactive Mode 完整參考指南",
+    "docDate": "2026-02-03",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "part-ii-multiline-input-quick-commands-多行輸入與快捷指令",
+    "sectionTitle": "Part II: Multiline Input & Quick Commands (多行輸入與快捷指令)",
+    "content": "Claude Code 支援多種 多行輸入方式 ，這在需要貼上程式碼片段或撰寫複雜提示時非常實用。最通用的方式是在行尾加上 \\ 再按 Enter，這在所有終端機都能使用。 \"Quick escape: \\ + Enter — Works in all terminals.\" Quick Commands（快捷指令） 是以特殊字元開頭的快速操作。 # 開頭可以直接將內容寫入 CLAUDE.md 記憶檔案； / 是 Slash Command； ! 是 Bash 模式； @ 觸發檔案路徑自動補全。 \"# at start — Memory shortcut: add to CLAUDE.md. / at start — Slash command. ! at start — Bash mode. @ — File path mention.\" 核心概念 Quick Commands 速查表： 前綴 功能 範例 # 寫入 CLAUDE.md # Always use TypeScript / Slash Command /vim 、 /clear ! 直接執行 Bash ! npm test"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code Interactive Mode 完整參考指南",
+    "docDate": "2026-02-03",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "part-iii-vim-editor-mode-vim-編輯模式",
+    "sectionTitle": "Part III: Vim Editor Mode (Vim 編輯模式)",
+    "content": "Claude Code 內建 Vim 風格編輯模式 ，可以透過 /vim 指令啟用，或在 /config 中永久設定。對於熟悉 Vim 的開發者來說，這意味著可以在不離開 Claude Code 的情況下，使用熟悉的按鍵操作來編輯輸入。 \"Enable vim-style editing with /vim command or configure permanently via /config.\" Vim 模式支援標準的 NORMAL / INSERT 模式切換 ，包含 i 、 a 、 o 等進入插入模式的方式，以及 Esc 返回一般模式。導航指令涵蓋 h/j/k/l 方向移動、 w/e/b 單字跳轉，以及 gg/G 跳到開頭或結尾。 \"Navigation (NORMAL mode): h/j/k/l — Move left/down/up/right. w — Next word. gg — Beginning of input. G — End of input.\" 編輯指令支援 dd （刪除整行）、 dw （刪除單字）、 cc （更改整行）等操作，以及 . （重複上次變更）。"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code Interactive Mode 完整參考指南",
+    "docDate": "2026-02-03",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "part-iv-command-history-reverse-search-指令歷史與搜尋",
+    "sectionTitle": "Part IV: Command History & Reverse Search (指令歷史與搜尋)",
+    "content": "Claude Code 維護基於 工作目錄 的指令歷史，可以用上下方向鍵瀏覽。使用 /clear 會清除歷史。值得注意的是， 歷史展開 ( ! ) 預設是關閉的 ，以避免和 Bash 模式的 ! 前綴衝突。 \"History is stored per working directory. Cleared with /clear command. Note: History expansion (!) is disabled by default.\" Ctrl+R 啟動 反向搜尋 功能，讓你互動式地搜尋先前的指令。輸入關鍵字後，搜尋詞會被高亮顯示在匹配結果中。按 Ctrl+R 繼續往前搜尋更舊的匹配項；按 Tab 或 Esc 接受匹配但繼續編輯；按 Enter 直接執行。 \"Press Ctrl+R to interactively search through your command history. Press Ctrl+R again to cycle through older matches.\" 核心概念 Ctrl+R 搜尋流程： 1. 按 Ctrl+R 啟動搜尋 2. 輸"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code Interactive Mode 完整參考指南",
+    "docDate": "2026-02-03",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "part-v-background-bash-commands-bash-mode-背景指令與-bash-模式",
+    "sectionTitle": "Part V: Background Bash Commands & Bash Mode (背景指令與 Bash 模式)",
+    "content": "Claude Code 支援 背景執行 Bash 指令 ，讓長時間運行的程序（如 build、test）在背景執行，你可以同時繼續與 Claude 互動。啟動方式有兩種：直接提示 Claude 在背景執行，或在指令執行時按 Ctrl+B 將其移到背景。 \"Claude Code supports running bash commands in the background, allowing you to continue working while long-running processes execute.\" 背景任務有唯一的 ID 用於追蹤，輸出會被緩衝，Claude 可以用 BashOutput 工具取回結果。 當 Claude Code 退出時，背景任務會被自動清理 。特別注意：tmux 使用者需要按兩次 Ctrl+B ，因為 tmux 預設用 Ctrl+B 作為前綴鍵。 \"Background tasks have unique IDs for tracking and output retrieval. Background tasks are automatical"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code Interactive Mode 完整參考指南",
+    "docDate": "2026-02-03",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Esc+Esc 是最強保險 雙擊 Escape 可以回溯程式碼和對話到先前狀態，這是 AI 生成程式碼時最重要的安全網。搭配 Checkpointing 功能使用效果更佳。 四個前綴記住就夠 # 記憶、 / 指令、 ! Bash、 @ 檔案 — 這四個快捷前綴涵蓋 80% 的高頻操作，是提升效率的核心。 背景執行釋放對話 Ctrl+B 將長時間運行的 build/test 移到背景，讓你可以同時繼續和 Claude 對話。這將 AI coding 從同步變成非同步工作流。 權限模式匹配風險 Shift+Tab 在三種權限模式間切換。高風險操作用一般模式逐步確認，成熟重複性任務可切到 Auto-Accept 提速。根據任務選擇信任等級。"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code Interactive Mode 完整參考指南",
+    "docDate": "2026-02-03",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 在 Claude Code 中， Ctrl+L 和 /clear 有什麼差異？為什麼這個差異在長時間的 coding session 中很重要？ Ctrl+L 只清除終端畫面的視覺內容，但保留完整的對話歷史。Claude 仍然記得之前所有的對話上下文。而 /clear 會清除指令歷史。 這在長時間 coding session 中非常重要，因為保留對話歷史意味著 Claude 仍然理解你的專案上下文（檔案結構、已修改的程式碼、先前的決策），而你只是想要一個乾淨的終端畫面。如果誤用 /clear ，Claude 可能會失去重要的上下文，導致需要重新建立專案理解。 Q2 產業應用 假設你正在用 Claude Code 開發一個 batch record 自動化系統，需要同時執行驗證測試和繼續編寫新功能。你會如何組合使用本文介紹的功能來最佳化這個工作流？ 建議的工作流組合： 1. 用 # 指令將 GMP 合規規則寫入 CLAUDE.md（例如 # All data must comply with ALCOA+ principles ），確保每次對話都自動載入合規上下文。 2"
+  },
+  {
+    "docFile": "2026-02-03_claude-code-product-mentors.html",
+    "docTitle": "用 Claude Code 打造世界級產品導師團",
+    "docDate": "2026-02-03",
+    "docSource": "Rich Holmes / Knowledge Series #98",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Prompt"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.2/5 Practical Value, Tool Ecosystem Technical Depth, Timeliness 本文示範如何使用 Claude Code 建立一套「AI 產品導師系統」，將 Steve Jobs、Ray Dalio、Demis Hassabis 等人的思維模式轉化為可互動的 Markdown 角色檔，並透過 Node.js 前端和 MCP 整合連結真實工作數據。文章的核心價值在於展示 Claude Code 的非工程應用場景，特別是 Agents、Skills 和 MCP 的組合使用模式。技術深度偏淺（主要是檔案結構和 prompt 設計），但對理解 Claude Code 生態系的應用延伸有啟發性。 Learning Objectives Claude Code 專案結構設計 理解如何用 Markdown 檔案 + 目錄結構建立可擴充的 AI 角色系統 Persona Prompt 設計維度 掌握角色文件的 10 個關鍵維度：Core Identity、Questioning Style、Red Flags 等 Agents / Skills / MCP 整合 了解 Claude Code 的三種擴充機制如何將靜態角色檔轉化為動態決策工具 Product Mentor System - 四階段建構流程 Choose Mentors 19 維度選人 Build Personas Markdown 角色檔 Build Frontend Node.js + SSE Connect Data MCP + Agents Part I 選擇你的產品導師 (Choose Your Product Mentors) 一位新創公司創辦人透露，她使用 客製化的 AI 版 Steve Jobs 來協助品牌策略決策。她用產品發表會逐字稿和策略演講訓練這個 GPT，讓它在她卡關時批判她的想法，並協助精煉到「10 分滿分」的概念。 A startup founder recently revealed that they use a custom built AI version of Steve Jobs to help guide their decision making... trained it on product launch transcripts and strategy talks. 作者提出一個更進階的構想：何不建立一整個 世界級產品思考者團隊 ，跨越策略、設計、決策、AI 等 19 個專業維度，在需要時隨時諮詢？文章將這些維度歸類為 7 大領域：Strategy & Vision、Discovery & Research、Execution & Delivery、Design & Craft、People & Communication、Data & Measurement、AI Product Sense。 What if you could build an entire team of world class product thinkers and refer to them to help you to assess your designs, make decisions or craft your strategy? 比喻說明 把這個系統想像成你的「私人董事會」 企業 CEO 都有外部董事提供不同觀點的挑戰與建議。這套系統就是用 AI 模擬這個概念，只是你的董事成員是根據公開資料重建的「思維模型」，"
+  },
+  {
+    "docFile": "2026-02-03_notebooklm-source-control.html",
+    "docTitle": "NotebookLM 進階指南：Source Control 消除 AI 幻覺",
+    "docDate": "2026-02-03",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.2,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Prompt"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.2/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem 這篇文章介紹 Google NotebookLM 的核心價值主張： Source Control（來源控制） 。不同於 ChatGPT、Claude、Gemini 從訓練資料回答問題，NotebookLM 強制只從你上傳的文件中擷取資訊並附上可點擊的引用，從根本上消除 AI Hallucination（幻覺）。文章提供 4 個商業工作流程（知識庫、團隊訓練、角色設定、Studio Panel 產出），以及與其他 AI 工具的使用場景區分。整體屬於入門級實務指南，技術深度有限但工作流思維值得借鑑。"
+  },
+  {
+    "docFile": "2026-02-03_notebooklm-source-control.html",
+    "docTitle": "NotebookLM 進階指南：Source Control 消除 AI 幻覺",
+    "docDate": "2026-02-03",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.2,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Prompt"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "1 理解 NotebookLM 的 Source Control 機制如何從架構層面消除 AI Hallucination 2 掌握 4 種商業工作流程模式：Knowledge Hub、Team Training、Custom Configuration、Studio Panel 3 建立 AI 工具選擇決策框架：何時用 NotebookLM vs ChatGPT vs Claude vs Gemini NotebookLM Source Control Framework Upload Sources 上傳指定文件 (上限 25M 字) Source-Only Search 僅搜尋已上傳來源 不引用訓練資料 Cited Response 每個聲明附 可點擊引用 Verify & Act 一鍵驗證 消除幻覺風險"
+  },
+  {
+    "docFile": "2026-02-03_notebooklm-source-control.html",
+    "docTitle": "NotebookLM 進階指南：Source Control 消除 AI 幻覺",
+    "docDate": "2026-02-03",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.2,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Prompt"
+    ],
+    "sectionId": "content",
+    "sectionTitle": "Content",
+    "content": "Foundation 4 Workflows Tool Strategy Part I NotebookLM 到底是什麼？ 多數領導者把 NotebookLM 當成「有筆記功能的 ChatGPT」，這就像拿手術刀來切奶油。 NotebookLM 是一個研究智能系統（Research Intelligence System），不是聊天機器人。 \"Most leaders treat NotebookLM like ChatGPT with a fancy notebook feature. That's like using a surgical scalpel as a butter knife... NotebookLM is a research intelligence system, not a chatbot.\" ChatGPT、Claude、Gemini 從訓練資料工作，擅長合成、創意和通用知識。但當你問它們關於你的特定文件時，它們是從記憶中的相似模式回答， 不是你的實際內容 。NotebookLM 則不同，每個回答都專門來自你上傳的來源，沒有訓練資料，沒有通用知識。 \"C"
+  },
+  {
+    "docFile": "2026-02-03_notebooklm-source-control.html",
+    "docTitle": "NotebookLM 進階指南：Source Control 消除 AI 幻覺",
+    "docDate": "2026-02-03",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.2,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Prompt"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Source Control = Honesty by Design NotebookLM 消除幻覺的方式不是讓 AI 更聰明，而是透過架構約束強制誠實。每個聲明都必須有可驗證的來源引用，找不到就直接告知。 Notebook = Surgical Knowledge Base 不同主題建立獨立 Notebook，實現精準的知識隔離。需要法規答案時不會混入產品文件，需要產能數據時不會拉入訓練教材。 Custom Config = 30 秒角色轉換 透過 Conversational Goal 設定，同一個 Notebook 可以變成 QA Reviewer、Deviation Investigator 或 Capacity Planner，切換角色只需 30 秒。 互補而非取代 NotebookLM 填補 ChatGPT / Claude / Gemini 無法觸及的空白：需要引用驗證的場景。選擇工具的關鍵問句：「出錯的後果有多嚴重？」"
+  },
+  {
+    "docFile": "2026-02-03_notebooklm-source-control.html",
+    "docTitle": "NotebookLM 進階指南：Source Control 消除 AI 幻覺",
+    "docDate": "2026-02-03",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.2,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Prompt"
+    ],
+    "sectionId": "practice",
+    "sectionTitle": "Practice",
+    "content": "Q1 概念理解 NotebookLM 的 Source Control 機制與 RAG（Retrieval Augmented Generation）有何異同？兩者都是「先檢索再回答」，差異在哪裡？ 相同點： 兩者都遵循「先檢索、再生成」的模式，都是為了讓 AI 回答有依據而非純粹從訓練資料生成。 關鍵差異： 來源範圍 ：RAG 通常搜尋企業級知識庫（可能包含數千份文件），NotebookLM 嚴格限制在單一 Notebook 中你主動選擇的文件 引用顆粒度 ：NotebookLM 提供段落級可點擊引用，一般 RAG 系統的引用追溯往往需要額外工程 使用者控制 ：NotebookLM 讓非技術人員也能管理來源（上傳/移除文件），RAG 通常需要工程團隊維護 Vector Database Fallback 行為 ：NotebookLM 找不到資訊會直接告知，部分 RAG 實作仍可能 fallback 到模型的訓練資料 簡言之：NotebookLM 是「消費者版的嚴格 RAG」，犧牲靈活性換取透明度和可驗證性。 Q2 產業應用 你是 CDMO 的 Operations Director，"
+  },
+  {
+    "docFile": "2026-02-05_ai-privacy-deep-dive.html",
+    "docTitle": "AI 時代的隱私深度解析",
+    "docDate": "2026-02-05",
+    "docSource": "Joel Salinas & Mohib Ur Rehman / SK NEXUS",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Security"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "這篇文章拆解了 AI 時代「隱私」的真實面貌。核心論點： AI 系統不只儲存資料，它從資料中「學習」 ，這根本改變了「安全」的定義。文章從便利性陷阱出發，解釋為何使用者在無意間大量暴露敏感資訊，並指出企業常見的四大安全盲區。最終提出領導者可立即執行的四項風險降低策略。內容偏向概念教育與管理者行動指南，技術細節較淺，但對於建立 AI 資料治理的基本框架非常實用。 1 理解 AI 隱私的本質差異 區分傳統資料儲存 vs. AI 學習模式的根本不同，以及為何「刪除」不等於「消失」 2 識別企業常見隱私盲區 認識安全 ≠ 隱私的區別，以及合規、員工假設、供應商信任的四大迷思 3 建立可執行的風險框架 掌握資料分類、工具集中管理、供應商稽核、AI 素養教育的四步行動計畫 AI 隱私風險累積模型 (Privacy Risk Accumulation) 1 便利輸入 小動作 × 重複 → 2 Metadata 累積 片段合成模式 → 3 推論建檔 AI 建構個人畫像 → 4 不可逆暴露 資料成為模型權重 Part I — 便利性陷阱與 AI 的資料本質 (The Comfort Trap & AI "
+  },
+  {
+    "docFile": "2026-02-05_ai-privacy-deep-dive.html",
+    "docTitle": "AI 時代的隱私深度解析",
+    "docDate": "2026-02-05",
+    "docSource": "Joel Salinas & Mohib Ur Rehman / SK NEXUS",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Security"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "AI 從資料「學習」而非只是「儲存」 傳統系統的資料可以加密、刪除、隔離。AI 系統一旦學習了你的資料，它就成為模型權重的一部分，無法逆轉。這是 AI 隱私與傳統資安最根本的差異。 安全 (Security) ≠ 隱私 (Privacy) 一個平台可以在資安面滿分，卻在隱私面嚴重侵入。企業不能因為工具通過了安全稽核就假設資料被妥善保護。合規是最低門檻，不是終點線。 推論 (Inference) 是最被低估的風險 你不需要貼上機密文件才會暴露機密。多條看似無害的微小輸入在 AI 系統中匯聚，可以重建你的角色、權限、決策模式，甚至組織的內部壓力點。 結構先於工具 大多數 AI 風險來自結構缺失。四步行動：定義資料邊界、集中管理工具、質問供應商、推動決策層 AI 素養。這不是技術問題，是領導力問題。"
+  },
+  {
+    "docFile": "2026-02-05_ai-privacy-deep-dive.html",
+    "docTitle": "AI 時代的隱私深度解析",
+    "docDate": "2026-02-05",
+    "docSource": "Joel Salinas & Mohib Ur Rehman / SK NEXUS",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Security"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "練習題 Practice Questions",
+    "content": "Q1 概念理解 文章指出「傳統系統儲存資料，AI 系統從資料中學習」— 這個區別對「刪除資料」這個動作產生了什麼根本性的改變？ 在傳統系統中，刪除資料意味著移除檔案、清除資料庫記錄 — 雖然可能有備份，但理論上可以追蹤和清除所有副本。但在 AI 系統中，一旦資料被用於模型訓練，它以權重 (Weights) 的形式被抽象化和分散化地編碼到神經網路中。沒有一個特定的「檔案」可以被找到和刪除。 這就像你無法讓一個人「忘記」已經學會的技能。你可以阻止他繼續學習新資料（opt-out），但無法撤銷已經發生的學習。這是 AI 隱私與傳統資安最根本的差異：「刪除」從「移除一個物件」變成了「你無法回收已被泛化到模型中的資訊」。 Q2 產業應用 在 CDMO 藥廠環境中，如果營運團隊開始使用 AI 工具來加速 Deviation Report 的撰寫，根據文章的隱私框架，你應該優先建立哪些防護措施？ 根據文章的四步框架，應優先建立： 第一步：資料分類 — Deviation Report 包含批號、產品名稱、製程參數、根因分析。需明確定義哪些欄位可以輸入 AI（如通用的偏差描述模板），哪些絕對不行（如客"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這篇文章記錄了 AI 內容創作者 Ruben Hassid 從 ChatGPT 轉換到 Claude Cowork 的完整使用體驗。核心論點是 Claude Cowork 解決了四個長期困擾 AI 使用者的痛點：指令遵循不一致、長對話中的「無限迴圈」問題、記憶系統的過度擬合（overfitting），以及輸出僅限於文字而非實際檔案。文章透過五個真實案例展示 Claude Cowork 如何直接產生簡報、Excel、研究報告等可用檔案，對於希望將 AI 從「聊天機器人」升級為「實際工作夥伴」的專業人士具有參考價值。"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "理解-claude-cowork-的核心差異",
+    "sectionTitle": "理解 Claude Cowork 的核心差異",
+    "content": "掌握指令遵循、長對話穩定性、無記憶設計、檔案生成四個關鍵特性"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "評估工具轉換的實際價值",
+    "sectionTitle": "評估工具轉換的實際價值",
+    "content": "透過五個案例學習如何將 AI 輸出從「文字」轉換為「可用檔案」"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "建立工具選擇的評估框架",
+    "sectionTitle": "建立工具選擇的評估框架",
+    "content": "理解「工具是哲學」的概念，學習如何選擇最適合工作流程的 AI 平台 Claude Cowork 四大核心優勢 1 指令遵循 真正讀取並執行長指令 → 2 長對話穩定 2+ 小時不迷失主題 → 3 無記憶設計 避免過度擬合問題 → 4 檔案生成 直接產出可用檔案"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "part-i-指令遵循從忽略一半到完整執行",
+    "sectionTitle": "Part I 指令遵循：從「忽略一半」到「完整執行」",
+    "content": "作者描述了 ChatGPT 長期存在的核心問題：無論你提供多詳細的 prompt — 500 字的背景說明、具體需求、格式規則、想要和不想要的東西 — 它會忽略其中一半 。 \"You give it a detailed prompt. 500 words of context. Specific requirements. Formatting rules. Things you want. Things you don't want. It ignores half of it.\" 作者的解決方案是上傳超過 2,000 字的個人寫作風格檔案 ，描述他如何寫作、討厭什麼、從不使用的詞彙、偏好的結構。Claude Cowork 會完整讀取並遵循這些指令。 \"I upload my voice profile. Over 2,000 words describing how I write, what I hate, phrases I never use, structures I prefer.\" 關鍵洞察： 輸出品質取決於你能提供多少 context 。如果 AI 忽略你的 con"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "part-ii-長對話穩定性打破無限迴圈困境",
+    "sectionTitle": "Part II 長對話穩定性：打破「無限迴圈」困境",
+    "content": "作者描述了 ChatGPT 在複雜任務中常見的崩潰模式：進行 45 分鐘後開始 重複自己、自相矛盾、或陷入不斷道歉卻產出相同錯誤輸出的迴圈 。 \"You're 45 minutes into a complex task. ChatGPT starts repeating itself. Or contradicting what it said earlier. Or getting stuck in a loop where it keeps apologizing and producing the same wrong output.\" 相比之下，Claude Cowork 可以進行 2 小時以上的複雜工作階段 ，包含來回修改、方向轉換、中途調整，而不會失去主題脈絡。 \"I've had 2-hour sessions in Claude Cowork. Complex back-and-forth. Revisions. Pivots. New directions mid-conversation. It doesn't lose the thread.\" 重點提示：AI "
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "part-iii-無記憶設計避免-overfitting-的優勢",
+    "sectionTitle": "Part III 無記憶設計：避免 Overfitting 的優勢",
+    "content": "作者提出一個反直覺的觀點： 沒有記憶反而是特性而非缺陷 。ChatGPT 的記憶功能會創造「過度擬合」問題 — 它太過努力匹配你上週說的話，基於不再適用的舊 context 做出假設。 \"ChatGPT remembers your past conversations. Sounds useful. But it creates what I call overfitting. It tries too hard to match what you said last week.\" Claude Cowork 每次都從頭開始， 沒有包袱、沒有三週前的假設 。如果你想讓 Claude 知道什麼，就在這次對話中明確提供那個 context。 \"If I want Claude to know something, I give it that context explicitly. In this conversation. For this task. With my favorite markdown files to support it.\" 比喻說明 想像你有兩種顧問：A 顧問會"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "part-iv-實際檔案生成從複製貼上到直接產出",
+    "sectionTitle": "Part IV 實際檔案生成：從「複製貼上」到「直接產出」",
+    "content": "這是作者認為最重要的差異：ChatGPT 給你文字，你複製貼上到其他工具再自己格式化。 每一次都是這樣 。 \"ChatGPT gives you text. You copy that text. You paste it into another tool. You format it yourself. Every. Single. Time.\" Claude Cowork 則 直接建立實際檔案 ：要求簡報得到真正的投影片、要求試算表得到有公式的 Excel 檔、要求文件得到格式化好的 Word 檔。檔案直接出現在資料夾中。 \"Claude Cowork creates the actual files. I ask for a presentation. I get slides. Real slides. I ask for a spreadsheet. I get an Excel file with working formulas.\" 重點提示 檔案生成的意義： 這不只是節省「複製貼上」的時間，而是改變了工作流程的本質。當 AI 可以直接產出可用檔案，它從「內容生成器」變"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "part-v-五個實戰案例從理論到實踐",
+    "sectionTitle": "Part V 五個實戰案例：從理論到實踐",
+    "content": "案例 1：從 Prompt 到簡報 作者結合 Claude Cowork 和 Gamma（AI 簡報工具）的整合，先用 AskUserQuestion 工具讓 AI 提問來確定大綱，內容確定後直接呼叫 Gamma MCP connector 生成簡報。 案例 2：大量文件閱讀篩選 面對出版社寄來的 4,992 個檔案 ，作者讓 Claude Cowork 分析並告訴他真正需要閱讀的內容及原因，而非自己一一過濾。 案例 3：Excel 公式自動化 Claude 不只可以生成 Excel 內容，還能 建立包含有效公式的升級版試算表 ，直接輸出為 .xlsx 檔案。 案例 4：收據自動報銷 47 張出差收據，傳統方式需要 2 小時以上。作者將收據放入資料夾後下指令， 10 分鐘內得到分類完成、計算好總額的 Excel 報表 。模糊的 3 張收據被標記出來供手動確認。 \"47 receipts from a work trip. The old way: 2 hours minimum... Time: 10 minutes total.\" 案例 5：研究簡報自動生成 撰寫 AI Agents"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "指令遵循是基礎",
+    "sectionTitle": "指令遵循是基礎",
+    "content": "再多的 prompt engineering 技巧都無法彌補工具本身忽略指令的問題。選擇能完整執行你 context 的工具。"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "無記憶-精準控制",
+    "sectionTitle": "無記憶 = 精準控制",
+    "content": "與其依賴不可預測的記憶系統，不如建立自己的 context 檔案庫，每次對話精確選擇要提供的資訊。"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "檔案生成改變工作流程",
+    "sectionTitle": "檔案生成改變工作流程",
+    "content": "當 AI 可以直接產出簡報、Excel、文件，它從「內容助手」升級為「工作完成器」。"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "工具是哲學不只是功能",
+    "sectionTitle": "工具是哲學，不只是功能",
+    "content": "Claude Cowork 代表的是一種工作方式，學會這種模式後可以應用到任何未來的 AI 工具。"
+  },
+  {
+    "docFile": "2026-02-05_claude-cowork-practical-guide.html",
+    "docTitle": "Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程",
+    "docDate": "2026-02-05",
+    "docSource": "Ruben Hassid Newsletter",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 作者為什麼認為「無記憶」是優勢而非劣勢？這與傳統的 AI 產品設計思維有何不同？ 核心論點： 記憶系統會產生「過度擬合」（overfitting）— 系統試圖匹配過去對話的模式，可能基於不再相關的 context 做出錯誤假設。 思維轉換： 傳統設計認為「記住使用者」等於「更好的體驗」，但在 AI 工作助手情境中，使用者需要的是「精準的 context 控制」而非「自動推斷」。每個任務可能需要完全不同的背景資訊，強制記憶反而會引入雜訊。 實務意涵： 這意味著你需要建立自己的 context 管理系統（如 markdown 檔案庫），而非依賴平台的記憶功能。這是額外工作，但換來的是可預測性和精準度。 Q2 產業應用 在 CDMO 的 GMP 環境中，Claude Cowork 的「檔案直接生成」功能可能帶來什麼價值？有什麼合規性考量？ 潛在價值： • 偏差調查報告的初稿生成（直接輸出 Word 檔） • 可行性評估的數據表格自動化（Excel 含公式） • 技術轉移文件的格式化整理 • 訓練材料的簡報製作 合規性考量： • 21 CFR Part 11：AI 生成的檔案仍"
+  },
+  {
+    "docFile": "2026-02-05_claude-starter-pack.html",
+    "docTitle": "Claude 終極入門包：指南、工具、資源完整攻略",
+    "docDate": "2026-02-05",
+    "docSource": "@aiedge_ on X",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "快速摘要-executive-summary",
+    "sectionTitle": "📋 快速摘要 Executive Summary",
+    "content": "★★★★☆ 3.8/5 ↑ 實務應用, 工具生態 ↓ 技術深度, 學習曲線 這是一篇 資源導向的彙整文章 ，作者 @aiedge_ 將所有「改變人生」的 Claude 資源整理成一份清單，涵蓋入門指南、最佳實踐、工具資源和常見陷阱。文章的核心價值在於 節省你搜尋和篩選資源的時間 ，提供一個可以直接收藏的起點。對於剛接觸 Claude 或想系統性學習的人來說，這是一份實用的「地圖」；但對於已有經驗的進階使用者，內容深度有限。"
+  },
+  {
+    "docFile": "2026-02-05_claude-starter-pack.html",
+    "docTitle": "Claude 終極入門包：指南、工具、資源完整攻略",
+    "docDate": "2026-02-05",
+    "docSource": "@aiedge_ on X",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "🎯 學習目標 Learning Objectives",
+    "content": "📚 建立 Claude 學習地圖 掌握從入門到進階的關鍵學習資源，規劃個人學習路徑 🛠️ 發現實用工具生態 認識 Claude Directory、Skills Marketplace 等工具平台，擴展使用情境 ⚠️ 避免常見使用陷阱 學習 Context Dumping、重複提示等問題的解決策略"
+  },
+  {
+    "docFile": "2026-02-05_claude-starter-pack.html",
+    "docTitle": "Claude 終極入門包：指南、工具、資源完整攻略",
+    "docDate": "2026-02-05",
+    "docSource": "@aiedge_ on X",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "part-i終極指南-ultimate-guides",
+    "sectionTitle": "📖 Part I：終極指南 Ultimate Guides",
+    "content": "這個章節彙整了 六個關鍵學習資源 ，從 Claude Code 的學習路徑到官方快速入門指南。重點在於這些資源涵蓋了不同的學習階段：初學者可以從 Quickstart 和 Beginner's Guide 開始，中級使用者可以研究 Claude Skills Optimization，進階使用者則可以深入 Claude Code 2.0 Guide。 \"I compiled every life-changing Claude resource into one place. Starter guides, best practices, tools, pro tips, and more.\" 💡 比喻說明 想像你要學習一門新技能，這份資源清單就像是一本「旅遊指南」——它不會教你所有細節，但會告訴你哪些景點值得去、哪些坑要避開。對於 CDMO 營運情境，這就像是有人幫你整理好「製藥自動化 AI 工具評估清單」，讓你不用從零開始搜索。 🛠️ 關鍵資源列表 1 Claude Code Learning Path @dani_avila7 的學習路徑圖，適合想系統學習 Claude Co"
+  },
+  {
+    "docFile": "2026-02-05_claude-starter-pack.html",
+    "docTitle": "Claude 終極入門包：指南、工具、資源完整攻略",
+    "docDate": "2026-02-05",
+    "docSource": "@aiedge_ on X",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "part-ii最佳實踐與進階技巧-best-practices-pro-tips",
+    "sectionTitle": "⚡ Part II：最佳實踐與進階技巧 Best Practices & Pro Tips",
+    "content": "這部分的核心是 Boris Cherny 的 Claude Code 設置指南 ——Boris 是 Claude Code 的創建者，他分享了團隊內部使用的方法。關鍵洞察是： 沒有唯一正確的使用方式 ，每個人的設置都可以不同。這呼應了「AI 是放大器而非替代品」的觀點。 \"I'm Boris and I created Claude Code. I wanted to quickly share a few tips for using Claude Code, sourced directly from the Claude Code team. Remember: there is no one right way to use Claude Code -- everyone's setup is different.\" ⚠️ 重點提示：Boris 的核心建議 Boris 的設置 cheatsheet 強調幾個關鍵點： 團隊成員使用 Claude 的方式各不相同 沒有「標準答案」，只有「適合你的答案」 實驗和迭代是找到最佳工作流程的唯一方法 📚 核心概念：100 Combined"
+  },
+  {
+    "docFile": "2026-02-05_claude-starter-pack.html",
+    "docTitle": "Claude 終極入門包：指南、工具、資源完整攻略",
+    "docDate": "2026-02-05",
+    "docSource": "@aiedge_ on X",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "part-iii工具與資源-valuable-claude-tools-resources",
+    "sectionTitle": "🧰 Part III：工具與資源 Valuable Claude Tools & Resources",
+    "content": "這是文章中 最實用的章節 ，列出了六個關鍵工具平台。特別值得注意的是 Claude Code for Everyone （一個在 Claude Code 中學習 Claude Code 的課程）和 Prompt Optimizer （Anthropic 官方的提示優化工具）。 \"My favorite section - you'll want to bookmark this article so you don't lose it.\" ⚖️ 工具比較 工具 用途 適合誰 Prompt Library 官方提示範例 所有人 Prompt Optimizer 自動改善提示 中級使用者 Skills Marketplace 128K+ 現成 Skills 需謹慎篩選 Claude Directory 整合式資源平台 探索新工具 ⚠️ 重點提示：Skills Marketplace 的警告 作者特別標註「be careful」—— 128,000+ 個 Skills 代表 品質參差不齊 。使用建議： 查看下載量和評分 優先選擇有說明文檔的 Skills 在非關鍵任務中先測試 對於 GMP "
+  },
+  {
+    "docFile": "2026-02-05_claude-starter-pack.html",
+    "docTitle": "Claude 終極入門包：指南、工具、資源完整攻略",
+    "docDate": "2026-02-05",
+    "docSource": "@aiedge_ on X",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "part-iv被低估的技巧-underrated-tips-nobody-talks-about",
+    "sectionTitle": "💎 Part IV：被低估的技巧 Underrated Tips Nobody Talks About",
+    "content": "這個章節揭示了 六個「隱藏功能」 ，其中最有價值的是 Token Usage 模型選擇矩陣 和 Style Selection 功能。Token 使用策略直接影響成本和效率，而 Style 功能則能改變 Claude 的回應結構。 \"Model selection matrix to save on token usage: Haiku 4.5 - switch to this for most of your tasks (80%+ of tasks), Sonnet 4.5 - for 'medium' level tasks only (10% of tasks), Opus 4.5 - ONLY use Opus 4.5 when absolutely necessary (final 10% of tasks).\" 📚 核心概念：80/10/10 模型分配法則 這個分配建議反映了 成本效益優化原則 ： Haiku 4.5 (80%) ：日常任務、快速問答、簡單生成 Sonnet 4.5 (10%) ：中等複雜度、需要較好推理能力 Opus 4.5 (10%) ：複雜分析、關"
+  },
+  {
+    "docFile": "2026-02-05_claude-starter-pack.html",
+    "docTitle": "Claude 終極入門包：指南、工具、資源完整攻略",
+    "docDate": "2026-02-05",
+    "docSource": "@aiedge_ on X",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "part-v常見陷阱與解決方案-common-pitfalls-and-how-to-fix",
+    "sectionTitle": "🚫 Part V：常見陷阱與解決方案 Common Pitfalls (and how to fix)",
+    "content": "最後這個章節列出了 四個最常見的使用錯誤 。其中 Context Dumping （一次性傾倒大量上下文）和 No Rules （沒有設定限制）是最普遍的問題。作者建議使用 CLAUDE.md 來定義嚴格規則。 \"When you dump context into Claude, it can forget earlier/previous context. Always 'drip feed' context step by step. This will decrease your hallucinations and increase output quality.\" 💡 比喻說明：Context Dumping 想像你在指導一位新員工： 錯誤方式 ：一次性給他 500 頁的 SOP 說「讀完這些就知道怎麼做了」 正確方式 ：先說「今天我們學第一章」，確認理解後再進入下一章 「Drip feed」就是這個概念——分批餵入上下文，讓模型能夠正確處理每個部分。 💻 CLAUDE.md 的作用 CLAUDE.md 是一個設定檔，用於定義： Coding style 規範 Proj"
+  },
+  {
+    "docFile": "2026-02-05_claude-starter-pack.html",
+    "docTitle": "Claude 終極入門包：指南、工具、資源完整攻略",
+    "docDate": "2026-02-05",
+    "docSource": "@aiedge_ on X",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "📌 重點整理 Key Takeaways",
+    "content": "🗺️ 資源地圖已建立 從官方 Quickstart 到 Boris 的內部技巧，學習路徑已清晰。重點在於選擇 2-3 個資源深入，而非淺嚐全部。 📊 80/10/10 模型法則 Haiku 處理 80% 日常任務，Sonnet 處理 10% 中等任務，Opus 保留給 10% 最關鍵的複雜任務。成本效益最大化。 🚨 Context Dumping 是大忌 分步驟「drip feed」上下文，而非一次性傾倒。這能減少幻覺、提升輸出品質，符合漸進式 prompting 原則。 ⚙️ 設定邊界是必要的 使用 CLAUDE.md 或 Skills 定義規則和限制。沒有邊界的 Claude 會漫遊到不相關任務，浪費 Token。"
+  },
+  {
+    "docFile": "2026-02-05_claude-starter-pack.html",
+    "docTitle": "Claude 終極入門包：指南、工具、資源完整攻略",
+    "docDate": "2026-02-05",
+    "docSource": "@aiedge_ on X",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "✏️ 練習題 Practice Questions",
+    "content": "Q1 概念理解 解釋「Context Dumping」為什麼會導致 Claude 的輸出品質下降，並描述「drip feed」方法如何改善這個問題。 答案要點： Context Dumping 的問題 ：當一次性傾倒大量上下文時，Claude 的注意力機制需要在所有資訊中分配權重。早期提供的資訊可能被後來的資訊「稀釋」，導致遺忘或錯誤關聯。這類似於人類閱讀——如果一次給你 100 頁文件，你很難記住第 5 頁的細節。 Drip Feed 的改善 ：分步驟餵入上下文讓每個「批次」的資訊都能被充分處理。你可以確認 Claude 理解了第一部分後再提供第二部分，形成漸進式的知識建構。 實務建議 ：將長文件拆分成邏輯區塊，每次提供一個區塊並要求 Claude 摘要或確認理解，再進入下一個區塊。 Q2 產業應用 在 CDMO 的無菌充填環境中，如何應用「80/10/10 模型分配法則」來優化 AI 工具的使用？請舉出具體的任務分類範例。 CDMO 應用範例： Haiku (80%) ：日常郵件撰寫、簡單資料查詢、會議記錄摘要、SOP 格式檢查、基礎翻譯任務 Sonnet (10%) ：Devia"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.8/5 Practical Value, Tool Ecosystem Technical Depth, Learning Curve OpenClaw 是目前 AI 圈最火熱的開源專案，從一個 Telegram chatbot wrapper 演變為具備 排程任務 (Cron Jobs) 、 主動監控 (Heartbeat) 和 結構化知識庫 (Markdown Files) 的完整 AI Agent 框架。本文作者花了 10 天實測，涵蓋了架構解析、安全風險評估、五大 VPS 託管平台比較（AWS / Cloudflare / DigitalOcean / Hostinger / Hetzner），以及三個實際 Agent 使用案例。文章對安全問題的坦誠討論是最大亮點，但技術深度偏向「使用者指南」而非「架構分析」層級。"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "理解-openclaw-核心架構",
+    "sectionTitle": "理解 OpenClaw 核心架構",
+    "content": "掌握 SOUL.md / USER.md / HEARTBEAT.md 等知識檔案如何構成 Agent 的「人格」與「行為」"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "評估安全風險與防護策略",
+    "sectionTitle": "評估安全風險與防護策略",
+    "content": "識別明文儲存、持久存取權限、Prompt Injection 三大安全風險，並了解防護措施"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "比較-vps-託管方案",
+    "sectionTitle": "比較 VPS 託管方案",
+    "content": "分析 AWS / DigitalOcean / Hostinger / Hetzner 的成本、安全性與易用性取捨 OpenClaw Agent 架構：從 Chatbot 到自主 Agent Knowledge Base SOUL / USER / IDENTITY 定義人格與記憶 Cron Jobs 固定排程 自動執行任務 Heartbeat 持續監控 情境感知通知 Multi-Agent 角色分工 各司其職"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "content-sections",
+    "sectionTitle": "Content Sections",
+    "content": "Architecture Security & Hosting Real-World Usage Part I - OpenClaw 的本質 OpenClaw 在過去兩週從一個開源實驗變成了病毒級現象： 165k GitHub stars、60k Discord 成員、230k X 追蹤者 ，以及一個超過 700 個 skills 的社群資料庫。 \"In the last two weeks, it's gone from an open-source experiment to a viral phenomenon: 165k GitHub stars, a 60k Discord, 230k followers on X, and a 700+ skills library.\" 很多人第一印象是「基本上就是 Claude 的 Telegram 包裝」。但這個描述遺漏了關鍵差異： OpenClaw 不只是轉發你的訊息給 AI 等回覆——它是一個 Agent，能在你不在場的情況下，按照自己的排程在你的 App 之間執行任務。 \"OpenClaw isn't just passing y"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "agent-chatbot",
+    "sectionTitle": "Agent =/= Chatbot",
+    "content": "OpenClaw 的核心價值在排程 (Cron Jobs) 和主動監控 (Heartbeat)，而非對話品質。判斷 AI Agent 成熟度的標準是：「它能不能在你不在場時完成工作？」"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "安全性是設計選擇",
+    "sectionTitle": "安全性是設計選擇",
+    "content": "明文憑證、Prompt Injection、持久存取權限——這三個風險是所有自託管 AI Agent 的共同挑戰。目前的最佳實踐是：獨立帳號 + 最小權限 + 隔離伺服器。"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "hetzner-是當前最佳選擇",
+    "sectionTitle": "Hetzner 是當前最佳選擇",
+    "content": "在成本（~$7/月）、安全認證（ISO 27001）和穩定性之間，Hetzner 提供了最好的平衡。Mac Mini 本地方案成本過高且無隔離優勢。"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "multi-agent-single-agent",
+    "sectionTitle": "Multi-Agent > Single Agent",
+    "content": "將不同職責分配給不同 Agent（各有獨立權限和排程），比一個「全能 Agent」更安全、更有效。這是職責分離原則在 AI 時代的實踐。"
+  },
+  {
+    "docFile": "2026-02-06_openclaw-agent-review.html",
+    "docTitle": "OpenClaw 完整評測指南 - AI Agent 自託管實戰",
+    "docDate": "2026-02-06",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Cron Job 和 Heartbeat 的核心差異是什麼？在什麼情境下你會選擇 Heartbeat 而非 Cron Job？ 核心差異在於情境感知 (Context Awareness)。 Cron Job 是「時間驅動」：每天固定時間執行固定任務，不管當下狀態。Heartbeat 是「情境驅動」：定時喚醒後，基於你的完整對話歷史、當前狀態和預設的監控清單來「判斷」是否需要行動。 選擇 Heartbeat 的情境：(1) 需要條件判斷的監控（「如果有緊急 Email 才通知我」vs 「每小時寄一封 Email 摘要」），(2) 需要減少通知噪音（只在有意義時打擾），(3) 需要跨系統的上下文整合判斷（同時考慮行事曆 + Email + 待辦事項）。 Q2 產業應用 如果你要在 CDMO 環境中導入類似 OpenClaw 的 AI Agent，你會如何處理 GMP 合規與 AI 自主行為之間的衝突？ 這個問題的關鍵在於區分 Copilot Mode vs Agent Mode 。 在 GMP 環境中，AI Agent 的「自主行為」與法規要求的「人員確認 + 電子簽章」"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★☆☆ 3.0/5 實務應用, 時效性 技術深度, 工具生態 Prosci 研究調查了 1,107 位專業人士，發現 AI 導入的主要障礙不是技術問題（僅佔 16%），而是 人員熟練度 （38%）。文章歸納出 AI 變革與傳統變革管理的 8 大差異，從「永無止境的第二階段」到「重新定義角色與工作模式」，核心論點是： AI 採用的成功取決於管理變革的人性面，而非技術的精密度 。對於正在導入 AI 的組織，這篇提供了實用的框架來重新思考變革管理策略。"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "理解數據差距",
+    "sectionTitle": "理解數據差距",
+    "content": "掌握 Prosci 研究揭示的信任差距、人員挑戰與技術挑戰的比例關係"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "辨識-8-大差異",
+    "sectionTitle": "辨識 8 大差異",
+    "content": "能夠解釋 AI 變革與傳統變革管理的 8 個關鍵差異及其應對策略"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "應用到自身情境",
+    "sectionTitle": "應用到自身情境",
+    "content": "將變革管理框架轉化為製藥/CDMO 產業的 AI 導入行動計畫 AI 變革管理的三大支柱 變革本質 持續性、安全性、倫理性 人員適應 個人化學習、企業規模思維 持續演化 模糊未來、新型阻力、角色重塑"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "content-deep-dive",
+    "sectionTitle": "Content Deep Dive",
+    "content": "變革本質 (1-3) 人員與學習 (4-5) 導航與適應 (6-8) 成功指標 Part I: 永無止境的第二階段 傳統變革管理有明確的階段和終點。AI 採用打破了這個模型。正如一位研討會參與者所說： 「AI 變化太快了——我們到底在追什麼？」 另一位形容這是「永無止境的第二階段」。 Traditional change management operates on defined phases with clear endpoints. AI adoption breaks this model. As one workshop participant put it, \"AI changes so fast—what are we chasing?\" Another described it as a \"never-ending Phase 2.\" 技術快速演進，新功能不斷出現，組織必須即時調整實施方案。你的變革管理計畫需要的是 靈活性和敏捷性 ，而非一次性交付。強化（Reinforcement）變成持續準備的主動過程，而非有限目標。 The technology evolves r"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "人的問題大於技術問題",
+    "sectionTitle": "人的問題大於技術問題",
+    "content": "User Proficiency 佔 38% 的實施挑戰，技術問題僅佔 16%。AI 導入成功的關鍵不在技術精密度，而在管理變革的人性面。投資在人員培訓和變革管理上的 ROI 可能遠超過技術投資。"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "持續演化取代一次性交付",
+    "sectionTitle": "持續演化取代一次性交付",
+    "content": "AI 變革沒有「完工日」。組織需要建立持續適應的能力，而非追求一個固定的未來狀態。變革管理從「專案交付物」升級為「核心能力」。"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "恐懼驅動的阻力需要情感回應",
+    "sectionTitle": "恐懼驅動的阻力需要情感回應",
+    "content": "AI 引發的阻力不是「不想學新系統」，而是「我會不會被取代」。處理這種存亡級的恐懼需要情感層面的介入——具體的角色地圖、合作敘事、以及可見的成功案例。"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "實驗文化是最強預測指標",
+    "sectionTitle": "實驗文化是最強預測指標",
+    "content": "鼓勵嘗試新工具的組織實施最順利，阻止實驗的組織最掙扎。領導者的信號——是鼓勵還是阻止探索——直接決定了 AI 採用的成敗。"
+  },
+  {
+    "docFile": "2026-02-09_ai-change-management.html",
+    "docTitle": "AI 驅動變革的 8 大差異 - 變革領導者必知",
+    "docDate": "2026-02-09",
+    "docSource": "Tim Creasey / Prosci",
+    "docRating": 3,
+    "docTags": [
+      "Analysis",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼 AI 變革被稱為「永無止境的第二階段」？這對變革管理計畫的設計意味著什麼？ 「永無止境的第二階段」反映了 AI 技術持續快速演進的本質。傳統變革有明確的「上線→穩定→完成」三階段，但 AI 的新功能不斷出現（例如 Claude 從 3 到 3.5 到 4.5，每次都改變最佳實踐），組織永遠處在「適應中」的狀態。 這意味著變革管理計畫需要從「瀑布式」轉向「敏捷式」：模組化設計、定期檢討和更新、建立持續學習機制而非一次性培訓。Reinforcement 不是結案後的追蹤，而是持續運作的組織能力。 Q2 產業應用 在你的 CDMO 環境中，如果要導入 AI 輔助偏差調查，根據文章的 8 大差異，你會優先處理哪 3 個差異？為什麼？ 建議優先處理：(1) 安全與合規 （差異 #2）——偏差報告涉及 GMP 數據完整性，AI 生成的內容必須通過驗證，幻覺風險在法規環境中不可接受；(2) 倫理與治理 （差異 #3）——AI 建議的調查方向是否有偏見？是否會忽略某些根本原因？需要建立審查機制；(3) 角色重塑 （差異 #8）——QA 調查員的角色將從「撰寫報告」轉向「審核 A"
+  },
+  {
+    "docFile": "2026-02-10_claude-skills-automation.html",
+    "docTitle": "Claude Skills：每月省下 40+ 小時的文件自動化系統",
+    "docDate": "2026-02-10",
+    "docSource": "Joel Salinas / Substack",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt"
+    ],
+    "sectionId": "quick-summary",
+    "sectionTitle": "Quick Summary",
+    "content": "★★★★☆ 3.6/5 實務應用, 時效性 技術深度, 工具生態 這篇文章是 Claude Skills 功能的實戰入門指南。作者 Joel Salinas 分享了他如何利用 5 個自訂 Skill 來自動化提案、簡報、儀表板、財務模型和流程圖的建立，每月省下超過 40 小時。文章的最大價值在於提供了 完整的 step-by-step 建立流程 和可下載的 SKILL.md 範本，讓讀者可以立即動手。技術深度不高（主要是操作指南而非架構解析），但對於想要快速上手 Claude Skills 的使用者來說，這是一篇極具實務價值的入門文。 Learning Objectives 學習目標 OBJECTIVE 01 理解 Claude Skills 與 Projects 的差異，以及兩者如何互補運作 OBJECTIVE 02 掌握建立 Skill 的完整 4 步流程：資料夾 → SKILL.md → 壓縮 → 上傳 OBJECTIVE 03 評估 5 種 Skill 類型（提案/簡報/儀表板/財務模型/流程圖）在自身工作場景的適用性 Skill 建立 4 步流程 Step 1: 建立資料夾 小寫 + 短橫線命名 Step 2: 建立 SKILL.md 定義工作流程指令 Step 3: 壓縮 ZIP 打包資料夾 Step 4: 上傳 Claude Settings > Skills Part I 什麼是 Claude Skills？為什麼它不同？ 一般的 Claude 能寫 email、摘要文件。但 Skills 教會 Claude 專門的工作流程（specialized workflows） ，當你提到相關需求時會自動觸發。 \"Regular Claude writes emails and summarizes documents. Skills teach Claude specialized workflows that trigger automatically when you mention them or ask for what they do.\" Skills 能建立的東西遠超文字回覆：Word 文件、PDF、PowerPoint 簡報、 含有運作公式的 Excel 試算表 、互動式儀表板、組織圖、流程圖。 \"Word documents, PDFs, PowerPoint presentations, Excel spreadsheets with working formulas, interactive dashboards, org charts, workflow diagrams.\" 根據統計，約 27% 的 Claude 輔助工作是「原本不會做」的任務 ——儀表板和分析工具如果手動做根本不划算。重度使用者回報 50-100% 的生產力提升 。 \"Approximately 27% of Claude-assisted work consists of tasks that wouldn't have been done otherwise... Power users report 50-100% productivity gains.\" 比喻說明 想像 Claude 是一位新進員工。沒有 Skill 時，他什麼都能做一點但不精通。Skill 就像是你給他的 專業 SOP 手冊 ——一旦有了提案製作 SOP，他就能每次都產出格式一致、品質穩定的提案，不用你每次重新教。 ROI 快速計算 前提： Claude Profes"
+  },
+  {
+    "docFile": "2026-02-10_import-ai-444-societies.html",
+    "docTitle": "Import AI #444: LLM Societies, ChipBench, Erdos Problems",
+    "docDate": "2026-02-10",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 3.4,
+    "docTags": [
+      "LLM",
+      "Research",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "本期 Import AI 涵蓋四個主題，全部指向同一個核心趨勢： AI 系統正在變得更「活」，但離自主運作仍有明顯差距 。Google 研究發現推理模型在解決難題時會自發模擬多重人格進行內部辯論；ChipBench 揭示前沿模型在真實晶片設計上表現仍差；Google DeepMind 的 Gemini 嘗試解決 Erdos 數學難題，700 個候選答案最終只有 1 個真正有創意的新解；華為用 LLM 自動生成 Ascend 晶片核心，但成功率尚需提升。共同結論：AI 加速了「生成」但人類在「判斷」上仍是瓶頸。"
+  },
+  {
+    "docFile": "2026-02-10_import-ai-444-societies.html",
+    "docTitle": "Import AI #444: LLM Societies, ChipBench, Erdos Problems",
+    "docDate": "2026-02-10",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 3.4,
+    "docTags": [
+      "LLM",
+      "Research",
+      "Tool"
+    ],
+    "sectionId": "理解-llm思維社會",
+    "sectionTitle": "理解 LLM「思維社會」",
+    "content": "掌握推理模型如何透過多重人格模擬和內部辯論來提升問題解決能力"
+  },
+  {
+    "docFile": "2026-02-10_import-ai-444-societies.html",
+    "docTitle": "Import AI #444: LLM Societies, ChipBench, Erdos Problems",
+    "docDate": "2026-02-10",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 3.4,
+    "docTags": [
+      "LLM",
+      "Research",
+      "Tool"
+    ],
+    "sectionId": "評估-ai-晶片設計能力",
+    "sectionTitle": "評估 AI 晶片設計能力",
+    "content": "了解 ChipBench 為何顯示現有 AI 系統尚未準備好進入真實晶片設計流程"
+  },
+  {
+    "docFile": "2026-02-10_import-ai-444-societies.html",
+    "docTitle": "Import AI #444: LLM Societies, ChipBench, Erdos Problems",
+    "docDate": "2026-02-10",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 3.4,
+    "docTags": [
+      "LLM",
+      "Research",
+      "Tool"
+    ],
+    "sectionId": "辨識-ai-科學研究的瓶頸",
+    "sectionTitle": "辨識 AI 科學研究的瓶頸",
+    "content": "分析「O-ring 自動化」模式：AI 加速生成但人類判斷仍是關鍵瓶頸 AI 自主性光譜：從生成到判斷的差距 AI 大量生成 候選方案、程式碼、證明 人類篩選判斷 正確性、品味、意圖 有效產出 極少數真正有價值 1 LLM 思維社會：推理模型的多重人格模擬 當思考困難問題時，我常常發現從 多重視角 來看問題會很有幫助，尤其是在檢視自己的假設和偏見時。Google、芝加哥大學和聖塔菲研究所的研究人員發現， AI 推理模型在解決困難問題時也會做同樣的事 。 \"When thinking about hard problems, I often find it's helpful to try and view them from multiple perspectives... researchers have concluded they do the same thing, with LLMs seeming to invoke multiple different perspectives in their chains of thought when solving hard pr"
+  },
+  {
+    "docFile": "2026-02-10_import-ai-444-societies.html",
+    "docTitle": "Import AI #444: LLM Societies, ChipBench, Erdos Problems",
+    "docDate": "2026-02-10",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 3.4,
+    "docTags": [
+      "LLM",
+      "Research",
+      "Tool"
+    ],
+    "sectionId": "思維社會-內建辯論",
+    "sectionTitle": "思維社會 = 內建辯論",
+    "content": "推理模型透過 RL 訓練後，自發地發展出多重人格模擬能力。它們不是「想更久」，而是「以不同身份思考」，驗證了 LLM 作為「模擬器」的理論。"
+  },
+  {
+    "docFile": "2026-02-10_import-ai-444-societies.html",
+    "docTitle": "Import AI #444: LLM Societies, ChipBench, Erdos Problems",
+    "docDate": "2026-02-10",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 3.4,
+    "docTags": [
+      "LLM",
+      "Research",
+      "Tool"
+    ],
+    "sectionId": "基準-vs-現實的落差",
+    "sectionTitle": "基準 vs 現實的落差",
+    "content": "ChipBench 顯示現有晶片設計基準太簡單（10-76 行 vs 真實 10,000+ 行）。通用 LLM 裸測成績差，但加上領域腳手架後可能大幅不同。"
+  },
+  {
+    "docFile": "2026-02-10_import-ai-444-societies.html",
+    "docTitle": "Import AI #444: LLM Societies, ChipBench, Erdos Problems",
+    "docDate": "2026-02-10",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 3.4,
+    "docTags": [
+      "LLM",
+      "Research",
+      "Tool"
+    ],
+    "sectionId": "生成易判斷難",
+    "sectionTitle": "生成易、判斷難",
+    "content": "Erdos 案例完美展示了 AI 科學的 O-Ring 模式：700 個問題 200 候選 1 個真正創新。人類的「專家品味」仍是無法自動化的瓶頸。"
+  },
+  {
+    "docFile": "2026-02-10_import-ai-444-societies.html",
+    "docTitle": "Import AI #444: LLM Societies, ChipBench, Erdos Problems",
+    "docDate": "2026-02-10",
+    "docSource": "Jack Clark / Import AI",
+    "docRating": 3.4,
+    "docTags": [
+      "LLM",
+      "Research",
+      "Tool"
+    ],
+    "sectionId": "dsl-腳手架是關鍵",
+    "sectionTitle": "DSL 腳手架是關鍵",
+    "content": "華為的 AscendCraft 用 DSL 中間層將 LLM 成功率從幾乎為零提升到 90%+ 功能正確。不要讓 LLM 直接做冷門任務 設計領域框架來引導它。 ? Practice Questions Q1 概念理解 「思維社會」(Society of Thought) 與單純的「思考更久」(longer chain-of-thought) 有什麼根本差異？為什麼這個差異對理解 AI 推理能力很重要？ 根本差異在於 質 vs 量 。單純延長 chain-of-thought 是線性地增加推理步驟（量的增加），而「思維社會」是在推理過程中引入不同視角、人格特徵和領域專長之間的辯論（質的變化）。 這很重要，因為它暗示推理能力的提升來自 多樣性 而非 計算量 。如果我們只是讓模型「想更久」，可能會陷入同一個思維框架的死胡同。但如果模型能自發地切換視角、產生衝突並調和分歧，它就更像真正的深度思考。這也解釋了為什麼 RL 訓練後才出現這個能力 RL 的獎勵機制鼓勵模型發現「有效的推理策略」，而多視角辯論恰好是最有效的策略之一。 Q2 產業應用 如果你要在 CDMO 的 deviation in"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.8/5 Practical Value, Timeliness Technical Depth, Tool Ecosystem 這篇文章記錄了頂尖科技公司如何在內部使用 Vibe Coding（氛圍式編程）來建構 AI 驅動的工具。核心案例是 Stripe 設計主管 Owen Williams 開發的 Protodash - 一個讓設計師直接在瀏覽器中使用真實生產元件進行即時原型設計的工具。文章最重要的洞察在於： 建構（Building）的民主化正在模糊工程師和非工程師的界線 ，產品經理、設計師甚至律師現在都能自己建構內部 AI 工具。這不只是技術趨勢，更是組織能力的根本轉變。"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "理解-vibe-coding-的組織影響",
+    "sectionTitle": "理解 Vibe Coding 的組織影響",
+    "content": "掌握「建構民主化」如何改變產品開發流程，以及非工程師角色如何參與 AI 工具建構。"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "分析-protodash-的設計哲學",
+    "sectionTitle": "分析 Protodash 的設計哲學",
+    "content": "理解 Stripe 如何透過「可拋棄式」輕量工具，將想法到原型的循環壓縮到接近零摩擦。"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "萃取可複製的內部工具策略",
+    "sectionTitle": "萃取可複製的內部工具策略",
+    "content": "從多家頂尖公司案例中提取可應用於自身組織的 AI 內部工具建構原則。 Vibe Coding 產品開發演進模型 Static Mockup Figma 靜態設計稿 AI-Assisted Build 即時 AI 輔助原型 Interactive Prototype 真實元件互動體驗 Team Decision 體驗式決策取代紙上討論"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "part-i-vibe-coding-的民主化浪潮",
+    "sectionTitle": "Part I: Vibe Coding 的民主化浪潮",
+    "content": "The Democratization of Building Vibe Coding 最重大的成就之一，是 建構的民主化 。現在，在許多全球頂尖科技公司中，建構有用的東西不再只是工程團隊的專屬領域；設計師、產品經理和研究人員都能動手建構讓自己工作更輕鬆的內部工具。 \"One of the major achievements of vibe coding has been the democratization of building; now, in many of the world's leading tech companies, building useful stuff isn't just the domain of engineering.\" 舉例來說，DuoLingo 發布了一個內部工具，讓產品經理和設計師能從零開始 建立自己的 Agent 來管理 Feature Flags 。Anthropic 表示律師現在能建構自己的迷你應用程式。Stripe 的設計主管 Owen Williams 則在空閒時間建構了自己的 AI 驅動原型工具。 \"DuoLingo shipp"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "part-ii-stripe-的-protodash---運作方式",
+    "sectionTitle": "Part II: Stripe 的 Protodash - 運作方式",
+    "content": "How Protodash Works Protodash 是 Stripe 設計主管 Owen Williams 開發的內部工具，用於 直接在瀏覽器中進行快速原型設計 。它讓設計師在 Stripe 的實際 Dashboard 中進行 UX 探索，使用真實數據和 Stripe 的實際元件庫，大幅降低構思階段的摩擦力。 \"Protodash is an internal tool Williams built for rapid in-browser prototyping directly within the company's dashboard. It enables quick UX exploration using real data and Stripe's actual components.\" 具體來說，它讓設計師（或任何人） 在頁面上選取特定的 HTML 元素，然後透過側面板的 AI 助手即時建構原型 。使用者可以描述他們想看到的內容，AI 助手就會使用 Stripe 的真實元件庫來建構，提供極度逼真的新功能預覽。 \"It lets designers specif"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "part-iii-protodash-的建構哲學",
+    "sectionTitle": "Part III: Protodash 的建構哲學",
+    "content": "How It Was Built - The Disposable Tool Philosophy Williams 自己建構了 Protodash，它在設計師的本地機器上運行（所以才用 localhost）。他表示他建構它是為了 將探索摩擦降到「零」 。 \"This was built by Williams himself and it runs locally on a designer's machine. He says that he built it to bring exploration friction to 'zero'.\" 第一個版本起步極簡：只是一個 模擬真實 Stripe Dashboard 的超簡單靜態網站 ，搭配可以在 Cursor 中設定和使用的規則。這個工具極度輕量，在雲端開發環境中運行，沒有專門為此建構的服務。 \"The first version started as a super simple static website that just emulates the real Stripe dashboard with rules that"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "part-iv-其他公司案例與關鍵原則",
+    "sectionTitle": "Part IV: 其他公司案例與關鍵原則",
+    "content": "Other Examples & Key Principles for Product Teams 文章還提到了多個其他公司的內部 AI 工具案例，涵蓋不同類別： 資料分析 （一個能民主化存取 600 PB 公司數據的 Data Agent）、 實驗性 UI （能即時建構自訂 Dashboard 的「UI on Demand」概念），以及 AI 專案管理 （協調 35+ 個 Agent 來管理跨 Gmail、Calendar、Drive 和 Sheets 的客戶 Dashboard）。 \"A data agent that democratized access to 600 petabytes of company data, the experimental UI that builds custom dashboards on the fly, and the AI project manager that coordinates three dozen agents to maintain client dashboards across Gmail, Calendar, Dr"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "建構的民主化已經發生",
+    "sectionTitle": "建構的民主化已經發生",
+    "content": "非工程師（設計師、PM、律師）正在用 AI 工具自己建構內部工具。這不是理論預測，而是 Stripe、DuoLingo、Anthropic 等公司的現狀。組織的瓶頸正從「誰能寫 code」轉向「誰能清楚描述需求」。"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "可拋棄式工具-完美架構",
+    "sectionTitle": "可拋棄式工具 > 完美架構",
+    "content": "Stripe 的 Protodash 刻意保持輕量可拋棄。AI 時代的內部工具哲學是「快速建構、用完即棄」，而非追求長期維護性。重建成本已經低到讓維護變得不經濟。"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "互動體驗取代靜態討論",
+    "sectionTitle": "互動體驗取代靜態討論",
+    "content": "Stripe 團隊現在帶互動原型而非 Figma 檔案來開會。當原型成本趨近於零，決策品質提升 - 因為團隊可以「體驗」而非「想像」新功能的效果。"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "內部工具是產品的試驗場",
+    "sectionTitle": "內部工具是產品的試驗場",
+    "content": "Cursor 的案例證明：內部實驗可以演化為面向百萬用戶的產品功能。內部工具不只是提升效率的手段，更是低風險驗證產品想法的策略。"
+  },
+  {
+    "docFile": "2026-02-10_vibe-coding-protodash.html",
+    "docTitle": "Vibe Coding 實戰：Stripe 如何用 AI 重塑原型設計流程",
+    "docDate": "2026-02-10",
+    "docSource": "Department of Product (DoP) / Rich Holmes",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Automation",
+      "Prompt",
+      "Agent"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Stripe 的 Protodash 選擇「可拋棄式」設計而非建構長期維護的平台，背後的經濟邏輯是什麼？這個邏輯在什麼情況下會失效？ 經濟邏輯的核心是： AI 讓重建成本（Rebuild Cost）低於維護成本（Maintenance Cost） 。當你可以在幾小時內重建一個工具，花數週去維護、升級、除錯就變得不經濟了。這就像影印比修復更便宜時，你不會花錢修一份破損的文件。 這個邏輯會在以下情況失效：(1) 工具累積了大量使用者數據或狀態，重建意味著數據遷移成本；(2) 工具被多個團隊依賴，成為事實上的基礎設施；(3) 工具涉及合規或驗證要求（如 GMP 環境），每次重建都需要重新驗證。 在製藥 CDMO 環境中，這個邏輯需要特別謹慎：任何與品質系統整合的工具都無法輕易「拋棄重建」，因為 CSV (Computer System Validation，電腦系統驗證) 的成本遠高於工具本身的建構成本。 Q2 產業應用 在你的 CDMO 組織中，哪些角色最有可能成為「非工程師建構者」？他們可能建構什麼類型的內部 AI 工具？有什麼限制？ 在 CDMO 環境中，最有潛力的「非"
+  },
+  {
+    "docFile": "2026-02-11_ai-disruption-shumer.html",
+    "docTitle": "AI 產業劇變：從業者的第一手警告 - Matt Shumer",
+    "docDate": "2026-02-11",
+    "docSource": "Matt Shumer (@mattshumer_)",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 3.8/5 ↑ 實務應用, 時效性 ↓ 技術深度, 工具生態 AI 新創創辦人 Matt Shumer 以個人經歷為核心，向非科技圈的親友發出一封「你現在就需要理解 AI」的公開信。文章核心論點：2026 年 2 月 5 日發布的 GPT-5.3 Codex 與 Claude Opus 4.6 標誌著 AI 從「有用工具」到「取代認知工作」的質變。他引用 Anthropic CEO Dario Amodei 預測 50% 入門級白領工作將在 1-5 年內消失，並用 METR 的任務時長數據佐證加速趨勢。文章屬於「從業者觀點宣言」而非技術分析，適合作為理解業界心態的窗口，但需注意其利益相關者視角的偏差。 Learning Objectives OBJECTIVE 01 理解 AI 能力進展的「水位上升」模型：從 METR 任務時長指標看 AI 自主工作能力的指數級增長 OBJECTIVE 02 解析 AI 自我改進循環（Recursive Self-Improvement）的機制與含義：為什麼 GPT-5.3 「幫助建造了自己」是一個關鍵里程碑 OBJECTIVE 03 評估個人職業策略：區分「暫時安全」與「結構性免疫」，建立在 AI 加速時代的適應框架 AI 影響擴散模型：Matt Shumer 的核心框架 1 Code First AI 先學會寫程式以加速自我改進 → 2 Recursive Loop AI 參與建造下一代 AI，形成正向回饋 → 3 General Cognitive 從程式碼擴展到所有認知工作領域 → 4 Physical World 最終透過機器人進入實體工作 Content Analysis Context & Evidence Impact & Disruption Action Framework Part I — 個人經歷：AI 已經取代了我的工作 Shumer 以 2020 年疫情比喻開場：我們正處於「這看起來被誇大了」的階段，但即將面對比 Covid 更大的變革。他坦言過去一直給親友「禮貌版」的回答，但 誠實版本和他實際說出來的之間的差距已經大到無法忽視 。 \"The gap between what I've been saying and what is actually happening has gotten far too big.\" 他描述 2 月 5 日發布的新模型如何改變他的工作： 他不再被需要做實際的技術工作 。他用自然語言描述想要的結果，離開電腦四小時後回來，工作已經完成——而且比他自己做的更好。 \"I describe what I want built, in plain English, and it just... appears. Not a rough draft I need to fix. The finished thing.\" 最讓他震驚的是 GPT-5.3 Codex 展現出的 判斷力（judgment）和品味（taste） ——那種「知道什麼是正確決定」的直覺感，這是人們過去總說 AI 永遠不會有的能力。 \"It had something that felt, for the first time, like judgment. Like taste. The inexplicable sense of knowing what the right call is.\" Analogy: Covid 比喻的策略意涵 Shumer 選擇 Covid 比喻是經"
+  },
+  {
+    "docFile": "2026-02-11_openclaw-security-hardening.html",
+    "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
+    "docDate": "2026-02-11",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
+    "docRating": 4.2,
+    "docTags": [
+      "Security",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "4.2/5 實務應用, 技術深度 工具生態, 學習曲線 這篇文章是 OpenClaw（前身 ClawdBot）安全強化的完整實作指南，由 AI 安全專家 Fernando Lucktemberg 撰寫。文章的核心前提是 「警告無法阻止採用」 （Harm Reduction，危害減少策略）：既然人們已經在使用 OpenClaw，與其說「不要用」，不如教他們如何安全地用。 指南採用 三層漸進式防護架構 ：Tier 1（基本隔離，3-4 小時）、Tier 2（主動監控，+2 小時）、Tier 3（深度防禦，+2-3 小時），涵蓋 32 個步驟，從 VPS 隔離、Tailscale VPN、防火牆、認證加密、到 Docker/Podman 容器化、LiteLLM 代理、Squid 網路出口過濾等。每個步驟都附有可複製的指令和驗證程序。 文章同時提供手動部署和 Ansible Playbook 自動化部署 兩條路徑（手動 7-9 小時 vs 自動 15-30 分鐘），並坦承即使 Tier 3 也無法防禦 Prompt Injection 和供應鏈攻擊這兩個 根本性弱點 。"
+  },
+  {
+    "docFile": "2026-02-11_openclaw-security-hardening.html",
+    "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
+    "docDate": "2026-02-11",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
+    "docRating": 4.2,
+    "docTags": [
+      "Security",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "三層安全架構",
+    "sectionTitle": "三層安全架構",
+    "content": "理解 Tier 1/2/3 的漸進式防護邏輯，以及每層的成本效益比"
+  },
+  {
+    "docFile": "2026-02-11_openclaw-security-hardening.html",
+    "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
+    "docDate": "2026-02-11",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
+    "docRating": 4.2,
+    "docTags": [
+      "Security",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "容器化隔離模式",
+    "sectionTitle": "容器化隔離模式",
+    "content": "掌握 Docker/Podman + LiteLLM + Squid 的三容器網路隔離架構"
+  },
+  {
+    "docFile": "2026-02-11_openclaw-security-hardening.html",
+    "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
+    "docDate": "2026-02-11",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
+    "docRating": 4.2,
+    "docTags": [
+      "Security",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "allowlist-vs-denylist-思維",
+    "sectionTitle": "Allowlist vs Denylist 思維",
+    "content": "從根本理解「預設拒絕」的安全原則如何應用於命令、網域、工具"
+  },
+  {
+    "docFile": "2026-02-11_openclaw-security-hardening.html",
+    "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
+    "docDate": "2026-02-11",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
+    "docRating": 4.2,
+    "docTags": [
+      "Security",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "harm-reduction-框架",
+    "sectionTitle": "Harm Reduction 框架",
+    "content": "學習「危害減少」策略在 AI Agent 安全中的實際應用思維 OpenClaw 三層漸進式安全強化架構 Tier 1: Basic VPS 隔離 + 防火牆 + Tailscale + 認證加密 Steps 1-14 | 3-4 hrs Tier 2: Standard Allowlisting + MCP 安全 + 監控腳本 + 月維護 Steps 15-19 | +2 hrs Tier 3: Advanced 容器沙箱 + LiteLLM + Squid + 事件回應 Steps 20-32 | +2-3 hrs"
+  },
+  {
+    "docFile": "2026-02-11_openclaw-security-hardening.html",
+    "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
+    "docDate": "2026-02-11",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
+    "docRating": 4.2,
+    "docTags": [
+      "Security",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "content",
+    "sectionTitle": "Content",
+    "content": "Context & NEVER List Tier 1: Basic Tier 2: Standard Tier 3: Advanced Architecture & Response Part I: 為什麼需要這篇指南 Wyndo 在前一篇文章介紹了 OpenClaw 的爆紅現象和基本安全建議，但他坦承 沒有展示如何真正做到端對端的安全強化 。他自己每天都在使用 OpenClaw 的三個 Agent（Morty、Goggins、Pepper Potts），其中 Pepper Potts 已經改變了他的工作方式——早上委派任務，Agent 自主運行，晚上回顧成果。 \"Pepper Potts especially has changed how I work. I delegate tasks to it in the morning. It runs its own workflow while I run mine. I review its work at the end of the day and move projects forward.\" 正因為 OpenClaw 如此"
+  },
+  {
+    "docFile": "2026-02-11_openclaw-security-hardening.html",
+    "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
+    "docDate": "2026-02-11",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
+    "docRating": 4.2,
+    "docTags": [
+      "Security",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Allowlist > Denylist 安全的核心思維轉換：從「封鎖已知危險」到「只允許已知安全」。這個原則貫穿命令、MCP Server、OAuth 範圍、網域出口的每一層。 隔離是基礎，不是保險 VPS 隔離 + 容器隔離 + 網路隔離是三層同心圓。每一層都限制爆破半徑（Blast Radius），但沒有任何一層能完全消除風險。 Credential Brokering 是關鍵模式 LiteLLM 作為認證代理的設計，讓 OpenClaw 永遠不接觸真正的 API Key。這是企業級 API Gateway 模式的簡化版。 坦承不可修復的弱點 文章最有價值的部分是它坦承 Prompt Injection 和供應鏈攻擊「不可修復」。這種誠實比假安全感更有用。"
+  },
+  {
+    "docFile": "2026-02-11_openclaw-security-hardening.html",
+    "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
+    "docDate": "2026-02-11",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
+    "docRating": 4.2,
+    "docTags": [
+      "Security",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼文章強調 Allowlist 比 Denylist 更安全？在什麼情況下 Allowlist 反而會造成問題？ Allowlist 更安全的原因 ：Denylist 只封鎖已知的危險命令（如 rm -rf ），但攻擊者可以用 wget 、 nc 、 python -c 等替代方案繞過。Allowlist 則相反——只有明確列出的命令才能執行，未列出的全部被拒絕。這就是「預設拒絕」（deny-by-default）原則。 Allowlist 的潛在問題 ：(1) 維護成本高——每次 Agent 需要新功能都要手動更新白名單；(2) 過度限制可能降低 Agent 的實用性，導致使用者為了方便而放寬設定；(3) 在快速迭代的開發環境中，嚴格的白名單可能成為瓶頸。關鍵是找到安全和實用性的平衡。 Q2 產業應用 如果你要在 CDMO 環境中部署類似 OpenClaw 的 AI Agent，Tier 3 的哪些安全原則可以直接對應到 GMP 的哪些法規要求？ 幾個直接對應： (1) Credential Brokering / 認證代理 21 CFR Part 11 的電子簽"
+  },
+  {
+    "docFile": "2026-02-12_a2a-commerce.html",
+    "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
+    "docDate": "2026-02-12",
+    "docSource": "Joel Salinas & JHong / Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "API"
+    ],
+    "sectionId": "executive-summary-快速摘要",
+    "sectionTitle": "Executive Summary | 快速摘要",
+    "content": "Agent-to-Agent Commerce (A2A2C，代理人對代理人商務) 已不是預測，而是 Q1 2026 正在上線的基礎設施。三個協議 — Google/Shopify 的 UCP、Visa 的 AP2、OpenAI 的 ACP — 讓消費者的 AI Agent 直接與商家 Agent 談判交易。30% 的消費者已信任 AI 代為完成購買。本文的戰略價值在於：它不只談技術，更提供領導者可立即行動的檢查清單，並揭示非營利組織在 LLM 對話中嵌入捐款路徑的意外機會。文章在策略洞察和行動建議上較強，但技術深度有限 — 協議的底層架構、API 整合細節均未涉及。 Learning Objectives | 學習目標 理解 A2A2C 架構演進 從 Agent-to-Site 到 Agent-to-Agent，三種商務模型的差異與趨勢 掌握三大協議佈局 UCP / AP2 / ACP 各自的定位、推動者與商業意涵 擬定組織回應策略 商業與非營利領導者的即時行動清單與風險評估 Agentic Commerce 演進模型 Agent-to-Site AI 代理瀏覽商家網站 (現狀) A"
+  },
+  {
+    "docFile": "2026-02-12_a2a-commerce.html",
+    "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
+    "docDate": "2026-02-12",
+    "docSource": "Joel Salinas & JHong / Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "API"
+    ],
+    "sectionId": "part-i-a2a2c-什麼是-agent-to-agent-commerce",
+    "sectionTitle": "Part I: A2A2C — 什麼是 Agent-to-Agent Commerce?",
+    "content": "從瀏覽器購物到代理人直接談判的典範轉移 文章開場用了一個生動的情境：你告訴 AI Agent「我需要球鞋，預算 150 美元，要永續品牌，我討厭退貨」，然後你的 Agent 同時向 17 個商家 Agent 開啟協商通道 ，幾秒內完成比價、篩選、談判、交易。你甚至沒有打開瀏覽器。 \"Your AI agent no longer needs to Google this... it opens a channel to seventeen merchant agents and starts negotiating... Transaction complete. And you never even opened a browser.\" 這不再是 B2AI2C（Business to AI to Consumer）的模型 — 也就是 AI 幫你在平台上購物。真正發生的是 Agent-to-Agent Commerce (A2A2C) ：平台不是目的地，而是基礎設施。消費者的 Agent 和商家的 Agent 直接對話。 \"The platforms aren't the destin"
+  },
+  {
+    "docFile": "2026-02-12_a2a-commerce.html",
+    "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
+    "docDate": "2026-02-12",
+    "docSource": "Joel Salinas & JHong / Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "API"
+    ],
+    "sectionId": "part-ii-三大協議-ucp-ap2-acp",
+    "sectionTitle": "Part II: 三大協議 — UCP, AP2, ACP",
+    "content": "正在上線的商務基礎設施 2025 年底到 2026 年初，三個重量級協議幾乎同時宣布，形成 Agent Commerce 的基礎層。它們的共通點是 開放標準（Open Standards） — 你的個人 Agent 無論在哪個平台，都能與任何商家的 Agent 交易。 \"The commonality across all of these announcements is open standards, meaning your personal agent (regardless of where it lives) can transact with any merchant agent (regardless of where they live).\" 三個協議的時間線：2025 年 9 月 OpenAI 推出 ACP（Agentic Commerce Protocol）、10 月 Visa 推出 AP2（Agent Payments Protocol）、2026 年 1 月 Google 與 Shopify 共同推出 UCP（Universal Commerce Protoc"
+  },
+  {
+    "docFile": "2026-02-12_a2a-commerce.html",
+    "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
+    "docDate": "2026-02-12",
+    "docSource": "Joel Salinas & JHong / Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "API"
+    ],
+    "sectionId": "part-iii-消費者準備好了嗎信任度與風險",
+    "sectionTitle": "Part III: 消費者準備好了嗎？信任度與風險",
+    "content": "30% 的消費者已信任 AI 完成購買 作者坦承自己喜歡親自購物，對 AI 的選品判斷持懷疑態度。她和妹妹做了一個測試：讓 Claude、ChatGPT、Gemini 幫忙選禮物（特定尺寸的透明時尚手袋）。沒有一個 AI 選中最終的首選，但 Claude 的推薦「相當不錯」。 \"None of them found her ultimate pick, but Claude did return a pretty good option.\" 然而數據顯示她可能是少數： 30% 的購物者已經願意讓 AI 代為完成購買 。Visa 的消費者洞察副總裁表示，將近一半的美國人已經使用 AI 來增強購物體驗。 \"30% of shoppers are already comfortable allowing AI to complete purchases on their behalf... nearly half of Americans now using AI to enhance their shopping experience.\" 信任的來源之一是 本地執行（Local Execu"
+  },
+  {
+    "docFile": "2026-02-12_a2a-commerce.html",
+    "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
+    "docDate": "2026-02-12",
+    "docSource": "Joel Salinas & JHong / Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "API"
+    ],
+    "sectionId": "part-iv-市場動能-數據與預測",
+    "sectionTitle": "Part IV: 市場動能 — 數據與預測",
+    "content": "從假期銷售數據到 2030 年預測 三個月前作者還在猜測 AI 會影響多少假期購物，現在數據出來了： AI 驅動了上個假期季 20% 的零售銷售 。Morgan Stanley 已做出預測：到 2030 年，近一半的線上購物者將使用 AI Shopping Agent，占總消費的 25%。 \"AI drove 20% of retail sales this past holiday season... nearly half of online shoppers will use AI Shopping agents by 2030, accounting for 25% of spending.\" 在商家端，零售商並沒有等到責任問題解決才行動。Google 的 Business Agent 已經讓消費者能在搜尋結果中直接與品牌對話 — 像虛擬銷售助理。 Lowe's、Poshmark、Reebok 已經部署了這些 Agent ，品牌可以用客戶數據訓練 Agent、提供優惠、並在體驗中完成購買。 \"Google's Business Agent lets shoppers chat "
+  },
+  {
+    "docFile": "2026-02-12_a2a-commerce.html",
+    "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
+    "docDate": "2026-02-12",
+    "docSource": "Joel Salinas & JHong / Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "API"
+    ],
+    "sectionId": "part-v-領導者策略-商業非營利跨產業",
+    "sectionTitle": "Part V: 領導者策略 — 商業、非營利、跨產業",
+    "content": "本週就能開始的行動清單 作者以 AI 策略教練的身份提出核心觀點： 「意識創造選項，無知消滅選項」(Awareness creates options. Ignorance eliminates them.) 。你不需要這季就部署 Business Agent，但你必須理解消費者的 AI Agent 已經在與商家平台協商。 \"Awareness creates options. Ignorance eliminates them... if you don't understand that consumer AI agents are already negotiating with merchant platforms, you can't make informed decisions.\" 商業領導者本週三個問題： 第一，你的結帳流程對 Agent 友善嗎？如果你的結帳需要人類直覺才能完成，你正在為 30% 已接受 AI 輔助購買的消費者製造摩擦。第二，你在價格談判上的弱點在哪？如果你的價值主張純粹基於價格，你會被 Agent 的即時比價壓到底。第三，你的 Agent 需要什麼客"
+  },
+  {
+    "docFile": "2026-02-12_a2a-commerce.html",
+    "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
+    "docDate": "2026-02-12",
+    "docSource": "Joel Salinas & JHong / Substack",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "API"
+    ],
+    "sectionId": "practice-questions-練習題",
+    "sectionTitle": "Practice Questions | 練習題",
+    "content": "Q1 概念理解 Agent-to-Agent Commerce（A2A2C）和之前的 B2AI2C 模型之間的核心差異是什麼？為什麼這個差異對商業策略有根本性的影響？ 核心差異在於「誰是中心」。 B2AI2C 中，AI 是替你操作現有平台的工具 — 平台仍是核心，AI 只是自動化了你的瀏覽行為。A2A2C 中，AI Agent 之間透過開放協議（UCP、AP2、ACP）直接通訊，平台降格為基礎設施。 策略影響： 在 B2AI2C 世界，你的品牌在平台上的視覺呈現仍然重要（因為 AI 還是在「看」你的網站）。在 A2A2C 世界，你的產品屬性必須以結構化數據存在，因為商家 Agent 是用數據欄位（價格、材質、永續認證、退貨政策）跟消費者 Agent 溝通，不是用美麗的網頁設計。 Q2 產業應用 假設你的 CDMO 正在考慮是否讓 AI Agent 處理供應商議價（如原物料採購）。基於本文的 A2A2C 框架和信任三角，你會如何評估哪些採購決策適合 Agent 自主完成，哪些需要人類監督？ 這個問題的核心是你已經在使用的 Copilot vs Agent 框架 在採購場景的應用： 適合 "
+  },
+  {
+    "docFile": "2026-02-17_ai-diagram-creation.html",
+    "docTitle": "AI 圖表生成教學 - Nano Banana × Gemini",
+    "docDate": "2026-02-17",
+    "docSource": "Nano Banana Infographic",
+    "docRating": 2.2,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "這篇信息圖提供了一個用 Gemini 圖片生成功能 將各類素材（論文、影片、逐字稿）轉化為 結構化圖表 的 6 步驟流程。核心價值在於 Step 6 提供的 可複用 Prompt 模板 ，讓你不需要從零摸索就能產出流程圖、概念圖等教學用圖表。內容偏入門級，適合作為快速參考卡片，但缺乏對 Prompt 原理的深入解析和跨平台比較。"
+  },
+  {
+    "docFile": "2026-02-17_ai-diagram-creation.html",
+    "docTitle": "AI 圖表生成教學 - Nano Banana × Gemini",
+    "docDate": "2026-02-17",
+    "docSource": "Nano Banana Infographic",
+    "docRating": 2.2,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "學習目標",
+    "sectionTitle": "學習目標",
+    "content": "1 掌握 AI 圖表生成的 6 步驟工作流程 2 理解 Prompt 模板中各參數的作用與調整邏輯 3 評估此方法在專業簡報和教育訓練中的適用性與限制 AI Diagram Creation Workflow 1 選擇素材 論文/影片/逐字稿 2 開啟 Gemini 點選 Create Image 3 選圖表類型 流程圖/概念圖/插圖 4 設定比例 16:9 簡報 / 1:1 社群 5 生成迭代 審查 + 修正 Prompt"
+  },
+  {
+    "docFile": "2026-02-17_ai-diagram-creation.html",
+    "docTitle": "AI 圖表生成教學 - Nano Banana × Gemini",
+    "docDate": "2026-02-17",
+    "docSource": "Nano Banana Infographic",
+    "docRating": 2.2,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "part-i-6-步驟工作流程拆解",
+    "sectionTitle": "Part I 6 步驟工作流程拆解",
+    "content": "整個流程的核心邏輯是： 先定義輸入素材，再透過 Gemini 的圖片生成功能，用結構化 Prompt 控制輸出 。這不是傳統的「畫圖」，而是用語言描述你要的圖表結構，讓 AI 幫你視覺化。 Choose the material you want to convert into a diagram, such as a research paper, video recording, or a written transcript. Step 1-2：素材選擇 + 工具啟動 先選定你要圖解的內容來源（論文、影片逐字稿、會議紀錄等），然後到 Gemini 平台點選「Create Image」功能。關鍵在於你的 素材品質決定圖表品質 ——如果輸入的是模糊的概念，AI 也只能產出模糊的圖。 Step 3-4：圖表類型 + 格式設定 選擇最適合你資料的圖表類型： Flowchart（流程圖） 適合步驟說明、 Conceptual Map（概念圖） 適合關係呈現、 Instructional Illustration（教學插圖） 適合解釋原理。格式方面，簡報用 16:9，社群媒體用 1:1。 S"
+  },
+  {
+    "docFile": "2026-02-17_ai-diagram-creation.html",
+    "docTitle": "AI 圖表生成教學 - Nano Banana × Gemini",
+    "docDate": "2026-02-17",
+    "docSource": "Nano Banana Infographic",
+    "docRating": 2.2,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "part-ii-prompt-模板解析",
+    "sectionTitle": "Part II Prompt 模板解析",
+    "content": "Step 6 提供了一個 可直接複製使用的 Prompt 模板 。這個模板的設計遵循了 Prompt Engineering 的基本原則： 明確指定輸出格式、主題、焦點、佈局方式和風格約束 。 Design a [ASPECT RATIO] diagram. Topic: [TOPIC]. Central focus: [MAIN IDEA]. Layout: [FLOW CYCLE STEPS]. Style: clean and instructional. Background: white. Prompt Template Design a [ASPECT RATIO] diagram. Topic: [TOPIC]. Central focus: [MAIN IDEA]. Layout: [FLOW CYCLE STEPS]. Style: clean and instructional. Background: white. Text must be clear, legible, and accurate. Accuracy is more important than "
+  },
+  {
+    "docFile": "2026-02-17_ai-diagram-creation.html",
+    "docTitle": "AI 圖表生成教學 - Nano Banana × Gemini",
+    "docDate": "2026-02-17",
+    "docSource": "Nano Banana Infographic",
+    "docRating": 2.2,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "重點整理",
+    "sectionTitle": "重點整理",
+    "content": "01 素材決定品質 垃圾進、垃圾出。清晰的輸入素材（逐字稿、論文摘要）才能產出有用的圖表。 02 Prompt = 設計 Brief 把 Prompt 當作和設計師的溝通文件，每個參數都在回答一個設計決策問題。 03 準確性 > 美觀 \"Accuracy over aesthetics\" 這個約束條件適用於所有教學型圖表生成。 04 迭代是關鍵 第一次生成幾乎不會完美。規劃 2-3 次迭代時間，每次微調 Prompt 的具體參數。"
+  },
+  {
+    "docFile": "2026-02-17_ai-diagram-creation.html",
+    "docTitle": "AI 圖表生成教學 - Nano Banana × Gemini",
+    "docDate": "2026-02-17",
+    "docSource": "Nano Banana Infographic",
+    "docRating": 2.2,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation"
+    ],
+    "sectionId": "練習題",
+    "sectionTitle": "練習題",
+    "content": "Q1 概念理解 Prompt 模板中「Accuracy is more important than aesthetics」這句話的作用是什麼？如果移除它，可能會發生什麼？ 這句話是一個 約束條件（Constraint） ，告訴 AI 在面臨「好看 vs 正確」的取捨時，優先選擇正確性。如果移除，AI 可能會為了視覺平衡而簡化步驟、合併概念、或用不精確的詞彙替代專業術語。在教學和專業場景中，這個約束尤其重要——一張漂亮但有誤的流程圖比沒有圖更危險。 Q2 產業應用 在你的 CDMO 環境中，AI 生成的流程圖可以用在哪些場景？哪些場景絕對不能用？ 可以用的場景： 團隊訓練的討論素材、技術轉移的初步流程視覺化、偏差調查時快速梳理事件時間線、跨部門溝通時的概念說明圖。 絕對不能用的場景： 正式 SOP 文件中的流程圖、法規提交文件（如 PIC/S 或 FDA 查廠資料）、驗證方案中的關鍵流程描述、任何需要受控文件管理的圖表。原因是 AI 生成內容無法保證 Data Integrity（數據完整性），且不符合 21 CFR Part 11 對電子記錄的要求。 Q3 批判思考 這個方法使用 G"
+  },
+  {
+    "docFile": "2026-02-17_ai-pm-builder-culture.html",
+    "docTitle": "AI 時代的 PM 角色重定義：Builder Culture 回歸",
+    "docDate": "2026-02-17",
+    "docSource": "Mike Krieger / Anthropic Labs",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "LLM",
+      "Automation"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "Anthropic 的 Mike Krieger（Instagram 共同創辦人）發文招募 Research PM，明確要求候選人具備三種能力： 判斷力（知道什麼不該做） 、 原型能力（自己動手做） 、 實戰經驗（做過真正有人用的產品） 。原 Po 評論者進一步推論：AI 時代最大的產品風險已從「做不出來」轉變為「做了一堆沒價值的東西」，未來 AI 團隊核心角色將精簡為 Product Builder、AI Engineer、Systems Engineer 三種。這篇不是技術文，而是一個重要的 產業訊號 ，值得用來校準你的職涯策略。 理解 PM 角色轉型 從 Coordinator 到 Builder 的典範轉移 辨識 AI 團隊新結構 三種核心角色的分工邏輯 校準個人策略 將 Builder 思維應用到非軟體產業 AI 時代 PM 能力模型 Kill 決策 砍掉錯誤方向 Build 原型 自己做 prototype Ship 產品 做過真的產品 I 招募訊號：Anthropic 要什麼樣的 PM？ Mike Krieger 最近加入 Anthropic Labs 團隊，直接站在 AI 前沿。他們正在 建造尚不存在的產品類別 ，而且底層技術還在快速演進中。這不是一般的 PM 職缺 — 這是在說：我們需要能在不確定性中自己動手的人。 \"I recently joined our Labs team at Anthropic to be hands-on at the frontier. We're building product categories that don't exist yet, on top of technology that's advancing rapidly.\" PM 的角色是 半偵察兵、半建造者 。你要辨識什麼值得追，自己做原型，然後跟團隊快速迭代找到 Product-Market Fit (產品市場適配)。 \"The PM role is part scout, part builder. You're identifying what's worth pursuing, prototyping yourself, and iterating quickly with your team to find product-market fit.\" 核心概念：Scout + Builder 雙重角色 傳統 PM 是「三角形的中心」— 連結設計、工程、商業。AI 時代的 PM 則是「最前線的偵察兵」— 你不只報告地形，你還得自己搭帳篷。 這裡的 \"prototyping yourself\" 不是比喻，是字面意思：你得會寫 prompt、串 API、做 UI flow，至少做到 functional prototype 的程度。 比喻說明：藥廠的製程開發工程師 這很像 CDMO 裡的製程開發工程師 vs 製程管理員。管理員可以追進度、寫報告、協調部門。但開發工程師要自己進無塵室、調參數、跑實驗。AI 時代的 PM 就是產品界的製程開發工程師 — 你得親自下場。 II 風險轉移：從「做不出來」到「做了沒價值」 原 Po 評論者點出一個關鍵洞察：過去產品最大的風險是 「做不出來」 ，現在最大的風險是 「做了一堆沒價值的東西」 。AI 大幅降低了「做」的門檻，但同時放大了「做錯方向」的成本。 \"過去產品最大的風險是做不出來，現在最大的風險是做了一堆沒價值的東西。\" 解法只有一個： 自己動手做 prototype 。不是開會，不是"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這篇文章的核心論點是： 當你卡住時，不要向 AI 要答案，而是要 AI 幫你生成問題 。作者透過自身 newsletter 轉換率優化的經歷，示範了「問對問題」如何比「蒐集框架」更能突破決策瓶頸。文章提出 5 個系統化的提問技巧：基礎提問、分層提問、借用他人視角、從成功回推、以及將問題轉化為實驗。這不是技術深文，而是一篇「AI 使用心智模型」的重塑指南 -- 特別適合已經累積大量 AI 技巧但仍感覺「知道很多卻做不好決策」的使用者。"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "診斷答案過載",
+    "sectionTitle": "診斷「答案過載」",
+    "content": "辨識何時蒐集更多答案反而阻礙決策"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "掌握-5-種提問技巧",
+    "sectionTitle": "掌握 5 種提問技巧",
+    "content": "系統化生成高品質策略性問題"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "問題轉化實驗",
+    "sectionTitle": "問題轉化實驗",
+    "content": "將抽象問題變成可測試的行動 AI Question-Generation System - 5 步驟框架 基礎提問 問「我需要回答什麼問題」 分層深入 逐層挖掘隱藏假設 借腦思考 用專家視角看問題 反向回推 從成功終態倒推 實驗驗證 最快方式找到答案"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-0-the-problem---答案陷阱",
+    "sectionTitle": "Part 0: The Problem - 答案陷阱",
+    "content": "Why collecting answers makes decisions harder 作者遇到一個常見的困境：想提高 newsletter 免費訂閱者轉為付費訂閱者的比率。他像多數人一樣，直接向 Claude 要解決方案。AI 給了 5 個具體的行動方案 -- 但他完全不知道該先執行哪一個 。 \"It was thorough. It was actionable. And I had absolutely no idea which one would actually work.\" 結果？這些方案被存進筆記資料夾，加入其他 50+ 個從未執行的框架中。每個答案在當下都覺得有用，但每個答案都讓決策變得更難。問題不在於方案不對，而在於 他沒有判斷標準來選擇 。 \"So I saved it to my notes folder with the other 50+ frameworks I'd never implemented. ...Every answer felt useful in the moment. Yet, every answer just made the "
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-i-基礎提問---what-questions-do-i-need-to-answer",
+    "sectionTitle": "Part I: 基礎提問 - \"What Questions Do I Need to Answer?\"",
+    "content": "Technique 1: The foundation prompt that changes everything 這是整個系統的基礎。當你卡住時，不要問 AI 解決方案，改問： 「我需要回答哪些問題，才能 [你的卡住點]？」 \"When you're stuck, don't ask AI for the solution. Ask: 'What questions do I need to answer to [your stuck point]?'\" 這個提問的力量在於：它揭示了 你知道的和你需要知道的之間的落差 。而且有個關鍵訣竅：選擇讓你最不舒服的那個問題，那通常就是你一直在迴避、也正是阻擋你前進的問題。 \"This reveals the gap between what you know and what you need to know. And here's the key: pick the question that makes you most uncomfortable. That's usually the one you've been avoiding"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-ii-分層提問---layer-your-questions",
+    "sectionTitle": "Part II: 分層提問 - Layer Your Questions",
+    "content": "Technique 2: Don't stop at the surface 大多數人問一個問題就停了，作者比喻這就像 做一下就說自己練過了 。真正的力量在三層式提問： \"Most people ask one question and stop. That's like doing one rep and calling it a workout.\" 第一層 ：直接問你的問題 → 得到表面的知識缺口。 第二層 ：「針對每個問題，它又引出什麼問題？」→ 揭露 隱藏的假設和依賴關係 。 第三層 ：「已經解決過這個問題的人，會怎麼看這些二階問題？」→ 獲得 專家級的模式識別 。 \"First layer: Your immediate knowledge gaps. Second layer: Hidden assumptions and dependencies. Third layer: Expert-level pattern recognition you can't see from where you're standing.\" 三層 Prompt 結構 Layer 1: \"W"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-iii-借腦思考---borrow-other-peoples-brains",
+    "sectionTitle": "Part III: 借腦思考 - Borrow Other People's Brains",
+    "content": "Technique 3: Escape your own perspective 當你卡住時，你是卡在自己的視角裡。AI 的一個強大用法是： 讓它模擬不同專家的思維模式來提問 。 \"When you're stuck, you're stuck in YOUR perspective. Your mental model. Your assumptions. But AI can inhabit someone else's brain for you.\" 作者舉了一個關鍵案例：他請 AI 用「媒體公司高層」的視角來審視 newsletter 成長策略。其中一個問題改變了他的整個方向：「 你的受眾中，有多少人不管你的內容多好都永遠不會付費？ 」這讓他意識到自己在優化總訂閱數，而不是最適合的訂閱者。 \"'What percentage of your audience will never pay, no matter how good your content is?' That question changed everything. I realized I was optimiz"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-iv-反向回推---work-backwards-from-success",
+    "sectionTitle": "Part IV: 反向回推 - Work Backwards From Success",
+    "content": "Technique 4: Define the destination before planning the route 多數人的問題是「接下來該做什麼？」但真正的問題是： 我們根本沒定義「成功」長什麼樣子 。這個技巧是從終態倒推：如果問題已經完美解決了，你一路上需要回答哪些問題？ \"Start from the end state and reverse-engineer what you'd need to know to get there.\" 作者原本不斷問「下一篇該寫什麼」，AI 不斷給主題建議，他不斷不採用。改用反向回推後，AI 回傳了完全不同層次的問題：「完美運作」到底是什麼意思？我想要更多哪種讀者？那些理想讀者需要看到什麼才會轉換？ 問題從「寫什麼」變成了「我到底在建什麼」 。 \"What does 'working perfectly' mean? Revenue target? Subscriber count? Reader impact? Which readers do I want more of? Which readers am I okay losi"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "part-v-實驗驗證---turn-questions-into-experiments",
+    "sectionTitle": "Part V: 實驗驗證 - Turn Questions Into Experiments",
+    "content": "Technique 5: Don't just think — test 沒有實驗的問題只是有趣的想法。生成問題後，接著問： 「如果我不知道這個問題的答案，最快的方法是什麼？」 \"Questions without experiments are just interesting thoughts. ...Ask: 'If I don't know the answer to [question], what's the fastest way to find out?'\" 作者的實際案例：他不確定人們不付費是因為「看不到價值」還是「看到價值但還不需要」。於是做了問卷調查，收到 160 個回覆。結果發現 39% 的人是因為 AI 選項太多而決策癱瘓 ，不是因為不認同價值。一個實驗、一個數據點，完全改變了內容策略 -- 從「更多 AI 工具推薦」轉向「如何用進階工作流簡化你的 AI 堆疊」。 \"I did that survey. 160 responses. Turned out: 39% said they were overwhelmed by too many AI option"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "1-答案給選項問題給標準",
+    "sectionTitle": "1. 答案給選項，問題給標準",
+    "content": "當你卡住時，缺的不是更多方案，而是選擇方案的判斷標準。改問「我需要回答哪些問題」是突破決策瓶頸的第一步。"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "2-分層提問挖出隱藏假設",
+    "sectionTitle": "2. 分層提問挖出隱藏假設",
+    "content": "三層式提問（表面缺口 → 隱藏假設 → 專家模式識別）能讓你從不同深度看到同一個問題，避免在表面層打轉。"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "3-定義成功比優化戰術重要",
+    "sectionTitle": "3. 定義成功比優化戰術重要",
+    "content": "多數卡住不是「不知道下一步做什麼」，而是「不知道自己在建什麼」。從終態回推問題，強迫你先定義成功。"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "4-問題必須轉化為實驗",
+    "sectionTitle": "4. 問題必須轉化為實驗",
+    "content": "沒有實驗的問題只是有趣的想法。一個問卷調查的 160 個回覆，比 50 個未執行的框架更有價值。"
+  },
+  {
+    "docFile": "2026-02-17_ai-questions-system.html",
+    "docTitle": "AI Question-Generation System - 用提問取代答案的 5 步驟系統",
+    "docDate": "2026-02-17",
+    "docSource": "Wyndo / AI Maker Labs",
+    "docRating": 3.8,
+    "docTags": [
+      "Prompt",
+      "LLM",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 作者說「Answers give you options, questions give you criteria」。請用你自己的一個決策經驗解釋這句話的意思。 核心區別在於： 答案（options）增加你的選擇數量，問題（criteria）增加你的判斷能力 。舉例：如果你在評估兩個 automation 平台（Make.com vs n8n），直接問 AI「哪個比較好」會得到各自的優缺點（options）。但問「我需要回答哪些問題才能選擇正確的平台」會得到判斷標準：你的團隊技術能力如何？需要處理多少 GMP 合規流程？預算限制是什麼？這些 criteria 幫你做出適合你情境的選擇，而不是依賴通用建議。 Q2 產業應用 你正在評估是否在 CDMO 的偏差調查流程中導入 AI 輔助。請使用「三層提問法」生成至少 3 層的問題。 第一層 （表面缺口）：目前偏差調查的平均耗時是多少？AI 能減少哪些重複性步驟？哪些調查類型最適合 AI 輔助？ 第二層 （隱藏假設）：我們假設「更快」就是「更好」嗎？品質團隊會信任 AI 生成的初步分析嗎？21 CFR Part 11 對 AI"
+  },
+  {
+    "docFile": "2026-02-18_ai-guide-agentic-era.html",
+    "docTitle": "AI 使用指南：代理時代 - Ethan Mollick",
+    "docDate": "2026-02-18",
+    "docSource": "Ethan Mollick / One Useful Thing",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Ethan Mollick 發表了他自 ChatGPT 問世以來的第八篇 AI 使用指南，但這次有根本性的轉變：「使用 AI」已從與聊天機器人對話，演進為 指派 AI 代理執行完整任務 。他提出一個全新的三層框架來思考 AI 選擇： Models（模型）、Apps（應用）、Harnesses（駕馭架構） 。三大前沿模型 GPT-5.2/5.3、Claude Opus 4.6、Gemini 3 Pro 在能力上已非常接近，真正的差異化來自 App 和 Harness 層面。Anthropic 目前在 agentic 工具生態上領先，Claude Code 和 Claude Cowork 代表了 AI 從「說話」到「做事」的根本轉變。 Learning Objective 01 理解 Models / Apps / Harnesses 三層框架，以及為什麼選擇 AI 不再只是比較模型 Learning Objective 02 掌握三大前沿模型的差異、最佳模型選擇策略，以及為何「選對模型」是最重要的一步 Learning Objective 03 認識 Claude Code、Cowork"
+  },
+  {
+    "docFile": "2026-02-18_ai-guide-agentic-era.html",
+    "docTitle": "AI 使用指南：代理時代 - Ethan Mollick",
+    "docDate": "2026-02-18",
+    "docSource": "Ethan Mollick / One Useful Thing",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼 Mollick 認為「Harness」是這次指南與過去八次的根本差異？請用三層框架解釋。 過去八版指南中，Model 就等於產品，App 就是網站，Harness 幾乎不存在。使用者輸入文字、AI 回覆、再輸入。但現在同一個模型（如 Claude Opus 4.6）可以因為不同的 Harness 而產生完全不同的行為：在聊天窗口是問答式顧問，在 Claude Code 是自主工作數小時的開發者，在 Cowork 是能操作本地檔案的執行者。 Harness 的出現意味著 「which AI should I use?」這個問題的答案，從比較模型智力轉變為比較整個系統的行動能力 。這是從「AI 說什麼」到「AI 做什麼」的根本轉變。 Q2 產業應用 在 GMP 製藥環境中，「copilot mode」和「agent mode」分別對應 Mollick 框架中的什麼？你會如何決定何時使用哪種模式？ Copilot mode 對應基本的 chatbot + 簡單 harness：AI 提供建議和草稿，人類審核每一步。例如：使用 Claude.ai 幫你起草偏差調查報告，"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "這是一篇來自研究者 Yen-Chi Chen 的社群貼文，整理出研究初學者最常犯的九個壞習慣。涵蓋範圍從「用 AI 生成 code 但不理解內容」到「認為 code 能跑就等於完成研究」。雖然原文針對學術研究情境，但每一條都直接對應到 軟體工程專業實踐 (Software Engineering Best Practices) 的核心原則，對任何在 AI 時代寫程式的人都有參考價值。"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "辨識反模式",
+    "sectionTitle": "辨識反模式",
+    "content": "理解九個常見研究壞習慣的根本原因，而非只是表面行為"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "建立工程紀律",
+    "sectionTitle": "建立工程紀律",
+    "content": "掌握 Git、CLI、環境管理、實驗記錄等基本功的「為什麼」"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "跨域遷移",
+    "sectionTitle": "跨域遷移",
+    "content": "將研究工程紀律連結到 GMP/製藥品質管理思維 九大惡的三層結構 Layer 1: 工具能力 #1-4: AI/環境/Git/CLI Layer 2: 工程架構 #5-6: 模組化/版本控制 Layer 3: 研究思維 #7-9: 記錄/重現/分析 九大惡：逐條深度解析 1"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "ai-生成-code-卻不理解內容-high",
+    "sectionTitle": "AI 生成 code 卻不理解內容 HIGH",
+    "content": "能跑但無法解釋 tensor、gradient、設計原因 這是 AI 時代最根本的陷阱。用 ChatGPT 或 Copilot 生成程式碼很容易，但如果你無法解釋 每一行為什麼這樣寫 ，你就是在建造一棟你看不懂藍圖的房子。當 bug 出現時（一定會出現），你完全無法 debug。這正是 Copilot Mode（副駕駛模式） 的核心原則：AI 加速你已經理解的工作，而不是取代你的理解。 CDMO 連結 跟 GMP 環境一模一樣：你可以抄一份 SOP，但如果不理解背後的科學原理，遇到偏差 (Deviation) 時就無法做出正確的根因分析 (Root Cause Analysis)。「能跑」不等於「能解釋」，在法規環境裡就是「能做」不等於「能回答稽核員的問題」。 2"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "無法依-requirementstxt-建立環境-high",
+    "sectionTitle": "無法依 requirements.txt 建立環境 HIGH",
+    "content": "conda / dependency 出錯就停止 環境管理是 可重現性 (Reproducibility) 的基礎。如果你連 pip install -r requirements.txt 失敗都不知道怎麼解決，代表你不理解 Python 的套件相依性系統。常見問題：版本衝突、系統層套件缺失、conda 與 pip 混用。解法是學會讀錯誤訊息，而不是重裝整個環境。 3"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "不會基本-git-workflow-high",
+    "sectionTitle": "不會基本 Git Workflow HIGH",
+    "content": "只會 upload 檔案、沒有 commit / branch 概念 把 GitHub 當 Google Drive 用是最常見的初學者行為。Git 不只是「存檔」，它是一套 變更追蹤系統 (Version Control System) 。每個 commit 是一個有意義的里程碑，branch 讓你安全地實驗。沒有 Git 紀律，你就無法回答「上週二的版本跟現在差在哪裡」這種基本問題。 CDMO 連結 這就是文件版本控制 (Document Control) 的軟體版。GMP 要求每份文件都要有版本號、變更歷史、核准紀錄。Git commit history 本質上就是你的 code 的變更管制紀錄 (Change Control Log)。 4"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "不會使用-cli-工具-med",
+    "sectionTitle": "不會使用 CLI 工具 MED",
+    "content": "依賴 GUI、無法用 command line 執行實驗 GUI 的問題不是「不好」，而是 不可自動化、不可重現 。你無法把「點擊第三個按鈕然後選擇 Options」寫成腳本。CLI 讓你的每一個操作都是可記錄、可重複、可腳本化的。在 AI 時代尤其重要：Claude Code、Cursor 等工具的核心互動方式就是 terminal。 5"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "大量程式塞進單一-jupyter-notebook-med",
+    "sectionTitle": "大量程式塞進單一 Jupyter Notebook MED",
+    "content": "缺乏模組化與結構設計 Notebook 很適合 探索性分析 (Exploratory Analysis) ，但不適合當主要開發環境。一個 500 行的 notebook 就像一份沒有分章節的報告 — 你無法重複使用其中的任何一段。正確做法是把可重用的邏輯抽取成 .py 模組，notebook 只負責呼叫和展示結果。 6"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "把-notebook-當-production-code-med",
+    "sectionTitle": "把 Notebook 當 Production Code MED",
+    "content": "版本控制困難、無法協作維護 #5 和 #6 是一體兩面。Notebook 的 JSON 格式讓 Git diff 幾乎無法閱讀，cell 執行順序的隱性依賴讓別人（包括三個月後的你）無法可靠地重現結果。 Rule of thumb：如果這段 code 會被跑超過三次，它就應該是一個 .py 檔案。 7"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "訓練完只輸出一張-finalpng-high",
+    "sectionTitle": "訓練完只輸出一張 final.png HIGH",
+    "content": "沒有 log、learning curve、過程資訊 一張最終結果圖就像只看病人的出院診斷而不看病歷。 訓練過程 (Training Dynamics) 才是真正的知識：loss curve 的形狀告訴你模型是否收斂、是否 overfit、learning rate 是否適當。沒有過程記錄，你無法判斷結果是真的好，還是剛好在某個 seed 下看起來好。 CDMO 連結 完全對應到製程驗證 (Process Validation) 的邏輯。FDA 不只看最終產品的放行測試結果，他們要看整個製程的 In-Process Control 數據、趨勢圖、關鍵製程參數 (CPP) 的紀錄。只有 final.png 等於只有 COA 沒有 Batch Record。 8"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "不記錄實驗設定與-metadata-high",
+    "sectionTitle": "不記錄實驗設定與 Metadata HIGH",
+    "content": "沒有 seed / config，結果不可重現 可重現性 (Reproducibility) 是科學方法的基石。如果你無法從 config 檔案完整重建實驗，你的結果就不是科學，只是軼事。最低標準：random seed、hyperparameters、data split ratio、環境版本，全部存成 JSON 或 YAML，跟結果一起 commit。 9"
+  },
+  {
+    "docFile": "2026-02-18_research-beginner-sins.html",
+    "docTitle": "研究初學九大惡 - AI 時代的研究基本功",
+    "docDate": "2026-02-18",
+    "docSource": "Yen-Chi Chen / Facebook Post",
+    "docRating": 3.6,
+    "docTags": [
+      "Research",
+      "Analysis"
+    ],
+    "sectionId": "認為-code-能跑就等於完成研究-high",
+    "sectionTitle": "認為 Code 能跑就等於完成研究 HIGH",
+    "content": "不分析 dynamics、failure mode、原因 這是九大惡中最核心的一條，也是 #1 的鏡像。#1 說的是「AI 幫你寫但你不懂」，#9 說的是「你自己寫完但不追問為什麼」。研究的價值不在於 code 能跑，而在於你理解 模型為什麼成功、在哪些條件下會失敗、failure mode 的 pattern 是什麼 。「能跑」只是起點，「能解釋」才是終點。 CDMO 連結 這就是 Quality by Design (QbD) 的精神：不是「batch 過了放行測試就好」，而是你要理解製程的 Design Space，知道哪些參數組合會失敗，為什麼會失敗。這也是偏差調查 (Deviation Investigation) 的核心能力 — 不只修好問題，而是理解問題的根本原因。 重點整理 理解 > 執行 AI 時代最危險的陷阱是用速度取代理解。Copilot 加速已知，不取代未知。 過程 > 結果 Training log、config、learning curve 比 final.png 有價值一百倍。沒有過程就沒有科學。 可重現 = 可信任 Seed、config、environ"
+  },
+  {
+    "docFile": "2026-02-19_ai-amplification-strategy.html",
+    "docTitle": "AI Amplification：用 AI 壓力測試策略假設",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.8/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem 本文提出 AI Amplification（AI 放大效應） 概念——在投入資源前，利用 AI 對話快速壓力測試策略假設。作者以 Bed Bath & Beyond 破產案例為核心，展示 CEO Mark Tritton 如何將 Target 的成功劇本錯誤套用到「尋寶式零售」業態，導致客戶流失與最終倒閉。文章透過五個 AI 測試問題，示範如何在 20 分鐘內揭露跨領域決策的核心盲點，並提供可立即應用的四步驟框架。這不是技術深潛文章，而是一篇 決策品質框架 ，對任何在陌生領域做高風險決策的領導者都有直接價值。"
+  },
+  {
+    "docFile": "2026-02-19_ai-amplification-strategy.html",
+    "docTitle": "AI Amplification：用 AI 壓力測試策略假設",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "理解-ai-amplification",
+    "sectionTitle": "理解 AI Amplification",
+    "content": "區分 AI 放大 vs. AI 自動化 vs. AI 替代——AI 不是替你決策，而是加速你在陌生領域的認知校準"
+  },
+  {
+    "docFile": "2026-02-19_ai-amplification-strategy.html",
+    "docTitle": "AI Amplification：用 AI 壓力測試策略假設",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "掌握五問壓力測試法",
+    "sectionTitle": "掌握五問壓力測試法",
+    "content": "學會用五個結構化問題，在 20 分鐘內揭露策略假設中的跨領域盲點"
+  },
+  {
+    "docFile": "2026-02-19_ai-amplification-strategy.html",
+    "docTitle": "AI Amplification：用 AI 壓力測試策略假設",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "建立決策前測試習慣",
+    "sectionTitle": "建立決策前測試習慣",
+    "content": "將 AI 壓力測試嵌入你的決策流程——從「直覺 行動」進化到「直覺 測試 行動」 AI Amplification 四步驟框架 寫下直覺 30 秒寫出你的 策略直覺 AI 對話 20 分鐘測試 假設與盲點 測試對立觀點 10 分鐘讓 AI 為替代方案辯護 知情決策 你做最終決定 但已壓力測試過 Part I — AI Amplification 是什麼（以及不是什麼） AI Amplification（AI 放大效應） 是在你投入資源之前，用 AI 測試你的策略直覺。把它想像成一個隨時待命的專家顧問團——全天候可用，能在你缺乏深度經驗的領域壓力測試你的思維。 \"AI Amplification is using AI to test your strategic hunches before you commit resources. Think of it as an on-demand expert panel—available 24/7 to stress-test your thinking in domains where you don't have deep exper"
+  },
+  {
+    "docFile": "2026-02-19_ai-amplification-strategy.html",
+    "docTitle": "AI Amplification：用 AI 壓力測試策略假設",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "AI 放大 =/= AI 替代 AI Amplification 的核心價值是壓縮「取得跨領域專業知識」的時間，不是替代人類判斷。領導者仍握有決策權，AI 加速的是認知校準。 測試假設的時機 > 假設的品質 Tritton 的假設在 Target 情境下完全正確。問題不是他不聰明，而是他無法在決策鎖定前測試這些假設在新情境中是否成立。時機就是一切。 跨領域劇本的最大風險 把一個領域的成功劇本套用到另一個領域時，最危險的不是明顯的差異，而是「看起來一樣但結構上不同」的隱藏假設。Bug vs. Feature 的判斷錯誤代價最高。 更好的問題 > 更好的答案 20 分鐘 AI 對話的產出不是新策略，而是不同的問題。從「如何更像 Target」到「如何成為最好的尋寶零售商」——問題的品質決定策略的方向。"
+  },
+  {
+    "docFile": "2026-02-19_ai-amplification-strategy.html",
+    "docTitle": "AI Amplification：用 AI 壓力測試策略假設",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas / Leadership in Change",
+    "docRating": 3.8,
+    "docTags": [
+      "LLM",
+      "Prompt",
+      "Tool",
+      "Agent"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 AI Amplification 與 AI Automation 最關鍵的區別是什麼？為什麼這個區別對高風險決策特別重要？ 核心區別： AI Automation 是讓 AI 執行任務（輸出導向），AI Amplification 是讓 AI 拓展你的認知邊界（輸入導向）。Automation 替你做事，Amplification 幫你想得更清楚。 為什麼重要： 高風險決策的關鍵不在於執行效率，而在於決策品質。在陌生領域，你不知道自己不知道什麼（unknown unknowns）。Amplification 的價值恰恰在於揭露這些盲點——在你投入不可逆的資源之前。如果你用 Automation 思維來使用 AI（「幫我做這份分析」），你可能只是更快地執行一個有缺陷的策略。 Q2 產業應用 在你的 CDMO 環境中，哪些決策場景最適合使用 AI Amplification？請舉一個具體例子，說明如何應用五問壓力測試法。 最適合的場景： 技術轉移（Tech Transfer）決策。當承接一個新客戶的無菌充填專案時，你會帶入過去成功專案的假設——但每個產品、每個客戶的製程需求"
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "quick-summary",
+    "sectionTitle": "Quick Summary",
+    "content": "Claude CoWork 是 Anthropic 在 2026 年 1 月推出的 桌面代理人功能（Desktop Agent） ，將 Claude 從「回答問題的聊天機器人」升級為「直接在你電腦上執行任務的數位同事」。它使用與 Claude Code 相同的 Agentic Architecture（代理架構），但包裝在非技術人員也能使用的圖形介面中。 本文將原始 Twitter Thread 的 5 級框架（檔案管理 → 瀏覽器代理 → 連接器 → Skills → 進階技巧）結合 Anthropic 官方文件和多方評測，補充原文缺少的 定價細節、安全機制、Plugin 架構 等關鍵資訊，讓你能做出適合自己工作流的採用決策。"
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "OBJECTIVE 01 理解 CoWork 的架構定位：它與 Claude Chat、Claude Code 的差異，以及為什麼 Anthropic 要推出這個產品 OBJECTIVE 02 掌握 5 級使用框架：從檔案管理到 Skills 自動化，能規劃適合自己的採用路徑 OBJECTIVE 03 評估 CoWork 的限制與成本：了解定價、Token 消耗、安全風險，做出 informed 的投資決策 CoWork 5-Level Mastery Framework Level 1 File Management Level 2 Web Agent Level 3 Connectors Level 4 Skills Level 5 Expert Tactics Foundation Execution Mastery"
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-i-cowork-是什麼為什麼它不只是聊天機器人",
+    "sectionTitle": "Part I — CoWork 是什麼？為什麼它不只是聊天機器人",
+    "content": "What is CoWork & Why It Matters CoWork 是執行者，不是建議者。 標準的 Claude 會告訴你「這是整理發票的方法」，但 CoWork 會直接說「我已經按日期排好你的發票，把供應商名稱和金額拉進試算表，還標記了三張重複的。要我刪掉嗎？」 \"Standard Claude gives you advice. CoWork executes the task.\" CoWork 在 2026 年 1 月推出，最初僅限 Claude Max 訂閱者（$100-200/月）使用 macOS 版本。2026 年 2 月 10 日擴展到 Windows，並開放給所有付費方案（Pro $20/月起）。它運行在 虛擬機器（VM） 中，使用 Claude Opus 4.6 模型，擁有 100 萬 Token 的 Context Window。 \"It runs on Claude Opus 4.6, with a 1-million-token context window — large enough to process entire projects in a "
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-ii-level-1-file-management檔案管理",
+    "sectionTitle": "Part II — Level 1: File Management（檔案管理）",
+    "content": "Start Here: Your First Real Task CoWork 在虛擬機器中運行。Claude 無法存取你沒有明確解鎖的資料夾以外的任何檔案 。點擊資料夾圖示，選擇一個資料夾，那就是邊界。這是最基本但最能立即證明價值的起點。 \"CoWork runs in a virtual machine. Claude cannot access files outside the folder you explicitly unlock.\" 三個立即證明概念的任務： The Cleanup： 「整理我的下載資料夾。按類型分組：圖片、PDF、安裝程式。建立命名資料夾。」手動 45 分鐘的 200 檔案資料夾，CoWork 四分鐘以內完成。 The Renamer： 「根據圖片內容重新命名這個資料夾中的每個截圖。」Claude 在命名前會 先讀取每張圖片 。 The Data Analyst： 「掃描這個發票資料夾。建立一個包含日期、供應商和金額的 CSV。」從雜亂的資料夾中產出結構化輸出。 \"A 200-file folder that takes 45 minutes manua"
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-iii-level-2-web-agent瀏覽器代理",
+    "sectionTitle": "Part III — Level 2: Web Agent（瀏覽器代理）",
+    "content": "Claude in Chrome Extension Unlocks Web Access 安裝 Claude in Chrome 擴充功能後，CoWork 獲得 網頁存取能力 。它會開啟一個視覺上與你正常分頁不同的專用瀏覽器，像人類一樣操作 — 滾動、點擊、閱讀、回報。 \"It opens a dedicated browser visually distinct from your normal tabs and operates it like a human.\" 三個值得立即執行的使用案例： Deep Research： 「去 X 和 Y 網站。拉出前三個 AI Agent 故事。整理成備忘錄。」兩小時的分頁切換，一個 Prompt 搞定。 Competitor Intel： 「去 [URL]。截圖他們的定價頁面。把功能集整理成比較表。」 Sentiment Analysis： 「找到這個 YouTube 頻道的最新影片。讀留言。給我整體情緒分析。」 \"Two hours of tab-switching, done in one prompt.\" 對於你每天使用的網站（Gma"
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-iv-level-3-connectors連接器",
+    "sectionTitle": "Part IV — Level 3: Connectors（連接器）",
+    "content": "MCP: The Bridge Between Claude and Your Apps CoWork 透過 MCP（Model Context Protocol，模型上下文協議） 與外部應用程式對話。把它想成 Claude 和你數據之間的即時橋樑。 \"Think of it as a live bridge between Claude and your data.\" 一鍵連接（Settings > Connectors）： Google Drive、Gmail、Google Calendar。一個 Prompt 就能串聯三個 App：「檢查我的行事曆找到下一個空檔。拉出我跟 John 的最後一封 email 看看我們需要討論什麼。起草一個會議邀請。」 \"One prompt. Three apps. Zero tab-switching.\" 對於未列出的工具（Notion、Slack、Salesforce），搜尋「[App Name] MCP server」。進階用戶可以在 Desktop Settings 中編輯 config.json 。非技術用戶應該找 Community S"
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-v-level-4-skills-plugins技能與插件",
+    "sectionTitle": "Part V — Level 4: Skills & Plugins（技能與插件）",
+    "content": "The Real Multiplier: Teach Once, Execute Forever Skill 是已儲存、可重複的工作流 。你不再每次從頭 Prompting，而是教 Claude 一次流程，它按指令執行。原文作者給了一個例子：每週一把影片逐字稿轉為 X 貼文和 Newsletter 簡介，90 秒完成。 \"A Skill is a saved, repeatable workflow. You teach Claude a process once, and it executes on command.\" 使用現有 Skills： Settings > Capabilities > Add Skill，上傳 .zip 檔案（如 smithy.ai 提供的）。像「SEO Blog Writer」或「Resume Tailor」這樣的 Skills 立即可用。 建立自己的 Skill： 手動執行一次任務 → 調整到結果完美 → 問 Claude：「Create a Skill from this session so I can repeat it later.」 \"Yo"
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-vi-level-5-expert-tactics-known-limitations",
+    "sectionTitle": "Part VI — Level 5: Expert Tactics & Known Limitations",
+    "content": "Advanced Strategies + What CoWork Can't Do Yet Parallel Processing（平行處理）： 開啟多個 CoWork 分頁。Tab 1 做研究、Tab 2 整理檔案、Tab 3 起草 email。你管理，它執行， 全部同時進行 。 \"You manage. It executes. All simultaneously.\" Plan Mode（計畫模式）： 對複雜任務，先讓 Claude 寫計畫。審查後再說「Proceed」。這能 保護你的用量配額 並在錯誤複合之前攔截。 \"Ask Claude to write a plan first. Review it. Then say 'Proceed.'\" Self-Verification（自我驗證）： 在任何 Prompt 後加上：「After you finish, verify the output and flag anything missed.」強制第二輪檢查。 Project Integration： 把你的 Claude Projects（品牌聲音、風格指南、業務背景"
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "CoWork = Claude Code for Everyone 相同的 Agentic Architecture，但包裝在非技術人員也能使用的 GUI 中。它執行（acts），不只建議（advises）。這是 Anthropic 從「聊天 AI」轉向「代理 AI」的關鍵產品。 Skills 是真正的乘數效應 一小時建立一個 Skill = 每週省下那一小時。累積 Skills Library 才是長期 ROI，不是零散的 Prompt。這與 Context Engineering 的思維一致：前期投資，長期回報。 Token 成本是隱藏變數 原文暗示 $20 Pro 就足夠，但實際上 CoWork 的多步驟執行消耗遠超 Chat。在 commit 之前，用 Plan Mode 測試複雜度，評估你的實際用量需求。 Plugin Stack = MCP + Skills + Commands 不要把 MCP、Skills、Plugins 當成獨立選項。它們是一個堆疊：MCP 是傳輸，Skills 是指令，Plugins 是打包的產品。理解這個架構才能有效客製化。"
+  },
+  {
+    "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
+    "docTitle": "Claude CoWork 完全攻略：從聊天機器人到桌面代理人",
+    "docDate": "2026-02-19",
+    "docSource": "@hooeem (X/Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 Concept CoWork 與標準 Claude Chat 的核心架構差異是什麼？為什麼這個差異對「執行」而非「建議」如此重要？ 核心差異在於 Agentic Architecture（代理架構） 。Chat 是「一問一答」模式，每次回應是獨立的。CoWork 能夠：(1) 自主規劃多步驟任務，(2) 直接讀寫本地檔案系統，(3) 協調多個 Sub-agents 平行工作，(4) 透過 MCP 連接外部服務。 這些能力合在一起意味著 CoWork 不需要你在中間「手動傳遞」結果 — 它可以自己完成從「讀取發票」到「建立試算表」到「標記異常」的整個鏈條。這就是從 Advisor 到 Executor 的質變。 Q2 Industry Application 在 GMP 製藥環境中，CoWork 的哪些功能可能有價值？哪些功能因為「Research Preview」狀態而絕對不能用於生產？ 有潛在價值的： 檔案整理（SOP 文件分類、Batch Record 歸檔）、研究彙整（法規更新監控、競爭對手 CDMO 情報）、會議準備（從 email 和行事曆自動生成 pre-read）。"
+  },
+  {
+    "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
+    "docTitle": "Claude Sonnet 4.6 - AI Computer Use 的五倍躍進",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這篇文章聚焦 Anthropic 於 2026 年 2 月 17 日發布的 Claude Sonnet 4.6。核心訊息不是「AI 更聰明」，而是 Computer Use（電腦使用）能力在 16 個月內提升近五倍 ，從實驗性質走向接近人類水準的軟體操作能力。文章以非技術人員友善的語言，向管理者說明這對企業工作流程和 legacy system 的意義。內容偏向高層概覽，缺少深入技術細節，但時效性極強，對理解 AI Agent 的最新進展很有價值。"
+  },
+  {
+    "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
+    "docTitle": "Claude Sonnet 4.6 - AI Computer Use 的五倍躍進",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "理解-sonnet-46-核心升級",
+    "sectionTitle": "理解 Sonnet 4.6 核心升級",
+    "content": "掌握 Sonnet 4.6 與 4.5 的關鍵差異：性能、記憶容量、定價策略 2"
+  },
+  {
+    "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
+    "docTitle": "Claude Sonnet 4.6 - AI Computer Use 的五倍躍進",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "掌握-computer-use-概念",
+    "sectionTitle": "掌握 Computer Use 概念",
+    "content": "理解 AI 直接操作軟體介面的技術意涵及其五倍進步的量化證據 3"
+  },
+  {
+    "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
+    "docTitle": "Claude Sonnet 4.6 - AI Computer Use 的五倍躍進",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "評估組織應用場景",
+    "sectionTitle": "評估組織應用場景",
+    "content": "判斷 Computer Use 對 legacy systems、手動流程和自動化策略的影響 Claude Sonnet 4.6 三大升級路徑 更聰明 Opus 等級性能 1/5 價格 更大記憶 1M Token Context Window 會操作電腦 Computer Use 14.9% → 72.5% Part I: Sonnet 4.6 的三大升級 Claude Sonnet 4.6 的核心價值主張很直接： 以旗艦模型五分之一的價格，提供旗艦等級的性能 。在早期測試中，開發者實際上有 59% 的時間偏好 Sonnet 4.6 而非最昂貴的 Opus 4.5 模型。這代表 Anthropic 的定價策略正在積極壓低「智慧」的取得門檻。 \"Claude Sonnet 4.6 now performs at the level of Anthropic's most expensive model (called Opus) at one-fifth the cost. In early testing, developers actually preferred Sonnet 4."
+  },
+  {
+    "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
+    "docTitle": "Claude Sonnet 4.6 - AI Computer Use 的五倍躍進",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "性能民主化加速",
+    "sectionTitle": "性能民主化加速",
+    "content": "Sonnet 4.6 以旗艦 1/5 的價格達到 Opus 等級性能，免費版也直接搭載。AI 能力的取得門檻正在快速降低，「觀望」的機會成本越來越高。 2"
+  },
+  {
+    "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
+    "docTitle": "Claude Sonnet 4.6 - AI Computer Use 的五倍躍進",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "computer-use-跨越門檻",
+    "sectionTitle": "Computer Use 跨越門檻",
+    "content": "從 14.9% 到 72.5% 的進步意味著 Computer Use 從實驗品走向生產工具。16 個月的進化速度暗示 12 個月後可能達到 90%+ 的可靠度。 3"
+  },
+  {
+    "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
+    "docTitle": "Claude Sonnet 4.6 - AI Computer Use 的五倍躍進",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "legacy-system-的新解方",
+    "sectionTitle": "Legacy System 的新解方",
+    "content": "AI 不再需要 API 整合就能操作軟體。這對擁有大量老舊系統的組織（包括 CDMO）來說，是一個全新的自動化路徑。 4"
+  },
+  {
+    "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
+    "docTitle": "Claude Sonnet 4.6 - AI Computer Use 的五倍躍進",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "governance-是真正瓶頸",
+    "sectionTitle": "Governance 是真正瓶頸",
+    "content": "PwC 的警告很中肯：技術能力 ≠ 部署準備度。Computer Use 的治理框架 — 包括 Audit Trail、責任歸屬、錯誤處理 — 目前仍是空白，尤其在受監管產業。"
+  },
+  {
+    "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
+    "docTitle": "Claude Sonnet 4.6 - AI Computer Use 的五倍躍進",
+    "docDate": "2026-02-19",
+    "docSource": "Joel Salinas",
+    "docRating": 3.6,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Computer Use 和傳統 RPA（Robotic Process Automation）的根本差異是什麼？為什麼這個差異很重要？ 傳統 RPA 依賴預先定義的腳本和固定的 UI 元素定位（如按鈕位置、CSS 選擇器）。一旦目標軟體更新 UI，腳本就可能失效，需要人工維護。 AI Computer Use 則是透過「視覺理解」螢幕內容來操作軟體 — 它看到的是畫面，不是程式碼。這意味著即使 UI 改變了佈局，AI 仍可能辨認出「提交按鈕」在哪裡，因為它理解的是語意而非座標。 這很重要是因為：它大幅降低了自動化的維護成本，讓沒有 API、沒有 RPA 專家的組織也能嘗試自動化。但代價是準確率目前只有 72.5%，而 RPA 在正常運作時接近 100%。 Q2 產業應用 在你的 CDMO 環境中，哪些工作流程最適合作為 Computer Use 的第一個試點？哪些絕對不適合？ 適合試點的場景（低風險、重複性高）： 從 ERP 系統導出報表並整理成特定格式、在不同系統間比對物料批號資訊、從環境監測系統擷取數據填入報告模板。這些任務失敗的後果可控，且有明確的人工覆核點。 "
+  },
+  {
+    "docFile": "2026-02-19_sonnet46-dynamic-filtering.html",
+    "docTitle": "Sonnet 4.6 Dynamic Filtering - AI Agent Cost Revolution",
+    "docDate": "2026-02-19",
+    "docSource": "Tom Crawshaw @tomcrawshaw01",
+    "docRating": 4,
+    "docTags": [
+      "LLM",
+      "Agent",
+      "Automation",
+      "Tool"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Agent Automation Tool LLM 沒有人注意到的 Sonnet 4.6 最佳功能 Dynamic Filtering 如何讓每個 AI Agent 降本 24% 來源：Tom Crawshaw @tomcrawshaw01 | 2026年2月 📋 執行摘要 ★★★★☆ 4.0/5 ↑ 實務應用、時效性 ↓ 技術深度、學習曲線 Anthropic 在發布 Sonnet 4.6 的同一天，悄悄發布了一篇幾乎無人注意的技術文章： Dynamic Filtering（動態過濾） 。這不是行銷話術，而是模型層面的架構改進。Claude 現在能夠在讀取搜尋結果之前， 自動撰寫並執行 Python 程式碼 來清理噪音——讓 AI Agent 在同等任務下準確率提升 11%、Token 消耗降低 24%。對於任何在 n8n、Make.com 或自建 Agent 管道中使用網路搜尋的人，這是一個立即影響成本計算的更新。 🎯 學習目標 目標 01 理解 Dynamic Filtering 的運作原理，以及為何它比 Prompt Engineering 更根本 目標 02 解讀 BrowseComp 與 DeepsearchQA 兩個基準測試的意義與局限 目標 03 評估 Sonnet 4.6 其他更新（1M context、Computer Use）對 Agent 架構的影響 目標 04 將 24% Token 節省轉換為具體的成本與升級決策邏輯 Dynamic Filtering 運作流程 🌐 原始搜尋結果 HTML、廣告、Cookie、導航列 → 🐍 Claude 自動生成 Python 即時撰寫並執行過濾程式碼 → ✂️ 清洗後的乾淨資料 只保留相關段落 → 🧠 高品質推理 更小 Context、更準確答案 Part 1：AI Agent 搜尋的隱性問題 每個搭建過 AI Agent 的人都遇過同一個問題：你給 Agent 搜尋工具，它去搜了，然後把整個網頁的 Headers、Footers、廣告、Cookie 橫幅 全部塞進 Context Window 一起推理。 \"Headers, footers, navigation menus, cookie banners, ads. All of it crammed into the context window.\" 你的 Agent 正在 花 Token 讀垃圾 。更糟的是，這些噪音實際上會 降低回應品質 ——訊號被垃圾埋沒了。 \"Your agent is now spending tokens reading junk. And worse, all that noise actually degrades the quality of the response.\" 這件事一直在發生，只是你看不到它。每一次網路搜尋，你的 Agent 就在默默地、低效率地處理大量無關內容。 \"This is what your AI agents have been doing every single time they search the web. You just didn't see it.\" 💡 比喻說明 想像你要一個助理去圖書館找資料。舊方法是：把整本百科全書（包括版權頁、目錄、廣告頁）都影印帶回來，然後你們兩個再一起翻找。Dynamic Filtering 就像助理在圖書館就直接把相關頁面標記好、把廢頁丟掉，帶回來的已經是整理好的摘要。 ⚠️ 重點提示 這個問題不是你的 Pr"
+  },
+  {
+    "docFile": "2026-02-20_claude-cowork-agentic-workflows.html",
+    "docTitle": "Claude Cowork 終極指南：7 個進階 Agentic AI 工作流程",
+    "docDate": "2026-02-20",
+    "docSource": "The AI Maker (Wyndo) / theaimaker.co",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 3.8/5 ↑ Practical Value, Tool Ecosystem ↓ Technical Depth, Learning Curve 這篇文章是 Anthropic 新產品 Claude Cowork 的完整實戰指南。Cowork 本質上是「不需要終端機的 Claude Code」——它把 Claude Code 的 Agentic 架構（自主多步驟執行、子代理人、檔案系統存取）包裝成任何人都能使用的圖形介面。作者以長期 Claude Code 使用者的視角，誠實比較了 Claude Website、Claude Code、Claude Cowork 三者的定位差異，並提供 7 個可直接複製的進階工作流程，從競品分析、內容策略到產品驗證，每個都附有完整的 Prompt 和資料夾結構。 文章的核心洞察在於角色轉變： 你不再是「做工作並用 AI 幫忙的人」，而是「定義成果並讓 AI 執行的人」 。這反映了 AI 工具從「對話夥伴」到「自主執行者」的產品演進方向。"
+  },
+  {
+    "docFile": "2026-02-20_claude-cowork-agentic-workflows.html",
+    "docTitle": "Claude Cowork 終極指南：7 個進階 Agentic AI 工作流程",
+    "docDate": "2026-02-20",
+    "docSource": "The AI Maker (Wyndo) / theaimaker.co",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "1 理解三層產品定位 區分 Claude Website（對話）、Code（終端開發）、Cowork（GUI Agentic）的使用場景與技術差異 2 掌握 Agentic AI 五大功能 claude.md 指令檔、Todo List 追蹤、瀏覽器整合、平行子代理、檔案輸出的運作原理與應用方式 3 評估 Agentic 工作流程的遷移價值 判斷哪些工作流程適合在 CDMO 營運環境中調適應用，以及 Token 消耗與效益的權衡 Anthropic Claude 產品層級架構 💬 Claude Website 對話迭代 人在迴路中 → 🖥 Claude Cowork GUI Agentic 人人可用 → ⌨ Claude Code 終端 Agentic 開發者專用 Foundation：產品比較 Features：五大功能 Workflows：7 大工作流程"
+  },
+  {
+    "docFile": "2026-02-20_claude-cowork-agentic-workflows.html",
+    "docTitle": "Claude Cowork 終極指南：7 個進階 Agentic AI 工作流程",
+    "docDate": "2026-02-20",
+    "docSource": "The AI Maker (Wyndo) / theaimaker.co",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-i-三大產品定位比較",
+    "sectionTitle": "Part I — 三大產品定位比較",
+    "content": "Claude Website vs Cowork vs Code: When to Use What 作者身為長期 Claude 使用者，將 Anthropic 的三大產品定位為清楚的階梯： Claude Website 是對話夥伴 ——你上傳檔案、來回對話、手動複製輸出。每個動作都需要你的下一個提示。它是協作式的，不是自主式的。 \"The limitation: You're always in the loop. Every action requires your next prompt. It's collaborative, not autonomous.\" Claude Code 是 Agentic AI 的始祖 ——住在你的終端機裡，擁有完整的檔案系統存取權，能自主執行多步驟計畫。但它的限制也很明確： 終端機門檻過濾掉了 90% 的潛在使用者 。 \"The power is complete, but the interface filters out 90% of potential users.\" Claude Cowork 就是「不需要終端機的 Claude Cod"
+  },
+  {
+    "docFile": "2026-02-20_claude-cowork-agentic-workflows.html",
+    "docTitle": "Claude Cowork 終極指南：7 個進階 Agentic AI 工作流程",
+    "docDate": "2026-02-20",
+    "docSource": "The AI Maker (Wyndo) / theaimaker.co",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-ii-cowork-五大核心功能",
+    "sectionTitle": "Part II — Cowork 五大核心功能",
+    "content": "What Cowork Actually Adds: Accessibility Features 功能 1：claude.md 指令檔 ——你可以在工作資料夾中建立一個 claude.md 檔案，寫入你的品牌聲音、格式標準、合成方法論、輸出結構。Claude 會在該專案的每個任務中遵循這些指令。 \"Drop in your custom rules—brand voice, formatting standards, synthesis methodology, output structure—and Claude operates by them every time.\" 最近的重大更新：現在可以設定 全域 claude.md ，一組指令套用到你整個 Cowork 工作區的所有任務。不再需要為每個專案重複設定。 \"You can now set a global claude.md that applies across your entire Cowork workspace.\" 功能 2：可見 Todo List ——給 Claude 一個複雜任務，它不會直接開始執行，而是先"
+  },
+  {
+    "docFile": "2026-02-20_claude-cowork-agentic-workflows.html",
+    "docTitle": "Claude Cowork 終極指南：7 個進階 Agentic AI 工作流程",
+    "docDate": "2026-02-20",
+    "docSource": "The AI Maker (Wyndo) / theaimaker.co",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-iii-7-個進階-agentic-工作流程",
+    "sectionTitle": "Part III — 7 個進階 Agentic 工作流程",
+    "content": "7 Advanced Workflows to Unlock Cowork's Full Potential 1. 登陸頁競爭審計 (Landing Page Competitive Audit) 模型：Opus 4.6 將 Cowork 指向你的服務頁面和 5-10 個競品。Claude 像潛在客戶一樣閱讀每個網站——分析品牌定位、方案結構、主視覺文案、社會認同、轉換策略。然後編譯成一份完整的 Word 文件報告。 \"Claude reads each site the way a potential customer would—analyzing brand positioning, offer structure, hero copy, social proof, and conversion strategy.\" 底層機制：Cowork 使用 Claude in Chrome 導航到每個 URL，像真人一樣捲動頁面、閱讀文案、擷取截圖。它不是在抓取原始 HTML，而是以潛在客戶的閱讀方式來看頁面，因此能捕捉情感語調、視覺層次和信任訊號。 2. 互動式績效故事板 (Intera"
+  },
+  {
+    "docFile": "2026-02-20_claude-cowork-agentic-workflows.html",
+    "docTitle": "Claude Cowork 終極指南：7 個進階 Agentic AI 工作流程",
+    "docDate": "2026-02-20",
+    "docSource": "The AI Maker (Wyndo) / theaimaker.co",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "01 Agentic 不是新功能，是新介面 Cowork 的所有能力（多步驟執行、子代理人、檔案輸出）都已存在於 Claude Code。真正的創新是 無障礙化 ——移除終端機門檻，讓 Agentic AI 對所有人開放。產品策略的核心是：相同引擎，不同入口。 02 claude.md = 持久化 System Prompt 全域 + 專案級的 claude.md 結構實現了「設定一次，永久遵循」的指令持久化。這是從每次重新解釋上下文到一次性配置的根本性轉變，特別適合有標準化作業需求的產業。 03 角色從「執行者」變成「定義者」 文章最深層的洞察：你不再是做工作並用 AI 幫忙的人，而是定義成果並讓 AI 執行的人。這是時間關係的根本改變——從「AI 加速我的工作」到「AI 做工作，我做判斷」。 04 Token 經濟學決定可行性 作者反覆強調 Token 消耗是 Cowork 進階工作流程的核心限制。Max 方案 + Opus 4.6 是進階使用的事實標準。這提醒我們：Agentic AI 的瓶頸不再是能力，而是成本。"
+  },
+  {
+    "docFile": "2026-02-20_claude-cowork-agentic-workflows.html",
+    "docTitle": "Claude Cowork 終極指南：7 個進階 Agentic AI 工作流程",
+    "docDate": "2026-02-20",
+    "docSource": "The AI Maker (Wyndo) / theaimaker.co",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 文章說 Cowork 是「Claude Code without the terminal」。但作者也承認自己仍然更常回到 Code。如果底層引擎相同，為什麼介面差異會導致使用偏好的分歧？這對 AI 產品設計有什麼啟示？ 這揭示了 AI 產品設計中一個常被忽略的維度： 介面不僅影響使用門檻，還影響執行效率和認知模型 。 作者偏好 Code 的原因是「速度更快」——CLI 的操作延遲更低、回饋更即時。這不是功能差異，而是 互動頻寬 差異。對於已經內化了終端操作的使用者，GUI 反而增加了認知負擔（需要點擊、等待畫面載入、視覺搜索按鈕位置）。 啟示：AI 產品不該追求「一個介面服務所有人」，而是「相同引擎、多個入口點」——讓不同技術舒適度的使用者都能以最低認知負擔操作。Anthropic 的三層策略（Website → Cowork → Code）正是這種思維的體現。 Q2 產業應用 假設你要在 CDMO 環境中實施類似「Daily Operating System」的工作流程來管理每日的生產偏差追蹤。考慮到 GMP 合規要求，你會如何調整 claude.md 的設計？哪些"
+  },
+  {
+    "docFile": "2026-02-20_prompt-caching-claude.html",
+    "docTitle": "Prompt Caching 完全指南 - Claude Code 工程實戰",
+    "docDate": "2026-02-20",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "API",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這篇來自 Claude Code 工程團隊的文章，揭示了一個讓長時間運行的 AI Agent 在成本和延遲上可行的關鍵技術： Prompt Caching（提示快取） 。核心原理是 prefix matching（前綴匹配），API 會快取從請求開頭到每個 cache_control 斷點的所有內容。文章分享了 Claude Code 團隊在大規模優化中學到的反直覺教訓，包括排列順序策略、避免中途變更工具或模型、以及如何安全地進行 Context 壓縮（Compaction）。這不是理論文章，而是 生產環境中用血淚換來的工程實踐 。 Learning Objectives 理解 Prefix Matching 原理 掌握 Prompt Caching 的核心機制，以及為什麼順序如此重要 學習 Cache-Safe 設計模式 Plan Mode、Tool Search、Compaction 的 cache 友善實作方式 掌握成本與延遲優化 理解 cache miss 對成本的影響，以及為何要像監控 uptime 一樣監控 cache hit rate Prompt Caching 最佳排"
+  },
+  {
+    "docFile": "2026-02-20_prompt-caching-claude.html",
+    "docTitle": "Prompt Caching 完全指南 - Claude Code 工程實戰",
+    "docDate": "2026-02-20",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "API",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼在 100k token 對話中切換到更便宜的模型反而更貴？請用 Prompt Caching 原理解釋。 因為 Prompt Cache 是 依模型區分的（model-specific） 。當你從 Opus 切換到 Haiku 時，Haiku 沒有任何已建立的快取前綴，需要重新處理整個 100k tokens 的輸入（cache miss）。即使 Haiku 的每 token 成本更低，重建 100k tokens 快取的費用遠高於讓 Opus 利用現有快取（cache read）來回答的費用。 正確做法是使用 subagent 模式：讓 Opus 準備一個精簡的交接訊息，發給 Haiku 處理特定子任務，而不是把整個對話 context 搬過去。 Q2 產業應用 在你的 CDMO 環境中，如果要建立一個 AI Agent 來協助批次記錄審查（Batch Record Review），如何應用 prompt caching 原則來設計系統？ 可以這樣設計 prompt 排列順序： 1. Static System Prompt（全域快取）： GMP 規範要求、A"
+  }
+];
