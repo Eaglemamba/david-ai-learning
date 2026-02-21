@@ -4,7 +4,7 @@
 
 ## What This Is
 
-52+ interactive HTML learning guides created from deep analysis of AI industry articles, research papers, and technical documentation. Each document transforms source material into structured educational content with:
+87 interactive HTML learning guides created from deep analysis of AI industry articles, research papers, and technical documentation. Each document transforms source material into structured educational content with:
 
 - Bilingual content (Traditional Chinese + English)
 - Executive summaries with article ratings
@@ -15,6 +15,15 @@
 ## Browse
 
 **[Open the Dashboard](https://eaglemamba.github.io/david-ai-learning/)** to search, filter, and explore all documents.
+
+### Full-Text Search
+
+The dashboard includes a deep search feature powered by a pre-built index of 770 section-level entries. Search covers not just titles and tags, but the full content of every document section.
+
+- **Relevance ranking** — results auto-sort by match strength
+- **Match-type badges** — see where your query matched (Title / Tag / Summary / Content)
+- **Content snippets** — highlighted keyword previews from matching sections
+- **Visual indicators** — relevance bars, rank numbers, and border highlights
 
 ## Categories
 
@@ -38,13 +47,26 @@ Created by an Operations Director in pharmaceutical manufacturing (CDMO), explor
 
 ```
 david-ai-learning/
-├── index.html          ← Dashboard (start here)
-├── docs/               ← All educational HTML documents
-│   ├── 2026-02-21_mollick-agentic-era.html
-│   ├── 2026-02-20_prompt-caching.html
+├── index.html               ← Dashboard with search UI
+├── search-index.js          ← Full-text search index (770 entries)
+├── build-search-index.js    ← Index builder script
+├── docs/                    ← 87 educational HTML documents
+│   ├── 2026-02-20_claude-cowork-agentic-workflows.html
+│   ├── 2026-02-20_prompt-caching-claude.html
 │   └── ...
-└── README.md
+└── docs-workflow/           ← Build workflow documentation
+    └── 2026-02-22_search-index-workflow.md
 ```
+
+### Rebuilding the Search Index
+
+When documents are added or updated:
+
+```bash
+node build-search-index.js
+```
+
+This parses all `docs/*.html`, extracts meta tags and h2/h3 sections, and regenerates `search-index.js`.
 
 ## License
 
