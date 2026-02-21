@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David's AI Learning Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { 'amaran': { 'purple': '#482A77', 'purple-light': '#6B4A9E', 'purple-dark': '#351F59' } } } } }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans TC', -apple-system, sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .doc-card { transition: all 0.2s ease; }
+        .doc-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(72,42,119,0.12); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="bg-gradient-to-r from-amaran-purple to-amaran-purple-light text-white px-6 py-8">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold tracking-tight">AI Learning Dashboard</h1>
+                <p class="text-purple-200 text-sm mt-1">Pharma x AI x Leadership — Educational Document Index</p>
+                <p class="text-xs text-purple-300 mt-2">Last updated: 2026-02-21 | <a href="https://github.com/Eaglemamba/david-ai-learning" target="_blank" class="text-white underline underline-offset-2 hover:text-purple-100">GitHub Repo</a></p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6" id="statsRow"></div>
+        </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 mt-4">
+        <div class="flex h-2 rounded-full overflow-hidden bg-gray-200" id="categoryBar"></div>
+        <div class="flex gap-4 flex-wrap mt-2" id="categoryLegend"></div>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 mt-4 flex gap-3 flex-wrap items-center">
+        <input type="text" id="searchBox" placeholder="Search titles, sources, tags..." class="flex-1 min-w-[250px] px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-800 text-sm focus:outline-none focus:border-amaran-purple focus:ring-1 focus:ring-amaran-purple">
+        <div class="flex gap-2 flex-wrap" id="filterBtns"></div>
+        <select id="sortSelect" onchange="renderCards()" class="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-gray-700 text-xs focus:outline-none focus:border-amaran-purple">
+            <option value="date-desc">Newest first</option>
+            <option value="date-asc">Oldest first</option>
+            <option value="rating-desc">Highest rated</option>
+            <option value="rating-asc">Lowest rated</option>
+        </select>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 py-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="docGrid"></div>
+    <div class="max-w-6xl mx-auto px-6 py-6 text-center text-xs text-gray-400 border-t border-gray-200 mt-4">
+        <p>Built with Claude AI | <a href="https://github.com/Eaglemamba" class="text-amaran-purple hover:underline">@Eaglemamba</a> | Pharma x AI x Leadership</p>
+    </div>
+<script>
+const documents=[{date:"2026-02-21",title:"AI 使用指南 - Mollick Agentic Era Framework",source:"Ethan Mollick / One Useful Thing",tags:["Agent","Tool","LLM"],rating:4.2,summary:"Mollick 的代理時代 AI 使用指南。App harness vs Code harness 架構、三大平台比較。",lines:700,file:"2026-02-21_mollick-agentic-era.html"},{date:"2026-02-20",title:"Prompt Caching - Claude Code Engineering Lessons",source:"Anthropic Engineering Blog",tags:["API","Agent"],rating:4.4,summary:"Claude Code 團隊的 prompt caching 優化實戰。Prefix matching、cache-safe compaction。",lines:600,file:"2026-02-20_prompt-caching.html"},{date:"2026-02-20",title:"Claude Cowork - 7 Advanced Agentic AI Workflows",source:"Wyndo / AI Maker",tags:["Agent","Tool"],rating:3.8,summary:"Anthropic 三層產品策略、Cowork 五大核心功能、七個進階工作流程。",lines:716,file:"2026-02-20_cowork-7-workflows.html"},{date:"2026-02-20",title:"AI Amplification - 策略壓力測試",source:"Joel Salinas & Nick Connor",tags:["Framework","Analysis"],rating:3.6,summary:"用 AI 壓力測試策略假設。BB&B 破產案例、五個壓力測試問題。",lines:400,file:"2026-02-20_ai-amplification.html"},{date:"2026-02-19",title:"Skill Architecture - 5 Layers Beyond SKILL.md",source:"The Boring Marketer",tags:["Agent","Prompt"],rating:4.0,summary:"五層技能架構：persistent memory、scored context loading、schema contracts。",lines:570,file:"2026-02-19_skill-architecture.html"},{date:"2026-02-19",title:"Sonnet 4.6 Dynamic Filtering - Token Cost -24%",source:"Anthropic / Joel Salinas",tags:["LLM","API"],rating:3.6,summary:"Sonnet 4.6 升級、Computer Use 14.9%→72.5%、GMP 合規差距。",lines:500,file:"2026-02-19_sonnet46.html"},{date:"2026-02-19",title:"Skill Graphs — 可遍歷知識網路",source:"Heinrich / arscontexta",tags:["Agent","Framework"],rating:4.0,summary:"Skill Graph 三核心原語、progressive disclosure 架構。",lines:550,file:"2026-02-19_skill-graphs.html"},{date:"2026-02-18",title:"Claude CoWork - Desktop Agent 5-Level Guide",source:"@hooeem",tags:["Agent","Tool"],rating:3.8,summary:"CoWork 五級精通框架：檔案管理→網頁自動化→Connectors→Skills→進階。",lines:650,file:"2026-02-18_cowork-5-level.html"},{date:"2026-02-18",title:"AI Question Generation - Stop Asking for Answers",source:"Wyndo / AI Maker",tags:["Prompt","Framework"],rating:3.8,summary:"五步驟系統：基礎提問→分層→專家視角→逆推→實驗。",lines:580,file:"2026-02-18_question-generation.html"},{date:"2026-02-18",title:"研究初學九大惡 - AI 時代工程紀律",source:"Yen-Chi Chen",tags:["Research","Framework"],rating:3.4,summary:"九個研究初學者壞習慣。連結到 GMP 工程紀律。",lines:400,file:"2026-02-18_research-9-sins.html"},{date:"2026-02-17",title:"Human 3.0 - 四象限全方位發展模型",source:"Dan Koe",tags:["Framework"],rating:3.8,summary:"Ken Wilber AQAL + Spiral Dynamics + 心流。四象限、三層級。",lines:700,file:"2026-02-17_human30.html"},{date:"2026-02-17",title:"AI Diagram Generation - Gemini Prompt Template",source:"Nano Banana",tags:["Tool"],rating:2.2,summary:"Gemini 圖像生成六步驟流程與 Prompt 模板。",lines:350,file:"2026-02-17_diagram-generation.html"},{date:"2026-02-17",title:"Claude Code CLAUDE.md - PDCA Optimization",source:"Chinese tech article",tags:["Tool","Prompt"],rating:4.0,summary:"三層 PDCA 改善框架：CLAUDE.md、/Lesson、/project-insights。",lines:755,file:"2026-02-17_claudemd-pdca.html"},{date:"2026-02-17",title:"AI PM Builder Culture - Anthropic Hiring Signal",source:"Mike Krieger / LinkedIn",tags:["Analysis"],rating:3.2,summary:"Anthropic AI PM 三要求。協調者→建構者轉變。",lines:473,file:"2026-02-17_pm-builder-culture.html"},{date:"2026-02-13",title:"A2A2C Commerce Protocols - Q1 2026",source:"Joel Salinas & JHong",tags:["Agent","API"],rating:3.6,summary:"Agent-to-Agent Commerce 協議與基礎設施。",lines:600,file:"2026-02-13_a2a2c-commerce.html"},{date:"2026-02-11",title:"AI Disruption Warning - Matt Shumer",source:"Matt Shumer",tags:["Analysis","LLM"],rating:3.8,summary:"AI 從工具到認知替代的質變。2-3x 折扣原則。",lines:550,file:"2026-02-11_shumer-disruption.html"},{date:"2026-02-11",title:"OpenClaw 三層安全強化",source:"Fernando Lucktemberg",tags:["Security","Agent"],rating:4.2,summary:"三層漸進式安全：隔離→監控→深度防禦。",lines:910,file:"2026-02-11_openclaw-security.html"},{date:"2026-02-10",title:"Import AI 444 - Societies of Thought",source:"Import AI Newsletter",tags:["LLM","Research"],rating:4.0,summary:"Google 多角色模擬、ChipBench、AscendCraft DSL。",lines:540,file:"2026-02-10_importai-444.html"},{date:"2026-02-09",title:"Anthropic 2026 Agentic Coding - 8 Trends",source:"Anthropic Report",tags:["Agent","Analysis"],rating:4.2,summary:"八大趨勢：SDLC 轉型、角色演化、協作悖論。",lines:623,file:"2026-02-09_agentic-coding-8-trends.html"},{date:"2026-02-09",title:"AI 變革管理 - Prosci 8大差異",source:"Tim Creasey / Prosci",tags:["Framework","Analysis"],rating:3.0,summary:"AI 驅動變革管理的八大不同。",lines:600,file:"2026-02-09_prosci-change-mgmt.html"},{date:"2026-02-07",title:"AI Privacy Deep Dive - Risk Framework",source:"Joel Salinas & Mohib Ur Rehman",tags:["Security","Framework"],rating:3.6,summary:"AI 隱私風險：便利陷阱、四步驟降低策略。",lines:510,file:"2026-02-07_privacy-deep-dive.html"},{date:"2026-02-05",title:"OpenClaw Review - AI Agent Setup",source:"Review Article",tags:["Agent","Tool"],rating:3.8,summary:"OpenClaw 架構、VPS 比較、安全實踐。",lines:400,file:"2026-02-05_openclaw-review.html"},{date:"2026-02-05",title:"Claude Starter Pack - 資源彙整",source:"@aiedge_",tags:["Tool"],rating:3.8,summary:"80/10/10 模型分配、Context Dumping 警告。",lines:500,file:"2026-02-05_claude-starter-pack.html"},{date:"2026-02-05",title:"Claude Cowork 轉換實戰",source:"Ruben Hassid",tags:["Tool","Agent"],rating:3.8,summary:"ChatGPT→Cowork 四大理由。五案例。",lines:500,file:"2026-02-05_cowork-switch.html"},{date:"2026-02-04",title:"ChatGPT vs Claude - Writing Split",source:"Timo Mason",tags:["Tool","Analysis"],rating:2.8,summary:"Gordon Ramsay 測試缺陷、五步自測。",lines:450,file:"2026-02-04_chatgpt-vs-claude.html"},{date:"2026-02-03",title:"Anti-Prompts - Constraint Engineering",source:"@thread",tags:["Prompt"],rating:3.2,summary:"八種反向提示技術。",lines:441,file:"2026-02-03_anti-prompts.html"},{date:"2026-02-03",title:"Claude Code Interactive Mode",source:"Claude Code Docs",tags:["Tool"],rating:3.8,summary:"互動模式：通用控制、Vim、歷史、Bash。",lines:541,file:"2026-02-03_claudecode-interactive.html"},{date:"2026-02-03",title:"NotebookLM Source Control",source:"Joel Salinas",tags:["Tool"],rating:3.6,summary:"Source Control、Studio Panel 不可替代性。",lines:686,file:"2026-02-03_notebooklm.html"},{date:"2026-02-03",title:"Claude Code Product Mentors",source:"Rich Holmes",tags:["Agent","Tool"],rating:3.2,summary:"Persona + Context Grounding 架構。",lines:500,file:"2026-02-03_product-mentors.html"},{date:"2026-02-03",title:"Import AI 443 - Agent Ecology",source:"Import AI Newsletter",tags:["Agent","LLM"],rating:4.0,summary:"Moltbook 代理社交網路、O-ring 框架。",lines:689,file:"2026-02-03_importai-443.html"},{date:"2026-02-02",title:"AI 上司崛起 - 日本企業案例",source:"Chinese news",tags:["Agent","Analysis"],rating:3.4,summary:"KDDI/三井住友 AI 管理者。QA Supervisor。",lines:550,file:"2026-02-02_ai-boss-japan.html"},{date:"2026-02-01",title:"Claude Code Power Tips - Boris Cherny",source:"Boris Cherny",tags:["Tool","Agent"],rating:4.6,summary:"Git Worktrees、Plan Mode、CLAUDE.md 迭代。",lines:600,file:"2026-02-01_boris-cherny-tips.html"},{date:"2026-02-01",title:"Substack Notes 成長策略",source:"Mark Wils",tags:["Content"],rating:3.8,summary:"三層演算法分發、每日 3-5 Notes。",lines:500,file:"2026-02-01_substack-notes.html"},{date:"2026-01-31",title:"DoP Weekly - Chrome, Claude, SaaS",source:"Department of Product",tags:["Agent","Tool","Analysis"],rating:4.0,summary:"九大主題：Chrome Gemini、SaaS 暴跌。",lines:754,file:"2026-01-31_dop-weekly.html"},{date:"2026-01-31",title:"The Batch - Sovereign AI, Moloch",source:"DeepLearning.AI",tags:["LLM","Analysis"],rating:4.0,summary:"Andrew Ng 主權 AI、Moloch's Bargain。",lines:615,file:"2026-01-31_batch-20260130.html"},{date:"2026-01-31",title:"Claude 提示工程 10 步驟",source:"@hooeem",tags:["Prompt"],rating:3.6,summary:"Anthropic 指南轉 10 步模板。",lines:550,file:"2026-01-31_prompt-10-steps.html"},{date:"2026-01-30",title:"Claude Code 完整指南",source:"Wyndo / AI Maker",tags:["Agent","Tool"],rating:4.6,summary:"CLAUDE.md/Commands/Agents。企業合規。",lines:700,file:"2026-01-30_claudecode-complete.html"},{date:"2026-01-30",title:"AI 技能委託 - 濕體先於軟體",source:"Article",tags:["Prompt","Framework"],rating:3.8,summary:"Core/Instrumental/Joy 三類技能。",lines:500,file:"2026-01-30_skill-delegation.html"},{date:"2026-01-22",title:"50 Claude Tips - Model Stacking",source:"@aiedge_",tags:["Tool","Prompt"],rating:3.6,summary:"CLAUDE.md、Plan Mode、MCP。",lines:600,file:"2026-01-22_50-claude-tips.html"},{date:"2026-01-21",title:"Claude + n8n + Synta MCP Stack",source:"Noah Epstein",tags:["Automation","Agent"],rating:4.2,summary:"30 億 tokens、7→5 人產出倍增。",lines:600,file:"2026-01-21_n8n-synta-stack.html"},{date:"2026-01-20",title:"AI Context Setup - Preferences",source:"Article",tags:["Prompt","Tool"],rating:3.6,summary:"上下文設定四大支柱。",lines:500,file:"2026-01-20_context-setup.html"},{date:"2026-01-16",title:"AI Tool Detox - Decision Tree",source:"Leadership in Change",tags:["Tool","Framework"],rating:3.8,summary:"95% 無 ROI、四問題決策樹。",lines:657,file:"2026-01-16_tool-detox.html"},{date:"2026-01-15",title:"AI Second Brain - Voice Pipeline",source:"AI Maker Labs",tags:["Automation","Tool"],rating:4.0,summary:"Make.com 語音→Notion→Substack。",lines:700,file:"2026-01-15_second-brain.html"},{date:"2026-01-10",title:"Context Engineering - Anthropic",source:"Anthropic",tags:["Prompt","LLM"],rating:4.4,summary:"Context Rot、Attention Budget。",lines:600,file:"2026-01-10_context-engineering.html"},{date:"2026-01-10",title:"HUMINT - Human Authority Audit",source:"Cross-domain transfer",tags:["Framework","Agent"],rating:4.0,summary:"Decision Weight/Trust/Judgment Scan。",lines:500,file:"2026-01-10_humint-audit.html"},{date:"2026-01-10",title:"Gmail Gemini + Agent 滿意度",source:"Newsletter compilation",tags:["Agent","Analysis"],rating:3.6,summary:"Agent 滿意度 5.11/6、Tailwind 案例。",lines:500,file:"2026-01-10_gmail-gemini-agent.html"},{date:"2026-01-10",title:"CES 2026 Jensen Huang Keynote",source:"CES 2026",tags:["LLM","Agent"],rating:4.4,summary:"Vera Rubin、Physical AI、Cosmos。",lines:958,file:"2026-01-10_ces2026-jensen.html"},{date:"2026-01-10",title:"Musk AGI 2026 - Abundance",source:"Moonshots #220",tags:["LLM","Analysis"],rating:4.0,summary:"AGI 預測、Optimus、Universal High Income。",lines:500,file:"2026-01-10_musk-agi.html"},{date:"2026-01-09",title:"Claude Code 2.1.0 Features",source:"Claude Code Release",tags:["Tool"],rating:4.0,summary:"110+ 功能、四層優先級、40 區塊。",lines:1059,file:"2026-01-09_claudecode-210.html"},{date:"2026-01-07",title:"UX of Search 2025",source:"UX article",tags:["Tool","LLM"],rating:3.6,summary:"搜尋 UX 演進、混合搜尋、AI 整合。",lines:700,file:"2026-01-07_ux-search.html"},{date:"2025-12-28",title:"The Batch Issue 332",source:"DeepLearning.AI",tags:["LLM"],rating:3.6,summary:"DeepLearning.AI 第 332 期。",lines:500,file:"2025-12-28_batch-332.html"}];
+
+const catColors={Agent:'#6366f1',Tool:'#ef4444',LLM:'#3b82f6',Prompt:'#f59e0b',Framework:'#a855f7',Analysis:'#06b6d4',Automation:'#22c55e',Security:'#dc2626',Content:'#d97706',API:'#7c3aed',Research:'#78716c'};
+const tagCls={Agent:'bg-indigo-50 text-indigo-700 border border-indigo-200',Tool:'bg-red-50 text-red-700 border border-red-200',LLM:'bg-blue-50 text-blue-700 border border-blue-200',Prompt:'bg-amber-50 text-amber-700 border border-amber-200',Framework:'bg-purple-50 text-purple-700 border border-purple-200',Analysis:'bg-cyan-50 text-cyan-700 border border-cyan-200',Automation:'bg-green-50 text-green-700 border border-green-200',Security:'bg-rose-50 text-rose-700 border border-rose-200',Content:'bg-orange-50 text-orange-700 border border-orange-200',API:'bg-violet-50 text-violet-700 border border-violet-200',Research:'bg-gray-100 text-gray-700 border border-gray-200'};
+const filterTags=['all','Agent','Tool','LLM','Prompt','Framework','Analysis','Automation'];
+let activeFilter='all';
+
+function initFilters(){
+    document.getElementById('filterBtns').innerHTML=filterTags.map(f=>{
+        const active=f===activeFilter;
+        const cls=active?'bg-amaran-purple text-white border-amaran-purple':'border-gray-200 text-gray-600 bg-white hover:border-amaran-purple hover:text-amaran-purple';
+        return `<button class="filter-btn px-3 py-1.5 rounded-lg text-xs font-medium border ${cls}" onclick="setFilter('${f}',this)">${f==='all'?'All':f}</button>`;
+    }).join('');
+}
+
+function setFilter(f,btn){
+    activeFilter=f;initFilters();renderCards();
+}
+
+function getFiltered(){
+    let d=[...documents];
+    const s=document.getElementById('searchBox').value.toLowerCase();
+    if(s)d=d.filter(x=>x.title.toLowerCase().includes(s)||x.source.toLowerCase().includes(s)||x.tags.some(t=>t.toLowerCase().includes(s))||x.summary.toLowerCase().includes(s));
+    if(activeFilter!=='all')d=d.filter(x=>x.tags.includes(activeFilter));
+    const sort=document.getElementById('sortSelect').value;
+    d.sort((a,b)=>{
+        if(sort==='date-desc')return b.date.localeCompare(a.date);
+        if(sort==='date-asc')return a.date.localeCompare(b.date);
+        if(sort==='rating-desc')return(b.rating||0)-(a.rating||0);
+        return(a.rating||0)-(b.rating||0);
+    });
+    return d;
+}
+
+function renderStats(){
+    const t=documents.length,avg=(documents.filter(d=>d.rating).reduce((s,d)=>s+d.rating,0)/documents.filter(d=>d.rating).length).toFixed(1);
+    const lines=documents.filter(d=>d.lines).reduce((s,d)=>s+d.lines,0);
+    const tc={};documents.flatMap(d=>d.tags).forEach(t=>tc[t]=(tc[t]||0)+1);
+    const top=Object.entries(tc).sort((a,b)=>b[1]-a[1])[0];
+    const linked=documents.filter(d=>d.file).length;
+    const stats=[{v:t,l:'Documents'},{v:avg,l:'Avg Rating'},{v:(lines/1000).toFixed(1)+'K',l:'Total Lines'},{v:top[0],l:`Top (${top[1]})`},{v:linked,l:'Linked'}];
+    document.getElementById('statsRow').innerHTML=stats.map(s=>`<div class="bg-white/10 backdrop-blur rounded-lg px-4 py-3 border border-white/20 hover:border-white/40 transition-colors text-center"><div class="mono text-2xl font-bold text-white">${s.v}</div><div class="text-xs text-purple-200 mt-0.5">${s.l}</div></div>`).join('');
+    const sorted=Object.entries(tc).sort((a,b)=>b[1]-a[1]);
+    const all=documents.flatMap(d=>d.tags).length;
+    document.getElementById('categoryBar').innerHTML=sorted.map(([t,c])=>`<div style="width:${c/all*100}%;background:${catColors[t]||'#6b7280'}"></div>`).join('');
+    document.getElementById('categoryLegend').innerHTML=sorted.map(([t,c])=>`<div class="flex items-center gap-1.5 text-xs text-gray-500"><div class="w-2 h-2 rounded-sm" style="background:${catColors[t]||'#6b7280'}"></div>${t} (${c})</div>`).join('');
+}
+
+function renderCards(){
+    const docs=getFiltered();
+    if(!docs.length){document.getElementById('docGrid').innerHTML='<div class="col-span-full text-center py-12 text-gray-400">No documents match.</div>';return;}
+    document.getElementById('docGrid').innerHTML=docs.map(d=>{
+        const rc=d.rating>=4.0?'text-green-600':d.rating>=3.0?'text-amber-600':'text-red-500';
+        const rd=d.rating?`<span class="mono font-semibold ${rc}">${d.rating}/5</span>`:'<span class="text-gray-300">—</span>';
+        const tags=d.tags.map(t=>`<span class="text-[10px] px-2 py-0.5 rounded-full font-medium ${tagCls[t]||'bg-gray-100 text-gray-600'}">${t}</span>`).join('');
+        const badge=d.file?'<span class="text-[10px] px-1.5 py-0.5 rounded bg-amaran-purple/10 text-amaran-purple font-medium">HTML</span>':'';
+        const btn=d.file?`<a href="docs/${d.file}" target="_blank" class="text-xs bg-amaran-purple text-white px-3 py-1 rounded hover:bg-amaran-purple-light no-underline">Open</a>`:'';
+        return `<div class="doc-card bg-white rounded-xl border border-gray-200 p-4 flex flex-col">
+            <div class="flex items-center justify-between"><span class="mono text-xs text-gray-400">${d.date}</span>${badge}</div>
+            <h3 class="text-sm font-semibold text-gray-900 mt-2 leading-snug">${d.title}</h3>
+            <p class="text-xs text-gray-500 mt-1">${d.source}</p>
+            <div class="flex gap-1.5 flex-wrap mt-2">${tags}</div>
+            <p class="text-xs text-gray-600 leading-relaxed mt-2 flex-1">${d.summary}</p>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                <div class="flex items-center gap-3">${rd}<span class="mono text-[10px] text-gray-400">${d.lines?d.lines+' lines':''}</span></div>${btn}
+            </div></div>`;
+    }).join('');
+}
+
+document.getElementById('searchBox').addEventListener('input',renderCards);
+initFilters();renderStats();renderCards();
+</script>
+</body>
+</html>
