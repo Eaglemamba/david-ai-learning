@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-12-31">
+    <meta name="doc-title" content="Deep: The UX of Search Explored - AI 學習指南">
+    <meta name="doc-source" content="Department of Product / Rich Holmes">
+    <meta name="doc-tags" content="Tool,Agent,LLM">
+    <meta name="doc-rating" content="4.0">
+    <meta name="doc-summary" content="產品內搜尋從找東西演變成AI命令中心，20+實際案例分析混合搜尋、輪播探索與自然語言搜尋設計">
+    <meta name="doc-file" content="2025-12-31_ux-search-explored.html">
+    <title>Deep: The UX of Search Explored - AI 學習指南</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; color: #1e293b; background: #f8fafc; }
+        code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.9em; }
+        
+        .header { background: linear-gradient(135deg, #1e3a5f, #3b5998, #4c6cb3); color: white; text-align: center; padding: 2.5rem 2rem 2rem; position: relative; }
+        .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899); }
+        .header h1 { font-weight: 700; font-size: 1.75rem; margin-bottom: 0.75rem; }
+        .header-meta { font-size: 0.85rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+        .tag { font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 500; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-integration { background: #99f6e4; color: #134e4a; }
+        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
+        
+        .executive-summary { background: #f0f9ff; margin: 0; padding: 1.5rem 2rem; border-bottom: 1px solid #bae6fd; }
+        .summary-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #bae6fd; }
+        .summary-icon { font-size: 1.25rem; }
+        .summary-title { font-weight: 700; font-size: 1.1rem; color: #0c4a6e; }
+        .read-time { margin-left: auto; font-size: 0.75rem; color: #0369a1; background: #e0f2fe; padding: 0.25rem 0.6rem; border-radius: 4px; }
+        .summary-content { display: flex; flex-direction: column; gap: 1rem; }
+        .summary-item { display: flex; flex-direction: column; gap: 0.3rem; }
+        .item-label { font-size: 0.7rem; font-weight: 600; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; }
+        .item-content { font-size: 0.95rem; line-height: 1.6; color: #334155; }
+        
+        .learning-objectives { background: #f8fafc; padding: 1.5rem 2rem; border-bottom: 1px solid #e2e8f0; }
+        .learning-objectives-title { font-size: 1rem; font-weight: 600; color: #334155; display: flex; align-items: center; gap: 0.5rem; margin: 0 0 1rem 0; }
+        .learning-objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+        @media (max-width: 900px) { .learning-objectives-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { .learning-objectives-grid { grid-template-columns: 1fr; } }
+        .objective-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; background: white; padding: 0.65rem 0.9rem; border-radius: 6px; border: 1px solid #e5e7eb; }
+        .objective-tag { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .objective-text { font-size: 0.95rem; color: #334155; line-height: 1.45; margin: 0; }
+        
+        .content-start { background: #1e293b; color: white; padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+        .left-column { background: #fafafa; padding: 2rem; border-right: 1px solid #e2e8f0; }
+        .right-column { background: #f0f7ff; padding: 2rem; }
+        .section-title { font-size: 1.15rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+        .content-text { font-size: 0.95rem; line-height: 1.8; color: #374151; margin-bottom: 1rem; }
+        
+        .info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; border: 1px solid; }
+        .info-box-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; font-weight: 600; font-size: 0.95rem; }
+        .info-box-header .icon { flex-shrink: 0; font-size: 1rem; }
+        .info-box-content { padding: 1rem; }
+        .info-box-content p { font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.5rem; color: #374151; }
+        .info-box-content p:last-child { margin-bottom: 0; }
+        .info-box-content ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+        .info-box-content li { font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.3rem; color: #374151; }
+        
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; }
+        .box-concept { border-color: #86efac; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; }
+        .box-analogy { border-color: #fcd34d; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; }
+        .box-key { border-color: #fdba74; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; }
+        .box-practical { border-color: #6ee7b7; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; }
+        .box-compare { border-color: #a5b4fc; }
+        
+        .highlight-concept { background: linear-gradient(to bottom, transparent 60%, #a5d6a7 60%); padding: 0 2px; }
+        .highlight-key { background: linear-gradient(to bottom, transparent 60%, #ffcc80 60%); padding: 0 2px; }
+        .highlight-practical { background: linear-gradient(to bottom, transparent 60%, #6ee7b7 60%); padding: 0 2px; }
+        
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+        .comparison-table th { background: #3b5998; color: white; padding: 0.75rem; text-align: left; font-weight: 600; }
+        .comparison-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
+        .comparison-table tr:nth-child(even) { background: #f8fafc; }
+        .comparison-table tr:hover { background: #f0f9ff; }
+        
+        .summary-section { background: #f8fafc; padding: 2rem; border-top: 1px solid #e2e8f0; }
+        .summary-title-main { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; color: #1e293b; }
+        .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        @media (max-width: 900px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+        .summary-card { background: white; padding: 1.25rem; border-radius: 8px; border: 1px solid #e2e8f0; border-top: 3px solid; }
+        .card-blue { border-top-color: #3b82f6; }
+        .card-green { border-top-color: #10b981; }
+        .card-purple { border-top-color: #8b5cf6; }
+        .card-orange { border-top-color: #f59e0b; }
+        .card-title { font-weight: 600; font-size: 0.9rem; color: #1e293b; margin-bottom: 0.5rem; }
+        .card-content { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+        
+        .practice-section { padding: 0; }
+        .practice-header { background: #f5f3ff; color: #6d28d9; padding: 1rem 2rem; font-size: 1.1rem; font-weight: 700; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #ddd6fe; display: flex; align-items: center; gap: 0.5rem; }
+        .practice-content { background: #faf5ff; padding: 2rem; }
+        .question { background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #f3e8ff; }
+        .question-number { font-weight: 700; color: #6d28d9; margin-bottom: 0.5rem; }
+        .question-text { font-size: 0.95rem; line-height: 1.7; color: #374151; margin-bottom: 1rem; }
+        .answer-toggle { background: #7c3aed; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+        .answer-toggle:hover { background: #6d28d9; }
+        .answer-content { display: block; margin-top: 1rem; padding: 1rem; background: #faf5ff; border-radius: 6px; border-left: 3px solid #7c3aed; }
+        .answer-content.hide { display: none; }
+        
+        .article-rating { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 12px; padding: 1.5rem 2rem; margin: 2rem; color: white; }
+        .rating-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.2); flex-wrap: wrap; gap: 1rem; }
+        .rating-title { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .overall-score { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 8px; }
+        .overall-label { font-size: 0.8rem; color: #94a3b8; }
+        .overall-value { font-size: 1.5rem; font-weight: 700; color: #fbbf24; }
+        .rating-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+        @media (max-width: 768px) { .rating-grid { grid-template-columns: repeat(2, 1fr); } }
+        .rating-item { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .rating-label { font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .rating-stars { font-size: 1rem; letter-spacing: 2px; margin-bottom: 0.25rem; }
+        .star-filled { color: #fbbf24; }
+        .star-empty { color: #475569; }
+        .rating-score { font-size: 0.85rem; font-weight: 600; color: #e2e8f0; }
+        .rating-item[data-dimension="technical"] { border-top: 3px solid #3b82f6; }
+        .rating-item[data-dimension="practical"] { border-top: 3px solid #10b981; }
+        .rating-item[data-dimension="ecosystem"] { border-top: 3px solid #8b5cf6; }
+        .rating-item[data-dimension="timeliness"] { border-top: 3px solid #f59e0b; }
+        .rating-item[data-dimension="learning"] { border-top: 3px solid #ec4899; }
+        
+        .footer { background: #1e293b; color: #94a3b8; padding: 1.5rem 2rem; text-align: center; font-size: 0.85rem; }
+        .footer-title { color: #e2e8f0; font-weight: 600; margin-bottom: 0.5rem; }
+        .footer a { color: #60a5fa; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Deep: The UX of Search Explored</h1>
+        <div class="header-meta">Department of Product | Rich Holmes | 2025.12.31</div>
+        <div class="tag-container">
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-integration">Integration</span>
+            <span class="tag tag-llm">LLM</span>
+        </div>
+    </div>
+
+    <div class="executive-summary">
+        <div class="summary-header">
+            <span class="summary-icon">📋</span>
+            <span class="summary-title">快速摘要 Executive Summary</span>
+            <span class="read-time">閱讀時間：15-20 分鐘</span>
+        </div>
+        <div class="summary-content">
+            <div class="summary-item">
+                <span class="item-label">核心概念 Core Concept</span>
+                <span class="item-content">產品內搜尋 (In-product Search) 正從單純的「找東西」功能，演變成融合 AI Assistant、能執行動作的「命令中心」(Command Center)。這種轉變對用戶留存率 (Retention) 和參與度 (Engagement) 產生重大影響。</span>
+            </div>
+            <div class="summary-item">
+                <span class="item-label">實務價值 Practical Value</span>
+                <span class="item-content">透過 20+ 個實際案例 (Instacart, LinkedIn, Reddit, YouTube 等)，學習如何設計混合搜尋 (Hybrid Search)、輪播式探索 (Carousel Discovery)、以及自然語言搜尋 (Natural Language Search) 功能，提升產品 UX。</span>
+            </div>
+            <div class="summary-item">
+                <span class="item-label">關鍵要點 Key Takeaways</span>
+                <span class="item-content">AI 整合已成為標配、搜尋正在成為獨立產品的收入來源、Carousel 主導探索體驗、速度是競爭優勢、多模態輸入正在擴展。</span>
+            </div>
+            <div class="summary-item">
+                <span class="item-label">行動建議 Action Items</span>
+                <span class="item-content">評估你的產品搜尋功能是否已整合 AI、考慮 Hybrid Search 架構、測試 Carousel-based 探索、投資搜尋速度優化。</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="learning-objectives">
+        <div class="learning-objectives-title">🎯 學習目標 Learning Objectives</div>
+        <div class="learning-objectives-grid">
+            <div class="objective-item">
+                <span class="objective-tag" style="background: #bfdbfe; color: #1e3a8a;">概念理解</span>
+                <p class="objective-text">理解 Hybrid Search 如何融合傳統搜尋與 AI Assistant</p>
+            </div>
+            <div class="objective-item">
+                <span class="objective-tag" style="background: #a7f3d0; color: #065f46;">實務應用</span>
+                <p class="objective-text">學習 Carousel、Quick Filter、Actions 等 UX 元件的設計模式</p>
+            </div>
+            <div class="objective-item">
+                <span class="objective-tag" style="background: #c7d2fe; color: #3730a3;">策略思維</span>
+                <p class="objective-text">評估搜尋功能如何影響產品策略與收入模式</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-start">
+        <span>📖 正文開始 | 共 3 部分</span>
+        <span>預估閱讀：15-20 分鐘</span>
+    </div>
+
+    <!-- Part 1: AI Integration in Search -->
+    <div class="content-grid">
+        <div class="left-column">
+            <div class="section-title">Part 1: AI 在搜尋中的整合</div>
+            <p class="content-text">The ability to search and find exactly what you need inside a product can play a critical role in <span class="highlight-key">engagement and retention</span>; a user who can't find what they need is ultimately a user who churns.</p>
+            <p class="content-text">For many leading companies, AI has transformed in-product search from a simple find-and-retrieve function into something more ambitious: <span class="highlight-concept">visual, conversational, and capable of taking actions</span>.</p>
+            <p class="content-text">If you look closely at the prompt text used in many leading products' search bars, you'll now notice that users are now prompted to not only search for something - but to <span class="highlight-practical">"ask a question"</span> too - signalling the shift towards the merging of traditional search with AI Assistants.</p>
+        </div>
+        <div class="right-column">
+            <div class="info-box box-concept">
+                <div class="info-box-header"><span class="icon">📚</span> 核心概念：搜尋的三重演化</div>
+                <div class="info-box-content">
+                    <p>傳統搜尋 (Search) 正在經歷三個層次的演化：</p>
+                    <ul>
+                        <li><strong>Visual (視覺化)</strong>：使用 AI 生成圖片增強搜尋結果 (如 Instacart 的 PIXEL)</li>
+                        <li><strong>Conversational (對話式)</strong>：從關鍵字搜尋轉向自然語言問答 (如 "誰能教我 diffusion models?")</li>
+                        <li><strong>Actionable (可執行)</strong>：搜尋結果可以觸發工作流程，而不只是顯示資訊</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header"><span class="icon">💡</span> 比喻說明：從圖書館到私人助理</div>
+                <div class="info-box-content">
+                    <p>想像傳統搜尋像是去圖書館找書——你需要知道書名或關鍵字，然後自己翻找。</p>
+                    <p>現代 AI 搜尋則像是有一位私人助理：你可以說「我想找一些適合週末看的輕鬆電影」，助理會根據你的喜好推薦，甚至可以直接幫你播放。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header"><span class="icon">⚠️</span> 重點提示：Placeholder Text 的信號</div>
+                <div class="info-box-content">
+                    <p>注意各產品搜尋欄的提示文字變化：</p>
+                    <ul>
+                        <li>傳統：「Search...」</li>
+                        <li>現代：「Search or ask anything」「Search or ask a question」</li>
+                    </ul>
+                    <p>這個微小的文字變化，反映了產品策略的重大轉向。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part 2: Generative AI in Results -->
+    <div class="content-grid">
+        <div class="left-column">
+            <div class="section-title">Part 2: 生成式 AI 在搜尋結果中的應用</div>
+            <p class="content-text">Instacart unveiled a new, proprietary image generation platform built in-house that it calls <span class="highlight-concept">PIXEL</span>. This platform makes it a lot easier for the company's merchandising team to create and manage images at scale.</p>
+            <p class="content-text">Instacart says that thanks to PIXEL, <span class="highlight-key">image generation times have reduced by 10x</span> with approvals of images jumping from 20% to 85%.</p>
+            <p class="content-text">The overall navigation and "add to cart" time <span class="highlight-practical">dropped by over 25%</span> once images were introduced. PIXEL is used to combine items and give users an idea of how different ingredients might work together for meal planning.</p>
+            <p class="content-text">YouTube added an experimental new search results page which embeds a <span class="highlight-concept">scrollable carousel of videos</span>, packaged up into thematically different chapters with AI generated narrative summaries.</p>
+        </div>
+        <div class="right-column">
+            <div class="info-box box-practical">
+                <div class="info-box-header"><span class="icon">🛠️</span> 實務應用：Instacart PIXEL 的商業價值</div>
+                <div class="info-box-content">
+                    <p>PIXEL 的投資回報率 (ROI) 來自三個維度：</p>
+                    <ul>
+                        <li><strong>效率提升</strong>：圖片生成速度 10x 提升</li>
+                        <li><strong>品質改善</strong>：審核通過率從 20% → 85%</li>
+                        <li><strong>轉換率優化</strong>：加入購物車時間減少 25%</li>
+                    </ul>
+                    <p>關鍵洞察：AI 生成圖片不只是視覺美化，而是直接影響購買決策的商業武器。</p>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header"><span class="icon">💡</span> 比喻說明：食材組合的視覺化</div>
+                <div class="info-box-content">
+                    <p>想像你在超市買菜，傳統方式是看一堆單獨的食材照片。</p>
+                    <p>Instacart 的 AI 則像是一位視覺化的私廚：它會把牛排、蘆筍、紅酒醬組合成一道誘人的成品照片，讓你「看到」晚餐的樣子，而不只是「看到」食材。</p>
+                    <p>這種「結果預覽」大幅降低了購買決策的認知負擔。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header"><span class="icon">⚠️</span> 重點提示：YouTube 的風險</div>
+                <div class="info-box-content">
+                    <p>YouTube 的 AI 生成輪播功能雖然創新，但存在 UX 風險：</p>
+                    <p>當搜尋結果同時包含 Shorts、長影片、圖文貼文、AI 輪播時，可能造成<strong>資訊過載</strong> (Information Overload)。</p>
+                    <p>對於只想快速瀏覽影片的用戶，過多格式反而增加了認知負擔。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part 3: Hybrid Search -->
+    <div class="content-grid">
+        <div class="left-column">
+            <div class="section-title">Part 3: Hybrid Search - 傳統搜尋與 AI 的融合</div>
+            <p class="content-text">One pattern that seems firmly established is the emergence of <span class="highlight-concept">hybrid search features</span> where search and assistants start to converge.</p>
+            <p class="content-text">Reddit combines both search and AI Assistant features into a single bar. When a user types a query, they are given two options: either perform a traditional search or "Ask" with AI. There's a <span class="highlight-practical">subtle horizontal bar separating the two concepts</span>.</p>
+            <p class="content-text">This convergence is one of Reddit's major strategic decisions with the feature high on the agenda in the company's most recent earnings call. They refer to this as <span class="highlight-key">"Search-Forward UX"</span> and acknowledge that volume on its AI Answers product is up 20%.</p>
+            <p class="content-text">Amazon's Rufus is deeply integrated into search. Unlike Reddit, <span class="highlight-concept">some of this process is automated</span> - the search bar can automatically detect whether the input is a question or a standard product search. During Black Friday, interactions with Rufus that resulted in a purchase were up 75%.</p>
+        </div>
+        <div class="right-column">
+            <div class="info-box box-concept">
+                <div class="info-box-header"><span class="icon">📚</span> 核心概念：Hybrid Search 的設計選擇</div>
+                <div class="info-box-content">
+                    <p>兩種 Hybrid Search 設計模式：</p>
+                    <ul>
+                        <li><strong>明確分離 (Reddit 模式)</strong>：用戶選擇「搜尋」或「問 AI」，兩者有視覺區隔</li>
+                        <li><strong>自動判斷 (Amazon Rufus 模式)</strong>：系統自動偵測意圖，無縫切換模式</li>
+                    </ul>
+                    <p>Reddit 的方式較為保守但清晰，Amazon 的方式更流暢但需要更強的意圖理解能力。</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header"><span class="icon">🛠️</span> 實務應用：Search-Forward UX 策略</div>
+                <div class="info-box-content">
+                    <p>Reddit 的 "Search-Forward UX" 策略帶來的商業成果：</p>
+                    <ul>
+                        <li>AI Answers 使用量成長 <strong>20%</strong></li>
+                        <li>被列為財報電話會議的重點議題</li>
+                        <li>成為公司戰略層級的決策</li>
+                    </ul>
+                    <p>這說明搜尋體驗的改善，已經從「功能優化」提升到「公司策略」層級。</p>
+                </div>
+            </div>
+            <div class="info-box box-compare">
+                <div class="info-box-header"><span class="icon">⚖️</span> 工具比較：Reddit vs Amazon 的 Hybrid Search</div>
+                <div class="info-box-content">
+                    <table class="comparison-table">
+                        <tr><th>特性</th><th>Reddit</th><th>Amazon Rufus</th></tr>
+                        <tr><td>意圖偵測</td><td>手動選擇</td><td>自動判斷</td></tr>
+                        <tr><td>UI 分離</td><td>明確視覺區隔</td><td>無縫整合</td></tr>
+                        <tr><td>用戶控制</td><td>高</td><td>中</td></tr>
+                        <tr><td>學習曲線</td><td>較低</td><td>較低</td></tr>
+                        <tr><td>Black Friday 購買轉換</td><td>N/A</td><td>+75%</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part 4: Carousels and Natural Language -->
+    <div class="content-grid">
+        <div class="left-column">
+            <div class="section-title">Part 4: Carousel 與自然語言搜尋</div>
+            <p class="content-text"><span class="highlight-concept">Carousels are typically used for search suggestions on mobile devices</span> to help users perform a search based on their interests without spending time typing.</p>
+            <p class="content-text">DoorDash has adopted something similar with its own carousels that it calls <span class="highlight-practical">Smart Tags</span>. Surface personalized tags based on a user's interests and let them perform a search quickly without ever having to actually type anything.</p>
+            <p class="content-text">LinkedIn released a major new version of their global search called <span class="highlight-key">"AI-powered people search"</span>. Users can ask: "Who can teach me about diffusion models?" or "Investment bankers who went to my college".</p>
+            <p class="content-text">The UX comes with <span class="highlight-concept">emoji-stylised carousels</span> that prompt users to make natural language queries. This style of carousel-based search is likely to form the basis of next generation search features as searching and prompting start to converge.</p>
+        </div>
+        <div class="right-column">
+            <div class="info-box box-concept">
+                <div class="info-box-header"><span class="icon">📚</span> 核心概念：Zero-Typing Search</div>
+                <div class="info-box-content">
+                    <p>Carousel 設計的核心價值是實現「零打字搜尋」(Zero-Typing Search)：</p>
+                    <ul>
+                        <li><strong>個人化標籤</strong>：基於用戶歷史行為動態生成</li>
+                        <li><strong>減少認知負擔</strong>：用戶不需要想「該搜什麼」</li>
+                        <li><strong>行動裝置優化</strong>：觸控操作比打字更直覺</li>
+                    </ul>
+                    <p>這種設計將「搜尋」從主動行為轉變為「探索」的被動體驗。</p>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header"><span class="icon">💡</span> 比喻說明：從搜尋引擎到發現引擎</div>
+                <div class="info-box-content">
+                    <p>傳統搜尋像是圖書館的索引卡——你需要知道要找什麼才能開始。</p>
+                    <p>Carousel-based 搜尋則像是書店的推薦書架——書店老闆已經根據你的喜好擺好了書，你只需要瀏覽。</p>
+                    <p>這種從 "Search Engine" 到 "Discovery Engine" 的轉變，正在重新定義產品中的「找東西」體驗。</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header"><span class="icon">🛠️</span> 實務應用：LinkedIn 的自然語言搜尋</div>
+                <div class="info-box-content">
+                    <p>LinkedIn 的 AI-powered People Search 支援的查詢類型：</p>
+                    <ul>
+                        <li><strong>技能導向</strong>：「誰能教我 diffusion models？」</li>
+                        <li><strong>關係導向</strong>：「去過我學校的投資銀行家」</li>
+                        <li><strong>目標導向</strong>：「能推薦我到 Google 的人」</li>
+                    </ul>
+                    <p>這種自然語言搜尋，將 LinkedIn 從「人才資料庫」轉型為「人脈發現平台」。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part 5: Five Key Trends -->
+    <div class="content-grid">
+        <div class="left-column">
+            <div class="section-title">Part 5: 產品團隊的五大趨勢</div>
+            <p class="content-text"><span class="highlight-key">1. AI integrations are growing</span> - Nearly every company has embedded AI into their search experience. The strategic question is to understand which AI capability delivers the most value for your specific use case.</p>
+            <p class="content-text"><span class="highlight-key">2. Search is becoming a command center</span> - Replit's contextual search lets users change settings, remix apps, and jump to specific features. Dropbox Dash is positioned as a standalone product with its own pricing.</p>
+            <p class="content-text"><span class="highlight-key">3. Carousels dominate discovery</span> - LinkedIn, YouTube, Google Maps, Instacart, Instagram, and Dropbox all present search with carousels. Instacart displays AI-generated carousels showing substitutions and complementary items.</p>
+            <p class="content-text"><span class="highlight-key">4. Speed is a competitive advantage</span> - Cursor markets their search speed (500-file projects in under 1 second). Uber invested in Amazon OpenSearch to reduce latency by 79%.</p>
+            <p class="content-text"><span class="highlight-key">5. Multi-modal inputs are expanding</span> - Pinterest allows users to select parts of images and search visually. ElevenLabs lets users upload audio samples to find matching voices.</p>
+        </div>
+        <div class="right-column">
+            <div class="info-box box-key">
+                <div class="info-box-header"><span class="icon">⚠️</span> 重點提示：搜尋成為獨立產品</div>
+                <div class="info-box-content">
+                    <p>搜尋功能強大到可以獨立成為產品的例子：</p>
+                    <ul>
+                        <li><strong>Dropbox Dash</strong>：擁有獨立網域 (dash.ai)、獨立定價、連接第三方應用的「超級搜尋」</li>
+                        <li><strong>Notion AI Search</strong>：企業搜尋功能，貢獻公司一半收入，ARR 超過 $600M</li>
+                    </ul>
+                    <p>這意味著：搜尋不再只是功能，而是可以獨立變現的產品線。</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header"><span class="icon">🛠️</span> 實務應用：速度優化的投資回報</div>
+                <div class="info-box-content">
+                    <p>搜尋速度的商業價值：</p>
+                    <ul>
+                        <li><strong>Cursor</strong>：將 500 檔案專案搜尋從 8+ 秒降到 1 秒以下，成為行銷賣點</li>
+                        <li><strong>Uber</strong>：投資 Amazon OpenSearch 降低延遲 79%</li>
+                    </ul>
+                    <p>對於工程師等對速度敏感的用戶群，搜尋延遲直接影響產品選擇決策。</p>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header"><span class="icon">📚</span> 核心概念：多模態輸入</div>
+                <div class="info-box-content">
+                    <p>「搜尋查詢」的定義正在擴展：</p>
+                    <ul>
+                        <li><strong>視覺輸入</strong>：Pinterest 允許選擇圖片部分進行視覺搜尋</li>
+                        <li><strong>音頻輸入</strong>：ElevenLabs 上傳音頻樣本搜尋相似聲音</li>
+                        <li><strong>對話輸入</strong>：DoorDash Zesty 接受「我想吃辣的」而非「泰式餐廳」</li>
+                    </ul>
+                    <p>問自己：用戶在搜尋時，手邊最常有的資產是什麼？那就是最自然的輸入方式。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Takeaways -->
+    <div class="summary-section">
+        <div class="summary-title-main">🎯 重點整理 Key Takeaways</div>
+        <div class="summary-grid">
+            <div class="summary-card card-blue">
+                <div class="card-title">AI 整合成為標配</div>
+                <div class="card-content">AI-powered Search 不再是差異化因素，而是用戶期望的基本功能。策略問題是：哪種 AI 能力 (意圖理解、視覺智能、個人化、NLP) 對你的場景最有價值？</div>
+            </div>
+            <div class="summary-card card-green">
+                <div class="card-title">搜尋成為命令中心</div>
+                <div class="card-content">搜尋不只是找東西，更是觸發工作流程的入口。Dropbox Dash 和 Notion AI Search 證明搜尋功能可以獨立變現，成為公司主要收入來源。</div>
+            </div>
+            <div class="summary-card card-purple">
+                <div class="card-title">Carousel 主導探索</div>
+                <div class="card-content">Carousel 讓多個結果類別共存於畫面、創造自然的瀏覽行為、支援 AI 生成的分組。Instacart 將 Carousel 轉化為交叉銷售和商品推廣的機會。</div>
+            </div>
+            <div class="summary-card card-orange">
+                <div class="card-title">速度與多模態</div>
+                <div class="card-content">搜尋延遲是競爭優勢 (Cursor 行銷速度、Uber 投資 OpenSearch)。輸入方式正從文字擴展到圖片、音頻、對話，最佳搜尋體驗是接受用戶最自然的輸入格式。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Practice Section -->
+    <div class="practice-section">
+        <div class="practice-header">🎯 練習題 Practice Questions</div>
+        <div class="practice-content">
+            <div class="question">
+                <div class="question-number">問題 1：概念理解</div>
+                <div class="question-text">文章提到 Reddit 和 Amazon 採用不同的 Hybrid Search 設計模式。請解釋「明確分離」和「自動判斷」兩種模式的差異，以及各自的優缺點。</div>
+                <button class="answer-toggle">隱藏答案</button>
+                <div class="answer-content">
+                    <p><strong>明確分離 (Reddit 模式)：</strong></p>
+                    <p>用戶在輸入查詢後，需要明確選擇「傳統搜尋」或「問 AI」。兩種選項有視覺上的區隔 (水平分隔線)。</p>
+                    <p>優點：用戶控制度高、功能清晰、不會產生意外結果</p>
+                    <p>缺點：增加一步操作、可能感覺較笨拙</p>
+                    <p><strong>自動判斷 (Amazon Rufus 模式)：</strong></p>
+                    <p>系統自動偵測用戶輸入是「搜尋產品」還是「問問題」，無縫切換模式。</p>
+                    <p>優點：體驗流暢、減少用戶決策負擔</p>
+                    <p>缺點：需要更強的意圖理解能力、可能誤判用戶意圖</p>
+                </div>
+            </div>
+            <div class="question">
+                <div class="question-number">問題 2：實務應用</div>
+                <div class="question-text">假設你在一家 CDMO (委託開發製造組織) 工作，需要設計內部文件搜尋系統。根據文章的五大趨勢，你會優先考慮哪些功能？請說明理由。</div>
+                <button class="answer-toggle">隱藏答案</button>
+                <div class="answer-content">
+                    <p><strong>建議優先考慮的功能：</strong></p>
+                    <p><strong>1. Hybrid Search (AI + 傳統搜尋)：</strong>讓用戶可以問「QS-21 adjuvant 的 stability testing 文件」而非只能搜關鍵字，適合技術文件查找。</p>
+                    <p><strong>2. 速度優化：</strong>製藥環境中，快速找到 SOP、批次記錄至關重要。投資搜尋基礎設施 (如 Elasticsearch/OpenSearch) 降低延遲。</p>
+                    <p><strong>3. Actions 功能：</strong>搜尋結果可以直接觸發工作流程，例如「找到 Batch Record 後直接開啟審核流程」。</p>
+                    <p><strong>4. Carousel-based 分類：</strong>根據文件類型 (SOP、Batch Record、Validation Protocol) 自動分組顯示。</p>
+                    <p><strong>理由：</strong>CDMO 環境需要高效率、高準確性的文件存取，且有嚴格的法規遵循要求，因此搜尋準確性和可追溯性比視覺化花俏功能更重要。</p>
+                </div>
+            </div>
+            <div class="question">
+                <div class="question-number">問題 3：批判思考</div>
+                <div class="question-text">文章指出「AI 整合已成為標配，不再是差異化因素」。你同意這個觀點嗎？在什麼情況下，AI 搜尋仍然可以成為產品的競爭優勢？</div>
+                <button class="answer-toggle">隱藏答案</button>
+                <div class="answer-content">
+                    <p><strong>部分同意，但需要區分「有 AI」和「AI 做得好」：</strong></p>
+                    <p><strong>AI 可以成為差異化的情況：</strong></p>
+                    <ul>
+                        <li><strong>垂直領域專業性：</strong>例如法律文件搜尋的 AI 能理解法律術語和案例關聯，這種專業能力仍是差異化</li>
+                        <li><strong>獨特數據優勢：</strong>Instacart 的 PIXEL 基於大量商品圖片訓練，競爭對手難以複製</li>
+                        <li><strong>深度整合：</strong>Amazon Rufus 的意圖自動判斷需要長期用戶行為數據，新進者難以達到同樣準確度</li>
+                        <li><strong>速度和成本：</strong>在同樣功能下，更快、更便宜的 AI 搜尋仍是優勢</li>
+                    </ul>
+                    <p><strong>結論：</strong>「有 AI」不再是差異化，但「AI 做得比別人好」仍然是強大的競爭優勢。關鍵在於找到你的產品場景中，哪種 AI 能力最能創造用戶價值。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Rating -->
+    <div class="article-rating">
+        <div class="rating-header">
+            <div class="rating-title">
+                <span class="rating-title-icon">📊</span>
+                文章評價 Article Rating
+            </div>
+            <div class="overall-score">
+                <span class="overall-label">綜合</span>
+                <span class="overall-value">4.0</span>
+            </div>
+        </div>
+        <div class="rating-grid">
+            <div class="rating-item" data-dimension="technical">
+                <div class="rating-label">技術深度</div>
+                <div class="rating-stars">
+                    <span class="star-filled">★★★</span><span class="star-empty">☆☆</span>
+                </div>
+                <div class="rating-score">3/5</div>
+            </div>
+            <div class="rating-item" data-dimension="practical">
+                <div class="rating-label">實務應用</div>
+                <div class="rating-stars">
+                    <span class="star-filled">★★★★★</span><span class="star-empty"></span>
+                </div>
+                <div class="rating-score">5/5</div>
+            </div>
+            <div class="rating-item" data-dimension="ecosystem">
+                <div class="rating-label">工具生態</div>
+                <div class="rating-stars">
+                    <span class="star-filled">★★★★</span><span class="star-empty">☆</span>
+                </div>
+                <div class="rating-score">4/5</div>
+            </div>
+            <div class="rating-item" data-dimension="timeliness">
+                <div class="rating-label">時效性</div>
+                <div class="rating-stars">
+                    <span class="star-filled">★★★★★</span><span class="star-empty"></span>
+                </div>
+                <div class="rating-score">5/5</div>
+            </div>
+            <div class="rating-item" data-dimension="learning">
+                <div class="rating-label">學習曲線</div>
+                <div class="rating-stars">
+                    <span class="star-filled">★★★</span><span class="star-empty">☆☆</span>
+                </div>
+                <div class="rating-score">3/5</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-title">AI Expert Learning System</div>
+        <p>製作日期：2026-01-06</p>
+        <p>原文來源：<a href="https://www.departmentofproduct.com/deep/ux-of-search-explored-second-edition" target="_blank">Department of Product - Deep: The UX of Search Explored (Second Edition)</a></p>
+        <p style="margin-top: 0.75rem;">建議 Chat Title：[Tool] UX of Search 2025 - Hybrid Search, Carousel, AI Integration</p>
+    </div>
+
+    <script>
+    document.querySelectorAll('.answer-toggle').forEach(button => {
+        button.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            content.classList.toggle('hide');
+            this.textContent = content.classList.contains('hide') ? '顯示答案' : '隱藏答案';
+        });
+    });
+    </script>
+</body>
+</html>

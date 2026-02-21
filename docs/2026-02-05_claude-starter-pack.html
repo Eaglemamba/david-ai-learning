@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-05">
+    <meta name="doc-title" content="Claude 終極入門包：指南、工具、資源完整攻略">
+    <meta name="doc-source" content="@aiedge_ on X">
+    <meta name="doc-tags" content="Tool,Prompt,Agent">
+    <meta name="doc-rating" content="3.8">
+    <meta name="doc-summary" content="Claude全面入門指南，涵蓋工具資源與最佳實踐攻略">
+    <meta name="doc-file" content="2026-02-05_claude-starter-pack.html">
+    <title>Claude 終極入門包：指南、工具、資源完整攻略</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --border-light: #e2e8f0;
+            --highlight-concept: #a5d6a7;
+            --highlight-key: #ffcc80;
+            --highlight-practical: #6ee7b7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7cb0 100%);
+            color: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .header-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+        .tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .source-info {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 1rem;
+        }
+        .source-info a { color: #93c5fd; text-decoration: none; }
+        .source-info a:hover { text-decoration: underline; }
+
+        /* Rating Bar */
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.6rem 1rem;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: 8px;
+            flex-wrap: wrap;
+            border: 1px solid #bae6fd;
+        }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .executive-summary {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .executive-summary h2 {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .summary-text { font-size: 0.95rem; color: var(--text-primary); }
+
+        /* Learning Objectives */
+        .objectives-section {
+            margin-bottom: 2rem;
+        }
+        .objectives-section h2 {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .objective-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--accent-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .objective-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .objective-item:nth-child(2) { border-left-color: var(--accent-green); }
+        .objective-item:nth-child(3) { border-left-color: var(--accent-purple); }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
+        .objective-desc { font-size: 0.85rem; color: var(--text-secondary); }
+
+        /* Content Section */
+        .content-section {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .section-header {
+            background: linear-gradient(135deg, #1e3a5f, #3b5998);
+            color: white;
+            padding: 1rem 1.5rem;
+        }
+        .section-header h3 {
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+        .content-left {
+            padding: 1.5rem;
+            border-right: 1px solid var(--border-light);
+        }
+        @media (max-width: 768px) {
+            .content-left { border-right: none; border-bottom: 1px solid var(--border-light); }
+        }
+        .content-right { padding: 1.5rem; }
+
+        /* Bilingual Block */
+        .bilingual-block { margin-bottom: 1.5rem; }
+        .chinese-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .english-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.7;
+        }
+        .highlight-concept { background: var(--highlight-concept); padding: 0 0.25rem; border-radius: 2px; }
+        .highlight-key { background: var(--highlight-key); padding: 0 0.25rem; border-radius: 2px; }
+        .highlight-practical { background: var(--highlight-practical); padding: 0 0.25rem; border-radius: 2px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; margin-bottom: 1rem; overflow: hidden; }
+        .info-box-header {
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Resource Cards */
+        .resource-list { list-style: none; }
+        .resource-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .resource-item:last-child { border-bottom: none; }
+        .resource-number {
+            background: var(--accent-blue);
+            color: white;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .resource-content { flex: 1; }
+        .resource-title { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); }
+        .resource-desc { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+        /* Key Takeaways */
+        .takeaways-section {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .takeaways-section h2 {
+            font-size: 1.2rem;
+            color: #0c4a6e;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .summary-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .summary-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .summary-card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .summary-card-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .summary-card-text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* Practice Section - Accordion */
+        .practice-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .practice-section h2 {
+            font-size: 1.2rem;
+            color: #6d28d9;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .question-accordion {
+            background: white;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e9d5ff;
+            overflow: hidden;
+        }
+        .question-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            list-style: none;
+        }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6d28d9;
+            background: #e9d5ff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.2s;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer {
+            padding: 1rem 1.25rem;
+            background: #faf5ff;
+            border-top: 1px solid #e9d5ff;
+        }
+        .question-answer p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 0.75rem;
+        }
+        .question-answer p:last-child { margin-bottom: 0; }
+        .question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+        .question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+
+        /* Bottom Line */
+        .bottom-line {
+            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
+            margin: 0 0 2rem 0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #7c3aed;
+        }
+        .bottom-line-header {
+            font-weight: 700;
+            color: #5b21b6;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .footer-date { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .footer-source { font-size: 0.85rem; }
+        .footer-source a { color: var(--accent-blue); text-decoration: none; }
+        .footer-source a:hover { text-decoration: underline; }
+        .chat-title-suggestion {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .chat-title-suggestion code {
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Source Code Pro', monospace;
+        }
+
+        /* Code blocks */
+        code {
+            font-family: 'Source Code Pro', monospace;
+            background: #f1f5f9;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="tag-container">
+                <span class="tag tag-tool">Tool</span>
+                <span class="tag tag-prompt">Prompt</span>
+                <span class="tag tag-agent">Agent</span>
+                <span class="tag tag-automation">Automation</span>
+            </div>
+            <h1>Claude 終極入門包：指南、工具、資源完整攻略</h1>
+            <p class="header-subtitle">Ultimate Claude Starter Pack: Guides, Tools, Resources + more</p>
+            <div class="source-info">
+                來源：<a href="https://x.com/aiedge_" target="_blank">@aiedge_</a> on X (Twitter) | 2026-02-05
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="executive-summary">
+            <h2>📋 快速摘要 Executive Summary</h2>
+            <div class="rating-bar">
+                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
+                <span class="rating-high">↑ 實務應用, 工具生態</span>
+                <span class="rating-low">↓ 技術深度, 學習曲線</span>
+            </div>
+            <p class="summary-text">
+                這是一篇<span class="highlight-practical">資源導向的彙整文章</span>，作者 @aiedge_ 將所有「改變人生」的 Claude 資源整理成一份清單，涵蓋入門指南、最佳實踐、工具資源和常見陷阱。文章的核心價值在於<span class="highlight-key">節省你搜尋和篩選資源的時間</span>，提供一個可以直接收藏的起點。對於剛接觸 Claude 或想系統性學習的人來說，這是一份實用的「地圖」；但對於已有經驗的進階使用者，內容深度有限。
+            </p>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section class="objectives-section">
+            <h2>🎯 學習目標 Learning Objectives</h2>
+            <div class="objectives-grid">
+                <div class="objective-item">
+                    <div class="objective-icon">📚</div>
+                    <div class="objective-title">建立 Claude 學習地圖</div>
+                    <div class="objective-desc">掌握從入門到進階的關鍵學習資源，規劃個人學習路徑</div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-icon">🛠️</div>
+                    <div class="objective-title">發現實用工具生態</div>
+                    <div class="objective-desc">認識 Claude Directory、Skills Marketplace 等工具平台，擴展使用情境</div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-icon">⚠️</div>
+                    <div class="objective-title">避免常見使用陷阱</div>
+                    <div class="objective-desc">學習 Context Dumping、重複提示等問題的解決策略</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part I: Ultimate Guides -->
+        <section class="content-section">
+            <div class="section-header">
+                <h3>📖 Part I：終極指南 Ultimate Guides</h3>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">
+                            這個章節彙整了<span class="highlight-concept">六個關鍵學習資源</span>，從 Claude Code 的學習路徑到官方快速入門指南。重點在於這些資源涵蓋了不同的學習階段：初學者可以從 Quickstart 和 Beginner's Guide 開始，中級使用者可以研究 Claude Skills Optimization，進階使用者則可以深入 Claude Code 2.0 Guide。
+                        </p>
+                        <p class="english-text">
+                            "I compiled every life-changing Claude resource into one place. Starter guides, best practices, tools, pro tips, and more."
+                        </p>
+                    </div>
+                    
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">💡 比喻說明</div>
+                        <div class="info-box-content">
+                            想像你要學習一門新技能，這份資源清單就像是一本「旅遊指南」——它不會教你所有細節，但會告訴你哪些景點值得去、哪些坑要避開。對於 CDMO 營運情境，這就像是有人幫你整理好「製藥自動化 AI 工具評估清單」，讓你不用從零開始搜索。
+                        </div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">🛠️ 關鍵資源列表</div>
+                        <div class="info-box-content">
+                            <ul class="resource-list">
+                                <li class="resource-item">
+                                    <span class="resource-number">1</span>
+                                    <div class="resource-content">
+                                        <div class="resource-title">Claude Code Learning Path</div>
+                                        <div class="resource-desc">@dani_avila7 的學習路徑圖，適合想系統學習 Claude Code 的人</div>
+                                    </div>
+                                </li>
+                                <li class="resource-item">
+                                    <span class="resource-number">2</span>
+                                    <div class="resource-content">
+                                        <div class="resource-title">Mastering Claude Skills in &lt;15 minutes</div>
+                                        <div class="resource-desc">@chasing_next 的快速上手指南，適合時間有限的學習者</div>
+                                    </div>
+                                </li>
+                                <li class="resource-item">
+                                    <span class="resource-number">3</span>
+                                    <div class="resource-content">
+                                        <div class="resource-title">Claude Skills Optimization</div>
+                                        <div class="resource-desc">@aiedge_ 自己的深度優化指南，包含實際 prompts</div>
+                                    </div>
+                                </li>
+                                <li class="resource-item">
+                                    <span class="resource-number">4</span>
+                                    <div class="resource-content">
+                                        <div class="resource-title">Claude Code 2.0 Guide</div>
+                                        <div class="resource-desc">sankalp 的實戰經驗分享，包含進階使用技巧</div>
+                                    </div>
+                                </li>
+                                <li class="resource-item">
+                                    <span class="resource-number">5</span>
+                                    <div class="resource-content">
+                                        <div class="resource-title">Official Quickstart</div>
+                                        <div class="resource-desc">Anthropic 官方快速入門，適合完全新手</div>
+                                    </div>
+                                </li>
+                                <li class="resource-item">
+                                    <span class="resource-number">6</span>
+                                    <div class="resource-content">
+                                        <div class="resource-title">Belmont University Guide</div>
+                                        <div class="resource-desc">學術機構的初學者指南 PDF，結構化教學</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part II: Best Practices & Pro Tips -->
+        <section class="content-section">
+            <div class="section-header">
+                <h3>⚡ Part II：最佳實踐與進階技巧 Best Practices & Pro Tips</h3>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">
+                            這部分的核心是<span class="highlight-key">Boris Cherny 的 Claude Code 設置指南</span>——Boris 是 Claude Code 的創建者，他分享了團隊內部使用的方法。關鍵洞察是：<span class="highlight-concept">沒有唯一正確的使用方式</span>，每個人的設置都可以不同。這呼應了「AI 是放大器而非替代品」的觀點。
+                        </p>
+                        <p class="english-text">
+                            "I'm Boris and I created Claude Code. I wanted to quickly share a few tips for using Claude Code, sourced directly from the Claude Code team. Remember: there is no one right way to use Claude Code -- everyone's setup is different."
+                        </p>
+                    </div>
+                    
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠️ 重點提示：Boris 的核心建議</div>
+                        <div class="info-box-content">
+                            <p>Boris 的設置 cheatsheet 強調幾個關鍵點：</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>團隊成員使用 Claude 的方式各不相同</li>
+                                <li>沒有「標準答案」，只有「適合你的答案」</li>
+                                <li>實驗和迭代是找到最佳工作流程的唯一方法</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 核心概念：100 Combined Tips</div>
+                        <div class="info-box-content">
+                            <p>@aiedge_ 提供了兩篇「50 Tips」文章，總計 100 條實用建議：</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li><strong>Claude Code Best Practices (50 Tips)</strong>：專注於程式開發場景</li>
+                                <li><strong>50 Underrated Claude Tips</strong>：涵蓋 Cowork、隱藏資源、Power User 密技</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.85rem;">
+                                這種「大量實用技巧」的格式適合快速瀏覽，但深度有限。建議挑選 5-10 條最相關的技巧深入實踐。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">🛠️ 實務應用</div>
+                        <div class="info-box-content">
+                            <p>對於 CDMO 營運場景，可以重點關注：</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>文件生成相關的 Tips（Batch Records、SOPs）</li>
+                                <li>API 整合技巧（連接現有 QMS 系統）</li>
+                                <li>Prompt 模板管理（建立標準化提示庫）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part III: Tools & Resources -->
+        <section class="content-section">
+            <div class="section-header">
+                <h3>🧰 Part III：工具與資源 Valuable Claude Tools & Resources</h3>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">
+                            這是文章中<span class="highlight-practical">最實用的章節</span>，列出了六個關鍵工具平台。特別值得注意的是 <strong>Claude Code for Everyone</strong>（一個在 Claude Code 中學習 Claude Code 的課程）和 <strong>Prompt Optimizer</strong>（Anthropic 官方的提示優化工具）。
+                        </p>
+                        <p class="english-text">
+                            "My favorite section - you'll want to bookmark this article so you don't lose it."
+                        </p>
+                    </div>
+
+                    <div class="info-box box-compare">
+                        <div class="info-box-header">⚖️ 工具比較</div>
+                        <div class="info-box-content">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                                <tr style="background: #f8fafc;">
+                                    <th style="padding: 0.5rem; text-align: left; border-bottom: 1px solid #e2e8f0;">工具</th>
+                                    <th style="padding: 0.5rem; text-align: left; border-bottom: 1px solid #e2e8f0;">用途</th>
+                                    <th style="padding: 0.5rem; text-align: left; border-bottom: 1px solid #e2e8f0;">適合誰</th>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">Prompt Library</td>
+                                    <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">官方提示範例</td>
+                                    <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">所有人</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">Prompt Optimizer</td>
+                                    <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">自動改善提示</td>
+                                    <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">中級使用者</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">Skills Marketplace</td>
+                                    <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">128K+ 現成 Skills</td>
+                                    <td style="padding: 0.5rem; border-bottom: 1px solid #e2e8f0;">需謹慎篩選</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0.5rem;">Claude Directory</td>
+                                    <td style="padding: 0.5rem;">整合式資源平台</td>
+                                    <td style="padding: 0.5rem;">探索新工具</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠️ 重點提示：Skills Marketplace 的警告</div>
+                        <div class="info-box-content">
+                            <p>作者特別標註「be careful」—— 128,000+ 個 Skills 代表<span class="highlight-key">品質參差不齊</span>。使用建議：</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>查看下載量和評分</li>
+                                <li>優先選擇有說明文檔的 Skills</li>
+                                <li>在非關鍵任務中先測試</li>
+                                <li>對於 GMP 環境，自建 Skills 比外部來源更可控</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">🛠️ 推薦優先探索</div>
+                        <div class="info-box-content">
+                            <ol style="padding-left: 1.5rem;">
+                                <li><strong>Prompt Library</strong>：免費、官方、高品質，是學習提示工程的最佳起點</li>
+                                <li><strong>Prompt Optimizer</strong>：可以用來改善你的 Master Prompt 系統</li>
+                                <li><strong>Claude Code for Everyone</strong>：如果你想深入 Claude Code</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part IV: Underrated Tips -->
+        <section class="content-section">
+            <div class="section-header">
+                <h3>💎 Part IV：被低估的技巧 Underrated Tips Nobody Talks About</h3>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">
+                            這個章節揭示了<span class="highlight-concept">六個「隱藏功能」</span>，其中最有價值的是 <strong>Token Usage 模型選擇矩陣</strong>和 <strong>Style Selection</strong> 功能。Token 使用策略直接影響成本和效率，而 Style 功能則能改變 Claude 的回應結構。
+                        </p>
+                        <p class="english-text">
+                            "Model selection matrix to save on token usage: Haiku 4.5 - switch to this for most of your tasks (80%+ of tasks), Sonnet 4.5 - for 'medium' level tasks only (10% of tasks), Opus 4.5 - ONLY use Opus 4.5 when absolutely necessary (final 10% of tasks)."
+                        </p>
+                    </div>
+
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 核心概念：80/10/10 模型分配法則</div>
+                        <div class="info-box-content">
+                            <p>這個分配建議反映了<span class="highlight-key">成本效益優化原則</span>：</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li><strong>Haiku 4.5 (80%)</strong>：日常任務、快速問答、簡單生成</li>
+                                <li><strong>Sonnet 4.5 (10%)</strong>：中等複雜度、需要較好推理能力</li>
+                                <li><strong>Opus 4.5 (10%)</strong>：複雜分析、關鍵決策支援、創意任務</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-secondary);">
+                                這與你的「Copilot vs Agent」框架一致：日常 Copilot 用 Haiku，Agent 任務用 Sonnet/Opus。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">🛠️ 實務應用：Style Selection</div>
+                        <div class="info-box-content">
+                            <p>Style Selection 讓你可以改變 Claude 的回應結構：</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li><strong>Concise</strong>：精簡回答，適合快速查詢</li>
+                                <li><strong>Learning</strong>：教學模式，適合學習新概念</li>
+                                <li><strong>Custom</strong>：自定義風格，可以設定特定格式</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">對於你的 Master Prompt 系統，可以考慮建立對應的 Style 預設。</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠️ Claude Cowork 的價值</div>
+                        <div class="info-box-content">
+                            <p>作者認為 Cowork「massively underrated」，是「市場上對一般人最好的 AI 工具」。關鍵建議：</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>建立專用資料夾給 Cowork 存取</li>
+                                <li>不要給予所有資料夾的權限</li>
+                                <li>這符合「最小權限原則」的安全實踐</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part V: Common Pitfalls -->
+        <section class="content-section">
+            <div class="section-header">
+                <h3>🚫 Part V：常見陷阱與解決方案 Common Pitfalls (and how to fix)</h3>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">
+                            最後這個章節列出了<span class="highlight-key">四個最常見的使用錯誤</span>。其中 <strong>Context Dumping</strong>（一次性傾倒大量上下文）和 <strong>No Rules</strong>（沒有設定限制）是最普遍的問題。作者建議使用 <code>CLAUDE.md</code> 來定義嚴格規則。
+                        </p>
+                        <p class="english-text">
+                            "When you dump context into Claude, it can forget earlier/previous context. Always 'drip feed' context step by step. This will decrease your hallucinations and increase output quality."
+                        </p>
+                    </div>
+
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">💡 比喻說明：Context Dumping</div>
+                        <div class="info-box-content">
+                            <p>想像你在指導一位新員工：</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li><strong>錯誤方式</strong>：一次性給他 500 頁的 SOP 說「讀完這些就知道怎麼做了」</li>
+                                <li><strong>正確方式</strong>：先說「今天我們學第一章」，確認理解後再進入下一章</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">「Drip feed」就是這個概念——分批餵入上下文，讓模型能夠正確處理每個部分。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-code">
+                        <div class="info-box-header">💻 CLAUDE.md 的作用</div>
+                        <div class="info-box-content">
+                            <p><code>CLAUDE.md</code> 是一個設定檔，用於定義：</p>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                <li>Coding style 規範</li>
+                                <li>Project constraints 專案限制</li>
+                                <li>Output boundaries 輸出邊界</li>
+                            </ul>
+                            <p style="margin-top: 0.75rem;">這類似於你的 Master Prompt 系統——預先定義規則可以避免 Claude「漫遊」到不相關的任務，節省 Token 使用。</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">🛠️ 四大陷阱速查</div>
+                        <div class="info-box-content">
+                            <ol style="padding-left: 1.5rem;">
+                                <li><strong>Wrong Prompting</strong> → 參考官方 Prompt Engineering 指南</li>
+                                <li><strong>Context Dumping</strong> → 分步驟餵入上下文</li>
+                                <li><strong>Repetitive Prompting</strong> → 建立 Skills 或 Notion 資料庫</li>
+                                <li><strong>No Rules</strong> → 使用 CLAUDE.md 設定邊界</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section class="takeaways-section">
+            <h2>📌 重點整理 Key Takeaways</h2>
+            <div class="takeaways-grid">
+                <div class="summary-card">
+                    <div class="summary-card-icon">🗺️</div>
+                    <div class="summary-card-title">資源地圖已建立</div>
+                    <div class="summary-card-text">從官方 Quickstart 到 Boris 的內部技巧，學習路徑已清晰。重點在於選擇 2-3 個資源深入，而非淺嚐全部。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-icon">📊</div>
+                    <div class="summary-card-title">80/10/10 模型法則</div>
+                    <div class="summary-card-text">Haiku 處理 80% 日常任務，Sonnet 處理 10% 中等任務，Opus 保留給 10% 最關鍵的複雜任務。成本效益最大化。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-icon">🚨</div>
+                    <div class="summary-card-title">Context Dumping 是大忌</div>
+                    <div class="summary-card-text">分步驟「drip feed」上下文，而非一次性傾倒。這能減少幻覺、提升輸出品質，符合漸進式 prompting 原則。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-icon">⚙️</div>
+                    <div class="summary-card-title">設定邊界是必要的</div>
+                    <div class="summary-card-text">使用 CLAUDE.md 或 Skills 定義規則和限制。沒有邊界的 Claude 會漫遊到不相關任務，浪費 Token。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="practice-section">
+            <h2>✏️ 練習題 Practice Questions</h2>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q1</span>
+                    <span class="question-type">概念理解</span>
+                    <span class="question-text">解釋「Context Dumping」為什麼會導致 Claude 的輸出品質下降，並描述「drip feed」方法如何改善這個問題。</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>答案要點：</strong></p>
+                    <ul>
+                        <li><strong>Context Dumping 的問題</strong>：當一次性傾倒大量上下文時，Claude 的注意力機制需要在所有資訊中分配權重。早期提供的資訊可能被後來的資訊「稀釋」，導致遺忘或錯誤關聯。這類似於人類閱讀——如果一次給你 100 頁文件，你很難記住第 5 頁的細節。</li>
+                        <li><strong>Drip Feed 的改善</strong>：分步驟餵入上下文讓每個「批次」的資訊都能被充分處理。你可以確認 Claude 理解了第一部分後再提供第二部分，形成漸進式的知識建構。</li>
+                        <li><strong>實務建議</strong>：將長文件拆分成邏輯區塊，每次提供一個區塊並要求 Claude 摘要或確認理解，再進入下一個區塊。</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q2</span>
+                    <span class="question-type">產業應用</span>
+                    <span class="question-text">在 CDMO 的無菌充填環境中，如何應用「80/10/10 模型分配法則」來優化 AI 工具的使用？請舉出具體的任務分類範例。</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>CDMO 應用範例：</strong></p>
+                    <ul>
+                        <li><strong>Haiku (80%)</strong>：日常郵件撰寫、簡單資料查詢、會議記錄摘要、SOP 格式檢查、基礎翻譯任務</li>
+                        <li><strong>Sonnet (10%)</strong>：Deviation 初步分類、Batch Record 異常識別、供應商評估報告初稿、訓練教材生成</li>
+                        <li><strong>Opus (10%)</strong>：複雜 Root Cause Analysis、製程可行性評估報告、跨部門整合策略文件、客戶 Tech Transfer 文件審閱</li>
+                    </ul>
+                    <p style="margin-top: 0.75rem;"><strong>關鍵原則</strong>：GMP 環境的關鍵決策（如 Batch Release）仍需人類 Copilot 模式審核，即使使用 Opus 也不能完全依賴 AI 輸出。</p>
+                </div>
+            </details>
+
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q3</span>
+                    <span class="question-type">批判思考</span>
+                    <span class="question-text">這篇文章的「資源彙整」形式有什麼優點和局限性？對於進階使用者，還需要補充什麼類型的內容？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>優點：</strong></p>
+                    <ul>
+                        <li>節省搜尋時間，提供結構化的學習起點</li>
+                        <li>涵蓋從初學到進階的資源，適合不同階段的學習者</li>
+                        <li>包含「常見陷阱」，幫助避免新手錯誤</li>
+                    </ul>
+                    <p style="margin-top: 0.75rem;"><strong>局限性：</strong></p>
+                    <ul>
+                        <li>缺乏深度分析——列出資源但沒有比較評價</li>
+                        <li>沒有「學習路徑建議」——讀者不知道先讀什麼</li>
+                        <li>部分連結（如 Skills Marketplace）未經品質篩選</li>
+                    </ul>
+                    <p style="margin-top: 0.75rem;"><strong>進階使用者需要：</strong></p>
+                    <ul>
+                        <li>API 整合的技術深度文件</li>
+                        <li>企業級部署的安全和合規考量</li>
+                        <li>產業特定的應用案例研究</li>
+                        <li>Token 經濟學和成本優化的量化分析</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- Bottom Line -->
+        <div class="bottom-line">
+            <div class="bottom-line-header">🎯 我的行動結論</div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">✔ 核心洞察</div>
+                <div class="bottom-line-text">這篇文章是「資源地圖」而非「深度教學」。它的價值在於<strong>節省搜尋時間</strong>，讓我可以快速定位需要的學習資源。「80/10/10 模型法則」和「Context Dumping」警告是最直接可用的兩個洞察，可以立即應用到我的 CDMO AI 工作流程中。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">📈 立即應用</div>
+                <div class="bottom-line-text">本週執行兩件事：(1) 用 Anthropic 官方 Prompt Optimizer 優化我的 Master Prompt v1.5；(2) 建立一個「模型選擇決策樹」，明確定義哪些 CDMO 任務用 Haiku、哪些用 Sonnet/Opus。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">⚠ 需要補充</div>
+                <div class="bottom-line-text">文章沒有提供 GMP 環境的合規考量——Skills Marketplace 的 128K 個 Skills 在受監管環境中是否適用？需要建立一個「Claude Skills 評估清單」，包含驗證、版本控制、審計軌跡等 21 CFR Part 11 要求。6 個月後重讀時，檢視這些工具平台是否仍然活躍。</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-date">製作日期：2026-02-05</div>
+            <div class="footer-source">
+                原文來源：<a href="https://x.com/aiedge_" target="_blank">@aiedge_ on X (Twitter)</a>
+            </div>
+            <div class="chat-title-suggestion">
+                建議 Chat Title：<code>[Tool] Claude Starter Pack - 資源彙整指南</code>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

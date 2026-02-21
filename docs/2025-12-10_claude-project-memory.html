@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-12-10">
+    <meta name="doc-title" content="Claude Project Memory 完整指南">
+    <meta name="doc-source" content="Wyndo / AI Maker Substack">
+    <meta name="doc-tags" content="Tool,Prompt,LLM">
+    <meta name="doc-rating" content="3.5">
+    <meta name="doc-summary" content="Claude Projects記憶系統完整指南，提升AI輸出一致性與品質">
+    <meta name="doc-file" content="2025-12-10_claude-project-memory.html">
+    <title>Claude Project Memory 完整指南 | AI 學習筆記</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans TC', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header .subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .header .source-link {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .header .source-link a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .left-column {
+            background: #fafafa;
+            padding: 2rem;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .right-column {
+            background: #f0f7ff;
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            height: fit-content;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .key-term {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .quote-box {
+            background: white;
+            border-left: 4px solid #667eea;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            font-style: italic;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Commentary boxes */
+        .concept-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .concept-box h4 {
+            color: #2d5a27;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .analogy-box {
+            background: linear-gradient(135deg, #fff3b0 0%, #ffd86f 100%);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .analogy-box h4 {
+            color: #8b6914;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .analogy-box h4::before {
+            content: "💡 ";
+        }
+
+        .note-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .note-box h4 {
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .note-box h4::before {
+            content: "⚠️ ";
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .formula-box h4 {
+            color: #5a3d8a;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .practice-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border: 2px dashed #667eea;
+        }
+
+        .practice-box h4 {
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .practice-box h4::before {
+            content: "🧠 ";
+        }
+
+        .example-good {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .example-bad {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+
+        .content-text {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-list li {
+            counter-increment: step;
+            margin-bottom: 1rem;
+            padding-left: 2.5rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            width: 1.8rem;
+            height: 1.8rem;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .toc {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .toc h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+            padding-left: 1rem;
+            border-left: 2px solid #e0e0e0;
+        }
+
+        .toc a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            color: #667eea;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .workflow-diagram {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .workflow-step {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .workflow-arrow {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+
+        .memory-vs-prompt {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .memory-card, .prompt-card {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .memory-card {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+        }
+
+        .prompt-card {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Claude Project Memory 終極指南</h1>
+        <p class="subtitle">如何打造真正理解你品味的 AI 助手</p>
+        <p class="source-link">原文出處：<a href="https://aimaker.substack.com/p/ultimate-guide-to-claude-project-memory-system-prompt" target="_blank">AI Maker Substack</a></p>
+    </header>
+
+    <main class="main-container">
+        <!-- LEFT COLUMN: Original Content -->
+        <div class="left-column">
+            <div class="toc">
+                <h3>目錄 Table of Contents</h3>
+                <ul>
+                    <li><a href="#intro">引言：為什麼 Project Memory 很重要</a></li>
+                    <li><a href="#problem">問題：大多數人做錯了什麼</a></li>
+                    <li><a href="#friction">核心概念：Friction-Driven Memory</a></li>
+                    <li><a href="#system">四步驟系統</a></li>
+                    <li><a href="#shortcut">快捷方法：Friction Detection Prompt</a></li>
+                    <li><a href="#examples">實際案例</a></li>
+                    <li><a href="#depth">進階：Knowledge Base Files</a></li>
+                    <li><a href="#conclusion">結論與行動建議</a></li>
+                </ul>
+            </div>
+
+            <section id="intro" class="section">
+                <h2 class="section-title">引言：Hook 的力量</h2>
+                <p class="content-text">作者在 LinkedIn 上每週發布 5-7 篇文章，上個月獲得超過 25 萬次曝光，但追蹤者只有 2,400 人。這個不成比例的成功來自一個關鍵因素：<span class="highlight">Hook（開場吸引語）</span>。</p>
+                
+                <div class="quote-box">
+                    "The right hook does 80% of the work. It stops people mid-scroll, makes them care enough to read, and eventually comment and share. A bad hook? Your best writing dies in silence."
+                </div>
+
+                <p class="content-text">問題是：作者使用 AI 來寫 LinkedIn 貼文，但一開始 Claude 總是產出 <span class="key-term">generic hooks</span>（通用且平淡的開場）——安全、不會出錯，但也不會讓人停下來。</p>
+
+                <p class="content-text">即使 Claude 已經讀過作者表現最好的文章，理解了他的聲音，輸出還是「還可以」——但「還可以」不會在 LinkedIn 爆紅。</p>
+
+                <p class="content-text">直到作者開始<span class="highlight">用不同的方式使用 Project Memory</span>。</p>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">ChatGPT vs Claude：Memory 的本質差異</h2>
+                <p class="content-text">你可能知道 ChatGPT 的記憶功能——它會記住你是誰，隨時間學習你的模式。但 ChatGPT 的記憶是一個<span class="key-term">black box（黑箱）</span>：</p>
+                <ul>
+                    <li>你無法真正編輯它</li>
+                    <li>你可以調整 system prompt，但無法直接控制它保留和優先處理什麼</li>
+                </ul>
+
+                <p class="content-text"><span class="highlight">Claude Projects 的運作方式不同</span>：</p>
+                <ul>
+                    <li>你可以<strong>直接編輯記憶</strong></li>
+                    <li>你可以告訴 Claude 確切要記住什麼</li>
+                    <li>這些指令會帶入每一次對話——不是模糊的背景資訊，而是<span class="key-term">decision-making criteria（決策準則）</span></li>
+                </ul>
+            </section>
+
+            <section id="problem" class="section">
+                <h2 class="section-title">大多數人做錯了什麼</h2>
+                <p class="content-text">大多數人從 <span class="key-term">System Prompt</span> 開始——這是正確的。你記錄自己的聲音、偏好、受眾、語調、背景資訊。你想到的每一條指令。</p>
+
+                <div class="quote-box">
+                    "This feels productive. More detail should mean better outputs, right?"
+                </div>
+
+                <p class="content-text">然後輸出還是感覺不對。不是完全錯誤，只是<span class="highlight">不像你</span>。</p>
+
+                <p class="content-text">所以你加更多。更多例子。更多說明。Prompt 越來越長，試圖涵蓋每一種邊緣情況。</p>
+
+                <p class="content-text">這有幫助。但還是有差距。輸出在技術上遵循了指令，但感覺不像自己。你不斷手動修正同樣的模式。</p>
+
+                <div class="quote-box">
+                    "The problem wasn't the system prompt. The problem was I didn't actually know what I wanted until I saw what I didn't want."
+                </div>
+            </section>
+
+            <section id="friction" class="section">
+                <h2 class="section-title">Friction-Driven Memory：摩擦驅動記憶</h2>
+                <h3>什麼是 Friction（摩擦）？</h3>
+                <p class="content-text">Friction 是 Claude 給你的東西與你實際需要的東西之間的<span class="highlight">差距</span>。當你讀 Claude 的輸出時想著：「這還可以，但不對」的那種感覺。</p>
+
+                <p class="content-text">大多數人修正它然後繼續前進：</p>
+                <ul>
+                    <li>Claude 寫了一個通用的 hook？手動重寫它</li>
+                    <li>Claude 聽起來太學術？自己簡化它</li>
+                    <li>問題解決了。下一個任務。</li>
+                </ul>
+
+                <p class="content-text">但那個摩擦<span class="highlight">會回來</span>。明天。下週。每次你做類似的事情時。</p>
+
+                <div class="quote-box">
+                    "Because Claude doesn't know it made a mistake. You fixed the output, but you didn't fix the root cause."
+                </div>
+
+                <p class="content-text">到了第三次修正同樣的問題時，你就知道這是一個值得解決的模式。而你做的修正會揭示你事先無法表達的偏好——<span class="highlight">你不知道你討厭那種 hook 結構，直到 Claude 使用了它</span>。</p>
+            </section>
+
+            <section id="system" class="section">
+                <h2 class="section-title">四步驟系統</h2>
+                
+                <h3>Step 1: 即時注意摩擦（別只是修正它）</h3>
+                <p class="content-text">你正在與 Claude 合作。輸出中有些東西困擾你。你的本能是快速修正然後繼續前進。</p>
+                <p class="content-text"><strong>停下來。</strong></p>
+                <p class="content-text">那個摩擦的時刻是有價值的。如果你修正它然後繼續，你就失去了數據。</p>
+                <p class="content-text">反而，暫停並問自己：「這裡具體哪裡錯了？」</p>
+                <ul>
+                    <li>是語調嗎？太正式？太隨意？太學術？</li>
+                    <li>是結構嗎？順序錯了？太長？漏了什麼？</li>
+                    <li>是一個模式嗎？你討厭的短語結構？感覺被強迫的修辭手法？</li>
+                </ul>
+
+                <h3>Step 2: 將摩擦轉換成指令</h3>
+                <p class="content-text">摩擦是一種<span class="highlight">感覺</span>。Project memory 需要<span class="highlight">語言</span>。你的工作是將一個轉換成另一個。</p>
+                <p class="content-text">作者使用這個簡單框架：</p>
+                <table class="comparison-table">
+                    <tr>
+                        <th>項目</th>
+                        <th>內容</th>
+                    </tr>
+                    <tr>
+                        <td>What I got</td>
+                        <td>Claude 的實際輸出</td>
+                    </tr>
+                    <tr>
+                        <td>What I needed</td>
+                        <td>正確的應該是什麼</td>
+                    </tr>
+                    <tr>
+                        <td>The gap</td>
+                        <td>這兩者之間的差異是什麼？</td>
+                    </tr>
+                    <tr>
+                        <td>The instruction</td>
+                        <td>我應該告訴 Claude 什麼，讓這不再發生？</td>
+                    </tr>
+                </table>
+
+                <h3>Step 3: 加入 Project Memory</h3>
+                <p class="content-text">現在把那個指令變成永久的。在 Claude Projects 中，你可以直接在對話中加入記憶。在更新前，作者通常會說：</p>
+                <div class="quote-box">
+                    "I noticed the hook you wrote explained the concept before revealing the insight. I need hooks that lead with the surprising claim first. Can you help me write a memory instruction that captures this preference?"
+                </div>
+                
+                <p class="content-text"><strong>好的 memory entries 原則：</strong></p>
+                <ul>
+                    <li><strong>具體，不要模糊</strong></li>
+                </ul>
+                <div class="example-bad">Bad: "Write better hooks"</div>
+                <div class="example-good">Good: "Lead with the insight first. Don't set up context before the revelation."</div>
+
+                <ul>
+                    <li><strong>需要時包含例子</strong></li>
+                </ul>
+                <div class="example-bad">Don't write: 'Here's a feature, many people don't use it, but there's a pattern...'</div>
+                <div class="example-good">Do write: 'You don't know what your project needs until it fails.'</div>
+
+                <ul>
+                    <li><strong>命名你要避免的模式</strong></li>
+                </ul>
+                <div class="example-good">Avoid the 'They won't be X, they'll be Y' rhetorical contrast pattern.</div>
+
+                <h3>Step 4: 測試和精煉</h3>
+                <p class="content-text">記憶加入了。但它有效嗎？</p>
+                <p class="content-text">下次遇到類似情況時，注意觀察。Claude 有遵循指令嗎？摩擦消失了嗎？</p>
+                <ul>
+                    <li><strong>如果是：</strong>很好。繼續並等待下一個摩擦點出現</li>
+                    <li><strong>如果否：</strong>指令可能不夠具體。精煉它</li>
+                </ul>
+            </section>
+
+            <section id="shortcut" class="section">
+                <h2 class="section-title">快捷方法：Friction-Detection Prompt</h2>
+                <p class="content-text">有時你在對話中間，邊做邊調整。你調整這裡的一個句子，重寫那裡的一個 hook。要求一個不同的角度。</p>
+                <p class="content-text">你在 flow 中。你只是修正東西而沒有想太多。</p>
+                <p class="content-text"><span class="highlight">但 Claude 正在注意。</span></p>
+                <p class="content-text">Claude 可以看到你修正的模式，即使你太專注而沒注意到。每次你調整什麼，Claude 都在追蹤改變了什麼以及為什麼。</p>
+                
+                <div class="quote-box">
+                    <strong>核心提示詞：</strong><br>
+                    "Looking at our conversation so far, are there any patterns in how I've corrected your outputs or asked you to adjust things? What preferences or rules am I demonstrating that aren't captured in your system prompt or project memory yet?"
+                </div>
+
+                <p class="content-text"><strong>為什麼這有效：</strong></p>
+                <ul>
+                    <li>Claude 對對話有完美的記憶。你可能忘了你連續調整了三次語調，但 Claude 不會</li>
+                    <li>它揭示盲點。你沒有意識到的摩擦被命名和識別</li>
+                    <li>它為你做翻譯工作。Claude 根據觀察到的模式草擬記憶條目</li>
+                </ul>
+
+                <h3>替代提示詞</h3>
+                <p class="content-text"><strong>做了多次修正後：</strong></p>
+                <div class="quote-box">
+                    "I've made several edits to your outputs in this conversation. Can you identify the pattern and suggest a memory instruction that would prevent this friction next time?"
+                </div>
+
+                <p class="content-text"><strong>全面分析：</strong></p>
+                <div class="quote-box">
+                    "Based on how I've responded to your outputs today - what I kept, what I changed, what I asked you to redo - draft 2-3 specific memory instructions that would improve our collaboration."
+                </div>
+
+                <p class="content-text"><strong>工作中快速檢查：</strong></p>
+                <div class="quote-box">
+                    "Pause. Have I been correcting the same type of thing repeatedly in the last few chats? If so, what memory instruction would fix it?"
+                </div>
+            </section>
+
+            <section id="examples" class="section">
+                <h2 class="section-title">實際案例</h2>
+                
+                <h3>案例 1：LinkedIn Hook 問題</h3>
+                <p class="content-text"><strong>情況：</strong>作者需要能讓人停止滾動的 hook——大膽、具體、引起好奇心的陳述。但 Claude 一直寫解釋性的 hook。在揭示之前先設定。先給背景再給重點。</p>
+                
+                <p class="content-text"><strong>摩擦：</strong>Claude 給的：</p>
+                <div class="example-bad">"The AI race is heating up. Companies are making important decisions about which AI providers to use. But the patterns emerging might surprise you."</div>
+                
+                <p class="content-text">這是反的。太多鋪陳。沒有張力。沒有具體性。</p>
+                <p class="content-text">作者手動重寫：</p>
+                <div class="example-good">"Anthropic just ate 20% of OpenAI's enterprise market in 24 months. And it's not even close to done."</div>
+
+                <p class="content-text"><strong>最終 Memory Entry：</strong></p>
+                <div class="quote-box">
+                    <strong>Hook Framework (LinkedIn):</strong><br>
+                    - Lead with the insight or surprising claim FIRST<br>
+                    - Don't explain or set up context before the revelation<br>
+                    - Structure: Insight → Context → Explanation<br>
+                    - Make readers think "Wait, what?" before "Oh, I see"<br>
+                    - Avoid: "Here's X. Most people don't Y. But there's Z..."<br>
+                    - Instead: Lead with Z immediately
+                </div>
+
+                <h3>案例 2：Tool-Name Creep 問題</h3>
+                <p class="content-text"><strong>情況：</strong>作者在寫 Substack Notes——需要對任何使用 AI 的人都通用和相關的簡短社交媒體貼文。策略是專注於轉變和原則，而不是工具功能。但 Claude 一直提到特定的工具名稱。</p>
+
+                <p class="content-text"><strong>摩擦：</strong>Claude 輸出：</p>
+                <div class="example-bad">"Cursor just changed how I think about coding. Instead of fighting syntax, the AI handles boilerplate and I focus on logic."</div>
+
+                <p class="content-text">作者編輯：</p>
+                <div class="example-good">"Programming became collaborative. The AI handles syntax patterns, I focus on problem-solving logic."</div>
+
+                <p class="content-text"><strong>最終 Memory Entry：</strong></p>
+                <div class="quote-box">
+                    <strong>Substack Notes Strategy - Universal Insights:</strong><br>
+                    NEVER mention specific AI tools by name (Cursor, Claude, NotebookLM, ChatGPT, etc.)<br>
+                    Focus on transformations, not tools:<br>
+                    - Instead of "Cursor made me think in systems" → "Thinking in systems changed everything"<br>
+                    - Instead of "Claude taught me to code" → "Programming became collaborative"
+                </div>
+
+                <h3>案例 3：銷售郵件太企業化問題</h3>
+                <p class="content-text"><strong>情況：</strong>作者在寫黑色星期五促銷郵件。他的聲音是樂觀但誠實的。直接但不推銷的。但 Claude 一直默認為典型的行銷誇大語言。</p>
+
+                <p class="content-text"><strong>摩擦：</strong>Claude 輸出：</p>
+                <div class="example-bad">"🔥 LAST CHANCE! Don't miss out on this incredible opportunity! This deal won't last forever - grab it now before it's gone! 🚨"</div>
+
+                <p class="content-text">作者重寫：</p>
+                <div class="example-good">"This ends Monday, then we're back to full price. You're either subscribing now or waiting another year for this offer."</div>
+
+                <p class="content-text"><strong>最終 Memory Entry（部分）：</strong></p>
+                <div class="quote-box">
+                    <strong>MAINTAIN (Authentic conviction):</strong><br>
+                    ✅ Direct challenge: "You're either subscribing now or waiting another year"<br>
+                    ✅ Honest urgency: "This ends Sunday, then we're back to full price"<br><br>
+                    <strong>AVOID (Typical marketing hype):</strong><br>
+                    ❌ Hype energy: "🔥 LAST CHANCE 🔥"<br>
+                    ❌ Typical marketing urgency: "Don't miss out!"
+                </div>
+            </section>
+
+            <section id="depth" class="section">
+                <h2 class="section-title">進階：Knowledge Base Files</h2>
+                <p class="content-text">一旦你開始建立 project memory，你最終會達到一個門檻。當前的記憶介面限制條目只能寫幾句話。有些項目可以用一段簡潔的指令來表達；其他的則需要更詳細的框架。</p>
+
+                <p class="content-text">這就是 <span class="key-term">Project Knowledge Base Files</span> 變得必要的地方。</p>
+
+                <div class="quote-box">
+                    <strong>這樣想：</strong><br>
+                    <strong>Project Memory</strong> = Claude 在每次對話中應用的主動指令<br>
+                    <strong>Knowledge Base Files</strong> = Claude 在需要時查閱的參考框架
+                </div>
+
+                <p class="content-text"><strong>建議做法：</strong></p>
+                <ul>
+                    <li>Memory entries 應該是簡潔的指針："Do X, reference Y framework, avoid Z pattern."</li>
+                    <li>Knowledge base files 應該是全面的文檔：詳細的例子、邊緣案例、前後對比、決策樹</li>
+                </ul>
+
+                <p class="content-text"><strong>實作方式：</strong>請 Claude 為你創建記憶，生成為 Markdown 文件，然後上傳到你的 project knowledge base。</p>
+            </section>
+
+            <section id="conclusion" class="section">
+                <h2 class="section-title">結論：這實際上教會你什麼</h2>
+                
+                <div class="quote-box">
+                    "This process teaches you how your own taste actually works."
+                </div>
+
+                <p class="content-text">大多數人認為他們知道自己想要什麼。他們有模糊的偏好：「我喜歡對話式寫作」或「我想要吸引人的 hook」或「保持簡單」。</p>
+
+                <p class="content-text">但這些不是可執行的。它們是沒有座標的方向。</p>
+
+                <p class="content-text"><span class="highlight">Friction 迫使你變得具體。</span></p>
+
+                <p class="content-text">當 Claude 寫出不符合你品味的東西時，你不能只說「那不對」然後繼續。你必須表達<em>為什麼</em>它不對。你必須命名困擾你的具體事物。你必須把感覺轉換成語言。</p>
+
+                <p class="content-text">這很難。因為我們大多數人以前從未有意識地檢視過自己的偏好。我們只是在看到時知道自己喜歡什麼。</p>
+
+                <p class="content-text">但建立 project memory 要求你<span class="highlight">逆向工程你自己的品味</span>。發現你保留什麼與你改變什麼之間的模式。注意到你一直在遵循但從未意識到存在的隱形規則。</p>
+
+                <div class="quote-box">
+                    "You're not just teaching Claude. You're teaching yourself."
+                </div>
+
+                <h3>行動建議</h3>
+                <ol class="step-list">
+                    <li>這週，開啟一個 Claude Project（如果已有，選最常用的那個）</li>
+                    <li>工作時注意摩擦。當你發現自己在編輯 Claude 的輸出時，暫停。注意你在改什麼以及為什麼</li>
+                    <li>使用 friction-detection prompt。讓 Claude 告訴你它注意到什麼</li>
+                    <li>從小處開始。這週一個 memory entry 就夠了</li>
+                </ol>
+            </section>
+        </div>
+
+        <!-- RIGHT COLUMN: Commentary -->
+        <div class="right-column">
+            <div class="concept-box">
+                <h4>核心概念解析：Project Memory vs System Prompt</h4>
+                <p><strong>System Prompt（系統提示詞）</strong>：你在開始工作前的最佳猜測。像是在正式約會前，你想像對方喜歡什麼類型的餐廳。</p>
+                <p><strong>Project Memory（專案記憶）</strong>：你透過實際工作學到的東西。像是約會幾次後，你知道她對海鮮過敏、喜歡安靜的環境。</p>
+                <p style="margin-top: 0.8rem; font-weight: 600; color: #2d5a27;">System Prompt 是假設，Project Memory 是證據。</p>
+            </div>
+
+            <div class="analogy-box">
+                <h4>比喻說明：餐廳主廚的學習</h4>
+                <p>想像你是一個新餐廳的常客。一開始，主廚只知道你的基本資料（System Prompt）：「這位客人喜歡義大利菜」。</p>
+                <p>但透過多次用餐（產生 Friction）：</p>
+                <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                    <li>你把洋蔥挑掉 → 主廚記下「不吃洋蔥」</li>
+                    <li>你稱讚青醬 → 主廚記下「偏好青醬」</li>
+                    <li>你抱怨太鹹 → 主廚記下「口味清淡」</li>
+                </ul>
+                <p>這些就是 <strong>Memory Entries</strong>。主廚不是一開始就知道這些，而是透過觀察你的反應（Friction）學習的。</p>
+            </div>
+
+            <div class="note-box">
+                <h4>重點提示：為什麼「還可以」不夠好</h4>
+                <p>在 AI 內容創作中，「還可以」是最危險的結果。它不會讓你停下來思考，但也不會讓讀者停下來閱讀。</p>
+                <p>真正的價值創造發生在：</p>
+                <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                    <li>你<strong>感覺到不對</strong>的那一刻</li>
+                    <li>你<strong>停下來分析</strong>為什麼不對</li>
+                    <li>你<strong>轉化成指令</strong>讓 AI 學習</li>
+                </ul>
+            </div>
+
+            <div class="concept-box">
+                <h4>核心概念解析：Friction（摩擦）</h4>
+                <p><strong>定義</strong>：AI 輸出與你實際需要之間的差距。</p>
+                <p><strong>信號</strong>：當你想說「這還可以，但不對」的時候。</p>
+                <p><strong>價值</strong>：摩擦是數據。它告訴你 AI 還不理解什麼。</p>
+                <p style="margin-top: 0.8rem; font-weight: 600; color: #2d5a27;">摩擦不是 bug，摩擦是系統本身。</p>
+            </div>
+
+            <div class="analogy-box">
+                <h4>比喻說明：健身教練的微調</h4>
+                <p>好的健身教練不會一開始就給你完美的訓練計劃。他會：</p>
+                <ol style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                    <li>給你一個基礎計劃（System Prompt）</li>
+                    <li>觀察你做動作時哪裡卡住（Friction）</li>
+                    <li>記錄下來並調整（Memory Entry）</li>
+                    <li>下次訓練時直接用調整後的版本</li>
+                </ol>
+                <p>「你深蹲時膝蓋會內扣」這種觀察，比「我要完美的深蹲」的指令有用 100 倍。</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>框架：Friction → Instruction 轉換公式</h4>
+                <table style="width: 100%; font-size: 0.9rem; border-collapse: collapse;">
+                    <tr style="background: rgba(255,255,255,0.5);">
+                        <td style="padding: 0.5rem; border: 1px solid #8ec5fc;"><strong>What I got</strong></td>
+                        <td style="padding: 0.5rem; border: 1px solid #8ec5fc;">Claude 實際給你的</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid #8ec5fc;"><strong>What I needed</strong></td>
+                        <td style="padding: 0.5rem; border: 1px solid #8ec5fc;">你真正想要的</td>
+                    </tr>
+                    <tr style="background: rgba(255,255,255,0.5);">
+                        <td style="padding: 0.5rem; border: 1px solid #8ec5fc;"><strong>The gap</strong></td>
+                        <td style="padding: 0.5rem; border: 1px solid #8ec5fc;">兩者差異是什麼</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid #8ec5fc;"><strong>The instruction</strong></td>
+                        <td style="padding: 0.5rem; border: 1px solid #8ec5fc;">防止再發生的指令</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="note-box">
+                <h4>重點提示：好的 Memory Entry 三原則</h4>
+                <ol style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                    <li><strong>具體而非模糊</strong>：「先給洞見」而非「寫好的 hook」</li>
+                    <li><strong>包含例子</strong>：展示做與不做的對比</li>
+                    <li><strong>命名要避免的模式</strong>：給壞模式一個名字讓 AI 識別</li>
+                </ol>
+            </div>
+
+            <div class="analogy-box">
+                <h4>比喻說明：偵探 Claude</h4>
+                <p>使用 Friction-Detection Prompt 就像請一個偵探分析你的行為模式。</p>
+                <p>你可能沒注意到自己連續三次把 hook 中的解釋移到後面，但 Claude 這個「偵探」看得一清二楚。</p>
+                <p>它會說：「我注意到你每次都把驚人的主張移到最前面，刪除所有鋪墊語言...」</p>
+                <p style="font-weight: 600;">讓 AI 告訴你，你自己的品味是什麼。</p>
+            </div>
+
+            <div class="concept-box">
+                <h4>核心概念解析：Memory vs Knowledge Base</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.5rem;">
+                    <div style="background: white; padding: 0.8rem; border-radius: 6px;">
+                        <strong style="color: #2196f3;">Project Memory</strong>
+                        <p style="font-size: 0.85rem; margin-top: 0.3rem;">主動指令<br>每次對話都應用<br>簡短精準</p>
+                    </div>
+                    <div style="background: white; padding: 0.8rem; border-radius: 6px;">
+                        <strong style="color: #ff9800;">Knowledge Base</strong>
+                        <p style="font-size: 0.85rem; margin-top: 0.3rem;">參考框架<br>需要時查閱<br>詳細完整</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-box">
+                <h4>練習思考 1</h4>
+                <p><strong>情境</strong>：你請 Claude 寫一篇關於時間管理的文章，它給了你一個充滿「10 個技巧」、「提升效率」等陳詞濫調的版本。你覺得不對，但說不出為什麼。</p>
+                <p><strong>問題</strong>：用 Friction → Instruction 框架，你會怎麼分析這個問題並寫出 Memory Entry？</p>
+            </div>
+
+            <div class="practice-box">
+                <h4>練習思考 2</h4>
+                <p><strong>情境</strong>：你發現 Claude 寫的電子郵件總是以「I hope this email finds you well」開頭，而你每次都要刪掉它。</p>
+                <p><strong>問題</strong>：這個 Friction 揭示了你什麼偏好？你會寫什麼樣的 Memory Entry？</p>
+            </div>
+
+            <div class="practice-box">
+                <h4>練習思考 3</h4>
+                <p><strong>情境</strong>：你是一個 B2B SaaS 公司的內容行銷人員。你想用這篇文章的方法來訓練 Claude 寫符合你品牌聲音的內容。</p>
+                <p><strong>問題</strong>：你會設計什麼樣的 Friction-Detection Prompt 來發現你的品牌聲音特徵？</p>
+            </div>
+
+            <div class="note-box">
+                <h4>重點提示：真正的學習發生在哪裡</h4>
+                <p>這個過程最意外的收穫不是讓 Claude 變得更好，而是讓<strong>你更了解自己</strong>。</p>
+                <p>Friction 迫使你逆向工程自己的品味——發現你一直在遵循但從未意識到的隱形規則。</p>
+                <p style="font-weight: 600; margin-top: 0.8rem;">你不只是在教 Claude，你也在教自己。</p>
+            </div>
+
+            <div class="workflow-diagram">
+                <h4 style="margin-bottom: 1rem; color: #667eea;">兩種工作流程</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Option A（快速）：</strong></p>
+                <span class="workflow-step">工作</span>
+                <span class="workflow-arrow">→</span>
+                <span class="workflow-step">Detection Prompt</span>
+                <span class="workflow-arrow">→</span>
+                <span class="workflow-step">加入建議</span>
+                
+                <p style="font-size: 0.9rem; margin: 1rem 0 0.5rem;"><strong>Option B（詳細）：</strong></p>
+                <span class="workflow-step">工作</span>
+                <span class="workflow-arrow">→</span>
+                <span class="workflow-step">注意摩擦</span>
+                <span class="workflow-arrow">→</span>
+                <span class="workflow-step">轉換指令</span>
+                <span class="workflow-arrow">→</span>
+                <span class="workflow-step">測試精煉</span>
+            </div>
+
+            <div class="analogy-box">
+                <h4>實務應用：你的第一週計劃</h4>
+                <ol style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                    <li><strong>Day 1-2</strong>：正常使用 Claude，但開始注意「不對勁」的感覺</li>
+                    <li><strong>Day 3-4</strong>：當你手動修改輸出時，問自己「為什麼要改？」</li>
+                    <li><strong>Day 5</strong>：使用 Friction-Detection Prompt，讓 Claude 告訴你它觀察到的模式</li>
+                    <li><strong>Day 6-7</strong>：選一個最明顯的模式，寫成 Memory Entry</li>
+                </ol>
+                <p style="font-weight: 600; margin-top: 0.8rem;">目標：這週只加一條 Memory Entry，但要是真正從摩擦中學到的。</p>
+            </div>
+
+            <div class="concept-box">
+                <h4>文章核心洞見總結</h4>
+                <ol style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                    <li><strong>你不知道你要什麼，直到你看到你不要什麼</strong></li>
+                    <li><strong>摩擦是數據，不是問題</strong></li>
+                    <li><strong>把感覺轉化成語言是最難也最有價值的工作</strong></li>
+                    <li><strong>這個過程教會你了解自己的品味</strong></li>
+                </ol>
+                <p style="margin-top: 0.8rem; font-weight: 600; color: #2d5a27; font-size: 1.1rem;">"Friction isn't a bug in the system. It's the system."</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>AI 學習筆記 | 基於 AI Maker Substack 文章製作</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">原文連結：<a href="https://aimaker.substack.com/p/ultimate-guide-to-claude-project-memory-system-prompt" style="color: #fff;">The Ultimate Guide to Claude's Project Memory</a></p>
+    </footer>
+</body>
+</html>

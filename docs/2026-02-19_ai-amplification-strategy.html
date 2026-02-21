@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-19">
+    <meta name="doc-title" content="AI Amplification：用 AI 壓力測試策略假設">
+    <meta name="doc-source" content="Joel Salinas / Leadership in Change">
+    <meta name="doc-tags" content="LLM,Prompt,Tool,Agent">
+    <meta name="doc-rating" content="3.8">
+    <meta name="doc-summary" content="AI Amplification概念：用AI壓力測試策略假設，五個問題揭露跨領域決策盲點的四步驟框架">
+    <meta name="doc-file" content="2026-02-19_ai-amplification-strategy.html">
+    <title>AI Amplification：用 AI 壓力測試策略假設</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+        /* Header */
+        .header { text-align: center; margin-bottom: 2rem; padding: 2.5rem 2rem; background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%); border-radius: 1rem; color: white; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.3; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; }
+        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .source-info { font-size: 0.8rem; opacity: 0.8; }
+        .source-info a { color: #93c5fd; text-decoration: none; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .exec-summary h2 { font-size: 1.15rem; color: #1e3a8a; margin-bottom: 1rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
+
+        /* Learning Objectives */
+        .objectives { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .objective-item h3 { font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.25rem; }
+        .objective-item p { font-size: 0.85rem; color: #64748b; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Content Sections */
+        .section-title { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } }
+        .content-left { border-right: 1px solid #e2e8f0; padding-right: 1.5rem; }
+        @media (max-width: 768px) { .content-left { border-right: none; padding-right: 0; } }
+        .content-right { padding-left: 0.5rem; }
+
+        /* Bilingual Blocks */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .bilingual-block .zh { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+        .bilingual-block .en { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
+
+        /* Highlights */
+        .hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; margin-bottom: 1.25rem; overflow: hidden; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .info-box-content ul { padding-left: 1.25rem; margin: 0.5rem 0; }
+        .info-box-content li { margin-bottom: 0.3rem; }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #f59e0b; }
+        .summary-card:nth-child(4) { border-left-color: #8b5cf6; }
+        .summary-card h4 { font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
+        .summary-card p { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+
+        /* Practice Accordion */
+        .practice-section { margin: 2rem 0; }
+        .practice-section h2 { font-size: 1.15rem; color: #5b21b6; margin-bottom: 1rem; }
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="tags">
+            <span class="tag tag-llm">LLM</span>
+            <span class="tag tag-prompt">Prompt</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-agent">Agent</span>
+        </div>
+        <h1>AI Amplification：用 AI 壓力測試你的策略假設</h1>
+        <div class="subtitle">五個問題揭露你在陌生領域中遺漏的關鍵盲點</div>
+        <div class="source-info">
+            Source: Joel Salinas &amp; Nick Connor / Leadership in Change &amp; The Convergence Project | Feb 19, 2026<br>
+            <a href="https://substack.com/@leadaichange" target="_blank">Leadership in Change Substack</a>
+        </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-summary">
+        <h2>Executive Summary</h2>
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 3.8/5</span>
+            <span class="rating-high">&uarr; Practical Value, Learning Curve</span>
+            <span class="rating-low">&darr; Technical Depth, Tool Ecosystem</span>
+        </div>
+        <p>
+            本文提出 <span class="hl-concept">AI Amplification（AI 放大效應）</span>概念——在投入資源前，利用 AI 對話快速壓力測試策略假設。作者以 Bed Bath &amp; Beyond 破產案例為核心，展示 CEO Mark Tritton 如何將 Target 的成功劇本錯誤套用到「尋寶式零售」業態，導致客戶流失與最終倒閉。文章透過五個 AI 測試問題，示範如何在 20 分鐘內揭露跨領域決策的核心盲點，並提供可立即應用的四步驟框架。這不是技術深潛文章，而是一篇 <span class="hl-key">決策品質框架</span>，對任何在陌生領域做高風險決策的領導者都有直接價值。
+        </p>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="objectives">
+        <div class="objective-item">
+            <div class="objective-icon">&#127919;</div>
+            <h3>理解 AI Amplification</h3>
+            <p>區分 AI 放大 vs. AI 自動化 vs. AI 替代——AI 不是替你決策，而是加速你在陌生領域的認知校準</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#128269;</div>
+            <h3>掌握五問壓力測試法</h3>
+            <p>學會用五個結構化問題，在 20 分鐘內揭露策略假設中的跨領域盲點</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#9889;</div>
+            <h3>建立決策前測試習慣</h3>
+            <p>將 AI 壓力測試嵌入你的決策流程——從「直覺 &rarr; 行動」進化到「直覺 &rarr; 測試 &rarr; 行動」</p>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">AI Amplification 四步驟框架</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#9997;&#65039;</div>
+                <div class="framework-step-title">寫下直覺</div>
+                <div class="framework-step-desc">30 秒寫出你的<br>策略直覺</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#129302;</div>
+                <div class="framework-step-title">AI 對話</div>
+                <div class="framework-step-desc">20 分鐘測試<br>假設與盲點</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#9878;&#65039;</div>
+                <div class="framework-step-title">測試對立觀點</div>
+                <div class="framework-step-desc">10 分鐘讓 AI<br>為替代方案辯護</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#127919;</div>
+                <div class="framework-step-title">知情決策</div>
+                <div class="framework-step-desc">你做最終決定<br>但已壓力測試過</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART I -->
+    <div class="section-title">Part I — AI Amplification 是什麼（以及不是什麼）</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">
+                    <span class="hl-concept">AI Amplification（AI 放大效應）</span>是在你投入資源之前，用 AI 測試你的策略直覺。把它想像成一個隨時待命的專家顧問團——全天候可用，能在你缺乏深度經驗的領域壓力測試你的思維。
+                </div>
+                <div class="en">"AI Amplification is using AI to test your strategic hunches before you commit resources. Think of it as an on-demand expert panel—available 24/7 to stress-test your thinking in domains where you don't have deep experience."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    這<span class="hl-key">不是</span> AI 替你做決策、不是自動化取代判斷、也不是研究或團隊合作的替代品。這是關於<span class="hl-concept">加速認知校準（accelerating orientation）</span>——把需要數月的專家諮詢壓縮到幾分鐘，及早到足以改變方向。
+                </div>
+                <div class="en">"This is not: AI making decisions for you / Automation replacing judgment / A substitute for research or teamwork. This is about accelerating orientation—compressing months of expert consultation into minutes, early enough to change course."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念</div>
+                <div class="info-box-content">
+                    <p><strong>AI Amplification vs. 其他 AI 應用模式：</strong></p>
+                    <ul>
+                        <li><strong>AI Automation：</strong>自動化重複性任務（如報告生成）</li>
+                        <li><strong>AI Decision-making：</strong>AI 做最終決策（如演算法交易）</li>
+                        <li><strong>AI Amplification：</strong>AI 放大人類的認知能力——不替你決定，而是幫你看到盲點</li>
+                    </ul>
+                    <p>關鍵區別：Amplification 模式下，<span class="hl-key">人類始終握有最終決策權</span>，AI 的角色是加速探索，不是取代判斷。</p>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>想像你要開車穿越一個陌生城市。<strong>AI Automation</strong> 是自駕車替你開；<strong>AI Decision-making</strong> 是 GPS 決定你的目的地；而 <strong>AI Amplification</strong> 是一個熟悉當地的副駕駛，在你做每個轉彎決定前提醒你：「前面那條路看起來快，但當地人都知道那裡經常塞車。」你還是自己開車、自己決定路線，但你有了本地知識。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART II -->
+    <div class="section-title">Part II — Bed Bath &amp; Beyond 案例：為什麼聰明人在陌生領域失敗</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">
+                    Mark Tritton 擁有哈佛 MBA，剛在 Target 帶領了零售業最大的轉型之一。2019 年 Bed Bath &amp; Beyond 聘請他為 CEO 時，他帶來了一套已創造數十億價值的劇本。<span class="hl-key">三年後，公司申請破產。</span>
+                </div>
+                <div class="en">"Mark Tritton had an MBA from Harvard and had just led one of retail's biggest transformations as Chief Merchandising Officer at Target... Three years later, the company filed for bankruptcy."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    這不是關於能力不足。更有趣的問題是：<span class="hl-concept">如果真正的問題不是智商或經驗，而是無法在決策變得不可逆之前足夠快地測試假設呢？</span>
+                </div>
+                <div class="en">"What if the real problem wasn't intelligence or experience—but the inability to test assumptions fast enough before decisions became irreversible?"</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    Tritton 沒有的是：對<span class="hl-key">「尋寶式零售」（treasure-hunt retail）</span>的深度理解——一種瀏覽本身就是產品、發現就是價值的商業模式。通常你會聘請專門顧問來做這種分析，但顧問需要數月，Tritton 只有幾週。
+                </div>
+                <div class="en">"Here's what Tritton didn't have: Deep knowledge of treasure-hunt retail—a business model where browsing itself is the product and discovery is the value."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                <div class="info-box-content">
+                    <p><strong>「真正的失敗模式」不在於決策品質，而在於時間約束：</strong></p>
+                    <ul>
+                        <li>決策窗口：數週</li>
+                        <li>顧問時程：數月</li>
+                        <li>風險：極高</li>
+                        <li>直覺：強烈</li>
+                        <li>領域知識：不完整</li>
+                    </ul>
+                    <p>這五個因素的組合，是每一位進入陌生領域的領導者都會面對的結構性困境。</p>
+                </div>
+            </div>
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#9878;&#65039; 兩種零售模式比較</div>
+                <div class="info-box-content">
+                    <p><strong>效率零售（Target 模式）：</strong>顧客帶著清單來、任務導向、快速進出、信任品牌選品</p>
+                    <p><strong>尋寶式零售（TJ Maxx/BB&amp;B 模式）：</strong>顧客來瀏覽探索、發現就是價值、長時間停留是功能不是問題、品牌認知度是「寶藏」本身</p>
+                    <p><span class="hl-key">Tritton 的錯誤：</span>把 Target 劇本套用到結構上更像 TJ Maxx 的業態。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART III -->
+    <div class="section-title">Part III — 五個 AI 壓力測試問題</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">
+                    <strong>Q1：我們真正的競爭對手是誰？</strong><br>
+                    假設：BB&amp;B 與 Target 競爭，需要變得更像 Target。<br>
+                    洞察：結構上，BB&amp;B 更像 TJ Maxx 和 HomeGoods 這類尋寶式零售商，而非 Target 這樣的效率零售商。<br>
+                    <span class="hl-concept">重新框架：套用 Target 劇本不是重新定位——而是把自己推向與 Target 的直接競爭，同時放棄既有客群。</span>
+                </div>
+                <div class="en">"Structurally, BB&B resembles treasure-hunt retailers like TJ Maxx and HomeGoods more than efficiency retailers like Target."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    <strong>Q2：促銷型零售商取消優惠券會怎樣？</strong><br>
+                    假設：優惠券效率低，培養壞習慣，顧客會適應天天低價。<br>
+                    洞察：2012 年 JCPenney 取消優惠券時，客流量崩潰。<br>
+                    <span class="hl-key">重新框架：取消優惠券不會重新訓練顧客行為——而是加速顧客流向仍然提供「尋寶」體驗的競爭對手。</span>
+                </div>
+                <div class="en">"When JCPenney eliminated coupons in 2012, traffic collapsed."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    <strong>Q3：顧客在店內實際上如何表現？</strong><br>
+                    假設：長時間停留和瀏覽是需要解決的問題。<br>
+                    洞察：Target 顧客是任務導向的；尋寶式顧客長時間瀏覽，因為<span class="hl-concept">發現本身就是價值</span>。<br>
+                    重新框架：長時間停留不是問題，而是價值主張。減少瀏覽時間 = 減少顧客來的理由。
+                </div>
+                <div class="en">"Long visits weren't a problem to solve—they were the value proposition."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="bilingual-block">
+                <div class="zh">
+                    <strong>Q4：如果我們看起來更像 Target，會失去誰、得到誰？</strong><br>
+                    假設：現代化會吸引新客戶，不會失去舊客戶。<br>
+                    洞察：BB&amp;B 會失去探索型顧客（流向 TJ Maxx），但幾乎無法吸引效率型顧客（他們已經有 Target）。<br>
+                    <span class="hl-key">重新框架：這不是轉型——而是沒有替代方案的侵蝕。</span>
+                </div>
+                <div class="en">"This wasn't transformation—it was erosion with no replacement."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    <strong>Q5：為什麼自有品牌在不同零售商有不同效果？</strong><br>
+                    假設：自有品牌通用有效，因為能改善利潤率和差異化。<br>
+                    洞察：在 Target，顧客信任 Target 的選品品味。在尋寶式零售中，<span class="hl-concept">知名品牌本身就是「寶藏」</span>。<br>
+                    重新框架：替換品牌移除了顧客來探索的東西。利潤率改善變成了營收毀滅。
+                </div>
+                <div class="en">"Replacing brands removed the very thing customers came to discover. Margin improvement became revenue destruction."</div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; 實務應用：跨領域通用原則</div>
+                <div class="info-box-content">
+                    <p>這五個問題的核心不是零售知識，而是<span class="hl-practical">跨領域轉移的通用檢查清單</span>：</p>
+                    <ul>
+                        <li>Q1：我的真正競爭格局是什麼？（避免錯誤類比）</li>
+                        <li>Q2：同類策略在哪裡失敗過？（歷史案例驗證）</li>
+                        <li>Q3：我認為的「問題」是否其實是「功能」？（Bug vs. Feature）</li>
+                        <li>Q4：策略轉向的客戶淨流量是正還是負？（Customer Swap 模型）</li>
+                        <li>Q5：同一戰術在不同情境效果是否不同？（Context &gt; Tactics）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART IV -->
+    <div class="section-title">Part IV — 如何應用：四步驟實戰流程</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">
+                    <strong>Step 1：寫下你的直覺（30 秒）</strong><br>
+                    你的直覺告訴你該做什麼？用 2-3 句話寫下來。<br>
+                    範例：「我們應該把成功的企業銷售劇本應用到中小企業。之前有效，調整一下也會有效。」
+                </div>
+                <div class="en">"What's your gut telling you to do? Write it in 2-3 sentences."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    <strong>Step 2：開啟 AI 對話（20 分鐘）</strong><br>
+                    起始 Prompt：<span class="hl-practical">「我打算 [你的直覺]。我做了什麼假設？這個方法在哪裡失敗過？我沒看到什麼？」</span><br>
+                    讓 AI 反問你。壓力測試你的邏輯。
+                </div>
+                <div class="en">"Start with: 'I'm planning to [your instinct]. What assumptions am I making? Where has this approach failed before? What am I not seeing?'"</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    <strong>Step 3：測試競爭觀點（10 分鐘）</strong><br>
+                    你的團隊有不同意見。請 AI 為每個替代方案做最強辯護，看哪些論點經得起審視。
+                </div>
+                <div class="en">"Ask AI to make the strongest case for each alternative approach. See which arguments hold up under scrutiny."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    <strong>Step 4：做出知情決策</strong><br>
+                    你仍然做最終決定。但現在你已經用今天早上還沒有的領域專業知識測試過它了。
+                </div>
+                <div class="en">"You still make the call. But now you've tested it against domain expertise you didn't have this morning."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明：Copilot vs. Autopilot</div>
+                <div class="info-box-content">
+                    <p>這四步驟框架的精髓是 <strong>Copilot 模式</strong>，不是 Autopilot 模式。AI 是你的副駕駛——提供視角、挑戰盲點、呈現替代路線——但方向盤始終在你手裡。</p>
+                    <p>關鍵在於<span class="hl-key">時機</span>：這個對話必須發生在決策鎖定之前。一旦組織動能啟動（資源配置、團隊重組、對外宣布），修正成本呈指數級增長。</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; 實務應用：起始 Prompt 模板</div>
+                <div class="info-box-content">
+                    <p>可直接複製使用的 Prompt：</p>
+                    <p style="background: #f1f5f9; padding: 0.75rem; border-radius: 0.5rem; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6;">
+                        我是 [角色]，正在 [情境]。<br>
+                        我的策略直覺是 [2-3 句描述]。<br><br>
+                        請幫我壓力測試這個方向：<br>
+                        1. 我做了什麼隱含假設？<br>
+                        2. 這個方法在類似情境中曾在哪裡失敗過？<br>
+                        3. 我的目標客戶/使用者會如何回應？<br>
+                        4. 最強的反對論點是什麼？<br>
+                        5. 我遺漏的最大風險是什麼？
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART V -->
+    <div class="section-title">Part V — 深層啟示：不是工具問題，是決策流程問題</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">
+                    20 分鐘的 AI 對話不會產生新策略。它產生的是<span class="hl-concept">不同的問題</span>。Tritton 原本問的是「如何讓 BB&amp;B 更像 Target？」——他本可以問「如何成為家居用品領域最好的尋寶式零售商？」
+                </div>
+                <div class="en">"Twenty minutes of AI conversation didn't produce a new strategy. It produced different questions."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">
+                    AI 沒有取代市場研究、客戶訪談、團隊意見、財務分析或領導判斷。它改變的是<span class="hl-key">工作的起點</span>。不再從 Target 的假設開始，而是從基於實際產業的已測試假說開始。
+                </div>
+                <div class="en">"It changed where the work started. Instead of beginning with assumptions imported from Target, Tritton could have started with tested hypotheses grounded in his actual industry."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                <div class="info-box-content">
+                    <p><strong>AI Amplification 的本質是改變決策流程的起點：</strong></p>
+                    <p>傳統流程：直覺 &rarr; 計畫 &rarr; 執行 &rarr; 發現問題 &rarr; 修正（代價巨大）</p>
+                    <p>放大流程：直覺 &rarr; <span class="hl-practical">AI 壓力測試</span> &rarr; 修正問題框架 &rarr; 計畫 &rarr; 執行</p>
+                    <p>差異不在於「更好的答案」，而在於「更好的問題」——問對問題的決策者，永遠比有好答案但問錯問題的人走得更遠。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEY TAKEAWAYS -->
+    <h2 class="section-title" style="border-bottom-color: #8b5cf6;">Key Takeaways</h2>
+    <div class="takeaways">
+        <div class="summary-card">
+            <h4>AI 放大 =/= AI 替代</h4>
+            <p>AI Amplification 的核心價值是壓縮「取得跨領域專業知識」的時間，不是替代人類判斷。領導者仍握有決策權，AI 加速的是認知校準。</p>
+        </div>
+        <div class="summary-card">
+            <h4>測試假設的時機 > 假設的品質</h4>
+            <p>Tritton 的假設在 Target 情境下完全正確。問題不是他不聰明，而是他無法在決策鎖定前測試這些假設在新情境中是否成立。時機就是一切。</p>
+        </div>
+        <div class="summary-card">
+            <h4>跨領域劇本的最大風險</h4>
+            <p>把一個領域的成功劇本套用到另一個領域時，最危險的不是明顯的差異，而是「看起來一樣但結構上不同」的隱藏假設。Bug vs. Feature 的判斷錯誤代價最高。</p>
+        </div>
+        <div class="summary-card">
+            <h4>更好的問題 > 更好的答案</h4>
+            <p>20 分鐘 AI 對話的產出不是新策略，而是不同的問題。從「如何更像 Target」到「如何成為最好的尋寶零售商」——問題的品質決定策略的方向。</p>
+        </div>
+    </div>
+
+    <!-- PRACTICE SECTION -->
+    <div class="practice-section">
+        <h2>Practice Questions</h2>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q1</span>
+                <span class="question-type">概念理解</span>
+                <span class="question-text">AI Amplification 與 AI Automation 最關鍵的區別是什麼？為什麼這個區別對高風險決策特別重要？</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p><strong>核心區別：</strong>AI Automation 是讓 AI 執行任務（輸出導向），AI Amplification 是讓 AI 拓展你的認知邊界（輸入導向）。Automation 替你做事，Amplification 幫你想得更清楚。</p>
+                <p><strong>為什麼重要：</strong>高風險決策的關鍵不在於執行效率，而在於決策品質。在陌生領域，你不知道自己不知道什麼（unknown unknowns）。Amplification 的價值恰恰在於揭露這些盲點——在你投入不可逆的資源之前。如果你用 Automation 思維來使用 AI（「幫我做這份分析」），你可能只是更快地執行一個有缺陷的策略。</p>
+            </div>
+        </details>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q2</span>
+                <span class="question-type">產業應用</span>
+                <span class="question-text">在你的 CDMO 環境中，哪些決策場景最適合使用 AI Amplification？請舉一個具體例子，說明如何應用五問壓力測試法。</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p><strong>最適合的場景：</strong>技術轉移（Tech Transfer）決策。當承接一個新客戶的無菌充填專案時，你會帶入過去成功專案的假設——但每個產品、每個客戶的製程需求可能有結構性差異。</p>
+                <p><strong>五問應用範例（以 QS-21 佐劑處理為例）：</strong></p>
+                <p>Q1 競爭格局：這個專案的真正難點是什麼——是我們的設備能力，還是客戶的製程特殊性？<br>
+                Q2 失敗案例：類似佐劑產品在其他 CDMO 技術轉移時常見的失敗模式是什麼？<br>
+                Q3 Bug vs Feature：我們認為需要「標準化」的製程步驟，是否其實是客戶產品的關鍵品質屬性？<br>
+                Q4 淨流量：如果我們用標準 SOP 取代客戶的特殊流程，風險和收益的淨值是什麼？<br>
+                Q5 情境差異：同樣的隔離器設定在不同產品上效果可能完全不同嗎？</p>
+                <p>這種壓力測試應該發生在 Feasibility Assessment 階段——在承諾時程和資源之前。</p>
+            </div>
+        </details>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q3</span>
+                <span class="question-type">批判思考</span>
+                <span class="question-text">這篇文章的 AI Amplification 框架有什麼限制？在什麼情況下，20 分鐘的 AI 對話可能反而有害？</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p><strong>主要限制：</strong></p>
+                <p>1. <strong>Hallucination 風險：</strong>AI 可能提供看似合理但實際上錯誤的「歷史案例」或「行業洞察」。如果領導者缺乏該領域知識來驗證，可能被虛構的信心誤導。這篇文章沒有充分討論這個風險。</p>
+                <p>2. <strong>過度信賴的危險：</strong>20 分鐘的壓力測試可能產生「我已經充分測試了」的虛假安全感，反而減少尋找真正領域專家的動力。AI 對話的便利性可能變成偷懶的藉口。</p>
+                <p>3. <strong>Confirmation Bias 放大：</strong>如果你的 Prompt 方式帶有傾向性（如「這個策略有什麼優點」而非「這個策略可能在哪裡失敗」），AI 很可能順著你的傾向走，反而強化而非挑戰你的假設。</p>
+                <p>4. <strong>在高度監管環境中的適用性：</strong>在 GMP/FDA 監管環境中，決策不僅需要正確，還需要可追溯和可辯護。AI 對話記錄目前不符合 21 CFR Part 11 等合規要求，這限制了它在正式決策流程中的角色。</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- BOTTOM LINE -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#127919; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#10004; 核心洞察</div>
+            <div class="bottom-line-text">
+                AI Amplification 的本質與我一直在實踐的「Copilot Mode」高度吻合——人類保持決策權，AI 加速認知校準。但這篇文章給了一個更清晰的應用場景：<strong>不是日常工作輔助，而是高風險跨領域決策的「假設壓力測試」</strong>。作為 Operations Director 朝 COO 發展的路上，我會越來越頻繁地面對自己不熟悉的領域決策（財務策略、市場定位、組織設計），這個框架正好填補了「專業知識不足但必須快速決策」的結構性缺口。
+            </div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#128200; 立即應用</div>
+            <div class="bottom-line-text">
+                本週在下一次 Feasibility Assessment 討論前，用這篇文章的五問壓力測試法，花 20 分鐘用 Claude 測試我們對新專案的初步假設。具體 Prompt：「我們計劃用現有的 SA25 Vanrx 標準 SOP 來處理 [新客戶產品]。我做了什麼隱含假設？這類產品在其他 CDMO 技術轉移時常見的失敗模式是什麼？」——然後帶著這些洞察進入團隊討論。
+            </div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#9888; 需要補充</div>
+            <div class="bottom-line-text">
+                文章偏策略層面，缺少對 AI Hallucination 風險的討論——在 GMP 環境中，如果 AI 提供的「歷史案例」是虛構的，後果比零售決策嚴重得多。我需要在使用時加入一層驗證機制：AI 壓力測試的輸出必須與團隊實際經驗和文獻交叉比對，而非直接採信。另外，這個框架在「個人決策」場景很好用，但如何在「團隊決策」中應用（例如在 Feasibility Review 會議中呈現 AI 壓力測試結果）還需要我自己設計流程。
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>Document generated: 2026-02-20 | AI Expert Learning System v1.4</p>
+        <p>Source: <a href="https://substack.com/@leadaichange" target="_blank">Leadership in Change - Joel Salinas &amp; The Convergence Project</a></p>
+        <p>Suggested Chat Title: <strong>[Prompt] AI Amplification - 策略假設壓力測試框架</strong></p>
+    </div>
+
+</div>
+</body>
+</html>

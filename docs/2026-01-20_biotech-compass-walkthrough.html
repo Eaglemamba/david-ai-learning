@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-01-20">
+    <meta name="doc-title" content="Biotech Compass 實戰教學 - AI 輔助生技投資分析工具">
+    <meta name="doc-source" content="The Pharma Fox Substack">
+    <meta name="doc-tags" content="Tool,Automation,LLM,API">
+    <meta name="doc-rating" content="4.0">
+    <meta name="doc-summary" content="示範用 AI 從 SEC 文件擷取數據並產出標準化生技投資分析圖表的完整流程">
+    <meta name="doc-file" content="2026-01-20_biotech-compass-walkthrough.html">
+    <title>Biotech Compass 實戰教學 - AI 輔助生技投資分析工具</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent-green: #10b981;
+            --accent-purple: #7c3aed;
+            --accent-orange: #f59e0b;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-light: #e2e8f0;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            font-size: 16px;
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #1e3a8a 100%);
+            color: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
+        .header-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem; }
+        
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.3rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 500; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
+        .tag-api { background: #ddd6fe; color: #4c1d95; }
+        
+        .source-info { font-size: 0.85rem; opacity: 0.8; }
+        .source-info a { color: #93c5fd; text-decoration: none; }
+        .source-info a:hover { text-decoration: underline; }
+        
+        /* Rating Bar */
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.6rem 1rem;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: 8px;
+            flex-wrap: wrap;
+            border: 1px solid #bae6fd;
+        }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        
+        /* Executive Summary */
+        .exec-summary {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .exec-summary p { color: var(--text-dark); margin-bottom: 1rem; line-height: 1.8; }
+        .exec-summary p:last-child { margin-bottom: 0; }
+        
+        /* Learning Objectives */
+        .objectives {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .objective-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary-light);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .objective-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .objective-number {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--primary-light);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 1.5rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+        .objective-text { font-size: 0.95rem; color: var(--text-dark); }
+        
+        /* Framework Visual */
+        .framework-visual {
+            background: linear-gradient(135deg, #1e3a5f, #3b5998);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: white;
+            margin: 1.5rem 0 2rem;
+        }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 140px; flex: 1; max-width: 180px; }
+        .framework-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+        }
+        .framework-step-title { font-weight: 700; font-size: 0.9rem; }
+        .framework-step-desc { font-size: 0.75rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.25rem; color: #93c5fd; }
+        @media (max-width: 700px) {
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1rem; }
+            .framework-step { min-width: 100px; }
+        }
+        
+        /* Content Grid */
+        .content-section { margin-bottom: 2rem; }
+        .part-header {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem 0.75rem 0 0;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        .part-title { font-size: 1.1rem; font-weight: 700; color: var(--primary-blue); }
+        .part-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            border-radius: 0 0 0.75rem 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } }
+        
+        .original-text {
+            padding: 1.5rem;
+            background: #fafafa;
+            border-right: 1px solid var(--border-light);
+        }
+        .original-text p { margin-bottom: 1rem; }
+        .original-text p:last-child { margin-bottom: 0; }
+        .zh-text { color: var(--text-dark); line-height: 1.8; }
+        .en-text { color: var(--text-muted); font-style: italic; font-size: 0.9rem; margin-top: 0.5rem; }
+        
+        .explanation {
+            padding: 1.5rem;
+            background: white;
+        }
+        
+        /* Info Boxes */
+        .info-box { border-radius: 0.5rem; margin-bottom: 1rem; overflow: hidden; }
+        .info-box:last-child { margin-bottom: 0; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+        
+        /* Highlights */
+        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        
+        /* Lists */
+        .content-list { margin: 0.5rem 0; padding-left: 1.25rem; }
+        .content-list li { margin-bottom: 0.5rem; font-size: 0.9rem; line-height: 1.6; }
+        
+        /* Code blocks */
+        code {
+            font-family: 'Source Code Pro', monospace;
+            background: #f1f5f9;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        
+        /* Key Takeaways */
+        .takeaways { margin: 2rem 0; }
+        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+        .summary-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--accent-green);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .summary-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .summary-card:nth-child(2) { border-left-color: var(--primary-light); }
+        .summary-card:nth-child(3) { border-left-color: var(--accent-purple); }
+        .summary-card:nth-child(4) { border-left-color: var(--accent-orange); }
+        .summary-number { font-size: 1.5rem; font-weight: 700; color: var(--accent-green); margin-bottom: 0.5rem; }
+        .summary-card:nth-child(2) .summary-number { color: var(--primary-light); }
+        .summary-card:nth-child(3) .summary-number { color: var(--accent-purple); }
+        .summary-card:nth-child(4) .summary-number { color: var(--accent-orange); }
+        .summary-title { font-weight: 600; color: var(--text-dark); margin-bottom: 0.5rem; }
+        .summary-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+        
+        /* Practice Questions - Accordion */
+        .practice-section { margin: 2rem 0; }
+        .question-accordion {
+            background: white;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e9d5ff;
+            overflow: hidden;
+        }
+        .question-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            list-style: none;
+        }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.2s;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+        .question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+        .question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+        
+        /* Bottom Line */
+        .bottom-line {
+            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #7c3aed;
+        }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            margin-top: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .footer p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .footer a { color: var(--primary-light); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .chat-title { font-weight: 600; color: var(--primary-blue); margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="tags">
+                <span class="tag tag-tool">Tool</span>
+                <span class="tag tag-automation">Automation</span>
+                <span class="tag tag-llm">LLM</span>
+                <span class="tag tag-api">API</span>
+            </div>
+            <h1>Biotech Compass 實戰教學</h1>
+            <p class="header-subtitle">A Practical Walkthrough of the Biotech Compass Tool</p>
+            <p class="source-info">
+                來源：The Pharma Fox's Substack | 2026-01-12<br>
+                <a href="https://thepharmafox.substack.com" target="_blank">原文連結</a>
+            </p>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="exec-summary">
+            <h2 class="section-title">Executive Summary</h2>
+            
+            <div class="rating-bar">
+                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+                <span class="rating-high">Practical Value, Tool Ecosystem</span>
+                <span class="rating-low">Technical Depth, Timeliness</span>
+            </div>
+            
+            <p>
+                這篇文章是 <span class="highlight-concept">Biotech Compass</span> 工具的完整實作教學。Biotech Compass 是一個結合 ChatGPT 提示工程與 Google Colab 視覺化的分析框架，讓投資者能在 15 分鐘內快速掌握生技公司的藥物管線、研發模式與財務健康狀況。
+            </p>
+            <p>
+                作者以 #BioPick2026 競賽中的三家公司（Palisade Bio、Corvus Pharmaceuticals、SELLAS Life Sciences）為範例，示範從 SEC 文件擷取數據、透過分層式提示詞控制 LLM 幻覺、到最終產出視覺化圖表的完整流程。這套方法論的核心價值在於<span class="highlight-key">將非結構化的財報資料轉化為可比較的標準化圖表</span>，同時嚴格限制 AI 推論範圍以確保資料可信度。
+            </p>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section>
+            <h2 class="section-title">學習目標</h2>
+            <div class="objectives">
+                <div class="objective-item">
+                    <span class="objective-number">1</span>
+                    <span class="objective-text">理解 Biotech Compass 的設計邏輯與資訊呈現方式</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-number">2</span>
+                    <span class="objective-text">學會使用分層式提示詞控制 LLM 資料擷取範圍</span>
+                </div>
+                <div class="objective-item">
+                    <span class="objective-number">3</span>
+                    <span class="objective-text">掌握從 SEC 文件到視覺化圖表的完整工作流程</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Framework Visual -->
+        <div class="framework-visual">
+            <div class="framework-title">Biotech Compass 工作流程</div>
+            <div class="framework-steps">
+                <div class="framework-step">
+                    <div class="framework-icon">1</div>
+                    <div class="framework-step-title">文件收集</div>
+                    <div class="framework-step-desc">SEC 10-Q/10-K + 新聞稿</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">2</div>
+                    <div class="framework-step-title">提示詞萃取</div>
+                    <div class="framework-step-desc">5 層漸進式數據提取</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">3</div>
+                    <div class="framework-step-title">CSV 輸出</div>
+                    <div class="framework-step-desc">標準化數據格式</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">4</div>
+                    <div class="framework-step-title">Colab 繪圖</div>
+                    <div class="framework-step-desc">視覺化比較圖表</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part I: Tools Needed -->
+        <section class="content-section">
+            <div class="part-header">
+                <div class="part-title">Part I：運行 Compass 所需工具</div>
+                <div class="part-subtitle">Tools needed to run the Compass</div>
+            </div>
+            <div class="content-grid">
+                <div class="original-text">
+                    <p class="zh-text">
+                        Compass 的設計<span class="highlight-concept">盡量降低對 LLM 操作、程式環境或公司官方文件的專業需求</span>。你只需要：免費的 ChatGPT 帳號（建議使用 Plus 但非必要）、瀏覽器、Google Colab（免費）、公司新聞稿與 SEC 申報文件（至少需要 10-Q 或 10-K），以及 Biotech Compass 的提示詞與程式碼。
+                    </p>
+                    <p class="en-text">
+                        "The compass has been designed to require minimal expertise or confidence with LLMs, coding environments or official company documents."
+                    </p>
+                    <p class="zh-text" style="margin-top: 1rem;">
+                        技術能力只需要<span class="highlight-practical">文件檢索（透過網頁搜尋）</span>以及將提示詞或程式碼複製貼上到 ChatGPT 或 Google Colab。
+                    </p>
+                    <p class="en-text">
+                        "Technical capacity only requires document retrieval (through web search) and copying and pasting prompts or code into ChatGPT or Google Colab respectively."
+                    </p>
+                </div>
+                <div class="explanation">
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">核心概念</div>
+                        <div class="info-box-content">
+                            這個工具的設計哲學是<strong>「低門檻、高價值」</strong>。作者刻意避免需要程式設計能力或專業金融終端機的解決方案，讓任何能操作瀏覽器的人都能使用。這種設計思維值得學習：真正有價值的 AI 工具不是炫技，而是讓更多人能解決實際問題。
+                        </div>
+                    </div>
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">實務應用</div>
+                        <div class="info-box-content">
+                            對 CDMO 情境的啟發：這種「文件輸入 → AI 萃取 → 標準化輸出」的模式，可以應用在客戶藥物資料的初步分析。例如：客戶提供的 CMC 文件 → 提示詞萃取關鍵參數 → 標準化的可行性評估初稿。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part II: Documents Needed -->
+        <section class="content-section">
+            <div class="part-header">
+                <div class="part-title">Part II：所需文件來源</div>
+                <div class="part-subtitle">Documents needed to run the Compass</div>
+            </div>
+            <div class="content-grid">
+                <div class="original-text">
+                    <p class="zh-text">
+                        作者收集了範例公司最近的季度新聞稿與 SEC 申報文件。Palisade Bio 無法找到季度新聞稿——<span class="highlight-key">這是常見問題</span>；但新聞稿只是用來輔助 SEC 申報文件。由於所有上市公司都必須提交 SEC 文件，這些文件應該總是可以取得進行分析。
+                    </p>
+                    <p class="en-text">
+                        "I was unable to retrieve a quarterly press release for Palisade Bio. This is a common problem; however, the press release is only there to support the SEC filing. As all public companies submit SEC filings, these documents should always be available for analysis."
+                    </p>
+                    <p class="zh-text" style="margin-top: 1rem;">
+                        作者刻意連結到文件的來源頁面而非文件本身，讓新投資者能看到這類資料通常在公司網站的哪裡找到。所有 SEC 申報文件也可以直接透過 sec.gov 取得。
+                    </p>
+                    <p class="en-text">
+                        "I have linked to the source pages for these documents rather than the documents themselves, so new investors can see where such materials are typically found on company websites."
+                    </p>
+                </div>
+                <div class="explanation">
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">比喻說明</div>
+                        <div class="info-box-content">
+                            把 SEC 申報文件想像成「必修科目」，新聞稿是「選修加分」。10-Q（季報）和 10-K（年報）是法規強制要求的標準化格式，內容經過審計；新聞稿則是公司自願發布的「行銷版本」，可能美化或省略某些資訊。分析時以 SEC 文件為主，新聞稿為輔。
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">重點提示</div>
+                        <div class="info-box-content">
+                            <strong>SEC 文件類型速查：</strong>
+                            <ul class="content-list">
+                                <li><strong>10-K</strong>：年度報告，最完整的公司概況</li>
+                                <li><strong>10-Q</strong>：季度報告，更新近期發展</li>
+                                <li><strong>8-K</strong>：重大事件即時揭露（併購、高管異動等）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part III: Data Collection Prompts -->
+        <section class="content-section">
+            <div class="part-header">
+                <div class="part-title">Part III：分層式資料收集提示詞</div>
+                <div class="part-subtitle">Collecting Data with Layered Prompts</div>
+            </div>
+            <div class="content-grid">
+                <div class="original-text">
+                    <p class="zh-text">
+                        從這些官方文件擷取資料很直接。只需將文件載入 ChatGPT 並依序執行提示詞即可。<span class="highlight-concept">提示詞的設計是為了消除 LLM 的幻覺與推論</span>。每個提示詞都謹慎地擴展 LLM 的文件範圍，以收集 Biotech Compass 所需的資料。
+                    </p>
+                    <p class="en-text">
+                        "The prompts are designed to eliminate hallucination and inference by the LLM. Each prompt broadens the LLM's scope of documents carefully to collect the data needed for the Biotech Compass."
+                    </p>
+                    <p class="zh-text" style="margin-top: 1rem;">
+                        依序執行五個提示詞：(1) Overview Prompt 從 SEC 與新聞稿萃取；(2) Backfill QC Prompt 識別可填補空白的外部來源；(3) Backfill Data Acquisition Prompt 用核准來源填入缺失欄位；(4) Open Web Assist Prompt 作為最後手段使用公開網路來源；(5) CSV Output Prompt 格式化最終輸出。
+                    </p>
+                    <p class="en-text">
+                        "Crucially, the CSV Output prompt can be run after Prompt 1, Prompt 3, or Prompt 4, depending on how tightly the user wants to constrain the Compass chart to specific data sources."
+                    </p>
+                </div>
+                <div class="explanation">
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">核心概念</div>
+                        <div class="info-box-content">
+                            這套提示詞架構體現了<strong>「漸進式信任擴展」</strong>的設計原則：
+                            <ul class="content-list">
+                                <li><strong>第一層</strong>：只信任官方申報文件（最高可信度）</li>
+                                <li><strong>第二層</strong>：公司官網 + ClinicalTrials.gov（官方但非強制審計）</li>
+                                <li><strong>第三層</strong>：公開網路來源（最低可信度，標註來源）</li>
+                            </ul>
+                            使用者可以選擇在任何一層停止，控制資料的「純度」。
+                        </div>
+                    </div>
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">CDMO 應用啟發</div>
+                        <div class="info-box-content">
+                            這種分層式資料收集架構可以直接應用到製藥 CMC 文件分析：
+                            <ul class="content-list">
+                                <li><strong>第一層</strong>：客戶提供的正式文件（IND、IMPD）</li>
+                                <li><strong>第二層</strong>：公開 API 資料庫、已發表文獻</li>
+                                <li><strong>第三層</strong>：產業報告、專家訪談紀錄</li>
+                            </ul>
+                            每一層都標註資料來源，讓審核者清楚知道哪些是「硬事實」、哪些是「軟推論」。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part IV: Plotting and Analysis -->
+        <section class="content-section">
+            <div class="part-header">
+                <div class="part-title">Part IV：繪圖與分析洞察</div>
+                <div class="part-subtitle">Plotting Data and Analyzing the Compass</div>
+            </div>
+            <div class="content-grid">
+                <div class="original-text">
+                    <p class="zh-text">
+                        CSV 檔案可以直接上傳到 Google Colab 並使用 Biotech Compass 程式碼執行。唯一需要修改的程式碼是<span class="highlight-practical">更新 CSV 檔名</span>，讓腳本指向正確的輸入檔案。
+                    </p>
+                    <p class="en-text">
+                        "The only required code change is updating the CSV filename so the script points to the correct input file."
+                    </p>
+                    <p class="zh-text" style="margin-top: 1rem;">
+                        第一個明顯的觀察是 SELLAS 和 Corvus 重疊了。對我來說，<span class="highlight-key">這是功能而非缺陷</span>。重疊的節點表示兩家公司佔據相似的利基市場。解決方法很直接：從 CSV 檔案中依次移除每家公司並重新執行程式碼，產生兩張可以並排比較的圖表。
+                    </p>
+                    <p class="en-text">
+                        "The first thing that stands out is that SELLAS and Corvus overlap. To me, this is a feature rather than a flaw. Overlapping nodes suggest that two companies occupy a similar niche."
+                    </p>
+                </div>
+                <div class="explanation">
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">比喻說明</div>
+                        <div class="info-box-content">
+                            把 Biotech Compass 想像成「公司 DNA 比對」。當兩家公司在圖表上重疊，就像兩個人的基因高度相似——他們可能是競爭對手、潛在併購目標，或者至少值得放在一起深入比較。重疊不是「顯示錯誤」，而是「發現訊號」。
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">重點提示</div>
+                        <div class="info-box-content">
+                            <strong>快速洞察三家公司：</strong>
+                            <ul class="content-list">
+                                <li><strong>Palisade Bio</strong>：高度依賴單一資產，策略聚焦或結構性風險？</li>
+                                <li><strong>Corvus</strong>：管線多元化，涵蓋生物製劑與小分子藥物</li>
+                                <li><strong>SELLAS</strong>：有一個未分類的臨床前資產，值得進一步調查</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part V: Design Philosophy -->
+        <section class="content-section">
+            <div class="part-header">
+                <div class="part-title">Part V：Compass 的設計哲學</div>
+                <div class="part-subtitle">The Purpose and Limitations</div>
+            </div>
+            <div class="content-grid">
+                <div class="original-text">
+                    <p class="zh-text">
+                        這樣看來，Compass 自然引出一系列後續問題，而非結論：Palisade 的單一資產聚焦是刻意策略還是結構性風險？Corvus 的資產在其更廣泛管線中有多大差異化？SELLAS 那個未分類的項目到底是什麼，為什麼它無法清楚歸入標準分類？
+                    </p>
+                    <p class="en-text">
+                        "Viewed this way, the Compass naturally raises a set of follow-on questions, rather than conclusions."
+                    </p>
+                    <p class="zh-text" style="margin-top: 1rem;">
+                        對我來說，<span class="highlight-concept">這正是 Biotech Compass 的目的</span>。從零背景知識開始，它讓我能在 15 分鐘內紮實掌握這些公司在做什麼，更重要的是，我接下來應該問什麼問題。
+                    </p>
+                    <p class="en-text">
+                        "Starting from no prior knowledge, it allows me to get a solid handle on what these companies do, and more importantly, what questions I should be asking next in just 15 minutes."
+                    </p>
+                </div>
+                <div class="explanation">
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">核心概念</div>
+                        <div class="info-box-content">
+                            作者明確定位 Compass 為<strong>「導航工具」而非「決策引擎」</strong>。它的價值在於：
+                            <ul class="content-list">
+                                <li>快速建立基礎認知框架</li>
+                                <li>識別需要深入調查的訊號</li>
+                                <li>產生結構化的後續問題清單</li>
+                            </ul>
+                            這種「提問機器」的定位避免了過度依賴 AI 輸出的風險。
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">使用者注意事項</div>
+                        <div class="info-box-content">
+                            作者特別提醒：重疊節點是預期行為（表示相似利基）、「Other」分類和空白欄位不是錯誤（表示來源文件的模糊或缺失）。這些設計選擇體現了<strong>嚴格的資料收集和防止幻覺推論</strong>的原則。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section class="takeaways">
+            <h2 class="section-title">重點整理</h2>
+            <div class="takeaways-grid">
+                <div class="summary-card">
+                    <div class="summary-number">01</div>
+                    <div class="summary-title">分層式提示詞架構</div>
+                    <div class="summary-desc">透過五層漸進式提示詞控制 LLM 資料來源範圍，從最高可信度的 SEC 文件逐步擴展到公開網路，使用者可在任何層級停止以控制資料純度。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">02</div>
+                    <div class="summary-title">低門檻工作流程</div>
+                    <div class="summary-desc">只需 ChatGPT + 瀏覽器 + Google Colab，透過複製貼上即可完成從文件萃取到視覺化的全流程，15 分鐘內產出可比較的公司分析圖表。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">03</div>
+                    <div class="summary-title">導航而非決策</div>
+                    <div class="summary-desc">Compass 定位為「提問機器」——產出的是後續調查問題清單，而非投資結論。重疊、空白、未分類都是訊號，不是錯誤。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">04</div>
+                    <div class="summary-title">幻覺控制設計</div>
+                    <div class="summary-desc">每個提示詞都明確限制 LLM 只能處理指定文件、禁止推論、必須標註來源，將「不知道」視為有價值的輸出而非需要填補的空白。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Questions -->
+        <section class="practice-section">
+            <h2 class="section-title">練習題</h2>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q1</span>
+                    <span class="question-type">概念理解</span>
+                    <span class="question-text">為什麼 Biotech Compass 的提示詞設計要「分層」而非一次性完成所有資料收集？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p>分層設計解決了 LLM 應用的核心矛盾：<strong>資料完整性 vs. 資料可信度</strong>。</p>
+                    <ul>
+                        <li><strong>單層設計的問題</strong>：如果一次性允許 LLM 搜尋所有來源，它可能會用低可信度資料填補空白，而使用者無法區分哪些是官方數據、哪些是網路推論。</li>
+                        <li><strong>分層設計的價值</strong>：使用者可以在每一層檢視「缺了什麼」，然後有意識地決定是否要用更低可信度的來源填補。這種「知情妥協」比「無聲混合」更符合投資分析的審慎原則。</li>
+                        <li><strong>彈性輸出</strong>：CSV Output Prompt 可以在 Prompt 1、3 或 4 之後執行，讓不同風險偏好的使用者選擇自己的「資料純度」。</li>
+                    </ul>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q2</span>
+                    <span class="question-type">產業應用</span>
+                    <span class="question-text">如何將 Biotech Compass 的分層提示詞架構應用到 CDMO 的客戶藥物可行性評估？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p>可以設計類似的分層架構來處理客戶 CMC 文件：</p>
+                    <ul>
+                        <li><strong>第一層（Overview）</strong>：只從客戶提供的正式文件（IND Module 3、IMPD Section S）萃取藥物特性、製程參數、穩定性數據。不推論、不假設。</li>
+                        <li><strong>第二層（Backfill QC）</strong>：識別缺失欄位，列出可能的補充來源（公開專利、已發表文獻、API 資料庫），但不自動填入。</li>
+                        <li><strong>第三層（Controlled Fill）</strong>：經過 SME 核准後，從指定來源填入缺失資料，並明確標註「來源：客戶文件」vs.「來源：公開資料庫」。</li>
+                        <li><strong>輸出</strong>：可行性評估初稿，每個數據點都有來源標註，讓審核者快速識別哪些需要向客戶確認。</li>
+                    </ul>
+                    <p>這種架構符合 GxP 的資料追溯要求，同時大幅縮短初步評估時間。</p>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q3</span>
+                    <span class="question-type">批判思考</span>
+                    <span class="question-text">Biotech Compass 將「未分類」和「空白」視為功能而非錯誤，這種設計哲學有什麼潛在風險？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p>這是一個權衡設計，有明確的優缺點：</p>
+                    <p><strong>優點（作者的立場）：</strong></p>
+                    <ul>
+                        <li>避免 LLM 幻覺填補，保持資料純度</li>
+                        <li>空白本身是訊號，提示使用者需要進一步調查</li>
+                        <li>符合「導航工具」而非「決策引擎」的定位</li>
+                    </ul>
+                    <p><strong>潛在風險：</strong></p>
+                    <ul>
+                        <li><strong>使用者誤解</strong>：不熟悉工具的人可能認為空白 = 資料不存在，而非資料未被萃取</li>
+                        <li><strong>比較失真</strong>：如果公司 A 的文件較詳細而公司 B 較簡略，圖表會讓 A 看起來「更豐富」，但這可能只是披露風格差異</li>
+                        <li><strong>行動偏誤</strong>：空白可能被解讀為「沒有問題」而非「需要調查」，導致該追問的地方被忽略</li>
+                    </ul>
+                    <p>緩解方式：在圖表旁加上「資料完整度指標」，讓使用者知道每家公司有多少欄位是空白的。</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Bottom Line -->
+        <div class="bottom-line">
+            <div class="bottom-line-header">我的行動結論</div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">核心洞察</div>
+                <div class="bottom-line-text">
+                    Biotech Compass 的分層提示詞架構解決了我一直在思考的問題：如何在 CDMO 場景中使用 LLM 萃取客戶文件資料，同時保持 GxP 要求的資料追溯性。關鍵設計原則是「漸進式信任擴展」——從最高可信度來源開始，每擴展一層都需要使用者明確同意，而非讓 AI 自動判斷。
+                </div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">立即應用</div>
+                <div class="bottom-line-text">
+                    本週嘗試將這個架構應用到一份客戶 RFP 的初步評估：設計三層提示詞（客戶文件 → 公開資料庫 → 網路搜尋），產出可行性評估初稿，每個數據點標註來源層級。這可以測試「分層萃取」在製藥文件場景的可行性。
+                </div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">需要補充</div>
+                <div class="bottom-line-text">
+                    文章沒有提供實際的提示詞內容（承諾稍後釋出）。在套用到 CDMO 場景前，需要研究作者如何在提示詞中實現「禁止推論」和「強制來源標註」——這是控制幻覺的關鍵技術細節。標記此文在提示詞釋出後重新閱讀。
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>製作日期：2026-01-20</p>
+            <p>原文來源：<a href="https://thepharmafox.substack.com" target="_blank">The Pharma Fox's Substack - The Biotech Compass Walkthrough</a></p>
+            <p class="chat-title">建議 Chat Title：[Tool] Biotech Compass - LLM 輔助生技投資分析</p>
+        </footer>
+
+    </div>
+</body>
+</html>

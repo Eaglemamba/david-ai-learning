@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-01">
+    <meta name="doc-title" content="讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論">
+    <meta name="doc-source" content="社群文章">
+    <meta name="doc-tags" content="Agent,Tool,Automation,Prompt">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="CLAUDE.md 的 PDCA 持續改善方法論，教你如何系統性優化 Claude Code 的行為設定">
+    <meta name="doc-file" content="2026-02-01_claude-md-pdca-optimization.html">
+    <title>讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
+            --success: #059669;
+            --warning: #d97706;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #1e293b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b21b6 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.4; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1.25rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .source-info { font-size: 0.8rem; opacity: 0.8; }
+        .source-info a { color: #93c5fd; text-decoration: none; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary {
+            margin: 2rem;
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--primary-light);
+        }
+        .exec-summary h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 0.75rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.5rem; }
+
+        /* Learning Objectives */
+        .objectives {
+            margin: 2rem;
+        }
+        .objectives h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 1rem; text-align: center; }
+        .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .objective-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-top: 3px solid var(--primary-light);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-item h3 { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.3rem; }
+        .objective-item p { font-size: 0.8rem; color: var(--text-light); line-height: 1.6; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 140px; flex: 1; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+        /* Content Sections */
+        .content-section { margin: 2rem; }
+        .section-header {
+            background: linear-gradient(135deg, var(--primary), #2563eb);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem 0.75rem 0 0;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 0.75rem 0.75rem;
+            overflow: hidden;
+            background: white;
+        }
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-left {
+            padding: 1.25rem;
+            border-right: 1px solid var(--border);
+        }
+        .content-grid.linear .content-left { border-right: none; }
+        .content-right { padding: 1.25rem; background: #fafbfc; }
+
+        /* Bilingual blocks */
+        .bilingual-block { margin-bottom: 1rem; }
+        .zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+        .en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.7; }
+        .highlight-concept { background: #a5d6a7; padding: 0 3px; border-radius: 2px; }
+        .highlight-key { background: #ffcc80; padding: 0 3px; border-radius: 2px; }
+        .highlight-practical { background: #6ee7b7; padding: 0 3px; border-radius: 2px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.5rem; margin-bottom: 1rem; overflow: hidden; }
+        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
+        .info-box-content p { margin-bottom: 0.5rem; }
+        .info-box-content p:last-child { margin-bottom: 0; }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Code blocks */
+        pre {
+            background: var(--code-bg);
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin-bottom: 0.75rem;
+        }
+        code {
+            font-family: 'Source Code Pro', monospace;
+            background: #f1f5f9;
+            color: #be185d;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+        pre code { background: none; color: inherit; padding: 0; }
+
+        /* Data table */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 0.75rem; }
+        .data-table th { background: #f1f5f9; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; color: var(--primary); border-bottom: 2px solid var(--border); }
+        .data-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+        .data-table tr:hover td { background: #f8fafc; }
+
+        /* Key Takeaways */
+        .takeaways { margin: 2rem; }
+        .takeaways h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 1rem; text-align: center; }
+        .takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .summary-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary-light);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card h3 { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .summary-card p { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+        /* Practice Accordion */
+        .practice-section { margin: 2rem; }
+        .practice-section h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 1rem; text-align: center; }
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer {
+            margin: 2rem;
+            padding: 1.25rem;
+            background: white;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .footer a { color: var(--primary-light); text-decoration: none; }
+
+        /* Tabs */
+        .tab-container { margin: 1.5rem 2rem; }
+        .tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+        .tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.9rem; }
+        .tab-btn:hover { color: #334155; }
+        .tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; border-bottom: 1px solid var(--border); }
+            .objectives-grid { grid-template-columns: 1fr; }
+            .takeaways-grid { grid-template-columns: 1fr; }
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1.5rem; }
+            .tab-nav { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="tags">
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-automation">Automation</span>
+        <span class="tag tag-prompt">Prompt</span>
+    </div>
+    <h1>讓 Claude 變成你的形狀：CLAUDE.md 持續改善方法論</h1>
+    <div class="subtitle">三層式 PDCA 循環 — 階層式架構 + /Lesson 回顧 + /project-insights 審計</div>
+    <div class="source-info">來源：社群文章 | 主題：Claude Code CLAUDE.md 維護與優化</div>
+</div>
+
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="exec-summary">
+    <h2>Executive Summary</h2>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
+        <span class="rating-high">↑ 實務應用, 工具生態</span>
+        <span class="rating-low">↓ 技術深度（偏方法論）</span>
+    </div>
+    <p>這篇文章提出了一套完整的 <span class="highlight-concept">CLAUDE.md 持續改善框架</span>，核心論點是：你的 AI 指令文件不該是靜態的，而是一個會自我演化的系統。作者用三層架構解決兩個痛點 — Context Window 被雜訊稀釋，以及無法量化 Claude 的表現問題。階層式 CLAUDE.md 做「空間分離」，/Lesson 做「單次經驗提取」，/project-insights 做「跨 session 趨勢審計」，三者組成 PDCA 循環。文章最大的價值在於將 Claude Code 本機存儲的 JSONL 對話紀錄和 Facet 後設資料變成可操作的改善依據，讓 CLAUDE.md 的維護從「憑感覺」變成「靠數據」。</p>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<div class="objectives">
+    <h2>Learning Objectives</h2>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">🏗</div>
+            <h3>階層式 Context 管理</h3>
+            <p>理解如何用目錄結構分層 CLAUDE.md，讓 AI 在對的時機載入對的規則，保護 Context Window</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">🔄</div>
+            <h3>PDCA 改善循環</h3>
+            <p>掌握 /Lesson + /project-insights 的雙軌回饋機制，將協作經驗系統化寫入指令文件</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">📊</div>
+            <h3>數據驅動的規則優化</h3>
+            <p>學會利用 Claude Code 的本機對話紀錄和 Facet 分析，用摩擦點數據找出 CLAUDE.md 的改進方向</p>
+        </div>
+    </div>
+</div>
+
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+    <div class="framework-title">CLAUDE.md 持續改善 PDCA 循環</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">📋</div>
+            <div class="framework-step-title">Plan（載入）</div>
+            <div class="framework-step-desc">階層式 CLAUDE.md<br>對的時間、對的規則</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">⚡</div>
+            <div class="framework-step-title">Do（協作）</div>
+            <div class="framework-step-desc">開發 + /Lesson<br>單次經驗即時提取</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🔍</div>
+            <div class="framework-step-title">Check（審計）</div>
+            <div class="framework-step-desc">/project-insights<br>跨 session 趨勢分析</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🔧</div>
+            <div class="framework-step-title">Act（更新）</div>
+            <div class="framework-step-desc">分流寫入對應層級<br>通用 vs 專屬規則</div>
+        </div>
+    </div>
+</div>
+
+<!-- TABBED CONTENT: 6 Parts grouped into 3 tabs -->
+<div class="tab-container">
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">基礎架構：階層式 CLAUDE.md</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-feedback')">回饋機制：/Lesson + 本機數據</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-audit')">審計系統：/project-insights</button>
+    </div>
+
+    <!-- TAB 1: Foundation -->
+    <div id="tab-foundation" class="tab-content active">
+
+        <!-- Part I -->
+        <div class="content-section" style="margin: 0 0 1.5rem 0;">
+            <div class="section-header">Part I — 為什麼單一 CLAUDE.md 會讓 AI 變笨</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh-text">AI 犯錯有三個根源：<span class="highlight-key">錯誤的資訊、遺漏的資訊、雜訊</span>。階層式 CLAUDE.md 主要解決的是「雜訊」問題。</p>
+                        <p class="en-text">AI errors stem from three sources: wrong info, missing info, and noise. Hierarchical CLAUDE.md primarily addresses the "noise" problem.</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="zh-text">你在寫前端的時候，後端的 API 格式規範對 Claude 來說就是雜訊。它佔了 <span class="highlight-concept">Context Window</span> 的空間，卻對當前任務毫無幫助，反而可能讓 Claude 分心。<span class="highlight-key">寫越多，Claude 反而越笨</span>。</p>
+                        <p class="en-text">When writing frontend code, backend API format specs are noise to Claude. They occupy Context Window space without helping the current task, potentially distracting Claude. The more you write, the dumber Claude gets.</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">💡 比喻說明</div>
+                        <div class="info-box-content">
+                            <p>想像你是外科醫師，正在做心臟手術。助手同時把骨科手術流程、眼科器材清單、牙科麻醉劑量全攤在手術台上。資訊量很大，但全是雜訊 — 佔空間、分散注意力。</p>
+                            <p>CLAUDE.md 塞滿所有規則，就是這個狀況。Claude 的 Context Window 就是那張手術台，空間有限。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠ 重點提示</div>
+                        <div class="info-box-content">
+                            <p>這個「雜訊」問題在 CDMO 情境中也常見 — 製程驗證時，你不會把所有 SOP 同時攤在 Clean Room 裡。只帶當前步驟需要的文件，這就是「階層式」的核心邏輯。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part II -->
+        <div class="content-section" style="margin: 0 0 1.5rem 0;">
+            <div class="section-header">Part II — 階層式 CLAUDE.md 的實作結構</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh-text">正確的做法是分層。Claude Code 會自動從當前工作目錄<span class="highlight-concept">往上遞迴（recursive）載入</span>所有 CLAUDE.md。在 <code>frontend/</code> 底下工作時，只會載入根目錄 + <code>frontend/CLAUDE.md</code>，後端規則不會被載入。</p>
+                        <p class="en-text">Claude Code automatically loads all CLAUDE.md files recursively from the current directory upward. Working in frontend/ loads only root + frontend/CLAUDE.md; backend rules won't be loaded.</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="zh-text"><span class="highlight-practical">動態載入</span>：有些東西太大了（教學文件、API 速查表），直接塞進 CLAUDE.md 會爆。更好的做法是把 CLAUDE.md 當成索引 — 只列出「去哪裡找」，Claude 需要的時候再動態載入。</p>
+                        <p class="en-text">For oversized content (tutorials, API cheat sheets), use CLAUDE.md as an index — list where to find things, let Claude load dynamically when needed.</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-code">
+                        <div class="info-box-header">💻 目錄結構</div>
+                        <div class="info-box-content">
+<pre><code>project/
+├── CLAUDE.md              ← 全域規則
+│   ・核心開發哲學
+│   ・全域命名規範
+│   ・Git commit 慣例
+│   ・專案架構概述
+├── frontend/
+│   └── CLAUDE.md          ← 前端專屬
+│       ・Component 寫法
+│       ・狀態管理慣例
+│       ・UI 框架注意事項
+└── backend/
+    └── CLAUDE.md          ← 後端專屬
+        ・API 格式
+        ・資料庫操作慣例
+        ・第三方服務整合</code></pre>
+                        </div>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 分層原則</div>
+                        <div class="info-box-content">
+                            <p><strong>根目錄</strong>：每次對話都需要的東西（哲學、命名、Git）</p>
+                            <p><strong>子目錄</strong>：該領域專屬規則（前端 Component、後端 API）</p>
+                            <p><strong>判斷標準</strong>：某條規則只在特定目錄會用到，就不該放在根目錄浪費全域 Context</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: Feedback -->
+    <div id="tab-feedback" class="tab-content">
+
+        <!-- Part III -->
+        <div class="content-section" style="margin: 0 0 1.5rem 0;">
+            <div class="section-header">Part III — /Lesson：單次 Session 的經驗提取</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh-text">即便有了階層式架構，Claude 仍然會<span class="highlight-key">反覆修不好同一個 Bug</span>、執著於錯誤的 API 用法。你花了力氣把它導正、最終完成任務了，但如果什麼都不做，下次遇到同樣問題它還是會再犯。</p>
+                        <p class="en-text">Even with hierarchical structure, Claude still repeatedly fails at the same bug or persists with wrong API usage. Without action, it'll make the same mistakes next time.</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="zh-text"><code>/Lesson</code> 是 Custom Command，在任務完成後讓 Claude 回頭 review 對話。做兩件事：(1) <span class="highlight-concept">回顧對話</span>，分析走錯的原因；(2) <span class="highlight-practical">提取經驗</span>，寫入對應層級的 CLAUDE.md。</p>
+                        <p class="en-text">/Lesson is a Custom Command that makes Claude review the conversation after task completion: (1) analyze what went wrong, (2) extract lessons into the corresponding CLAUDE.md level.</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="zh-text">關鍵是「寫入對應層級」— 通用教訓（如「收到明確指令就直接執行」）寫根目錄，特定框架的踩坑寫子目錄。</p>
+                        <p class="en-text">The key is "write to the corresponding level" — generic lessons go to root, framework-specific pitfalls go to subdirectories.</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">💡 比喻說明</div>
+                        <div class="info-box-content">
+                            <p>/Lesson 就像每次看完診後寫的<strong>病歷記錄</strong>。剛治好一個難症，趁記憶新鮮把診斷過程、踩過的坑、最後有效的處方全寫下來。下次遇到類似症狀，翻病歷就好。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">🛠 建立方式</div>
+                        <div class="info-box-content">
+<pre><code># 在專案根目錄建立 Custom Command
+mkdir -p .claude/commands/
+touch .claude/commands/lesson.md
+
+# lesson.md 裡定義：
+# 1. 回顧當前對話的指示
+# 2. 分析哪裡走錯的指示
+# 3. 將結論寫入 CLAUDE.md 的指示</code></pre>
+                        </div>
+                    </div>
+                    <div class="info-box box-compare">
+                        <div class="info-box-header">⚖ /Lesson vs /project-insights</div>
+                        <div class="info-box-content">
+                            <p><strong>/Lesson</strong>：處理「單次 session」，精準但依賴人記得去做</p>
+                            <p><strong>/project-insights</strong>：處理「跨所有 session」的趨勢，全面但有延遲</p>
+                            <p>兩者互補，不是二選一</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part IV -->
+        <div class="content-section" style="margin: 0 0 1.5rem 0;">
+            <div class="section-header">Part IV — Claude Code 本機存了什麼：對話紀錄與 Facet</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh-text">Claude Code 默默在本機存了大量資料。<span class="highlight-concept">對話紀錄（JSONL）</span>存在 <code>~/.claude/projects/{encoded-path}/{session-id}.jsonl</code>，你跟 Claude 講的每句話、回覆、工具使用、Token 消耗全部都在。</p>
+                        <p class="en-text">Claude Code silently stores extensive local data. Conversation logs (JSONL) at ~/.claude/projects/{encoded-path}/{session-id}.jsonl contain every message, reply, tool usage, and token consumption.</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="zh-text"><span class="highlight-concept">索引檔（sessions-index.json）</span>幫約 70% 的 session 整理好了基本資料。<span class="highlight-concept">Facet</span> 則是 /insights 產生的後設分析，標註每個 session 的目標分類、結果、摩擦點、幫助程度。</p>
+                        <p class="en-text">The index file covers ~70% of sessions with basic metadata. Facets are meta-analyses generated by /insights, tagging each session's goal categories, outcomes, friction points, and helpfulness.</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-code">
+                        <div class="info-box-header">💻 本機資料路徑</div>
+                        <div class="info-box-content">
+<pre><code># 對話紀錄
+~/.claude/projects/{path}/{session}.jsonl
+
+# 索引
+~/.claude/projects/{path}/sessions-index.json
+
+# Facet 後設分析
+~/.claude/usage-data/facets/{session-id}.json</code></pre>
+                        </div>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 Facet 欄位一覽</div>
+                        <div class="info-box-content">
+                            <table class="data-table">
+                                <tr><th>欄位</th><th>白話意思</th><th>範例</th></tr>
+                                <tr><td>goal_categories</td><td>在做什麼</td><td>bugfix, code_migration</td></tr>
+                                <tr><td>outcome</td><td>結果如何</td><td>fully_achieved, not_achieved</td></tr>
+                                <tr><td>friction_counts</td><td>卡關摩擦</td><td>wrong_approach, buggy_code</td></tr>
+                                <tr><td>claude_helpfulness</td><td>多有幫助</td><td>very_helpful, essential</td></tr>
+                                <tr><td>session_type</td><td>工作模式</td><td>iterative_refinement</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠ 數據規模參考</div>
+                        <div class="info-box-content">
+                            <p>作者的一個專案：44 天、260 個 session、整個資料夾超過 <strong>600MB</strong>，最大單一 session 達 54MB。22,000+ 則使用者訊息，21,000+ 次工具呼叫。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: Audit -->
+    <div id="tab-audit" class="tab-content">
+        <!-- Part V -->
+        <div class="content-section" style="margin: 0 0 1.5rem 0;">
+            <div class="section-header">Part V — /project-insights：專案級自動審計</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh-text">Claude Code 官方的 <code>/insights</code> 很強 — 回頭翻 30 天對話紀錄，分析工具使用、卡關點、成功率。但有兩個問題：<span class="highlight-key">它分析所有專案混在一起</span>，以及你不知道要改哪個專案的 CLAUDE.md。</p>
+                        <p class="en-text">Claude Code's official /insights is powerful — analyzing 30 days of history for tool usage, friction points, success rates. But it mixes all projects together, and you don't know which project's CLAUDE.md to fix.</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="zh-text">作者自建的 <code>/project-insights</code> 解決這些問題：(1) <span class="highlight-practical">只看當前專案</span>、(2) 重用 /insights 已分析的 Facet 不重複花 Token、(3) <span class="highlight-key">直接產出 CLAUDE.md 改進建議</span>。</p>
+                        <p class="en-text">The custom /project-insights fixes these: (1) scopes to current project only, (2) reuses existing Facet data, (3) outputs concrete CLAUDE.md improvement suggestions.</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="zh-text">技術上是兩個檔案：<code>SKILL.md</code>（告訴 Claude 怎麼分析、報告格式）和 <code>extract.py</code>（Python 腳本，從幾百 MB 的 JSONL 濃縮成 ~100KB JSON）。Python 串流處理 260 個 session，3.6 秒搞定。</p>
+                        <p class="en-text">Technically just two files: SKILL.md (analysis instructions, report format) and extract.py (Python script condensing hundreds of MB of JSONL into ~100KB JSON). Streams through 260 sessions in 3.6 seconds.</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-code">
+                        <div class="info-box-header">💻 /project-insights 結構</div>
+                        <div class="info-box-content">
+<pre><code>~/.claude/skills/project-insights/
+├── SKILL.md         # 分析指令 + 報告格式
+└── scripts/
+    └── extract.py   # 資料濃縮腳本
+
+# 安裝步驟
+mkdir -p ~/.claude/skills/project-insights/scripts
+chmod +x extract.py
+# 在任何專案目錄打 /project-insights 即可</code></pre>
+                        </div>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 extract.py 做什麼</div>
+                        <div class="info-box-content">
+                            <p><strong>1.</strong> 接收專案路徑，找到對應 session 資料夾</p>
+                            <p><strong>2.</strong> 先讀索引拿基本 metadata（70% 免解析 JSONL）</p>
+                            <p><strong>3.</strong> 串流掃描每個 JSONL：訊息數、工具次數、Token、錯誤</p>
+                            <p><strong>4.</strong> 比對哪些 session 已有 Facet</p>
+                            <p><strong>5.</strong> 挑 10 個「最值得深入看」的未分析 session</p>
+                            <p><strong>6.</strong> 全部彙總成 JSON 輸出</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠ 10 個 session 怎麼挑</div>
+                        <div class="info-box-content">
+                            <p>最多訊息的 3 個（最複雜）、最多錯誤的 2 個（卡最久）、最新的 3 個（最近習慣）、最耗 Token 的 2 個（成本最高）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part VI -->
+        <div class="content-section" style="margin: 0 0 1.5rem 0;">
+            <div class="section-header">Part VI — 報告的七個分析區塊 + 實際改進案例</div>
+            <div class="content-grid linear">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh-text">SKILL.md 定義了七個分析區塊：(1) 概覽統計、(2) 工作內容分析、(3) 工具使用模式、(4) <span class="highlight-key">摩擦點分析</span>（最有價值）、(5) Session 結果分佈、(6) 重複模式、(7) <span class="highlight-practical">CLAUDE.md 改進建議</span>。</p>
+                        <p class="en-text">SKILL.md defines seven analysis blocks: overview, work content, tool usage, friction analysis (most valuable), session outcomes, repeated patterns, and CLAUDE.md improvement suggestions.</p>
+                    </div>
+
+                    <div class="info-box box-compare">
+                        <div class="info-box-header">⚖ 摩擦點排名（作者實際數據）</div>
+                        <div class="info-box-content">
+                            <table class="data-table">
+                                <tr><th>摩擦類型</th><th>次數</th><th>改善方向</th></tr>
+                                <tr><td>buggy_code</td><td>33</td><td>加入第三方 API 速查表（cheat sheet）</td></tr>
+                                <tr><td>wrong_approach</td><td>24</td><td>加強架構說明 + 「直接執行不要產計畫」</td></tr>
+                                <tr><td>misunderstood_request</td><td>9</td><td>更明確的指令範本</td></tr>
+                                <tr><td>user_rejected_action</td><td>8</td><td>加強操作範圍限制</td></tr>
+                                <tr><td>excessive_changes</td><td>3</td><td>明確界定修改範圍</td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">🛠 三個實際改了 CLAUDE.md 的例子</div>
+                        <div class="info-box-content">
+                            <p><strong>1. Bash > Read → 加「優先使用專用工具」規範</strong><br>工具分析顯示 Bash(6,128) 多於 Read(5,560)，讀檔該用 Read 不是 cat。加了對照表後 Claude 明顯改善。</p>
+                            <p><strong>2. wrong_approach → 加「直接執行不要產計畫」</strong><br>收到「fix all 15 findings」還在寫修正計畫。加規則：「收到明確指令時直接執行」。</p>
+                            <p><strong>3. buggy_code → 加第三方 API 速查表</strong><br>shadcn-vue Checkbox 用舊版語法、Strapi lifecycle hook 行為不同。寫進 CLAUDE.md 後不再重犯。</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠ 覆蓋率的坑</div>
+                        <div class="info-box-content">
+                            <p>/insights 每次最多只處理 50 個 Facet（跨所有專案）。作者 254 個 session 跑一次只有 27 個 Facet（11% 覆蓋率）。連續跑多次後：11% → 26% → 45% → 56%（143 個 Facet），分析結果完全不同。<strong>花十分鐘多跑幾次是值得的。</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 改進建議的四種類型</div>
+                        <div class="info-box-content">
+                            <p><strong>[新增規範]</strong> — wrong_approach 太多 → 加強架構說明</p>
+                            <p><strong>[修改規範]</strong> — 既有規範沒被遵守 → 改寫得更明確</p>
+                            <p><strong>[新增知識]</strong> — 同樣問題反覆出現 → 加入常見陷阱</p>
+                            <p><strong>[效率提升]</strong> — 重複任務太多 → 建議自動化</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- KEY TAKEAWAYS -->
+<div class="takeaways">
+    <h2>Key Takeaways</h2>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <h3>🏗 階層式 = 空間隔離</h3>
+            <p>CLAUDE.md 按目錄分層，Claude Code 自動遞迴載入。只讓 AI 在對的時間看到對的規則，保護有限的 Context Window 不被雜訊稀釋。判斷標準：只在特定目錄有用的規則，就不該放根目錄。</p>
+        </div>
+        <div class="summary-card">
+            <h3>🔄 /Lesson = 即時病歷</h3>
+            <p>任務完成後的 Custom Command，讓 Claude 回顧對話、分析走錯的原因、提取經驗寫入對應層級的 CLAUDE.md。精準但依賴人記得做。通用教訓寫根目錄，專屬踩坑寫子目錄。</p>
+        </div>
+        <div class="summary-card">
+            <h3>📊 /project-insights = 定期健檢</h3>
+            <p>Python 腳本濃縮數百 MB 對話紀錄，Claude 分析產出七區塊報告。最有價值的是「摩擦點分析」和「CLAUDE.md 改進建議」。記得多跑幾次 /insights 提高 Facet 覆蓋率。</p>
+        </div>
+        <div class="summary-card">
+            <h3>🎯 PDCA = 自我演化</h3>
+            <p>三層疊起來形成閉環：載入規則 → 協作開發 → 審計數據 → 更新規則。CLAUDE.md 不再是靜態文件，而是會根據數據自我改善的系統。「憑感覺」變成「靠數據」。</p>
+        </div>
+    </div>
+</div>
+
+<!-- PRACTICE -->
+<div class="practice-section">
+    <h2>Practice Questions</h2>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">為什麼作者說「寫越多，Claude 反而越笨」？這和 Context Window 有什麼關係？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>Claude 的 Context Window 是有限資源。當 CLAUDE.md 塞滿所有規則（前端 + 後端 + 部署 + 命名...），與當前任務無關的規則會佔據 Context 空間，形成「雜訊」。LLM 的注意力機制會被這些無關資訊稀釋，導致對真正重要規則的遵循度下降。</p>
+            <p>這就像 GMP 文件管理的邏輯 — 你不會把所有 SOP 同時帶進 Clean Room。只帶當前製程步驟需要的文件，確保操作人員專注在對的指引上。階層式 CLAUDE.md 做的就是同樣的「資訊隔離」。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">如果你要在 CDMO 的 AI 輔助系統中實作類似的「階層式指令架構」，你會怎麼設計分層？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>可以參考這個思路：</p>
+            <p><strong>根目錄（全域）：</strong>GMP 核心原則、數據完整性要求（21 CFR Part 11）、變更管理流程、文件編號慣例 — 不論哪個部門都要遵守的規則。</p>
+            <p><strong>manufacturing/：</strong>製程參數範圍、設備操作 SOP（如 SA25 Vanrx isolator）、環境監測標準、QS-21 佐劑處理流程。</p>
+            <p><strong>quality/：</strong>偏差調查流程、CAPA 分類標準、穩定性試驗規範、放行條件。</p>
+            <p><strong>regulatory/：</strong>PIC/S 指引對照、法規提交格式、各市場 CTD 差異。</p>
+            <p>核心邏輯一樣 — AI 在處理製程偏差時，不需要載入法規提交格式；在準備提交文件時，不需要載入設備操作細節。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">這套 PDCA 循環框架有什麼限制？在什麼情境下可能不適用？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>限制 1 — 前提是你要用 Claude Code：</strong>整套系統建立在 Claude Code 的本機 JSONL 存儲和 /insights Facet 系統上。如果你用的是 claude.ai 網頁版、API、或其他 IDE 整合，這些本機數據不存在。</p>
+            <p><strong>限制 2 — Facet 覆蓋率問題：</strong>作者自己也坦承，多跑幾次 /insights 才能達到 56% 覆蓋率。未分析的 44% session 可能藏有重要模式。</p>
+            <p><strong>限制 3 — /Lesson 依賴人的紀律：</strong>作者承認「人難免會懶惰或遺忘」。如果團隊裡多人使用，紀律更難維持。</p>
+            <p><strong>限制 4 — 對 GMP 環境的適用性：</strong>在高度管制環境中，AI 生成的「改進建議」不能直接寫入正式 SOP。需要加一個人工審核 + 變更管理的閘門，這在文章中沒有提到。這是 copilot mode（人審 100%）vs agent mode 的判斷點。</p>
+        </div>
+    </details>
+</div>
+
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+    <div class="bottom-line-header">🎯 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">CLAUDE.md 不是寫一次就完的靜態文件，而是需要 PDCA 循環持續優化的「活系統」。這個觀點直接適用於我的 Master Prompt 系統 — 從 v1.0 到 v1.5 的迭代本質上就是同樣的邏輯，但我缺少作者這套「數據驅動」的回饋機制。目前我的 Master Prompt 改版靠的是主觀感受，缺少量化的摩擦點分析。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用</div>
+        <div class="bottom-line-text">雖然我主要用 claude.ai 而非 Claude Code，但「階層式架構」的邏輯可以遷移 — 在 Claude Projects 中，我可以把 Master Prompt 拆成「核心教學方法（永遠載入）」和「特定文件類型模板（按需引用）」兩層。本週動手做：把 v1.5 Master Prompt 中「只在特定文件類型用到」的 CSS/HTML 模板段落抽出，改用索引引用方式。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠ 需要補充</div>
+        <div class="bottom-line-text">文章缺少 GMP 合規視角 — 在 CDMO 環境中，AI 自動建議的規則變更需要經過變更管理程序（Change Control），不能直接寫入。另外，/project-insights 的 Python 腳本和 SKILL.md 的完整原始碼雖然文末提到但未附上，需要另外取得或自行開發。等 Claude Code 更成熟或我實際開始用時，再重新閱讀這篇的技術細節。</div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>製作日期：2025-07 | 來源：社群文章「讓 Claude 變成你的形狀，持續改善你的 CLAUDE.md」</p>
+    <p>建議 Chat Title：<strong>[Tool] Claude Code CLAUDE.md - PDCA Optimization</strong></p>
+</div>
+
+</div>
+
+<script>
+function switchTab(evt, tabId) {
+    const container = evt.currentTarget.closest('.tab-container');
+    container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+</script>
+
+</body>
+</html>

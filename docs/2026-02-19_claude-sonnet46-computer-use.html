@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-19">
+    <meta name="doc-title" content="Claude Sonnet 4.6 - AI Computer Use 的五倍躍進">
+    <meta name="doc-source" content="Joel Salinas">
+    <meta name="doc-tags" content="LLM,Tool,Agent,Automation">
+    <meta name="doc-rating" content="3.6">
+    <meta name="doc-summary" content="Anthropic發布Claude Sonnet 4.6，Computer Use能力16個月提升近五倍">
+    <meta name="doc-file" content="2026-02-19_claude-sonnet46-computer-use.html">
+    <title>Claude Sonnet 4.6 - AI Computer Use 的五倍躍進</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --accent: #059669;
+            --bg: #f8fafc;
+            --text: #334155;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #f5f3ff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+        code, pre { font-family: 'Source Code Pro', monospace; }
+
+        /* Header */
+        .header { background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7ec2 100%); color: white; padding: 2.5rem 2rem; text-align: center; }
+        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.4; }
+        .header .subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.2rem 0.6rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; }
+        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .source-info { font-size: 0.8rem; opacity: 0.8; }
+        .source-info a { color: #93c5fd; text-decoration: none; }
+
+        /* Main container */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; margin: 1.5rem; padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--primary-light); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .exec-summary h2 { color: var(--primary); font-size: 1.1rem; margin-bottom: 0.75rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; margin-bottom: 0.75rem; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Learning Objectives */
+        .objectives { margin: 1.5rem; }
+        .objectives h2 { color: var(--primary); font-size: 1.1rem; margin-bottom: 1rem; text-align: center; }
+        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid var(--primary-light); box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .objective-item h3 { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.3rem; }
+        .objective-item p { font-size: 0.85rem; color: var(--text-light); }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Content Grid */
+        .content-section { margin: 1.5rem; }
+        .part-header { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; padding: 1rem 1.5rem; border-radius: 0.75rem 0.75rem 0 0; font-size: 1.05rem; font-weight: 700; }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; background: white; border-radius: 0 0 0.75rem 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
+        .content-left { padding: 1.5rem; border-right: 1px solid var(--border); }
+        .content-right { padding: 1.5rem; background: #fafbfd; }
+
+        /* Linear layout override */
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-grid.linear .content-left { border-right: none; }
+
+        /* Bilingual blocks */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh-text { font-size: 0.95rem; line-height: 1.8; color: var(--text); margin-bottom: 0.3rem; }
+        .en-text { font-size: 0.9rem; line-height: 1.7; color: var(--text-light); font-style: italic; }
+        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info boxes */
+        .info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem; }
+        .info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Key Takeaways */
+        .takeaways { margin: 1.5rem; }
+        .takeaways h2 { color: var(--primary); font-size: 1.1rem; margin-bottom: 1rem; text-align: center; }
+        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid var(--primary-light); box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card .card-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .summary-card h3 { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.3rem; }
+        .summary-card p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+
+        /* Practice Questions - Accordion */
+        .practice { margin: 1.5rem; }
+        .practice h2 { color: var(--primary); font-size: 1.1rem; margin-bottom: 1rem; }
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 1.5rem; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; margin-top: 1rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-light); }
+        .footer a { color: var(--primary-light); text-decoration: none; }
+        .chat-title { margin-top: 0.5rem; font-size: 0.75rem; color: #94a3b8; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; border-bottom: 1px solid var(--border); }
+            .header h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="tags">
+        <span class="tag tag-llm">LLM</span>
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-automation">Automation</span>
+    </div>
+    <h1>Claude Sonnet 4.6 - AI Computer Use 的五倍躍進</h1>
+    <div class="subtitle">AI 不只變聰明了，它開始會操作你的軟體</div>
+    <div class="source-info">
+        Joel Salinas | Feb 18, 2026 | <a href="#">Original Article</a>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="exec-summary">
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
+        <span class="rating-high">↑ 時效性, 實務應用</span>
+        <span class="rating-low">↓ 技術深度, 工具生態</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>
+        這篇文章聚焦 Anthropic 於 2026 年 2 月 17 日發布的 Claude Sonnet 4.6。核心訊息不是「AI 更聰明」，而是 <span class="highlight-key">Computer Use（電腦使用）能力在 16 個月內提升近五倍</span>，從實驗性質走向接近人類水準的軟體操作能力。文章以非技術人員友善的語言，向管理者說明這對企業工作流程和 legacy system 的意義。內容偏向高層概覽，缺少深入技術細節，但時效性極強，對理解 AI Agent 的最新進展很有價值。
+    </p>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<div class="objectives">
+    <h2>Learning Objectives</h2>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">1</div>
+            <h3>理解 Sonnet 4.6 核心升級</h3>
+            <p>掌握 Sonnet 4.6 與 4.5 的關鍵差異：性能、記憶容量、定價策略</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">2</div>
+            <h3>掌握 Computer Use 概念</h3>
+            <p>理解 AI 直接操作軟體介面的技術意涵及其五倍進步的量化證據</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">3</div>
+            <h3>評估組織應用場景</h3>
+            <p>判斷 Computer Use 對 legacy systems、手動流程和自動化策略的影響</p>
+        </div>
+    </div>
+</div>
+
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+    <div class="framework-title">Claude Sonnet 4.6 三大升級路徑</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#x1f4a1;</div>
+            <div class="framework-step-title">更聰明</div>
+            <div class="framework-step-desc">Opus 等級性能<br>1/5 價格</div>
+        </div>
+        <div class="framework-arrow">&#x2192;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1f9e0;</div>
+            <div class="framework-step-title">更大記憶</div>
+            <div class="framework-step-desc">1M Token<br>Context Window</div>
+        </div>
+        <div class="framework-arrow">&#x2192;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1f5a5;</div>
+            <div class="framework-step-title">會操作電腦</div>
+            <div class="framework-step-desc">Computer Use<br>14.9% → 72.5%</div>
+        </div>
+    </div>
+</div>
+
+<!-- PART I -->
+<div class="content-section">
+    <div class="part-header">Part I: Sonnet 4.6 的三大升級</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    Claude Sonnet 4.6 的核心價值主張很直接：<span class="highlight-key">以旗艦模型五分之一的價格，提供旗艦等級的性能</span>。在早期測試中，開發者實際上有 59% 的時間偏好 Sonnet 4.6 而非最昂貴的 Opus 4.5 模型。這代表 Anthropic 的定價策略正在積極壓低「智慧」的取得門檻。
+                </p>
+                <p class="en-text">
+                    "Claude Sonnet 4.6 now performs at the level of Anthropic's most expensive model (called Opus) at one-fifth the cost. In early testing, developers actually preferred Sonnet 4.6 over the flagship Opus 4.5 model 59% of the time."
+                </p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    另一個重要升級是 <span class="highlight-concept">1 百萬 Token 的上下文窗口</span>（Context Window），相當於好幾本完整小說的長度。如果你曾遇過 Claude 在對話中途「忘記」你之前說的內容，這就是解方。更大的記憶意味著更連貫的長對話體驗。
+                </p>
+                <p class="en-text">
+                    "The new model can hold up to 1 million tokens (roughly the equivalent of several full-length novels) in a single conversation. If you've ever had Claude lose track of what you were discussing mid-conversation, this is the fix."
+                </p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    最後，<span class="highlight-practical">免費方案現在預設使用 Sonnet 4.6</span>。這不是閹割版 — 而是與付費用戶和開發者使用的完全相同的模型。「Premium AI」和「Accessible AI」之間的差距顯著縮小。
+                </p>
+                <p class="en-text">
+                    "Everyone on the free plan now gets Sonnet 4.6 as the default. This isn't a watered-down version. It's the same model that paying users and developers are building with."
+                </p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1f4da; 核心概念：性能民主化</div>
+                <div class="info-box-content">
+                    <p>Anthropic 的策略值得注意：不是讓最新模型成為高價獨享，而是讓前代旗艦的能力快速普及。Sonnet 4.6 能匹敵 Opus 但價格只有 1/5，免費版也直接搭載 — 這是一個「智慧通膨」（intelligence deflation）的清楚訊號。對企業決策者來說，意味著「等等再導入 AI」的機會成本正在急速上升。</p>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1f4a1; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>想像你去買車。去年的頂級房車現在以國民車的價格在賣，而且同時開放免費試駕。你可能不會立刻買，但你絕對會重新評估通勤方式。AI 模型的定價正在經歷同樣的事。</p>
+                </div>
+            </div>
+            <div class="info-box box-cost">
+                <div class="info-box-header">&#x1f4b0; 成本視角</div>
+                <div class="info-box-content">
+                    <p>文章提到 Sonnet 4.6 是 Opus 的 1/5 價格，但沒有給具體的 API 定價數據。對我們這種需要計算 ROI 的使用者來說，這是一個資訊缺口。關鍵問題：在你的 use case 中，Sonnet 4.6 是否已經「夠好」到可以從 Opus 降級？59% 的偏好率暗示答案可能是肯定的。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART II -->
+<div class="content-section">
+    <div class="part-header">Part II: Computer Use — 真正的頭條</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    自 2024 年 10 月以來，Anthropic 一直在開發 <span class="highlight-key">Computer Use（電腦使用）</span>功能。簡單說：AI 可以看到你的螢幕，並像你一樣操作軟體 — 點擊滑鼠、打字、在應用程式之間切換。
+                </p>
+                <p class="en-text">
+                    "Since October 2024, Anthropic has been developing something called 'computer use.' It's exactly what it sounds like. The AI can see your screen and interact with software the way you do, by clicking a mouse, typing on a keyboard, and navigating between applications."
+                </p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    當這個功能首次推出時，<span class="highlight-concept">Anthropic 自己都承認它是「實驗性的、有時笨拙且容易出錯」</span>。那是誠實的。它很慢、會犯錯，不是你敢拿來處理真實工作的東西。
+                </p>
+                <p class="en-text">
+                    "When this feature first launched, Anthropic themselves called it 'experimental, at times cumbersome and error-prone.' That was honest. It was slow, it made mistakes, and it wasn't something you'd trust with real work."
+                </p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    但變化很快。在一個標準化測試（評估 AI 完成真實軟體任務的能力，使用 Chrome、試算表、程式編輯器等）中，Claude 的分數<span class="highlight-key">從 2024 年 10 月的 14.9% 提升到 2026 年 2 月 17 日的 72.5%</span>。16 個月內接近五倍的進步。
+                </p>
+                <p class="en-text">
+                    "On a standard test that evaluates AI's ability to complete real software tasks... Claude's score went from 14.9% in October 2024 to 72.5% on February 17, 2026. Nearly a five-times improvement in sixteen months."
+                </p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    實際應用上，Anthropic 報告早期使用者在「導航複雜試算表和填寫多步驟網頁表單」等任務中看到了<span class="highlight-practical">「接近人類水準的能力」</span>。不是理論上的能力，而是跨多個瀏覽器分頁和應用程式的實際可靠執行。
+                </p>
+                <p class="en-text">
+                    "Anthropic reports that early users are seeing 'human-level capability' in tasks like navigating complex spreadsheets and filling out multi-step web forms. Not theoretical capability. Actual, reliable execution across multiple browser tabs and applications."
+                </p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26a0;&#xfe0f; 重點提示：五倍進步的意義</div>
+                <div class="info-box-content">
+                    <p>14.9% → 72.5% 這個數字本身很驚人，但更重要的是它意味著什麼：Computer Use 從「有趣的 demo」跨越到「可用於生產環境」的門檻。想想 2024 年 10 月時，每 7 個任務只能完成 1 個。現在，每 4 個任務能完成 3 個。這是質的改變，不只是量的提升。</p>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1f4a1; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>把 Computer Use 想成你剛雇用的新員工。16 個月前，他只能完成 15% 的交辦任務 — 基本上是個需要你全程盯著的實習生。現在他能完成 72% — 他已經是一個可以獨立處理大部分日常工作的正職員工。你不會把最敏感的客戶案件交給他，但日常行政作業？完全可以放手。</p>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1f4da; 核心概念：不需要 API 整合</div>
+                <div class="info-box-content">
+                    <p>文章的一句話點出了關鍵差異：<strong>「AI 不需要與你的軟體建立特殊連結。它用和人一樣的方式使用軟體。」</strong> 這是 Computer Use 和傳統自動化（API、RPA）的根本不同。傳統方式需要每個系統都有整合介面。Computer Use 則是從 UI 層面操作，意味著即使是沒有 API 的老舊系統也能被自動化。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART III -->
+<div class="content-section">
+    <div class="part-header">Part III: 對組織的影響 — Legacy Systems 的解方？</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    每個組織都有<span class="highlight-key">無法輕易自動化的軟體</span>。早於現有團隊的舊 HR 系統、需要三個不同工具的費用核准流程、在現代整合方案出現前就建好的 CRM。
+                </p>
+                <p class="en-text">
+                    "Every organization has software it can't easily automate. The old HR system that predates your current team. The clunky expense approval workflow that involves three different tools. The CRM that was built before modern integrations existed."
+                </p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    過去自動化這些系統只有兩個選項：建客製化整合（昂貴、緩慢），或接受手動作業。根據 2025 年的生產力研究，<span class="highlight-cost">一般辦公室員工每週花約 1.5 小時在不同商業應用之間複製貼上數據</span>。
+                </p>
+                <p class="en-text">
+                    "According to productivity research from 2025, a typical office worker spends roughly 1.5 hours every week just copying and pasting data between business applications."
+                </p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    Computer Use 提供了<span class="highlight-practical">第三種選項</span>。AI 用和你的團隊一樣的方式操作軟體。不需要客製化連接器、不需要開發者工時、不需要系統改造。
+                </p>
+                <p class="en-text">
+                    "Computer use offers a third option. The AI navigates the software the same way your team does. No custom connectors. No developer hours. No system overhaul."
+                </p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">
+                    但 PwC 在其 2026 年 2 月的 AI 預測中也指出：<span class="highlight-key">「Agent 大約可以執行人們目前工作的一半任務，但這需要一種新型態的治理。」</span>
+                </p>
+                <p class="en-text">
+                    "As PwC put it in their February 2026 AI predictions: 'Agents can do roughly half of the tasks that people now do, but that requires a new kind of governance.'"
+                </p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1f6e0;&#xfe0f; 實務應用：CDMO 場景思考</div>
+                <div class="info-box-content">
+                    <p>在 CDMO 環境中，想想那些沒有 API 的場景：手動填寫批次記錄系統、在不同 QMS 之間複製數據、或是從舊版 LIMS 導出報告。Computer Use 理論上可以處理這些 UI 層面的操作。但關鍵問題是：在 GMP 環境中，AI 操作軟體的 Data Integrity 如何驗證？Audit Trail 怎麼追蹤？這是文章完全沒觸及的議題。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26a0;&#xfe0f; 重點提示：Governance 的關鍵</div>
+                <div class="info-box-content">
+                    <p>PwC 提到的「新型態治理」正是 Computer Use 從實驗到生產的最大障礙。想想看：你願意讓一個 AI Agent 自行填寫你的費用報銷表單嗎？如果它填錯了金額？如果它點了不該點的按鈕？這不只是技術問題，更是責任歸屬、風險管理和合規的問題。對高度監管的產業（如製藥），這個 Governance 門檻會更高。</p>
+                </div>
+            </div>
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#x2696;&#xfe0f; 自動化方式比較</div>
+                <div class="info-box-content">
+                    <p><strong>傳統 API 整合：</strong>高可靠、可預測、需要開發資源、僅限有 API 的系統</p>
+                    <p><strong>RPA（如 UiPath）：</strong>UI 層面操作、需要固定流程腳本、維護成本高、UI 改變即失效</p>
+                    <p><strong>AI Computer Use：</strong>UI 層面操作、有一定適應能力、不需固定腳本、但準確率仍有上限（72.5%）且缺乏企業級 Audit Trail</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- KEY TAKEAWAYS -->
+<div class="takeaways">
+    <h2>Key Takeaways</h2>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <div class="card-icon">1</div>
+            <h3>性能民主化加速</h3>
+            <p>Sonnet 4.6 以旗艦 1/5 的價格達到 Opus 等級性能，免費版也直接搭載。AI 能力的取得門檻正在快速降低，「觀望」的機會成本越來越高。</p>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">2</div>
+            <h3>Computer Use 跨越門檻</h3>
+            <p>從 14.9% 到 72.5% 的進步意味著 Computer Use 從實驗品走向生產工具。16 個月的進化速度暗示 12 個月後可能達到 90%+ 的可靠度。</p>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">3</div>
+            <h3>Legacy System 的新解方</h3>
+            <p>AI 不再需要 API 整合就能操作軟體。這對擁有大量老舊系統的組織（包括 CDMO）來說，是一個全新的自動化路徑。</p>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">4</div>
+            <h3>Governance 是真正瓶頸</h3>
+            <p>PwC 的警告很中肯：技術能力 ≠ 部署準備度。Computer Use 的治理框架 — 包括 Audit Trail、責任歸屬、錯誤處理 — 目前仍是空白，尤其在受監管產業。</p>
+        </div>
+    </div>
+</div>
+
+<!-- PRACTICE QUESTIONS -->
+<div class="practice">
+    <h2>Practice Questions</h2>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">Computer Use 和傳統 RPA（Robotic Process Automation）的根本差異是什麼？為什麼這個差異很重要？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>傳統 RPA 依賴預先定義的腳本和固定的 UI 元素定位（如按鈕位置、CSS 選擇器）。一旦目標軟體更新 UI，腳本就可能失效，需要人工維護。</p>
+            <p>AI Computer Use 則是透過「視覺理解」螢幕內容來操作軟體 — 它看到的是畫面，不是程式碼。這意味著即使 UI 改變了佈局，AI 仍可能辨認出「提交按鈕」在哪裡，因為它理解的是語意而非座標。</p>
+            <p>這很重要是因為：它大幅降低了自動化的維護成本，讓沒有 API、沒有 RPA 專家的組織也能嘗試自動化。但代價是準確率目前只有 72.5%，而 RPA 在正常運作時接近 100%。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">在你的 CDMO 環境中，哪些工作流程最適合作為 Computer Use 的第一個試點？哪些絕對不適合？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>適合試點的場景（低風險、重複性高）：</strong>從 ERP 系統導出報表並整理成特定格式、在不同系統間比對物料批號資訊、從環境監測系統擷取數據填入報告模板。這些任務失敗的後果可控，且有明確的人工覆核點。</p>
+            <p><strong>絕對不適合的場景（GMP 關鍵、資料完整性）：</strong>批次記錄的電子簽章操作、偏差調查報告的提交、任何涉及 21 CFR Part 11 合規的數據輸入。原因：Computer Use 目前沒有符合 ALCOA+ 原則的 Audit Trail 機制，且 72.5% 的準確率在 GMP 環境中是不可接受的風險。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">文章聲稱 Computer Use 進步了「近五倍」。作為批判讀者，這個宣稱有哪些需要追問的地方？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>幾個值得追問的點：</p>
+            <p><strong>基準測試的代表性：</strong>OSWorld/WebArena 這類 benchmark 測試的任務與你實際的業務任務差距有多大？「能在 Chrome 中填寫表單」不等於「能在你的 SAP 系統中正確操作」。</p>
+            <p><strong>從 14.9% 起步的低基數效應：</strong>從 15% 到 75% 聽起來是五倍，但如果改用「錯誤率」角度看，是從 85% 降到 27.5% — 大約三倍改善。而且從 72.5% 到 95%（企業可用門檻）的最後一段可能比前五倍還難。</p>
+            <p><strong>利益衝突：</strong>數據來源是 Anthropic 自己。文章作者也自稱是 Claude 粉絲。套用你的 2-3 倍折扣原則，對時間線和能力宣稱都應該保持審慎。</p>
+        </div>
+    </details>
+</div>
+
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+    <div class="bottom-line-header">&#x1f3af; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x2714; 核心洞察</div>
+        <div class="bottom-line-text">Computer Use 的五倍進步不只是技術里程碑 — 它代表了一種全新的自動化範式：不再需要 API 或 RPA 腳本就能操作軟體。對我在 CDMO 中面對的各種 legacy system（LIMS、ERP、QMS），這是一個值得追蹤的長期策略選項。但現階段它的準確率和合規框架都還不足以用在 GMP 關鍵流程。我目前的 copilot mode 策略（人類覆核 100% AI 輸出）仍然是正確的路線。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x1f4c8; 立即應用</div>
+        <div class="bottom-line-text">本週行動：在 Claude on Chrome 中試用 Computer Use 功能，測試一個低風險的重複性任務（如從網頁系統導出報表並整理格式）。記錄成功率和失敗模式，作為內部評估 AI Agent 可行性的第一手數據。同時更新我的 AI 工具評估框架，加入 Computer Use 準確率作為新的追蹤指標。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x26a0; 需要補充</div>
+        <div class="bottom-line-text">文章最大的缺口是缺乏對 Governance 和合規框架的深入討論 — PwC 的引述只是一筆帶過。對製藥產業來說，Computer Use 的 Data Integrity、Audit Trail、和 Validation 要求才是決定是否能部署的關鍵因素。需要另外搜尋 Anthropic 官方的 enterprise governance 文檔和 Computer Use 的技術架構細節。建議 3 個月後重新評估，屆時 Computer Use 的準確率和企業功能可能會有新的進展。</div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>Learning Document | Generated: 2026-02-19</p>
+    <p>Source: Joel Salinas - "Claude Sonnet 4.6 Dropped: AI Just Got 5x Better at Your Busywork" (Feb 18, 2026)</p>
+    <div class="chat-title">Suggested Chat Title: [LLM] Claude Sonnet 4.6 - Computer Use 五倍躍進</div>
+</div>
+
+</div>
+</body>
+</html>

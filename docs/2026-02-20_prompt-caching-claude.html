@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-20">
+    <meta name="doc-title" content="Prompt Caching 完全指南 - Claude Code 工程實戰">
+    <meta name="doc-source" content="Thariq (@trq212) / Anthropic Claude Code Team">
+    <meta name="doc-tags" content="LLM,API,Tool">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="Anthropic官方Prompt Caching工程實戰指南，涵蓋快取機制原理、工具穩定性設計與成本優化策略">
+    <meta name="doc-file" content="2026-02-20_prompt-caching-claude.html">
+    <title>Prompt Caching 完全指南 - Claude Code 工程實戰</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #dbeafe;
+            --accent: #7c3aed;
+            --accent-light: #e9d5ff;
+            --green: #059669;
+            --green-light: #d1fae5;
+            --orange: #d97706;
+            --orange-light: #fef3c7;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-500: #64748b;
+            --gray-700: #334155;
+            --gray-900: #0f172a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-700);
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f, #3b5998);
+            color: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.4; }
+        .header .subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+        .tag { padding: 0.2rem 0.6rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; }
+        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
+        .tag-api { background: #ddd6fe; color: #4c1d95; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .source-info { font-size: 0.8rem; opacity: 0.75; }
+
+        /* Rating Bar */
+        .rating-bar {
+            display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
+            padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd;
+        }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary {
+            background: white; border-radius: 1rem; padding: 1.5rem 2rem;
+            margin-bottom: 2rem; border: 1px solid var(--gray-200);
+        }
+        .exec-summary h2 { color: var(--primary); font-size: 1.1rem; margin-bottom: 0.75rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: var(--gray-700); }
+
+        /* Learning Objectives */
+        .objectives {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 768px) { .objectives { grid-template-columns: 1fr; } }
+        .objective-item {
+            background: white; border-radius: 0.75rem; padding: 1.25rem;
+            border-top: 3px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 700; color: var(--primary); font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .objective-desc { font-size: 0.82rem; color: var(--gray-500); }
+
+        /* Framework Visual */
+        .framework-visual {
+            background: linear-gradient(135deg, #1e3a5f, #3b5998);
+            border-radius: 1rem; padding: 1.5rem; color: white; margin: 0 0 2rem;
+        }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 110px; }
+        .framework-icon {
+            font-size: 1.3rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem;
+            background: rgba(255,255,255,0.2); border-radius: 0.75rem;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;
+        }
+        .framework-step-title { font-weight: 700; font-size: 0.85rem; }
+        .framework-step-desc { font-size: 0.75rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Content Grid */
+        .part-header {
+            background: var(--primary); color: white; padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem 0.75rem 0 0; font-weight: 700; font-size: 1rem;
+        }
+        .content-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+            background: white; border-radius: 0 0 0.75rem 0.75rem;
+            margin-bottom: 2rem; border: 1px solid var(--gray-200); border-top: none;
+            overflow: hidden;
+        }
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-left {
+            padding: 1.25rem; border-right: 1px solid var(--gray-200);
+        }
+        .content-grid.linear .content-left { border-right: none; }
+        .content-right { padding: 1.25rem; }
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; border-bottom: 1px solid var(--gray-200); }
+        }
+
+        /* Bilingual blocks */
+        .bilingual-block { margin-bottom: 1rem; }
+        .bilingual-zh { font-size: 0.95rem; line-height: 1.8; color: var(--gray-700); margin-bottom: 0.25rem; }
+        .bilingual-en { font-size: 0.85rem; line-height: 1.6; color: var(--gray-500); font-style: italic; }
+
+        /* Highlight */
+        .hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.5rem; margin-bottom: 1rem; overflow: hidden; }
+        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 700; font-size: 0.85rem; }
+        .info-box-content { padding: 0.75rem; font-size: 0.88rem; line-height: 1.7; }
+        .info-box-content p { margin-bottom: 0.5rem; }
+        .info-box-content p:last-child { margin-bottom: 0; }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Code blocks */
+        pre {
+            background: #1e293b; color: #e2e8f0; padding: 1rem;
+            border-radius: 0.5rem; overflow-x: auto; font-size: 0.82rem;
+            font-family: 'Source Code Pro', monospace; line-height: 1.6; margin: 0.5rem 0;
+        }
+        code { font-family: 'Source Code Pro', monospace; }
+        .inline-code {
+            background: #f1f5f9; color: #7c3aed; padding: 0.15rem 0.4rem;
+            border-radius: 3px; font-size: 0.85em;
+        }
+
+        /* Ordered list inside content */
+        .prompt-order { margin: 0.5rem 0; padding-left: 0; list-style: none; counter-reset: item; }
+        .prompt-order li {
+            counter-increment: item; padding: 0.4rem 0 0.4rem 2rem; position: relative;
+            font-size: 0.9rem; border-bottom: 1px dashed var(--gray-200);
+        }
+        .prompt-order li:last-child { border-bottom: none; }
+        .prompt-order li::before {
+            content: counter(item); position: absolute; left: 0; top: 0.4rem;
+            width: 1.4rem; height: 1.4rem; background: var(--primary); color: white;
+            border-radius: 50%; font-size: 0.7rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0; }
+        @media (max-width: 768px) { .takeaways { grid-template-columns: 1fr; } }
+        .summary-card {
+            background: white; border-radius: 0.5rem; padding: 1.25rem;
+            border-left: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card-title { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .summary-card-text { font-size: 0.88rem; color: var(--gray-700); line-height: 1.7; }
+
+        /* Practice Accordion */
+        .practice-section { margin: 2rem 0; }
+        .practice-section h2 { color: var(--accent); font-size: 1.1rem; margin-bottom: 1rem; }
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon {
+            width: 1.25rem; height: 1.25rem; transition: transform 0.2s;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line {
+            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
+            margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed;
+        }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer {
+            text-align: center; padding: 1.5rem; margin-top: 2rem;
+            border-top: 1px solid var(--gray-200); color: var(--gray-500); font-size: 0.8rem;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+
+        /* Section titles */
+        .section-title {
+            font-size: 1.1rem; font-weight: 700; color: var(--primary);
+            margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary-light);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="tags">
+            <span class="tag tag-llm">LLM</span>
+            <span class="tag tag-api">API</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-tool">Tool</span>
+        </div>
+        <h1>Prompt Caching 完全指南：Claude Code 的工程實戰經驗</h1>
+        <div class="subtitle">Lessons from Building Claude Code: Prompt Caching Is Everything</div>
+        <div class="source-info">Thariq (@trq212) | Anthropic Claude Code Team | 2025</div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-summary">
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.2/5</span>
+            <span class="rating-high">&uarr; Technical Depth, Practical Value</span>
+            <span class="rating-low">&darr; Tool Ecosystem, Learning Curve</span>
+        </div>
+        <h2>Executive Summary</h2>
+        <p>
+            這篇來自 Claude Code 工程團隊的文章，揭示了一個讓長時間運行的 AI Agent 在成本和延遲上可行的關鍵技術：<span class="hl-concept">Prompt Caching（提示快取）</span>。核心原理是 prefix matching（前綴匹配），API 會快取從請求開頭到每個 <span class="inline-code">cache_control</span> 斷點的所有內容。文章分享了 Claude Code 團隊在大規模優化中學到的反直覺教訓，包括排列順序策略、避免中途變更工具或模型、以及如何安全地進行 Context 壓縮（Compaction）。這不是理論文章，而是<span class="hl-key">生產環境中用血淚換來的工程實踐</span>。
+        </p>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="section-title">Learning Objectives</div>
+    <div class="objectives">
+        <div class="objective-item">
+            <div class="objective-icon">&#x1F9E9;</div>
+            <div class="objective-title">理解 Prefix Matching 原理</div>
+            <div class="objective-desc">掌握 Prompt Caching 的核心機制，以及為什麼順序如此重要</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#x1F6E0;</div>
+            <div class="objective-title">學習 Cache-Safe 設計模式</div>
+            <div class="objective-desc">Plan Mode、Tool Search、Compaction 的 cache 友善實作方式</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#x1F4B0;</div>
+            <div class="objective-title">掌握成本與延遲優化</div>
+            <div class="objective-desc">理解 cache miss 對成本的影響，以及為何要像監控 uptime 一樣監控 cache hit rate</div>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">Prompt Caching 最佳排列順序（Prefix Ordering）</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4DC;</div>
+                <div class="framework-step-title">Static System Prompt</div>
+                <div class="framework-step-desc">全域快取</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4C4;</div>
+                <div class="framework-step-title">Claude.MD</div>
+                <div class="framework-step-desc">專案級快取</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4CB;</div>
+                <div class="framework-step-title">Session Context</div>
+                <div class="framework-step-desc">工作階段快取</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4AC;</div>
+                <div class="framework-step-title">Messages</div>
+                <div class="framework-step-desc">動態內容（最後）</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART I -->
+    <div class="part-header">Part I: Prompt Caching 核心原理</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    工程界有句名言「<span class="hl-concept">Cache Rules Everything Around Me</span>」（快取主宰一切），對 AI Agent 來說同樣適用。像 Claude Code 這樣的長時間運行的 Agent 產品，之所以在成本和延遲上可行，靠的就是 Prompt Caching：讓我們重複利用前一輪對話的運算結果，<span class="hl-cost">大幅降低延遲和成本</span>。
+                </div>
+                <div class="bilingual-en">
+                    "Cache Rules Everything Around Me" — Long running agentic products like Claude Code are made feasible by prompt caching which allows us to reuse computation from previous roundtrips and significantly decrease latency and cost.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    Prompt Caching 的運作原理是<span class="hl-key">前綴匹配（prefix matching）</span>：API 會將從請求開頭到每個 <span class="inline-code">cache_control</span> 斷點的所有內容進行快取。這代表<span class="hl-key">你放置內容的順序極其重要</span>，你需要讓盡可能多的請求共享相同的前綴。
+                </div>
+                <div class="bilingual-en">
+                    Prompt caching works by prefix matching — the API caches everything from the start of the request up to each cache_control breakpoint. This means the order you put things in matters enormously.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>想像你在圖書館排書架。Prompt Caching 就像把<strong>所有人都會查的百科全書放在最前面</strong>，個人借閱的小說放在最後面。前面的書一旦就位就不動（被快取），後面的書可以隨時更換（動態內容）。如果你突然把百科全書的位置換掉，所有人都得重新找書（cache miss）。</p>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：排列順序</div>
+                <div class="info-box-content">
+                    <p>Claude Code 的最佳排列為：</p>
+                    <ol class="prompt-order">
+                        <li><strong>Static System Prompt &amp; Tools</strong>（全域快取）</li>
+                        <li><strong>Claude.MD</strong>（專案內快取）</li>
+                        <li><strong>Session Context</strong>（工作階段快取）</li>
+                        <li><strong>Conversation Messages</strong>（動態，最後）</li>
+                    </ol>
+                    <p>原則：<span class="hl-key">靜態內容在前，動態內容在後</span>。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：脆弱性警告</div>
+                <div class="info-box-content">
+                    <p>這個排列順序<strong>非常脆弱</strong>！Claude Code 團隊曾因以下原因意外打破排列：在靜態 System Prompt 中放入時間戳記、非確定性地打亂 Tool 定義順序、動態更新 Tool 參數等。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART II -->
+    <div class="part-header">Part II: 用 Messages 傳遞更新，不要改 Prompt</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    有時候你放在 Prompt 中的資訊會過時，例如時間變了或使用者修改了檔案。直覺上你會想更新 Prompt，但這會導致 <span class="hl-cost">cache miss，對使用者來說可能非常昂貴</span>。
+                </div>
+                <div class="bilingual-en">
+                    There may be times when the information you put in your prompt becomes out of date. It may be tempting to update the prompt, but that would result in a cache miss and could end up being quite expensive for the user.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    考慮改用<span class="hl-practical">在下一輪的 Messages 中傳入更新資訊</span>。在 Claude Code 中，我們會在下一個 user message 或 tool result 中加入 <span class="inline-code">&lt;system-reminder&gt;</span> 標籤來傳遞更新資訊（例如：現在是星期三），這樣就能保住快取。
+                </div>
+                <div class="bilingual-en">
+                    Consider if you can pass in this information via messages in the next turn instead. In Claude Code, we add a &lt;system-reminder&gt; tag in the next user message or tool result with the updated information for the model.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                <div class="info-box-content">
+                    <p><strong>錯誤做法：</strong>每次時間更新就修改 System Prompt</p>
+                    <p><strong>正確做法：</strong>保持 System Prompt 不變，在 User Message 中加入：</p>
+                    <pre>&lt;system-reminder&gt;
+  Current time: Wednesday 2:30 PM
+  Updated file: config.yaml
+&lt;/system-reminder&gt;</pre>
+                    <p>這個模式的精髓：<span class="hl-key">寧可讓訊息稍微冗餘，也不要打破快取前綴</span>。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART III -->
+    <div class="part-header">Part III: 不要在對話中途切換模型</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    Prompt 快取是<span class="hl-key">依模型區分的</span>，這會讓 Prompt Caching 的成本計算變得非常反直覺。如果你已經和 Opus 對話了 100k tokens，想問一個簡單問題，<span class="hl-cost">切換到 Haiku 實際上比讓 Opus 回答更貴</span>，因為你需要為 Haiku 從頭建立整個 Prompt 快取。
+                </div>
+                <div class="bilingual-en">
+                    Prompt caches are unique to models. If you're 100k tokens into a conversation with Opus and want to ask a fairly easy question, it would actually be more expensive to switch to Haiku than to have Opus answer, because we would need to rebuild the prompt cache for Haiku.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    如果你需要切換模型，最佳方式是使用<span class="hl-practical">子代理（subagents）</span>，讓 Opus 準備一個「交接訊息」給另一個模型。Claude Code 的 Explore Agents 就是這樣使用 Haiku 的。
+                </div>
+                <div class="bilingual-en">
+                    If you need to switch models, the best way to do it is with subagents, where Opus would prepare a "handoff" message to another model on the task that it needs done.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-cost">
+                <div class="info-box-header">&#x1F4B0; 成本分析：反直覺的數學</div>
+                <div class="info-box-content">
+                    <p>假設你有 100k tokens 的對話歷史：</p>
+                    <p><strong>選項 A：繼續用 Opus</strong><br>
+                    快取命中 &rarr; 只需支付少量 cache read 費用 + 輸出 tokens</p>
+                    <p><strong>選項 B：切換到 Haiku</strong><br>
+                    Haiku 需要重新建立 cache &rarr; 100k tokens 全部重新計費（cache miss）</p>
+                    <p>即使 Haiku 每 token 成本更低，100k tokens 的 cache rebuild 成本遠超繼續用 Opus 的 cache read 成本。</p>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>這就像你在 A 餐廳已經點了滿桌的菜還沒吃完，只因為想喝杯便宜的咖啡就換到 B 餐廳 &mdash; 結果得在 B 餐廳重新點所有菜。那杯咖啡再便宜，也不值得你重點整桌菜。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART IV -->
+    <div class="part-header">Part IV: 絕對不要在對話中途增減 Tools</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    在對話中途更改 Tool 集合是<span class="hl-key">最常見的打破 Prompt Caching 的方式之一</span>。直覺上你應該只給模型它當下需要的工具，但因為 Tools 是快取前綴的一部分，增加或移除任何一個 Tool 都會使整個對話的快取失效。
+                </div>
+                <div class="bilingual-en">
+                    Changing the tool set in the middle of a conversation is one of the most common ways people break prompt caching. Because tools are part of the cached prefix, adding or removing a tool invalidates the cache for the entire conversation.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    <strong>Plan Mode 的設計案例：</strong>直覺做法是進入計劃模式時，只保留唯讀工具。但這會打破快取。Claude Code 的做法是<span class="hl-practical">始終保留所有 Tools，用 EnterPlanMode 和 ExitPlanMode 作為 Tools 本身</span>。當使用者切換到計劃模式時，Agent 透過系統訊息得知它在計劃模式中的指令。Tool 定義永遠不變。
+                </div>
+                <div class="bilingual-en">
+                    Instead, we keep all tools in the request at all times and use EnterPlanMode and ExitPlanMode as tools themselves. The tool definitions never change.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    額外好處：因為 EnterPlanMode 是模型可以自己呼叫的 Tool，<span class="hl-practical">它可以在遇到困難問題時自主進入計劃模式</span>，完全不需要打破快取。
+                </div>
+                <div class="bilingual-en">
+                    This has a bonus benefit: because EnterPlanMode is a tool the model can call itself, it can autonomously enter plan mode when it detects a hard problem, without any cache break.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：設計原則</div>
+                <div class="info-box-content">
+                    <p><strong>不要改變 Tool 集合 &rarr; 用 Tool 本身來表達狀態轉換</strong></p>
+                    <p>這是一個深刻的設計範式轉移：與其動態管理可用工具，不如讓工具本身成為狀態機的一部分。模式切換不是「移除工具」，而是「呼叫代表切換的工具」。</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; Tool Search: Defer 而非 Remove</div>
+                <div class="info-box-content">
+                    <p>Claude Code 可能載入數十個 MCP Tools。全部包含太昂貴，但移除會破壞快取。</p>
+                    <p>解決方案：<span class="hl-practical">defer_loading</span>。不移除 Tools，而是發送輕量的 stub（只有 Tool 名稱 + <span class="inline-code">defer_loading: true</span>），模型可以透過 ToolSearch Tool 在需要時「發現」它們。完整的 Tool schema 只在模型選擇時載入。</p>
+                    <p>這確保快取前綴穩定：相同的 stubs 始終以相同順序存在。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART V -->
+    <div class="part-header">Part V: Context 壓縮（Compaction）的 Cache-Safe 策略</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    Compaction 是當你<span class="hl-concept">用完 Context Window 時的處理方式</span>：摘要目前對話，然後以該摘要開始新的工作階段。但 Compaction 在 Prompt Caching 方面有許多反直覺的邊界情況。
+                </div>
+                <div class="bilingual-en">
+                    Compaction is what happens when you run out of the context window. We summarize the conversation so far and continue a new session with that summary.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    具體來說，當我們執行壓縮時，需要將整個對話發送給模型來產生摘要。如果這是一個使用不同 System Prompt、沒有 Tools 的獨立 API 呼叫（最直覺的實作方式），主對話的快取前綴完全不匹配。<span class="hl-cost">你需要為所有輸入 tokens 支付全額費用</span>，大幅增加使用者的成本。
+                </div>
+                <div class="bilingual-en">
+                    If this is a separate API call with a different system prompt and no tools, the cached prefix from the main conversation doesn't match at all. You pay full price for all those input tokens.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="bilingual-zh">
+                    <strong>解決方案 &mdash; Cache-Safe Forking：</strong>執行壓縮時，使用與父對話<span class="hl-practical">完全相同的 System Prompt、User Context、System Context 和 Tool 定義</span>。先放入父對話的歷史訊息，然後將壓縮提示作為新的 User Message 附加在最後。從 API 角度看，這個請求和父對話的最後一個請求幾乎一模一樣，所以能重用快取前綴。
+                </div>
+                <div class="bilingual-en">
+                    When we run compaction, we use the exact same system prompt, user context, system context, and tool definitions as the parent conversation. We prepend the parent's conversation messages, then append the compaction prompt as a new user message at the end.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>想像你正在寫一本很長的會議紀錄。紀錄本快寫滿了，你需要換新本繼續。</p>
+                    <p><strong>錯誤做法：</strong>拿一本空白新本，重新抄寫所有內容來做摘要（全額重新輸入）。</p>
+                    <p><strong>正確做法：</strong>在原本的紀錄本最後一頁寫「請總結」，利用你已經翻閱過的所有頁面（已快取的前綴），只需多寫一行指令。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; Compaction Buffer</div>
+                <div class="info-box-content">
+                    <p>這個方法需要你預留一個「壓縮緩衝區（compaction buffer）」，確保 Context Window 中有足夠空間來放入壓縮訊息和摘要輸出 tokens。</p>
+                    <p>好消息是 Anthropic 已將 Compaction 直接內建到 API 中，開發者可以直接使用這些經過優化的模式。</p>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心原則：Fork 操作共享父前綴</div>
+                <div class="info-box-content">
+                    <p>任何需要分支運算的操作（壓縮、摘要、技能執行），都應使用與父對話相同的 cache-safe 參數，以確保命中父對話的快取前綴。這是一個可以推廣到所有 Agent 系統的通用設計原則。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEY TAKEAWAYS -->
+    <div class="section-title">Key Takeaways</div>
+    <div class="takeaways">
+        <div class="summary-card">
+            <div class="summary-card-title">&#x1F3AF; 前綴匹配是一切的基礎</div>
+            <div class="summary-card-text">Prompt Caching 是前綴匹配。前綴中任何位置的任何變更都會使其後的所有內容失效。整個系統設計都要圍繞這個限制來做。排列順序正確了，大部分的快取就自然到位。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">&#x1F4AC; 用 Messages 取代 System Prompt 變更</div>
+            <div class="summary-card-text">任何你想在 System Prompt 中更新的資訊（時間、模式切換、檔案更新），都改用對話中的 Messages 傳遞。保護快取前綴的穩定性，永遠是優先考量。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">&#x1F6AB; 不要在對話中途改 Tools 或 Models</div>
+            <div class="summary-card-text">用 Tool 本身來表達狀態轉換（如 EnterPlanMode），而非改變 Tool 集合。用 defer_loading stubs 取代移除 Tools。切換模型用 subagent 交接，不直接替換。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">&#x1F4CA; 像監控 Uptime 一樣監控 Cache Hit Rate</div>
+            <div class="summary-card-text">Claude Code 團隊對 cache miss rate 設定警報，視為 SEV 等級事件。幾個百分點的 cache miss 率就能劇烈影響成本和延遲。Fork 操作（compaction）需共享父對話的前綴。</div>
+        </div>
+    </div>
+
+    <!-- PRACTICE SECTION -->
+    <div class="practice-section">
+        <h2>Practice Questions</h2>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q1</span>
+                <span class="question-type">概念理解</span>
+                <span class="question-text">為什麼在 100k token 對話中切換到更便宜的模型反而更貴？請用 Prompt Caching 原理解釋。</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p>因為 Prompt Cache 是<strong>依模型區分的（model-specific）</strong>。當你從 Opus 切換到 Haiku 時，Haiku 沒有任何已建立的快取前綴，需要重新處理整個 100k tokens 的輸入（cache miss）。即使 Haiku 的每 token 成本更低，重建 100k tokens 快取的費用遠高於讓 Opus 利用現有快取（cache read）來回答的費用。</p>
+                <p>正確做法是使用 subagent 模式：讓 Opus 準備一個精簡的交接訊息，發給 Haiku 處理特定子任務，而不是把整個對話 context 搬過去。</p>
+            </div>
+        </details>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q2</span>
+                <span class="question-type">產業應用</span>
+                <span class="question-text">在你的 CDMO 環境中，如果要建立一個 AI Agent 來協助批次記錄審查（Batch Record Review），如何應用 prompt caching 原則來設計系統？</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p>可以這樣設計 prompt 排列順序：</p>
+                <p><strong>1. Static System Prompt（全域快取）：</strong>GMP 規範要求、ALCOA+ 原則、審查 SOP 標準、常見偏差類型定義。這些法規知識幾乎不變，放在最前面。</p>
+                <p><strong>2. Product-Specific Context（專案快取）：</strong>特定產品的製程參數規格、批次大小、關鍵品質屬性（CQA）。同產品的所有批次共享此快取。</p>
+                <p><strong>3. Session Context（工作階段快取）：</strong>當前批次的基本資訊、設備狀態。</p>
+                <p><strong>4. Messages（動態）：</strong>具體的審查問題、偏差描述、逐頁的批次記錄資料。</p>
+                <p>如果製程參數在審查過程中需要更新（如設備校驗結果），使用 <span class="inline-code">&lt;system-reminder&gt;</span> 模式在 message 中更新，不要修改 System Prompt。</p>
+            </div>
+        </details>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q3</span>
+                <span class="question-type">批判思考</span>
+                <span class="question-text">文章中 "defer_loading" 的 Tool stub 策略可能有什麼潛在的缺點或風險？</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p>幾個值得考慮的面向：</p>
+                <p><strong>可發現性（Discoverability）降低：</strong>模型只看到 Tool 名稱而沒有完整 schema，可能無法判斷何時該使用某個 Tool，導致遺漏適合的工具。模型需要先「猜測」再搜尋，增加了中間步驟。</p>
+                <p><strong>延遲交換成本：</strong>雖然省了快取成本，但當模型需要使用 deferred tool 時，需要額外一次 ToolSearch 呼叫來載入完整 schema，這會增加該次互動的延遲。這是典型的「空間換時間 vs 時間換空間」取捨。</p>
+                <p><strong>工具順序穩定性：</strong>如果 stub 的排列順序不穩定（例如新增 MCP Tools 後位置變動），仍然會打破快取。需要有機制確保 stub 列表的排序是確定性的。</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- BOTTOM LINE -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x2714; 核心洞察</div>
+            <div class="bottom-line-text">
+                Prompt Caching 不只是「API 使用的小技巧」，而是決定 Agent 系統是否在經濟上可行的<strong>架構級決策</strong>。「用 Tool 本身表達狀態轉換」這個設計模式，本質上是在說：為了快取穩定性，你需要重新思考整個系統的抽象層次。這和 GMP 環境中「不要為了方便而改變驗證過的流程」的思維完全一致 &mdash; 穩定性本身就是一種價值。
+            </div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+            <div class="bottom-line-text">
+                本週在使用 Claude Code 或 Claude API 時，有意識地檢查：我的 System Prompt 中有沒有不必要的動態內容？我的 Tools 定義是否保持穩定？可以用這篇文章的框架來 audit 目前的 Make.com 自動化流程中的 Anthropic API 呼叫，確認是否有優化空間。同時，在建立 AI Agent 概念驗證時，從第一天就將 prompt 排列順序設計為 cache-friendly。
+            </div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x26A0; 需要補充</div>
+            <div class="bottom-line-text">
+                文章沒有提供具體的成本數字（cache hit vs miss 的價差倍數）和延遲基準數據，需要查閱 Anthropic 官方定價頁面來量化實際效益。此外，文章主要從 Claude Code（CLI Agent）角度出發，對於 Web-based 或企業級 Agent 的 caching 策略（如多用戶共享快取）著墨較少。建議在 Anthropic 的 API 文件中深入閱讀 auto-caching 和 API-level compaction 的技術規格。
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>Produced: 2025-02-20 | Source: <a href="https://x.com/trq212" target="_blank">@trq212 on X</a> | Anthropic Claude Code Team</p>
+        <p>Suggested Chat Title: <strong>[API] Prompt Caching - Claude Code Engineering Lessons</strong></p>
+    </div>
+
+</div>
+</body>
+</html>

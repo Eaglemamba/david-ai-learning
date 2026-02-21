@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-03">
+    <meta name="doc-title" content="Claude Code Interactive Mode 完整參考指南">
+    <meta name="doc-source" content="Claude Code Docs / code.claude.com">
+    <meta name="doc-tags" content="Tool,Agent,Automation">
+    <meta name="doc-rating" content="3.8">
+    <meta name="doc-summary" content="Claude Code 互動模式完整操作手冊：鍵盤快捷鍵、Vim 模式、背景指令與 Bash 模式">
+    <meta name="doc-file" content="2026-02-03_claude-code-interactive-mode.html">
+    <title>Claude Code Interactive Mode 完整參考指南</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
+        code, pre { font-family: 'Source Code Pro', monospace; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+
+        /* Header */
+        .header { text-align: center; padding: 2.5rem 2rem; background: linear-gradient(135deg, #0f172a, #1e3a5f); color: white; border-radius: 1rem; margin-bottom: 2rem; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .header .subtitle { font-size: 1rem; opacity: 0.85; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .source-info { font-size: 0.8rem; opacity: 0.7; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .exec-summary h2 { font-size: 1.2rem; color: #0f172a; margin-bottom: 0.75rem; }
+        .exec-summary p { font-size: 0.95rem; color: #475569; line-height: 1.8; }
+
+        /* Learning Objectives */
+        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-item:nth-child(2) { border-left-color: #8b5cf6; }
+        .objective-item:nth-child(3) { border-left-color: #10b981; }
+        .objective-number { font-size: 0.75rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em; }
+        .objective-item:nth-child(2) .objective-number { color: #8b5cf6; }
+        .objective-item:nth-child(3) .objective-number { color: #10b981; }
+        .objective-text { font-size: 0.9rem; color: #334155; margin-top: 0.25rem; }
+
+        /* Section Headers */
+        .section-header { font-size: 1.3rem; font-weight: 700; color: #0f172a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 2rem; background: white; border-radius: 0.75rem; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+        .content-grid.linear .content-left { border-right: none; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+
+        /* Bilingual Block */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; }
+        .en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.7; margin-top: 0.25rem; }
+        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 0.75rem; font-size: 0.85rem; line-height: 1.7; }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+
+        /* Code blocks */
+        pre.code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.6; margin: 0.5rem 0; }
+        code.inline { background: #f1f5f9; color: #7c3aed; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
+
+        /* Shortcut Table */
+        .shortcut-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.75rem 0; }
+        .shortcut-table th { background: #f1f5f9; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; color: #334155; border-bottom: 2px solid #e2e8f0; }
+        .shortcut-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #f1f5f9; color: #475569; }
+        .shortcut-table tr:hover { background: #f8fafc; }
+        .shortcut-table kbd { background: #1e293b; color: #e2e8f0; padding: 0.15rem 0.5rem; border-radius: 4px; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; white-space: nowrap; }
+
+        /* Key Takeaways */
+        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #8b5cf6; }
+        .summary-card:nth-child(3) { border-left-color: #10b981; }
+        .summary-card:nth-child(4) { border-left-color: #f59e0b; }
+        .summary-card-title { font-weight: 700; font-size: 0.9rem; color: #0f172a; margin-bottom: 0.5rem; }
+        .summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+        /* Practice Section - Accordion */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+            .objectives-grid { grid-template-columns: 1fr; }
+            .takeaways-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- ============ HEADER ============ -->
+<div class="header">
+    <div class="tags">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-automation">Automation</span>
+    </div>
+    <h1>Claude Code Interactive Mode 完整參考指南</h1>
+    <p class="subtitle">掌握鍵盤快捷鍵、Vim 模式、背景指令與 Bash 模式的完整操作手冊</p>
+    <p class="source-info">Source: Claude Code Docs | code.claude.com</p>
+</div>
+
+<!-- ============ EXECUTIVE SUMMARY ============ -->
+<div class="exec-summary">
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
+        <span class="rating-high">↑ Practical Value, Tool Ecosystem</span>
+        <span class="rating-low">↓ Technical Depth, Learning Curve</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>
+        這是 Claude Code 互動模式的官方參考文件，涵蓋所有鍵盤快捷鍵、Vim 編輯模式、指令歷史搜尋、背景執行指令，以及 <code class="inline">!</code> 前綴的 Bash 模式。作為一份 reference documentation，它的價值在於「需要時能快速查到」，而非從頭讀到尾。對於每天使用 Claude Code 的開發者來說，熟悉這些快捷鍵可以大幅減少滑鼠操作，讓 AI-assisted coding 的工作流更加流暢。文件本身是清單式結構，適合作為速查手冊收藏。
+    </p>
+</div>
+
+<!-- ============ LEARNING OBJECTIVES ============ -->
+<h2 class="section-header">Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-number">Objective 1</div>
+        <div class="objective-text">掌握 Claude Code 的核心鍵盤快捷鍵，包含中斷、清除、歷史瀏覽、圖片貼上、權限模式切換等操作</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-number">Objective 2</div>
+        <div class="objective-text">理解 Vim 編輯模式在 Claude Code 中的應用，包括模式切換、游標導航與編輯指令</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-number">Objective 3</div>
+        <div class="objective-text">學會使用背景指令 (Background Bash) 和 <code class="inline">!</code> 前綴 Bash 模式來最佳化開發工作流</div>
+    </div>
+</div>
+
+<!-- ============ PART I: General Controls ============ -->
+<h2 class="section-header">Part I: General Controls (基本控制快捷鍵)</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <p class="zh-text">
+                Claude Code 的互動模式提供了一組<span class="highlight-key">基本控制快捷鍵</span>，讓你在終端機中高效操作。這些快捷鍵涵蓋從中斷生成、清除畫面到切換詳細輸出等常見操作。
+            </p>
+            <p class="en-text">
+                "Keyboard shortcuts may vary by platform and terminal. Press ? to see available shortcuts for your environment."
+            </p>
+        </div>
+        <div class="bilingual-block">
+            <p class="zh-text">
+                特別值得注意的是 <code class="inline">Esc + Esc</code>（雙擊 Escape）可以<span class="highlight-concept">回溯程式碼和對話</span>，將狀態恢復到之前的某個時間點。這對於 AI 生成了不理想的程式碼時特別有用，類似 Git 的 revert 但作用在對話層級。
+            </p>
+            <p class="en-text">
+                "Esc + Esc — Rewind the code/conversation: Restore the code and/or conversation to a previous point."
+            </p>
+        </div>
+        <div class="bilingual-block">
+            <p class="zh-text">
+                <code class="inline">Tab</code> 鍵用來切換 Extended Thinking（延伸思考），<code class="inline">Shift+Tab</code> 則在權限模式之間切換：Auto-Accept Mode（自動接受）、Plan Mode（規劃模式）和一般模式。
+            </p>
+            <p class="en-text">
+                "Tab — Toggle extended thinking: Switch between Thinking on and Thinking off."
+            </p>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+            <div class="info-box-content">
+                <table class="shortcut-table">
+                    <tr><th>快捷鍵</th><th>功能</th></tr>
+                    <tr><td><kbd>Ctrl+C</kbd></td><td>中斷當前輸入或生成</td></tr>
+                    <tr><td><kbd>Ctrl+D</kbd></td><td>退出 Claude Code</td></tr>
+                    <tr><td><kbd>Ctrl+L</kbd></td><td>清除終端畫面（保留對話歷史）</td></tr>
+                    <tr><td><kbd>Ctrl+O</kbd></td><td>切換詳細輸出（Verbose）</td></tr>
+                    <tr><td><kbd>Ctrl+R</kbd></td><td>反向搜尋指令歷史</td></tr>
+                    <tr><td><kbd>Ctrl+V</kbd></td><td>從剪貼簿貼上圖片</td></tr>
+                    <tr><td><kbd>Esc Esc</kbd></td><td>回溯程式碼/對話</td></tr>
+                    <tr><td><kbd>Tab</kbd></td><td>切換 Extended Thinking</td></tr>
+                    <tr><td><kbd>Shift+Tab</kbd></td><td>切換權限模式</td></tr>
+                </table>
+            </div>
+        </div>
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#128161; 比喻說明</div>
+            <div class="info-box-content">
+                把 Claude Code 的權限模式想像成製藥廠的<strong>品質管控等級</strong>：一般模式就像每個步驟都需要 QA 簽核；Plan Mode 像是先審核整個批次計畫再放行；Auto-Accept 則像已驗證的自動化產線，信任 AI 直接執行。根據任務風險等級選擇對應模式。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ PART II: Multiline & Quick Commands ============ -->
+<h2 class="section-header">Part II: Multiline Input & Quick Commands (多行輸入與快捷指令)</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <p class="zh-text">
+                Claude Code 支援多種<span class="highlight-key">多行輸入方式</span>，這在需要貼上程式碼片段或撰寫複雜提示時非常實用。最通用的方式是在行尾加上 <code class="inline">\</code> 再按 Enter，這在所有終端機都能使用。
+            </p>
+            <p class="en-text">
+                "Quick escape: \ + Enter — Works in all terminals."
+            </p>
+        </div>
+        <div class="bilingual-block">
+            <p class="zh-text">
+                <span class="highlight-concept">Quick Commands（快捷指令）</span>是以特殊字元開頭的快速操作。<code class="inline">#</code> 開頭可以直接將內容寫入 CLAUDE.md 記憶檔案；<code class="inline">/</code> 是 Slash Command；<code class="inline">!</code> 是 Bash 模式；<code class="inline">@</code> 觸發檔案路徑自動補全。
+            </p>
+            <p class="en-text">
+                "# at start — Memory shortcut: add to CLAUDE.md. / at start — Slash command. ! at start — Bash mode. @ — File path mention."
+            </p>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">&#128218; 核心概念</div>
+            <div class="info-box-content">
+                <strong>Quick Commands 速查表：</strong><br><br>
+                <table class="shortcut-table">
+                    <tr><th>前綴</th><th>功能</th><th>範例</th></tr>
+                    <tr><td><kbd>#</kbd></td><td>寫入 CLAUDE.md</td><td><code># Always use TypeScript</code></td></tr>
+                    <tr><td><kbd>/</kbd></td><td>Slash Command</td><td><code>/vim</code>、<code>/clear</code></td></tr>
+                    <tr><td><kbd>!</kbd></td><td>直接執行 Bash</td><td><code>! npm test</code></td></tr>
+                    <tr><td><kbd>@</kbd></td><td>檔案路徑補全</td><td><code>@src/index.ts</code></td></tr>
+                </table>
+            </div>
+        </div>
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 實務應用</div>
+            <div class="info-box-content">
+                <strong>CDMO 情境：</strong>如果你在用 Claude Code 開發 batch record 自動化腳本，<code class="inline">#</code> 指令可以讓你持久保存專案規則，例如 <code># Always validate against 21 CFR Part 11 requirements</code>，確保 AI 在每次對話都記得合規需求。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ PART III: Vim Editor Mode ============ -->
+<h2 class="section-header">Part III: Vim Editor Mode (Vim 編輯模式)</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <p class="zh-text">
+                Claude Code 內建 <span class="highlight-concept">Vim 風格編輯模式</span>，可以透過 <code class="inline">/vim</code> 指令啟用，或在 <code class="inline">/config</code> 中永久設定。對於熟悉 Vim 的開發者來說，這意味著可以在不離開 Claude Code 的情況下，使用熟悉的按鍵操作來編輯輸入。
+            </p>
+            <p class="en-text">
+                "Enable vim-style editing with /vim command or configure permanently via /config."
+            </p>
+        </div>
+        <div class="bilingual-block">
+            <p class="zh-text">
+                Vim 模式支援標準的 <span class="highlight-key">NORMAL / INSERT 模式切換</span>，包含 <code class="inline">i</code>、<code class="inline">a</code>、<code class="inline">o</code> 等進入插入模式的方式，以及 <code class="inline">Esc</code> 返回一般模式。導航指令涵蓋 <code class="inline">h/j/k/l</code> 方向移動、<code class="inline">w/e/b</code> 單字跳轉，以及 <code class="inline">gg/G</code> 跳到開頭或結尾。
+            </p>
+            <p class="en-text">
+                "Navigation (NORMAL mode): h/j/k/l — Move left/down/up/right. w — Next word. gg — Beginning of input. G — End of input."
+            </p>
+        </div>
+        <div class="bilingual-block">
+            <p class="zh-text">
+                編輯指令支援 <code class="inline">dd</code>（刪除整行）、<code class="inline">dw</code>（刪除單字）、<code class="inline">cc</code>（更改整行）等操作，以及 <code class="inline">.</code>（重複上次變更）。這些是 Vim 的核心操作子集，足以應付大多數輸入編輯場景。
+            </p>
+            <p class="en-text">
+                "Editing (NORMAL mode): dd — Delete line. dw/de/db — Delete word/to end/back. . — Repeat last change."
+            </p>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; Vim 模式切換</div>
+            <div class="info-box-content">
+                <table class="shortcut-table">
+                    <tr><th>指令</th><th>動作</th><th>方向</th></tr>
+                    <tr><td><kbd>Esc</kbd></td><td>進入 NORMAL 模式</td><td>INSERT → NORMAL</td></tr>
+                    <tr><td><kbd>i</kbd></td><td>游標前插入</td><td>NORMAL → INSERT</td></tr>
+                    <tr><td><kbd>I</kbd></td><td>行首插入</td><td>NORMAL → INSERT</td></tr>
+                    <tr><td><kbd>a</kbd></td><td>游標後插入</td><td>NORMAL → INSERT</td></tr>
+                    <tr><td><kbd>A</kbd></td><td>行尾插入</td><td>NORMAL → INSERT</td></tr>
+                    <tr><td><kbd>o</kbd></td><td>下方新增行</td><td>NORMAL → INSERT</td></tr>
+                    <tr><td><kbd>O</kbd></td><td>上方新增行</td><td>NORMAL → INSERT</td></tr>
+                </table>
+            </div>
+        </div>
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#128161; 比喻說明</div>
+            <div class="info-box-content">
+                Vim 模式就像<strong>操作無菌隔離器的手套箱</strong>：你有兩種狀態 — 觀察模式（NORMAL，手在手套箱外看著裡面）和操作模式（INSERT，手伸進手套箱直接操作）。按 <code class="inline">Esc</code> 就是把手抽回來觀察全局，按 <code class="inline">i</code> 就是伸手進去精確操作。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ PART IV: Command History & Search ============ -->
+<h2 class="section-header">Part IV: Command History & Reverse Search (指令歷史與搜尋)</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <p class="zh-text">
+                Claude Code 維護基於<span class="highlight-key">工作目錄</span>的指令歷史，可以用上下方向鍵瀏覽。使用 <code class="inline">/clear</code> 會清除歷史。值得注意的是，<span class="highlight-concept">歷史展開 (<code class="inline">!</code>) 預設是關閉的</span>，以避免和 Bash 模式的 <code class="inline">!</code> 前綴衝突。
+            </p>
+            <p class="en-text">
+                "History is stored per working directory. Cleared with /clear command. Note: History expansion (!) is disabled by default."
+            </p>
+        </div>
+        <div class="bilingual-block">
+            <p class="zh-text">
+                <code class="inline">Ctrl+R</code> 啟動<span class="highlight-practical">反向搜尋</span>功能，讓你互動式地搜尋先前的指令。輸入關鍵字後，搜尋詞會被高亮顯示在匹配結果中。按 <code class="inline">Ctrl+R</code> 繼續往前搜尋更舊的匹配項；按 <code class="inline">Tab</code> 或 <code class="inline">Esc</code> 接受匹配但繼續編輯；按 <code class="inline">Enter</code> 直接執行。
+            </p>
+            <p class="en-text">
+                "Press Ctrl+R to interactively search through your command history. Press Ctrl+R again to cycle through older matches."
+            </p>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">&#128218; 核心概念</div>
+            <div class="info-box-content">
+                <strong>Ctrl+R 搜尋流程：</strong><br><br>
+                1. 按 <kbd>Ctrl+R</kbd> 啟動搜尋<br>
+                2. 輸入搜尋關鍵字（搜尋詞會高亮）<br>
+                3. 按 <kbd>Ctrl+R</kbd> 往前翻找更舊的匹配<br>
+                4. 接受結果：<br>
+                &nbsp;&nbsp;&nbsp;- <kbd>Tab</kbd> / <kbd>Esc</kbd> → 接受並繼續編輯<br>
+                &nbsp;&nbsp;&nbsp;- <kbd>Enter</kbd> → 接受並立即執行<br>
+                5. 取消：<kbd>Ctrl+C</kbd> 或 <kbd>Backspace</kbd>（空搜尋時）
+            </div>
+        </div>
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 實務應用</div>
+            <div class="info-box-content">
+                在開發 Make.com automation 腳本時，你可能反覆調整同一個提示讓 Claude 修改程式碼。<code class="inline">Ctrl+R</code> 可以快速找回之前用過的長提示，避免重新輸入。這比用滑鼠滾動歷史記錄快得多。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ PART V: Background Bash & Bash Mode ============ -->
+<h2 class="section-header">Part V: Background Bash Commands & Bash Mode (背景指令與 Bash 模式)</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <p class="zh-text">
+                Claude Code 支援<span class="highlight-concept">背景執行 Bash 指令</span>，讓長時間運行的程序（如 build、test）在背景執行，你可以同時繼續與 Claude 互動。啟動方式有兩種：直接提示 Claude 在背景執行，或在指令執行時按 <code class="inline">Ctrl+B</code> 將其移到背景。
+            </p>
+            <p class="en-text">
+                "Claude Code supports running bash commands in the background, allowing you to continue working while long-running processes execute."
+            </p>
+        </div>
+        <div class="bilingual-block">
+            <p class="zh-text">
+                背景任務有唯一的 ID 用於追蹤，輸出會被緩衝，Claude 可以用 BashOutput 工具取回結果。<span class="highlight-key">當 Claude Code 退出時，背景任務會被自動清理</span>。特別注意：tmux 使用者需要按兩次 <code class="inline">Ctrl+B</code>，因為 tmux 預設用 <code class="inline">Ctrl+B</code> 作為前綴鍵。
+            </p>
+            <p class="en-text">
+                "Background tasks have unique IDs for tracking and output retrieval. Background tasks are automatically cleaned up when Claude Code exits."
+            </p>
+        </div>
+        <div class="bilingual-block">
+            <p class="zh-text">
+                <code class="inline">!</code> 前綴的 <span class="highlight-practical">Bash 模式</span>可以繞過 Claude，直接在終端執行指令。指令和輸出都會被加入對話上下文，所以 Claude 仍然「知道」你做了什麼。這對於 <code class="inline">git status</code>、<code class="inline">npm test</code> 等快速操作特別方便。
+            </p>
+            <p class="en-text">
+                "Run bash commands directly without going through Claude by prefixing your input with !. Adds the command and its output to the conversation context."
+            </p>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; Bash 模式範例</div>
+            <div class="info-box-content">
+<pre class="code-block">! npm test
+! git status
+! ls -la
+! python validate_batch.py --lot 2025001</pre>
+                <p style="margin-top:0.5rem;font-size:0.85rem;color:#475569;">這些指令會直接執行，輸出會被加入對話上下文。Claude 不需要解讀或批准指令。</p>
+            </div>
+        </div>
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+            <div class="info-box-content">
+                <strong>Background vs Bash Mode 差異：</strong><br><br>
+                <strong>背景執行 (Ctrl+B)：</strong>長時間運行的程序（build、test runner、dev server），不阻擋你繼續和 Claude 對話。<br><br>
+                <strong>Bash 模式 (! 前綴)：</strong>快速的一次性指令，即時看到結果，並自動加入上下文讓 Claude 知道。<br><br>
+                兩者都支援 <kbd>Ctrl+B</kbd> 背景化。
+            </div>
+        </div>
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#128161; 比喻說明</div>
+            <div class="info-box-content">
+                背景執行就像在 fill-finish 產線上讓一個<strong>環境監測程序</strong>持續在背景運行，而你繼續處理其他批次作業。Bash 模式則像是<strong>快速查看一下設備面板上的即時數據</strong> — 你不需要透過系統發出正式指令，直接看一眼就好，但這個觀察記錄仍然會被記錄在批次紀錄中。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ KEY TAKEAWAYS ============ -->
+<h2 class="section-header">Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-title">Esc+Esc 是最強保險</div>
+        <div class="summary-card-text">雙擊 Escape 可以回溯程式碼和對話到先前狀態，這是 AI 生成程式碼時最重要的安全網。搭配 Checkpointing 功能使用效果更佳。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">四個前綴記住就夠</div>
+        <div class="summary-card-text"><code class="inline">#</code> 記憶、<code class="inline">/</code> 指令、<code class="inline">!</code> Bash、<code class="inline">@</code> 檔案 — 這四個快捷前綴涵蓋 80% 的高頻操作，是提升效率的核心。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">背景執行釋放對話</div>
+        <div class="summary-card-text">Ctrl+B 將長時間運行的 build/test 移到背景，讓你可以同時繼續和 Claude 對話。這將 AI coding 從同步變成非同步工作流。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">權限模式匹配風險</div>
+        <div class="summary-card-text">Shift+Tab 在三種權限模式間切換。高風險操作用一般模式逐步確認，成熟重複性任務可切到 Auto-Accept 提速。根據任務選擇信任等級。</div>
+    </div>
+</div>
+
+<!-- ============ PRACTICE QUESTIONS ============ -->
+<h2 class="section-header">Practice Questions</h2>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">在 Claude Code 中，<code class="inline">Ctrl+L</code> 和 <code class="inline">/clear</code> 有什麼差異？為什麼這個差異在長時間的 coding session 中很重要？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><code>Ctrl+L</code> 只清除終端畫面的視覺內容，但保留完整的對話歷史。Claude 仍然記得之前所有的對話上下文。而 <code>/clear</code> 會清除指令歷史。</p>
+        <p>這在長時間 coding session 中非常重要，因為保留對話歷史意味著 Claude 仍然理解你的專案上下文（檔案結構、已修改的程式碼、先前的決策），而你只是想要一個乾淨的終端畫面。如果誤用 <code>/clear</code>，Claude 可能會失去重要的上下文，導致需要重新建立專案理解。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">假設你正在用 Claude Code 開發一個 batch record 自動化系統，需要同時執行驗證測試和繼續編寫新功能。你會如何組合使用本文介紹的功能來最佳化這個工作流？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>建議的工作流組合：</p>
+        <p>1. 用 <code>#</code> 指令將 GMP 合規規則寫入 CLAUDE.md（例如 <code># All data must comply with ALCOA+ principles</code>），確保每次對話都自動載入合規上下文。</p>
+        <p>2. 開發到一個段落後，用 <code>! pytest tests/</code> 快速執行測試，輸出會自動加入上下文讓 Claude 知道測試結果。</p>
+        <p>3. 如果需要執行完整的 integration test（耗時較久），用 <code>Ctrl+B</code> 將其移到背景，然後繼續和 Claude 討論下一個功能模組。</p>
+        <p>4. 對於驗證性質的程式碼修改，使用一般權限模式逐步確認；對於重複性的樣板程式碼生成，切換到 Auto-Accept 提速。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">這份文件是一份 reference documentation。它缺少什麼關鍵資訊？如果你是 Anthropic 的文件團隊，你會建議增加什麼內容？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>這份文件有幾個明顯的缺口：</p>
+        <p><strong>缺少情境化建議：</strong>文件列出了所有快捷鍵，但沒有說明「什麼時候應該用什麼」。新使用者面對一張長表格可能不知道從何開始。建議增加一個「Top 5 shortcuts to learn first」的入門指南。</p>
+        <p><strong>缺少錯誤處理：</strong>背景執行失敗時會發生什麼？背景任務的輸出被截斷了怎麼辦？文件只描述了「happy path」。</p>
+        <p><strong>缺少實際工作流範例：</strong>沒有展示一個完整的使用場景（例如從啟動到完成一個 feature 的過程中，快捷鍵如何串聯使用）。</p>
+        <p><strong>缺少平台差異的詳細說明：</strong>文件提到「Keyboard shortcuts may vary by platform」但只在 Ctrl+V/Alt+V 上有區分，其他差異沒有列出。</p>
+    </div>
+</details>
+
+<!-- ============ BOTTOM LINE ============ -->
+<div class="bottom-line">
+    <div class="bottom-line-header">&#127919; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#10004; 核心洞察</div>
+        <div class="bottom-line-text">
+            Claude Code 的互動模式設計哲學是「讓手留在鍵盤上」。四個前綴（<code class="inline"># / ! @ </code>）加上背景執行，本質上是在 AI-assisted coding 中重建了類似 Vim 的效率哲學。對我來說，<code class="inline">Esc+Esc</code> 的回溯功能和 <code class="inline">Ctrl+B</code> 的背景執行是最有價值的 — 前者是 AI 生成不確定性下的安全網，後者讓 coding session 從同步變成非同步。
+        </div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#128200; 立即應用</div>
+        <div class="bottom-line-text">
+            這週在使用 Claude Code 開發自動化腳本時，刻意練習三個操作：(1) 用 <code class="inline">#</code> 將 CDMO 專案的合規規則寫入 CLAUDE.md；(2) 用 <code class="inline">!</code> 前綴直接執行 git 和測試指令；(3) 長時間 build 時用 <code class="inline">Ctrl+B</code> 背景化。目標是一週後這三個操作變成肌肉記憶。
+        </div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#9888; 需要補充</div>
+        <div class="bottom-line-text">
+            這份文件是純 reference，缺乏「最佳實踐」和「常見陷阱」。需要自己在實際使用中測試：Auto-Accept 模式在什麼場景下是安全的？背景任務的輸出上限是多少？此外，應該搭配 <a href="https://code.claude.com/docs/en/checkpointing" style="color:#7c3aed;">Checkpointing</a> 和 <a href="https://code.claude.com/docs/en/slash-commands" style="color:#7c3aed;">Slash Commands</a> 文件一起讀，才能拼出完整的操作圖景。
+        </div>
+    </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<div class="footer">
+    <p>Document generated: 2025-02-03 | Source: <a href="https://code.claude.com/docs/en/interactive-mode" target="_blank">Claude Code Docs - Interactive Mode</a></p>
+    <p>Suggested Chat Title: <strong>[Tool] Claude Code Interactive Mode - Shortcuts Reference</strong></p>
+</div>
+
+</div><!-- end container -->
+</body>
+</html>

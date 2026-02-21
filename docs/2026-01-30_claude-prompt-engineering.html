@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-01-30">
+    <meta name="doc-title" content="Claude 提示工程黃金標準：10 步驟框架">
+    <meta name="doc-source" content="@hooeem on X / Anthropic">
+    <meta name="doc-tags" content="Prompt,LLM,Tool">
+    <meta name="doc-rating" content="4.0">
+    <meta name="doc-summary" content="Anthropic官方提示工程指南轉化為10步驟即插即用Prompt Template框架">
+    <meta name="doc-file" content="2026-01-30_claude-prompt-engineering.html">
+    <title>Claude 提示工程黃金標準：10 步驟框架</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.8; color: #1e293b; background: #f8fafc; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        /* Header */
+        .header { text-align: center; padding: 2.5rem 2rem; background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 100%); color: white; border-radius: 1rem; margin-bottom: 2rem; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 500; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .source-info { font-size: 0.85rem; opacity: 0.8; }
+        .source-info a { color: #93c5fd; }
+        
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        
+        /* Executive Summary */
+        .executive-summary { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .executive-summary h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .executive-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
+        
+        /* Learning Objectives */
+        .objectives { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-item h3 { font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
+        .objective-item p { font-size: 0.85rem; color: #64748b; }
+        
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 90px; max-width: 110px; }
+        .framework-icon { font-size: 1.25rem; margin-bottom: 0.4rem; width: 2.75rem; height: 2.75rem; background: rgba(255,255,255,0.2); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.4rem; }
+        .framework-step-title { font-weight: 600; font-size: 0.75rem; line-height: 1.3; }
+        .framework-step-num { font-size: 0.65rem; opacity: 0.7; margin-top: 0.2rem; }
+        .framework-arrow { font-size: 1.25rem; color: #93c5fd; align-self: center; }
+        @media (max-width: 800px) { .framework-arrow { display: none; } .framework-steps { gap: 1rem; } .framework-step { min-width: 70px; } }
+        
+        /* Content Grid */
+        .content-section { background: white; border-radius: 1rem; margin-bottom: 1.5rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .section-header { background: linear-gradient(135deg, #1e3a5f, #2d4a6f); color: white; padding: 1rem 1.5rem; }
+        .section-header h2 { font-size: 1.1rem; font-weight: 600; }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        .content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+        
+        /* Bilingual Block */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .chinese-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.5rem; }
+        .english-text { font-size: 0.9rem; font-style: italic; color: #64748b; line-height: 1.7; }
+        
+        /* Highlights */
+        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        
+        /* Info Boxes */
+        .info-box { border-radius: 0.5rem; margin-bottom: 1rem; overflow: hidden; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        
+        /* Code Block */
+        pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; line-height: 1.6; margin: 0.75rem 0; }
+        code { font-family: 'Source Code Pro', monospace; }
+        .inline-code { background: #f1f5f9; color: #7c3aed; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+        
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #f59e0b; }
+        .summary-card:nth-child(4) { border-left-color: #8b5cf6; }
+        .summary-card h3 { font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
+        .summary-card p { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+        
+        /* Practice Accordion */
+        .practice-section { margin: 2rem 0; }
+        .practice-section > h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+        
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+        
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; background: white; border-radius: 1rem; margin-top: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .footer p { font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .chat-title { background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 0.5rem; display: inline-block; margin-top: 0.5rem; font-size: 0.85rem; color: #475569; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="tags">
+                <span class="tag tag-prompt">Prompt</span>
+                <span class="tag tag-llm">LLM</span>
+                <span class="tag tag-tool">Tool</span>
+            </div>
+            <h1>Claude 提示工程黃金標準：10 步驟框架</h1>
+            <p class="subtitle">將模糊想法轉化為專業級提示的完整方法論</p>
+            <p class="source-info">來源：@hooeem on X | 基於 Anthropic 官方提示指南 | 2025-01-30</p>
+        </header>
+        
+        <!-- Executive Summary -->
+        <section class="executive-summary">
+            <div class="rating-bar">
+                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+                <span class="rating-high">↑ 實務應用, 學習曲線</span>
+                <span class="rating-low">↓ 技術深度, 時效性</span>
+            </div>
+            <h2>快速摘要</h2>
+            <p>這篇推文將 Anthropic 官方提示工程指南轉化為<span class="highlight-practical">即插即用的 Prompt Template</span>。核心價值不在於「新知識」，而在於<span class="highlight-key">結構化的實作框架</span>——10 個步驟涵蓋角色定義、語調控制、背景資料、任務規則、範例校準、輸出格式等面向。對於已熟悉基本提示技巧的使用者，這個框架提供了一個<span class="highlight-concept">可重複使用的「提示生成器」</span>，讓你不再從零開始撰寫複雜提示。</p>
+        </section>
+        
+        <!-- Learning Objectives -->
+        <section class="objectives">
+            <div class="objective-item">
+                <h3>理解「提示工程師」角色</h3>
+                <p>區分「完成任務」與「設計完成任務的提示」兩種不同思維模式</p>
+            </div>
+            <div class="objective-item">
+                <h3>掌握 10 步驟框架</h3>
+                <p>從角色定義到輸出格式，建立完整的提示設計 Checklist</p>
+            </div>
+            <div class="objective-item">
+                <h3>應用 Meta-Prompting</h3>
+                <p>學會使用 AI 來生成 AI 提示，提升提示品質的一致性</p>
+            </div>
+        </section>
+        
+        <!-- Framework Visual -->
+        <div class="framework-visual">
+            <div class="framework-title">10-Step Gold Standard Prompt Framework</div>
+            <div class="framework-steps">
+                <div class="framework-step">
+                    <div class="framework-icon">1</div>
+                    <div class="framework-step-title">Task Context</div>
+                    <div class="framework-step-num">角色定義</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">2</div>
+                    <div class="framework-step-title">Tone</div>
+                    <div class="framework-step-num">語調風格</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">3</div>
+                    <div class="framework-step-title">Background</div>
+                    <div class="framework-step-num">背景資料</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">4</div>
+                    <div class="framework-step-title">Rules</div>
+                    <div class="framework-step-num">任務規則</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">5</div>
+                    <div class="framework-step-title">Examples</div>
+                    <div class="framework-step-num">範例校準</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">6</div>
+                    <div class="framework-step-title">History</div>
+                    <div class="framework-step-num">對話脈絡</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">7</div>
+                    <div class="framework-step-title">Task</div>
+                    <div class="framework-step-num">具體任務</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">8</div>
+                    <div class="framework-step-title">Thinking</div>
+                    <div class="framework-step-num">深度推理</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">9</div>
+                    <div class="framework-step-title">Format</div>
+                    <div class="framework-step-num">輸出格式</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">10</div>
+                    <div class="framework-step-title">Prefill</div>
+                    <div class="framework-step-num">預填回應</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Part I: Core Concept -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>Part I: 核心概念——提示工程師的思維轉換</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><span class="highlight-concept">你的工作不是完成使用者的任務。你的工作是設計完美的提示</span>，讓這個提示之後能以最高的準確度、深度和可靠性完成任務。</p>
+                        <p class="english-text">"Your job is NOT to complete the user's task. Your job is to design the perfect prompt that will later be used to complete the task with maximum accuracy, depth, and reliability."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text">你必須假設使用者的輸入可能是：<span class="highlight-key">模糊的、結構不良的、概念不完整的、情緒驅動而非邏輯定義的</span>。</p>
+                        <p class="english-text">"You must assume the user's input may be: Vague, Poorly structured, Conceptually incomplete, Emotionally driven rather than logically defined."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text">你的責任是：1) 提取請求背後的<span class="highlight-practical">真正意圖</span>、2) 消除模糊性、3) 添加缺失但必要的結構、4) 設計能提升輸出品質的限制條件、5) 產出一個專家會引以為傲的提示。</p>
+                        <p class="english-text">"Your responsibility is to: 1. Extract the true intent behind the request 2. Remove ambiguity 3. Add missing but necessary structure 4. Engineer constraints that improve output quality 5. Produce a prompt that an expert would be proud to use."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-key">
+                        <div class="info-box-header">我的詮釋</div>
+                        <div class="info-box-content">
+                            <p>這是一個重要的<strong>思維轉換</strong>——從「執行者」變成「架構師」。這種「最壞情況假設」是專業提示工程的基礎：假設輸入永遠不完美，你的工作就是補足缺口。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">比喻說明</div>
+                        <div class="info-box-content">
+                            <p>想像你是一位建築師，客戶說「我想要一間漂亮的房子」。一般做法是直接開始畫圖；專業做法是先釐清：幾個人住？預算多少？偏好什麼風格？有沒有特殊需求？</p>
+                            <p>這個框架就是在做同樣的事：在「動工」之前，先把所有需求和限制條件都問清楚、定義清楚。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">核心概念</div>
+                        <div class="info-box-content">
+                            <p><strong>Meta-Prompting</strong>（元提示）：使用 AI 來生成 AI 提示。這個框架本身就是一個 Meta-Prompt——你把模糊想法丟進去，它輸出結構化的專業提示。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Part II: Framework Steps 1-5 -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>Part II: 框架步驟 1-5——建立基礎</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 1 - Task Context（任務情境）</strong>：以<span class="highlight-key">專家級精確度</span>定義 AI 的角色。避免使用「助手」或「寫手」等通用角色。包含：資深程度、專業領域、運作環境、目標。</p>
+                        <p class="english-text">"Define the AI's role with expert-level specificity. Avoid generic roles like 'assistant' or 'writer'. Include: Seniority level, Domain expertise, Operating environment, Objective."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 2 - Tone（語調）</strong>：指定：語調（專業、銳利、冷靜、中立等）、風格（簡潔、詳細、敘事、條列式）、語言規則（英式 vs 美式英語、是否允許表情符號）、<span class="highlight-practical">明確要避免的事項</span>。</p>
+                        <p class="english-text">"Specify: Tone (professional, sharp, calm, neutral, aggressive, etc.), Style (concise, detailed, narrative, bullet-driven), Language rules (British vs American English, emojis allowed or not), Explicit things to avoid."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 3 - Background Data（背景資料）</strong>：使用 <span class="inline-code">&lt;guide&gt;</span> 標籤注入明確的上下文。如果沒有現成文件，就<span class="highlight-concept">清楚定義運作假設</span>。</p>
+                        <p class="english-text">"Inject explicit context using a guide tag... If no document exists, define operating assumptions clearly."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 4 - Rules（規則）</strong>：這是「規則手冊」。包含：步驟式期望、評估標準、邏輯限制、If/Then 條件、<span class="highlight-key">資訊缺失或不確定時該如何處理</span>。</p>
+                        <p class="english-text">"This is the rulebook. Include: Step-by-step expectations, Evaluation criteria, Logical constraints, If/Then conditions, What to do when information is missing or uncertain."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 5 - Examples（範例）</strong>：提供<span class="highlight-practical">至少一個強力範例</span>。如有幫助可添加更多範例。</p>
+                        <p class="english-text">"Provide at least one strong example... Add more examples if helpful."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">我的詮釋</div>
+                        <div class="info-box-content">
+                            <p>Step 5 的「範例」就是 <strong>Few-shot Learning</strong>（少樣本學習）的核心技術。範例應展示正確的語調、深度和結構，讓模型「模仿」你想要的輸出風格。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-code">
+                        <div class="info-box-header">原文範例：角色定義</div>
+                        <div class="info-box-content">
+                            <pre>// 弱：
+"You are a helpful assistant."
+
+// 強：
+"You are a senior crypto research 
+analyst advising long-term capital 
+allocators. Your job is to evaluate 
+early-stage protocols using 
+first-principles analysis and 
+risk-weighted thinking."</pre>
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">CDMO 應用</div>
+                        <div class="info-box-content">
+                            <p>角色定義範例：「你是一位具有 10 年以上無菌充填經驗的 CDMO 營運顧問，專精 PIC/S GMP 法規和 SA25 Vanrx 隔離器技術。你的任務是評估新專案的可行性，並提供符合 21 CFR Part 11 和 ALCOA+ 原則的建議。」</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">CDMO 應用</div>
+                        <div class="info-box-content">
+                            <p>Step 4 的「資訊缺失時的處理」在批次審查中特別重要：「若批次紀錄缺少關鍵參數，明確列出缺失項目並建議補充方式，而非做出假設。」</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Part III: Framework Steps 6-10 -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>Part III: 框架步驟 6-10——精煉輸出</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 6 - History（對話歷史）</strong>：如適用，注入相關的過往脈絡。[包括相關的過往偏好、目標或限制]</p>
+                        <p class="english-text">"Inject relevant past context if applicable. [Relevant prior preferences, goals, or constraints]"</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 7 - Task Request（任務請求）</strong>：定義<span class="highlight-key">現在要執行的確切動作</span>。使用清晰、動詞驅動的指令。</p>
+                        <p class="english-text">"Define the exact action to perform now. Use a clear, verb-driven instruction."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 8 - Deep Thinking（深度思考）</strong>：觸發謹慎推理。使用以下其中一個：「回答前一步步思考」、「考慮邊緣案例和失敗模式」、「在產出最終回應前仔細推理」。<span class="highlight-concept">除非明確要求，否則不要透露內部推理過程。</span></p>
+                        <p class="english-text">"Trigger careful reasoning. Use one: Think step by step before answering. Consider edge cases and failure modes. Reason carefully before producing the final response. Do not reveal internal reasoning unless explicitly requested."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 9 - Output Formatting（輸出格式）</strong>：指定確切的輸出格式。包含：格式類型（Markdown、JSON、表格、條列等）、結構要求、長度限制（如需要）。使用 <span class="inline-code">&lt;response&gt;</span> 標籤<span class="highlight-practical">強制遵循</span>。</p>
+                        <p class="english-text">"Specify the exact output format. Include: Format type (Markdown, JSON, table, bullets, etc.), Structural requirements, Length constraints if needed. Force compliance using a response tag."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>Step 10 - Prefilled Response（預填回應）</strong>：選擇性地開始回應以<span class="highlight-key">錨定語調和方向</span>。</p>
+                        <p class="english-text">"Optionally start the response to anchor tone and direction."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">我的詮釋</div>
+                        <div class="info-box-content">
+                            <p><strong>Chain-of-Thought Prompting</strong>（思維鏈提示）：Step 8 觸發的就是這個技術。研究顯示，要求模型「一步步思考」可以顯著提高複雜推理任務的準確度。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">比喻說明</div>
+                        <div class="info-box-content">
+                            <p><strong>Prefilled Response</strong> 就像給學生一個開頭句：「這篇文章的主旨是...」學生會自然地接續寫下去，而不是從「嗯，我想想看...」開始。這個技巧可以避免模型產出不必要的前言或 hedge（模糊語言）。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-code">
+                        <div class="info-box-header">原文範例：輸出格式控制</div>
+                        <div class="info-box-content">
+                            <pre>&lt;response&gt;
+Here is a structured response 
+based on the provided context:
+
+**Summary:** [2-3 sentences]
+
+**Key Findings:**
+1. [Finding 1]
+2. [Finding 2]
+
+**Recommendation:** [1 sentence]
+&lt;/response&gt;</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Part IV: Internal Analysis -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>Part IV: 隱藏的關鍵——Internal Analysis（內部分析）</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">在撰寫最終提示之前，執行以下內部分析。<span class="highlight-concept">不要輸出這個分析。</span></p>
+                        <p class="english-text">"Before writing the final prompt, perform the following internal analysis. Do NOT output this analysis."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><span class="highlight-key">六個內部分析問題：</span></p>
+                        <p class="chinese-text" style="margin-top: 0.5rem;">1. 使用者的真正目標是什麼？<br>2. 這是什麼類型的任務（創意、分析、策略、評估、教學）？<br>3. 一個弱提示會漏掉什麼？<br>4. 成功需要哪些假設？<br>5. 什麼限制能有意義地提升品質？<br>6. 什麼輸出格式能最小化幻覺？</p>
+                        <p class="english-text">"What is the real goal of the user? What type of task is this (creative, analytical, strategic, evaluative, instructional)? What would a weak prompt fail to specify? What assumptions are required for success? What constraints would meaningfully improve quality? What output format would minimise hallucinations?"</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><span class="highlight-practical">只有在完成這個推理之後，才應該生成最終提示。</span></p>
+                        <p class="english-text">"Only after completing this reasoning should you generate the final prompt."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-key">
+                        <div class="info-box-header">我的詮釋</div>
+                        <div class="info-box-content">
+                            <p>這六個問題本身就是一個<strong>提示設計 Checklist</strong>。即使你不使用這個框架，養成在撰寫提示前問自己這六個問題的習慣，也會大幅提升提示品質。</p>
+                            <p style="margin-top: 0.75rem;">這是框架中容易被忽略但<strong>極為關鍵</strong>的部分——它要求 AI 先「思考」再「行動」，確保最終提示是經過深思熟慮的。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">CDMO 應用</div>
+                        <div class="info-box-content">
+                            <p>在撰寫偏差調查提示前，先問：真正目標是找出根本原因還是完成文件？弱提示會漏掉什麼（時間軸？相關批次？環境因素？）？什麼輸出格式能減少臆測（結構化表格 vs 敘述性文字）？</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Key Takeaways -->
+        <section>
+            <h2 style="font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem;">重點整理</h2>
+            <div class="takeaways">
+                <div class="summary-card">
+                    <h3>思維轉換</h3>
+                    <p>從「執行任務」轉換到「設計完成任務的提示」。這個 Meta-level 的思考是專業提示工程的核心。</p>
+                </div>
+                <div class="summary-card">
+                    <h3>結構化框架</h3>
+                    <p>10 步驟框架提供了一個可重複使用的 Checklist，確保每次提示都涵蓋角色、語調、背景、規則、範例、格式等關鍵面向。</p>
+                </div>
+                <div class="summary-card">
+                    <h3>內部分析</h3>
+                    <p>在產出提示前先進行六問分析：真正目標、任務類型、弱提示漏洞、成功假設、有效限制、減少幻覺的格式。</p>
+                </div>
+                <div class="summary-card">
+                    <h3>即插即用</h3>
+                    <p>這個框架本身就是一個 Meta-Prompt——把模糊想法丟進去，輸出結構化的專業提示，省去從零開始的時間。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Practice Section -->
+        <section class="practice-section">
+            <h2>練習題</h2>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q1</span>
+                    <span class="question-type">概念理解</span>
+                    <span class="question-text">為什麼框架強調「避免使用通用角色如 assistant 或 writer」？這與模型的行為有什麼關係？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p>通用角色會讓模型採用「通用行為」——試圖滿足所有可能的需求，導致回應缺乏深度和專業性。具體角色（如「資深加密貨幣研究分析師」）會觸發模型調用與該角色相關的知識和推理模式，產生更專業、更聚焦的輸出。</p>
+                    <p>這與 LLM 的訓練方式有關：模型在訓練時看過大量「專家在特定情境下如何回應」的範例。當你明確定義角色，等於是在「檢索」這些專家行為模式。</p>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q2</span>
+                    <span class="question-type">產業應用</span>
+                    <span class="question-text">如果你要設計一個「批次放行決策支援」的提示，你會如何應用這個框架的 Step 1（角色定義）和 Step 4（規則）？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>Step 1 角色定義範例：</strong>「你是一位具有 15 年經驗的 QA 放行專家，專精無菌注射劑的批次放行決策。你熟悉 PIC/S GMP Annex 1、21 CFR Part 211，以及 ALCOA+ 數據完整性原則。你的任務是審查批次紀錄並提供放行建議，同時識別任何需要進一步調查的異常。」</p>
+                    <p><strong>Step 4 規則範例：</strong></p>
+                    <p>1. 若任何關鍵製程參數超出規格，必須標記為「需調查」，不得直接建議放行。</p>
+                    <p>2. 若環境監測數據有 action limit excursion，必須確認相關批次的影響評估已完成。</p>
+                    <p>3. 若文件有塗改或修正，必須確認符合 21 CFR Part 11 的審計軌跡要求。</p>
+                    <p>4. 資訊不完整時，明確列出缺失項目，而非做出假設。</p>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q3</span>
+                    <span class="question-type">批判思考</span>
+                    <span class="question-text">這個框架有什麼限制？在什麼情況下使用它可能是「過度工程」？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>限制：</strong></p>
+                    <p>1. <strong>時間成本</strong>：對於簡單、一次性的任務，走完 10 步驟可能比直接問還慢。</p>
+                    <p>2. <strong>學習曲線</strong>：需要對提示工程有基本理解才能有效使用。</p>
+                    <p>3. <strong>假設固定輸出</strong>：框架適合有明確預期輸出的任務，對於探索性、開放式的對話可能過於僵化。</p>
+                    <p><strong>過度工程的情況：</strong></p>
+                    <p>- 日常對話或閒聊</p>
+                    <p>- 快速事實查詢（「台灣的首都是哪裡？」）</p>
+                    <p>- 需要多輪迭代、逐步釐清需求的任務</p>
+                    <p>- 創意發想階段，需要保持開放性</p>
+                    <p><strong>最佳使用場景</strong>：高頻率重複使用的任務模板、需要一致性輸出的專業工作、API 整合的系統提示。</p>
+                </div>
+            </details>
+        </section>
+        
+        <!-- Bottom Line -->
+        <div class="bottom-line">
+            <div class="bottom-line-header">我的行動結論</div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">核心洞察</div>
+                <div class="bottom-line-text">這個框架的價值不在於「新知識」，而在於<strong>結構化和標準化</strong>。我已經知道這些提示技巧，但把它們整合成一個可重複使用的模板，可以大幅提升提示品質的一致性。特別是「內部分析」的六個問題，可以作為我設計任何提示前的 Checklist。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">立即應用</div>
+                <div class="bottom-line-text">這週將這個框架整合到我的 Claude Project 中，建立一個「提示生成器」Project。當我需要設計複雜提示（如偏差調查、可行性評估）時，先用這個框架生成結構化提示，而非從零開始。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">需要補充</div>
+                <div class="bottom-line-text">這篇推文是「應用層」，沒有深入 Anthropic 原始指南的「原理層」。需要回去閱讀官方文件，理解為什麼這些步驟有效（例如：為什麼 Prefilled Response 能引導輸出方向？背後的機制是什麼？）。</div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>製作日期：2025-01-30</p>
+            <p>來源：<a href="https://x.com/hooeem" target="_blank">@hooeem on X</a> | 基於 Anthropic 官方提示工程指南</p>
+            <p>相關資源：<a href="https://docs.anthropic.com/claude/docs/prompt-engineering" target="_blank">Anthropic Prompt Engineering Documentation</a></p>
+            <div class="chat-title">建議 Chat Title：[Prompt] Claude 提示工程黃金標準 10 步驟框架</div>
+        </footer>
+    </div>
+</body>
+</html>

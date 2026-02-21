@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-12-15">
+    <meta name="doc-title" content="Skill Architecture: The 5 Layers Beyond the SKILL.md">
+    <meta name="doc-source" content="The Boring Marketer @boringmarketer / X (Twitter)">
+    <meta name="doc-tags" content="Agent,Prompt,Automation">
+    <meta name="doc-rating" content="4.1">
+    <meta name="doc-summary" content="AI Skill架構五層設計：持久記憶、評分式context載入、schema契約、學習回饋迴圈、共用協定層">
+    <meta name="doc-file" content="2025-12-15_skill-architecture-layers.html">
+<title>Skill Architecture: The 5 Layers Beyond the SKILL.md</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans TC', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.7; }
+  
+  /* Header */
+  .doc-header { background: linear-gradient(135deg, #1e3a8a, #3b5998); color: white; padding: 2.5rem 2rem; text-align: center; }
+  .doc-header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .doc-header .subtitle { font-size: 1rem; opacity: 0.85; margin-bottom: 1rem; }
+  .tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0.75rem; }
+  .tag { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; }
+  .tag-agent { background: #c7d2fe; color: #3730a3; }
+  .tag-prompt { background: #fde68a; color: #92400e; }
+  .tag-automation { background: #a7f3d0; color: #065f46; }
+  .source-info { font-size: 0.8rem; opacity: 0.7; }
+
+  /* Rating Bar */
+  .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+  .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+  .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+  .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+  .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+  /* Section wrapper */
+  .section { margin: 1.5rem 2rem; }
+  .section-title { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; border-bottom: 3px solid #bfdbfe; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+
+  /* Executive Summary */
+  .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin: 1.5rem 2rem; }
+  .exec-text { font-size: 0.95rem; line-height: 1.8; color: #334155; }
+  mark.concept { background: #a5d6a7; padding: 0 2px; border-radius: 2px; }
+  mark.key { background: #ffcc80; padding: 0 2px; border-radius: 2px; }
+  mark.practical { background: #6ee7b7; padding: 0 2px; border-radius: 2px; }
+
+  /* Learning Objectives */
+  .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-top: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+  .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .obj-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .obj-title { font-weight: 700; font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.4rem; }
+  .obj-desc { font-size: 0.82rem; color: #64748b; line-height: 1.6; }
+  @media (max-width: 640px) { .objectives-grid { grid-template-columns: 1fr; } }
+
+  /* Framework Visual */
+  .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+  .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+  .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .framework-step { text-align: center; min-width: 100px; }
+  .framework-icon { font-size: 1.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+  .framework-step-title { font-weight: 700; font-size: 0.85rem; }
+  .framework-step-desc { font-size: 0.75rem; opacity: 0.85; margin-top: 0.2rem; }
+  .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+  /* Content Grid (two-column) */
+  .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .content-left { border-right: 1px solid #e2e8f0; padding-right: 1.5rem; }
+  .content-right { }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; padding-right: 0; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; } }
+  
+  /* Linear layout override */
+  .content-linear { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+  /* Part header */
+  .part-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .part-badge { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+  .part-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; }
+
+  /* Bilingual block */
+  .bilingual-block { margin-bottom: 1rem; }
+  .zh-text { color: #1e293b; font-size: 0.95rem; line-height: 1.8; margin-bottom: 0.3rem; }
+  .en-text { color: #64748b; font-style: italic; font-size: 0.88rem; line-height: 1.6; }
+
+  /* Info boxes */
+  .info-box { border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
+  .box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+  .box-body { padding: 0.75rem 1rem; font-size: 0.88rem; line-height: 1.7; }
+  .box-concept .box-header { background: #bbf7d0; color: #14532d; }
+  .box-concept .box-body { background: #f0fdf4; }
+  .box-analogy .box-header { background: #fef3c7; color: #92400e; }
+  .box-analogy .box-body { background: #fffbeb; }
+  .box-key .box-header { background: #fed7aa; color: #9a3412; }
+  .box-key .box-body { background: #fff7ed; }
+  .box-code .box-header { background: #ddd6fe; color: #4c1d95; }
+  .box-code .box-body { background: #f5f3ff; font-family: 'Source Code Pro', monospace; }
+  .box-practical .box-header { background: #a7f3d0; color: #065f46; }
+  .box-practical .box-body { background: #ecfdf5; }
+  pre { background: #1e293b; color: #e2e8f0; padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.82rem; overflow-x: auto; line-height: 1.6; white-space: pre-wrap; }
+
+  /* Key Takeaways */
+  .takeaways-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .takeaway-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+  .takeaway-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+  .takeaway-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .takeaway-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .takeaway-text { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+  @media (max-width: 600px) { .takeaways-grid { grid-template-columns: 1fr; } }
+
+  /* Practice - Accordion */
+  .practice-section { margin: 1.5rem 2rem; }
+  .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+  .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+  .question-header::-webkit-details-marker { display: none; }
+  .question-number { font-weight: 700; color: #6d28d9; }
+  .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+  .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+  .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+  details[open] .accordion-icon { transform: rotate(180deg); }
+  .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; font-size: 0.9rem; line-height: 1.7; color: #374151; }
+
+  /* Bottom Line */
+  .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 1.5rem 2rem; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+  .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; font-size: 1.1rem; }
+  .bottom-line-item { margin-bottom: 1rem; }
+  .bottom-line-item:last-child { margin-bottom: 0; }
+  .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+  .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+  /* Footer */
+  .doc-footer { background: #1e293b; color: #94a3b8; text-align: center; padding: 1.5rem 2rem; font-size: 0.82rem; margin-top: 2rem; }
+  .doc-footer a { color: #60a5fa; text-decoration: none; }
+
+  /* Progression Table */
+  table.progression { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 0.75rem; }
+  table.progression th { background: #1e3a8a; color: white; padding: 0.5rem 0.75rem; text-align: left; }
+  table.progression td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
+  table.progression tr:nth-child(even) td { background: #f8fafc; }
+  table.progression td:first-child { font-weight: 600; color: #1e3a8a; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="tags">
+    <span class="tag tag-agent">Agent</span>
+    <span class="tag tag-prompt">Prompt Architecture</span>
+    <span class="tag tag-automation">Automation</span>
+  </div>
+  <h1>Skill Architecture: The 5 Layers Beyond SKILL.md</h1>
+  <div class="subtitle">從單一指令檔到行銷編排系統 — 架構才是真正的護城河</div>
+  <div class="source-info">來源：The Boring Marketer @boringmarketer | 2025 | X (Twitter)</div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="exec-summary">
+  <div class="rating-bar">
+    <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.1/5</span>
+    <span class="rating-high">↑ 實務應用、工具生態</span>
+    <span class="rating-low">↓ 技術深度（無程式碼細節）</span>
+  </div>
+  <div class="exec-text">
+    大多數人以為 AI skill 就是一份寫得好的 <mark class="key">SKILL.md 指令檔</mark>——清晰的指示、評分標準、決策樹。這是基線，不是終點。
+    本文作者建立了 <mark class="concept">11 個行銷 skill、共 32,000 行</mark>，發現真正的效益不在 skill 本身，而在<mark class="practical">架構層</mark>。他分享了五個讓系統從「有用」升級為「越用越聰明」的關鍵設計：持久記憶、評分式 context 載入、schema 契約、學習回饋迴圈、共用協定層。
+    核心洞察：<mark class="key">skill 是起點，圍繞它的架構才是讓它真正 perform 的關鍵。</mark>
+  </div>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<div class="section">
+  <div class="section-title">學習目標 Learning Objectives</div>
+  <div class="objectives-grid">
+    <div class="objective-item">
+      <div class="obj-icon">🧠</div>
+      <div class="obj-title">理解 Skill 架構的五層設計</div>
+      <div class="obj-desc">掌握持久記憶、context 評分、schema 契約、學習迴圈、協定層的作用與關聯</div>
+    </div>
+    <div class="objective-item">
+      <div class="obj-icon">📐</div>
+      <div class="obj-title">應用 Context 精準化原則</div>
+      <div class="obj-desc">學習「少即是多」的 context 設計，了解為何給 AI 太多資訊反而降低品質</div>
+    </div>
+    <div class="objective-item">
+      <div class="obj-icon">🔄</div>
+      <div class="obj-title">建立自我強化的 AI 工作流</div>
+      <div class="obj-desc">理解學習迴圈設計，讓 session 1 的錯誤不會在 session 20 重複發生</div>
+    </div>
+  </div>
+</div>
+
+<!-- FRAMEWORK VISUAL -->
+<div class="section">
+  <div class="framework-visual">
+    <div class="framework-title">Skill Architecture 成熟度模型</div>
+    <div class="framework-steps">
+      <div class="framework-step">
+        <div class="framework-icon">📄</div>
+        <div class="framework-step-title">Level 1</div>
+        <div class="framework-step-desc">SKILL.md<br>靜態指令檔</div>
+      </div>
+      <div class="framework-arrow">→</div>
+      <div class="framework-step">
+        <div class="framework-icon">🗂️</div>
+        <div class="framework-step-title">Level 2</div>
+        <div class="framework-step-desc">持久記憶<br>+ Context 評分</div>
+      </div>
+      <div class="framework-arrow">→</div>
+      <div class="framework-step">
+        <div class="framework-icon">🔗</div>
+        <div class="framework-step-title">Level 3</div>
+        <div class="framework-step-desc">Schema 契約<br>Skills 互聯</div>
+      </div>
+      <div class="framework-arrow">→</div>
+      <div class="framework-step">
+        <div class="framework-icon">📈</div>
+        <div class="framework-step-title">Level 4</div>
+        <div class="framework-step-desc">學習迴圈<br>系統自我進化</div>
+      </div>
+      <div class="framework-arrow">→</div>
+      <div class="framework-step">
+        <div class="framework-icon">🌐</div>
+        <div class="framework-step-title">Level 5</div>
+        <div class="framework-step-desc">共用協定層<br>11 Skills 一致性</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PART 1: PERSISTENT MEMORY -->
+<div class="section">
+  <div class="section-title">核心五層架構 Core Architecture</div>
+  <div class="content-grid">
+    <div class="content-left">
+      <div class="part-header">
+        <span class="part-badge">Layer 1</span>
+        <span class="part-title">持久記憶 Persistent Memory</span>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">問題核心：<mark class="key">每個 session 都從零開始</mark>。你每次都要重新解釋你的品牌、受眾、市場定位。skill 完全不記得昨天發生了什麼。</div>
+        <div class="en-text">"the problem: every session starts at zero. you re-explain your brand, your audience, your positioning every single time. the skill has no idea what happened yesterday."</div>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">解法：建立一個<mark class="practical">共用品牌目錄</mark>，每個 skill 都從中讀取、也寫入。檔案有<mark class="concept">所有權規則</mark>：profile 類檔案只有一個 skill 可以覆寫（需附 diff 確認）；append 類檔案只增不減，永遠成長。</div>
+        <div class="en-text">"a shared brand directory that every skill reads from and writes to. profile files have one owner. only that skill can overwrite (with a diff and confirmation). append files never truncate. they only grow."</div>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">結果：session 1 建立的 context，在 session 20 時仍然有效。系統記得你是誰、做過什麼。</div>
+        <div class="en-text">"session 1 builds context that session 20 uses. the skill remembers who you are and what you've done."</div>
+      </div>
+    </div>
+    <div class="content-right">
+      <div class="info-box box-concept">
+        <div class="box-header">📚 目錄結構設計</div>
+        <div class="box-body">
+          <strong>所有者型（Owner-based）— 只能被特定 skill 覆寫：</strong><br>
+          <code>voice-profile.md</code> ← /brand-voice 擁有<br>
+          <code>positioning.md</code> ← /positioning 擁有<br>
+          <code>audience.md</code> ← /audience-research 擁有<br>
+          <code>keyword-plan.md</code> ← /keyword-research 擁有<br><br>
+          <strong>追加型（Append-only）— 所有 skill 都可寫入：</strong><br>
+          <code>assets.md</code> ← 所有 skill 追加<br>
+          <code>learnings.md</code> ← 所有 skill 追加
+        </div>
+      </div>
+      <div class="info-box box-analogy">
+        <div class="box-header">💡 製藥業比喻</div>
+        <div class="box-body">
+          這就像 CDMO 的<strong>批次記錄系統</strong>：每個批次都可讀取既有的製程驗證數據，但只有製程擁有者（Process Owner）可以更新 Master Batch Record。偏差調查結果則是 append-only，永遠保留、不得刪除。記憶設計與 GMP 的 ALCOA+ 原則高度吻合。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PART 2: SCORED CONTEXT LOADING -->
+<div class="section">
+  <div class="content-grid">
+    <div class="content-left">
+      <div class="part-header">
+        <span class="part-badge">Layer 2</span>
+        <span class="part-title">評分式 Context 載入 Scored Context Loading</span>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">反直覺發現：<mark class="key">給 AI 更多 context 不等於更好的輸出</mark>。測試顯示：同時把關鍵字計劃、競品分析、創意素材庫、品牌聲音都丟給 email skill，它寫出的是模糊的 email——試圖顧全所有東西，但注意力是有限的。</div>
+        <div class="en-text">"give the email skill your keyword plan, competitor analysis, creative kit, and voice profile all at once — it writes muddy emails. tries to honor everything. attention is finite."</div>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">解法：一個<mark class="practical">context 評分矩陣</mark>，定義每個 skill 接收什麼、刻意屏蔽什麼。同時加入<mark class="concept">TTL 新鮮度機制</mark>：context 越舊，傳遞的方式越保守。</div>
+        <div class="en-text">"a context matrix that scores what each skill receives vs what's withheld. each skill gets what sharpens it. everything else is withheld on purpose."</div>
+      </div>
+    </div>
+    <div class="content-right">
+      <div class="info-box box-key">
+        <div class="box-header">⚠️ Context TTL 新鮮度規則</div>
+        <div class="box-body">
+          <strong>&lt; 7 天</strong> → 直接傳入，原文不變<br>
+          <strong>7–30 天</strong> → 標記年齡警告後傳入<br>
+          <strong>30–90 天</strong> → 只傳摘要版本<br>
+          <strong>&gt; 90 天</strong> → 不載入，視為過期資料
+        </div>
+      </div>
+      <div class="info-box box-analogy">
+        <div class="box-header">💡 比喻：手術室的資訊管控</div>
+        <div class="box-body">
+          外科醫生執刀時，護士不會把整本病歷丟在台上——只給當前手術最相關的那頁。<strong>精準的 context 控制讓 AI 的注意力聚焦</strong>，就像術前簡報只說此次手術的關鍵點，而非患者的童年病史。
+        </div>
+      </div>
+      <div class="info-box box-practical">
+        <div class="box-header">🛠️ CDMO 應用場景</div>
+        <div class="box-body">
+          在技術移轉可行性評估中，給 AI 「所有客戶資料」反而產生泛化建議。正確做法：只載入與<strong>該劑型相關的設備規格</strong>和<strong>近期驗證結果</strong>，屏蔽無關的其他品項數據。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PART 3: SCHEMA CONTRACTS -->
+<div class="section">
+  <div class="content-grid">
+    <div class="content-left">
+      <div class="part-header">
+        <span class="part-badge">Layer 3</span>
+        <span class="part-title">Schema 契約 Schema Contracts Between Skills</span>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">問題：Skills 在孤島中運作。關鍵字研究 skill 找到了主題，然後你開一個新對話，對內容撰寫 skill 重新解釋一切。<mark class="key">資料無法在 skills 之間流動</mark>。</div>
+        <div class="en-text">"skills work in isolation. the keyword researcher finds your topics. then you open a new conversation and re-explain everything to the content writer. data doesn't flow between skills."</div>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">解法：<mark class="concept">有型別的介面（typed interfaces）</mark>。Skills 不只輸出文字，而是輸出<mark class="practical">結構化產物（structured artifacts）</mark>供其他 skills 消費。共用 6 個 JSON Schema 契約——關鍵字研究 skill 輸出 keyword plan，SEO 內容 skill 直接讀取該 plan 作為輸入，無需重新解釋。</div>
+        <div class="en-text">"typed interfaces. skills don't just output text. they output structured artifacts that other skills consume. 6 JSON Schema contracts. /keyword-research outputs a keyword plan. /seo-content reads that plan as input. no re-explaining."</div>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">結果：<mark class="practical">Skills 變成管線中的節點</mark>。一個的輸出成為下一個的輸入，資料全程保持結構化。</div>
+        <div class="en-text">"skills become nodes in a pipeline. the output of one becomes the input of the next. the data stays structured the whole way."</div>
+      </div>
+    </div>
+    <div class="content-right">
+      <div class="info-box box-concept">
+        <div class="box-header">📚 核心概念：Typed Interface</div>
+        <div class="box-body">
+          這是軟體工程中「強型別」的概念移植到 AI workflow。傳統 AI 互動輸出的是自由文字（untyped），任何下游系統都需要人工解讀。<strong>Schema 契約</strong>讓輸出變成可被機器直接消費的格式，實現真正的自動化管線。
+        </div>
+      </div>
+      <div class="info-box box-analogy">
+        <div class="box-header">💡 比喻：藥廠的 CoA 文件</div>
+        <div class="box-body">
+          Certificate of Analysis（CoA）就是一種 schema 契約：原料商的 CoA 有固定欄位格式，QC 實驗室直接讀取不需電話確認。<strong>AI skill 的 JSON Schema 就是 CoA 的數位對等物</strong>——確保上下游之間的資料交換不依賴人工轉譯。
+        </div>
+      </div>
+      <div class="info-box box-key">
+        <div class="box-header">⚠️ 重點提示</div>
+        <div class="box-body">
+          Claude Projects 目前不支援原生的 skill-to-skill 資料傳遞。作者使用的是<strong>共用檔案目錄</strong>作為中介層，而非 API 呼叫。在 Claude 環境中實作時，Project Knowledge 可扮演類似角色。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PART 4: LEARNING LOOPS -->
+<div class="section">
+  <div class="content-grid">
+    <div class="content-left">
+      <div class="part-header">
+        <span class="part-badge">Layer 4</span>
+        <span class="part-title">學習迴圈 Learning Loops</span>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">問題：Skill 在第 90 天的輸出品質和第 1 天一樣。<mark class="key">沒有改善機制，每個 session 都是孤立的</mark>。</div>
+        <div class="en-text">"the skill produces the same quality output on day 90 as day 1. no mechanism for improvement. every session is isolated."</div>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">解法：每次重大交付後，系統詢問一個簡單問題：「這個表現如何？」答案日期戳記並按 skill 標記後記錄。<mark class="practical">下次任何 skill 執行時，它會讀取這些學習記錄</mark>——email skill 停止寫疑問式主旨行，文案 skill 拋棄了過度修飾的風格。</div>
+        <div class="en-text">"after every major deliverable the system asks a simple question. how did this perform? answers get logged. date-stamped. skill-tagged. next time any skill runs it reads those learnings."</div>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">結果：<mark class="concept">Session 1 教導 Session 5</mark>。錯誤只犯一次，成功永遠重複。系統越用越聰明。</div>
+        <div class="en-text">"session 1 teaches session 5. mistakes are made once. wins repeat forever. the system gets smarter the more you use it."</div>
+      </div>
+    </div>
+    <div class="content-right">
+      <div class="info-box box-practical">
+        <div class="box-header">🛠️ 學習回饋問卷（三選一）</div>
+        <div class="box-body">
+          執行完主要交付物後，系統詢問：<br><br>
+          <strong>這次輸出的表現如何？</strong><br>
+          a) 直接使用（shipped as-is）<br>
+          b) 小幅修改（minor edits）<br>
+          c) 大幅重寫（rewrote significantly）<br><br>
+          <em>答案記錄到 learnings.md，附上日期與 skill 標籤。</em>
+        </div>
+      </div>
+      <div class="info-box box-analogy">
+        <div class="box-header">💡 比喻：CAPA 系統</div>
+        <div class="box-body">
+          這和 GMP 的 CAPA（糾正與預防措施）精神完全相同：<strong>偏差被記錄，根因被分析，預防措施被執行</strong>，確保同樣的問題不再發生。學習迴圈就是 AI workflow 的 CAPA 系統。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PART 5: SHARED PROTOCOL LAYER -->
+<div class="section">
+  <div class="content-grid">
+    <div class="content-left">
+      <div class="part-header">
+        <span class="part-badge">Layer 5</span>
+        <span class="part-title">共用協定層 Shared Protocol Layer</span>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">問題：11 個 skills 各自實作自己的記憶邏輯、新鮮度規則、回饋收集機制。<mark class="key">處處不一致</mark>。</div>
+        <div class="en-text">"11 skills each implementing their own memory logic, their own freshness rules, their own feedback collection. inconsistency everywhere."</div>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">解法：<mark class="concept">一份所有 skills 都遵循的協定文件</mark>。定義如何讀取品牌檔案、如何寫入、context 過期時的處理方式、如何收集回饋、檔案遺失時如何降級運作。<mark class="practical">沒有執行期強制——skills 就是遵循規範</mark>，就像 HTTP 協定一樣。</div>
+        <div class="en-text">"one protocol document that every skill follows. it defines how to read brand files, how to write them, when context is too stale to use, how to collect feedback, how to degrade when files are missing. no runtime enforces it. the skills just follow the spec. like HTTP."</div>
+      </div>
+      <div class="bilingual-block">
+        <div class="zh-text">結果：<mark class="practical">一份文件，11 個 skills，系統級的一致性</mark>。</div>
+        <div class="en-text">"one document. 11 skills. system-wide coherence."</div>
+      </div>
+    </div>
+    <div class="content-right">
+      <div class="info-box box-concept">
+        <div class="box-header">📚 「像 HTTP 一樣」的深意</div>
+        <div class="box-body">
+          HTTP 是網際網路的共用語言——瀏覽器和伺服器各自不同，但都遵循同一套規範。<strong>沒有中央執行機構，卻能達到全球一致性</strong>。作者的 Protocol Layer 採用同樣思路：透過明確的書面規範，而非程式碼約束，確保所有 skills 行為一致。
+        </div>
+      </div>
+      <div class="info-box box-practical">
+        <div class="box-header">🛠️ 協定文件應涵蓋的事項</div>
+        <div class="box-body">
+          1. 如何讀取品牌記憶檔案<br>
+          2. 如何安全地寫入/追加<br>
+          3. Context 新鮮度判斷規則（TTL）<br>
+          4. 如何觸發學習回饋收集<br>
+          5. 檔案遺失時的降級行為（graceful degradation）
+        </div>
+      </div>
+      <div class="info-box box-analogy">
+        <div class="box-header">💡 比喻：GMP SOPs</div>
+        <div class="box-body">
+          製藥工廠的 SOP 系統就是協定層：不同部門（QA、生產、QC）遵循同一套文件規範，確保行為可預測、可稽核。<strong>Protocol Layer 是 AI 工作流的 SOP</strong>——讓系統在沒有人工監督的情況下仍能一致運作。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESSION TABLE -->
+<div class="section">
+  <div class="section-title">系統成熟度進程 What This Adds Up To</div>
+  <div class="content-linear">
+    <div class="bilingual-block">
+      <div class="zh-text">系統在第 1 天無需任何設定即可運作。但隨著時間累積，每一層架構都在疊加品質：</div>
+    </div>
+    <table class="progression">
+      <tr><th>Context 狀態</th><th>系統輸出水準</th><th>對應架構層</th></tr>
+      <tr><td>無 context</td><td>有用的通用輸出</td><td>基礎 SKILL.md</td></tr>
+      <tr><td>+ 品牌聲音</td><td>聽起來像你的品牌</td><td>Layer 1 持久記憶</td></tr>
+      <tr><td>+ 市場定位</td><td>使用你的角度和框架</td><td>Layer 2 評分式載入</td></tr>
+      <tr><td>+ 受眾洞察</td><td>觸及真實痛點</td><td>Layer 3 Schema 契約</td></tr>
+      <tr><td>+ 學習記錄</td><td>避免過去的錯誤</td><td>Layer 4 學習迴圈</td></tr>
+      <tr><td>+ 完整套件</td><td>高度個人化的專業輸出</td><td>Layer 5 協定層</td></tr>
+    </table>
+    <div class="bilingual-block" style="margin-top:1rem;">
+      <div class="zh-text">作者的結論：<mark class="key">「第 1 天它能用。第 7 天它更好。第 14 天它像認識你一樣。」</mark></div>
+      <div class="en-text">"day 1: it works. day 7: it works better. day 14: it works like it knows you."</div>
+    </div>
+  </div>
+</div>
+
+<!-- KEY TAKEAWAYS -->
+<div class="section">
+  <div class="section-title">重點整理 Key Takeaways</div>
+  <div class="takeaways-grid">
+    <div class="takeaway-card" style="border-left-color: #3b82f6;">
+      <div class="takeaway-icon">🗂️</div>
+      <div class="takeaway-title">記憶設計的所有權原則</div>
+      <div class="takeaway-text">品牌記憶不是自由的公共財。Profile 檔案需要明確的所有者，只有主責 skill 可以覆寫。這防止了多個 skills 互相覆蓋造成的「記憶腐化」。</div>
+    </div>
+    <div class="takeaway-card" style="border-left-color: #10b981;">
+      <div class="takeaway-icon">🎯</div>
+      <div class="takeaway-title">Context 精準化：少即是多</div>
+      <div class="takeaway-text">給 AI 的 context 需要刻意篩選，而非傾倒所有資訊。注意力是有限資源，過多 context 導致輸出模糊。TTL 機制確保只有新鮮的資訊被載入。</div>
+    </div>
+    <div class="takeaway-card" style="border-left-color: #8b5cf6;">
+      <div class="takeaway-icon">🔗</div>
+      <div class="takeaway-title">Skills 互聯需要 Schema 契約</div>
+      <div class="takeaway-text">讓 AI workflow 從點到線，關鍵是定義結構化的輸出格式。JSON Schema 讓上游的輸出直接成為下游的輸入，消除人工轉譯的瓶頸。</div>
+    </div>
+    <div class="takeaway-card" style="border-left-color: #f59e0b;">
+      <div class="takeaway-icon">📈</div>
+      <div class="takeaway-title">架構才是護城河，不是 Prompt</div>
+      <div class="takeaway-text">競爭對手可以複製你的 SKILL.md，但無法複製你累積的 learnings.md 和 positioning.md。架構設計創造了隨時間增長的複利效益——這才是真正的差異化。</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRACTICE -->
+<div class="practice-section">
+  <div class="section-title">練習題 Practice Questions</div>
+
+  <details class="question-accordion">
+    <summary class="question-header">
+      <span class="question-number">Q1</span>
+      <span class="question-type">概念理解</span>
+      <span class="question-text">為什麼「append-only」的 learnings.md 比「可覆寫」的設計更好？這個設計決策的邏輯是什麼？</span>
+      <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+      <p><strong>核心邏輯：</strong>可覆寫的學習記錄會丟失歷史資訊。如果允許 skill 刪除舊記錄，當系統判斷「這個教訓已過時」時，可能錯誤刪除仍然有效的學習成果。</p>
+      <p><strong>Append-only 的三個優點：</strong>1) 完整的歷史追溯性（可審計） 2) 系統永遠有更多數據可學習 3) 防止因誤判而丟失寶貴洞察。這與 GMP 的稽核軌跡原則完全一致——記錄只能新增，不能刪除或修改。</p>
+      <p><strong>潛在缺點：</strong>長期累積後，learnings.md 可能變得過大，需要定期做 summarization 或分層歸檔，這是作者未在文章中討論的維護挑戰。</p>
+    </div>
+  </details>
+
+  <details class="question-accordion">
+    <summary class="question-header">
+      <span class="question-number">Q2</span>
+      <span class="question-type">產業應用</span>
+      <span class="question-text">假設你要為 CDMO 的技術移轉評估設計一套 Skill Architecture，哪兩個 Layer 的投資報酬率最高？為什麼？</span>
+      <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+      <p><strong>優先推薦：Layer 2（評分式 Context 載入）+ Layer 4（學習迴圈）</strong></p>
+      <p><strong>Layer 2 的理由：</strong>技術移轉評估涉及大量文件（設備規格、法規要求、客戶 CMC 資料、既有驗證報告）。直覺上會想把所有資料都丟給 AI，但這正是導致「泛化建議」的根因。為每種劑型設計精準的 context 矩陣，只載入與當前評估相關的子集，可以立即提升輸出的針對性。</p>
+      <p><strong>Layer 4 的理由：</strong>每次可行性評估完成後，都會有客戶反饋（接受/修改/拒絕）。這些反饋目前可能只存在於 email 往返中。系統化地捕捉這些學習，讓第 10 個客戶的評估直接受益於前 9 個的經驗，這是目前最容易實作、回報最快的架構投資。</p>
+    </div>
+  </details>
+
+  <details class="question-accordion">
+    <summary class="question-header">
+      <span class="question-number">Q3</span>
+      <span class="question-type">批判思考</span>
+      <span class="question-text">作者說「No runtime enforces it — the skills just follow the spec, like HTTP」。這個設計有什麼潛在風險？在高度受監管的環境中，這個假設能成立嗎？</span>
+      <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+      <p><strong>核心風險：</strong>HTTP 之所以能在無中央執行的情況下運作，是因為違反協定的後果是<strong>立即可見的技術失敗</strong>（頁面無法載入）。但 AI skill 違反協定的後果可能是<strong>隱性的品質下降</strong>，難以被即時偵測。</p>
+      <p><strong>在製藥受監管環境中的問題：</strong>GMP 要求每個控制措施都必須有驗證的執行機制（21 CFR Part 11 要求系統控制而非依賴人員自律）。「依賴 skills 自律遵循協定」在 FDA 審查中很可能被歸類為「程序控制」而非「系統控制」，符合性風險更高。</p>
+      <p><strong>建議補強：</strong>對於監管關鍵的 AI workflow，應在協定層之上加入<strong>自動化合規檢查</strong>（Compliance Check Layer），定期驗證各 skill 的輸出是否符合協定規範，並留有可審計的記錄。</p>
+    </div>
+  </details>
+</div>
+
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+  <div class="bottom-line-header">🎯 我的行動結論</div>
+  <div class="bottom-line-item">
+    <div class="bottom-line-label">✔ 核心洞察</div>
+    <div class="bottom-line-text">我在 Claude Projects 中建立的 Master Prompt 和 Project Knowledge，本質上已是 Layer 1（持久記憶）的初階版本。但缺失的是 Layer 2 的「評分式載入」——我把所有 Project Knowledge 都同時載入，而非根據任務類型精準選擇。這解釋了為什麼有些輸出仍然「太泛化」。真正的升級點不是寫更好的 Prompt，而是設計更精準的 Context 管控機制。</div>
+  </div>
+  <div class="bottom-line-item">
+    <div class="bottom-line-label">📈 立即應用</div>
+    <div class="bottom-line-text">本週在現有的可行性評估 Claude Project 中實作 Layer 4 的最簡版本：在每次評估完成後，手動在 Project Knowledge 的 learnings.md 中追加一條記錄（客戶類型 / 劑型 / 評估結果 / 主要修改點）。不需要自動化，先建立習慣和數據，三個月後再評估是否值得自動化。</div>
+  </div>
+  <div class="bottom-line-item">
+    <div class="bottom-line-label">⚠ 需要補充</div>
+    <div class="bottom-line-text">文章完全基於行銷場景，且假設使用者有自架檔案系統的能力。在 Claude.ai 的 Projects 環境中，skills-to-skills 的 schema 契約（Layer 3）目前難以實作，需要人工橋接。此外，文章未討論<strong>監管合規環境</strong>中，「自律遵循協定」是否足夠——這是 CDMO 應用時最需要補充設計的部分。6 個月後重讀，評估 Claude Projects 是否新增了 skill-to-skill 資料傳遞的原生支援。</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <p>製作日期：2025年 | 來源：<a href="https://x.com/boringmarketer" target="_blank">@boringmarketer on X</a></p>
+  <p style="margin-top:0.5rem; color:#64748b;">建議 Chat Title：[Agent] Skill Architecture - 5 Layers Beyond SKILL.md</p>
+</div>
+
+</body>
+</html>

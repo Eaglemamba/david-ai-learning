@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-01-22">
+    <meta name="doc-title" content="AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器">
+    <meta name="doc-source" content="Miles Deutscher (@milesdeutscher)">
+    <meta name="doc-tags" content="Automation,Prompt,Tool,Agent">
+    <meta name="doc-rating" content="3.8">
+    <meta name="doc-summary" content="用Claude打造習慣追蹤器的Vibe Coding教學，展示非工程師如何用AI建構實用工具">
+    <meta name="doc-file" content="2026-01-22_ai-habit-tracker-vibe-coding.html">
+    <title>AI Habit Tracker Vibe Coding - 用 Claude 打造改變生活的習慣追蹤器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --accent-pink: #ec4899;
+            --accent-cyan: #06b6d4;
+            --border-light: #e2e8f0;
+            --highlight-concept: #a5d6a7;
+            --highlight-key: #ffcc80;
+            --highlight-practical: #6ee7b7;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f, #3b5998);
+            color: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .tag-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        
+        .source-info {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        /* Rating Bar */
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.6rem 1rem;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: 8px;
+            flex-wrap: wrap;
+            border: 1px solid #bae6fd;
+        }
+        
+        .rating-score {
+            font-weight: 700;
+            color: #0c4a6e;
+            font-size: 1rem;
+        }
+        
+        .rating-stars {
+            color: #f59e0b;
+            letter-spacing: 1px;
+        }
+        
+        .rating-high {
+            font-size: 0.8rem;
+            color: #047857;
+            background: #d1fae5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .rating-low {
+            font-size: 0.8rem;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        /* Executive Summary */
+        .executive-summary {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .summary-text {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text-primary);
+        }
+        
+        .summary-text .highlight-concept {
+            background: var(--highlight-concept);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+        
+        .summary-text .highlight-key {
+            background: var(--highlight-key);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+        
+        .summary-text .highlight-practical {
+            background: var(--highlight-practical);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+        
+        /* Learning Objectives */
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .objective-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--accent-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .objective-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .objective-item:nth-child(2) { border-left-color: var(--accent-green); }
+        .objective-item:nth-child(3) { border-left-color: var(--accent-purple); }
+        
+        .objective-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+        
+        .objective-item:nth-child(2) .objective-number { color: var(--accent-green); }
+        .objective-item:nth-child(3) .objective-number { color: var(--accent-purple); }
+        
+        .objective-text {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+        
+        /* Framework Visual */
+        .framework-visual {
+            background: linear-gradient(135deg, #1e3a5f, #3b5998);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: white;
+            margin: 1.5rem 0 2rem;
+        }
+        
+        .framework-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .framework-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .framework-step {
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .framework-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+        }
+        
+        .framework-step-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        
+        .framework-step-desc {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+        
+        .framework-arrow {
+            font-size: 1.5rem;
+            color: #93c5fd;
+        }
+        
+        @media (max-width: 600px) {
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1.5rem; }
+        }
+        
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+        
+        .content-left {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .content-right {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .part-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+        
+        .bilingual-block {
+            margin-bottom: 1.25rem;
+        }
+        
+        .chinese-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .english-text {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        /* Info Boxes */
+        .info-box {
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .info-box-header {
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-box-content {
+            padding: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        
+        /* Code Block */
+        code {
+            font-family: 'Source Code Pro', monospace;
+            background: #f1f5f9;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+        
+        pre {
+            font-family: 'Source Code Pro', monospace;
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        
+        /* Key Takeaways */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .summary-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--accent-blue);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .summary-card:nth-child(2) { border-left-color: var(--accent-green); }
+        .summary-card:nth-child(3) { border-left-color: var(--accent-purple); }
+        .summary-card:nth-child(4) { border-left-color: var(--accent-amber); }
+        
+        .card-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .card-content {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Practice Section - Accordion */
+        .practice-section {
+            background: #faf5ff;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .question-accordion {
+            background: white;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e9d5ff;
+            overflow: hidden;
+        }
+        
+        .question-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            list-style: none;
+        }
+        
+        .question-header::-webkit-details-marker { display: none; }
+        
+        .question-number {
+            font-weight: 700;
+            color: #6d28d9;
+        }
+        
+        .question-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6d28d9;
+            background: #e9d5ff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+        
+        .question-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #374151;
+            min-width: 200px;
+        }
+        
+        .accordion-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.2s;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+        
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        
+        .question-answer {
+            padding: 1rem 1.25rem;
+            background: #faf5ff;
+            border-top: 1px solid #e9d5ff;
+        }
+        
+        .question-answer p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 0.75rem;
+        }
+        
+        .question-answer p:last-child { margin-bottom: 0; }
+        
+        .question-answer ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .question-answer li {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 0.3rem;
+        }
+        
+        /* Bottom Line */
+        .bottom-line {
+            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #7c3aed;
+        }
+        
+        .bottom-line-header {
+            font-weight: 700;
+            color: #5b21b6;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .bottom-line-item {
+            margin-bottom: 1rem;
+        }
+        
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        
+        .bottom-line-label {
+            font-weight: 600;
+            color: #6d28d9;
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .bottom-line-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #334155;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            margin-top: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .footer-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-source {
+            font-size: 0.85rem;
+        }
+        
+        .footer-source a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+        
+        .footer-source a:hover { text-decoration: underline; }
+        
+        .chat-title-suggestion {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: #f1f5f9;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .chat-title-suggestion strong {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="tag-container">
+                <span class="tag tag-automation">Automation</span>
+                <span class="tag tag-prompt">Prompt</span>
+                <span class="tag tag-tool">Tool</span>
+                <span class="tag tag-agent">Agent</span>
+            </div>
+            <h1>AI Habit Tracker Vibe Coding<br>用 Claude 打造改變生活的習慣追蹤器</h1>
+            <div class="source-info">
+                Miles Deutscher (@milesdeutscher) | 2026-01-22 | X Thread
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="executive-summary">
+            <div class="rating-bar">
+                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
+                <span class="rating-high">↑ 實務應用, 工具生態</span>
+                <span class="rating-low">↓ 技術深度, 學習曲線</span>
+            </div>
+            <h2 class="section-title">快速摘要</h2>
+            <p class="summary-text">
+                這篇文章展示了 <span class="highlight-concept">Vibe Coding</span> 的實際威力：作者用不到 30 分鐘，透過 Claude Opus 4.5 打造出一個功能完整的「遊戲化習慣追蹤 App」。核心策略是 <span class="highlight-key">將日常任務轉換成 XP 經驗值系統</span>，結合行事曆整合、每週/月回顧、以及針對特定領域（交易、健身、營養）的專屬 Dashboard。文章提供完整的 <span class="highlight-practical">Mega Prompt 模板</span>，讓讀者可以直接複製貼上開始建造。對於想要快速將 AI 轉化為實際生產力工具的人，這是一個具體可行的範例。
+            </p>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section>
+            <h2 class="section-title">學習目標</h2>
+            <div class="objectives-grid">
+                <div class="objective-item">
+                    <div class="objective-number">目標 1</div>
+                    <div class="objective-text">理解 Vibe Coding 的核心概念：用自然語言指令讓 AI 生成完整功能的應用程式</div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-number">目標 2</div>
+                    <div class="objective-text">掌握 [Role] + [Goal] + [Features] + [Constraints] 的 Mega Prompt 結構設計</div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-number">目標 3</div>
+                    <div class="objective-text">學習 Modular Prompting 策略：分階段建造複雜系統而非一次性要求所有功能</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Framework Visual -->
+        <div class="framework-visual">
+            <div class="framework-title">Vibe Coding 四步驟流程</div>
+            <div class="framework-steps">
+                <div class="framework-step">
+                    <div class="framework-icon">1</div>
+                    <div class="framework-step-title">Planning</div>
+                    <div class="framework-step-desc">用 ChatGPT 規劃功能</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">2</div>
+                    <div class="framework-step-title">Prompting</div>
+                    <div class="framework-step-desc">設計 Mega Prompt</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">3</div>
+                    <div class="framework-step-title">Building</div>
+                    <div class="framework-step-desc">Claude 生成程式碼</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">4</div>
+                    <div class="framework-step-title">Iterating</div>
+                    <div class="framework-step-desc">Modular 微調優化</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part I: What is Vibe Coding -->
+        <section class="content-grid">
+            <div class="content-left">
+                <h3 class="part-header">Part I：什麼是 Vibe Coding？</h3>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        作者過去 6 個月用 Claude 成功建造了 10 多個工作流程，而這個 AI 習慣追蹤 App 是他認為<span class="highlight-key">對日常生活影響最大的一個</span>。最關鍵的是：整個 App 只花了不到 30 分鐘就建造完成。
+                    </p>
+                    <p class="english-text">
+                        "Over the past 6 months, I've vibe-coded 10+ successful workflows using Claude. Of all my builds, this is the single most impactful workflow I've built for my daily life... The best part is, it only took <30 minutes to build."
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        這個工作流程的核心是一個<span class="highlight-concept">「遊戲化」習慣追蹤 App</span>，透過將日常任務轉換成遊戲任務和經驗值系統，來幫助使用者達成目標。
+                    </p>
+                    <p class="english-text">
+                        "An AI habit tracking app that 'gamifies' your life to help you crush your goals."
+                    </p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">核心概念</div>
+                    <div class="info-box-content">
+                        <strong>Vibe Coding</strong> 是一種用自然語言指令讓 AI 生成完整程式碼的開發方式。不需要寫程式，只需要清楚描述你想要什麼，AI 就會生成可運作的應用程式。這種方式讓非工程師也能快速打造客製化工具。
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">比喻說明</div>
+                    <div class="info-box-content">
+                        想像你是製藥廠的 Operations Director，以前要做一個追蹤批次生產進度的 Dashboard，需要跟 IT 部門來回溝通好幾週。現在你可以直接用自然語言告訴 Claude：「我需要一個追蹤 Batch Record 完成率的介面，要顯示每條產線的進度...」，30 分鐘後就有一個可用的原型。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part II: App Features -->
+        <section class="content-grid">
+            <div class="content-left">
+                <h3 class="part-header">Part II：App 功能架構</h3>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        這個 App 包含多個專屬 Dashboard，每個都針對特定領域設計：
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>1. Homepage Command Center</strong>：每日概覽的指揮中心
+                    </p>
+                    <p class="chinese-text">
+                        <strong>2. Sprint</strong>：<span class="highlight-key">遊戲化任務追蹤</span>的「動量」Dashboard
+                    </p>
+                    <p class="chinese-text">
+                        <strong>3. Schedule</strong>：整合會議的行事曆總覽
+                    </p>
+                    <p class="chinese-text">
+                        <strong>4. Trading Terminal</strong>：每日交易/市場研究專用終端
+                    </p>
+                    <p class="chinese-text">
+                        <strong>5. Kinetic Performance</strong>：健身/體能任務追蹤
+                    </p>
+                    <p class="chinese-text">
+                        <strong>6. Biogenic Fueling</strong>：營養/健康任務追蹤
+                    </p>
+                    <p class="chinese-text">
+                        <strong>7. History</strong>：每週/月進度追蹤
+                    </p>
+                    <p class="chinese-text">
+                        <strong>8. Settings</strong>：偏好設定與各種模式
+                    </p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-practical">
+                    <div class="info-box-header">實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>CDMO 應用情境</strong>：你可以把這個架構改造成生產管理 Dashboard：</p>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+                            <li><strong>Command Center</strong> → 當日生產排程總覽</li>
+                            <li><strong>Sprint</strong> → Batch Release Checklist（每項有完成 XP）</li>
+                            <li><strong>Schedule</strong> → 跨部門會議與 Tech Transfer 時程</li>
+                            <li><strong>Terminal</strong> → Deviation Dashboard</li>
+                            <li><strong>Kinetic</strong> → 設備維護追蹤</li>
+                            <li><strong>History</strong> → 月度 KPI 趨勢</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        注意這個 App 的設計邏輯：不是一個萬用工具，而是<span class="highlight-key">針對使用者的具體生活領域（交易、健身、營養）各自設計專屬介面</span>。這種「模組化領域」的思維，比「一個通用介面」更能提高實際使用率。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part III: How to Build -->
+        <section class="content-grid">
+            <div class="content-left">
+                <h3 class="part-header">Part III：如何建造這個系統</h3>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>工具設定</strong>：作者推薦使用 <span class="highlight-practical">Claude Opus 4.5 搭配 Max Plan</span>。如果沒有 Max Plan，會很快遇到使用量限制，只能分批處理（每幾小時回來繼續）。
+                    </p>
+                    <p class="english-text">
+                        "Claude Opus 4.5 with Max Plan is best. If you're on anything less than a Max plan, you'll hit usage limits pretty fast."
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>省錢技巧</strong>：可以用 Google AI Studio（免費）先寫程式碼，再貼到 Claude 做優化，這樣可以繞過 Claude 的使用量限制。
+                    </p>
+                    <p class="english-text">
+                        "Pro tip: Use Google AI Studio. You can use Google AI Studio to code (free), then simply paste it into Claude, which will help bypass Claude usage limits."
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>規劃階段</strong>：在開始建造前，先用 ChatGPT 規劃功能。給它你的目標和背景，讓它幫你腦力激盪應該包含哪些功能。
+                    </p>
+                    <p class="english-text">
+                        "Before instructing Claude to build, I highly recommend prompting ChatGPT with an overview of the project to generate helpful feature ideas."
+                    </p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">程式碼/API</div>
+                    <div class="info-box-content">
+                        <p><strong>Claude Project 設定建議</strong>：</p>
+                        <p>1. 在 Claude Web 建立新 Project，命名為「AI Habit Tracker Workflow」</p>
+                        <p>2. 加入基本文字 Context：「I'm building an AI habit tracker system...」</p>
+                        <p>3. 這樣 Claude 會在整個對話中保持上下文記憶</p>
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">比喻說明</div>
+                    <div class="info-box-content">
+                        這個工作流程像是「<strong>雙廚房策略</strong>」：用 ChatGPT 做菜單規劃（規劃功能），用 Google AI Studio 做食材備料（初步程式碼），最後用 Claude 做精緻擺盤（最終優化）。每個工具做它最擅長的事，整體效率最高。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part IV: Prompt Engineering Structure -->
+        <section class="content-grid">
+            <div class="content-left">
+                <h3 class="part-header">Part IV：Prompt Engineering 結構</h3>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        作者分享了他的 <span class="highlight-key">Mega Prompt 結構</span>：<code>[Role] + [Goal/Task] + [Features to Build] + [Constraints]</code>
+                    </p>
+                    <p class="english-text">
+                        "This prompting structure worked perfectly: [Role] + [Goal/Task] + [Features to Build] + [Constraints]"
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>[Role] 角色</strong>：「Act as a world-class senior frontend engineer and elite UI/UX designer specializing in high-performance productivity tools and gamified interfaces.」
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>[Goal/Task] 目標</strong>：建造一個極簡「Cyber-Executive」風格的每日計劃器，專為 Power User 設計，包含 Sprint 執行、XP 遊戲化系統、高優先會議排程。
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>[Features] 功能</strong>：包含 Dashboard、Sprint、Schedule、Trading、Gym、Nutrition、History、Settings 八大模組。
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>[Constraints] 限制條件</strong>：深色背景 #0a0a0c、霓虹青綠 #00c8e0、電子紫 #9d5cff、成功綠 #22c55e。字體用 JetBrains Mono 和 Inter。
+                    </p>
+                    <p class="english-text">
+                        "Visual Aesthetic: Strictly 'Cyber-Minimalist' dark mode. Background: #0a0a0c. Accents: Neon Cyan (#00c8e0), Electric Purple (#9d5cff), and Success Green (#22c55e)."
+                    </p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>Modular Prompting 策略</strong>：避免一次要求 10 個功能。大型 LLM 在專注於單一「元件」時表現最好。作者稱之為「Micro-Sprinting」：</p>
+                        <p style="margin-top: 0.5rem;">1. 先修好 Meetings Tab</p>
+                        <p>2. 再優化 History Charts</p>
+                        <p>3. 最後加上音效</p>
+                        <p style="margin-top: 0.5rem;">這樣可以保持程式碼乾淨，Debug 也容易 10 倍。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>擴展 App 的正確姿勢</strong>：</p>
+                        <pre style="font-size: 0.8rem; background: #1e293b; color: #e2e8f0; padding: 0.75rem; border-radius: 0.5rem; overflow-x: auto;">"I want to [ADD FEATURE].
+Functional Requirement: [...]
+Data Structure: [...]
+Visual Direction: [...]
+Existing Context: The app uses 
+constants.tsx and types.ts..."</pre>
+                        <p style="margin-top: 0.5rem;">這個結構讓 Claude 知道現有架構，避免重寫整個 App。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part V: Pro Tips -->
+        <section class="content-grid">
+            <div class="content-left">
+                <h3 class="part-header">Part V：進階技巧</h3>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>偷懶技巧</strong>：如果不想自己寫 Prompt，可以把文章中的所有圖片複製貼上，叫 Claude 逆向工程建造 App。
+                    </p>
+                    <p class="english-text">
+                        "If you're lazy, you can copy/paste all the images from this article and ask Claude to reverse-engineer and build the app."
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>偷設計</strong>：看到喜歡的 UI，就截圖給 Claude，用 Prompt：「Keep the logic of my App.tsx exactly the same, but update the styling of my cards to match the glassmorphism and padding seen in this image.」
+                    </p>
+                    <p class="english-text">
+                        "Steal Aesthetics: If you see a UI you like, take a screenshot and share it with Claude."
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">
+                        <strong>實際使用建議</strong>：把 Claude 下載到手機並放在容易存取的位置。每天早上花時間整理 To-do List，然後送給 App 作為 Prompt 來載入任務。
+                    </p>
+                    <p class="english-text">
+                        "Download Claude to your mobile device and place it in an easily accessible location. This will help you actually use the workflow & increase productivity."
+                    </p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>記憶體問題對策</strong>：App 可能會遇到記憶體問題（例如不載入每週/月歷史）。解決方法是主動送 Prompt：</p>
+                        <p style="margin-top: 0.5rem; font-style: italic;">「Ensure memory loads between desktop and mobile, make sure my data is saved every day, etc.」</p>
+                        <p style="margin-top: 0.5rem;">這種「預防性 Prompting」可以避免後續問題。</p>
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">比喻說明</div>
+                    <div class="info-box-content">
+                        「偷設計」這招就像製藥業的 <strong>Tech Transfer</strong>：你不是從零開發製程，而是看到別人成功的產品，把它的配方（視覺設計）拿過來，再根據自己的設備（邏輯需求）做調整。合法、高效、聰明。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section>
+            <h2 class="section-title">重點整理</h2>
+            <div class="takeaways-grid">
+                <div class="summary-card">
+                    <div class="card-title">Vibe Coding 的核心價值</div>
+                    <div class="card-content">用自然語言在 30 分鐘內建造功能完整的 App。不需要程式背景，只需要清楚描述需求和限制條件。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-title">Mega Prompt 結構</div>
+                    <div class="card-content">[Role] + [Goal] + [Features] + [Constraints] 是經過驗證的最佳結構。限制條件（顏色、字體、技術架構）越具體，結果越好。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-title">Modular 微調策略</div>
+                    <div class="card-content">不要一次要求 10 個功能。專注單一元件、逐步疊代，程式碼更乾淨、Debug 更容易。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-title">Multi-Tool 協作</div>
+                    <div class="card-content">ChatGPT 規劃功能、Google AI Studio 寫初稿、Claude 做最終優化。善用免費工具繞過使用量限制。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section class="practice-section">
+            <h2 class="section-title">練習題</h2>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q1</span>
+                    <span class="question-type">概念理解</span>
+                    <span class="question-text">為什麼作者建議用 Modular Prompting 而非一次要求所有功能？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>答案</strong>：大型 LLM 在專注於單一「元件」時表現最好（類似人類的認知負荷限制）。一次要求太多功能會導致：</p>
+                    <ul>
+                        <li>程式碼結構混亂，不同功能之間的邊界模糊</li>
+                        <li>出現 Bug 時難以定位問題來源</li>
+                        <li>AI 可能會在某些功能上偷工減料來完成任務</li>
+                    </ul>
+                    <p>分階段建造（Micro-Sprinting）讓每個元件都能得到充分注意力，也方便後續維護和擴展。</p>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q2</span>
+                    <span class="question-type">產業應用</span>
+                    <span class="question-text">如果要用這個方法為 CDMO 建造一個 Batch Release Dashboard，Mega Prompt 的 [Constraints] 部分應該包含什麼？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>答案</strong>：考慮到製藥法規要求（GMP、21 CFR Part 11），[Constraints] 應該包含：</p>
+                    <ul>
+                        <li><strong>資料記錄</strong>：所有操作必須有 timestamp 和操作者 ID（ALCOA+ 原則）</li>
+                        <li><strong>不可刪除</strong>：只能標記完成/撤銷，不能真正刪除記錄（Audit Trail）</li>
+                        <li><strong>視覺設計</strong>：高對比度、清晰狀態標示（Pass/Fail/Pending）、可列印格式</li>
+                        <li><strong>技術架構</strong>：資料必須持久化到 localStorage 或後端，不能只存在記憶體</li>
+                        <li><strong>權限層級</strong>：不同角色看到不同資訊（Operator vs QA vs QP）</li>
+                    </ul>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q3</span>
+                    <span class="question-type">批判思考</span>
+                    <span class="question-text">這篇文章沒有提到的潛在風險或限制是什麼？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>答案</strong>：文章呈現了最佳情境，但實際使用可能遇到：</p>
+                    <ul>
+                        <li><strong>資料安全</strong>：localStorage 的資料沒有加密，敏感資訊（交易策略、健康數據）有外洩風險</li>
+                        <li><strong>長期維護</strong>：AI 生成的程式碼可能難以理解和修改，技術債累積</li>
+                        <li><strong>跨裝置同步</strong>：作者提到「記憶體問題」，但沒有真正解決跨裝置的資料同步</li>
+                        <li><strong>依賴風險</strong>：如果 Claude 服務中斷或收費方案改變，整個工作流程可能失效</li>
+                        <li><strong>過度客製化</strong>：太多專屬功能可能讓 App 變得複雜難用，違背「習慣追蹤」的初衷</li>
+                    </ul>
+                    <p>這些不代表方法不好，而是在實際導入時需要考慮的因素。</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Bottom Line -->
+        <div class="bottom-line">
+            <div class="bottom-line-header">我的行動結論</div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">核心洞察</div>
+                <div class="bottom-line-text">Vibe Coding 的價值不是「不用學程式」，而是<strong>大幅縮短「想法到原型」的週期</strong>。對於想要往 COO 發展的 Operations Director，這意味著可以快速驗證流程改善的想法，而不用等 IT 排程。這是一種「先有 MVP 再說服 Stakeholder」的策略。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">立即應用</div>
+                <div class="bottom-line-text">這週可以嘗試：用作者的 Mega Prompt 結構，為一個小型追蹤需求（例如：Deviation Follow-up Tracker）建造一個 Prototype。不需要完美，目標是驗證「我能用這個方法多快做出可用的東西」。如果成功，下一步是考慮如何在不違反 21 CFR Part 11 的前提下使用這類工具。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">需要補充</div>
+                <div class="bottom-line-text">文章沒有討論：(1) 在企業環境中使用這類工具的合規考量 (2) 如何讓團隊成員（非 AI 熟悉者）也能維護這些工具 (3) 長期資料管理策略。這些是在 CDMO 環境導入前必須釐清的問題。建議 3 個月後重讀這篇，對照自己的 Vibe Coding 實驗結果。</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-date">製作日期：2026-01-22</div>
+            <div class="footer-source">
+                來源：<a href="https://x.com/milesdeutscher" target="_blank">Miles Deutscher (@milesdeutscher) X Thread</a>
+            </div>
+            <div class="chat-title-suggestion">
+                <strong>建議 Chat Title：</strong>[Tool] Vibe Coding - Claude Habit Tracker Build Guide
+            </div>
+        </footer>
+
+    </div>
+</body>
+</html>
