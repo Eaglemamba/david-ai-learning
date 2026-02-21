@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-01-13">
+    <meta name="doc-title" content="ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計">
+    <meta name="doc-source" content="Wyndo & Judy Ossello">
+    <meta name="doc-tags" content="Agent,Framework">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="ACT + BASE 框架：高壓溝通的行為穩定性設計。">
+    <meta name="doc-file" content="2025-01-13_act-base-framework.html">
+    <title>ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --light-bg: #f8fafc;
+            --card-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--light-bg);
+            color: #1e293b;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 100%);
+            color: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .header-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .domain-tags {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .domain-tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+
+        .source-info {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        /* Rating Bar */
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.6rem 1rem;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: 8px;
+            flex-wrap: wrap;
+            border: 1px solid #bae6fd;
+        }
+
+        .rating-score {
+            font-weight: 700;
+            color: #0c4a6e;
+            font-size: 1rem;
+        }
+
+        .rating-stars {
+            color: #f59e0b;
+            letter-spacing: 1px;
+        }
+
+        .rating-high {
+            font-size: 0.8rem;
+            color: #047857;
+            background: #d1fae5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .rating-low {
+            font-size: 0.8rem;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Executive Summary */
+        .exec-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .exec-summary h2 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .summary-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        .summary-text p {
+            margin-bottom: 1rem;
+        }
+
+        .summary-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Learning Objectives */
+        .learning-objectives {
+            margin-bottom: 2rem;
+        }
+
+        .learning-objectives h2 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .objective-item {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--secondary-blue);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .objective-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .objective-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .objective-title {
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .objective-desc {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* Framework Visual */
+        .framework-visual {
+            background: linear-gradient(135deg, #1e3a5f, #3b5998);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: white;
+            margin: 2rem 0;
+        }
+
+        .framework-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .framework-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .framework-step {
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .framework-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+        }
+
+        .framework-step-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .framework-step-desc {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .framework-arrow {
+            font-size: 1.5rem;
+            color: #93c5fd;
+        }
+
+        @media (max-width: 600px) {
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1.5rem; }
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .left-column, .right-column {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .left-column h3, .right-column h3 {
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        /* Bilingual Content */
+        .bilingual-block {
+            margin-bottom: 1.5rem;
+        }
+
+        .bilingual-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .chinese-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .english-text {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #64748b;
+            line-height: 1.7;
+            padding-left: 1rem;
+            border-left: 2px solid #e2e8f0;
+        }
+
+        /* Highlights */
+        .highlight-concept {
+            background: linear-gradient(to bottom, transparent 60%, #a5d6a7 60%);
+            padding: 0 2px;
+        }
+
+        .highlight-key {
+            background: linear-gradient(to bottom, transparent 60%, #ffcc80 60%);
+            padding: 0 2px;
+        }
+
+        .highlight-practical {
+            background: linear-gradient(to bottom, transparent 60%, #6ee7b7 60%);
+            padding: 0 2px;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            border-radius: 0.75rem;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .info-box-header {
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-box-content {
+            padding: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Code Blocks */
+        pre, code {
+            font-family: 'Source Code Pro', monospace;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.85em;
+            color: #7c3aed;
+        }
+
+        /* Tabbed Content */
+        .tab-container {
+            margin: 1.5rem 0;
+        }
+
+        .tab-nav {
+            display: flex;
+            gap: 0.25rem;
+            background: #f1f5f9;
+            padding: 0.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            background: transparent;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .tab-btn:hover {
+            color: #334155;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #1e3a8a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Key Takeaways */
+        .key-takeaways {
+            margin: 2rem 0;
+        }
+
+        .key-takeaways h2 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--secondary-blue);
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .summary-card:nth-child(2) { border-left-color: var(--accent-green); }
+        .summary-card:nth-child(3) { border-left-color: var(--accent-purple); }
+        .summary-card:nth-child(4) { border-left-color: var(--accent-amber); }
+
+        .card-title {
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content {
+            font-size: 0.9rem;
+            color: #374151;
+            line-height: 1.7;
+        }
+
+        /* Question Accordion */
+        .practice-section {
+            margin: 2rem 0;
+        }
+
+        .practice-section h2 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .question-accordion {
+            background: white;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e9d5ff;
+            overflow: hidden;
+        }
+
+        .question-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .question-header::-webkit-details-marker {
+            display: none;
+        }
+
+        .question-number {
+            font-weight: 700;
+            color: #6d28d9;
+        }
+
+        .question-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6d28d9;
+            background: #e9d5ff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+
+        .question-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #374151;
+            min-width: 200px;
+        }
+
+        .accordion-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.2s;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+
+        details[open] .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .question-answer {
+            padding: 1rem 1.25rem;
+            background: #faf5ff;
+            border-top: 1px solid #e9d5ff;
+        }
+
+        .question-answer p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 0.75rem;
+        }
+
+        .question-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-answer ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .question-answer li {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Bottom Line */
+        .bottom-line {
+            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #7c3aed;
+        }
+
+        .bottom-line-header {
+            font-weight: 700;
+            color: #5b21b6;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .bottom-line-item {
+            margin-bottom: 1rem;
+        }
+
+        .bottom-line-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .bottom-line-label {
+            font-weight: 600;
+            color: #6d28d9;
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .bottom-line-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #334155;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .comparison-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            margin-top: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer a {
+            color: var(--secondary-blue);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .chat-title-suggestion {
+            background: #f1f5f9;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="domain-tags">
+                <span class="domain-tag tag-agent">Agent</span>
+                <span class="domain-tag tag-prompt">Prompt</span>
+                <span class="domain-tag tag-automation">Automation</span>
+                <span class="domain-tag tag-tool">Tool</span>
+            </div>
+            <h1>ACT + BASE Agent Framework<br>高壓溝通的行為穩定性設計</h1>
+            <p class="header-subtitle">Why Communication Breaks When the Stakes Are High</p>
+            <p class="source-info">來源：Wyndo &amp; Judy Ossello | 2025-01-13</p>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="exec-summary">
+            <h2>📋 快速摘要 Executive Summary</h2>
+            <div class="rating-bar">
+                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
+                <span class="rating-high">↑ 實務應用, 工具生態</span>
+                <span class="rating-low">↓ 技術深度, 時效性</span>
+            </div>
+            <div class="summary-text">
+                <p>這篇文章解決一個被忽略的問題：<span class="highlight-key">單次 Prompt 在高壓情境下為何失效</span>。當你的郵件被轉發給 VP、當有人強硬反駁你、當私人討論變成公開 escalation 時，原本的 tone 和 intent 就會開始崩解。</p>
+                <p>作者 Judy Ossello 提出 <span class="highlight-concept">ACT + BASE 框架</span>：ACT 定義「什麼行為必須永遠成立」，BASE 確保「透過結構而非措辭來執行這些保證」。這不是讓單一草稿更精緻，而是讓行為可以跨輪次保持穩定。</p>
+                <p>文章提供完整的 System Prompt 範本，可直接貼入 ChatGPT Project Instructions 使用，並包含四種模式切換機制：Draft、Clarify、Pushback、Variants。</p>
+            </div>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section class="learning-objectives">
+            <h2>🎯 學習目標 Learning Objectives</h2>
+            <div class="objectives-grid">
+                <div class="objective-item">
+                    <div class="objective-icon">🔍</div>
+                    <div class="objective-title">診斷溝通崩解模式</div>
+                    <div class="objective-desc">理解單次 Prompt 在壓力下失效的根本原因，以及人類和 AI 共同面臨的「過度軟化」陷阱</div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-icon">🏗️</div>
+                    <div class="objective-title">掌握 ACT + BASE 架構</div>
+                    <div class="objective-desc">區分行為規格 (ACT) 與實施元件 (BASE) 的設計原則，建立可跨輪次穩定的 Agent</div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-icon">⚡</div>
+                    <div class="objective-title">實作高信任溝通 Agent</div>
+                    <div class="objective-desc">使用提供的 System Prompt 建立 ChatGPT Project，並運用四種模式處理不同溝通情境</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Framework Visual -->
+        <div class="framework-visual">
+            <div class="framework-title">ACT + BASE Agent Framework</div>
+            <div class="framework-steps">
+                <div class="framework-step">
+                    <div class="framework-icon">📝</div>
+                    <div class="framework-step-title">Prompt</div>
+                    <div class="framework-step-desc">單次互動<br>Single Turn</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">🎯</div>
+                    <div class="framework-step-title">ACT</div>
+                    <div class="framework-step-desc">行為規格<br>What must hold</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">🔧</div>
+                    <div class="framework-step-title">BASE</div>
+                    <div class="framework-step-desc">結構執行<br>How enforced</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">🤖</div>
+                    <div class="framework-step-title">Agent</div>
+                    <div class="framework-step-desc">跨輪穩定<br>Multi-turn stability</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabbed Content for Parts -->
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-problem')">問題診斷</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-framework')">ACT + BASE 框架</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-implementation')">實作指南</button>
+            </div>
+
+            <!-- Tab 1: Problem Diagnosis -->
+            <div id="tab-problem" class="tab-content active">
+                <!-- Part I: The Problem -->
+                <div class="content-grid">
+                    <div class="left-column">
+                        <h3>Part I: 高壓溝通為何崩解</h3>
+                        <div class="bilingual-block">
+                            <p class="chinese-text">我曾經做過一些工作，<span class="highlight-key">零權力但全責任</span>。你知道這種類型：協調跨團隊的大型專案，但這些團隊都不向你報告。緊迫的截止日期、持續的模糊性。成功取決於數十個不向你匯報的人。</p>
+                            <p class="english-text">"I've had jobs where I had zero authority but full accountability. You know the type: coordinate massive projects across teams you don't control."</p>
+                        </div>
+                        <div class="bilingual-block">
+                            <p class="chinese-text">你唯一真正的工具？<span class="highlight-concept">溝通</span>。而且它不能只成功一次。它必須在你的主管把它轉發給她的 VP 時撐住。當有人強力反駁時撐住。當私人討論突然變成公開升級時撐住。</p>
+                            <p class="english-text">"The only real tool you have? Communication. And it can't just work once. It has to hold up when your manager forwards it to her VP. When someone pushes back hard."</p>
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <h3>💡 我的理解</h3>
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">💡 比喻說明</div>
+                            <div class="info-box-content">
+                                想像你在玩傳話遊戲，但每一輪傳話的人都會「善意地」修改你的訊息。原本說「這個功能需要延後兩天」，經過三輪修改後變成「他們團隊有困難」。這就是高壓溝通的現實：你的原始 intent 會在每次修訂中被稀釋。
+                            </div>
+                        </div>
+                        <div class="info-box box-key">
+                            <div class="info-box-header">⚠️ 重點提示</div>
+                            <div class="info-box-content">
+                                <strong>核心洞察</strong>：問題不在於「寫不好」，而在於<span class="highlight-key">溝通工具不是為「跨輪次穩定」設計的</span>。大多數人用 AI 寫郵件時，只想到單次輸出，沒想到這封信會被轉發、被質疑、被公開討論。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part II: Why Single-Use Prompts Fail -->
+                <div class="content-grid">
+                    <div class="left-column">
+                        <h3>Part II: 單次 Prompt 的限制</h3>
+                        <div class="bilingual-block">
+                            <p class="chinese-text">大多數人試圖用 AI 解決高壓溝通，方法是要求它「寫一封專業郵件」或「讓這聽起來更好」。<span class="highlight-key">一次性 Prompt 對應一次性訊息</span>。</p>
+                            <p class="english-text">"Most people try to solve high-stakes communication with AI by asking it to 'draft a professional email' or 'make this sound better.' One-off prompts for one-off messages."</p>
+                        </div>
+                        <div class="bilingual-block">
+                            <p class="chinese-text">第一次草稿效果很好。但當有人挑戰你，或把你的訊息往上轉發三層，你就回到原點——重新解釋脈絡、重新描述語氣、每次修訂都要重新下 Prompt。</p>
+                            <p class="english-text">"It works great for the first draft. But the moment someone challenges you or forwards your message three levels up, you're back to square one—re-explaining context, re-describing tone, re-prompting for every single revision."</p>
+                        </div>
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">📚 核心概念</div>
+                            <div class="info-box-content">
+                                <p><strong>單次 Prompt 的隱性假設：</strong></p>
+                                <p>• 訊息只會發送一次</p>
+                                <p>• 受眾和風險是已知且穩定的</p>
+                                <p>• 目標是產出好版本，而非管理對話</p>
+                                <p>• 任何 tone drift 都可以手動修復</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <h3>💡 我的理解</h3>
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">💡 比喻說明</div>
+                            <div class="info-box-content">
+                                這就像每次需要切菜時都要重新教你的廚房助手「刀怎麼拿、要切多細、手指要收好」。對於單次任務沒問題，但如果你要連續做十道菜，每道菜都要重新教一遍，效率就崩潰了。
+                            </div>
+                        </div>
+                        <div class="info-box box-compare">
+                            <div class="info-box-header">⚖️ 工具比較</div>
+                            <div class="info-box-content">
+                                <table class="comparison-table">
+                                    <tr>
+                                        <th>情況</th>
+                                        <th>人類</th>
+                                        <th>AI</th>
+                                    </tr>
+                                    <tr>
+                                        <td>壓力下</td>
+                                        <td>過度謹慎措辭</td>
+                                        <td>每次重新生成</td>
+                                    </tr>
+                                    <tr>
+                                        <td>被質疑時</td>
+                                        <td>加更多 context</td>
+                                        <td>無法保持一致</td>
+                                    </tr>
+                                    <tr>
+                                        <td>結果</td>
+                                        <td>語言越來越安全模糊</td>
+                                        <td>原始 intent 流失</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Framework -->
+            <div id="tab-framework" class="tab-content">
+                <!-- Part III: ACT Definition -->
+                <div class="content-grid">
+                    <div class="left-column">
+                        <h3>Part III: ACT - 行為規格</h3>
+                        <div class="bilingual-block">
+                            <p class="chinese-text">AI Agent 行為可以透過兩個互補層達到跨輪次穩定：<span class="highlight-concept">ACT</span> 指定什麼必須永遠為真，<span class="highlight-concept">BASE</span> 透過結構而非措辭來執行這些保證。</p>
+                            <p class="english-text">"AI Agent behavior can achieve stability across turns using two complementary layers: ACT, which specifies what must always be true about the agent's behavior; BASE, which enforces those guarantees through structure, not wording."</p>
+                        </div>
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">📚 ACT 三元素</div>
+                            <div class="info-box-content">
+                                <p><strong>ALIGNED（對齊）</strong>：保持冷靜、穩定、專業的語氣。減少熱度：不戲劇化、不誇大緊迫性、不情緒信號。優先保護信任而非說服。</p>
+                                <p><strong>CONSTRAINED（約束）</strong>：不捏造事實、假設或理由。不指責或推測他人責任。不包含法律、HR、醫療或合規聲明。不建議欺騙或操縱。</p>
+                                <p><strong>TUNED（調校）</strong>：僅根據收件人關係和風險調整句子長度、直接程度和正式程度。不調整責任結構、原因框架或建議的下一步。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <h3>💡 我的理解</h3>
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">💡 比喻說明</div>
+                            <div class="info-box-content">
+                                ACT 就像是公司的「核心價值」——不管市場怎麼變、客戶怎麼要求，這些原則永遠不動搖。你可以調整報價、調整交期，但「誠實」這個價值不能因為壓力而打折。
+                            </div>
+                        </div>
+                        <div class="info-box box-key">
+                            <div class="info-box-header">⚠️ 重點提示</div>
+                            <div class="info-box-content">
+                                <strong>TUNED 的精妙之處</strong>：很多人以為「適應受眾」就是改變所有東西。但 ACT 框架區分了「可調整」和「不可調整」：你可以對 VP 用更正式的語言，但你不能改變「誰負責」這個事實。<span class="highlight-practical">這是高壓溝通的關鍵防線</span>。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part IV: BASE Definition -->
+                <div class="content-grid">
+                    <div class="left-column">
+                        <h3>Part IV: BASE - 實施元件</h3>
+                        <div class="bilingual-block">
+                            <p class="chinese-text">BASE 定義如何在結構層面執行 ACT 的保證。它不依賴措辭的好壞，而是透過<span class="highlight-concept">明確的禁止清單、吸引子模式、和結構模板</span>來確保一致性。</p>
+                            <p class="english-text">"BASE is how those expectations are enforced... Instead of generating a single draft and stepping away, it becomes a steadier collaborator that preserves tone, framing, and trust while you move quickly in high-pressure situations."</p>
+                        </div>
+                        <div class="info-box box-code">
+                            <div class="info-box-header">💻 BASE 四元素</div>
+                            <div class="info-box-content">
+                                <p><strong>BOUNDARIES（邊界）</strong>：缺少必要細節時最多問兩個針對性問題。如果用戶要求策略，用訊息變體回應，不要解釋。</p>
+                                <p><strong>PROHIBIT（禁止）</strong>：填充詞（just、wanted to）、情緒安撫（I understand this is frustrating）、自我參照（I want to be transparent）</p>
+                                <p><strong>ATTRACTORS（吸引子）</strong>：每輪必須回到：清楚原因 → 責任歸屬 → 下一步。偏好簡單的管理語言。保持簡短。</p>
+                                <p><strong>STRUCTURAL ATTRACTOR（結構吸引子）</strong>：偏好 3-4 句：(1) 狀況更新 (2) 責任歸屬 (3) 建議調整/請求 (4) 下一步/確認</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <h3>💡 我的理解</h3>
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">💡 比喻說明</div>
+                            <div class="info-box-content">
+                                BASE 就像是「機場安檢」——不管你是誰、要去哪裡，都要經過同樣的流程。這不是因為不信任你，而是因為一致的流程比個案判斷更可靠。PROHIBIT 清單就是安檢的「禁止攜帶物品」，ATTRACTORS 就是「標準通關流程」。
+                            </div>
+                        </div>
+                        <div class="info-box box-practical">
+                            <div class="info-box-header">🛠️ 實務應用</div>
+                            <div class="info-box-content">
+                                <p><strong>為什麼禁止「just」和「wanted to」？</strong></p>
+                                <p>這些填充詞會削弱你的訊息。比較：</p>
+                                <p>• ❌ "I just wanted to let you know..."</p>
+                                <p>• ✅ "The timeline has shifted..."</p>
+                                <p>第一種聽起來在道歉，第二種是在陳述事實。在高壓情境下，這個差異會被放大。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Implementation -->
+            <div id="tab-implementation" class="tab-content">
+                <!-- Part V: Implementation -->
+                <div class="content-grid">
+                    <div class="left-column">
+                        <h3>Part V: 實作步驟</h3>
+                        <div class="bilingual-block">
+                            <p class="chinese-text">重要：將 System Prompt 貼入你的 <span class="highlight-practical">ChatGPT Project 的 Instructions 欄位</span>，而不是作為附加檔案。Project instructions 作為持久的 system prompt，適用於所有對話。</p>
+                            <p class="english-text">"Important: Paste the system prompt into your ChatGPT Project's Instructions field, not as an attached file. Project instructions act as a persistent system prompt and apply across all threads."</p>
+                        </div>
+                        <div class="info-box box-practical">
+                            <div class="info-box-header">🛠️ 三步驟設定</div>
+                            <div class="info-box-content">
+                                <p><strong>Step 1</strong>：在 ChatGPT 建立新 Project</p>
+                                <p><strong>Step 2</strong>：開啟 Add Instructions</p>
+                                <p><strong>Step 3</strong>：貼上 Instructions 並儲存</p>
+                                <p>設定完成後，你不需要重述規則或約束。你可以用自然語言與 Agent 互動。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <h3>💡 我的理解</h3>
+                        <div class="info-box box-key">
+                            <div class="info-box-header">⚠️ 重點提示</div>
+                            <div class="info-box-content">
+                                <strong>為什麼是 Project Instructions 而非附加檔案？</strong>
+                                <p>附加檔案適合參考資料，但不會可靠地執行行為。Project Instructions 在每次對話開始時都會被讀取，確保行為一致性。這是 <span class="highlight-key">Context Engineering</span> 的核心原則：不是靠「說得更清楚」，而是靠「結構位置」來確保執行。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part VI: Modes -->
+                <div class="content-grid">
+                    <div class="left-column">
+                        <h3>Part VI: 四種模式切換</h3>
+                        <div class="info-box box-code">
+                            <div class="info-box-header">💻 SHIFTS 模式定義</div>
+                            <div class="info-box-content">
+                                <p><strong>[DEFAULT] Draft Mode</strong>：產出請求的訊息。僅輸出訊息文本。</p>
+                                <p><strong>[CLARIFY] Clarify Mode</strong>：最多問兩個必要問題以準確起草。無建議或評論。</p>
+                                <p><strong>[PUSHBACK] Pushback Mode</strong>：對提供的回覆生成 2-3 句回應。保持壓縮和冷靜權威。</p>
+                                <p><strong>[VARIANTS] Variant Mode</strong>：提供 2-3 個僅訊息變體，在直接程度和壓縮度上有所不同。除變體標題外無評論。</p>
+                            </div>
+                        </div>
+                        <div class="bilingual-block">
+                            <p class="chinese-text">你不需要為日常起草使用模式。它們存在是為了當情況改變時，<span class="highlight-key">行為仍然可靠</span>。把模式想成護欄，而非功能。</p>
+                            <p class="english-text">"You don't need to use modes for everyday drafting. They exist so behavior stays reliable when the situation changes. Think of modes as guardrails, not features."</p>
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <h3>💡 我的理解</h3>
+                        <div class="info-box box-compare">
+                            <div class="info-box-header">⚖️ 模式使用時機</div>
+                            <div class="info-box-content">
+                                <table class="comparison-table">
+                                    <tr>
+                                        <th>情境</th>
+                                        <th>觸發詞</th>
+                                        <th>模式</th>
+                                    </tr>
+                                    <tr>
+                                        <td>一般起草</td>
+                                        <td>（無需觸發）</td>
+                                        <td>Draft</td>
+                                    </tr>
+                                    <tr>
+                                        <td>資訊不足</td>
+                                        <td>[CLARIFY]</td>
+                                        <td>Clarify</td>
+                                    </tr>
+                                    <tr>
+                                        <td>收到反駁</td>
+                                        <td>[PUSHBACK]</td>
+                                        <td>Pushback</td>
+                                    </tr>
+                                    <tr>
+                                        <td>需要選項</td>
+                                        <td>[VARIANTS]</td>
+                                        <td>Variant</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">💡 比喻說明</div>
+                            <div class="info-box-content">
+                                這就像汽車的排檔：大部分時間你用 D 檔，但遇到陡坡你需要 L 檔，停車時需要 P 檔。模式不是讓你每次都要選，而是讓你在特定情境下有精確的控制。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <section class="key-takeaways">
+            <h2>📌 重點整理 Key Takeaways</h2>
+            <div class="takeaways-grid">
+                <div class="summary-card">
+                    <div class="card-title">1. Prompt vs Agent 的本質差異</div>
+                    <div class="card-content">Prompt 問模型「要寫什麼」，Agent 定義「應該如何行為」。當對話持續、壓力升高時，你需要的是行為穩定性，而非更精緻的單次輸出。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-title">2. ACT 定義不可妥協的原則</div>
+                    <div class="card-content">ALIGNED（對齊信任）、CONSTRAINED（約束邊界）、TUNED（調校風格）三層架構確保行為的核心不會因壓力而改變，只有表面風格可以適應受眾。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-title">3. BASE 透過結構執行保證</div>
+                    <div class="card-content">BOUNDARIES（邊界）、PROHIBIT（禁止清單）、ATTRACTORS（吸引子）、STRUCTURAL ATTRACTOR（結構模板）四元件讓行為執行不依賴措辭好壞。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-title">4. 模式是護欄而非功能</div>
+                    <div class="card-content">Draft、Clarify、Pushback、Variants 四種模式不是讓你每次都要選，而是在特定情境下提供精確控制，確保行為在情況改變時仍然可靠。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Questions -->
+        <section class="practice-section">
+            <h2>🧠 練習題 Practice Questions</h2>
+
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q1</span>
+                    <span class="question-type">概念理解</span>
+                    <span class="question-text">為什麼單次 Prompt 在高壓情境下會失效？請從文章框架解釋。</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p>單次 Prompt 的設計假設是：訊息只發送一次、受眾穩定、目標是產出好版本。但高壓情境打破了這些假設：</p>
+                    <ul>
+                        <li>訊息會被轉發給不同層級的人（VP、跨部門）</li>
+                        <li>受眾和風險會隨時改變（私人 → 公開）</li>
+                        <li>目標從「產出好版本」變成「管理對話」</li>
+                    </ul>
+                    <p>每次情境改變，你就要重新解釋 context、重新描述 tone，原本的 intent 在反覆修訂中流失。這是「互動問題」，不是「寫作問題」。</p>
+                </div>
+            </details>
+
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q2</span>
+                    <span class="question-type">產業應用</span>
+                    <span class="question-text">在 CDMO 製藥環境中，如何應用 ACT + BASE 框架來處理客戶的 Deviation 通知？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p>以 Deviation 通知為例，可以這樣設計：</p>
+                    <p><strong>ACT 層：</strong></p>
+                    <ul>
+                        <li>ALIGNED：保持專業、事實導向，不使用可能暗示過失的語言</li>
+                        <li>CONSTRAINED：不推測根本原因（在調查完成前）、不承諾特定時間表、不做法規聲明</li>
+                        <li>TUNED：可根據客戶層級調整詳細程度，但不改變事件描述的準確性</li>
+                    </ul>
+                    <p><strong>BASE 層：</strong></p>
+                    <ul>
+                        <li>PROHIBIT：「我們認為」、「應該不會影響」、「可能是因為」</li>
+                        <li>STRUCTURAL ATTRACTOR：(1) 事件描述 (2) 目前狀態 (3) 初步影響評估 (4) 下一步行動與時間表</li>
+                    </ul>
+                    <p>這樣不管是 QA Manager 還是 VP 問起，訊息的核心內容和責任結構都不會改變。</p>
+                </div>
+            </details>
+
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q3</span>
+                    <span class="question-type">批判思考</span>
+                    <span class="question-text">這個框架有什麼限制？在什麼情況下可能不適用？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p>作者自己也承認幾個限制：</p>
+                    <ul>
+                        <li><strong>範圍限制</strong>：這個 Agent 專為「高壓專業溝通」設計，不會自動推廣到其他 Agent 任務</li>
+                        <li><strong>風格中立</strong>：個人聲音、寫作習慣、組織風格指南是另一層，只有在行為穩定後才有意義</li>
+                        <li><strong>不處理人際衝突</strong>：不適用於 coaching 績效、解決團隊衝突、情緒安撫</li>
+                    </ul>
+                    <p><strong>我的補充觀點</strong>：這個框架假設問題是「溝通工具不夠好」，但有時候問題是「根本沒有可溝通的空間」。當對方已經決定要找你麻煩，再完美的溝通也只是拖延。框架解決的是「技術性溝通失敗」，不是「政治性溝通困境」。</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- Bottom Line -->
+        <div class="bottom-line">
+            <div class="bottom-line-header">🎯 我的行動結論</div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">✔ 核心洞察</div>
+                <div class="bottom-line-text">高壓溝通的問題不是「寫不好」，而是「沒有機制保持跨輪次穩定」。這直接對應我在 CDMO 面臨的挑戰：客戶溝通、Deviation 通知、專案狀態更新都需要在壓力下保持一致的 tone 和 accountability 結構。ACT（不可妥協的原則）+ BASE（結構化執行）的分層設計，比我之前用的單次 Prompt 更有系統性。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">📈 立即應用</div>
+                <div class="bottom-line-text">這週在 Claude Project 中建立一個「高壓溝通」專案，用 ACT + BASE 框架設計專屬的 System Prompt。先從最常見的情境開始：(1) Timeline 延遲通知給客戶 (2) Cross-functional 協調郵件。重點是定義好我的 PROHIBIT 清單（不該出現的詞）和 STRUCTURAL ATTRACTOR（標準 4 句結構）。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">⚠ 需要補充</div>
+                <div class="bottom-line-text">文章缺少「如何測試 Agent 在壓力下是否真的穩定」的方法論。作者提到有 stress tests，但沒有公開。另外，這個框架是針對 ChatGPT Project 設計的，我需要調適到 Claude Project 的 context。建議三個月後重讀，那時應該有實際使用經驗可以對照。</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>製作日期：2025-01-15</p>
+            <p>原文連結：<a href="https://www.wyndo.com/p/why-communication-breaks-when-the" target="_blank">Why Communication Breaks When the Stakes Are High - Wyndo</a></p>
+            <p>延伸資源：<a href="https://empathetic-agentic-ai.beehiiv.com/" target="_blank">Empathetic Agentic AI Lab</a></p>
+            <div class="chat-title-suggestion">
+                建議 Chat Title：[Agent] ACT + BASE - 高壓溝通穩定性框架
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        function switchTab(evt, tabId) {
+            const container = evt.currentTarget.closest('.tab-container');
+            container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
