@@ -48,13 +48,20 @@ Created by an Operations Director in pharmaceutical manufacturing (CDMO), explor
 ```
 david-ai-learning/
 ├── index.html               ← Dashboard with search UI
+├── mindmap.html             ← Interactive knowledge mind map (11 topic clusters)
 ├── search-index.js          ← Full-text search index (770 entries)
 ├── build-search-index.js    ← Index builder script
+├── normalize_html.py        ← Batch HTML normalization script
+├── CLAUDE.md                ← Project rules & document revision chain
 ├── docs/                    ← 87 educational HTML documents
 │   ├── 2026-02-20_claude-cowork-agentic-workflows.html
 │   ├── 2026-02-20_prompt-caching-claude.html
 │   └── ...
-└── docs-workflow/           ← Build workflow documentation
+└── docs-workflow/           ← Templates & workflow documentation
+    ├── essence-template.md      ← Concept article summary template
+    ├── essence-example.md       ← Example (PDCA optimization)
+    ├── cheatsheet-template.md   ← Technical article cheatsheet template
+    ├── cheatsheet-example.md    ← Example (Claude Code power tips)
     └── 2026-02-22_search-index-workflow.md
 ```
 
