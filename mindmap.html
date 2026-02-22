@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>David AI Learning — 知識心智圖</title>
+<style>
+  body { margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; }
+  #mindmap { width: 100vw; height: 100vh; }
+  .back-link {
+    position: fixed; top: 12px; left: 16px; z-index: 999;
+    background: #1e3a8a; color: white; padding: 6px 14px;
+    border-radius: 6px; text-decoration: none; font-size: 13px;
+    font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .back-link:hover { background: #2563eb; }
+  .stats {
+    position: fixed; bottom: 12px; right: 16px; z-index: 999;
+    font-size: 12px; color: #64748b; background: rgba(255,255,255,0.9);
+    padding: 4px 10px; border-radius: 4px;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<a class="back-link" href="index.html">← 回索引</a>
+<div class="stats">87 篇 · 11 主題群組 · 2025/08 – 2026/02</div>
+<svg id="mindmap"></svg>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15"></script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15"></script>
+<script>
+const md = `
+# David AI Learning
+## Claude 工具生態
+### Claude Code
+- [進階生產力技巧 ★4.6](docs/2026-02-01_claude-code-power-tips.html)
+- [CLAUDE.md PDCA 持續改善 ★4.2](docs/2026-02-01_claude-md-pdca-optimization.html)
+- [Interactive Mode 參考指南 ★3.8](docs/2026-02-03_claude-code-interactive-mode.html)
+- [Agent OS 完整指南 ★3.5](docs/2025-12-15_claude-code-agent-os.html)
+- [2.1.0 版本更新解析 ★3.5](docs/2026-01-09_claude-code-210-update.html)
+- [非技術領導者指南 ★4.0](docs/2026-01-23_claude-code-nontechnical-guide.html)
+- [產品導師團 ★3.2](docs/2026-02-03_claude-code-product-mentors.html)
+### Claude Cowork
+- [Cowork 終極指南：7 個工作流 ★3.8](docs/2026-02-20_claude-cowork-agentic-workflows.html)
+- [Cowork 桌面代理人攻略 ★3.8](docs/2026-02-19_claude-cowork-desktop-agent.html)
+- [Cowork 實戰指南 ★3.8](docs/2026-02-05_claude-cowork-practical-guide.html)
+- [Cowork 全面解析 ★3.8](docs/2026-01-14_claude-cowork-guide.html)
+- [Cowork 產品策略分析 ★4.0](docs/2026-01-17_claude-cowork-product-lessons.html)
+### Claude Skills & Projects
+- [Skills 深度解析 ★3.5](docs/2025-12-20_claude-skills-deep-dive.html)
+- [Skills 自動化省 40+ 小時 ★3.6](docs/2026-02-10_claude-skills-automation.html)
+- [Skill Architecture 五層 ★4.1](docs/2025-12-15_skill-architecture-layers.html)
+- [Skill Graphs 知識網路 ★3.8](docs/2025-12-20_skill-graphs-knowledge.html)
+- [Project Memory 指南 ★3.5](docs/2025-12-10_claude-project-memory.html)
+- [Projects 產品健康監測 ★4.0](docs/2026-01-06_claude-projects-product-health.html)
+### Claude 使用技巧
+- [50 個被低估的技巧 ★4.2](docs/2026-01-22_50-claude-tips.html)
+- [Starter Pack 入門攻略 ★3.8](docs/2026-02-05_claude-starter-pack.html)
+- [AI Context 一次設定 ★4.2](docs/2026-01-19_ai-context-setup.html)
+## Prompt 工程
+### 框架與方法論
+- [Claude 提示工程 10 步驟 ★4.0](docs/2026-01-30_claude-prompt-engineering.html)
+- [Anti-Prompts 約束策略 ★3.2](docs/2026-02-03_anti-prompts-constraints.html)
+- [用提問取代答案 5 步驟 ★3.8](docs/2026-02-17_ai-questions-system.html)
+- [Prompt Caching 工程實戰 ★4.2](docs/2026-02-20_prompt-caching-claude.html)
+- [3-Prompt Pipeline 管道系統 ★3.6](docs/2025-12-02_prompt-pipeline.html)
+- [四個 Prompts 洞見創造者 ★3.5](docs/2025-11-04_ai-prompts-insight-creator.html)
+### Context Engineering
+- [Context Engineering 深度指南 ★4.6](docs/2026-01-08_context-engineering-agents.html)
+- [NotebookLM Source Control ★3.2](docs/2026-02-03_notebooklm-source-control.html)
+## Agent 架構
+### 框架設計
+- [ACT + BASE Agent Framework ★4.2](docs/2026-01-13_act-base-framework.html)
+- [A2UI 使用者介面框架 ★3.8](docs/2026-01-20_a2ui-framework.html)
+- [Anthropic Skills vs Agents ★3.5](docs/2025-12-09_anthropic-skills-agents.html)
+### Agent 應用
+- [Email Triage Agent 自動化 ★4.2](docs/2026-01-15_email-triage-agent.html)
+- [Gmail Gemini AI Agents ★3.6](docs/2026-01-09_gmail-gemini-ai-agents.html)
+- [AI News Agent (Perplexity) ★3.5](docs/2025-12-04_ai-news-agent-perplexity.html)
+- [AI 上司：日本企業 AI 本部長 ★3.2](docs/2026-01-29_ai-boss-japan-enterprise.html)
+- [OpenClaw Agent 自託管評測 ★3.8](docs/2026-02-06_openclaw-agent-review.html)
+### Agent 商務
+- [A2A Commerce — Agent 商務協議 ★3.8](docs/2026-02-12_a2a-commerce.html)
+- [Agent Ecologies & Automation ★4.0](docs/2026-02-03_agent-ecology-automation.html)
+## 自動化 & 整合
+- [Claude + n8n + Synta 技術棧 ★4.2](docs/2026-01-21_claude-n8n-synta-stack.html)
+- [AI Habit Tracker Vibe Coding ★3.8](docs/2026-01-22_ai-habit-tracker-vibe-coding.html)
+- [AI 內容再利用自動化 ★3.5](docs/2025-11-15_ai-content-repurposing.html)
+- [AI Second Brain 語音系統 ★4.2](docs/2025-11-30_ai-second-brain-voice.html)
+- [LinkedIn Carousel 自動化 ★3.8](docs/2026-01-22_linkedin-carousel-skills.html)
+- [Vibe Coding：Stripe 原型設計 ★3.8](docs/2026-02-10_vibe-coding-protodash.html)
+- [AI 圖表生成教學 ★2.2](docs/2026-02-17_ai-diagram-creation.html)
+## LLM 模型 & 技術
+### Claude 模型
+- [Sonnet 4.6 Dynamic Filtering ★4.0](docs/2026-02-19_sonnet46-dynamic-filtering.html)
+- [Sonnet 4.6 Computer Use 五倍躍進 ★3.6](docs/2026-02-19_claude-sonnet46-computer-use.html)
+### 其他工具
+- [Typeless 語音輸入評測 ★3.8](docs/2026-01-10_typeless-voice-review.html)
+- [Biotech Compass 生技分析 ★4.0](docs/2026-01-20_biotech-compass-walkthrough.html)
+- [UX of Search 搜尋體驗 ★4.0](docs/2025-12-31_ux-search-explored.html)
+- [AI 工具排毒指南 ★3.8](docs/2026-01-15_ai-tool-detox.html)
+- [Data Literacy Loop ★3.5](docs/2025-12-16_data-literacy-loop.html)
+## AI 產業趨勢
+### 大勢判讀
+- [Dario Amodei — Technology Adolescence ★4.8](docs/2026-01-31_amodei-technology-adolescence.html)
+- [CES 2026 Jensen Huang 全面解析 ★4.4](docs/2026-01-07_ces-jensen-huang-keynote.html)
+- [2026 Agentic Coding Trends ★4.2](docs/2026-01-21_agentic-coding-trends.html)
+- [2026 六大 AI 趨勢 ★3.8](docs/2026-01-15_ai-trends-2026.html)
+- [Elon Musk 談 AGI 與豐盛時代 ★4.0](docs/2026-01-08_musk-agi-abundance.html)
+- [AI 產業劇變：Matt Shumer 警告 ★3.8](docs/2026-02-11_ai-disruption-shumer.html)
+- [Agentic Era 使用指南 ★4.0](docs/2026-02-18_ai-guide-agentic-era.html)
+### 產業分析
+- [Apple 選擇 Gemini 戰略 ★3.8](docs/2026-01-17_apple-gemini-strategy.html)
+- [AI Amplification 策略壓力測試 ★3.8](docs/2026-02-19_ai-amplification-strategy.html)
+- [Batch：主權AI & 購物協議 ★4.0](docs/2026-01-30_batch-sovereign-ai.html)
+- [Import AI 438：AI 能力超額 ★4.2](docs/2025-12-22_import-ai-438-guide.html)
+- [Import AI 444：LLM Societies ★3.4](docs/2026-02-10_import-ai-444-societies.html)
+- [Batch 331 學習指南 ★4.2](docs/2025-12-10_batch-331-study-guide.html)
+## 安全 & 隱私
+- [OpenClaw 安全強化三層防護 ★4.2](docs/2026-02-11_openclaw-security-hardening.html)
+- [AI 隱私深度解析 ★3.6](docs/2026-02-05_ai-privacy-deep-dive.html)
+- [HUMINT：機器無法取代人類情報 ★3.8](docs/2026-01-08_humint-intelligence-ai.html)
+## 職場 & 領導力
+- [AI PM 角色重定義 ★3.2](docs/2026-02-17_ai-pm-builder-culture.html)
+- [AI 變革管理 8 大差異 ★3.0](docs/2026-02-09_ai-change-management.html)
+- [AI 領導力三角 ★3.8](docs/2025-11-10_ai-leadership-triad.html)
+- [AI 生產力悖論 ★3.5](docs/2025-11-20_ai-productivity-paradox.html)
+- [Future of Work ★4.2](docs/2026-01-22_future-of-work.html)
+- [5 AI Books All Leaders Should Read ★3.8](docs/2025-12-18_ai-books-leaders-guide.html)
+## 內容創作 & 個人品牌
+- [Substack Notes 訂閱成長 ★3.8](docs/2025-11-10_substack-notes-growth.html)
+- [X 平台成長策略 ★3.8](docs/2026-01-22_x-platform-growth.html)
+- [Newsletter Audit Playbook ★3.5](docs/2025-11-15_newsletter-audit-playbook.html)
+- [清晰表達三層框架 ★4.0](docs/2026-01-15_articulation-intelligence.html)
+## 個人成長 & 心態
+- [Human 3.0 人生地圖 ★3.8](docs/2025-08-26_human30-life-map.html)
+- [如何在一天內重塑人生 ★4.2](docs/2026-01-13_dan-koe-fix-your-life.html)
+- [多元興趣者事業藍圖 ★3.8](docs/2026-01-12_dan-koe-multiple-interests.html)
+- [One Hour of Focus ★4.2](docs/2026-01-20_one-hour-focus.html)
+- [忘掉金錢 ★3.4](docs/2026-01-12_forget-about-money.html)
+- [交易心理學：比較陷阱 ★4.0](docs/2026-01-15_trading-comparison-trap.html)
+- [加密貨幣生存心法 ★4.2](docs/2026-01-28_crypto-survival-mindset.html)
+## 研究方法
+- [研究初學九大惡 ★3.6](docs/2026-02-18_research-beginner-sins.html)
+`;
+
+const { Transformer } = markmap;
+const transformer = new Transformer();
+const { root } = transformer.transform(md);
+const { Markmap } = markmap;
+Markmap.create('#mindmap', {
+  autoFit: true,
+  color: (node) => {
+    const colors = ['#1e3a8a','#7c3aed','#059669','#d97706','#dc2626','#0891b2','#4f46e5','#c026d3','#ea580c','#16a34a','#2563eb'];
+    return colors[node.state?.depth % colors.length] || '#1e3a8a';
+  },
+  paddingX: 16,
+  initialExpandLevel: 2,
+}, root);
+</script>
+</body>
+</html>
