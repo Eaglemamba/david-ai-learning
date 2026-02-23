@@ -7,31 +7,208 @@
 <style>
   body { margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; }
   #mindmap { width: 100vw; height: 100vh; }
-  .back-link {
-    position: fixed; top: 12px; left: 16px; z-index: 999;
-    background: #1e3a8a; color: white; padding: 6px 14px;
-    border-radius: 6px; text-decoration: none; font-size: 13px;
-    font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  .nav-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    display: flex; align-items: center; gap: 8px; padding: 8px 16px;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   }
-  .back-link:hover { background: #2563eb; }
+  .nav-link {
+    padding: 5px 12px; border-radius: 6px; text-decoration: none;
+    font-size: 12px; font-weight: 600; transition: all 0.2s;
+  }
+  .nav-link-primary { background: #482A77; color: white; }
+  .nav-link-primary:hover { background: #6B4A9E; }
+  .nav-link-secondary { background: #f1f5f9; color: #475569; }
+  .nav-link-secondary:hover { background: #e2e8f0; }
+  .nav-separator { color: #cbd5e1; font-size: 14px; }
+  .view-toggle {
+    margin-left: auto; display: flex; gap: 4px;
+    background: #f1f5f9; border-radius: 6px; padding: 2px;
+  }
+  .view-btn {
+    padding: 4px 10px; border-radius: 4px; border: none; cursor: pointer;
+    font-size: 11px; font-weight: 600; font-family: 'Noto Sans TC', sans-serif;
+    background: transparent; color: #64748b; transition: all 0.2s;
+  }
+  .view-btn.active { background: white; color: #482A77; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   .stats {
     position: fixed; bottom: 12px; right: 16px; z-index: 999;
-    font-size: 12px; color: #64748b; background: rgba(255,255,255,0.9);
-    padding: 4px 10px; border-radius: 4px;
+    font-size: 12px; color: #64748b; background: rgba(255,255,255,0.95);
+    padding: 6px 12px; border-radius: 6px; backdrop-filter: blur(8px);
+    border: 1px solid #e2e8f0;
   }
+  .legend {
+    position: fixed; bottom: 12px; left: 16px; z-index: 999;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+    border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px;
+    font-size: 11px; line-height: 1.8;
+  }
+  .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+  .legend-title { font-weight: 700; font-size: 11px; color: #334155; margin-bottom: 4px; }
+  .legend-arrow { color: #94a3b8; margin: 0 4px; font-size: 10px; }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<a class="back-link" href="index.html">← 回索引</a>
-<div class="stats">87 篇 · 11 主題群組 · 2025/08 – 2026/02</div>
+
+<div class="nav-bar">
+  <a class="nav-link nav-link-primary" href="index.html">← Dashboard</a>
+  <span class="nav-separator">|</span>
+  <a class="nav-link nav-link-secondary" href="learning-path.html">📚 Learning Path</a>
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="switchView('path')" id="btn-path">Learning Path</button>
+    <button class="view-btn" onclick="switchView('topic')" id="btn-topic">Topic Clusters</button>
+  </div>
+</div>
+
+<div class="legend" id="legend">
+  <div class="legend-title">Learning Path Stages</div>
+  <div><span class="legend-dot" style="background:#2563eb"></span>Stage 1 — AI 基礎認知</div>
+  <div><span class="legend-dot" style="background:#7c3aed"></span>Stage 2 — Prompt 與溝通</div>
+  <div><span class="legend-dot" style="background:#059669"></span>Stage 3 — 工具實戰</div>
+  <div><span class="legend-dot" style="background:#d97706"></span>Stage 4 — Agent 與自動化</div>
+  <div><span class="legend-dot" style="background:#dc2626"></span>Stage 5 — 組織導入</div>
+  <div style="margin-top:4px;color:#94a3b8;font-size:10px">
+    Stage 1 <span class="legend-arrow">→</span> 2 <span class="legend-arrow">→</span> 3 <span class="legend-arrow">→</span> 4 <span class="legend-arrow">→</span> 5
+  </div>
+</div>
+
+<div class="stats">87 篇 · 5 學習階段 · 2025/08 – 2026/02</div>
 <svg id="mindmap"></svg>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15"></script>
 <script src="https://cdn.jsdelivr.net/npm/markmap-lib@0.15"></script>
 <script>
-const md = `
+// ─── Learning-Path-Based Mindmap ───
+const mdPath = `
+# David AI Learning Path
+
+## 🧠 Stage 1：AI 基礎認知
+### 必讀 — 建立 AI 全局觀
+- [Dario Amodei — Technology Adolescence ★4.8](docs/2026-01-31_amodei-technology-adolescence.html)
+- [AI 使用指南：代理時代 ★4.0](docs/2026-02-18_ai-guide-agentic-era.html)
+- [AI 生產力悖論 ★3.5](docs/2025-11-20_ai-productivity-paradox.html)
+- [AI 隱私深度解析 ★3.6](docs/2026-02-05_ai-privacy-deep-dive.html)
+### 選讀 — 產業脈動
+- [5 AI Books All Leaders Should Read ★3.8](docs/2025-12-18_ai-books-leaders-guide.html)
+- [2026 六大 AI 趨勢 ★3.8](docs/2026-01-15_ai-trends-2026.html)
+- [CES 2026 Jensen Huang ★4.4](docs/2026-01-07_ces-jensen-huang-keynote.html)
+### ↗ 進入 Stage 2：學會跟 AI 溝通
+
+## 💬 Stage 2：Prompt 與溝通技巧
+### 必讀 — Prompt 基本功
+- [Claude 提示工程 10 步驟 ★4.0](docs/2026-01-30_claude-prompt-engineering.html)
+- [AI Context 一次設定 ★4.2](docs/2026-01-19_ai-context-setup.html)
+- [Context Engineering 深度指南 ★4.6](docs/2026-01-08_context-engineering-agents.html)
+- [清晰表達三層框架 ★4.0](docs/2026-01-15_articulation-intelligence.html)
+### 選讀 — 進階提問
+- [Anti-Prompts 約束策略 ★3.2](docs/2026-02-03_anti-prompts-constraints.html)
+- [用提問取代答案 5 步驟 ★3.8](docs/2026-02-17_ai-questions-system.html)
+- [四個 Prompts 洞見創造者 ★3.5](docs/2025-11-04_ai-prompts-insight-creator.html)
+- [Data Literacy Loop ★3.5](docs/2025-12-16_data-literacy-loop.html)
+### ↗ 進入 Stage 3：動手使用工具
+
+## 🛠 Stage 3：AI 工具實戰
+### 必讀 — 上手 Claude 全家桶
+- [Claude 入門攻略 ★3.8](docs/2026-02-05_claude-starter-pack.html)
+- [Claude Code 進階技巧 ★4.6](docs/2026-02-01_claude-code-power-tips.html)
+- [Claude Code 非技術領導者指南 ★4.0](docs/2026-01-23_claude-code-nontechnical-guide.html)
+- [50 個被低估的 Claude 技巧 ★4.2](docs/2026-01-22_50-claude-tips.html)
+- [Claude Cowork 實戰指南 ★3.8](docs/2026-02-05_claude-cowork-practical-guide.html)
+### 選讀 — 工具深入
+- [Cowork 全面解析 ★3.8](docs/2026-01-14_claude-cowork-guide.html)
+- [Claude Code Interactive Mode ★3.8](docs/2026-02-03_claude-code-interactive-mode.html)
+- [Agent OS 指南 ★3.5](docs/2025-12-15_claude-code-agent-os.html)
+- [Typeless 語音輸入 ★3.8](docs/2026-01-10_typeless-voice-review.html)
+- [NotebookLM Source Control ★3.2](docs/2026-02-03_notebooklm-source-control.html)
+### ↗ 進入 Stage 4：從使用者到建構者
+
+## 🤖 Stage 4：Agent 架構與自動化
+### 必讀 — Agent 設計思維
+- [2026 Agentic Coding Trends ★4.2](docs/2026-01-21_agentic-coding-trends.html)
+- [ACT + BASE Agent Framework ★4.2](docs/2026-01-13_act-base-framework.html)
+- [CLAUDE.md PDCA 持續改善 ★4.2](docs/2026-02-01_claude-md-pdca-optimization.html)
+- [Claude + n8n + Synta 技術棧 ★4.2](docs/2026-01-21_claude-n8n-synta-stack.html)
+- [Email Triage Agent 自動化 ★4.2](docs/2026-01-15_email-triage-agent.html)
+### 選讀 — 進階建構
+- [Skills 深度解析 ★3.5](docs/2025-12-20_claude-skills-deep-dive.html)
+- [Skill Architecture 五層 ★4.1](docs/2025-12-15_skill-architecture-layers.html)
+- [Skill Graphs 知識網路 ★3.8](docs/2025-12-20_skill-graphs-knowledge.html)
+- [Cowork 終極指南：7 個工作流 ★3.8](docs/2026-02-20_claude-cowork-agentic-workflows.html)
+- [AI Second Brain 語音系統 ★4.2](docs/2025-11-30_ai-second-brain-voice.html)
+- [Habit Tracker Vibe Coding ★3.8](docs/2026-01-22_ai-habit-tracker-vibe-coding.html)
+### ↗ 進入 Stage 5：推動組織採用
+
+## 🏢 Stage 5：組織導入與領導力
+### 必讀 — 組織變革
+- [AI 變革管理 8 大差異 ★3.0](docs/2026-02-09_ai-change-management.html)
+- [AI 領導力三角 ★3.8](docs/2025-11-10_ai-leadership-triad.html)
+- [OpenClaw 安全強化三層防護 ★4.2](docs/2026-02-11_openclaw-security-hardening.html)
+- [AI 工具排毒指南 ★3.8](docs/2026-01-15_ai-tool-detox.html)
+- [Cowork 產品策略分析 ★4.0](docs/2026-01-17_claude-cowork-product-lessons.html)
+### 選讀 — 策略延伸
+- [AI Amplification 策略壓力測試 ★3.8](docs/2026-02-19_ai-amplification-strategy.html)
+- [Anthropic Skills vs Agents ★3.5](docs/2025-12-09_anthropic-skills-agents.html)
+- [HUMINT 不可取代性 ★3.8](docs/2026-01-08_humint-intelligence-ai.html)
+- [Future of Work ★4.2](docs/2026-01-22_future-of-work.html)
+- [AI PM 角色重定義 ★3.2](docs/2026-02-17_ai-pm-builder-culture.html)
+- [Biotech Compass 生技分析 ★4.0](docs/2026-01-20_biotech-compass-walkthrough.html)
+
+## 📖 補充學習
+### AI 產業深度
+- [Elon Musk 談 AGI ★4.0](docs/2026-01-08_musk-agi-abundance.html)
+- [AI 產業劇變 Matt Shumer ★3.8](docs/2026-02-11_ai-disruption-shumer.html)
+- [Apple 選擇 Gemini 戰略 ★3.8](docs/2026-01-17_apple-gemini-strategy.html)
+- [Batch：主權AI ★4.0](docs/2026-01-30_batch-sovereign-ai.html)
+- [Import AI 438 ★4.2](docs/2025-12-22_import-ai-438-guide.html)
+- [Import AI 444 ★3.4](docs/2026-02-10_import-ai-444-societies.html)
+- [Batch 331 學習指南 ★4.2](docs/2025-12-10_batch-331-study-guide.html)
+- [A2A Commerce ★3.8](docs/2026-02-12_a2a-commerce.html)
+- [Agent Ecologies ★4.0](docs/2026-02-03_agent-ecology-automation.html)
+### Agent 應用案例
+- [Gmail Gemini AI Agents ★3.6](docs/2026-01-09_gmail-gemini-ai-agents.html)
+- [AI News Agent ★3.5](docs/2025-12-04_ai-news-agent-perplexity.html)
+- [AI 上司：日本企業 ★3.2](docs/2026-01-29_ai-boss-japan-enterprise.html)
+- [OpenClaw Agent 評測 ★3.8](docs/2026-02-06_openclaw-agent-review.html)
+- [A2UI 框架 ★3.8](docs/2026-01-20_a2ui-framework.html)
+### 工具與技術
+- [Sonnet 4.6 Dynamic Filtering ★4.0](docs/2026-02-19_sonnet46-dynamic-filtering.html)
+- [Sonnet 4.6 Computer Use ★3.6](docs/2026-02-19_claude-sonnet46-computer-use.html)
+- [Claude Code 2.1.0 更新 ★3.5](docs/2026-01-09_claude-code-210-update.html)
+- [產品導師團 ★3.2](docs/2026-02-03_claude-code-product-mentors.html)
+- [Prompt Caching ★4.2](docs/2026-02-20_prompt-caching-claude.html)
+- [3-Prompt Pipeline ★3.6](docs/2025-12-02_prompt-pipeline.html)
+- [Skills 自動化 ★3.6](docs/2026-02-10_claude-skills-automation.html)
+- [Project Memory ★3.5](docs/2025-12-10_claude-project-memory.html)
+- [Projects 產品健康監測 ★4.0](docs/2026-01-06_claude-projects-product-health.html)
+- [Cowork 桌面代理人 ★3.8](docs/2026-02-19_claude-cowork-desktop-agent.html)
+- [UX of Search ★4.0](docs/2025-12-31_ux-search-explored.html)
+- [Biotech Compass ★4.0](docs/2026-01-20_biotech-compass-walkthrough.html)
+### 自動化實作
+- [AI 內容再利用 ★3.5](docs/2025-11-15_ai-content-repurposing.html)
+- [LinkedIn Carousel ★3.8](docs/2026-01-22_linkedin-carousel-skills.html)
+- [Vibe Coding Protodash ★3.8](docs/2026-02-10_vibe-coding-protodash.html)
+- [AI 圖表生成 ★2.2](docs/2026-02-17_ai-diagram-creation.html)
+### 內容創作 & 個人品牌
+- [Substack Notes 成長 ★3.8](docs/2025-11-10_substack-notes-growth.html)
+- [X 平台成長策略 ★3.8](docs/2026-01-22_x-platform-growth.html)
+- [Newsletter Audit ★3.5](docs/2025-11-15_newsletter-audit-playbook.html)
+### 個人成長 & 心態
+- [Human 3.0 人生地圖 ★3.8](docs/2025-08-26_human30-life-map.html)
+- [一天內重塑人生 ★4.2](docs/2026-01-13_dan-koe-fix-your-life.html)
+- [多元興趣者藍圖 ★3.8](docs/2026-01-12_dan-koe-multiple-interests.html)
+- [One Hour of Focus ★4.2](docs/2026-01-20_one-hour-focus.html)
+- [忘掉金錢 ★3.4](docs/2026-01-12_forget-about-money.html)
+- [交易心理學 ★4.0](docs/2026-01-15_trading-comparison-trap.html)
+- [加密貨幣生存心法 ★4.2](docs/2026-01-28_crypto-survival-mindset.html)
+### 研究方法
+- [研究初學九大惡 ★3.6](docs/2026-02-18_research-beginner-sins.html)
+`;
+
+// ─── Topic-Cluster Mindmap (original) ───
+const mdTopic = `
 # David AI Learning
 ## Claude 工具生態
 ### Claude Code
@@ -146,19 +323,65 @@ const md = `
 - [研究初學九大惡 ★3.6](docs/2026-02-18_research-beginner-sins.html)
 `;
 
-const { Transformer } = markmap;
-const transformer = new Transformer();
-const { root } = transformer.transform(md);
-const { Markmap } = markmap;
-Markmap.create('#mindmap', {
-  autoFit: true,
-  color: (node) => {
-    const colors = ['#1e3a8a','#7c3aed','#059669','#d97706','#dc2626','#0891b2','#4f46e5','#c026d3','#ea580c','#16a34a','#2563eb'];
-    return colors[node.state?.depth % colors.length] || '#1e3a8a';
-  },
-  paddingX: 16,
-  initialExpandLevel: 2,
-}, root);
+// Stage colors for the learning-path view
+const stageColors = ['#482A77', '#2563eb', '#7c3aed', '#059669', '#d97706', '#dc2626', '#0891b2'];
+const topicColors = ['#1e3a8a','#7c3aed','#059669','#d97706','#dc2626','#0891b2','#4f46e5','#c026d3','#ea580c','#16a34a','#2563eb'];
+
+let currentMM = null;
+
+function createMarkmap(md, colors) {
+  // Clear existing
+  const svg = document.getElementById('mindmap');
+  svg.innerHTML = '';
+
+  const { Transformer } = markmap;
+  const transformer = new Transformer();
+  const { root } = transformer.transform(md);
+  const { Markmap } = markmap;
+  currentMM = Markmap.create('#mindmap', {
+    autoFit: true,
+    color: (node) => colors[node.state?.depth % colors.length] || colors[0],
+    paddingX: 16,
+    initialExpandLevel: 2,
+  }, root);
+}
+
+function switchView(view) {
+  document.getElementById('btn-path').classList.toggle('active', view === 'path');
+  document.getElementById('btn-topic').classList.toggle('active', view === 'topic');
+
+  const legend = document.getElementById('legend');
+  const stats = document.querySelector('.stats');
+
+  if (view === 'path') {
+    legend.innerHTML = `
+      <div class="legend-title">Learning Path Stages</div>
+      <div><span class="legend-dot" style="background:#2563eb"></span>Stage 1 — AI 基礎認知</div>
+      <div><span class="legend-dot" style="background:#7c3aed"></span>Stage 2 — Prompt 與溝通</div>
+      <div><span class="legend-dot" style="background:#059669"></span>Stage 3 — 工具實戰</div>
+      <div><span class="legend-dot" style="background:#d97706"></span>Stage 4 — Agent 與自動化</div>
+      <div><span class="legend-dot" style="background:#dc2626"></span>Stage 5 — 組織導入</div>
+      <div style="margin-top:4px;color:#94a3b8;font-size:10px">
+        Stage 1 <span class="legend-arrow">→</span> 2 <span class="legend-arrow">→</span> 3 <span class="legend-arrow">→</span> 4 <span class="legend-arrow">→</span> 5
+      </div>`;
+    stats.textContent = '87 篇 · 5 學習階段 · 2025/08 – 2026/02';
+    createMarkmap(mdPath, stageColors);
+  } else {
+    legend.innerHTML = `
+      <div class="legend-title">Topic Clusters</div>
+      <div><span class="legend-dot" style="background:#1e3a8a"></span>Claude 工具生態</div>
+      <div><span class="legend-dot" style="background:#7c3aed"></span>Prompt 工程</div>
+      <div><span class="legend-dot" style="background:#059669"></span>Agent 架構</div>
+      <div><span class="legend-dot" style="background:#d97706"></span>自動化 & 整合</div>
+      <div><span class="legend-dot" style="background:#dc2626"></span>LLM 模型 & 技術</div>
+      <div><span class="legend-dot" style="background:#0891b2"></span>AI 產業趨勢</div>`;
+    stats.textContent = '87 篇 · 11 主題群組 · 2025/08 – 2026/02';
+    createMarkmap(mdTopic, topicColors);
+  }
+}
+
+// Init with learning-path view
+createMarkmap(mdPath, stageColors);
 </script>
 </body>
 </html>
