@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Learning Path — 結構化學習路徑</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: { colors: {
+  'amaran': { 'purple': '#482A77', 'purple-light': '#6B4A9E', 'purple-dark': '#351F59' },
+  'stage1': '#2563eb', 'stage2': '#7c3aed', 'stage3': '#059669', 'stage4': '#d97706', 'stage5': '#dc2626'
+}}}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Noto Sans TC', -apple-system, sans-serif; }
+.mono { font-family: 'Source Code Pro', monospace; }
+
+/* Progress ring */
+.progress-ring { transform: rotate(-90deg); }
+.progress-ring__circle { transition: stroke-dashoffset 0.5s ease; }
+
+/* Stage connector lines */
+.stage-connector { position: relative; }
+.stage-connector::before {
+  content: ''; position: absolute; left: 28px; top: 0; bottom: 0;
+  width: 3px; background: linear-gradient(to bottom, var(--line-color, #e2e8f0), var(--line-color-next, #e2e8f0));
+  z-index: 0;
+}
+.stage-connector:last-child::before { display: none; }
+
+/* Doc card */
+.doc-item { transition: all 0.2s ease; }
+.doc-item:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(72,42,119,0.1); }
+.doc-item.completed { opacity: 0.7; }
+.doc-item.completed .doc-title { text-decoration: line-through; color: #94a3b8; }
+
+/* Prereq arrow */
+.prereq-badge { font-size: 10px; padding: 1px 6px; border-radius: 4px; background: #fef3c7; color: #92400e; font-weight: 600; }
+.optional-badge { font-size: 10px; padding: 1px 6px; border-radius: 4px; background: #f0fdf4; color: #166534; font-weight: 600; }
+
+/* Checkbox animation */
+.check-box { cursor: pointer; transition: all 0.2s; }
+.check-box:hover { transform: scale(1.15); }
+.check-box.checked { background: #482A77; border-color: #482A77; }
+.check-box.checked::after { content: '✓'; color: white; font-size: 12px; font-weight: 700; }
+
+/* Stage badge */
+.stage-badge {
+  width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: white; z-index: 1; position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Tooltip */
+.tooltip { visibility: hidden; opacity: 0; transition: all 0.2s; }
+.has-tooltip:hover .tooltip { visibility: visible; opacity: 1; }
+
+/* Milestone */
+.milestone-bar { height: 6px; border-radius: 3px; transition: width 0.6s ease; }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- Header -->
+<div class="bg-gradient-to-r from-amaran-purple to-amaran-purple-light text-white px-6 py-8">
+  <div class="max-w-4xl mx-auto text-center">
+    <h1 class="text-3xl font-bold tracking-tight">AI Learning Path</h1>
+    <p class="text-purple-200 text-sm mt-1">結構化學習路徑 — 從基礎到進階的 AI 導入旅程</p>
+    <p class="text-xs text-purple-300 mt-2">
+      <a href="index.html" class="text-white underline underline-offset-2 hover:text-purple-100">📊 Dashboard</a> ·
+      <a href="mindmap.html" class="text-white underline underline-offset-2 hover:text-purple-100">🗺 Mind Map</a> ·
+      <a href="https://github.com/Eaglemamba/david-ai-learning" target="_blank" class="text-white underline underline-offset-2 hover:text-purple-100">GitHub</a>
+    </p>
+    <!-- Overall progress -->
+    <div class="mt-6 bg-white/10 backdrop-blur rounded-xl px-6 py-4 border border-white/20 max-w-md mx-auto">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-left text-xs text-purple-200">Overall Progress</div>
+          <div class="mono text-2xl font-bold" id="overallPct">0%</div>
+        </div>
+        <div>
+          <svg class="progress-ring" width="64" height="64">
+            <circle stroke="rgba(255,255,255,0.2)" stroke-width="5" fill="transparent" r="28" cx="32" cy="32"/>
+            <circle class="progress-ring__circle" id="progressCircle" stroke="white" stroke-width="5" fill="transparent"
+              r="28" cx="32" cy="32" stroke-dasharray="175.93" stroke-dashoffset="175.93" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 mt-2">
+        <div class="flex-1 bg-white/20 rounded-full h-2">
+          <div class="milestone-bar bg-white" id="overallBar" style="width:0%"></div>
+        </div>
+        <span class="mono text-xs text-purple-200" id="overallCount">0 / 0</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- How to use -->
+<div class="max-w-4xl mx-auto px-6 mt-6">
+  <div class="bg-blue-50 border border-blue-200 rounded-xl px-5 py-4 text-sm text-blue-800">
+    <strong>如何使用：</strong>按照 Stage 1 → 5 的順序閱讀。每篇文章前的勾選框會記錄你的進度（存在瀏覽器 localStorage）。
+    標記 <span class="prereq-badge">必讀</span> 的為該階段核心文章，
+    <span class="optional-badge">選讀</span> 可依興趣選擇。
+  </div>
+</div>
+
+<!-- Learning Path Stages -->
+<div class="max-w-4xl mx-auto px-6 py-8 space-y-2" id="pathContainer"></div>
+
+<!-- Footer -->
+<div class="max-w-4xl mx-auto px-6 py-6 text-center text-xs text-gray-400 border-t border-gray-200 mt-4">
+  <p>Built with Claude AI | <a href="https://github.com/Eaglemamba" class="text-amaran-purple hover:underline">@Eaglemamba</a> | Pharma × AI × Leadership</p>
+</div>
+
+<script>
+// ─── Curriculum Data ───
+const stages = [
+  {
+    id: 1,
+    title: 'AI 基礎認知',
+    subtitle: 'Week 1 — 理解 AI 是什麼、能做什麼、風險在哪',
+    color: '#2563eb',
+    icon: '🧠',
+    description: '建立 AI 與 LLM 基本認知，了解風險框架，培養正確心態',
+    docs: [
+      { file: '2026-01-31_amodei-technology-adolescence.html', title: 'Dario Amodei — Technology Adolescence ★4.8', required: true, why: 'AI 風險與應對的全局觀，建立正確心態' },
+      { file: '2026-02-18_ai-guide-agentic-era.html', title: 'AI 使用指南：代理時代 ★4.0', required: true, why: '三層框架理解 AI 從聊天到代理的演進' },
+      { file: '2025-11-20_ai-productivity-paradox.html', title: 'AI 生產力悖論 ★3.5', required: true, why: '學會判斷何時該用 AI、何時不該' },
+      { file: '2026-02-05_ai-privacy-deep-dive.html', title: 'AI 隱私深度解析 ★3.6', required: true, why: '了解 AI 時代的資料安全風險' },
+      { file: '2025-12-18_ai-books-leaders-guide.html', title: '5 AI Books All Leaders Should Read ★3.8', required: false, why: '延伸閱讀書單' },
+      { file: '2026-01-15_ai-trends-2026.html', title: '2026 六大 AI 趨勢 ★3.8', required: false, why: '掌握產業脈動' },
+      { file: '2026-01-07_ces-jensen-huang-keynote.html', title: 'CES 2026 Jensen Huang 全面解析 ★4.4', required: false, why: '了解 AI 硬體與生態演進' },
+    ]
+  },
+  {
+    id: 2,
+    title: 'Prompt 與溝通技巧',
+    subtitle: 'Week 2 — 學會跟 AI 有效溝通',
+    color: '#7c3aed',
+    icon: '💬',
+    description: '掌握 Prompt Engineering 基本功，學會設定 Context，寫出高品質指令',
+    docs: [
+      { file: '2026-01-30_claude-prompt-engineering.html', title: 'Claude 提示工程 10 步驟框架 ★4.0', required: true, why: '系統性學習 Prompt 撰寫' },
+      { file: '2026-01-19_ai-context-setup.html', title: 'AI Context 一次設定，永久提升 90% ★4.2', required: true, why: '建立個人 AI 設定檔' },
+      { file: '2026-01-08_context-engineering-agents.html', title: 'Context Engineering 深度指南 ★4.6', required: true, why: '從 Prompt 到 Context 的關鍵思維轉變' },
+      { file: '2026-01-15_articulation-intelligence.html', title: '清晰表達三層框架 ★4.0', required: true, why: '把模糊想法轉化為 AI 可執行指令' },
+      { file: '2026-02-03_anti-prompts-constraints.html', title: 'Anti-Prompts 約束策略 ★3.2', required: false, why: '用「不要做什麼」提升輸出品質' },
+      { file: '2026-02-17_ai-questions-system.html', title: '用提問取代答案 5 步驟 ★3.8', required: false, why: '進階提問技巧' },
+      { file: '2025-11-04_ai-prompts-insight-creator.html', title: '四個 Prompts 洞見創造者 ★3.5', required: false, why: '從資訊收集到洞見創造' },
+      { file: '2025-12-16_data-literacy-loop.html', title: 'Data Literacy Loop ★3.5', required: false, why: '打造具數據素養的 AI 協作' },
+    ]
+  },
+  {
+    id: 3,
+    title: 'AI 工具實戰',
+    subtitle: 'Week 3–4 — 上手 Claude 全家桶及實用工具',
+    color: '#059669',
+    icon: '🛠',
+    description: '動手使用 Claude Code、Cowork、Skills，整合進日常工作流程',
+    docs: [
+      { file: '2026-02-05_claude-starter-pack.html', title: 'Claude 入門攻略 ★3.8', required: true, why: 'Claude 全面功能概覽' },
+      { file: '2026-02-01_claude-code-power-tips.html', title: 'Claude Code 進階生產力技巧 ★4.6', required: true, why: '高效使用 Claude Code 的核心技巧' },
+      { file: '2026-01-23_claude-code-nontechnical-guide.html', title: 'Claude Code 非技術領導者指南 ★4.0', required: true, why: '非工程師也能用 Claude Code' },
+      { file: '2026-01-22_50-claude-tips.html', title: '50 個被低估的 Claude 技巧 ★4.2', required: true, why: '快速查閱的實用技巧集' },
+      { file: '2026-02-05_claude-cowork-practical-guide.html', title: 'Claude Cowork 實戰指南 ★3.8', required: true, why: '從 ChatGPT 轉到 Cowork 的完整體驗' },
+      { file: '2026-01-14_claude-cowork-guide.html', title: 'Claude Cowork 全面解析 ★3.8', required: false, why: 'Cowork 深入功能解析' },
+      { file: '2026-02-03_claude-code-interactive-mode.html', title: 'Claude Code Interactive Mode ★3.8', required: false, why: '互動模式操作手冊' },
+      { file: '2025-12-15_claude-code-agent-os.html', title: 'Claude Code Agent OS 指南 ★3.5', required: false, why: '將 Claude Code 當作個人 AI OS' },
+      { file: '2026-01-10_typeless-voice-review.html', title: 'Typeless 語音輸入評測 ★3.8', required: false, why: '語音輸入生產力工具' },
+      { file: '2026-02-03_notebooklm-source-control.html', title: 'NotebookLM Source Control ★3.2', required: false, why: '消除 AI 幻覺的文件工具' },
+    ]
+  },
+  {
+    id: 4,
+    title: 'Agent 架構與自動化',
+    subtitle: 'Week 5–6 — 從使用者進化到建構者',
+    color: '#d97706',
+    icon: '🤖',
+    description: '理解 Agent 架構，學會建構自動化工作流程，從手動操作進化到系統設計',
+    docs: [
+      { file: '2026-01-21_agentic-coding-trends.html', title: '2026 Agentic Coding Trends ★4.2', required: true, why: '理解 Agentic 開發的全貌' },
+      { file: '2026-01-13_act-base-framework.html', title: 'ACT + BASE Agent Framework ★4.2', required: true, why: 'Agent 行為穩定性設計' },
+      { file: '2026-02-01_claude-md-pdca-optimization.html', title: 'CLAUDE.md PDCA 持續改善 ★4.2', required: true, why: '系統性優化 AI 行為設定' },
+      { file: '2026-01-21_claude-n8n-synta-stack.html', title: 'Claude + n8n + Synta 技術棧 ★4.2', required: true, why: '自動化工具組合實戰' },
+      { file: '2026-01-15_email-triage-agent.html', title: 'Email Triage Agent 自動化 ★4.2', required: true, why: '動手建構第一個 Agent' },
+      { file: '2025-12-20_claude-skills-deep-dive.html', title: 'Claude Skills 深度解析 ★3.5', required: false, why: 'Skills 建構實戰教學' },
+      { file: '2025-12-15_skill-architecture-layers.html', title: 'Skill Architecture 五層設計 ★4.1', required: false, why: '進階 Skill 架構設計' },
+      { file: '2025-12-20_skill-graphs-knowledge.html', title: 'Skill Graphs 知識網路 ★3.8', required: false, why: '建構可導航的知識圖譜' },
+      { file: '2026-02-20_claude-cowork-agentic-workflows.html', title: 'Cowork 終極指南：7 個工作流 ★3.8', required: false, why: '進階 Agentic 工作流程' },
+      { file: '2025-11-30_ai-second-brain-voice.html', title: 'AI Second Brain 語音系統 ★4.2', required: false, why: '語音驅動的知識管理' },
+      { file: '2026-01-22_ai-habit-tracker-vibe-coding.html', title: 'AI Habit Tracker Vibe Coding ★3.8', required: false, why: '非工程師 Vibe Coding 教學' },
+    ]
+  },
+  {
+    id: 5,
+    title: '組織導入與領導力',
+    subtitle: 'Week 7–8 — 在組織中推動 AI 採用',
+    color: '#dc2626',
+    icon: '🏢',
+    description: '將個人技能轉化為組織能力，安全評估、變革管理、團隊賦能',
+    docs: [
+      { file: '2026-02-09_ai-change-management.html', title: 'AI 變革管理 8 大差異 ★3.0', required: true, why: '理解 AI 導入的組織挑戰' },
+      { file: '2025-11-10_ai-leadership-triad.html', title: 'AI 領導力三角 ★3.8', required: true, why: '成功 AI 領導者的三項核心技能' },
+      { file: '2026-02-11_openclaw-security-hardening.html', title: 'OpenClaw 安全強化三層防護 ★4.2', required: true, why: '企業 AI 安全防護實作' },
+      { file: '2026-01-15_ai-tool-detox.html', title: 'AI 工具排毒指南 ★3.8', required: true, why: '評估新工具的決策框架' },
+      { file: '2026-01-17_claude-cowork-product-lessons.html', title: 'Cowork 產品策略分析 ★4.0', required: true, why: '產品管理角度的 AI 策略' },
+      { file: '2026-02-19_ai-amplification-strategy.html', title: 'AI Amplification 策略壓力測試 ★3.8', required: false, why: '用 AI 壓力測試策略假設' },
+      { file: '2025-12-09_anthropic-skills-agents.html', title: 'Anthropic Skills vs Agents 策略 ★3.5', required: false, why: '企業 Agent 架構選擇' },
+      { file: '2026-01-08_humint-intelligence-ai.html', title: 'HUMINT：機器無法取代人類 ★3.8', required: false, why: '人類在 AI 時代的不可取代性' },
+      { file: '2026-01-22_future-of-work.html', title: 'Future of Work ★4.2', required: false, why: 'AI 時代工作意義的思考' },
+      { file: '2026-02-17_ai-pm-builder-culture.html', title: 'AI PM 角色重定義 ★3.2', required: false, why: 'PM 從協調者到建造者' },
+      { file: '2026-01-20_biotech-compass-walkthrough.html', title: 'Biotech Compass 生技分析 ★4.0', required: false, why: '產業應用：生技投資分析' },
+    ]
+  }
+];
+
+// ─── LocalStorage progress ───
+const STORAGE_KEY = 'ai-learning-path-progress';
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+function toggleDoc(file) {
+  const p = loadProgress();
+  p[file] = !p[file];
+  if (!p[file]) delete p[file];
+  saveProgress(p);
+  render();
+}
+
+function resetProgress() {
+  if (confirm('確定要重置所有進度嗎？')) {
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+  }
+}
+
+// ─── Render ───
+function render() {
+  const progress = loadProgress();
+  const container = document.getElementById('pathContainer');
+
+  // Compute totals
+  const allDocs = stages.flatMap(s => s.docs);
+  const totalDocs = allDocs.length;
+  const completedDocs = allDocs.filter(d => progress[d.file]).length;
+  const pct = totalDocs > 0 ? Math.round(completedDocs / totalDocs * 100) : 0;
+
+  // Update overall progress
+  document.getElementById('overallPct').textContent = pct + '%';
+  document.getElementById('overallCount').textContent = `${completedDocs} / ${totalDocs}`;
+  document.getElementById('overallBar').style.width = pct + '%';
+  const circle = document.getElementById('progressCircle');
+  const circumference = 2 * Math.PI * 28;
+  circle.style.strokeDashoffset = circumference - (pct / 100) * circumference;
+
+  // Render stages
+  container.innerHTML = stages.map((stage, si) => {
+    const stageDone = stage.docs.filter(d => progress[d.file]).length;
+    const stageTotal = stage.docs.length;
+    const stagePct = stageTotal > 0 ? Math.round(stageDone / stageTotal * 100) : 0;
+    const stageRequired = stage.docs.filter(d => d.required);
+    const stageRequiredDone = stageRequired.filter(d => progress[d.file]).length;
+    const allRequiredDone = stageRequiredDone === stageRequired.length;
+    const isLast = si === stages.length - 1;
+
+    return `
+    <div class="stage-connector" style="--line-color:${stage.color};--line-color-next:${stages[si+1]?.color || stage.color}; padding-left: 0;">
+
+      <!-- Stage Header -->
+      <div class="flex items-start gap-4 mb-4">
+        <div class="stage-badge flex-shrink-0" style="background: ${stage.color}">
+          ${stage.icon}
+        </div>
+        <div class="flex-1 pt-1">
+          <div class="flex items-center gap-3 flex-wrap">
+            <h2 class="text-xl font-bold text-gray-900">Stage ${stage.id}：${stage.title}</h2>
+            ${allRequiredDone ? '<span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-semibold">✓ 必讀完成</span>' : ''}
+          </div>
+          <p class="text-sm text-gray-500 mt-0.5">${stage.subtitle}</p>
+          <p class="text-xs text-gray-400 mt-1">${stage.description}</p>
+          <!-- Stage progress bar -->
+          <div class="flex items-center gap-2 mt-2">
+            <div class="flex-1 bg-gray-200 rounded-full h-2 max-w-[200px]">
+              <div class="milestone-bar rounded-full h-2" style="width:${stagePct}%;background:${stage.color}"></div>
+            </div>
+            <span class="mono text-xs text-gray-400">${stageDone}/${stageTotal}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doc Cards -->
+      <div class="ml-[28px] pl-8 ${isLast ? '' : 'pb-8'} border-l-0 space-y-2">
+        ${stage.docs.map((doc, di) => {
+          const done = progress[doc.file];
+          return `
+          <div class="doc-item flex items-start gap-3 bg-white rounded-lg border ${done ? 'border-green-200 bg-green-50/30' : 'border-gray-200'} px-4 py-3 ${done ? 'completed' : ''}">
+            <div class="check-box flex-shrink-0 w-5 h-5 rounded border-2 ${done ? 'checked bg-amaran-purple border-amaran-purple' : 'border-gray-300'} flex items-center justify-center mt-0.5"
+              onclick="toggleDoc('${doc.file}')"></div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <a href="docs/${doc.file}" target="_blank" class="doc-title text-sm font-medium ${done ? 'text-gray-400 line-through' : 'text-gray-900 hover:text-amaran-purple'} transition-colors">${doc.title}</a>
+                ${doc.required ? '<span class="prereq-badge">必讀</span>' : '<span class="optional-badge">選讀</span>'}
+              </div>
+              <p class="text-xs text-gray-400 mt-0.5">${doc.why}</p>
+            </div>
+            <span class="mono text-xs text-gray-300 flex-shrink-0 mt-1">${di + 1}/${stage.docs.length}</span>
+          </div>`;
+        }).join('')}
+      </div>
+
+      ${!isLast ? `
+      <!-- Stage transition -->
+      <div class="ml-[28px] flex items-center gap-2 py-2">
+        <div class="w-8 border-t-2 border-dashed" style="border-color:${stage.color}"></div>
+        <span class="text-xs font-medium" style="color:${stage.color}">${allRequiredDone ? '✓ Ready for next stage' : `Complete ${stageRequired.length - stageRequiredDone} required reading(s) to advance`}</span>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+render();
+</script>
+</body>
+</html>
