@@ -26,6 +26,12 @@
         .match-badge-summary { background: #d1fae5; color: #065f46; }
         .match-badge-content { background: #f3e8ff; color: #6b21a8; }
         .match-badge-tag { background: #fef3c7; color: #92400e; }
+        /* Clean search mode: collapse header stats and category distribution */
+        body.search-active #statsRow,
+        body.search-active #categoryBar,
+        body.search-active #categoryLegend { display: none; }
+        body.search-active .bg-gradient-to-r { padding-bottom: 1.5rem; }
+        body.search-active .search-hits { flex: 1; }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -193,6 +199,7 @@ function renderCards(){
     // Update result count
     const countEl=document.getElementById('resultCount');
     if(countEl){countEl.textContent=s?`${docs.length} results`:'';countEl.style.display=s?'inline':'none';}
+    document.body.classList.toggle('search-active', !!s);
     if(!docs.length){document.getElementById('docGrid').innerHTML='<div class="col-span-full text-center py-12 text-gray-400">No documents match.</div>';return;}
 
     // Find max score for relative bar widths
@@ -238,16 +245,21 @@ function renderCards(){
             ? (d._score / maxScore >= 0.7 ? 'border-amaran-purple' : d._score / maxScore >= 0.4 ? 'border-purple-300' : 'border-gray-200')
             : 'border-gray-200';
 
+        // Clean search mode: hide date, source, lines; show summary only when no content matches
+        const hasHits = d._hits && d._hits.length > 0;
+        const showMeta = !s;
+        const showSummary = !s || !hasHits;
+
         return `<div class="doc-card bg-white rounded-xl border ${borderCls} p-4 flex flex-col">
-            <div class="flex items-center justify-between"><span class="mono text-xs text-gray-400">${d.date}</span>${badge}</div>
-            <h3 class="text-sm font-semibold text-gray-900 mt-2 leading-snug">${d.title}</h3>
-            <p class="text-xs text-gray-500 mt-1">${d.source}</p>
+            ${showMeta ? `<div class="flex items-center justify-between"><span class="mono text-xs text-gray-400">${d.date}</span>${badge}</div>` : ''}
+            <h3 class="text-sm font-semibold text-gray-900 ${showMeta ? 'mt-2' : ''} leading-snug">${d.title}</h3>
+            ${showMeta ? `<p class="text-xs text-gray-500 mt-1">${d.source}</p>` : ''}
             <div class="flex gap-1.5 flex-wrap mt-2">${tags}</div>
             ${relevanceHtml}
-            <p class="text-xs text-gray-600 leading-relaxed mt-2 flex-1">${d.summary}</p>
+            ${showSummary ? `<p class="text-xs text-gray-600 leading-relaxed mt-2 flex-1">${d.summary}</p>` : ''}
             ${hitsHtml}
             <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-                <div class="flex items-center gap-3">${rd}<span class="mono text-[10px] text-gray-400">${d.lines?d.lines+' lines':''}</span></div>${btn}
+                <div class="flex items-center gap-3">${rd}${showMeta ? `<span class="mono text-[10px] text-gray-400">${d.lines?d.lines+' lines':''}</span>` : ''}</div>${btn}
             </div></div>`;
     }).join('');
 }
