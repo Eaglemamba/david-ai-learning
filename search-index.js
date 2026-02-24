@@ -4815,7 +4815,7 @@ const searchIndex = [
     ],
     "sectionId": "main",
     "sectionTitle": "Main Content",
-    "content": "Forget About The Money 忘掉金錢 作者：Vas (@vasuman) | 發佈日期：2025年1月10日 Mindset Career Startup Strategy 📋 快速摘要 Executive Summary 閱讀時間：12 分鐘 核心概念 Core Concept 金錢是工作的「廢氣」(waste product/exhaust)，不是引擎本身。當你專注於做有意義的事並精進技能，金錢會作為副產品自然產生。對金錢的執著反而會阻礙你創造真正財富的能力。 實務價值 Practical Value 提供職涯決策框架：找到「享受做」與「擅長做」的交集，搭配非對稱風險策略（有限下檔、無限上檔），並以長期複利思維做決策。這對 AI 從業者特別重要——在快速變化的領域，選擇能長期投入的方向比追逐短期薪資更有價值。 關鍵要點 Key Points 六個核心課題：金錢是廢氣而非目標、職涯選擇的 Venn Diagram、風險承受力的自我誠實、花錢投資自己、非對稱賭注、長期遊戲不要提早兌現。 行動建議 Action Items 1) 誠實評估你真正享受和擅長的事 2) 在現職旁建立副業測試想法 3) 將錢視為工具而非積累目標 4) 尋找有限風險、無限回報的機會 5) 抵抗提早兌現的誘惑。 學習目標 Learning Objectives Mindset 理解「金錢是副產品」的心態如何改變決策品質 Career 學會使用 Venn Diagram 框架評估職涯方向 Strategy 掌握非對稱風險 (Asymmetric Risk) 的識別與運用 Startup 理解「投資自己」與「花錢」的本質差異 Mindset 認識長期複利效應與提早兌現的機會成本 Practical 應用這些原則於 AI/製藥產業的職涯規劃 正文開始 Content Start 共 6 部分 | 6 Sections Part 1: 金錢是廢氣 Money as Waste Product 作者 Vas 開篇就承認金錢確實重要——它解決了生活中大多數的物質問題，包括醫療、教育、體驗。但他指出， 心理問題和人際關係卻不是金錢能解決的 。有錢反而讓信任變得更複雜，也無法買到對人生方向的清晰度。 既然金錢這麼重要，為什麼要「忘掉」它？因為 要賺錢，你必須先忘掉它 。你對金錢的執著和擔憂，正是你永遠無法賺大錢的原因。 原文核心比喻：「 Money is a waste product. 」當你做自己享受且擅長的工作時，金錢會跟隨——不是立即，也不容易，但必然會來。真正創造財富的人在工作時不是想著錢，而是想著工作本身。金錢是引擎的排氣，是過程的副產品，literally 是這個過程的「排泄物」。 💡 比喻說明：引擎與排氣 想像一輛汽車：引擎是你的工作、技能、熱情；汽油是你的時間和精力；目的地是你想達成的目標。而排氣（exhaust）呢？那就是金錢。 沒有人會為了收集排氣而開車。但當引擎運轉良好、方向正確時，排氣自然會產生。同樣地，當你專注於打造卓越的事物時，金錢會作為自然結果出現。 ⚠️ 重點提示：心態轉換 執著金錢時的決策濾鏡： 「什麼現在付錢更多？」「這個行動會增加還是減少我的淨資產？」 這種思維讓你傾向安全、漸進、短期的選擇——恰好是那些會限制你上檔空間的選擇。 執著工作時的決策濾鏡： 「什麼會複利成長？」「什麼是我可以一輩子做的事？」 🛠️ 實務應用：製藥/AI 情境 在製藥 CDMO 產業，你可能面臨選擇：接受一個薪資更高但純粹管理行政的職位，還是一個薪資較"
+    "content": "Forget About The Money 忘掉金錢 作者：Vas (@vasuman) | 發佈日期：2026年1月10日 Mindset Career Startup Strategy 📋 快速摘要 Executive Summary 閱讀時間：12 分鐘 核心概念 Core Concept 金錢是工作的「廢氣」(waste product/exhaust)，不是引擎本身。當你專注於做有意義的事並精進技能，金錢會作為副產品自然產生。對金錢的執著反而會阻礙你創造真正財富的能力。 實務價值 Practical Value 提供職涯決策框架：找到「享受做」與「擅長做」的交集，搭配非對稱風險策略（有限下檔、無限上檔），並以長期複利思維做決策。這對 AI 從業者特別重要——在快速變化的領域，選擇能長期投入的方向比追逐短期薪資更有價值。 關鍵要點 Key Points 六個核心課題：金錢是廢氣而非目標、職涯選擇的 Venn Diagram、風險承受力的自我誠實、花錢投資自己、非對稱賭注、長期遊戲不要提早兌現。 行動建議 Action Items 1) 誠實評估你真正享受和擅長的事 2) 在現職旁建立副業測試想法 3) 將錢視為工具而非積累目標 4) 尋找有限風險、無限回報的機會 5) 抵抗提早兌現的誘惑。 學習目標 Learning Objectives Mindset 理解「金錢是副產品」的心態如何改變決策品質 Career 學會使用 Venn Diagram 框架評估職涯方向 Strategy 掌握非對稱風險 (Asymmetric Risk) 的識別與運用 Startup 理解「投資自己」與「花錢」的本質差異 Mindset 認識長期複利效應與提早兌現的機會成本 Practical 應用這些原則於 AI/製藥產業的職涯規劃 正文開始 Content Start 共 6 部分 | 6 Sections Part 1: 金錢是廢氣 Money as Waste Product 作者 Vas 開篇就承認金錢確實重要——它解決了生活中大多數的物質問題，包括醫療、教育、體驗。但他指出， 心理問題和人際關係卻不是金錢能解決的 。有錢反而讓信任變得更複雜，也無法買到對人生方向的清晰度。 既然金錢這麼重要，為什麼要「忘掉」它？因為 要賺錢，你必須先忘掉它 。你對金錢的執著和擔憂，正是你永遠無法賺大錢的原因。 原文核心比喻：「 Money is a waste product. 」當你做自己享受且擅長的工作時，金錢會跟隨——不是立即，也不容易，但必然會來。真正創造財富的人在工作時不是想著錢，而是想著工作本身。金錢是引擎的排氣，是過程的副產品，literally 是這個過程的「排泄物」。 💡 比喻說明：引擎與排氣 想像一輛汽車：引擎是你的工作、技能、熱情；汽油是你的時間和精力；目的地是你想達成的目標。而排氣（exhaust）呢？那就是金錢。 沒有人會為了收集排氣而開車。但當引擎運轉良好、方向正確時，排氣自然會產生。同樣地，當你專注於打造卓越的事物時，金錢會作為自然結果出現。 ⚠️ 重點提示：心態轉換 執著金錢時的決策濾鏡： 「什麼現在付錢更多？」「這個行動會增加還是減少我的淨資產？」 這種思維讓你傾向安全、漸進、短期的選擇——恰好是那些會限制你上檔空間的選擇。 執著工作時的決策濾鏡： 「什麼會複利成長？」「什麼是我可以一輩子做的事？」 🛠️ 實務應用：製藥/AI 情境 在製藥 CDMO 產業，你可能面臨選擇：接受一個薪資更高但純粹管理行政的職位，還是一個薪資較"
   },
   {
     "docFile": "2026-01-13_act-base-framework.html",
@@ -10528,7 +10528,7 @@ const searchIndex = [
     ],
     "sectionId": "快速摘要",
     "sectionTitle": "快速摘要",
-    "content": "Anthropic 的 Mike Krieger（Instagram 共同創辦人）發文招募 Research PM，明確要求候選人具備三種能力： 判斷力（知道什麼不該做） 、 原型能力（自己動手做） 、 實戰經驗（做過真正有人用的產品） 。原 Po 評論者進一步推論：AI 時代最大的產品風險已從「做不出來」轉變為「做了一堆沒價值的東西」，未來 AI 團隊核心角色將精簡為 Product Builder、AI Engineer、Systems Engineer 三種。這篇不是技術文，而是一個重要的 產業訊號 ，值得用來校準你的職涯策略。 理解 PM 角色轉型 從 Coordinator 到 Builder 的典範轉移 辨識 AI 團隊新結構 三種核心角色的分工邏輯 校準個人策略 將 Builder 思維應用到非軟體產業 AI 時代 PM 能力模型 Kill 決策 砍掉錯誤方向 Build 原型 自己做 prototype Ship 產品 做過真的產品 I 招募訊號：Anthropic 要什麼樣的 PM？ Mike Krieger 最近加入 Anthropic Labs 團隊，直接站在 AI 前沿。他們正在 建造尚不存在的產品類別 ，而且底層技術還在快速演進中。這不是一般的 PM 職缺 — 這是在說：我們需要能在不確定性中自己動手的人。 \"I recently joined our Labs team at Anthropic to be hands-on at the frontier. We're building product categories that don't exist yet, on top of technology that's advancing rapidly.\" PM 的角色是 半偵察兵、半建造者 。你要辨識什麼值得追，自己做原型，然後跟團隊快速迭代找到 Product-Market Fit (產品市場適配)。 \"The PM role is part scout, part builder. You're identifying what's worth pursuing, prototyping yourself, and iterating quickly with your team to find product-market fit.\" 核心概念：Scout + Builder 雙重角色 傳統 PM 是「三角形的中心」— 連結設計、工程、商業。AI 時代的 PM 則是「最前線的偵察兵」— 你不只報告地形，你還得自己搭帳篷。 這裡的 \"prototyping yourself\" 不是比喻，是字面意思：你得會寫 prompt、串 API、做 UI flow，至少做到 functional prototype 的程度。 比喻說明：藥廠的製程開發工程師 這很像 CDMO 裡的製程開發工程師 vs 製程管理員。管理員可以追進度、寫報告、協調部門。但開發工程師要自己進無塵室、調參數、跑實驗。AI 時代的 PM 就是產品界的製程開發工程師 — 你得親自下場。 II 風險轉移：從「做不出來」到「做了沒價值」 原 Po 評論者點出一個關鍵洞察：過去產品最大的風險是 「做不出來」 ，現在最大的風險是 「做了一堆沒價值的東西」 。AI 大幅降低了「做」的門檻，但同時放大了「做錯方向」的成本。 \"過去產品最大的風險是做不出來，現在最大的風險是做了一堆沒價值的東西。\" 解法只有一個： 自己動手做 prototype 。不是開會，不是"
+    "content": "Anthropic 的 Mike Krieger（Instagram 共同創辦人）發文招募 Research PM，明確要求候選人具備三種能力： 判斷力（知道什麼不該做） 、 原型能力（自己動手做） 、 實戰經驗（做過真正有人用的產品） 。原 Po 評論者進一步推論：AI 時代最大的產品風險已從「做不出來」轉變為「做了一堆沒價值的東西」，未來 AI 團隊核心角色將精簡為 Product Builder、AI Engineer、Systems Engineer 三種。這篇不是技術文，而是一個重要的 產業訊號 ，值得用來校準你的職涯策略。 理解 PM 角色轉型 從 Coordinator 到 Builder 的典範轉移 辨識 AI 團隊新結構 三種核心角色的分工邏輯 校準個人策略 將 Builder 思維應用到非軟體產業 AI 時代 PM 能力模型 Kill 決策 砍掉錯誤方向 Build 原型 自己做 prototype Ship 產品 做過真的產品 I 招募訊號：Anthropic 要什麼樣的 PM？ Mike Krieger 最近加入 Anthropic Labs 團隊，直接站在 AI 前沿。他們正在 建造尚不存在的產品類別 ，而且底層技術還在快速演進中。這不是一般的 PM 職缺 — 這是在說：我們需要能在不確定性中自己動手的人。 \"I recently joined our Labs team at Anthropic to be hands-on at the frontier. We're building product categories that don't exist yet, on top of technology that's advancing rapidly.\" PM 的角色是 半偵察兵、半建造者 。你要辨識什麼值得追，自己做原型，然後跟團隊快速迭代找到 Product-Market Fit (產品市場適配)。 \"The PM role is part scout, part builder. You're identifying what's worth pursuing, prototyping yourself, and iterating quickly with your team to find product-market fit.\" 核心概念：Scout + Builder 雙重角色 傳統 PM 是「三角形的中心」— 連結設計、工程、商業。AI 時代的 PM 則是「最前線的偵察兵」— 你不只報告地形，你還得自己搭帳篷。 這裡的 \"prototyping yourself\" 不是比喻，是字面意思：你得會寫 prompt、串 API、做 UI flow，至少做到 functional prototype 的程度。 比喻說明：主廚 vs 餐廳經理 這很像主廚 vs 餐廳經理的差別。經理可以排班、管庫存、處理客訴。但主廚要自己進廚房、試菜、調味、出餐。AI 時代的 PM 就是產品界的主廚 — 你不能只管外場，你得親自下廚。 II 風險轉移：從「做不出來」到「做了沒價值」 原 Po 評論者點出一個關鍵洞察：過去產品最大的風險是 「做不出來」 ，現在最大的風險是 「做了一堆沒價值的東西」 。AI 大幅降低了「做」的門檻，但同時放大了「做錯方向」的成本。 \"過去產品最大的風險是做不出來，現在最大的風險是做了一堆沒價值的東西。\" 解法只有一個： 自己動手做 prototype 。不是開會，不是寫文件，不是做流程。是「做"
   },
   {
     "docFile": "2026-02-17_ai-questions-system.html",
@@ -11507,5 +11507,1142 @@ const searchIndex = [
     "sectionId": "practice-questions",
     "sectionTitle": "Practice Questions",
     "content": "Q1 概念理解 為什麼在 100k token 對話中切換到更便宜的模型反而更貴？請用 Prompt Caching 原理解釋。 因為 Prompt Cache 是 依模型區分的（model-specific） 。當你從 Opus 切換到 Haiku 時，Haiku 沒有任何已建立的快取前綴，需要重新處理整個 100k tokens 的輸入（cache miss）。即使 Haiku 的每 token 成本更低，重建 100k tokens 快取的費用遠高於讓 Opus 利用現有快取（cache read）來回答的費用。 正確做法是使用 subagent 模式：讓 Opus 準備一個精簡的交接訊息，發給 Haiku 處理特定子任務，而不是把整個對話 context 搬過去。 Q2 產業應用 在你的 CDMO 環境中，如果要建立一個 AI Agent 來協助批次記錄審查（Batch Record Review），如何應用 prompt caching 原則來設計系統？ 可以這樣設計 prompt 排列順序： 1. Static System Prompt（全域快取）： GMP 規範要求、A"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Boris Tane 在九個月的密集使用後，發展出一套以 「計畫先行」 為核心的 Claude Code 工作流。他的方法與多數開發者的「打提示、修錯誤、重複」迴圈截然不同： 永遠不讓 AI 寫程式碼，直到你審核並批准了書面計畫 。整個流程分為四個階段 — Research（深度閱讀）、Plan（撰寫計畫）、Annotate（人類標註修正）、Implement（機械式執行）。最關鍵的創新是「標註循環」(Annotation Cycle)，開發者在 Markdown 計畫文件中直接寫下修正意見，讓 AI 反覆修改計畫直到完全正確，然後才進入執行。這套方法將「思考」與「打字」分離，確保人類始終掌握架構決策，而 AI 處理機械式的程式碼撰寫。"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "Research-First 原則 理解為何讓 AI 深度閱讀程式碼庫是防止「在隔離中正確但破壞系統」的關鍵第一步。 Annotation Cycle 方法 學會使用 Markdown 計畫文件作為「共享可變狀態」，透過人類標註循環注入判斷力。 Copilot vs Autopilot 界線 掌握何時給 AI 自主權、何時收緊控制的決策框架，以及如何在執行中做精準微調。 Boris Tane's Claude Code Pipeline Research Deep-read codebase Write research.md Plan Detailed plan.md Code snippets + paths Annotate Human inline notes 1-6 review cycles Implement Execute full plan Typecheck as you go Part I"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "research-phase-深度閱讀是一切的起點",
+    "sectionTitle": "Research Phase — 深度閱讀是一切的起點",
+    "content": "Boris 的每一個重要任務都從「深度閱讀指令」開始。他要求 Claude 在做任何事之前， 徹底理解程式碼庫的相關部分 ，並且永遠要求將發現寫成持久的 Markdown 文件，而不只是聊天中的口頭總結。 Every meaningful task starts with a deep-read directive. I ask Claude to thoroughly understand the relevant part of the codebase before doing anything else. And I always require the findings to be written into a persistent markdown file, never just a verbal summary in the chat. 注意用語：「deeply」、「in great details」、「intricacies」。 沒有這些詞，Claude 會略讀 。它會讀一個檔案、看到函式簽名層級的功能就繼續往下。你需要發出訊號告訴它：表面層級的閱讀是不被接受的。 N"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "planning-phase-用-markdown-取代內建-plan-mode",
+    "sectionTitle": "Planning Phase — 用 Markdown 取代內建 Plan Mode",
+    "content": "審查完 research 之後，Boris 要求 Claude 在獨立的 Markdown 文件中撰寫 詳細的實作計畫 。生成的計畫包含方法的詳細說明、展示實際變更的程式碼片段、將被修改的檔案路徑，以及考量與權衡。 Once I've reviewed the research, I ask for a detailed implementation plan in a separate markdown file. The generated plan always includes a detailed explanation of the approach, code snippets showing the actual changes, file paths that will be modified, and considerations and trade-offs. Boris 明確表示 不使用 Claude Code 的內建 plan mode ，因為那不夠好。自己的 Markdown 文件給了他完全的控制權：可以在編輯器中編輯、加上行內筆記，而且它作為專案中的真實產"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "annotation-cycle-工作流中最具創新性的部分",
+    "sectionTitle": "Annotation Cycle — 工作流中最具創新性的部分",
+    "content": "這是 Boris 工作流中 最具特色的部分 ，也是他貢獻最大價值的地方。Claude 寫完計畫後，Boris 在編輯器中打開它， 直接在文件中加入行內筆記 。這些筆記修正假設、拒絕方法、添加約束條件，或提供 Claude 沒有的領域知識。 This is the most distinctive part of my workflow, and the part where I add the most value. After Claude writes the plan, I open it in my editor and add inline notes directly into the document. These notes correct assumptions, reject approaches, add constraints, or provide domain knowledge that Claude doesn't have. 筆記的長度差異極大。有時只有兩個字：在 Claude 標記為 optional 的參數旁邊寫「not optional」。有時則"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "implementation-phase-讓執行變得無聊",
+    "sectionTitle": "Implementation Phase — 讓執行變得無聊",
+    "content": "當計畫準備好後，Boris 發出一個 標準化的實作指令 ，他幾乎在每個實作階段都重複使用。到他說「implement it all」的時候，每個決策都已經做完並驗證過了。 實作變成機械式的，而不是創造性的。 這是刻意為之的 — 創造性工作發生在標註循環中。 By the time I say \"implement it all,\" every decision has been made and validated. The implementation becomes mechanical, not creative. This is deliberate. The creative work happened in the annotation cycles. Boris 同時解釋了他的標準 prompt 中每個片段的用意：「implement it all」意味著執行計畫中的所有內容，不要挑選；「mark it as completed in the plan document」意味著計畫是進度的唯一來源；「do not stop」意味著不要在流程中途暫停請求確認；「contin"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "feedback-staying-in-the-drivers-seat",
+    "sectionTitle": "Feedback & Staying in the Driver's Seat",
+    "content": "一旦 Claude 開始執行計畫，Boris 的角色從 架構師轉變為監督者 。他的 prompt 變得極為精簡。計畫階段的筆記可能是一整段文字，但實作階段的修正通常只有一句話。 Once Claude is executing the plan, my role shifts from architect to supervisor. My prompts become dramatically shorter. Where a planning note might be a paragraph, an implementation correction is often a single sentence. 前端工作是最迭代的部分。Boris 在瀏覽器中測試，然後快速射出修正：「wider」、「still cropped」、「there's a 2px gap」。對於視覺問題，他有時會附上截圖 — 一張錯位表格的截圖比描述問題更快傳達問題 。 Frontend work is the most iterative part. I test in the browser and fi"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "single-long-sessions-挑戰傳統認知",
+    "sectionTitle": "Single Long Sessions — 挑戰傳統認知",
+    "content": "Boris 在單一長工作階段中完成 research、planning 和 implementation，而不是將它們拆分到不同的工作階段。他表示 沒有看到大家所說的「context window 超過 50% 後效能下降」 的問題。到他說「implement it all」的時候，Claude 已經花了整個工作階段在建立理解：在 research 期間閱讀檔案、在標註循環中精煉心智模型、吸收他的領域知識修正。 I run research, planning, and implementation in a single long session. I am not seeing the performance degradation everyone talks about after 50% context window. By the time I say \"implement it all,\" Claude has spent the entire session building understanding. 當 context window 填滿時，Claude 的自動壓"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Research 防止「無知的變更」 AI 輔助編程最昂貴的失敗模式不是語法錯誤，而是「在隔離中正確但破壞周圍系統」的實作。深度閱讀 + 書面報告是防線。 Annotation Cycle 是核心創新 Markdown 文件作為人-AI 之間的共享可變狀態。人類在自己的節奏下思考、精確標註，讓 AI 重複修正計畫直到完美。 思考與打字分離 創造性決策在標註循環中完成，實作階段刻意設計成無聊的、機械式的。「don't implement yet」是最重要的防護語句。 Revert > Patch 當 AI 走錯方向時，回滾 + 縮小範圍永遠優於嘗試漸進修復。果斷放棄錯誤路線是效率的關鍵。"
+  },
+  {
+    "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
+    "docTitle": "Boris Tane Claude Code Workflow - Plan Before Code",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Tane / Personal Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Prompt"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Boris 為什麼堅持使用自己的 Markdown 文件而非 Claude Code 的內建 plan mode？這反映了什麼更深層的原則？ 表面原因是內建 plan mode 功能不足 — 無法在編輯器中自由編輯、加入行內筆記。但更深層的原則是 「人類必須擁有對產物的完全控制權」 。Markdown 文件是 Boris 可以在自己的時間和空間中思考的媒介，不受聊天界面的時間壓力。它作為專案中的真實產物而持續存在，不會隨著對話消失。 這也反映了一個重要的 AI 協作原則： 最有價值的產物應該存在於你的工作環境中，而不是被鎖在 AI 工具的介面裡。 這確保即使你換工具或工具失效，你的思考成果仍然保留。 Q2 產業應用 如果你要在 CDMO 的偏差調查 (Deviation Investigation) 流程中應用 Boris 的 Annotation Cycle 方法，你會如何設計這個流程？ 在 GMP 環境中，Boris 的 Annotation Cycle 天然適合偏差調查： Research Phase： 讓 AI 深度閱讀相關 SOP、批次紀錄、設備維護歷史，產出"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Claude Code 不是聊天機器人，而是一個 Agentic 編碼環境 — 它能讀取檔案、執行命令、自主解決問題。但這種自主性帶來一個核心限制： Context Window 填滿的速度比你想像的快，而且效能會隨之下降 。本文從 Anthropic 內部團隊的實戰經驗出發，整理出 6 大最佳實踐模式：驗證迴路、探索-規劃-執行流程、精確 Prompt、環境配置（CLAUDE.md / MCP / Hooks / Skills）、Session 管理、以及平行擴展。這不是功能介紹，而是一份「如何用對 Claude Code」的操作手冊。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "理解 Context Window 為什麼是 Claude Code 最重要的資源，以及如何管理它 掌握「探索 → 規劃 → 執行 → 提交」四階段工作流程 學會配置 CLAUDE.md、Skills、Hooks、MCP 建立高效開發環境 運用 Headless Mode 和 Fan-out 模式將 Claude Code 擴展到自動化工作流 Claude Code 最佳實踐核心流程 Explore Plan Mode 讀取理解 Plan 建立實作計畫 Implement 執行 + 驗證 Commit 提交 + PR"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-i-核心限制-context-window-是最重要的資源",
+    "sectionTitle": "Part I: 核心限制 — Context Window 是最重要的資源",
+    "content": "大多數最佳實踐都基於一個限制： Claude 的 Context Window 填滿的速度很快，效能會隨之下降 。Context Window 容納你整個對話的一切 — 每條訊息、每個讀取的檔案、每個指令輸出。一次除錯 session 就可能消耗數萬個 token。 \"Most best practices are based on one constraint: Claude's context window fills up fast, and performance degrades as it fills.\" 當 Context Window 接近滿載時，Claude 可能開始「 遺忘 」先前的指令或犯更多錯誤。這不是 bug — 這是 LLM 的基本特性。因此 Context Window 是你最需要管理的資源。 \"LLM performance degrades as context fills. When the context window is getting full, Claude may start 'forgetting' earlier instructio"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "核心觀念",
+    "sectionTitle": "核心觀念",
+    "content": "比喻說明 想像 Context Window 就像你的工作桌面。桌面越亂（塞滿不相關的文件），你找到需要的東西就越慢，出錯的機率也越高。 /clear 就像清理桌面 — 不同任務之間應該重新整理。 實務應用 用 custom status line 持續追蹤 context 使用量。在不同任務之間使用 /clear 重置。把 Context Window 當成你最珍貴的預算來管理。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-ii-給-claude-驗證自己工作的方法",
+    "sectionTitle": "Part II: 給 Claude 驗證自己工作的方法",
+    "content": "這是 最高槓桿的一件事 。Claude 在能驗證自己工作時表現顯著提升 — 執行測試、比對截圖、驗證輸出。沒有明確的成功標準，它可能產出看起來正確但實際不能用的東西。 \"Claude performs dramatically better when it can verify its own work... Without clear success criteria, it might produce something that looks right but actually doesn't work.\" 三個關鍵策略：(1) 提供驗證標準 — 給出具體測試案例和預期結果 (2) 視覺驗證 UI 變更 — 貼截圖讓 Claude 比對 (3) 解決根本原因而非症狀 — 提供錯誤訊息，要求找出根因。 \"Provide verification criteria... Verify UI changes visually... Address root causes, not symptoms.\""
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "before-vs-after",
+    "sectionTitle": "Before vs After",
+    "content": "Before After \"implement a function that validates email\" \"write validateEmail. test: user@ex.com=true, invalid=false. run tests after.\" \"make the dashboard look better\" [paste screenshot] \"implement this design, take screenshot, compare, fix differences\" \"the build is failing\" \"build fails with [error]. fix root cause, verify build succeeds.\" 重點提示 驗證可以是測試套件、linter、或檢查輸出的 Bash 指令。 投資在讓你的驗證堅如磐石 。你也可以用 Claude in Chrome 擴充功能做 UI 的視覺驗證。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-iii-先探索再規劃最後寫程式",
+    "sectionTitle": "Part III: 先探索、再規劃、最後寫程式",
+    "content": "讓 Claude 直接跳進寫程式，可能產出 解決錯誤問題的程式碼 。用 Plan Mode 將探索和執行分開。推薦四階段工作流： \"Letting Claude jump straight to coding can produce code that solves the wrong problem. Use Plan Mode to separate exploration from execution.\" Explore ：進入 Plan Mode，Claude 讀取檔案、回答問題但不做修改。 Plan ：要求 Claude 建立詳細實作計畫，按 Ctrl+G 在編輯器中直接修改計畫。 Implement ：切回 Normal Mode 執行，根據計畫驗證。 Commit ：提交並建立 PR。 \"The recommended workflow has four phases: Explore, Plan, Implement, Commit.\" 但 Plan Mode 也有開銷。 如果範圍明確、修改很小 （修正錯字、加 log、重新命名變數），直接做就好。規劃在你不確定方法、修"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "指令範例",
+    "sectionTitle": "指令範例",
+    "content": "# Explore (Plan Mode) read /src/auth and understand how we handle sessions and login. # Plan (Plan Mode) I want to add Google OAuth. What files need to change? Create a plan. # Implement (Normal Mode) implement the OAuth flow from your plan. write tests, run suite, fix failures. # Commit (Normal Mode) commit with a descriptive message and open a PR 比喻說明 這就像裝修房子：你不會拿到鐵鎚就開始敲牆。先看圖紙（Explore）、做施工計畫（Plan）、然後按計畫施工（Implement）。小修補可以直接動手，大工程一定要先規劃。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-iv-環境配置-claudemdskillshooksmcp",
+    "sectionTitle": "Part IV: 環境配置 — CLAUDE.md、Skills、Hooks、MCP",
+    "content": "CLAUDE.md 是 Claude 在每次對話開始時讀取的特殊檔案。放入 Bash 指令、程式碼風格、工作流規則 — 這些是 Claude 無法從程式碼本身推斷的持久性上下文 。用 /init 生成初始版本，然後逐步精煉。 \"CLAUDE.md is a special file that Claude reads at the start of every conversation. Include Bash commands, code style, and workflow rules.\" 關鍵原則： 保持精簡 。對每一行問：「移除這行會讓 Claude 犯錯嗎？」如果不會，就刪掉。臃腫的 CLAUDE.md 會讓 Claude 忽略你真正的指令。如果 Claude 持續做你不想要的事，檔案可能太長了。把 CLAUDE.md 當程式碼看待：定期審查、剪裁、測試。 \"Keep it concise. For each line, ask: 'Would removing this cause Claude to make mistakes?' If not, cut it. Bl"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "claudemd-該放什麼",
+    "sectionTitle": "CLAUDE.md 該放什麼",
+    "content": "Include Exclude Claude 猜不到的 Bash 指令 Claude 看程式碼就能推斷的事 偏離預設的程式碼風格 標準語言慣例 測試指令與偏好的 test runner 詳細 API 文件（改放連結） Repo 規範（branch 命名、PR 慣例） 經常變動的資訊 架構決策、常見陷阱 逐檔案的 codebase 描述 CLAUDE.md 範例 # Code style - Use ES modules (import/export), not CommonJS - Destructure imports when possible # Workflow - Typecheck after code changes - Prefer single tests over full suite Skills vs Hooks 的區別 Skills = 「建議」（Claude 視情況參考）。Hooks = 「規定」（每次都必須執行，零例外）。需要 100% 遵守的規則用 Hooks；需要領域知識的用 Skills。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-v-session-管理-早修正勤清理善用-checkpoint",
+    "sectionTitle": "Part V: Session 管理 — 早修正、勤清理、善用 Checkpoint",
+    "content": "最好的結果來自 緊密的回饋迴路 。一發現偏離就修正。 Esc 可以中途停止、 Esc+Esc 或 /rewind 回到之前的狀態、 /clear 在不相關任務間重置 context。 \"The best results come from tight feedback loops... Correct Claude as soon as you notice it going off track.\" 黃金法則： 如果你已經修正同一問題超過兩次，context 就被失敗方法污染了 。執行 /clear ，用更精確的 prompt 重新開始。乾淨的 session + 更好的 prompt 幾乎總是優於累積修正的長 session。 \"If you've corrected Claude more than twice on the same issue... A clean session with a better prompt almost always outperforms a long session with accumulated corrections.\" Subagen"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "session-管理快捷鍵",
+    "sectionTitle": "Session 管理快捷鍵",
+    "content": "操作 說明 Esc 中途停止 Claude，context 保留 Esc + Esc 開啟 rewind 選單，回復先前狀態 /clear 重置 context（任務切換時必用） /compact 智慧壓縮，保留關鍵決策 /rewind checkpoint 還原（對話/程式碼/兩者） --continue 恢復最近的對話 --resume 從最近 sessions 中選擇恢復 比喻說明 把每個 session 想像成 Git branch。不同工作流用不同 session，就像不同功能用不同 branch。用 /rename 給 session 取描述性名稱（如 \"oauth-migration\"、\"debugging-memory-leak\"）。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-vi-自動化與擴展-headless-mode平行-sessionfan-out",
+    "sectionTitle": "Part VI: 自動化與擴展 — Headless Mode、平行 Session、Fan-out",
+    "content": "一旦你能有效使用一個 Claude，就可以 水平擴展 。三種平行模式：(1) Headless Mode （ claude -p \"prompt\" ）整合進 CI pipeline 和自動化工作流 (2) 多 Session 平行 （Desktop app、Web、Agent Teams）(3) Fan-out （迴圈處理檔案清單，每個檔案一個 Claude 實例）。 \"Once you're effective with one Claude, multiply your output with parallel sessions, headless mode, and fan-out patterns.\" Writer/Reviewer 模式特別值得注意： 一個 session 寫程式碼，另一個 session 做 code review 。新鮮的 context 提供更好的 review 品質，因為 Claude 不會偏向自己剛寫的程式碼。同樣邏輯可以應用在「一個寫測試，另一個寫程式碼通過測試」。 \"A fresh context improves code review sin"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "headless-mode-範例",
+    "sectionTitle": "Headless Mode 範例",
+    "content": "# 一次性查詢 claude -p \"Explain what this project does\" # 結構化輸出（供腳本處理） claude -p \"List all API endpoints\" \\ --output-format json # Fan-out 模式 for file in $(cat files.txt); do claude -p \"Migrate $file from React \\ to Vue. Return OK or FAIL.\" \\ --allowedTools \"Edit,Bash(git commit *)\" done Writer/Reviewer 模式 Session A (Writer)： \"Implement a rate limiter for our API endpoints\" Session B (Reviewer)： \"Review the rate limiter in @src/middleware/rateLimiter.ts. Look for edge cases, race conditions.\" Session"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-vii-避免常見失敗模式",
+    "sectionTitle": "Part VII: 避免常見失敗模式",
+    "content": "失敗模式 症狀 修正方法 Kitchen Sink Session 一個 session 混雜多個不相關任務，context 充滿無關資訊 不同任務之間用 /clear 反覆修正 同一問題修正 3 次以上，context 被失敗嘗試污染 /clear + 寫更好的初始 prompt 臃腫 CLAUDE.md 指令太多，Claude 忽略一半 無情剪裁；能正確就不寫、改用 Hook 信任-驗證落差 看起來正確但沒處理邊緣案例 永遠提供驗證（測試/腳本/截圖） 無限探索 要求「調查」但不設範圍，Claude 讀數百個檔案 限定探索範圍或用 Subagents"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "context-是核心資源",
+    "sectionTitle": "Context 是核心資源",
+    "content": "Claude Code 的效能直接受 Context Window 影響。積極管理：用 /clear 重置、用 Subagents 隔離研究、用 /compact 智慧壓縮。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "驗證-信任",
+    "sectionTitle": "驗證 > 信任",
+    "content": "給 Claude 驗證自己工作的方法是最高槓桿動作。測試套件、截圖比對、linter — 投資在驗證機制上。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "claudemd-精簡原則",
+    "sectionTitle": "CLAUDE.md 精簡原則",
+    "content": "只放 Claude 猜不到的指令。每行都問「移除會犯錯嗎？」。太長會適得其反。定期審查和剪裁。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "水平擴展",
+    "sectionTitle": "水平擴展",
+    "content": "Headless Mode 整合 CI/CD、多 Session 平行工作（Writer/Reviewer）、Fan-out 處理大規模遷移。一個 Claude 有效後就該擴展。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-best-practices.html",
+    "docTitle": "Claude Code Best Practices - 環境配置到平行擴展",
+    "docDate": "2026-02-22",
+    "docSource": "Anthropic / Claude Code Documentation",
+    "docRating": 4.3,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼文章將 Context Window 稱為「最重要的資源」而非 GPU 算力或 API 成本？ 因為 Context Window 直接影響 Claude Code 的輸出品質。GPU 和 API 成本影響的是速度和費用，但 Context Window 填滿會導致 Claude 遺忘指令、犯更多錯誤 — 這是品質問題而非效率問題。一個充滿無關內容的 context 會讓正確的指令「沉沒」在噪音中，類似於人類在資訊過載時的認知退化。因此管理 context 是提升 Claude Code 效能的第一優先。 Q2 產業應用 在 CDMO 的 GMP 環境中，你會如何應用 Claude Code 的「驗證迴路」和「CLAUDE.md」概念？ 在 GMP 環境中，「驗證迴路」可以對應到自動化文件生成後的合規性檢查 — 例如讓 Claude Code 產出 SOP 草稿後，自動檢查是否包含所有 ALCOA+ 必要元素（Attributable, Legible, Contemporaneous, Original, Accurate）。CLAUDE.md 則可以內嵌 21"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-product-philosophy.html",
+    "docTitle": "Claude Code 產品哲學 - Boris Cherny 訪談",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Cherny / The Lightcone (YC Podcast)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Boris Cherny 是 Claude Code 的創建者。這個最初只是為了學 API 而隨手寫的終端聊天工具，在 2025 年 5 月公開發布後僅 6 個月就達到 10 億美元年化收入，目前貢獻了 GitHub 上 4% 的公開程式碼提交。這篇訪談摘要揭示了三個核心產品理念： 潛在需求 （Latent Demand）— 不要讓人做新事情，幫他們把正在做的事做得更簡單； 為未來的模型構建 — 不要為今天的模型做產品；以及 The Bitter Lesson — 永遠不要跟模型對賭。Boris 從 Opus 4.5 開始 100% 使用 Claude Code 寫程式碼、卸載了 IDE、每天提交約 20 個 PR，並預測「軟體工程師」這個頭銜將逐漸消失。 Learning Objectives 潛在需求 (Latent Demand) 理解為什麼觀察用戶「已經在做的事」比發明新行為更有效，以及如何應用在產品開發中 為未來模型構建 學習 Anthropic 的「六個月後」產品策略，理解 scaffolding 為何是技術債 Agent 拓撲與多 Agent 協作 掌握「不相關的上下文窗"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-product-philosophy.html",
+    "docTitle": "Claude Code 產品哲學 - Boris Cherny 訪談",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Cherny / The Lightcone (YC Podcast)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "從我在聽什麼音樂到-agi-時刻",
+    "sectionTitle": "從「我在聽什麼音樂」到 AGI 時刻",
+    "content": "Boris 說 Claude Code 的誕生完全是偶然。他加入 Anthropic Labs 團隊時的任務是探索某種編碼產品，但他先需要搞懂 API 怎麼用，就 隨手寫了個終端聊天 App 。選終端的原因很簡單：不用寫 UI，當時就他一個人。 \"I chose the terminal because I didn't have to write a UI. It was just me at the time.\" 當 Anthropic 推出 Tool Use 功能時，Boris 給模型加了一個 bash 工具，直接從文件範例搬過來的。他先讓模型用 cat 讀了個文件，然後問了一句：「我在聽什麼音樂？」Claude 寫了一段 AppleScript， 調用他 Mac 上的音樂播放器查了當前播放的歌 。 \"That was my first real AGI moment. I realized: this thing just wants to use tools, it just wants to interact with the world.\" 原型做出兩天後給團隊內部測試。"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-product-philosophy.html",
+    "docTitle": "Claude Code 產品哲學 - Boris Cherny 訪談",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Cherny / The Lightcone (YC Podcast)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "claudemd-與-plan-mode-的極簡哲學",
+    "sectionTitle": "CLAUDE.md 與 Plan Mode 的極簡哲學",
+    "content": "CLAUDE.md 的由來又是一個 潛在需求 的例子。用戶自發開始寫 markdown 檔案讓模型讀，Boris 觀察到這個行為後才把它產品化。Boris 的個人 CLAUDE.md 只有兩行：第一行是提交 PR 後自動合併；第二行是 PR 提交後發到團隊頻道讓人審批。 \"People just started writing markdown files for the model to read. We observed that behavior and productized it.\" Boris 的建議很直接： 如果你的 CLAUDE.md 太長了，刪掉，從頭來過 。模型能力隨著每次更新在變，你需要的是做最少的事情讓模型走上正軌。每個新模型需要的指令越來越少。 \"Delete it and start over. You'll find each new model needs fewer and fewer instructions.\" Plan Mode 的全部技術實現就是在 prompt 裡加一句 「請不要寫程式碼」 。Boris 周日晚上 10 點看到用戶反覆要求「先"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-product-philosophy.html",
+    "docTitle": "Claude Code 產品哲學 - Boris Cherny 訪談",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Cherny / The Lightcone (YC Podcast)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "三大產品原則",
+    "sectionTitle": "三大產品原則",
+    "content": "原則一：潛在需求 (Latent Demand) — 人們只會做他們已經在做的事 。你不能讓人做新事情，只能幫他們把正在做的事做得更簡單。Boris 說自己前幾次創業都不理解這個概念。 \"People will only do what they're already doing. You can't make people do new things, you can only make what they're doing easier.\" 原則二：為未來的模型構建 — 不要為今天的模型做產品，要為六個月後的模型做 。Claude Code 正式發布時只能寫 Boris 約 10% 的程式碼，但團隊賭對了模型進步方向。如果你只為當前模型最佳化，找到的 PMF 很快就會被別人用下一代模型超越。 \"Don't build for today's model, build for the model six months from now.\" 原則三：The Bitter Lesson — 永遠不要跟模型對賭 。他們辦公區牆上裱框了 Rich Sutton 2019 年寫的這篇文章。核心"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-product-philosophy.html",
+    "docTitle": "Claude Code 產品哲學 - Boris Cherny 訪談",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Cherny / The Lightcone (YC Podcast)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "新手-vs-老手初心者心態的力量",
+    "sectionTitle": "新手 vs 老手：初心者心態的力量",
+    "content": "Boris 認為跟上模型能力邊界的關鍵是 初心者心態和謙遜 。高級工程師過去被獎勵「有很強的觀點」，但很多這些觀點現在已經不再適用了。 \"Senior engineers were rewarded for having strong opinions, but many of those opinions no longer apply.\" 他講了一個內存洩漏的故事：Boris 按老辦法來（抓內存快照、開發者工具、看程式碼），團隊另一個工程師 Chris 直接讓 Claude Code 處理。 Claude 自己抓了快照、自己寫了分析工具、比 Boris 更快找到了洩漏。 \"This is something I have to constantly relearn, because my brain is sometimes still stuck six months ago.\" Boris 招人時會問一個簡單問題：「舉一個你犯錯的例子。」他想看候選人能不能承認錯誤、把責任歸到自己身上。他自己估計 大約一半的想法是錯的 。 \"About half of my ideas are "
+  },
+  {
+    "docFile": "2026-02-22_claude-code-product-philosophy.html",
+    "docTitle": "Claude Code 產品哲學 - Boris Cherny 訪談",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Cherny / The Lightcone (YC Podcast)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "agent-拓撲與-mama-claude",
+    "sectionTitle": "Agent 拓撲與 Mama Claude",
+    "content": "Boris 引出了 「Agent 拓撲」(Agent Topologies) 這個概念。核心思想是「不相關的上下文窗口」：多個 Agent 各有獨立的上下文，不會被彼此的上下文「污染」。更多上下文就是更多推理時計算 (inference-time compute)，配合合適的協作結構就能做更大的事。 \"Unrelated context windows — multiple agents each with their own independent context, not polluted by each other's context.\" Anthropic 的 Plugins 功能完全由一群 Agent 在週末自動協作構建完成。一個工程師給 Claude 一個規格說明 (spec)，讓它用 Asana 的看板來管理。 Claude 在 Asana 上創建了一堆任務，然後自動生成了一批子 Agent，這些 Agent 開始自動領取任務執行 。 \"The main Claude just gave instructions, and they figured it out them"
+  },
+  {
+    "docFile": "2026-02-22_claude-code-product-philosophy.html",
+    "docTitle": "Claude Code 產品哲學 - Boris Cherny 訪談",
+    "docDate": "2026-02-22",
+    "docSource": "Boris Cherny / The Lightcone (YC Podcast)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "1000-倍工程師與軟體工程師頭銜的消亡",
+    "sectionTitle": "1000 倍工程師與「軟體工程師」頭銜的消亡",
+    "content": "Anthropic 所有技術員工每天都在用 Claude Code。自推出以來， 人均生產力累計增長了 150% 。Boris 用自己在 Meta 的經歷做對比：當時 2% 的生產力提升就是幾百人工作一年的成果。150%？聞所未聞。 \"At Meta, a 2% productivity improvement was hundreds of people working for a year. 150%? Unheard of.\" Boris 個人從 Opus 4.5 開始就 100% 使用 Claude Code 寫程式碼 ，卸載了 IDE，每天提交約 20 個 PR，不再手動編輯任何一行程式碼。Anthropic 整體的 AI 編碼比例在 70-90% 之間。 \"I uninstalled my IDE. I submit about 20 PRs a day. I don't manually edit a single line of code anymore.\" Boris 認為程式設計將對所有人「基本解決」。 「軟體工程師」這個頭銜可能會消失 ，變成「builder」或「"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "4.2/5 實務應用, 工具生態 技術深度, 時效性 這篇文章是目前最完整的 Claude Cowork 非開發者使用指南。Huryn 從 PM 的角度出發，系統性地拆解了 Cowork 與 Chat/Code 的差異、Skills/Plugins 生態系統、MCP 連接架構（三種類型）、跨 Session 記憶方案，以及 Desktop Commander 這個「一分鐘 2 倍生產力」的技巧。文章最大價值在於 釐清了 Cowork 在 Claude 工具矩陣中的定位 ：Chat 是對話、Cowork 是工作流、Code 是開發。對非開發者來說，Cowork 可能是日常最實用的 AI Agent 入口。"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "理解-cowork-定位",
+    "sectionTitle": "理解 Cowork 定位",
+    "content": "區分 Chat / Cowork / Code 三個工具的核心差異與各自適用場景"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "掌握-plugin-與-mcp-架構",
+    "sectionTitle": "掌握 Plugin 與 MCP 架構",
+    "content": "理解 Skills、Plugins、MCP Connectors 三層擴展機制的運作方式"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "建立實用工作流",
+    "sectionTitle": "建立實用工作流",
+    "content": "設置 Desktop Commander、跨 Session 記憶、MCP 權限配置 Claude Desktop 三層工具架構 Chat 對話式互動 Artifacts 輸出 Cowork 自主 Agent Sub-agents 協作 Code CLI 開發 Git 工作流"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "part-i-cowork-是什麼不只是-chat-換皮",
+    "sectionTitle": "Part I Cowork 是什麼？不只是 Chat 換皮",
+    "content": "Cowork 不是一個換了外觀的聊天介面。它是一個 內建在 Claude Desktop 應用程式中的自主桌面 Agent 。當你打開 Cowork 分頁，你等於是給 Claude 一台在你機器上運行的沙箱 Linux VM 的存取權限。 Cowork is not a chat interface with a new skin. It's an autonomous desktop agent built into the Claude Desktop app. When you open the Cowork tab, you're giving Claude access to a sandboxed Linux VM running on your machine. 在那個沙箱裡，Claude 可以寫程式碼、執行腳本、建立檔案（Word 文件、簡報、試算表、PDF），還能連接 Gmail、GitHub、Slack 等服務。你描述需求， Cowork 會規劃工作、拆解成平行運作的 sub-agents，然後以可點擊的檔案交付結果 。 Inside that sandbox, C"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "part-ii-chat-vs-cowork為什麼是不同物種",
+    "sectionTitle": "Part II Chat vs. Cowork：為什麼是不同物種",
+    "content": "Huryn 做了一個清楚的比較： Chat 是對話，Cowork 是工作流 。Cowork 增加了真正重要的能力：sub-agent 協調平行工作、任務分解、檔案直接送到你的資料夾而非 chat artifacts。 Chat is for conversations. Cowork is for workflows. Cowork adds what matters for getting real work done: sub-agent coordination, task decomposition, and files delivered directly to your folder. 功能維度 Chat Cowork 互動模式 對話式來回 任務導向，自主規劃執行 輸出格式 Artifacts（聊天內檢視） 真正的檔案（.docx, .pptx, .xlsx, .pdf） 平行處理 無 Sub-agents 同時處理多個子任務 任務追蹤 無 即時進度顯示，可中途引導 檔案存取 有限 完整讀寫共享資料夾 工具連接 Connectors Connectors + Plugin "
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "part-iii-skills-與-plugins-生態系統",
+    "sectionTitle": "Part III Skills 與 Plugins 生態系統",
+    "content": "Skills 是可重複使用的指令手冊，教 Claude 如何處理特定的重複性任務。說「建立一個 Word 文件」，docx skill 就會載入。 Skills 不會一次全部載入 -- Claude 只讀取每個 skill 的簡短描述（約 100 tokens）來決定哪些相關 ，然後才載入完整指令。這保持了 context window 的乾淨。 Skills are reusable instruction manuals that teach Claude how to approach specific, repeatable tasks. Skills don't all load at once. Claude reads only a short description of each skill (~100 tokens) to decide which ones are relevant, then loads full instructions only when needed. Cowork 有專屬的 Plugins 面板（Chat 沒有）。你可以瀏覽、安裝、上傳和"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "part-iv-mcp連接-cowork-到你的世界",
+    "sectionTitle": "Part IV MCP：連接 Cowork 到你的世界",
+    "content": "MCP（Model Context Protocol）是 Anthropic 的開放標準。每個 MCP server 暴露 Claude 可以呼叫的工具。理解三種 MCP 連接方式的差異非常重要： MCP stands for Model Context Protocol — the open standard by Anthropic. Each MCP server exposes tools Claude can call. There are three ways to connect MCP servers to Claude. Remote Connectors 和 Custom Connectors 在所有地方都能用（包括瀏覽器的 claude.ai）。 Extensions 是 Anthropic 包裝的本地 MCP server，一鍵安裝。自訂 MCP server 則需要編輯 JSON 設定檔。 Remote and custom connectors work everywhere — including claude.ai in your browser. Ex"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "part-v-desktop-commander一分鐘讓-claude-desktop-強-2-倍",
+    "sectionTitle": "Part V Desktop Commander：一分鐘讓 Claude Desktop 強 2 倍",
+    "content": "Huryn 認為 Desktop Commander 是 投資報酬率最高的動作之一 ，而且只需不到一分鐘。安裝後，Chat、Cowork 和 Code Tab 都能在你的筆電上做幾乎任何事情，包括安裝 MCP server 或存取任何檔案。 That's one of the highest-ROI moves. And it takes less than 1 minute. Chat, Cowork, and Code Tab can do virtually anything on your laptop including installing MCP servers or accessing any file. 安裝步驟（4 步） 1. 打開 Claude Desktop 2. 在聊天視窗點擊： + > Connectors > Manage connectors 3. 點擊： Browse connectors > All > Desktop Commander 4. 選擇哪些工具不需要你的核准 提示： 不使用時停用 Claude in Chrome 擴充功能，避免 Cla"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "part-vi-跨-session-記憶方案",
+    "sectionTitle": "Part VI 跨 Session 記憶方案",
+    "content": "Huryn 提供了兩個層次的記憶方案。基礎版只需兩步：啟用 Desktop Commander + 在 Global Instructions 加入記憶管理指令。進階版則使用 結構化記憶系統 ： .claude/memory/ 下分為 general.md、domain/{topic}.md、tools/{tool}.md 等檔案。 Two simple steps for basic memory. Advanced: Split into multiple files so Claude loads only what's relevant — structured memory rooted at .claude/memory/. 核心規則是： 當你學到值得記住的東西，立刻寫入正確的檔案 。每條記錄包含：日期、什麼事、為什麼。Session 開始時讀取 memory.md，其他檔案只在相關時才載入。 When you learn something worth remembering, write it to the right file immediately. Entries"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "part-vii-chat-vs-cowork-vs-code-總覽",
+    "sectionTitle": "Part VII Chat vs. Cowork vs. Code 總覽",
+    "content": "文章最後提供了完整的三工具比較摘要。以下是從 Huryn 的視覺摘要整理出的關鍵差異： 面向 Chat Cowork Code (Tab/CLI) 目標使用者 所有人 非開發者的進階使用者 開發者 核心模式 對話 自主 Agent + Sub-agents CLI Agentic Coding 檔案輸出 Artifacts 真正的檔案到資料夾 程式碼到 repo Plugin 系統 無 Plugins Panel Plugins Panel (獨立) MCP 設定 Connectors 共用 Desktop 設定 Tab 共用 / CLI 獨立 記憶方案 Claude Memory memory.md 檔案 .claude/memory/ 或 --continue 最佳場景 問答、分析、腦力激盪 文件工作流、email、檔案管理 編碼、Git 工作流、CI/CD"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Cowork = 非開發者的 Agent 入口 同樣的模型、同樣的 skill 格式，但用視覺介面取代 CLI。對 PM、營運、行銷人員來說，Cowork 是 Claude 生態中最被低估的工具。 三層擴展：Skills > Plugins > MCP Skills 是指令手冊，Plugins 打包 skills + slash commands，MCP 連接外部服務。三層疊加讓 Cowork 從文件產生器變成全方位工作平台。 權限控制是關鍵 每個 MCP connector 都能設定 Allow/Ask/Block。Desktop Commander 雖然強大，但需要謹慎設定哪些操作需要你的核准，特別是在有敏感資料的環境。 記憶問題有解但需手動 memory.md 方案簡單有效，但依賴 Desktop Commander 且需要手動維護。這不是原生功能，而是社群的 workaround。"
+  },
+  {
+    "docFile": "2026-02-22_claude-cowork-guide.html",
+    "docTitle": "Claude Cowork 終極指南 - PM 桌面 Agent",
+    "docDate": "2026-02-22",
+    "docSource": "Paweł Huryn / Product Compass",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Cowork 的 sub-agent 機制與傳統 Chat 的差異，本質上解決了什麼問題？ Sub-agents 解決的核心問題是 context window 的瓶頸 。在 Chat 中，所有對話都在同一個 context 中，複雜任務容易超出上下文限制或導致品質下降。Cowork 的 sub-agents 各自獨立的 context，可以平行處理不同子任務，最後匯總結果。 這類似於軟體工程中的「分而治之」-- 把一個大問題拆成多個小問題，各自解決後再合併。對使用者來說，這意味著可以交付更複雜的工作而不需要手動拆解任務。 Q2 產業應用 在 CDMO 的 GMP 環境中，Cowork 的 Desktop Commander 功能帶來什麼合規風險？如何設定才能在 copilot mode 下安全使用？ 合規風險： Desktop Commander 讓 Claude 能存取和修改本機檔案。在 GMP 環境中，這可能觸及 21 CFR Part 11 的電子記錄要求 -- 任何對品質文件的修改都需要 audit trail 和授權簽核。 Copilot mode 設定建議"
+  },
+  {
+    "docFile": "2026-02-22_personal-business-agent.html",
+    "docTitle": "個人業務 Agent 化 - 從時間槓桿到算法槓桿",
+    "docDate": "2026-02-22",
+    "docSource": "XinGPT (@xingpt) / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.8/5 實務應用, 學習曲線 技術深度, 工具生態 投研 KOL XinGPT 分享了他在 2026 年春節期間將個人全部業務流程 Agent 化的完整經歷。核心主張：任何知識工作都可以拆解為 「知識庫 (Knowledge Base) → 技能框架 (Skills) → 自動化排程 (CRON)」 三層架構，用 API 成本（每月約 $500 美金）取代人力成本，將每日工作從 6 小時壓縮至 2 小時，產出反而提升 300%。 文章涵蓋投研 Agent 系統、內容生產 Agent 化、咨詢服務驗證、以及從 SaaS 到 AaaS (Agent as a Service) 的商業模式轉變。實務案例豐富、框架清晰易懂，但技術實作細節偏少（未涉及具體工具鏈、API 選型、部署架構），更偏向「方法論啟發」而非「技術教程」。 理解三層架構 掌握「知識庫 → Skills → CRON」的個人業務 Agent 化拆解方法 評估 Agent 化 ROI 學會分析「時間成本 vs API 成本」的替代邏輯，判斷哪些工作值得 Agent 化 設計行動路徑 運用「診斷 → 搭建 → 優化 → 商業化"
+  },
+  {
+    "docFile": "2026-02-22_personal-business-agent.html",
+    "docTitle": "個人業務 Agent 化 - 從時間槓桿到算法槓桿",
+    "docDate": "2026-02-22",
+    "docSource": "XinGPT (@xingpt) / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "三層架構是通用框架 「知識庫 → Skills → CRON」可以套用到任何知識工作：投研、內容、諮詢、銷售。核心是把你的判斷標準顯性化、結構化，讓 AI 按你的框架工作。 80/20 法則的 Agent 版 大多數知識工作者 80% 的時間在做資訊搬運，只有 20% 在做真正的判斷。Agent 化的第一步就是識別並自動化那 80%，把時間釋放給判斷層。 Skills 品質決定 Agent 上限 Agent 不會比你的判斷框架更聰明。如果 Skills 設計得差，Agent 只是更快地產出垃圾。持續迭代復盤 Skills 是系統長期價值的關鍵。 AaaS 是新商業模式 從「賣時間」到「賣算法能力」的範式轉移。但在高度監管行業（如製藥），Agent 只能做 copilot，不能自主決策。定位為「智慧助手」更安全。"
+  },
+  {
+    "docFile": "2026-02-22_personal-business-agent.html",
+    "docTitle": "個人業務 Agent 化 - 從時間槓桿到算法槓桿",
+    "docDate": "2026-02-22",
+    "docSource": "XinGPT (@xingpt) / X (Twitter)",
+    "docRating": 3.8,
+    "docTags": [
+      "Agent",
+      "Automation",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 作者三層架構中的「Skills」層為什麼被認為是「最容易被忽視但最關鍵」的？它和直接丟問題給 ChatGPT 有什麼本質區別？ 直接問 ChatGPT 是「無框架對話」——AI 用通用知識回答，不知道你的判斷標準、風險偏好、經驗教訓。Skills 層的本質是把 你的決策邏輯顯性化 ：明確定義輸入（什麼數據）、判斷標準（什麼閾值）、觸發條件（什麼情況下行動）、輸出格式（什麼形式交付）。 以偏差調查為例：直接問 AI「這個偏差怎麼處理」，它會給你教科書答案。但如果你把偏差分類決策樹（Critical / Major / Minor 判斷條件、歷史類似偏差的處置方式、你們工廠特有的設備特性）結構化為 Skill，AI 就能按照 你的經驗 工作，而不是按照通用知識工作。 核心區別： Skills 讓 AI 從「通用工具」變成「你的分身」 。 Q2 產業應用 在 GMP 環境下，作者的「CRON 自動化執行」層面臨什麼合規挑戰？如何在 21 CFR Part 11 框架下合理實施？ 核心挑戰：21 CFR Part 11 要求電子記錄必須有 可追溯的人為審核和電子簽名 。CRON"
+  },
+  {
+    "docFile": "2026-02-23_global-intelligence-crisis.html",
+    "docTitle": "2028 全球智慧危機 - AI Bull Case Gone Wrong",
+    "docDate": "2026-02-23",
+    "docSource": "Citrini Research / Alap Shah",
+    "docRating": 4.5,
+    "docTags": [
+      "Analysis",
+      "Agent",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "4.5/5 Framework, Practical Value Technical Depth, Tool Ecosystem 這篇文章以「2028 年 6 月回顧」的虛構體裁，推演 AI 持續超出預期後可能引發的 系統性經濟危機 。核心論點：AI 能力提升 白領裁員 消費萎縮 企業更依賴 AI 能力再提升，形成 無自然煞車的負反饋螺旋 （Intelligence Displacement Spiral）。 文章從 SaaS 估值崩塌、Agentic Commerce 消滅中間層、Private Credit 違約，一路推演到 13 兆美元房貸市場的結構性動搖。這不是預測，而是 壓力測試 ——幫助投資人和從業者提前辨識左尾風險。 理解 Intelligence Displacement Spiral 的完整傳導機制：從 AI 能力提升到消費萎縮的負反饋迴路 辨識 AI 對金融系統的二階 / 三階衝擊：SaaS 違約、Private Credit 傳染、房貸假設失效 將「左尾情境分析」方法應用於個人職涯規劃和 CDMO 營運策略的風險評估 Intelligence Displacement Spiral - 智慧位移螺旋 AI 能力躍升 Agentic Coding 推理能力突破 白領裁員 OpEx 替代 利潤率擴張 消費萎縮 Ghost GDP 收入中位數下降 加碼 AI 投資 成本壓力推動 更多自動化 I. 宏觀傳導機制 II. 金融系統傳染 III. 政策與啟示 Part I Ghost GDP — 繁榮的幻象 到 2026 年 10 月，S&P 500 逼近 8000 點，Nasdaq 突破 30k。AI 驅動的裁員潮始於 2026 年初，且效果完全符合預期： 利潤率擴張、盈餘超越預期、股價上漲 。創紀錄的企業獲利直接回流到 AI 算力投資。 \"The euphoria was palpable. By October 2026, the S&P 500 flirted with 8000, the Nasdaq broke above 30k. The initial wave of layoffs due to human obsolescence began in early 2026, and they did exactly what layoffs are supposed to. Margins expanded, earnings beat, stocks rallied. Record-setting corporate profits were funneled right back into AI compute.\" 表面數字看起來很棒。名目 GDP 反覆印出中高個位數的年化增長。生產力正在飆升。但 實質工資增長崩塌 ——白領工人被機器取代，被迫轉入低薪職位。 \"The headline numbers were still great. Nominal GDP repeatedly printed mid-to-high single-digit annualized growth. Productivity was booming. ...real wage growth collapsed. Despite the administration's repeated boasts of record productivity, white-collar workers lost jobs to machines"
+  },
+  {
+    "docFile": "2026-02-23_personal-brain-os.html",
+    "docTitle": "Personal Brain OS - File System as AI Agent Memory",
+    "docDate": "2026-02-23",
+    "docSource": "Muratcan Koylan / X Thread",
+    "docRating": 4.2,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Muratcan Koylan 厭倦了每次與 AI 對話都要重新介紹自己，於是打造了一套名為 Personal Brain OS 的檔案式個人作業系統。整個系統是一個 Git repository，包含 80+ 個 Markdown、YAML、JSONL 檔案，涵蓋他的語氣、品牌、目標、聯絡人、內容管線和失敗紀錄。核心架構原則是 Progressive Disclosure（漸進式揭露） ：不一次餵給 AI 所有資料，而是透過三層路由（Routing → Module → Data）讓模型在每個任務只看到它需要的東西。這不是 Prompt Engineering，而是 Context Engineering ── 設計資訊架構，讓 AI 能做出正確決策。 Learning Objectives 🏗️ Context Engineering 架構設計 理解 Progressive Disclosure 三層架構如何解決 Context Window 的注意力瓶頸 📁 檔案格式選擇策略 掌握 JSONL / YAML / Markdown 各自的最佳使用場景與 Agent 安全性考量 ⚡ Skill System 與自動化鏈 學習如何用 Agent Skills 編碼工作流程，實現一個指令觸發完整上下文組裝 Progressive Disclosure 三層架構 🗺️ Level 1: Routing SKILL.md 輕量路由 永遠載入，判斷任務類型 → 📋 Level 2: Module CONTENT.md 等模組指令 40-100 行，任務相關才載入 → 💾 Level 3: Data JSONL/YAML 資料檔 逐行讀取，按需載入 Content Deep Dive 架構基礎 檔案即記憶 Skill 系統 日常運作 踩坑與成果 Part I & II — 核心問題與模組化架構 大多數人認為 AI 助手的瓶頸在於 Prompting（提示方式） 。寫一個更好的 Prompt，得到更好的回答。這對單次互動來說是對的，但當你想讓 AI 長期以你的身份運作 時就完全行不通了。 \"Most people think the bottleneck with AI assistants is prompting. Write a better prompt, get a better answer. That's true for single interactions. It falls apart when you want an AI to operate as you across dozens of tasks over weeks and months.\" 語言模型有有限的 Context Window，而且 不是所有 Token 位置都同等重要 。把所有資訊塞進 System Prompt 不只浪費，還會主動降低表現 ── 每個 Token 都在搶奪模型的注意力。我們的大腦也類似：別人花 15 分鐘簡報，你記得第一件事和最後一件事，中間模糊。語言模型有同樣的 U 型注意力曲線 。 \"Language models have a finite context window, and not all of it is created equal... dumping everything you know into a system prompt isn't just wasteful, it actively degrades p"
+  },
+  {
+    "docFile": "2026-02-24_kobeissi-ai-abundance.html",
+    "docTitle": "AI Abundance vs Doom - Kobeissi Counter-Narrative",
+    "docDate": "2026-02-24",
+    "docSource": "The Kobeissi Letter / @KobeissiLetter",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 3.6/5 ↑ 時效性, 實務應用 ↓ 技術深度, 工具生態 The Kobeissi Letter 挑戰當前市場共識：AI 末日論太明顯，而「明顯的交易從來不會贏」。文章提出 Abundance GDP 框架，認為 AI 帶來的認知成本崩跌不會摧毀經濟，反而可能觸發史上最大的生產力擴張。核心論點是：當生產成本崩跌，需求不會停滯不動，而是爆炸式擴張。歷史上每次重大技術革命（PC、網路、雲端）都遵循這個模式。文章同時承認 Anthropic 的 Claude 正在真實地壓縮企業市值（IBM 最差單日表現、CrowdStrike 蒸發 200 億美元），但認為這是轉型訊號而非崩潰訊號。 定位為投資分析信，觀點鮮明但帶有明顯推銷自家付費服務的動機。數據引用紮實但選擇性呈現，缺乏對轉型期間摩擦成本的深入分析。 Learning Objectives 1 理解 Abundance GDP 框架：價格下跌快於收入下降時，實質購買力如何提升 2 區分 Commoditization（商品化） 與 Collapse（崩潰）：技術壓縮利潤但擴大市場參與 3 評估 AI 對 CDMO 產業 的雙重影響：成本壓縮 vs 市場擴張機會 Kobeissi 的 Abundance GDP 邏輯鏈 AI 認知成本崩跌 AI 壓縮知識工作邊際成本 $ 服務價格下降 醫療/法律/教育等服務變便宜 + 購買力提升 實質所得增加，無需加薪 ^ 需求擴張 新產業與消費類別誕生 Part I Anthropic Takedowns：市場反應是真實的 Kobeissi 開門見山承認： 我們無法忽視市場 。Anthropic 正在透過 Claude 顛覆世界，Fortune 500 企業因此蒸發了數千億美元市值。這已經是 2026 年反覆出現的故事模式：Anthropic 發布新工具，Claude 在編碼和工作流自動化方面大幅進步，目標產業的股價在數小時內崩跌。 \"Anthropic is disrupting the world through Claude, with Fortune 500 companies shedding hundreds of billions of market cap as a result.\" 具體案例令人印象深刻：IBM 發布自 2000 年 10 月以來最糟糕的單日表現（Anthropic 宣布 Claude 可以簡化 COBOL 代碼）；Adobe 年初至今下跌 30%；CrowdStrike 在「Claude Code Security」發布後兩個交易日內蒸發了 200 億美元 市值。 \"IBM stock just posted its worst day since October 2000 after Anthropic announced that Claude can streamline COBOL code.\" 但關鍵的重新框架來了： 商品化不是崩潰（Commoditization is not collapse） 。個人電腦商品化了計算，網路商品化了分銷，雲端商品化了基礎設施，而 AI 正在商品化認知。 \"Commoditization is not collapse. Rather, it is how technology lowers costs and expands access.\" 重點提示 Anthropic Takedown 模式： Anthropic 發布新能力 Claude 在特定領域大幅進步 目標產"
+  },
+  {
+    "docFile": "2026-02-25_ai-ethics-fintech-profiling.html",
+    "docTitle": "AI Ethics - Fintech Psychological Profiling",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Mila Agius / Substack",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Security",
+      "Analysis"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這篇文章揭露了一個歐洲 Fintech 公司如何使用 精神科臨床術語 對客戶進行心理分類，再透過 AI 將這套剝削系統工業化擴展到數十萬人。作者 Mila Agius 親歷了這套系統的內部運作，並提出了 Projective Calibration Layer (PCL) 作為倫理替代方案。核心洞察： AI 不是發明剝削的一方，而是移除了剝削的規模限制 。對任何採購 AI 工具或建構個人化系統的領導者而言，這篇文章提供了一個清晰的框架來區分「幫助客戶」與「利用客戶」。 Learning Objectives 辨識剝削式個人化 理解 AI 心理剖析如何從「個人化服務」跨越到「系統性剝削」的三個判斷標準 掌握 PCL 框架 學會 Projective Calibration Layer 的三步驟設計，以及三道安全護欄的實作邏輯 建立採購審計思維 開發評估 AI 供應商個人化系統的關鍵問題清單，應用到組織決策中 Projective Calibration Layer (PCL) Framework Step 1: Identify AI 分析行為模式 （非人格判斷） Step 2: Calibrate 投射式微測驗 驗證偏好 Step 3: Scale 全用戶群應用 僅調整溝通格式 Part I: The Shiny Narrative - AI as Customer Hero 歐洲 Fintech 公司積極將 AI 定位為改善客戶體驗的工具。敘事完美無瑕： 技術服務客戶，讓生活更簡單，讓財務更清晰，讓決策更好 。 \"European fintech companies actively position artificial intelligence as a way to improve customer experience. The narrative is flawless: technology serves the customer, makes life easier, makes finances clearer, and decisions better.\" 數字看起來令人印象深刻：Klarna 的 AI 助手在第一個月處理了 230 萬次對話，佔所有支援請求的三分之二。解決時間從 11 分鐘降到 2 分鐘。Bunq 的 AI 助手 Finn 自主解決 40% 的請求，協助另外 35%。 \"Klarna launched an AI assistant based on OpenAI that, in its first month, handled 2.3 million conversations... Resolution time dropped from 11 minutes to two.\" 在詐欺防範方面，Visa Protect 透過即時模式分析將詐欺偵測提高了 40%。一切聽起來都很進步： 更快、更方便、更安全 。 \"All of this sounds progressive. Faster, more convenient, safer. AI as the customer's assistant, a technological shield against fraudsters and bureaucracy.\" 比喻說明：表演舞台 想像 Fintech 的 AI 敘事就像一場精心製作的舞台表演：觀眾（客戶）看到的是華麗的前台——友善的聊天機器人、個人化推薦、「我們在這裡幫助你」的訊息。但舞台後方還有"
+  },
+  {
+    "docFile": "2026-02-25_cursor-non-engineering.html",
+    "docTitle": "Cursor 非工程用途指南 - PM 設計師實戰",
+    "docDate": "2026-02-25",
+    "docSource": "Rich Holmes / Department of Product",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Integration"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這篇指南是少數 專門為非工程師撰寫的 Cursor 使用教學 ，涵蓋四個核心用例：用 Mermaid 圖視覺化程式碼架構、用內建 Browser 測試功能、用新推出的 Plugin Marketplace 建立產品分析 Pipeline、以及用 Claude Code + Figma MCP 雙向推送原型設計。文章強調 Cursor 已從「工程師 IDE」轉型為 產品團隊的多功能工作站 ，特別是 Plugin 生態系統讓 PM 可以一鍵串接 Amplitude、Linear、Notion 等工具。內容偏實操導向，概念深度適中，適合想快速上手 Cursor 的產品人員。 Learning Objectives 🗺️ Cursor 核心介面與模式 理解 Agent/Ask/Plan/Edit 四種模式的適用場景，掌握 Working Directory 的設定邏輯 🔌 Plugin Pipeline 建構 學會用 Cursor Plugin Marketplace 串接 Amplitude + Linear + Notion 建立自動化產品分析流程 🎨 Claude Code + Figma MCP 掌握雙向 Figma 整合：從本地 UI 擷取並推送為可編輯的 Figma 設計稿 Cursor 非工程師工作流四步驟 📂 理解架構 視覺化 Codebase → 🧪 測試功能 Browser + Design Bar → 🔗 自動化 Pipeline Plugin 串接工具 → 🎨 原型設計 Claude Code → Figma Part I — Cursor 定位與介面基礎 Cursor 本質上是一個 以 AI 為核心的程式碼編輯器 ，但它正快速演化為產品團隊的多功能工作站。Stripe 已將 Cursor 部署給超過 3,000 名工程師，而越來越多的 PM 和設計師也開始將它作為日常工具。 \"Cursor is used by some of the world's leading tech companies, including Stripe, who recently rolled it out to over 3,000 engineers.\" 對非工程師來說，Cursor 有兩種主要使用方式： 從零建構東西 （例如原型）或 與現有程式碼互動 （例如理解架構、生成文件）。不需要寫程式就能獲得巨大價值。 \"...you can build something entirely from scratch... or you can use it to interact with your existing code base...\" ⚠️ 重點提示：Working Directory Working Directory（工作目錄）是 Cursor 的「視野範圍」。開太高層的資料夾 → Agent 雜訊太多；開太低層 → 失去專案全貌上下文。正確的做法是開啟 專案根目錄 。 💡 比喻說明 Working Directory 就像你走進一間辦公室——如果你站在大樓門口（太高層），你看到的是所有公司的招牌但什麼都不清楚；如果你只進了一間會議室（太低層），你不知道隔壁在做什麼。正確的做法是走進你自己團隊的樓層。 📚 核心概念：四種模式 模式 用途 PM 適用場景 Agent 自主執行任務、寫/改程式碼 建構原型、Plugin Pipeline Ask 問答、不修改檔案 理解架構、詢問技術細節 Plan 規劃方案再確認 需求拆解、技"
+  },
+  {
+    "docFile": "2026-02-25_geo-ai-visibility.html",
+    "docTitle": "GEO 實戰 - AI Visibility Framework",
+    "docDate": "2026-02-25",
+    "docSource": "Darlene Killen / The Visible Practitioner via The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Framework",
+      "Tool",
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 3.6/5 ↑ Practical Value, Framework Clarity ↓ Technical Depth, Data Rigor 這篇文章記錄了一位小眾領域實踐者如何在 6 週內，從所有主流 AI 平台完全隱形，到被 Claude 主動推薦的完整過程。核心論點是： Google 排名不等於 AI 能見度 ，因為 AI 推薦系統依賴的是「實體辨識」而非「頁面相關性」。文章提出三個關鍵信號（Entity Recognition、Semantic Consistency、Cross-Platform Presence）和一套四階段 GEO 框架。實務價值高——有具體步驟、時程和自我檢測工具。但技術深度有限，缺乏 AI 系統內部運作的嚴謹解釋，部分因果宣稱需要打折理解。 1"
+  },
+  {
+    "docFile": "2026-02-25_geo-ai-visibility.html",
+    "docTitle": "GEO 實戰 - AI Visibility Framework",
+    "docDate": "2026-02-25",
+    "docSource": "Darlene Killen / The Visible Practitioner via The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Framework",
+      "Tool",
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "理解-geo-vs-seo-的根本差異",
+    "sectionTitle": "理解 GEO vs SEO 的根本差異",
+    "content": "為什麼 Google 排名高不代表 AI 會推薦你，兩套系統的評估邏輯有何不同 2"
+  },
+  {
+    "docFile": "2026-02-25_geo-ai-visibility.html",
+    "docTitle": "GEO 實戰 - AI Visibility Framework",
+    "docDate": "2026-02-25",
+    "docSource": "Darlene Killen / The Visible Practitioner via The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Framework",
+      "Tool",
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "掌握-ai-推薦的三個核心信號",
+    "sectionTitle": "掌握 AI 推薦的三個核心信號",
+    "content": "Entity Recognition、Semantic Consistency、Cross-Platform Presence 如何運作 3"
+  },
+  {
+    "docFile": "2026-02-25_geo-ai-visibility.html",
+    "docTitle": "GEO 實戰 - AI Visibility Framework",
+    "docDate": "2026-02-25",
+    "docSource": "Darlene Killen / The Visible Practitioner via The AI Maker",
+    "docRating": 3.6,
+    "docTags": [
+      "Framework",
+      "Tool",
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "建立自己的-geo-行動計畫",
+    "sectionTitle": "建立自己的 GEO 行動計畫",
+    "content": "四階段框架的具體執行步驟，以及如何衡量進展 Creator GEO Framework - 四階段實施流程 1 Foundation 統一 Bio + 語意一致性 → 2 Expansion 4+ 平台跨域佈局 → 3 References 外部引用 + Reddit → 4 Verify 月度測試 + 追蹤 Part I AI 能見度的盲點：為什麼 AI 不認識你 作者（Darlene Killen）經營了兩年的小眾實踐品牌 MoonInMental，持續產出內容、有清楚的方法論和定位。但當她用無痕模式在 ChatGPT、Claude、Perplexity、Gemini 上搜尋自己領域的推薦時， 沒有任何一個平台提到她 。 \"Two years building MoonInMental... I asked ChatGPT to recommend practitioners in my field. Nothing. I tried Claude. Perplexity. Gemini. I wasn't mentioned. Not once.\" 這不只是創作者的問題。如果你是"
+  },
+  {
+    "docFile": "2026-02-25_shared-ai-context-files.html",
+    "docTitle": "Shared AI Context Files - 團隊共享上下文",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "executive-summary-快速摘要",
+    "sectionTitle": "Executive Summary | 快速摘要",
+    "content": "**** 3.8/5 ^ Practical Value, Tool Ecosystem v Technical Depth, Timeliness 本文提出一個簡單但高影響力的概念：將 AI 上下文從「每人每次重新解釋」轉為「共享檔案自動載入」。核心載具是 CLAUDE.md 和 AGENTS.md 等 instruction files（指令檔案），部署在團隊共享資料夾中，讓每次 AI Session（AI 工作階段）自動載入正確的公司、部門和專案上下文。文章的最大價值在於「知識複利」框架：一個人的修正自動惠及整個團隊。技術深度較淺，但實作導向清晰，適合作為團隊導入 AI Context Management（AI 上下文管理）的入門指南。"
+  },
+  {
+    "docFile": "2026-02-25_shared-ai-context-files.html",
+    "docTitle": "Shared AI Context Files - 團隊共享上下文",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "learning-objectives-學習目標",
+    "sectionTitle": "Learning Objectives | 學習目標",
+    "content": "$ 量化隱形成本 理解團隊重複提供 AI 上下文的時間成本，以及 Shared Context Files 的 ROI 計算邏輯 # 掌握分層架構 學會用資料夾結構鏡射組織架構，實現自動化的上下文分層載入 + 建立複利機制 設計共享修正流程，讓每次 AI 錯誤修正自動惠及整個團隊 Shared Context Compounding Model | 共享上下文複利模型 1 Structure 資料夾鏡射組織架構 2 Share 團隊共用 Context Files 3 Correct 發現錯誤即時更新 4 Compound 修正自動惠及全團隊"
+  },
+  {
+    "docFile": "2026-02-25_shared-ai-context-files.html",
+    "docTitle": "Shared AI Context Files - 團隊共享上下文",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-i-問題隱形的上下文成本",
+    "sectionTitle": "Part I | 問題：隱形的上下文成本",
+    "content": "Part I The Hidden Cost of Context Re-Explanation 想像付薪水給三名全職員工，讓他們什麼都不做，只是 反覆向一個每晚失憶的 AI 解釋你的公司 。這就是大多數組織正在發生的事情。 Imagine paying three full-time employees to do nothing but re-explain your company to an AI that forgets everything overnight. That's what's happening right now at most organizations. 目前大多數團隊使用 AI 的方式是 個人化且孤立的 ：每個人都有自己的設定、自己的 Prompt、自己向 AI 解釋相同公司上下文的方式。每次 Session 從零開始。 Right now, most teams using AI at work are doing it the same way: individually. Everyone's got their own setup, their"
+  },
+  {
+    "docFile": "2026-02-25_shared-ai-context-files.html",
+    "docTitle": "Shared AI Context Files - 團隊共享上下文",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-ii-解方從-web-based-到-folder-based",
+    "sectionTitle": "Part II | 解方：從 Web-based 到 Folder-based",
+    "content": "Part II The Shift: Folder-Based AI Tools 解決方案始於一個關鍵轉換：從 Web-based AI 工具 （如 ChatGPT 或 claude.ai）遷移到 Folder-based AI 工具 （如 Claude Code、Claude Cowork、Cursor 或 Antigravity）。差異至關重要。 It starts with one shift: moving your team from web-based AI tools (like ChatGPT or claude.ai) to folder-based AI tools like Claude Code, Claude Cowork, Cursor, or Antigravity. Web-based AI 工具每次對話都是空白的——不記得你的公司、專案或偏好。Folder-based AI 工具則直接與電腦上的檔案和資料夾協作，能夠 自動讀取指令檔案 ，在每次 Session 開始時告訴 AI 你是誰、你在做什麼。 Web-based AI tools start e"
+  },
+  {
+    "docFile": "2026-02-25_shared-ai-context-files.html",
+    "docTitle": "Shared AI Context Files - 團隊共享上下文",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-iii-複利效應團隊共享的力量",
+    "sectionTitle": "Part III | 複利效應：團隊共享的力量",
+    "content": "Part III Knowledge Compounding Through Shared Context 當個人使用 Context Files 時，已經是很大的改進——不再每次從零開始。但當團隊 共享 Context Files 時，更強大的事情發生了： 知識產生複利效應 （knowledge compounds）。 But when a team shares context files, something more powerful happens: knowledge compounds. 假設行銷團隊共用一個 Marketing 資料夾。共享指令檔案包含品牌指南、目標受眾、溝通風格。團隊中每個人——無論是起草 Campaign Email、撰寫廣告文案或建立 Landing Page——每次 AI Session 都從相同的共享上下文開始。沒有人參考過時文件，沒有人重新解釋品牌聲音。 Say your marketing team works out of a shared Marketing folder. The shared instruction file has"
+  },
+  {
+    "docFile": "2026-02-25_shared-ai-context-files.html",
+    "docTitle": "Shared AI Context Files - 團隊共享上下文",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-iv-實作指南三步建立共享上下文",
+    "sectionTitle": "Part IV | 實作指南：三步建立共享上下文",
+    "content": "Part IV How to Set It Up: Three Requirements 建立團隊共享上下文不需要技術背景，只需要三個要素： 共享工作空間 、 鏡射組織架構的資料夾結構 、以及 持續貢獻的習慣 。 You don't need a technical background to get started... A shared place to work... A folder structure that mirrors how your company and teams work... A habit of contributing so the files stay useful over time. 1. 共享工作空間： 團隊需要一個所有人都能存取的共享資料夾。可以是雲端儲存（Dropbox, Google Drive, OneDrive）或 Git（GitHub, GitLab）。關鍵是確保變更不會遺失或被覆寫。 Your team needs a shared folder where everyone can access the same files. "
+  },
+  {
+    "docFile": "2026-02-25_shared-ai-context-files.html",
+    "docTitle": "Shared AI Context Files - 團隊共享上下文",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-v-從小處開始最低可行啟動方案",
+    "sectionTitle": "Part V | 從小處開始：最低可行啟動方案",
+    "content": "Part V Start Small, Then Scale 你不需要一夜之間在整個公司推出。 從一個部門或一個團隊開始 。建立一個共享資料夾，一起寫一份涵蓋基本資訊的 CLAUDE.md：這個團隊做什麼、AI 需要知道什麼、你希望 AI 如何工作。 You don't need to roll this out across your entire company overnight. Start with one department or one team. Create a shared folder, write a single CLAUDE.md or AGENTS.md file together that captures the basics. 然後使用它。注意缺少什麼。更新。這就是整個流程。一旦一個團隊看到好處，它會自然擴散——其他團隊會想要同樣的優勢。 Then use it. Notice what's missing. Update. That's the whole process. Once one team sees the benefit, it s"
+  },
+  {
+    "docFile": "2026-02-25_shared-ai-context-files.html",
+    "docTitle": "Shared AI Context Files - 團隊共享上下文",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "key-takeaways-重點整理",
+    "sectionTitle": "Key Takeaways | 重點整理",
+    "content": "Context Tax 是真實的隱形成本 每年 6,000+ 小時浪費在重複解釋上下文。這不是效率問題，是結構問題——工具選擇決定了上下文能否被複用。 Folder-based > Web-based 從 ChatGPT/claude.ai 遷移到 Claude Code/Cursor/Cowork 是啟用共享上下文的前提。Folder-based 工具能自動讀取指令檔案。 知識複利 = 修正 x 傳播 共享 Context File 的核心價值不在初始設定，而在持續修正。一個人的修正惠及整個團隊——這是個人使用做不到的。 Start Small, Compound Fast 不需要全公司同時導入。一個團隊、一個資料夾、一份 CLAUDE.md。使用、發現不足、更新。複利效應會自然吸引其他團隊加入。"
+  },
+  {
+    "docFile": "2026-02-25_shared-ai-context-files.html",
+    "docTitle": "Shared AI Context Files - 團隊共享上下文",
+    "docDate": "2026-02-25",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "practice-練習題",
+    "sectionTitle": "Practice | 練習題",
+    "content": "Q1 概念理解 Web-based AI 工具和 Folder-based AI 工具在上下文管理上的核心差異是什麼？為什麼這個差異決定了「共享上下文」的可行性？ 核心差異： Web-based 工具（ChatGPT, claude.ai）每次對話從空白狀態開始，無法自動載入預設上下文。Folder-based 工具（Claude Code, Cursor, Cowork）能讀取本地資料夾中的指令檔案（如 CLAUDE.md），在每次 Session 開始前自動載入。 為什麼這決定可行性： 共享上下文的前提是「檔案可以被放在共享資料夾中，且工具能自動讀取」。Web-based 工具沒有這個機制——你只能手動貼上上下文，這本質上還是個人化的、無法擴展的。Folder-based 工具的檔案分層載入（stacking）機制讓公司級、部門級、專案級的上下文可以自動疊加。 Q2 產業應用 在你的 CDMO 環境中，如果要建立共享 CLAUDE.md，「公司級」檔案應該包含哪些 GMP 相關內容？有哪些內容絕對不應該放在 AI 可讀取的指令檔案中？ 應包含的 GMP 內容： ALCOA+ 數據完"
   }
 ];

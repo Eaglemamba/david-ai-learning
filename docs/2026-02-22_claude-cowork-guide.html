@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Cowork 終極指南 - PM 的桌面 AI Agent</title>
+    
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-02-22">
+    <meta name="doc-title" content="Claude Cowork 終極指南 - PM 桌面 Agent">
+    <meta name="doc-source" content="Paweł Huryn / Product Compass">
+    <meta name="doc-tags" content="Agent,Tool,Automation,Integration">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="Cowork 桌面 Agent 完整指南：Skills/Plugins、MCP 連接、跨 Session 記憶、與 Chat/Code 比較。">
+    <meta name="doc-file" content="2026-02-22_claude-cowork-guide.html">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+        
+        /* Header */
+        .header { text-align: center; padding: 2.5rem 2rem; background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%); color: white; border-radius: 1rem; margin-bottom: 2rem; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.3; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 600; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-auto { background: #a7f3d0; color: #065f46; }
+        .tag-int { background: #99f6e4; color: #134e4a; }
+        .source-info { font-size: 0.85rem; opacity: 0.8; }
+        .source-info a { color: #93c5fd; text-decoration: none; }
+        .source-info a:hover { text-decoration: underline; }
+        
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 1rem; padding: 1.75rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+        .exec-summary h2 { font-size: 1.2rem; color: #1e3a8a; margin-bottom: 1rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.75rem; }
+        
+        /* Learning Objectives */
+        .objectives { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-top: 3px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-item h3 { font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.4rem; }
+        .objective-item p { font-size: 0.82rem; color: #64748b; line-height: 1.5; }
+        
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        
+        /* Section Headers */
+        .section-header { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+        .part-label { font-size: 0.75rem; font-weight: 600; color: #6366f1; background: #e0e7ff; padding: 0.2rem 0.6rem; border-radius: 0.25rem; margin-right: 0.5rem; }
+        
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 2rem; background: white; border-radius: 0.75rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+        .content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-grid.linear .content-left { border-right: none; }
+        
+        /* Bilingual Block */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.3rem; }
+        .en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
+        
+        /* Info Boxes */
+        .info-box { border-radius: 0.5rem; margin-bottom: 1rem; overflow: hidden; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 600; font-size: 0.85rem; }
+        .info-box-content { padding: 0.75rem 1rem; font-size: 0.88rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+        
+        /* Highlights */
+        .hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        
+        /* Code Block */
+        pre { background: #1e293b; color: #e2e8f0; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; line-height: 1.6; margin: 0.75rem 0; }
+        code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; background: #f1f5f9; padding: 0.15rem 0.35rem; border-radius: 3px; color: #6d28d9; }
+        pre code { background: transparent; padding: 0; color: #e2e8f0; }
+        
+        /* Comparison Table */
+        .compare-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
+        .compare-table th { background: #1e3a5f; color: white; padding: 0.75rem 1rem; text-align: left; font-weight: 600; }
+        .compare-table td { padding: 0.6rem 1rem; border-bottom: 1px solid #e2e8f0; }
+        .compare-table tr:nth-child(even) { background: #f8fafc; }
+        .compare-table tr:hover { background: #e0f2fe; }
+        
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #8b5cf6; }
+        .summary-card:nth-child(4) { border-left-color: #f59e0b; }
+        .summary-card h4 { font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
+        .summary-card p { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+        
+        /* Accordion */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+        .question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+        .question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+        
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+        
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.82rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .chat-title { background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 0.5rem; display: inline-block; margin-top: 0.75rem; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; color: #475569; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+            .objectives { grid-template-columns: 1fr; }
+            .takeaways { grid-template-columns: 1fr; }
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="tags">
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-auto">Automation</span>
+            <span class="tag tag-int">Integration</span>
+        </div>
+        <h1>Claude Cowork 終極指南：PM 的桌面 AI Agent</h1>
+        <div class="subtitle">The Ultimate Guide for PMs - Skills, Plugins, MCP, Memory</div>
+        <div class="source-info">
+            來源：Paweł Huryn / Product Compass | 2026-02-22
+        </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-summary">
+        <h2>Executive Summary</h2>
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.2/5</span>
+            <span class="rating-high">&#8593; 實務應用, 工具生態</span>
+            <span class="rating-low">&#8595; 技術深度, 時效性</span>
+        </div>
+        <p>這篇文章是目前最完整的 Claude Cowork 非開發者使用指南。Huryn 從 PM 的角度出發，系統性地拆解了 Cowork 與 Chat/Code 的差異、Skills/Plugins 生態系統、MCP 連接架構（三種類型）、跨 Session 記憶方案，以及 Desktop Commander 這個「一分鐘 2 倍生產力」的技巧。文章最大價值在於<span class="hl-practical">釐清了 Cowork 在 Claude 工具矩陣中的定位</span>：Chat 是對話、Cowork 是工作流、Code 是開發。對非開發者來說，Cowork 可能是日常最實用的 AI Agent 入口。</p>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <h2 class="section-header">Learning Objectives</h2>
+    <div class="objectives">
+        <div class="objective-item">
+            <div class="objective-icon">&#127919;</div>
+            <h3>理解 Cowork 定位</h3>
+            <p>區分 Chat / Cowork / Code 三個工具的核心差異與各自適用場景</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#128268;</div>
+            <h3>掌握 Plugin 與 MCP 架構</h3>
+            <p>理解 Skills、Plugins、MCP Connectors 三層擴展機制的運作方式</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#128736;</div>
+            <h3>建立實用工作流</h3>
+            <p>設置 Desktop Commander、跨 Session 記憶、MCP 權限配置</p>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">Claude Desktop 三層工具架構</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#128172;</div>
+                <div class="framework-step-title">Chat</div>
+                <div class="framework-step-desc">對話式互動<br>Artifacts 輸出</div>
+            </div>
+            <div class="framework-arrow">&#8594;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#129302;</div>
+                <div class="framework-step-title">Cowork</div>
+                <div class="framework-step-desc">自主 Agent<br>Sub-agents 協作</div>
+            </div>
+            <div class="framework-arrow">&#8594;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128187;</div>
+                <div class="framework-step-title">Code</div>
+                <div class="framework-step-desc">CLI 開發<br>Git 工作流</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PART I ==================== -->
+    <h2 class="section-header"><span class="part-label">Part I</span> Cowork 是什麼？不只是 Chat 換皮</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">Cowork 不是一個換了外觀的聊天介面。它是一個<span class="hl-concept">內建在 Claude Desktop 應用程式中的自主桌面 Agent</span>。當你打開 Cowork 分頁，你等於是給 Claude 一台在你機器上運行的沙箱 Linux VM 的存取權限。</p>
+                <p class="en-text">Cowork is not a chat interface with a new skin. It's an autonomous desktop agent built into the Claude Desktop app. When you open the Cowork tab, you're giving Claude access to a sandboxed Linux VM running on your machine.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">在那個沙箱裡，Claude 可以寫程式碼、執行腳本、建立檔案（Word 文件、簡報、試算表、PDF），還能連接 Gmail、GitHub、Slack 等服務。你描述需求，<span class="hl-key">Cowork 會規劃工作、拆解成平行運作的 sub-agents，然後以可點擊的檔案交付結果</span>。</p>
+                <p class="en-text">Inside that sandbox, Claude can write code, execute scripts, create files, and connect to services like Gmail, GitHub, and Slack. You describe what you need. Cowork plans the work, breaks it into sub-agents that run in parallel, and delivers output as clickable files.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念：Cowork 的五大差異化能力</div>
+                <div class="info-box-content">
+                    <p><strong>1. 規劃與追蹤</strong> - 將複雜任務拆解為子任務，即時顯示進度<br>
+                    <strong>2. 平行 Sub-agents</strong> - 產生獨立 Claude 實例同時處理不同部分<br>
+                    <strong>3. 真正的檔案輸出</strong> - .docx/.pptx/.xlsx/.pdf 直接送到你的資料夾<br>
+                    <strong>4. 沙箱但有存取權</strong> - VM 內運行，但可讀寫你共享的資料夾<br>
+                    <strong>5. 工具連接</strong> - Gmail、GitHub、Slack、Google Drive + 自訂 MCP</p>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>如果 Chat 像是跟助理「對話」請他幫忙，Cowork 更像是把一個專案交給一整個小團隊 -- 你當 PM，Cowork 當 Tech Lead，sub-agents 是各自負責不同模組的工程師。你看到的是看板上的進度條，拿到的是完成品。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PART II ==================== -->
+    <h2 class="section-header"><span class="part-label">Part II</span> Chat vs. Cowork：為什麼是不同物種</h2>
+    <div class="content-grid linear">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">Huryn 做了一個清楚的比較：<span class="hl-key">Chat 是對話，Cowork 是工作流</span>。Cowork 增加了真正重要的能力：sub-agent 協調平行工作、任務分解、檔案直接送到你的資料夾而非 chat artifacts。</p>
+                <p class="en-text">Chat is for conversations. Cowork is for workflows. Cowork adds what matters for getting real work done: sub-agent coordination, task decomposition, and files delivered directly to your folder.</p>
+            </div>
+        </div>
+    </div>
+    
+    <table class="compare-table">
+        <thead>
+            <tr><th>功能維度</th><th>Chat</th><th>Cowork</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>互動模式</td><td>對話式來回</td><td>任務導向，自主規劃執行</td></tr>
+            <tr><td>輸出格式</td><td>Artifacts（聊天內檢視）</td><td>真正的檔案（.docx, .pptx, .xlsx, .pdf）</td></tr>
+            <tr><td>平行處理</td><td>無</td><td>Sub-agents 同時處理多個子任務</td></tr>
+            <tr><td>任務追蹤</td><td>無</td><td>即時進度顯示，可中途引導</td></tr>
+            <tr><td>檔案存取</td><td>有限</td><td>完整讀寫共享資料夾</td></tr>
+            <tr><td>工具連接</td><td>Connectors</td><td>Connectors + Plugin Panel</td></tr>
+            <tr><td>最佳場景</td><td>問答、分析、撰寫</td><td>文件製作、email 處理、檔案管理、多步驟工作流</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ==================== PART III ==================== -->
+    <h2 class="section-header"><span class="part-label">Part III</span> Skills 與 Plugins 生態系統</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">Skills 是可重複使用的指令手冊，教 Claude 如何處理特定的重複性任務。說「建立一個 Word 文件」，docx skill 就會載入。<span class="hl-concept">Skills 不會一次全部載入 -- Claude 只讀取每個 skill 的簡短描述（約 100 tokens）來決定哪些相關</span>，然後才載入完整指令。這保持了 context window 的乾淨。</p>
+                <p class="en-text">Skills are reusable instruction manuals that teach Claude how to approach specific, repeatable tasks. Skills don't all load at once. Claude reads only a short description of each skill (~100 tokens) to decide which ones are relevant, then loads full instructions only when needed.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">Cowork 有專屬的 Plugins 面板（Chat 沒有）。你可以瀏覽、安裝、上傳和建立 plugins。每個 plugin 打包了 skills 加上 slash commands。<span class="hl-key">Skill 格式在 Claude 生態系統和第三方工具（Cursor, Windsurf, Codex CLI）間通用</span>。</p>
+                <p class="en-text">Cowork has a dedicated Plugins panel that Chat doesn't. Each plugin bundles skills with slash commands. The format works across Claude ecosystem and third-party tools like Cursor, Windsurf, and Codex CLI.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示：Plugin 隔離規則</div>
+                <div class="info-box-content">
+                    <p><strong>Cowork 和 Code Tab 的 Plugin 面板是獨立的</strong>。在一個裝的 plugin 不會出現在另一個。但透過 Claude Desktop Settings 上傳的 Skills 會在 Chat、Cowork、Code Tab 三個地方共享。</p>
+                    <p>你可以把 Code 的開發者 plugins 加到 Cowork，反之亦然 -- 同樣的 skill 格式，完全跨相容。</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; Skills/Plugins 資源清單</div>
+                <div class="info-box-content">
+                    <p><strong>官方：</strong><br>
+                    - <code>anthropics/skills</code> -- 文件 skills（docx, xlsx, pptx, pdf）+ 範例<br>
+                    - <code>anthropics/knowledge-work-plugins</code> -- Cowork 預設的 11 個商業 plugins<br>
+                    - <code>anthropics/claude-code</code> -- 開發者工作流 plugins</p>
+                    <p><strong>社群：</strong><br>
+                    - <code>claudemarketplaces.com</code> -- Marketplace 的 marketplace<br>
+                    - <code>sickn33/antigravity-awesome-skills</code> -- 868+ 通用 agentic skills<br>
+                    - <code>skills.sh</code> -- 產品策略框架、PRD 產生器等</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PART IV ==================== -->
+    <h2 class="section-header"><span class="part-label">Part IV</span> MCP：連接 Cowork 到你的世界</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">MCP（Model Context Protocol）是 Anthropic 的開放標準。每個 MCP server 暴露 Claude 可以呼叫的工具。理解三種 MCP 連接方式的差異非常重要：</p>
+                <p class="en-text">MCP stands for Model Context Protocol — the open standard by Anthropic. Each MCP server exposes tools Claude can call. There are three ways to connect MCP servers to Claude.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text"><span class="hl-concept">Remote Connectors</span> 和 <span class="hl-concept">Custom Connectors</span> 在所有地方都能用（包括瀏覽器的 claude.ai）。<span class="hl-concept">Extensions</span> 是 Anthropic 包裝的本地 MCP server，一鍵安裝。自訂 MCP server 則需要編輯 JSON 設定檔。</p>
+                <p class="en-text">Remote and custom connectors work everywhere — including claude.ai in your browser. Extensions are how Anthropic packages local MCP servers for one-click install. Custom MCP servers are managed by editing a JSON config.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text"><span class="hl-key">每個 connector 都可以設定個別工具的權限</span>：Allow（自動執行）、Ask（執行前確認）、Block（永不執行）。你可以允許 Claude 搜尋你的 email 但阻止它發送 email。</p>
+                <p class="en-text">For every connector, you can set individual tools to Allow, Ask, or Block. You could allow Claude to search your emails but block it from sending them.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#9878;&#65039; 三種 MCP 連接方式比較</div>
+                <div class="info-box-content">
+                    <table class="compare-table" style="margin:0;">
+                        <thead><tr><th>類型</th><th>設定方式</th><th>適用範圍</th></tr></thead>
+                        <tbody>
+                            <tr><td>Remote</td><td>Connectors UI</td><td>所有平台含 claude.ai</td></tr>
+                            <tr><td>Extensions</td><td>Settings 一鍵安裝</td><td>Desktop 三個分頁</td></tr>
+                            <tr><td>Custom</td><td>JSON 設定檔</td><td>Desktop 三個分頁</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="info-box box-code">
+                <div class="info-box-header">&#128187; 自訂 MCP 設定範例</div>
+                <div class="info-box-content">
+<pre><code>{
+  "mcpServers": {
+    "gmail": {
+      "command": "npx",
+      "args": [
+        "@gongrzhe/server-gmail-autoauth-mcp"
+      ]
+    }
+  }
+}</code></pre>
+                    <p style="font-size:0.82rem; color:#64748b;">設定路徑：Menu > Developer > App Config File</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; Windows 陷阱</div>
+                <div class="info-box-content">
+                    <p>透過 Microsoft Store (MSIX) 安裝的 Claude Desktop，「Edit Config」按鈕可能打開錯誤的檔案。App 讀取的是 MSIX 虛擬化路徑，而非 <code>%APPDATA%\Claude\</code>。如果 MCP server 靜默載入失敗，檢查 GitHub issue #26073。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PART V ==================== -->
+    <h2 class="section-header"><span class="part-label">Part V</span> Desktop Commander：一分鐘讓 Claude Desktop 強 2 倍</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">Huryn 認為 Desktop Commander 是<span class="hl-key">投資報酬率最高的動作之一</span>，而且只需不到一分鐘。安裝後，Chat、Cowork 和 Code Tab 都能在你的筆電上做幾乎任何事情，包括安裝 MCP server 或存取任何檔案。</p>
+                <p class="en-text">That's one of the highest-ROI moves. And it takes less than 1 minute. Chat, Cowork, and Code Tab can do virtually anything on your laptop including installing MCP servers or accessing any file.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; 安裝步驟（4 步）</div>
+                <div class="info-box-content">
+                    <p>1. 打開 Claude Desktop<br>
+                    2. 在聊天視窗點擊：<code>+ > Connectors > Manage connectors</code><br>
+                    3. 點擊：<code>Browse connectors > All > Desktop Commander</code><br>
+                    4. 選擇哪些工具不需要你的核准</p>
+                    <p style="margin-top:0.5rem; font-size:0.82rem; color:#64748b;"><strong>提示：</strong>不使用時停用 Claude in Chrome 擴充功能，避免 Claude 預設使用網頁操作。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PART VI ==================== -->
+    <h2 class="section-header"><span class="part-label">Part VI</span> 跨 Session 記憶方案</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">Huryn 提供了兩個層次的記憶方案。基礎版只需兩步：啟用 Desktop Commander + 在 Global Instructions 加入記憶管理指令。進階版則使用<span class="hl-concept">結構化記憶系統</span>：<code>.claude/memory/</code> 下分為 general.md、domain/{topic}.md、tools/{tool}.md 等檔案。</p>
+                <p class="en-text">Two simple steps for basic memory. Advanced: Split into multiple files so Claude loads only what's relevant — structured memory rooted at .claude/memory/.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">核心規則是：<span class="hl-key">當你學到值得記住的東西，立刻寫入正確的檔案</span>。每條記錄包含：日期、什麼事、為什麼。Session 開始時讀取 memory.md，其他檔案只在相關時才載入。</p>
+                <p class="en-text">When you learn something worth remembering, write it to the right file immediately. Entries: date, what, why — nothing more. Read memory.md at session start. Load other files only when relevant.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">&#128187; 基礎記憶 Prompt（Global Instructions）</div>
+                <div class="info-box-content">
+<pre><code>## Memory Management
+When you discover something valuable
+for future sessions — immediately 
+append it to {folder}/memory.md
+
+Keep entries short: date, what, why.
+Read this file at the start of 
+every session.</code></pre>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 結構化記憶目錄</div>
+                <div class="info-box-content">
+                    <p><code>.claude/memory/</code><br>
+                    ├── <code>memory.md</code> -- 索引檔<br>
+                    ├── <code>general.md</code> -- 跨專案事實、偏好<br>
+                    ├── <code>domain/{topic}.md</code> -- 領域知識<br>
+                    └── <code>tools/{tool}.md</code> -- 工具設定、CLI 模式</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PART VII ==================== -->
+    <h2 class="section-header"><span class="part-label">Part VII</span> Chat vs. Cowork vs. Code 總覽</h2>
+    <div class="content-grid linear">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">文章最後提供了完整的三工具比較摘要。以下是從 Huryn 的視覺摘要整理出的關鍵差異：</p>
+            </div>
+        </div>
+    </div>
+    <table class="compare-table">
+        <thead>
+            <tr><th>面向</th><th>Chat</th><th>Cowork</th><th>Code (Tab/CLI)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>目標使用者</td><td>所有人</td><td>非開發者的進階使用者</td><td>開發者</td></tr>
+            <tr><td>核心模式</td><td>對話</td><td>自主 Agent + Sub-agents</td><td>CLI Agentic Coding</td></tr>
+            <tr><td>檔案輸出</td><td>Artifacts</td><td>真正的檔案到資料夾</td><td>程式碼到 repo</td></tr>
+            <tr><td>Plugin 系統</td><td>無</td><td>Plugins Panel</td><td>Plugins Panel (獨立)</td></tr>
+            <tr><td>MCP 設定</td><td>Connectors</td><td>共用 Desktop 設定</td><td>Tab 共用 / CLI 獨立</td></tr>
+            <tr><td>記憶方案</td><td>Claude Memory</td><td>memory.md 檔案</td><td>.claude/memory/ 或 --continue</td></tr>
+            <tr><td>最佳場景</td><td>問答、分析、腦力激盪</td><td>文件工作流、email、檔案管理</td><td>編碼、Git 工作流、CI/CD</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ==================== KEY TAKEAWAYS ==================== -->
+    <h2 class="section-header">Key Takeaways</h2>
+    <div class="takeaways">
+        <div class="summary-card">
+            <h4>Cowork = 非開發者的 Agent 入口</h4>
+            <p>同樣的模型、同樣的 skill 格式，但用視覺介面取代 CLI。對 PM、營運、行銷人員來說，Cowork 是 Claude 生態中最被低估的工具。</p>
+        </div>
+        <div class="summary-card">
+            <h4>三層擴展：Skills > Plugins > MCP</h4>
+            <p>Skills 是指令手冊，Plugins 打包 skills + slash commands，MCP 連接外部服務。三層疊加讓 Cowork 從文件產生器變成全方位工作平台。</p>
+        </div>
+        <div class="summary-card">
+            <h4>權限控制是關鍵</h4>
+            <p>每個 MCP connector 都能設定 Allow/Ask/Block。Desktop Commander 雖然強大，但需要謹慎設定哪些操作需要你的核准，特別是在有敏感資料的環境。</p>
+        </div>
+        <div class="summary-card">
+            <h4>記憶問題有解但需手動</h4>
+            <p>memory.md 方案簡單有效，但依賴 Desktop Commander 且需要手動維護。這不是原生功能，而是社群的 workaround。</p>
+        </div>
+    </div>
+
+    <!-- ==================== PRACTICE ==================== -->
+    <h2 class="section-header">Practice Questions</h2>
+    
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">Cowork 的 sub-agent 機制與傳統 Chat 的差異，本質上解決了什麼問題？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>Sub-agents 解決的核心問題是 <strong>context window 的瓶頸</strong>。在 Chat 中，所有對話都在同一個 context 中，複雜任務容易超出上下文限制或導致品質下降。Cowork 的 sub-agents 各自獨立的 context，可以平行處理不同子任務，最後匯總結果。</p>
+            <p>這類似於軟體工程中的「分而治之」-- 把一個大問題拆成多個小問題，各自解決後再合併。對使用者來說，這意味著可以交付更複雜的工作而不需要手動拆解任務。</p>
+        </div>
+    </details>
+    
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">在 CDMO 的 GMP 環境中，Cowork 的 Desktop Commander 功能帶來什麼合規風險？如何設定才能在 copilot mode 下安全使用？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>合規風險：</strong>Desktop Commander 讓 Claude 能存取和修改本機檔案。在 GMP 環境中，這可能觸及 21 CFR Part 11 的電子記錄要求 -- 任何對品質文件的修改都需要 audit trail 和授權簽核。</p>
+            <p><strong>Copilot mode 設定建議：</strong></p>
+            <ul>
+                <li>所有與 GMP 文件相關的操作設定為 <strong>Ask</strong>（執行前確認），絕不用 Allow</li>
+                <li>將 Cowork 的共享資料夾限制在非 GMP 的工作區域（如個人學習、行政文件）</li>
+                <li>GMP 文件的處理仍使用 validated 系統，Cowork 僅用於草稿產生和分析</li>
+                <li>Block 所有自動發送 email 的功能，避免未審核的通訊送出</li>
+            </ul>
+        </div>
+    </details>
+    
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">Huryn 對 Scheduled Tasks 評價為「不可靠」，但推薦了 memory.md 的手動方案。這反映了 AI Agent 工具目前的什麼結構性限制？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>這反映了當前 AI Agent 在<strong>「可靠自主」vs.「人類可控」之間的張力</strong>。Scheduled Tasks 需要 Agent 在無人監督下可靠執行 -- 這目前技術上仍不穩定。而 memory.md 本質上是把「記憶」的責任推回給人類（或半手動的 Agent），這其實是 copilot mode 的延伸。</p>
+            <p>結構性限制包括：1) 缺乏可靠的後台持久化機制；2) Agent 無法自我驗證跨 session 的一致性；3) 錯誤累積問題 -- 每次 session 重新讀取記憶都可能引入偏差。這也呼應了「2-3x discount principle」-- 對 Agent 自主能力的宣傳需要打折評估，手動 workaround 往往比自動化方案更可靠。</p>
+        </div>
+    </details>
+
+    <!-- ==================== BOTTOM LINE ==================== -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#127919; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#10004; 核心洞察</div>
+            <div class="bottom-line-text">Cowork 填補了 Chat（太簡單）和 Code（太開發者導向）之間的空白。對我作為 Operations Director 來說，文件製作、email 處理、檔案整理這些日常工作流，Cowork 的 sub-agent + 真檔案輸出比 Chat 的 artifacts 更適合。但在 GMP 環境中，它的角色仍然是 copilot -- 產出需要人類審核才能進入正式流程。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#128200; 立即應用</div>
+            <div class="bottom-line-text">本週在 Claude Desktop 中開啟 Cowork tab，安裝 Desktop Commander。先用於非 GMP 的行政工作測試（如整理學習筆記、產生會議摘要文件）。評估 knowledge-work-plugins 的 productivity 和 product-management plugins 是否適合我的 COO 發展路線。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#9888; 需要補充</div>
+            <div class="bottom-line-text">文章缺少 Cowork 的實際效能限制（如 sub-agent 數量上限、VM 資源限制）。memory.md 方案的長期可維護性也未驗證。需要自己測試 Cowork 在處理中文文件（特別是含表格的 Word/Excel）時的品質，這對 CDMO 場景很關鍵。另外，Scheduled Tasks 的替代方案（n8n/Make.com）與 Cowork 的整合可能性值得進一步研究。</div>
+        </div>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <div class="footer">
+        <p>製作日期：2026-02-22 | AI Expert Learning System v1.4.2</p>
+        <p>原文來源：Paweł Huryn / Product Compass</p>
+        <p>Suggested Chat Title:</p>
+        <div class="chat-title">2026-02-22 [Agent] Cowork - PM Desktop Agent Guide</div>
+    </div>
+
+</div>
+</body>
+</html>

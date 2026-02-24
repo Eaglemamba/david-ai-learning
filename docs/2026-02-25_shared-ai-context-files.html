@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared AI Context Files - 團隊 AI 共享上下文檔案</title>
+    
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-02-25">
+    <meta name="doc-title" content="Shared AI Context Files - 團隊共享上下文">
+    <meta name="doc-source" content="Joel Salinas & Hannah Stulberg / Superhuman AI">
+    <meta name="doc-tags" content="Tool,Agent,Automation,Framework">
+    <meta name="doc-rating" content="3.8">
+    <meta name="doc-summary" content="CLAUDE.md 共享上下文檔案如何將個人 AI 使用轉化為團隊級知識複利效應。">
+    <meta name="doc-file" content="2026-02-25_shared-ai-context-files.html">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Header */
+.header-tags { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.header-tag { font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 1rem; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+.tag-framework { background: #fde68a; color: #92400e; }
+.header h1 { font-size: 1.8rem; font-weight: 700; margin: 0 0 0.5rem 0; line-height: 1.3; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.exec-summary h2 { font-size: 1.2rem; color: #1e3a5f; margin: 0 0 1rem 0; }
+.exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.75rem; }
+.exec-summary p:last-child { margin-bottom: 0; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-item:nth-child(2) { border-left-color: #10b981; }
+.objective-item:nth-child(3) { border-left-color: #8b5cf6; }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; font-size: 0.9rem; color: #1e293b; margin-bottom: 0.25rem; }
+.objective-desc { font-size: 0.8rem; color: #64748b; line-height: 1.6; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+/* Section Headers */
+.section-header { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+
+/* Content Grid */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.content-part-label { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.6rem; border-radius: 0.25rem; display: inline-block; margin-bottom: 0.75rem; }
+.content-part-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; }
+
+/* Bilingual */
+.bilingual-block { margin-bottom: 1.25rem; }
+.bilingual-zh { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+.bilingual-en { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
+
+/* Highlights */
+.hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.hl-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.6rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content p { margin: 0 0 0.5rem 0; }
+.info-box-content p:last-child { margin: 0; }
+.info-box-content ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+.info-box-content li { margin-bottom: 0.3rem; font-size: 0.9rem; }
+
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+.box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card:nth-child(2) { border-left-color: #10b981; }
+.summary-card:nth-child(3) { border-left-color: #f59e0b; }
+.summary-card:nth-child(4) { border-left-color: #8b5cf6; }
+.summary-card-title { font-weight: 700; font-size: 0.9rem; color: #1e293b; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.85rem; color: #64748b; line-height: 1.7; }
+
+/* Practice Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+.question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+.question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+    .objectives-grid { grid-template-columns: 1fr; }
+    .takeaways-grid { grid-template-columns: 1fr; }
+    .framework-arrow { display: none; }
+    .framework-steps { gap: 1.5rem; }
+    .header h1 { font-size: 1.4rem; }
+}
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="header-content">
+        <div class="header-tags">
+            <span class="header-tag tag-tool">Tool</span>
+            <span class="header-tag tag-agent">Agent</span>
+            <span class="header-tag tag-automation">Automation</span>
+            <span class="header-tag tag-framework">Framework</span>
+        </div>
+        <h1>Shared AI Context Files<br>團隊 AI 共享上下文檔案</h1>
+        <div class="subtitle">如何用一個檔案將個人 AI 使用轉化為團隊級知識複利</div>
+        <div class="source">Joel Salinas & Hannah Stulberg | Superhuman AI / In the Weeds | 2025-02-21</div>
+    </div>
+</div>
+
+<!-- Container -->
+<div class="container">
+
+<!-- Executive Summary -->
+<div class="exec-summary">
+    <h2>Executive Summary | 快速摘要</h2>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">****</span> 3.8/5</span>
+        <span class="rating-high">^ Practical Value, Tool Ecosystem</span>
+        <span class="rating-low">v Technical Depth, Timeliness</span>
+    </div>
+    <p>本文提出一個簡單但高影響力的概念：將 AI 上下文從「每人每次重新解釋」轉為「共享檔案自動載入」。核心載具是 <span class="hl-concept">CLAUDE.md</span> 和 <span class="hl-concept">AGENTS.md</span> 等 instruction files（指令檔案），部署在團隊共享資料夾中，讓每次 AI Session（AI 工作階段）自動載入正確的公司、部門和專案上下文。文章的最大價值在於「知識複利」框架：一個人的修正自動惠及整個團隊。技術深度較淺，但實作導向清晰，適合作為團隊導入 AI Context Management（AI 上下文管理）的入門指南。</p>
+</div>
+
+<!-- Learning Objectives -->
+<h2 class="section-header">Learning Objectives | 學習目標</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-icon">$</div>
+        <div class="objective-title">量化隱形成本</div>
+        <div class="objective-desc">理解團隊重複提供 AI 上下文的時間成本，以及 Shared Context Files 的 ROI 計算邏輯</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">#</div>
+        <div class="objective-title">掌握分層架構</div>
+        <div class="objective-desc">學會用資料夾結構鏡射組織架構，實現自動化的上下文分層載入</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">+</div>
+        <div class="objective-title">建立複利機制</div>
+        <div class="objective-desc">設計共享修正流程，讓每次 AI 錯誤修正自動惠及整個團隊</div>
+    </div>
+</div>
+
+<!-- Framework Visual -->
+<div class="framework-visual">
+    <div class="framework-title">Shared Context Compounding Model | 共享上下文複利模型</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">1</div>
+            <div class="framework-step-title">Structure</div>
+            <div class="framework-step-desc">資料夾鏡射組織架構</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">2</div>
+            <div class="framework-step-title">Share</div>
+            <div class="framework-step-desc">團隊共用 Context Files</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">3</div>
+            <div class="framework-step-title">Correct</div>
+            <div class="framework-step-desc">發現錯誤即時更新</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">4</div>
+            <div class="framework-step-title">Compound</div>
+            <div class="framework-step-desc">修正自動惠及全團隊</div>
+        </div>
+    </div>
+</div>
+
+<!-- PART I -->
+<h2 class="section-header">Part I | 問題：隱形的上下文成本</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <span class="content-part-label">Part I</span>
+        <div class="content-part-title">The Hidden Cost of Context Re-Explanation</div>
+        
+        <div class="bilingual-block">
+            <div class="bilingual-zh">想像付薪水給三名全職員工，讓他們什麼都不做，只是<span class="hl-cost">反覆向一個每晚失憶的 AI 解釋你的公司</span>。這就是大多數組織正在發生的事情。</div>
+            <div class="bilingual-en">Imagine paying three full-time employees to do nothing but re-explain your company to an AI that forgets everything overnight. That's what's happening right now at most organizations.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">目前大多數團隊使用 AI 的方式是<span class="hl-key">個人化且孤立的</span>：每個人都有自己的設定、自己的 Prompt、自己向 AI 解釋相同公司上下文的方式。每次 Session 從零開始。</div>
+            <div class="bilingual-en">Right now, most teams using AI at work are doing it the same way: individually. Everyone's got their own setup, their own prompts, their own way of explaining the same company context.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">數學很簡單：每人每次花 5 分鐘重新解釋上下文，每天 3 次 AI Session，100 人團隊每天浪費 25 小時——相當於<span class="hl-cost">每年超過 6,000 小時</span>，等於 3 名全職員工的工時。而 5 分鐘還是保守估計。</div>
+            <div class="bilingual-en">Say each person spends just 5 minutes per session re-explaining context, and they start 3 AI sessions a day. That's 15 minutes per person, per day... Across a team of 100 people, that's 25 hours a day - over 6,000 hours a year.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-cost">
+            <div class="info-box-header">$ 成本分析</div>
+            <div class="info-box-content">
+                <p><strong>Context Tax 上下文稅計算：</strong></p>
+                <p>5 分鐘/Session x 3 Sessions/天 = 15 分鐘/人/天</p>
+                <p>100 人 x 15 分 = 25 小時/天</p>
+                <p>25 小時 x 250 工作日 = <strong>6,250 小時/年</strong></p>
+                <p>相當於 ~3 FTE（Full-Time Equivalent, 全職當量）</p>
+                <p style="margin-top:0.75rem; color: #64748b; font-size: 0.85rem;">而實際上，好的上下文需要解釋公司背景、團隊結構、角色定位、專案狀態等，遠超 5 分鐘。</p>
+            </div>
+        </div>
+        <div class="info-box box-analogy">
+            <div class="info-box-header">! 比喻說明</div>
+            <div class="info-box-content">
+                <p>想像你每天上班都要向同事重新介紹自己、解釋公司做什麼、你的專案進度在哪。這就是目前 AI 使用的現狀——AI 沒有「昨天的記憶」，所以每次對話都是第一天上班。</p>
+            </div>
+        </div>
+        <div class="info-box box-key">
+            <div class="info-box-header">! 重點提示</div>
+            <div class="info-box-content">
+                <p>完整的上下文包含四層：Company Context（公司上下文）、Team Context（團隊上下文）、Role Context（角色上下文）、Project Context（專案上下文）。缺少任何一層，AI 的產出品質都會打折。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART II -->
+<h2 class="section-header">Part II | 解方：從 Web-based 到 Folder-based</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <span class="content-part-label">Part II</span>
+        <div class="content-part-title">The Shift: Folder-Based AI Tools</div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">解決方案始於一個關鍵轉換：從 <span class="hl-key">Web-based AI 工具</span>（如 ChatGPT 或 claude.ai）遷移到 <span class="hl-concept">Folder-based AI 工具</span>（如 Claude Code、Claude Cowork、Cursor 或 Antigravity）。差異至關重要。</div>
+            <div class="bilingual-en">It starts with one shift: moving your team from web-based AI tools (like ChatGPT or claude.ai) to folder-based AI tools like Claude Code, Claude Cowork, Cursor, or Antigravity.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">Web-based AI 工具每次對話都是空白的——不記得你的公司、專案或偏好。Folder-based AI 工具則直接與電腦上的檔案和資料夾協作，能夠<span class="hl-practical">自動讀取指令檔案</span>，在每次 Session 開始時告訴 AI 你是誰、你在做什麼。</div>
+            <div class="bilingual-en">Web-based AI tools start every conversation blank - no memory of your company, your projects, or your preferences. Folder-based AI tools work directly with the files and folders on your computer... which means they can read instruction files that tell the AI agent who you are and how you work - automatically, every time.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">在 Anthropic 生態系中，這些檔案叫做 <span class="hl-concept">CLAUDE.md</span>——檔名告訴你它是什麼：為 Claude 撰寫的 Markdown（簡易格式語言）檔案。Cursor 使用 <span class="hl-concept">AGENTS.md</span>。概念相同：AI Agent 開始工作前已經知道你的上下文。</div>
+            <div class="bilingual-en">In Anthropic's ecosystem, these are called CLAUDE.md files... Other tools have their own versions - Cursor uses AGENTS.md, for example. The concept is the same: instead of re-explaining your context every time you start a conversation, the AI agent shows up already knowing it.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-compare">
+            <div class="info-box-header">~ 工具比較</div>
+            <div class="info-box-content">
+                <p><strong>Web-based vs Folder-based AI：</strong></p>
+                <p><strong>Web-based</strong>（ChatGPT, claude.ai）：每次對話從零開始，無法自動載入上下文，適合個人臨時查詢。</p>
+                <p><strong>Folder-based</strong>（Claude Code, Cursor, Cowork, Antigravity）：直接讀取本地/共享資料夾中的指令檔案，自動載入上下文，支援團隊協作。</p>
+            </div>
+        </div>
+        <div class="info-box box-concept">
+            <div class="info-box-header">@ 核心概念</div>
+            <div class="info-box-content">
+                <p><strong>CLAUDE.md / AGENTS.md 是什麼？</strong></p>
+                <p>把它想成「AI Agent 的 Onboarding Document（入職文件）」——不是讀一次就忘的那種，而是<strong>每天上班前都會重讀</strong>的那種。裡面包含品牌指南、溝通風格、專案目標、已做的決策。</p>
+            </div>
+        </div>
+        <div class="info-box box-key">
+            <div class="info-box-header">! 重點提示</div>
+            <div class="info-box-content">
+                <p><strong>分層載入機制（Stacking）：</strong>這些檔案按資料夾組織，且會<strong>堆疊</strong>——深層資料夾的指令會疊加在上層之上。公司級上下文先載入，然後是部門、再是專案。正確的資訊為正確的工作自動載入。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART III -->
+<h2 class="section-header">Part III | 複利效應：團隊共享的力量</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <span class="content-part-label">Part III</span>
+        <div class="content-part-title">Knowledge Compounding Through Shared Context</div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">當個人使用 Context Files 時，已經是很大的改進——不再每次從零開始。但當團隊<span class="hl-key">共享</span> Context Files 時，更強大的事情發生了：<span class="hl-concept">知識產生複利效應</span>（knowledge compounds）。</div>
+            <div class="bilingual-en">But when a team shares context files, something more powerful happens: knowledge compounds.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">假設行銷團隊共用一個 Marketing 資料夾。共享指令檔案包含品牌指南、目標受眾、溝通風格。團隊中每個人——無論是起草 Campaign Email、撰寫廣告文案或建立 Landing Page——每次 AI Session 都從相同的共享上下文開始。沒有人參考過時文件，沒有人重新解釋品牌聲音。</div>
+            <div class="bilingual-en">Say your marketing team works out of a shared Marketing folder. The shared instruction file has your brand guidelines, your target audience, your tone of voice. Everyone on the team... starts every AI session with the same shared context.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">複利效應的關鍵在這裡：當一個人發現 AI 做錯了——比如使用了舊版 Logo 指南——他把修正加到共享檔案中。從那一刻起，<span class="hl-practical">團隊中所有人的 AI 都知道不要犯這個錯</span>。做出修正的人受益，但其他所有人也自動受益。</div>
+            <div class="bilingual-en">When one person on the team notices the AI agent doing something wrong... they add a correction to the shared file. Now everyone's AI knows not to make that mistake.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">Anthropic 團隊自己就是這樣做的。Claude Code 的創建者 Boris Cherny 分享了他們團隊的做法：團隊共享一個 CLAUDE.md，check in 到 Git，每週多次貢獻。<span class="hl-key">每次看到 Claude 做錯，就加到 CLAUDE.md 裡</span>。</div>
+            <div class="bilingual-en">"Our team shares a single CLAUDE.md for the Claude Code repo. We check it into git, and the whole team contributes multiple times a week. Anytime we see Claude do something incorrectly we add it to the CLAUDE.md."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-analogy">
+            <div class="info-box-header">! 比喻說明</div>
+            <div class="info-box-content">
+                <p><strong>知識複利 vs 知識孤島：</strong></p>
+                <p>個人使用 Context File 像是一個人的筆記本——只幫自己。共享 Context File 像是團隊的 Wiki——一個人更新，所有人受益。差別在於<strong>修正是否能傳播</strong>。</p>
+                <p>想像一個 SOP 文件：如果只存在你的抽屜裡，只有你知道最新版本。放在共享硬碟上，每個人隨時都讀到最新版。</p>
+            </div>
+        </div>
+        <div class="info-box box-practical">
+            <div class="info-box-header"># 實務應用</div>
+            <div class="info-box-content">
+                <p><strong>CDMO 情境下的複利效應：</strong></p>
+                <p>想像製藥廠的 QA 團隊共用一個 CLAUDE.md，裡面記錄了：偏差調查（Deviation Investigation）的標準格式、ALCOA+ 原則的具體要求、常見的 FDA Warning Letter 模式。當一位 QA 專員發現 AI 產出的偏差報告缺少 Root Cause 的 5 Why 分析，他更新了共享檔案。從此，整個 QA 團隊的 AI 都會自動包含 5 Why。</p>
+            </div>
+        </div>
+        <div class="info-box box-key">
+            <div class="info-box-header">! 重點提示</div>
+            <div class="info-box-content">
+                <p><strong>Anthropic 自己的實踐：</strong>如果連 Claude Code 的開發團隊都在用共享 CLAUDE.md 的方式工作，這個方法值得認真對待。這不是理論——是已經在生產環境中驗證的做法。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART IV -->
+<h2 class="section-header">Part IV | 實作指南：三步建立共享上下文</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <span class="content-part-label">Part IV</span>
+        <div class="content-part-title">How to Set It Up: Three Requirements</div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">建立團隊共享上下文不需要技術背景，只需要三個要素：<span class="hl-practical">共享工作空間</span>、<span class="hl-practical">鏡射組織架構的資料夾結構</span>、以及<span class="hl-practical">持續貢獻的習慣</span>。</div>
+            <div class="bilingual-en">You don't need a technical background to get started... A shared place to work... A folder structure that mirrors how your company and teams work... A habit of contributing so the files stay useful over time.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh"><strong>1. 共享工作空間：</strong>團隊需要一個所有人都能存取的共享資料夾。可以是雲端儲存（Dropbox, Google Drive, OneDrive）或 Git（GitHub, GitLab）。關鍵是確保變更不會遺失或被覆寫。</div>
+            <div class="bilingual-en">Your team needs a shared folder where everyone can access the same files. This can be shared cloud storage (Dropbox, Google Drive, iCloud, OneDrive)... or Git (GitHub, GitLab).</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh"><strong>2. 資料夾結構鏡射組織：</strong>你的資料夾控制 AI 載入什麼上下文。按公司的實際組織方式構建——部門、團隊、專案。每一層越來越具體：公司級上下文先載入，接著是部門、團隊、專案。</div>
+            <div class="bilingual-en">Your folders control what context the AI agent loads. Structure them around how your company is actually organized - departments, teams, and projects.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh"><strong>3. 持續貢獻的習慣：</strong>最重要的不是初始設定，而是<span class="hl-key">持續的貢獻</span>。每次有人發現 AI 犯錯或缺少上下文，就提議更新共享檔案。你需要與各層級匹配的審批流程——團隊檔案由團隊成員更新，公司級檔案經管理層審核。</div>
+            <div class="bilingual-en">The most important part isn't the initial setup - it's the ongoing contributions. Every time someone notices the AI agent making a mistake or missing context, they propose an update to the shared file.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-practical">
+            <div class="info-box-header"># 實務應用</div>
+            <div class="info-box-content">
+                <p><strong>資料夾分層範例（CDMO 版）：</strong></p>
+                <p><code style="font-family:'Source Code Pro',monospace; background:#e2e8f0; padding:0.15rem 0.3rem; border-radius:3px; font-size:0.85rem;">/Company/CLAUDE.md</code> &rarr; GMP 標準、PIC/S 指引、公司文化</p>
+                <p><code style="font-family:'Source Code Pro',monospace; background:#e2e8f0; padding:0.15rem 0.3rem; border-radius:3px; font-size:0.85rem;">/Company/Operations/CLAUDE.md</code> &rarr; 製造 SOP 框架、設備清單</p>
+                <p><code style="font-family:'Source Code Pro',monospace; background:#e2e8f0; padding:0.15rem 0.3rem; border-radius:3px; font-size:0.85rem;">/Company/Operations/Fill-Finish/CLAUDE.md</code> &rarr; SA25 Vanrx 參數、QS-21 處理</p>
+                <p><code style="font-family:'Source Code Pro',monospace; background:#e2e8f0; padding:0.15rem 0.3rem; border-radius:3px; font-size:0.85rem;">/Company/Operations/Fill-Finish/Project-X/CLAUDE.md</code> &rarr; 特定客戶 Tech Transfer 細節</p>
+            </div>
+        </div>
+        <div class="info-box box-compare">
+            <div class="info-box-header">~ 工具比較</div>
+            <div class="info-box-content">
+                <p><strong>Cloud Storage vs Git：</strong></p>
+                <p><strong>Cloud Storage</strong>（Dropbox, Google Drive）：非技術團隊最簡單的選項。大多內建版本歷史。需要簡單的審批工作流。</p>
+                <p><strong>Git</strong>（GitHub, GitLab）：技術團隊最佳選項。內建版本控制、Pull Request 審查機制、完整變更歷史。</p>
+            </div>
+        </div>
+        <div class="info-box box-key">
+            <div class="info-box-header">! 重點提示</div>
+            <div class="info-box-content">
+                <p><strong>Governance 治理機制：</strong>你不希望未經審批的編輯悄悄進入所有人的 AI 指令檔。特別是公司級檔案，需要明確的審批流程。即使只是「在 Slack 提議變更，由一個人審核後更新」的簡單流程也好。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART V -->
+<h2 class="section-header">Part V | 從小處開始：最低可行啟動方案</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <span class="content-part-label">Part V</span>
+        <div class="content-part-title">Start Small, Then Scale</div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">你不需要一夜之間在整個公司推出。<span class="hl-practical">從一個部門或一個團隊開始</span>。建立一個共享資料夾，一起寫一份涵蓋基本資訊的 CLAUDE.md：這個團隊做什麼、AI 需要知道什麼、你希望 AI 如何工作。</div>
+            <div class="bilingual-en">You don't need to roll this out across your entire company overnight. Start with one department or one team. Create a shared folder, write a single CLAUDE.md or AGENTS.md file together that captures the basics.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">然後使用它。注意缺少什麼。更新。這就是整個流程。一旦一個團隊看到好處，它會自然擴散——其他團隊會想要同樣的優勢。</div>
+            <div class="bilingual-en">Then use it. Notice what's missing. Update. That's the whole process. Once one team sees the benefit, it spreads naturally - other teams will want the same advantage.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">最棒的部分？每次更新都改善了該層級及其以下所有層級的 AI Agent。這就是<span class="hl-concept">複利效應</span>。一旦體驗過，個人化的 AI 使用會感覺像是在浪費潛力。</div>
+            <div class="bilingual-en">Every update improves the AI agent for everyone at that level and every level below it. That's the compounding effect. And once you've experienced it, individual AI use feels like leaving value on the table.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-practical">
+            <div class="info-box-header"># 實務應用</div>
+            <div class="info-box-content">
+                <p><strong>CDMO 最低可行啟動方案：</strong></p>
+                <p>1. 選一個團隊（例如 QA 或 Tech Transfer）</p>
+                <p>2. 建立共享 Google Drive 資料夾</p>
+                <p>3. 寫一份基礎 CLAUDE.md：GMP 原則、團隊職責、常用文件格式</p>
+                <p>4. 用 Claude Code 或 Cowork 開啟該資料夾</p>
+                <p>5. 每次發現 AI 錯誤就更新</p>
+                <p>6. 兩週後評估效果，再推廣到其他團隊</p>
+            </div>
+        </div>
+        <div class="info-box box-analogy">
+            <div class="info-box-header">! 比喻說明</div>
+            <div class="info-box-content">
+                <p><strong>Snowball Effect（雪球效應）：</strong>共享 Context File 就像滾雪球——一開始小小的，每次修正都讓它變大一點。初期看不出差異，但三個月後回頭看，你的 AI 已經「了解」了幾十個團隊特有的細節，新人加入時直接受益。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Key Takeaways -->
+<h2 class="section-header">Key Takeaways | 重點整理</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-title">Context Tax 是真實的隱形成本</div>
+        <div class="summary-card-text">每年 6,000+ 小時浪費在重複解釋上下文。這不是效率問題，是結構問題——工具選擇決定了上下文能否被複用。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">Folder-based > Web-based</div>
+        <div class="summary-card-text">從 ChatGPT/claude.ai 遷移到 Claude Code/Cursor/Cowork 是啟用共享上下文的前提。Folder-based 工具能自動讀取指令檔案。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">知識複利 = 修正 x 傳播</div>
+        <div class="summary-card-text">共享 Context File 的核心價值不在初始設定，而在持續修正。一個人的修正惠及整個團隊——這是個人使用做不到的。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">Start Small, Compound Fast</div>
+        <div class="summary-card-text">不需要全公司同時導入。一個團隊、一個資料夾、一份 CLAUDE.md。使用、發現不足、更新。複利效應會自然吸引其他團隊加入。</div>
+    </div>
+</div>
+
+<!-- Practice Questions -->
+<h2 class="section-header">Practice | 練習題</h2>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">Web-based AI 工具和 Folder-based AI 工具在上下文管理上的核心差異是什麼？為什麼這個差異決定了「共享上下文」的可行性？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>核心差異：</strong>Web-based 工具（ChatGPT, claude.ai）每次對話從空白狀態開始，無法自動載入預設上下文。Folder-based 工具（Claude Code, Cursor, Cowork）能讀取本地資料夾中的指令檔案（如 CLAUDE.md），在每次 Session 開始前自動載入。</p>
+        <p><strong>為什麼這決定可行性：</strong>共享上下文的前提是「檔案可以被放在共享資料夾中，且工具能自動讀取」。Web-based 工具沒有這個機制——你只能手動貼上上下文，這本質上還是個人化的、無法擴展的。Folder-based 工具的檔案分層載入（stacking）機制讓公司級、部門級、專案級的上下文可以自動疊加。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">在你的 CDMO 環境中，如果要建立共享 CLAUDE.md，「公司級」檔案應該包含哪些 GMP 相關內容？有哪些內容絕對不應該放在 AI 可讀取的指令檔案中？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>應包含的 GMP 內容：</strong></p>
+        <ul>
+            <li>ALCOA+ 數據完整性原則（Attributable, Legible, Contemporaneous, Original, Accurate + Complete, Consistent, Enduring, Available）</li>
+            <li>偏差調查標準格式和 Root Cause Analysis 方法論（5 Why, Fishbone）</li>
+            <li>文件標準格式（SOP 編號規則、CAPA 模板結構）</li>
+            <li>PIC/S 和 FDA 常見 Observation 模式，供 AI 在起草文件時自動檢查</li>
+            <li>溝通風格規範（技術文件用正式語氣、Batch Record 的特定術語）</li>
+        </ul>
+        <p><strong>絕對不應包含的：</strong></p>
+        <ul>
+            <li>客戶機密資訊（配方、製程參數具體數值）</li>
+            <li>員工個資（薪資、績效評價）</li>
+            <li>尚未核准的法規提交文件內容</li>
+            <li>API Key、密碼或系統登入憑證</li>
+        </ul>
+        <p><strong>21 CFR Part 11 考量：</strong>任何放入 AI Context File 的內容都應被視為「非受控文件」——它指導 AI 行為但不取代正式的 GMP 文件系統。AI 產出仍需經過人工審核和正式核准流程。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">文章聲稱「每次更新都改善該層級及以下所有層級的 AI」。這個「知識複利」模型有哪些潛在風險或失敗模式？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>潛在風險：</strong></p>
+        <ul>
+            <li><strong>Context Pollution（上下文污染）：</strong>如果審批流程不嚴謹，錯誤的指令也會「複利」——一個不正確的修正會讓整個團隊的 AI 都犯同樣的錯。複利是雙面刃。</li>
+            <li><strong>Context Bloat（上下文膨脹）：</strong>隨著時間推移，共享檔案會越來越大。如果不定期清理過時內容，Token 消耗增加，且互相矛盾的指令可能導致 AI 行為不可預測。</li>
+            <li><strong>Single Point of Failure：</strong>所有人依賴同一份檔案——如果檔案被意外刪除或損壞，整個團隊的 AI 品質立即下降。</li>
+            <li><strong>Governance Bottleneck（治理瓶頸）：</strong>如果審批流程太嚴格，更新速度太慢，會抑制「快速修正」的複利效應。太鬆則有上述污染風險。</li>
+            <li><strong>Over-reliance（過度依賴）：</strong>團隊可能過度信賴 AI 「已經知道了」，減少自身對上下文的理解和批判性思考。在 GMP 環境中這特別危險。</li>
+        </ul>
+        <p><strong>緩解策略：</strong>定期 Review（每月清理一次）、Version Control（Git 優於雲端儲存）、以及保持「Copilot Mode」心態——Context File 加速 AI 但不取代人工判斷。</p>
+    </div>
+</details>
+
+<!-- Bottom Line -->
+<div class="bottom-line">
+    <div class="bottom-line-header">我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">核心洞察</div>
+        <div class="bottom-line-text">共享 Context File 的價值不在於「節省時間」（雖然那是量化的入口），而在於<strong>將 AI 品質從「個人能力」提升到「組織資產」</strong>。這與我一直在思考的 O-ring 瓶頸理論完美對接——Context File 就是降低 AI 在「理解上下文」這個環節出錯率的系統化方法，讓人類的判斷力（真正的瓶頸）可以專注在更高價值的決策上。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">立即應用</div>
+        <div class="bottom-line-text">本週行動：為我的 Claude Projects 中最常用的專案（如 Feasibility Assessment 或 Master Prompt 系統）草擬一份結構化的 Context File，包含三層：(1) CDMO 基本原則（GMP、ALCOA+）、(2) SA25 Vanrx 設備上下文、(3) 常見產出格式規範。先個人使用驗證效果，再考慮團隊推廣。同時評估 Claude Code / Cowork 作為 Folder-based 工具的可行性。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">需要補充</div>
+        <div class="bottom-line-text">文章幾乎沒有討論 <strong>Context File 的大小限制和 Token 成本</strong>——當公司級 + 部門級 + 團隊級 + 專案級全部堆疊後，Context Window 消耗多少？是否會擠壓實際工作的可用 Token？也沒有討論<strong>合規環境的特殊考量</strong>——在 GMP/21 CFR Part 11 下，AI 指令檔案是否需要被納入 Document Control？這些是在製藥環境導入前必須釐清的問題。</div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>製作日期：2025-02-25 | AI Expert Learning System v1.4.3</p>
+    <p>原文：<a href="https://www.superhuman.ai/p/shared-ai-context-files" target="_blank">The One File That Can Save Your Team Thousands of Hours</a> | Joel Salinas & Hannah Stulberg</p>
+    <p>建議 Chat Title：2025-02-25 [Tool] Shared Context Files - CLAUDE.md Teams</p>
+    <p>建議檔名：2025-02-25_shared-ai-context-files.html</p>
+</div>
+
+</div><!-- end container -->
+</body>
+</html>
+</body>
+</html>

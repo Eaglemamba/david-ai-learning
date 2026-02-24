@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boris Tane 的 Claude Code 工作流 - AI Expert Learning</title>
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-02-22">
+    <meta name="doc-title" content="Boris Tane Claude Code Workflow - Plan Before Code">
+    <meta name="doc-source" content="Boris Tane / Personal Blog">
+    <meta name="doc-tags" content="Agent,Tool,Framework,Prompt">
+    <meta name="doc-rating" content="4.4">
+    <meta name="doc-summary" content="Boris Tane 九個月 Claude Code 工作流：Research → Plan → Annotate → Implement 四階段紀律。">
+    <meta name="doc-file" content="2026-02-22_boris-tane-claude-code-workflow.html">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+        /* Header */
+        .header { text-align: center; margin-bottom: 2rem; padding: 2rem 0; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; color: #0f172a; margin-bottom: 0.75rem; line-height: 1.4; }
+        .header .subtitle { font-size: 1rem; color: #64748b; margin-bottom: 1rem; }
+        .tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .tag-framework { background: #a7f3d0; color: #065f46; }
+        .source-info { font-size: 0.85rem; color: #94a3b8; }
+        .source-info a { color: #3b82f6; text-decoration: none; }
+        .source-info a:hover { text-decoration: underline; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .exec-summary h2 { font-size: 1.15rem; color: #1e3a8a; margin-bottom: 1rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.75rem; }
+
+        /* Learning Objectives */
+        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-item .obj-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .objective-item .obj-title { font-weight: 700; font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.25rem; }
+        .objective-item .obj-desc { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+        /* Section Headers */
+        .section-header { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; margin: 2.5rem 0 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid #dbeafe; }
+        .part-label { font-size: 0.75rem; font-weight: 600; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 2rem; background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        .content-linear { grid-template-columns: 1fr; }
+        .content-linear .content-left { border-right: none; }
+
+        /* Bilingual */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .bilingual-block .zh { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.3rem; }
+        .bilingual-block .en { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.7; }
+
+        /* Highlights */
+        .hl-concept { background: #a5d6a7; padding: 0 0.2rem; border-radius: 3px; }
+        .hl-key { background: #ffcc80; padding: 0 0.2rem; border-radius: 3px; }
+        .hl-practical { background: #6ee7b7; padding: 0 0.2rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1.25rem; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+
+        /* Code blocks */
+        code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; color: #7c3aed; }
+        pre { background: #1e293b; color: #e2e8f0; padding: 1rem 1.25rem; border-radius: 0.5rem; overflow-x: auto; margin: 0.75rem 0; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; line-height: 1.6; }
+        pre code { background: none; color: inherit; padding: 0; }
+        .code-comment { color: #64748b; }
+
+        /* Key Takeaways */
+        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0 2rem; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card .card-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .summary-card .card-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .summary-card .card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+        /* Accordion Questions */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 2rem 0; margin-top: 2rem; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 0.85rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+        .chat-title-suggestion { background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 0.5rem; display: inline-block; margin-top: 0.75rem; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; color: #475569; }
+
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Boris Tane 的 Claude Code 工作流：先計畫，再寫程式碼</h1>
+        <p class="subtitle">How I Use Claude Code — A Disciplined Research-Plan-Annotate-Implement Pipeline</p>
+        <div class="tag-container">
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-framework">Framework</span>
+            <span class="tag tag-prompt">Prompt</span>
+        </div>
+        <p class="source-info">Boris Tane / Personal Blog / 2026-02-10 | <a href="https://boristane.com/blog/how-i-use-claude-code/" target="_blank">原文連結</a></p>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-summary">
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.4/5</span>
+            <span class="rating-high">&uarr; Practical Value, Framework Clarity</span>
+            <span class="rating-low">&darr; Tool Ecosystem, Timeliness</span>
+        </div>
+        <h2>Executive Summary</h2>
+        <p>Boris Tane 在九個月的密集使用後，發展出一套以<span class="hl-key">「計畫先行」</span>為核心的 Claude Code 工作流。他的方法與多數開發者的「打提示、修錯誤、重複」迴圈截然不同：<span class="hl-concept">永遠不讓 AI 寫程式碼，直到你審核並批准了書面計畫</span>。整個流程分為四個階段 — Research（深度閱讀）、Plan（撰寫計畫）、Annotate（人類標註修正）、Implement（機械式執行）。最關鍵的創新是「標註循環」(Annotation Cycle)，開發者在 Markdown 計畫文件中直接寫下修正意見，讓 AI 反覆修改計畫直到完全正確，然後才進入執行。這套方法將「思考」與「打字」分離，確保人類始終掌握架構決策，而 AI 處理機械式的程式碼撰寫。</p>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <h2 class="section-header">Learning Objectives</h2>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="obj-icon">&#128269;</div>
+            <div class="obj-title">Research-First 原則</div>
+            <div class="obj-desc">理解為何讓 AI 深度閱讀程式碼庫是防止「在隔離中正確但破壞系統」的關鍵第一步。</div>
+        </div>
+        <div class="objective-item" style="border-color: #10b981;">
+            <div class="obj-icon">&#128221;</div>
+            <div class="obj-title">Annotation Cycle 方法</div>
+            <div class="obj-desc">學會使用 Markdown 計畫文件作為「共享可變狀態」，透過人類標註循環注入判斷力。</div>
+        </div>
+        <div class="objective-item" style="border-color: #f59e0b;">
+            <div class="obj-icon">&#128736;</div>
+            <div class="obj-title">Copilot vs Autopilot 界線</div>
+            <div class="obj-desc">掌握何時給 AI 自主權、何時收緊控制的決策框架，以及如何在執行中做精準微調。</div>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">Boris Tane's Claude Code Pipeline</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#128218;</div>
+                <div class="framework-step-title">Research</div>
+                <div class="framework-step-desc">Deep-read codebase<br>Write research.md</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128203;</div>
+                <div class="framework-step-title">Plan</div>
+                <div class="framework-step-desc">Detailed plan.md<br>Code snippets + paths</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#9997;</div>
+                <div class="framework-step-title">Annotate</div>
+                <div class="framework-step-desc">Human inline notes<br>1-6 review cycles</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#9881;</div>
+                <div class="framework-step-title">Implement</div>
+                <div class="framework-step-desc">Execute full plan<br>Typecheck as you go</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CONTENT SECTIONS ==================== -->
+
+    <!-- PART I: RESEARCH PHASE -->
+    <div class="part-label">Part I</div>
+    <h2 class="section-header">Research Phase — 深度閱讀是一切的起點</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh">Boris 的每一個重要任務都從「深度閱讀指令」開始。他要求 Claude 在做任何事之前，<span class="hl-concept">徹底理解程式碼庫的相關部分</span>，並且永遠要求將發現寫成持久的 Markdown 文件，而不只是聊天中的口頭總結。</p>
+                <p class="en">Every meaningful task starts with a deep-read directive. I ask Claude to thoroughly understand the relevant part of the codebase before doing anything else. And I always require the findings to be written into a persistent markdown file, never just a verbal summary in the chat.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh">注意用語：「deeply」、「in great details」、「intricacies」。<span class="hl-key">沒有這些詞，Claude 會略讀</span>。它會讀一個檔案、看到函式簽名層級的功能就繼續往下。你需要發出訊號告訴它：表面層級的閱讀是不被接受的。</p>
+                <p class="en">Notice the language: "deeply", "in great details", "intricacies". Without these words, Claude will skim. It'll read a file, see what a function does at the signature level, and move on. You need to signal that surface-level reading is not acceptable.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh"><span class="hl-key">這是 AI 輔助寫程式中最昂貴的失敗模式</span>，而且不是語法錯誤或邏輯錯誤。是那些在隔離中能運作，但會破壞周圍系統的實作。例如一個忽略現有快取層的函式、一個不考慮 ORM 慣例的資料遷移、一個複製了已存在邏輯的 API 端點。Research 階段可以防止這一切。</p>
+                <p class="en">This is the most expensive failure mode with AI-assisted coding, and it's not wrong syntax or bad logic. It's implementations that work in isolation but break the surrounding system. The research phase prevents all of this.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">&#128187; Research Prompt 範例</div>
+                <div class="info-box-content">
+<pre><code>read this folder in depth, understand
+how it works deeply, what it does and
+all its specificities. when that's done,
+write a detailed report of your learnings
+and findings in research.md</code></pre>
+<pre><code>go through the task scheduling flow,
+understand it deeply and look for
+potential bugs... keep researching
+until you find all the bugs, don't
+stop until all the bugs are found.</code></pre>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>這就像派一個新進工程師去理解系統之前，要求他先寫一份「系統理解報告」。你不是要考他，而是<strong>在他動手改東西之前，先確認他真的懂</strong>。如果報告有錯，你在他寫任何程式碼之前就能糾正。這比事後修復便宜 10 倍。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                <div class="info-box-content">
+                    <p><strong>Written artifact（research.md）是審查介面。</strong>你可以閱讀它、驗證 Claude 是否真正理解系統、在任何規劃發生之前糾正誤解。如果研究是錯的，計畫就會是錯的，實作也會是錯的。Garbage in, garbage out。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART II: PLANNING PHASE -->
+    <div class="part-label">Part II</div>
+    <h2 class="section-header">Planning Phase — 用 Markdown 取代內建 Plan Mode</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh">審查完 research 之後，Boris 要求 Claude 在獨立的 Markdown 文件中撰寫<span class="hl-concept">詳細的實作計畫</span>。生成的計畫包含方法的詳細說明、展示實際變更的程式碼片段、將被修改的檔案路徑，以及考量與權衡。</p>
+                <p class="en">Once I've reviewed the research, I ask for a detailed implementation plan in a separate markdown file. The generated plan always includes a detailed explanation of the approach, code snippets showing the actual changes, file paths that will be modified, and considerations and trade-offs.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh">Boris 明確表示<span class="hl-key">不使用 Claude Code 的內建 plan mode</span>，因為那不夠好。自己的 Markdown 文件給了他完全的控制權：可以在編輯器中編輯、加上行內筆記，而且它作為專案中的真實產物而持續存在。</p>
+                <p class="en">I use my own .md plan files rather than Claude Code's built-in plan mode. The built-in plan mode sucks. My markdown file gives me full control. I can edit it in my editor, add inline notes, and it persists as a real artifact in the project.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh">一個他經常使用的技巧：對於範圍明確的功能，如果他在開源專案中看過好的實作，<span class="hl-practical">他會將該程式碼作為參考一起分享</span>。Claude 在有具體參考實作可依循時，表現會顯著優於從零設計。</p>
+                <p class="en">For well-contained features where I've seen a good implementation in an open source repo, I'll share that code as a reference alongside the plan request. Claude works dramatically better when it has a concrete reference implementation to work from rather than designing from scratch.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">&#128187; Planning Prompt 範例</div>
+                <div class="info-box-content">
+<pre><code>I want to build a new feature &lt;name&gt;
+that extends the system to perform
+&lt;business outcome&gt;. write a detailed
+plan.md document outlining how to
+implement this. include code snippets</code></pre>
+<pre><code>the list endpoint should support
+cursor-based pagination instead of
+offset. write a detailed plan.md for
+how to achieve this. read source files
+before suggesting changes, base the
+plan on the actual codebase</code></pre>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736; 實務應用：Reference Implementation 技巧</div>
+                <div class="info-box-content">
+                    <p>如果你想加入 sortable IDs，找一個做得好的開源專案，貼上它的 ID 生成碼，然後說：「<em>this is how they do sortable IDs, write a plan.md explaining how we can adopt a similar approach.</em>」這個技巧的核心邏輯是：<strong>給 AI 一個「已被證明可行的」錨點，比讓它從白紙開始設計好得多。</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART III: ANNOTATION CYCLE -->
+    <div class="part-label">Part III</div>
+    <h2 class="section-header">Annotation Cycle — 工作流中最具創新性的部分</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh">這是 Boris 工作流中<span class="hl-key">最具特色的部分</span>，也是他貢獻最大價值的地方。Claude 寫完計畫後，Boris 在編輯器中打開它，<span class="hl-concept">直接在文件中加入行內筆記</span>。這些筆記修正假設、拒絕方法、添加約束條件，或提供 Claude 沒有的領域知識。</p>
+                <p class="en">This is the most distinctive part of my workflow, and the part where I add the most value. After Claude writes the plan, I open it in my editor and add inline notes directly into the document. These notes correct assumptions, reject approaches, add constraints, or provide domain knowledge that Claude doesn't have.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh">筆記的長度差異極大。有時只有兩個字：在 Claude 標記為 optional 的參數旁邊寫「not optional」。有時則是一整段文字，解釋業務約束或貼上他期望的資料格式。</p>
+                <p class="en">The notes vary wildly in length. Sometimes a note is two words: "not optional" next to a parameter Claude marked as optional. Other times it's a paragraph explaining a business constraint or pasting a code snippet showing the data shape I expect.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh">然後他把 Claude 送回文件：「I added a few notes to the document, address all the notes and update the document accordingly. <span class="hl-key">don't implement yet</span>。」這個循環重複 1 到 6 次。明確的「don't implement yet」防護至關重要。沒有它，Claude 一認為計畫夠好就會跳去寫程式碼。</p>
+                <p class="en">Then I send Claude back to the document. This cycle repeats 1 to 6 times. The explicit "don't implement yet" guard is essential. Without it, Claude will jump to code the moment it thinks the plan is good enough.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">&#128187; Annotation 筆記實例</div>
+                <div class="info-box-content">
+<pre><code><span class="code-comment">// 領域知識注入</span>
+"use drizzle:generate for migrations,
+not raw SQL"
+
+<span class="code-comment">// 修正錯誤假設</span>
+"no — this should be a PATCH, not PUT"
+
+<span class="code-comment">// 拒絕提議的方法</span>
+"remove this section entirely,
+we don't need caching here"
+
+<span class="code-comment">// 重新導向整個區段</span>
+"this is wrong, the visibility field
+needs to be on the list itself, not
+on individual items. restructure the
+schema section accordingly"</code></pre>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念：Shared Mutable State</div>
+                <div class="info-box-content">
+                    <p>Markdown 文件充當了人類和 AI 之間的<strong>共享可變狀態</strong>。Boris 可以按自己的節奏思考、精確標註問題所在位置，然後重新參與而不失去上下文。這與試圖透過聊天訊息引導實作根本不同。<strong>計畫是一份結構化、完整的規格書</strong>，你可以整體性地審查。聊天對話是你需要滾動瀏覽才能重建決策的東西。</p>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>想像你是建築師，AI 是繪圖員。你不會站在繪圖員身後口述每一條線（聊天模式）。你會讓他畫一版藍圖，然後<strong>你拿紅筆在藍圖上標註修改</strong>（Annotation Cycle），他根據標註改完，你再看一次，直到滿意才讓施工隊進場。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART IV: IMPLEMENTATION -->
+    <div class="part-label">Part IV</div>
+    <h2 class="section-header">Implementation Phase — 讓執行變得無聊</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh">當計畫準備好後，Boris 發出一個<span class="hl-concept">標準化的實作指令</span>，他幾乎在每個實作階段都重複使用。到他說「implement it all」的時候，每個決策都已經做完並驗證過了。<span class="hl-key">實作變成機械式的，而不是創造性的。</span>這是刻意為之的 — 創造性工作發生在標註循環中。</p>
+                <p class="en">By the time I say "implement it all," every decision has been made and validated. The implementation becomes mechanical, not creative. This is deliberate. The creative work happened in the annotation cycles.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh">Boris 同時解釋了他的標準 prompt 中每個片段的用意：「implement it all」意味著執行計畫中的所有內容，不要挑選；「mark it as completed in the plan document」意味著計畫是進度的唯一來源；「do not stop」意味著不要在流程中途暫停請求確認；「continuously run typecheck」意味著及早發現問題。</p>
+                <p class="en">This single prompt encodes everything that matters: do everything in the plan, don't cherry-pick; the plan is the source of truth for progress; don't pause for confirmation mid-flow; catch problems early, not at the end.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">&#128187; 標準 Implementation Prompt</div>
+                <div class="info-box-content">
+<pre><code>implement it all. when you're done with
+a task or phase, mark it as completed
+in the plan document. do not stop until
+all tasks and phases are completed.
+do not add unnecessary comments or
+jsdocs, do not use any or unknown types.
+continuously run typecheck to make sure
+you're not introducing new issues.</code></pre>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示：Todo List 作為進度追蹤器</div>
+                <div class="info-box-content">
+                    <p>在進入實作之前，Boris 總是要求一個細粒度的任務分解：「<code>add a detailed todo list to the plan, with all the phases and individual tasks necessary</code>」。Claude 在執行時標記已完成項目，所以 Boris 可以隨時一眼看到進度，在長達數小時的工作階段中特別有價值。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART V: FEEDBACK & STEERING -->
+    <div class="part-label">Part V</div>
+    <h2 class="section-header">Feedback &amp; Staying in the Driver's Seat</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh">一旦 Claude 開始執行計畫，Boris 的角色從<span class="hl-concept">架構師轉變為監督者</span>。他的 prompt 變得極為精簡。計畫階段的筆記可能是一整段文字，但實作階段的修正通常只有一句話。</p>
+                <p class="en">Once Claude is executing the plan, my role shifts from architect to supervisor. My prompts become dramatically shorter. Where a planning note might be a paragraph, an implementation correction is often a single sentence.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh">前端工作是最迭代的部分。Boris 在瀏覽器中測試，然後快速射出修正：「wider」、「still cropped」、「there's a 2px gap」。對於視覺問題，他有時會附上截圖 — <span class="hl-practical">一張錯位表格的截圖比描述問題更快傳達問題</span>。</p>
+                <p class="en">Frontend work is the most iterative part. I test in the browser and fire off rapid corrections. For visual issues, I sometimes attach screenshots. A screenshot of a misaligned table communicates the problem faster than describing it.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh">Boris 也經常引用現有程式碼：「this table should look exactly like the users table」。這比從零描述設計精確得多。成熟程式碼庫中的大多數功能都是現有模式的變體。<span class="hl-key">當方向出錯時，他不嘗試修補，而是回滾然後縮小範圍</span>。</p>
+                <p class="en">I also reference existing code constantly. When something goes in a wrong direction, I don't try to patch it. I revert and re-scope by discarding the git changes.</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736; 實務應用：四種主動干預模式</div>
+                <div class="info-box-content">
+                    <p><strong>Cherry-picking：</strong>「for the first one, just use Promise.all; for the third, extract into a separate function; ignore the fourth and fifth」— 逐項決策。</p>
+                    <p><strong>Trimming scope：</strong>「remove the download feature from the plan, I don't want to implement this now」— 防止範圍蔓延。</p>
+                    <p><strong>Protecting interfaces：</strong>「the signatures of these three functions should not change, the caller should adapt」— 硬性約束。</p>
+                    <p><strong>Overriding choices：</strong>「use this library's built-in method instead of writing a custom one」— 快速技術覆寫。</p>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念：Revert > Patch</div>
+                <div class="info-box-content">
+                    <p>Boris 的哲學是：當 AI 走錯方向時，<strong>回滾 + 縮小範圍</strong>幾乎總是比嘗試漸進修復一個糟糕的方法更好。「I reverted everything. Now all I want is to make the list view more minimal — nothing else.」這與「沉沒成本謬誤」相反 — 果斷放棄錯誤路線比堅持修補更有效率。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART VI: SINGLE LONG SESSIONS -->
+    <div class="part-label">Part VI</div>
+    <h2 class="section-header">Single Long Sessions — 挑戰傳統認知</h2>
+    <div class="content-grid content-linear">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh">Boris 在單一長工作階段中完成 research、planning 和 implementation，而不是將它們拆分到不同的工作階段。他表示<span class="hl-key">沒有看到大家所說的「context window 超過 50% 後效能下降」</span>的問題。到他說「implement it all」的時候，Claude 已經花了整個工作階段在建立理解：在 research 期間閱讀檔案、在標註循環中精煉心智模型、吸收他的領域知識修正。</p>
+                <p class="en">I run research, planning, and implementation in a single long session. I am not seeing the performance degradation everyone talks about after 50% context window. By the time I say "implement it all," Claude has spent the entire session building understanding.</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh">當 context window 填滿時，Claude 的自動壓縮機制維持了足夠的上下文繼續運作。而<span class="hl-concept">計畫文件 — 那個持久化的產物 — 在壓縮後依然完整保存</span>。Boris 可以在任何時間點指向它。這解釋了為什麼持久化的 .md 文件如此關鍵：它不受聊天記憶衰減的影響。</p>
+                <p class="en">When the context window fills up, Claude's auto-compaction maintains enough context to keep going. And the plan document, the persistent artifact, survives compaction in full fidelity.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEY TAKEAWAYS -->
+    <h2 class="section-header">Key Takeaways</h2>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <div class="card-icon">&#128218;</div>
+            <div class="card-title">Research 防止「無知的變更」</div>
+            <div class="card-text">AI 輔助編程最昂貴的失敗模式不是語法錯誤，而是「在隔離中正確但破壞周圍系統」的實作。深度閱讀 + 書面報告是防線。</div>
+        </div>
+        <div class="summary-card" style="border-color: #10b981;">
+            <div class="card-icon">&#9997;</div>
+            <div class="card-title">Annotation Cycle 是核心創新</div>
+            <div class="card-text">Markdown 文件作為人-AI 之間的共享可變狀態。人類在自己的節奏下思考、精確標註，讓 AI 重複修正計畫直到完美。</div>
+        </div>
+        <div class="summary-card" style="border-color: #f59e0b;">
+            <div class="card-icon">&#128736;</div>
+            <div class="card-title">思考與打字分離</div>
+            <div class="card-text">創造性決策在標註循環中完成，實作階段刻意設計成無聊的、機械式的。「don't implement yet」是最重要的防護語句。</div>
+        </div>
+        <div class="summary-card" style="border-color: #8b5cf6;">
+            <div class="card-icon">&#128295;</div>
+            <div class="card-title">Revert > Patch</div>
+            <div class="card-text">當 AI 走錯方向時，回滾 + 縮小範圍永遠優於嘗試漸進修復。果斷放棄錯誤路線是效率的關鍵。</div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <h2 class="section-header">Practice Questions</h2>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">Boris 為什麼堅持使用自己的 Markdown 文件而非 Claude Code 的內建 plan mode？這反映了什麼更深層的原則？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>表面原因是內建 plan mode 功能不足 — 無法在編輯器中自由編輯、加入行內筆記。但更深層的原則是<strong>「人類必須擁有對產物的完全控制權」</strong>。Markdown 文件是 Boris 可以在自己的時間和空間中思考的媒介，不受聊天界面的時間壓力。它作為專案中的真實產物而持續存在，不會隨著對話消失。</p>
+            <p>這也反映了一個重要的 AI 協作原則：<strong>最有價值的產物應該存在於你的工作環境中，而不是被鎖在 AI 工具的介面裡。</strong>這確保即使你換工具或工具失效，你的思考成果仍然保留。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">如果你要在 CDMO 的偏差調查 (Deviation Investigation) 流程中應用 Boris 的 Annotation Cycle 方法，你會如何設計這個流程？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>在 GMP 環境中，Boris 的 Annotation Cycle 天然適合偏差調查：</p>
+            <p><strong>Research Phase：</strong>讓 AI 深度閱讀相關 SOP、批次紀錄、設備維護歷史，產出 research.md 式的「背景分析報告」。人類審查 AI 是否正確理解了製程和規範。</p>
+            <p><strong>Plan Phase：</strong>AI 提出調查計畫（根本原因假設、需要檢查的數據、建議的 CAPA）。人類在 plan.md 中標註：「這個假設不對，我們的 SA25 isolator 的壓差監控邏輯和你描述的不同」或「加上環境監測數據的交叉比對」。</p>
+            <p><strong>Critical Guard：</strong>「don't implement yet」在 GMP 中變成「<strong>don't finalize yet</strong>」— 在 QA 審核批准之前，任何結論都是草稿。這正是 copilot mode 的精髓：100% 人類審核。</p>
+            <p>核心價值：AI 加速資料收集和假設生成，但人類的 O-ring 判斷（製程經驗、法規知識、客戶關係考量）透過標註循環注入。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">Boris 聲稱在 context window 超過 50% 後沒有看到效能下降。這個觀察有什麼可能的限制或替代解釋？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>幾個值得質疑的點：</p>
+            <p><strong>倖存者偏差：</strong>Boris 的工作流本身就把最重要的資訊持久化到 .md 文件中，所以即使 Claude 的內部記憶衰減了，計畫文件作為「外部記憶體」彌補了差距。他可能沒有察覺到衰減，因為他的方法恰好抵消了衰減。</p>
+            <p><strong>任務結構差異：</strong>到 implementation 階段，大多數決策已經做完了。Claude 只需要讀計畫然後執行機械式任務，這對 context window 的依賴度本就較低。與需要在長對話中持續做複雜推理的場景不同。</p>
+            <p><strong>Auto-compaction 的選擇性：</strong>Claude Code 的壓縮機制可能優先保留了 .md 文件的內容（因為它被頻繁引用），而丟棄了早期的聊天歷史。這不代表沒有衰減，只是衰減發生在不重要的部分。</p>
+            <p><strong>啟示：</strong>Boris 的經驗可能證明的不是「context window 沒有衰減」，而是「<strong>如果你把關鍵資訊外部化到持久文件中，衰減就不再重要</strong>」— 這其實是更有價值的洞察。</p>
+        </div>
+    </details>
+
+    <!-- BOTTOM LINE -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#127919; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#10004; 核心洞察</div>
+            <div class="bottom-line-text">Boris 的 Annotation Cycle 本質上就是我一直在實踐的 copilot mode 的最佳範例 — 但他把它結構化成一個可重複的流程。「Markdown 文件作為共享可變狀態」這個概念，與我在 CDMO 偏差調查中讓 AI 起草、人類標註修正、AI 再修改的模式完全吻合。差別在於他把這個循環的媒介從「聊天對話」升級成了「持久化文件」，這大幅降低了上下文損失的風險。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#128200; 立即應用</div>
+            <div class="bottom-line-text">在下一次使用 Claude Projects 處理複雜分析任務時，嘗試 Boris 的三步法：(1) 要求 Claude 先寫 research.md 理解背景，我審核後再進行；(2) 要求寫 plan.md 列出分析框架，我在文件中直接標註修改意見而非在聊天中來回討論；(3) 確認計畫無誤後才說「execute」。特別是在為 COO 層級的戰略報告做準備時，這個流程可以確保 AI 的分析方向從一開始就對齊我的意圖。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#9888; 需要補充</div>
+            <div class="bottom-line-text">Boris 的工作流高度針對軟體開發場景，需要調適到知識工作和文件分析的情境。他的「reference implementation」技巧在編程中很自然，但在報告撰寫或策略分析中，對應的做法是什麼？可能是「給 AI 看一份過去的好報告作為格式和深度的參考」。另外，他的整個流程假設使用者有能力判斷計畫的正確性 — 這在我的專業領域內沒問題，但在學習全新領域時，Annotation Cycle 的價值會降低，因為你可能無法辨識 AI 的錯誤。</div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>AI Expert Learning System v1.4.2 | 製作日期 2026-02-22</p>
+        <p>原文：<a href="https://boristane.com/blog/how-i-use-claude-code/" target="_blank">How I Use Claude Code — Boris Tane</a></p>
+        <div class="chat-title-suggestion">2026-02-22 [Agent] Boris Tane - Claude Code Workflow</div>
+    </div>
+
+</div>
+</body>
+</html>
