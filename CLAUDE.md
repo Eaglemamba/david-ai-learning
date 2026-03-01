@@ -8,7 +8,9 @@ When any document is updated, check and update all related downstream files:
 |---------|-----------------|
 | Add/remove HTML in `docs/` | `node build-search-index.js` to rebuild `search-index.js` |
 | Add/remove HTML in `docs/` | Add/remove entry in `mindmap.html` |
-| Change doc metadata (title, tags, rating) | Rebuild search index + update mindmap entry |
+| Add/remove HTML in `docs/` | Add/remove entry in `learning-path.html` |
+| Add/remove HTML in `docs/` | Dashboard (`index.html`) auto-reads meta tags — verify new docs appear correctly |
+| Change doc metadata (title, tags, rating) | Rebuild search index + update mindmap entry + update learning-path entry |
 | Change doc date or year | Grep all related files for stale dates |
 | Add new tag category | Add tag color in `docs/styles.css` (when created) + update README Categories table |
 | Update `docs-workflow/` templates | Check if examples still match template structure |
@@ -16,10 +18,11 @@ When any document is updated, check and update all related downstream files:
 ## File Relationships
 
 ```
-docs/*.html (87 source files)
-  ├── index.html          reads doc-* meta tags for dashboard
+docs/*.html (108 source files)
+  ├── index.html          reads doc-* meta tags for dashboard (auto)
   ├── search-index.js     built from docs/ via build-search-index.js
   ├── mindmap.html         manually curated topic clusters
+  ├── learning-path.html   structured learning progression
   └── docs-workflow/       MD essence/cheatsheet summaries
 ```
 
