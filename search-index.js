@@ -4250,6 +4250,7 @@ const searchIndex = [
     "docSource": "Anthropic Engineering Blog",
     "docRating": 4.6,
     "docTags": [
+      "Anthropic-Eng",
       "Agent",
       "LLM",
       "Prompt",
@@ -4416,6 +4417,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / Anthropic",
     "docRating": 3.5,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "LLM"
@@ -6842,6 +6844,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -6859,6 +6862,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -6876,6 +6880,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -6893,6 +6898,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -6910,6 +6916,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -6927,6 +6934,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -6944,6 +6952,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -6961,6 +6970,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -6978,6 +6988,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -6995,6 +7006,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -7012,6 +7024,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -7029,6 +7042,7 @@ const searchIndex = [
     "docSource": "Anthropic",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Docs",
       "Agent",
       "LLM",
       "Automation",
@@ -8925,6 +8939,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / code.claude.com",
     "docRating": 3.8,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation"
@@ -8940,6 +8955,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / code.claude.com",
     "docRating": 3.8,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation"
@@ -8955,6 +8971,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / code.claude.com",
     "docRating": 3.8,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation"
@@ -8970,6 +8987,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / code.claude.com",
     "docRating": 3.8,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation"
@@ -8985,6 +9003,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / code.claude.com",
     "docRating": 3.8,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation"
@@ -9000,6 +9019,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / code.claude.com",
     "docRating": 3.8,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation"
@@ -9015,6 +9035,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / code.claude.com",
     "docRating": 3.8,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation"
@@ -9030,6 +9051,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / code.claude.com",
     "docRating": 3.8,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation"
@@ -9045,6 +9067,7 @@ const searchIndex = [
     "docSource": "Claude Code Docs / code.claude.com",
     "docRating": 3.8,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation"
@@ -10521,6 +10544,7 @@ const searchIndex = [
     "docSource": "Mike Krieger / Anthropic Labs",
     "docRating": 3.2,
     "docTags": [
+      "Anthropic-Eng",
       "Agent",
       "Tool",
       "LLM",
@@ -11485,6 +11509,7 @@ const searchIndex = [
     "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Eng",
       "LLM",
       "API",
       "Tool"
@@ -11500,6 +11525,7 @@ const searchIndex = [
     "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
     "docRating": 4.2,
     "docTags": [
+      "Anthropic-Eng",
       "LLM",
       "API",
       "Tool"
@@ -11675,6 +11701,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11691,6 +11718,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11707,6 +11735,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11723,6 +11752,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11739,6 +11769,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11755,6 +11786,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11771,6 +11803,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11787,6 +11820,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11803,6 +11837,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11819,6 +11854,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11835,6 +11871,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11851,6 +11888,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11867,6 +11905,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11883,6 +11922,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11899,6 +11939,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11915,6 +11956,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11931,6 +11973,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11947,6 +11990,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11963,6 +12007,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -11979,6 +12024,7 @@ const searchIndex = [
     "docSource": "Anthropic / Claude Code Documentation",
     "docRating": 4.3,
     "docTags": [
+      "Anthropic-Docs",
       "Tool",
       "Agent",
       "Automation",
@@ -12644,5 +12690,719 @@ const searchIndex = [
     "sectionId": "practice-練習題",
     "sectionTitle": "Practice | 練習題",
     "content": "Q1 概念理解 Web-based AI 工具和 Folder-based AI 工具在上下文管理上的核心差異是什麼？為什麼這個差異決定了「共享上下文」的可行性？ 核心差異： Web-based 工具（ChatGPT, claude.ai）每次對話從空白狀態開始，無法自動載入預設上下文。Folder-based 工具（Claude Code, Cursor, Cowork）能讀取本地資料夾中的指令檔案（如 CLAUDE.md），在每次 Session 開始前自動載入。 為什麼這決定可行性： 共享上下文的前提是「檔案可以被放在共享資料夾中，且工具能自動讀取」。Web-based 工具沒有這個機制——你只能手動貼上上下文，這本質上還是個人化的、無法擴展的。Folder-based 工具的檔案分層載入（stacking）機制讓公司級、部門級、專案級的上下文可以自動疊加。 Q2 產業應用 在你的 CDMO 環境中，如果要建立共享 CLAUDE.md，「公司級」檔案應該包含哪些 GMP 相關內容？有哪些內容絕對不應該放在 AI 可讀取的指令檔案中？ 應包含的 GMP 內容： ALCOA+ 數據完"
+  },
+  {
+    "docFile": "2026-02-26_skills-markdown-folders.html",
+    "docTitle": "Skills 解密 - Markdown 資料夾的威力",
+    "docDate": "2026-02-26",
+    "docSource": "Gabriel Chua / OpenAI DevRel",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Prompt",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Agent Prompt Framework Tool Skills 解密：為什麼 Markdown 資料夾如此有效 Skills, Explained: Why Folders of Markdown Files Are So Effective Gabriel Chua / OpenAI DevRel | 2026-02-26 ★★★★☆ 4.0/5 ↑ 實務應用, 學習曲線 ↓ 技術深度, 時效性 這篇文章由 OpenAI 開發者關係團隊的 Gabriel Chua 撰寫，解釋了 AI 領域中「Skill」的概念 — 本質上就是將反覆使用的 Prompt 和相關資源打包成可重複使用的資料夾結構。文章提出 Skill 相對於傳統 Prompt 的三大差異：Progressive Disclosure（漸進式揭露）、Structure（結構化）、和 Access to Additional Resources（資源整合）。概念清晰、比喻恰當，但技術深度偏淺，更適合作為入門概覽。對於已有 Claude Projects Skill 建置經驗的讀者，本文的最大價值在於提供一個系統化的思維框架來理解自己正在做的事。 學習目標 1 理解 Skill 與傳統 Prompt 的本質差異，以及為什麼「可重複使用」是關鍵設計原則 2 掌握 Progressive Disclosure、Structure、Resource Access 三層架構的運作邏輯 3 評估如何將團隊的隱性知識（Tacit Knowledge）轉化為可執行的 Skill 模組 Skill 三層價值架構 1 Progressive Disclosure 按需載入，減少雜訊 → 2 Structure 資料夾即語義，模組化管理 → 3 Resource Access 附帶腳本、範例、工具 Part I：Skill 的本質 — 讓 Prompt 可重複使用 PART I 從「大致能用」到「穩定產出」 大多數使用 AI 工具的人，都曾經有過一個「 大致能用 」的 Prompt。可能是一份檢查清單、一個工作流程、或是一組規則。你調整了幾次直到輸出看起來對了，然後存起來以便下次使用。 \"Most people who use AI tools have, at some point, ended up with a prompt that 'mostly works.'\" 隨著時間推移，這個 Prompt 慢慢改變。你在某次出錯後加了一條規則，刪掉一行看似不再需要的指令。有人把它複製到不同專案並稍作修改。最終， 同一個流程有三四個版本在流傳 ，沒人確定哪個版本才能產出你真正想要的結果。 \"Eventually, there are three or four versions of the same process floating around, and no one is quite sure which one produces the output you actually want.\" Skill 本質上就是將這個習慣 正式化 的方式。核心來說，Skill 就是寫在 Markdown 檔案裡的 Prompt 集合，有時附帶額外的參考檔案或腳本。 \"A skill is essentially a way of formalizing that habit. At its core, a skill is just a collection of prompts written down i"
+  },
+  {
+    "docFile": "2026-02-27_agent-skills-architecture.html",
+    "docTitle": "Agent Skills - 模組化能力架構與漸進式揭露",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Claude Documentation",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Agent Skills 是 Anthropic 為 Claude 設計的 模組化能力擴展機制 。每個 Skill 是一個檔案目錄，包含指令（SKILL.md）、可執行腳本和參考資源，Claude 在需要時自動觸發並載入。核心架構採用 三層漸進式揭露（Progressive Disclosure） ：第 1 層元資料（~100 tokens，始終載入）、第 2 層指令（<5k tokens，觸發時載入）、第 3 層資源（按需載入，不消耗上下文）。這解決了傳統 Prompt Engineering 的核心痛點——將大量指令塞入系統提示會消耗上下文窗口。Skills 可跨 Claude API、Claude.ai、Claude Code 和 Agent SDK 使用，但 不會跨平台自動同步 。"
+  },
+  {
+    "docFile": "2026-02-27_agent-skills-architecture.html",
+    "docTitle": "Agent Skills - 模組化能力架構與漸進式揭露",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Claude Documentation",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "1 理解 Agent Skills 的 三層漸進式載入架構 ，以及它如何解決 Context Window 效率問題 2 掌握 SKILL.md 的 結構與撰寫要求 ，能設計自訂 Skill 的目錄結構 3 分辨不同平台（API / Claude.ai / Claude Code / Agent SDK）的 Skill 部署差異與限制 Agent Skills 三層漸進式揭露架構 L1 Metadata YAML name + description ~100 tokens / 始終載入 L2 Instructions SKILL.md 主體 <5k tokens / 觸發時載入 L3 Resources 腳本、範本、文件 按需載入 / 無上限"
+  },
+  {
+    "docFile": "2026-02-27_agent-skills-architecture.html",
+    "docTitle": "Agent Skills - 模組化能力架構與漸進式揭露",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Claude Documentation",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-i-為什麼需要-agent-skills",
+    "sectionTitle": "Part I: 為什麼需要 Agent Skills？",
+    "content": "從 Prompt 到 Skill — 解決重複指令與上下文消耗的痛點 Skills 是 可重複使用的、基於檔案系統的資源 ，為 Claude 提供特定領域的專業知識：工作流程、上下文和最佳實踐，將通用代理轉變為專家。 Skills are reusable, file-system-based resources that give Claude domain-specific expertise: workflows, context, and best practices that transform a general agent into a specialist. 與提示詞（對話層級的一次性任務指令）不同，Skills 按需載入 ，消除了在多個對話中重複提供相同指導的需要。 Unlike prompts (one-time task instructions at the conversation level), Skills load on demand, eliminating the need to repeat the same guidance across mul"
+  },
+  {
+    "docFile": "2026-02-27_agent-skills-architecture.html",
+    "docTitle": "Agent Skills - 模組化能力架構與漸進式揭露",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Claude Documentation",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-ii-三層漸進式揭露架構",
+    "sectionTitle": "Part II: 三層漸進式揭露架構",
+    "content": "Progressive Disclosure — 只載入需要的，節省每一個 Token Skills 利用 Claude 的 VM 環境來提供超越提示詞所能實現的能力。Claude 在具有 檔案系統存取權限的虛擬機器 中運作，允許 Skills 以目錄形式存在。 Skills leverage Claude's VM environment to provide capabilities beyond what prompts alone can achieve. Claude operates in a virtual machine with file system access, allowing Skills to exist as directories. 這種基於檔案系統的架構實現了 漸進式揭露 ：Claude 根據需要分階段載入資訊，而不是預先消耗上下文。 This file-system-based architecture enables progressive disclosure: Claude loads information in stages as nee"
+  },
+  {
+    "docFile": "2026-02-27_agent-skills-architecture.html",
+    "docTitle": "Agent Skills - 模組化能力架構與漸進式揭露",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Claude Documentation",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-iii-skill-結構與撰寫要求",
+    "sectionTitle": "Part III: Skill 結構與撰寫要求",
+    "content": "SKILL.md 檔案格式、目錄組織與欄位限制 每個 Skill 都需要一個包含 YAML 前置資料（Front Matter） 的 SKILL.md 檔案。必填欄位只有兩個： name 和 description 。 Every Skill requires a SKILL.md file with YAML front matter. Only two fields are required: name and description. name 最多 64 個字元，只能使用小寫字母、數字和連字號，不能包含「anthropic」或「claude」等保留字。 description 最多 1024 個字元，不能為空——這段描述 決定了 Claude 何時觸發這個 Skill 。 name: max 64 chars, lowercase alphanumeric and hyphens only, no reserved words like \"anthropic\" or \"claude\". description: max 1024 chars, cannot be empty —"
+  },
+  {
+    "docFile": "2026-02-27_agent-skills-architecture.html",
+    "docTitle": "Agent Skills - 模組化能力架構與漸進式揭露",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Claude Documentation",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-iv-跨平台部署與限制",
+    "sectionTitle": "Part IV: 跨平台部署與限制",
+    "content": "API / Claude.ai / Claude Code / Agent SDK 的 Skill 可用性差異 Skills 可在 Claude 的各代理產品中使用，但 自訂 Skills 不會跨平台同步 。上傳到一個平台的 Skills 不會自動在其他平台上可用——你需要為每個平台分別管理和上傳。 Skills work across Claude's agent products, but custom Skills don't sync across platforms. Skills uploaded to one platform aren't automatically available on others — you need to manage and upload separately for each platform. 共享範圍也不同：Claude.ai 的自訂 Skills 僅限個人使用者（每個團隊成員必須分別上傳）；Claude API 是 工作區範圍 （所有成員可存取）；Claude Code 則是個人或專案級，也可透過 Plugins 共享。 Shari"
+  },
+  {
+    "docFile": "2026-02-27_agent-skills-architecture.html",
+    "docTitle": "Agent Skills - 模組化能力架構與漸進式揭露",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Claude Documentation",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-v-安全考量與最佳實踐",
+    "sectionTitle": "Part V: 安全考量與最佳實踐",
+    "content": "像安裝軟體一樣對待 Skills — 信任來源、審查內容 Anthropic 強烈建議 僅使用來自可信來源的 Skills ：你自己建立的，或從 Anthropic 獲取的。Skills 透過指令和程式碼為 Claude 提供新能力，惡意 Skill 可以指導 Claude 以不符合聲明目的的方式呼叫工具或執行程式碼。 Anthropic strongly recommends only using Skills from trusted sources: ones you create yourself or obtain from Anthropic. Malicious Skills can direct Claude to call tools or execute code in ways inconsistent with the Skill's stated purpose. 主要風險包括： 工具濫用 （惡意 Skills 可以以有害方式呼叫 bash 命令）、 資料暴露 （具有敏感資料存取權限的 Skills 可能被設計為向外部洩露資訊）、以及 外部依賴風險 （從外部 "
+  },
+  {
+    "docFile": "2026-02-27_agent-skills-architecture.html",
+    "docTitle": "Agent Skills - 模組化能力架構與漸進式揭露",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Claude Documentation",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "1. Skills = 檔案系統上的可重用專業知識模組 不同於 Prompt（一次性指令），Skills 以目錄形式存在於 VM 中，包含指令、腳本和資源。建立一次，Claude 在需要時自動觸發——解決了跨對話重複載入指令的痛點。 2. 三層漸進式揭露是核心設計哲學 元資料（~100 tokens）始終載入 → 指令（<5k tokens）觸發時載入 → 資源按需從不預載。安裝 20 個 Skills 也只消耗 ~2k tokens 元資料，而非 100k tokens 完整指令。 3. description 是觸發的關鍵 Claude 根據 YAML 中的 description 決定何時觸發 Skill。寫不好 = 不觸發或誤觸發。這是 Skill 設計中最需要反覆迭代的部分。 4. 跨平台不同步，安全視同安裝軟體 自訂 Skills 需在每個平台分別上傳/管理。API 無網路，Claude Code 有完整權限。只使用可信來源的 Skills——惡意 Skill 可以指導 Claude 執行有害操作。"
+  },
+  {
+    "docFile": "2026-02-27_agent-skills-architecture.html",
+    "docTitle": "Agent Skills - 模組化能力架構與漸進式揭露",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Claude Documentation",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "practice",
+    "sectionTitle": "Practice",
+    "content": "Q1 概念理解 為什麼 Anthropic 選擇「漸進式揭露」而非「全部預載」的架構？如果 Context Window 無限大，這個設計還有意義嗎？ 核心原因是 Context Window 效率。 即使 Claude 支援 200k tokens 的上下文，預載所有 Skill 指令仍會佔用寶貴的對話空間，降低回應品質（注意力被分散到不相關指令上）。即使 Context Window 無限大，漸進式揭露仍有價值：(1) 減少「注意力稀釋」——LLM 在較少的相關上下文中表現更好；(2) 降低成本——按 token 計費的 API 模式下，每多載入 5k tokens 都是錢；(3) 降低延遲——更少的輸入 tokens 意味著更快的首字回應。 Q2 產業應用 在 CDMO 製藥環境中，你會如何設計一個偏差調查（Deviation Investigation）的自訂 Skill？三層內容分別放什麼？ 第 1 層（元資料） ：name: deviation-investigation ，description 涵蓋觸發關鍵字如「偏差」「deviation」「CAPA」「根因分析」「ro"
+  },
+  {
+    "docFile": "2026-02-27_anthropic-claude-code-internal.html",
+    "docTitle": "Anthropic 內部如何使用 Claude Code - 10 團隊實戰",
+    "docDate": "2026-02-27",
+    "docSource": "Anthropic / Official Case Study",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Tool Agent Automation Framework Anthropic 內部團隊如何使用 Claude Code 10 個部門的實戰案例、影響評估與最佳實踐 Source: Anthropic Official Case Study | 2026 Executive Summary 4.3/5 實務應用, 工具生態 技術深度, 成本分析 這份文件來自 Anthropic 內部，記錄了 10 個不同部門 如何在日常工作中使用 Claude Code。從資料基礎建設、產品開發、安全工程到法務部門，涵蓋了 開發者與非技術人員 兩種截然不同的使用模式。 最大的價值不在於 Claude Code 的功能介紹，而在於 真實的採用模式（adoption patterns） ：哪些團隊用同步模式、哪些用非同步模式、失敗率多少、如何處理回滾。這些是你在官方文件中看不到的「使用現場」。 Learning Objectives 辨別 Claude Code 的兩大使用模式：同步協作 (Synchronous) vs. 非同步自主 (Async Autonomous) 掌握 Claude.md 文件和自訂 Slash Commands 對 Claude Code 效能的關鍵影響 評估非技術團隊（行銷、設計、法務）採用 Claude Code 的可行路徑與限制 Claude Code 採用模式光譜 (Adoption Spectrum) 探索模式 Codebase 導航 概念查詢 協作模式 同步編碼 即時監督 委派模式 Auto-accept 非同步自主 系統模式 Agentic Workflows GitHub Actions Content Sections 基礎建設 工程開發 資料與 API 非技術團隊 Part I Data Infrastructure 資料基礎建設團隊 Developer Team 資料基礎建設團隊負責整合公司所有業務資料。他們用 Claude Code 做三件核心的事： 自動化例行資料工程任務 、排除複雜基礎設施問題、以及為非技術成員建立可執行的工作流程。 The Data Infrastructure team organizes all business data for teams across the company, using Claude Code for automating routine data engineering tasks. 最令人印象深刻的案例是 Kubernetes 截圖除錯 ：當叢集無法排程新的 Pod 時，團隊將儀表板截圖餵給 Claude Code，它一步步引導他們在 Google Cloud UI 中找到 IP 位址耗盡的警告，並提供建立新 IP pool 的精確指令。這完全繞過了對網路專家的依賴。 They fed screenshots of dashboards into Claude Code, which guided them through Google Cloud's UI menu by menu until they found a warning indicating pod IP address exhaustion. 另一個重要模式是 純文字工作流程 (Plain Text Workflows) ：財務團隊成員只需用純文字描述資料工作流程，載入 Claude Code 就能自動執行整個流程。零程式碼經驗的員工也能執行複雜的資料查詢和 Excel 輸出。 Emplo"
+  },
+  {
+    "docFile": "2026-02-27_block-ai-layoffs.html",
+    "docTitle": "Block 裁員 40% - AI 驅動組織重構",
+    "docDate": "2026-02-27",
+    "docSource": "Jack Dorsey / Block Inc. Shareholder Letter & X Post",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Analysis Agent Automation Block 裁員 40%：AI 時代的組織重構信號 Jack Dorsey 以 AI 為名砍半人力 -- 這對所有產業意味著什麼？ Source: Jack Dorsey / Block Inc. Shareholder Letter & X Post | 2026-02-26 Executive Summary 4.0/5 時效性, 實務應用 技術深度, 工具生態 Block（前 Square）CEO Jack Dorsey 於 2026 年 2 月 26 日宣布將公司人力從 10,000+ 裁減至 6,000 以下，幅度達 40%。他的核心論述： AI 智慧工具搭配更小更扁平的團隊，正在根本性地改變經營公司的意義 。這不是財務危機驅動的裁員，而是一個獲利成長中的公司主動進行的結構轉型。股價盤後立即跳漲超過 23%。 本文件分析 Dorsey 的決策邏輯、市場反應、專家質疑，以及對製藥 CDMO 營運者的啟示。這是迄今最大規模、最明確以「AI 取代人力」為敘事核心的上市公司裁員行動。 Learning Objectives 理解 Block 裁員的商業邏輯，區分「AI 效率敘事」與「過度招聘修正」的不同動機 分析「一次到位」vs「漸進裁員」的領導決策框架，及其對組織士氣的影響 評估 AI 驅動組織重構對製藥 / CDMO 產業的中期影響，識別 O-ring 瓶頸與可自動化區域 Dorsey 的組織重構決策框架 確認基本面 獲利成長中，非危機 識別結構變革 AI 工具改變工作模式 一次到位 避免漸進式士氣侵蝕 AI-first 重建 智慧工具為核心架構 Part I: 發生了什麼事？ Block 是 Jack Dorsey 創辦的金融科技公司，旗下產品包括 Square （商家支付）、 Cash App （個人金融）和 Tidal （音樂串流）。2026 年 2 月 26 日，Dorsey 在 X 上發文並同時發布致股東信，宣布將公司從 10,205 人裁至不到 6,000 人。 \"Today we're making one of the hardest decisions in the history of our company: we're reducing our organization by nearly half.\" 關鍵：這不是因為公司陷入困境。Block 的 2025 全年毛利達 103.6 億美元 ，年增 17%。Q4 毛利 28.7 億美元，年增 24%。Cash App 的毛利更是飆升 33%。Dorsey 的論述是： AI 智慧工具正在根本改變公司營運方式 ，與其慢慢裁員，不如一次到位。 \"We're not making this decision because we're in trouble. Our business is strong... but something has changed.\" 受影響員工將獲得 20 週薪資 + 每年年資 1 週 、股權歸屬至五月底、6 個月健康保險、公司設備，以及 5,000 美元轉職補助。公司預計認列 4.5-5 億美元的重組費用。 \"You'll receive your salary for 20 weeks + 1 week per year of tenure, equity vested through the end of May, 6 months of health care.\" 關鍵數據一覽 項目 "
+  },
+  {
+    "docFile": "2026-02-27_claude-cowork-setup.html",
+    "docTitle": "Claude Cowork 設定指南 - Nav Toor 五大功能解析",
+    "docDate": "2026-02-27",
+    "docSource": "Nav Toor / @heynavtoor",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.8/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem Nav Toor 這篇文章是目前最完整的 Claude Cowork 實戰設定指南。他以三年 AI workflow 建構經驗為基礎，將 Cowork 拆解為五大功能（File System Access、AskUserQuestion、Plugins、Instructions、Connectors），並提供每個功能的設定步驟和第一個 Prompt。文章最有價值的洞察是 「停止想如何寫更好的 Prompt，開始想如何提供更好的 Context」 這個思維轉換。文章偏「how-to 教學」而非深度技術分析，但作為 Cowork 的入門到進階設定指南，實用性極高。 Learning Objectives 理解 Cowork 五大功能架構 區分 File System、AskUserQuestion、Plugins、Instructions、Connectors 的角色與優先順序 建立 Context Files 系統 設計 about-me.md、br"
+  },
+  {
+    "docFile": "2026-02-27_claude-cowork-setup.html",
+    "docTitle": "Claude Cowork 設定指南 - Nav Toor 五大功能解析",
+    "docDate": "2026-02-27",
+    "docSource": "Nav Toor / @heynavtoor",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "從對話介面到桌面協作者",
+    "sectionTitle": "從對話介面到桌面協作者",
+    "content": "大多數人以為 Claude 就像 ChatGPT：一個文字框，你輸入，它回應。那是 claude.ai 的瀏覽器版本。 Cowork 完全不同。它住在你的桌面上，能讀寫你電腦上的資料夾檔案 ，建立 Word 文件、帶有公式的試算表，還能安裝針對你特定工作的專業外掛。 \"Most people think Claude is like ChatGPT. A text box. You type, it responds. That's claude.ai. Claude Cowork is different. It lives on your desktop. It reads and writes to folders on your actual computer.\" Cowork 的誕生背景是 Anthropic 將 Claude Code （開發者用的 agentic 工具）重新打造給一般知識工作者使用。不需要終端機、命令列或程式碼。你描述想要的結果，指向你的檔案，然後離開。 \"Cowork is what happened when Anthropic took the po"
+  },
+  {
+    "docFile": "2026-02-27_claude-cowork-setup.html",
+    "docTitle": "Claude Cowork 設定指南 - Nav Toor 五大功能解析",
+    "docDate": "2026-02-27",
+    "docSource": "Nav Toor / @heynavtoor",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "從上傳下載到直接讀寫",
+    "sectionTitle": "從上傳/下載到直接讀寫",
+    "content": "其他所有 AI 工具都靠上傳運作。你匯出檔案、拖進聊天、等待、取得輸出、下載、放回原處。 Cowork 消除了整個循環 。你選擇電腦上的資料夾，Claude 讀取裡面的所有內容。當它建立東西時，直接存到那個資料夾。 \"Every other AI tool runs on uploads. You export a file. You drag it into the chat. You wait. Cowork eliminates that entire loop.\" 更重要的是 Cowork 能 讀取你的舊報告來匹配格式、從上個月的試算表提取資料來建立這個月的、在任務中途參考你的品牌指南 ——全部因為你指向了正確的資料夾。 \"Cowork can read your old reports to match your formatting. It can pull data from last month's spreadsheet to build this month's. It can reference your brand guidelines mid-task.\" C"
+  },
+  {
+    "docFile": "2026-02-27_claude-cowork-setup.html",
+    "docTitle": "Claude Cowork 設定指南 - Nav Toor 五大功能解析",
+    "docDate": "2026-02-27",
+    "docSource": "Nav Toor / @heynavtoor",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "讓-ai-問你而不是替你猜",
+    "sectionTitle": "讓 AI 問你，而不是替你猜",
+    "content": "以下是每個其他 AI 在你給出不清楚任務時會做的事： 它猜。而且很有自信地猜。 它選一個詮釋、全力執行，然後給你一份精美的輸出——回答的卻是錯誤的問題。 \"Here's what every other AI does when you give it an unclear task: it guesses. Confidently. It picks an interpretation, runs with it, and gives you a polished output that answers the wrong question.\" Cowork 的做法不同。當它需要更多資訊時，它停下來 產生一個表單：多選題、具體選項、結構化的提示 ，幫助你想清楚你真正要什麼。 \"When it needs more information, it stops and generates a form. Multiple-choice questions. Specific options. A structured prompt that helps you think through"
+  },
+  {
+    "docFile": "2026-02-27_claude-cowork-setup.html",
+    "docTitle": "Claude Cowork 設定指南 - Nav Toor 五大功能解析",
+    "docDate": "2026-02-27",
+    "docSource": "Nav Toor / @heynavtoor",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "從通才到領域專家",
+    "sectionTitle": "從通才到領域專家",
+    "content": "沒有 Plugin 的 Cowork 是一個聰明的通才。但它不知道你的產業術語、團隊工作流程或你的角色需要的特定輸出。 Plugins 是技能包、斜線命令和子代理的組合 ，專為特定工作職能設計。 \"Without a plugin, Claude Cowork is a brilliant generalist. Plugins are bundles of skills, slash commands, and sub-agents designed for specific job functions.\" Anthropic 在 2026 年 1 月推出了 11 個官方 Plugin：Productivity、Marketing、Sales、Finance、Data Analysis、Legal、Product Management、Customer Support、Enterprise Search、Biology Research 等。 影響立竿見影。 Legal plugin 推出後，Thomson Reuters 單日下跌 16%——創下歷史最大單日跌幅。LegalZoom"
+  },
+  {
+    "docFile": "2026-02-27_claude-cowork-setup.html",
+    "docTitle": "Claude Cowork 設定指南 - Nav Toor 五大功能解析",
+    "docDate": "2026-02-27",
+    "docSource": "Nav Toor / @heynavtoor",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "跨-session-的記憶與工具串接",
+    "sectionTitle": "跨 Session 的記憶與工具串接",
+    "content": "Instructions（指令）： Cowork 沒有跨 session 記憶。每次你開新對話，Claude 完全重新開始。 Instructions 是你寫一次的常駐指令，在每個 Cowork session 開始時自動載入。 Global Instructions 全域適用，Folder Instructions 在你選擇特定資料夾時適用。 \"Instructions are standing orders you write once. They load automatically at the start of every Cowork session. Global instructions apply everywhere. Folder instructions apply when you select a specific local folder.\" 設定好 Instructions 後，Claude 在每個 session 開始時就已經知道你的名字、角色、溝通偏好、輸出預設和工作風格。 你再也不需要重複解釋自己。 \"Claude starts every ses"
+  },
+  {
+    "docFile": "2026-02-27_claude-cowork-setup.html",
+    "docTitle": "Claude Cowork 設定指南 - Nav Toor 五大功能解析",
+    "docDate": "2026-02-27",
+    "docSource": "Nav Toor / @heynavtoor",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "六個你需要知道的限制",
+    "sectionTitle": "六個你需要知道的限制",
+    "content": "限制 說明 因應策略 無跨 Session 記憶 每次新對話完全從零開始，是最大摩擦點 用 Context Files + Global Instructions 彌補 關閉 App 任務中斷 Cowork 在桌面 App 中運行，關閉即停止 用睡眠模式代替關閉視窗；session 可存活睡眠 用量消耗快 複雜任務比普通聊天消耗更多配額 監控 Settings > Usage；重度使用者考慮 Max 方案 僅限桌面 無手機版、無瀏覽器版、無跨裝置同步 Context files 放在 iCloud/Dropbox 等雲端同步資料夾 不能生成圖片 文件、試算表、簡報可以，圖片不行 圖片用 Gemini Imagen，文件用 Cowork Research Preview Agent 安全性仍在開發中 開啟刪除保護；敏感檔案讓 Claude 先確認再執行 Key Takeaways Context > Prompts 最核心的思維轉換：停止優化 Prompt，開始投資 Context Files。三個 .md 檔案（about-me、brand-voice、working-style）就是"
+  },
+  {
+    "docFile": "2026-02-28_ai-legal-practice-skills.html",
+    "docTitle": "AI 法律實務革命 - Skill 驅動精品律所",
+    "docDate": "2026-02-28",
+    "docSource": "Zack Shapiro",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Skill",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Zack Shapiro 經營一家兩人精品律師事務所，卻能處理大型事務所等級的交易工作量。核心秘訣不是使用法律專用 AI 產品（Harvey、Spellbook 等），而是用 Claude 的通用型 AI 搭配自建的 Skill（技能指令文件） 。這些 Skill 編碼了他十年實務累積的判斷力，讓 AI 不是套用通用模板，而是套用「他個人的分析框架」。 文章從一個交割前夜的真實案例開場，展示 AI 如何在兩小時內完成三名初級律師整夜的工作，接著系統性拆解 Skill 系統、三種使用模式（Chat / Cowork / Code）、三個實戰案例，以及對計費模式和人力配置的影響。對任何在「受監管環境中導入 AI」的專業人士來說，這是極具參考價值的第一手實證。 Learning Objectives Skill vs Prompt 的本質差異 理解為什麼 2026 年的 AI 顯學從 Prompt 轉移到 Skill，以及 Skill 的系統化可迭代特性 通用型 AI vs 垂直 AI 的取捨 學會評估「套殼產品」與「配置良好的前沿模型」之間的價值差異 判斷力的不可取代性 掌握 AI 加速下，人類判斷力如何從成本中心變成價值中心 AI 實務轉型框架：從 Prompt 到 Harness Prompt 一次性指令 無法迭代 Skill 可系統化迭代 編碼判斷力 Agent Skill 驅動 自主執行任務 Harness 人類馴服者 判斷 + 負責 Part I 開場案例：交割前夜的 AI 實戰 在一個客戶收購案即將交割的前一天晚上，買方律師寄來一封信，要求重組幾項關鍵交易條款：新的 代管條件（Escrow） 、擴大 賠償例外條款（Indemnification carve-outs） 、修訂後的交割交付物清單。隱含的威脅是：接受變動，否則撤出交易。 The night before a client's acquisition was set to close, the buyer's lawyer sent a letter demanding restructuring of several key deal terms: new escrow conditions, expanded indemnification carve-outs, and a revised closing deliverables schedule. 作者將收購協議、揭露清單和要求信上傳到 Claude。幾分鐘內，Claude 就將每一項提議的變動與現有交易條款進行比對，並 發現了買方律師自己沒注意到的問題 ：其中兩個例外條款與他們已在揭露清單中確認的陳述直接矛盾；第三個變動會與基礎陳述章節產生內部衝突，實際上反而會削弱買方自己的保障。 Within minutes, Claude had cross-referenced every proposed change against existing deal terms and found issues the buyer's lawyer apparently missed: two of their proposed carve-outs directly contradicted representations they'd already confirmed in the disclosure schedules. 到了晚上 11 點，他已經有了一套清晰的反制立場，每一項都基於對 買方自身文字的具體交叉引用 。交"
+  },
+  {
+    "docFile": "2026-02-28_anthropic-pentagon-supply-chain.html",
+    "docTitle": "Anthropic vs Pentagon - Supply Chain Risk 事件分析",
+    "docDate": "2026-02-28",
+    "docSource": "Anthropic Official Statement / Multi-source Analysis",
+    "docRating": 4.6,
+    "docTags": [
+      "Anthropic-Docs",
+      "Analysis",
+      "Agent",
+      "Tool",
+      "Security"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "2026 年 2 月 27 日，美國國防部長 Pete Hegseth 宣布將 Anthropic 列為 「供應鏈風險」(Supply Chain Risk) ，這是美國政府首次對本國科技公司使用此項原本針對外國敵對勢力的措施。事件核心：Anthropic 拒絕移除 Claude 模型的兩條使用限制 大規模國內監控 和 全自主武器系統 而國防部要求 AI 模型可用於「所有合法用途」(all lawful purposes)。 這不只是一間公司與政府的合約糾紛。它觸及了 AI 治理的根本問題： 誰有權決定前沿 AI 技術的使用邊界？ 事件後續引發 OpenAI、Google 員工聯名支持，Sam Altman 公開表態共享相同紅線，Ilya Sutskever 讚許 Anthropic 立場。對所有在受監管環境中使用 AI 的企業而言，這是一個必須理解的里程碑事件。 0 Learning Objectives 理解法律爭議核心 10 USC 3252「供應鏈風險」條款的設計意圖 vs 實際應用，以及為何法律專家質疑此舉的合法性 掌握產業連鎖效應 從 $200M 合約到全產業衝擊：供應鏈風險認定如何波及所有 DoD 承包商及其 AI 工具選擇 建立企業 AI 治理框架 從 Anthropic 的「兩條紅線」策略中，提煉受監管產業（如 CDMO）AI 部署的決策原則 事件衝突結構：Terms of Service vs All Lawful Purposes Anthropic 立場 支持所有合法軍事用途 但排除監控 + 自主武器 灰色地帶 「合法」定義寬泛 現行法規未跟上 AI 能力 Pentagon 立場 軍方購買工具後 自行決定如何使用 1 Part I: 事件時間線與關鍵轉折 這場衝突並非一夜之間爆發。Anthropic 於 2024 年 6 月成為 首家在美軍機密網路部署 AI 模型的前沿 AI 公司 ，並在 2025 年 7 月簽下價值高達 2 億美元的國防部合約。然而，數月來關於使用條款的緊張談判逐漸升級。 \"As the first frontier AI company to deploy models in the US government's classified networks, Anthropic has supported American warfighters since June 2024.\" 轉折點出現在國防部使用 Claude 協助策劃 逮捕委內瑞拉總統 Maduro 的行動 ，引發 Anthropic 對使用邊界的擔憂。此後，國防部堅持要求 AI 公司同意其模型可用於「所有合法用途」，而 Anthropic 堅持保留兩項例外。 \"The DOD is insisting that all AI labs make their models available for 'all lawful purposes.'\" 2 月 25 日（週二），Hegseth 與 Amodei 在 Pentagon 面對面會談，氣氛據稱「禮貌而尊重」。但國防部隨後在週三晚間發出「最終報價」，並設定週五下午 5:01 為最後期限。Amodei 在週四發表聲明，表示 「我們無法憑良心同意他們的要求」 。 \"We cannot in good conscience accede to their request.\" — Dario Amodei, Feb 26, 2026 關鍵時間線 2024 年 6 月 Anthropic 首次在軍方"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這篇文章來自 Anthropic 內部 Claude Code 團隊的第一手經驗分享，揭示了 設計 AI Agent 工具（Action Space）的核心哲學 。作者 Thariq 透過四個具體案例（AskUserQuestion、Tasks/Todos、Search Interface、Progressive Disclosure）展示了一個關鍵洞察： 工具設計不是工程問題，而是「學會像 Agent 一樣思考」的能力 。 文章最重要的啟示是：隨著模型能力提升，曾經必要的工具可能反而成為限制。好的 Agent 設計者需要持續觀察模型行為、迭代工具設計，而非追求一次到位的完美架構。"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "理解 Agent Action Space（行動空間）設計的核心原則：工具應匹配模型能力 掌握 Progressive Disclosure（漸進式揭露）模式，以及如何用它擴展 Agent 功能而不增加工具數量 學會從具體案例中提取工具設計的迭代方法論，應用到自己的 Agent 建構場景 Agent Tool Design Evolution Framework Observe 觀察模型行為與輸出 Design 設計匹配能力的工具 Evaluate 測試模型是否「喜歡」使用 Evolve 隨能力升級而重新設計 Part I: Action Space 設計哲學"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "content-原文解析",
+    "sectionTitle": "Content 原文解析",
+    "content": "建構 Agent Harness（代理框架）最困難的部分之一，是 設計它的 Action Space（行動空間） 。Claude 透過 Tool Calling（工具呼叫）來執行動作，但工具可以有多種建構方式，包括 bash、skills、以及最近的 code execution（程式碼執行）。 \"One of the hardest parts of building an agent harness is constructing its action space. Claude acts through Tool Calling, but there are a number of ways tools can be constructed...\" 作者用了一個精彩的比喻：想像你被給予一道困難的數學題。你會想要什麼工具？ 這取決於你自己的能力 。紙張是最基本的，但你會受限於手動計算。計算機更好，但你需要知道如何操作進階功能。最快最強大的選項是電腦，但你必須知道如何寫程式。 \"To put myself in the mind of the model I like to imag"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "analysis-延伸分析",
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "比喻說明 「工具要匹配能力」就像醫院分配手術設備一樣。你不會給實習醫生達文西機器手臂，也不會讓資深主刀只用剪刀。設備（工具）要匹配操作者的技能等級，太簡單會限制發揮，太複雜則會造成混亂。Agent 工具設計的邏輯完全一樣。 核心概念：Action Space Action Space（行動空間）是 Agent 所有可用工具和操作的集合。設計得太窄，Agent 無法完成任務；設計得太寬，Agent 會在選擇中迷失。關鍵在於找到「剛好能力匹配」的甜蜜點 - 這與 Context Engineering（上下文工程）的核心思維一致：不是越多越好，而是越精準越好。 重點提示 「Seeing like an agent」不只是比喻，而是一種實際的設計方法論。它要求開發者從模型的視角審視工具：當模型面對這個工具定義，它的 token probability distribution（詞元概率分佈）會怎麼反應？會不會產生困惑？這是 Prompt Engineering 和 Tool Design 的交叉點。 Part II: AskUserQuestion - 迭代工具設計的範例"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "content-原文解析",
+    "sectionTitle": "Content 原文解析",
+    "content": "在建造 AskUserQuestion 工具時，團隊的目標是 改善 Claude 提問的能力（Elicitation，引導資訊） 。雖然 Claude 可以用純文字提問，但團隊發現回答那些問題感覺花了不必要的時間。如何降低摩擦、提高使用者與 Claude 之間的溝通頻寬？ \"When building the AskUserQuestion tool, our goal was to improve Claude's ability to ask questions (often called elicitation)... How could we lower this friction and increase the bandwidth of communication?\" 嘗試 #1 - 修改 ExitPlanTool： 先嘗試在 ExitPlanTool 加入問題參數。但這讓 Claude 困惑，因為同時要求計畫和關於計畫的問題。如果使用者的答案與計畫衝突怎麼辦？ \"This confused Claude because we were simultaneously ask"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "analysis-延伸分析",
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "重點提示：三次迭代的教訓 這三次嘗試揭示了 Agent 工具設計的核心法則： 1. 職責分離 - 一個工具不要同時承擔多個功能（計畫 + 提問 = 混亂） 2. 結構化優於自由格式 - Tool Calling 的 structured output 比改造文本格式更可靠 3. 模型親和性 - 工具設計的最終評判標準不是人類覺得合理，而是模型能否穩定呼叫 實務應用 CDMO 場景映射： 這跟製藥偏差調查（Deviation Investigation）的 Root Cause 流程很像。你不會讓調查員在一張表單上同時做 5W1H 分析和 CAPA 規劃 - 這會混淆焦點。正確做法是先完成調查，再開 CAPA。Agent 工具設計遵循相同的「單一職責」原則。 核心概念：Elicitation Elicitation（引導資訊提取）是 Agent 與使用者互動的關鍵能力。好的 Elicitation 降低了「人類必須知道如何精確描述需求」的門檻。這是 Copilot Mode（協作模式）的核心價值：Agent 主動問對的問題，而不是被動等待完美的 Prompt。 Part III: Tas"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "content-原文解析",
+    "sectionTitle": "Content 原文解析",
+    "content": "Claude Code 初次推出時，團隊意識到模型需要一個 Todo List（待辦清單）來保持方向。可以在開始時寫下任務，完成後勾選。為此他們給了 Claude 一個 TodoWrite 工具。 \"When we first launched Claude Code, we realized that the model needed a Todo list to keep it on track.\" 但即使如此，Claude 經常忘記自己該做什麼。為了適應，團隊 每 5 個回合插入系統提醒 。 \"We inserted system reminders every 5 turns that reminded Claude of its goal.\" 但隨著模型進步，它們不僅不需要被提醒 Todo List，而且可能發現它是 限制 。被發送 Todo List 提醒會讓 Claude 認為必須嚴格遵循清單，而不是修改它。團隊也看到 Opus 4.5 在使用 Subagent（子代理）方面大幅進步，但子代理如何在共享的 Todo List 上協作？ \"Being sent remind"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "analysis-延伸分析",
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "重點提示：工具退化法則 這是本文最深刻的洞察之一： 曾經必要的工具，可能因為模型進步而成為束縛 。「每 5 回合提醒」這個設計在弱模型時代是必要的拐杖，但在強模型時代變成了牢籠。 啟示：你為 AI 設計的任何流程或 Prompt，都應該有「到期日」的概念 - 定期重新評估是否還需要這些 guardrails（護欄）。 比喻說明 Todo 到 Task 的演進，就像從個人的紙本待辦清單，升級到團隊的專案管理系統（如 Asana 或 Jira）。個人清單只需要「做/沒做」，但團隊協作需要依賴關係、狀態更新、分工分配。當模型從「單一 Agent」進化到「多 Agent 協作」，工具也必須跟著進化。 實務應用 對你的 AI 工具策略的啟示： 你目前的 Master Prompt 已到 v1.4.3，這正是「隨能力演化工具」的最佳實踐。建議設定季度回顧：哪些 prompt 指令是因為早期模型限制而加入的？隨著 Claude 能力提升，哪些規則可以簡化或移除？ Part IV: Search & Progressive Disclosure - 讓 Agent 自己建構 Context"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "content-原文解析",
+    "sectionTitle": "Content 原文解析",
+    "content": "Claude Code 最初使用 RAG 向量資料庫來為 Claude 找上下文。雖然 RAG 強大且快速，但它需要索引和設定，在不同環境中可能很脆弱。更重要的是， Claude 是被動接收上下文，而不是主動尋找上下文 。 \"Claude was given this context instead of finding the context itself.\" 如果 Claude 能在網路上搜尋，為什麼不能搜尋你的程式碼庫？透過給 Claude 一個 Grep 工具，團隊讓它自己搜尋檔案並建構上下文。 隨著 Claude 變聰明，它越來越擅長在有正確工具的情況下自行建構上下文。 \"By giving Claude a Grep tool, we could let it search for files and build context itself.\" 當團隊引入 Agent Skills 時，他們正式化了 Progressive Disclosure（漸進式揭露） 的概念。Claude 可以讀取 Skill 檔案，那些檔案再引用其他檔案，模型可以遞迴地讀取。事實上，Skills"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "analysis-延伸分析",
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "核心概念：Progressive Disclosure Progressive Disclosure（漸進式揭露）是本文最值得深入理解的概念。它的精髓是： 不要一次把所有資訊塞給 Agent，而是讓它按需探索 。 這與你的 Context Engineering 核心原則完全一致：「不是越多越好，而是越精準越好」。Skill 檔案就是 Progressive Disclosure 的實際載體 - Agent 先讀入口檔，按需載入深層資訊。 重點提示：RAG vs Agent Search 從 RAG 到 Grep 的轉變揭示了一個重要趨勢： 被動的上下文注入正在被主動的上下文建構取代 。RAG 是「系統決定什麼是相關的」，而 Agent Search 是「模型自己決定什麼是相關的」。隨著模型推理能力增強，後者往往更準確。 實務應用 你的 Claude Projects 就是 Progressive Disclosure： Project Knowledge 檔案是入口層，對話中的追問是探索層。你的 CDMO 可行性評估 Skill 正是這個模式 - Claude 先讀 SKILL.md"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "content-原文解析",
+    "sectionTitle": "Content 原文解析",
+    "content": "Claude Code 目前有大約 20 個工具，團隊不斷自問是否需要全部。 增加新工具的門檻很高，因為這會讓模型多一個需要考慮的選項 。 \"Claude Code currently has ~20 tools, and we are constantly asking ourselves if we need all of them.\" 例如，團隊注意到 Claude 不夠了解如何使用 Claude Code 本身。他們可以把所有資訊放進系統提示，但因為使用者很少問這類問題，這會造成 Context Rot（上下文腐爛） 並干擾 Claude Code 的主要工作：寫程式。 \"It would have added context rot and interfered with Claude Code's main job: writing code.\" 取而代之的是，他們嘗試了 Progressive Disclosure 的另一種形式： 建立了 Claude Code Guide Subagent（子代理） ，當你問關於 Claude Code 本身的問題時會被呼叫。這個子代理"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "analysis-延伸分析",
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "重點提示：Context Rot Context Rot（上下文腐爛）是一個非常重要的概念：當你把「偶爾才需要」的資訊永久放進系統提示時，它不只佔用 token 空間，還會 干擾模型對核心任務的注意力分配 。這就是為什麼你的 Master Prompt 系統使用 Project Knowledge 而不是把一切塞進系統提示 - 按需載入永遠優於預先載入。 工具比較：擴展 Action Space 的三種策略 1. 新增工具 - 最直接，但每增一個都增加模型認知負擔 2. Subagent 委派 - 主 Agent 保持輕量，專業任務交給子 Agent 3. Progressive Disclosure - 透過 Skill 檔案和文件連結，讓 Agent 按需探索 Claude Code 團隊明顯偏好 #2 和 #3。這也是目前 AI Agent 架構的主流趨勢。 比喻說明 「藝術而非科學」這個結論很重要。就像 GMP 驗證一樣 - 你有 IQ/OQ/PQ 框架，但每一次驗證的具體判斷仍然需要專業經驗。Agent 工具設計有框架（觀察 > 設計 > 評估 > 迭代），但具體決策沒有萬用"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Tool-Ability Fit Agent 工具必須匹配模型的能力水平。太簡單限制發揮，太複雜造成混亂。設計前先問：「模型能穩定呼叫這個工具嗎？」 Tools Decay Over Time 曾經必要的工具會隨模型進步而成為限制。為每個工具和 Prompt 設定「到期日」，定期重新評估是否仍然需要。 Progressive Disclosure 不要一次給 Agent 所有資訊。讓它透過 Skill 檔案、文件連結、Subagent 按需探索。擴展能力不一定要增加工具。 Art, Not Science Agent 設計沒有萬用公式。核心方法是：觀察模型行為、閱讀輸出、迭代實驗。建立「看見 Agent 視角」的工程直覺。"
+  },
+  {
+    "docFile": "2026-02-28_claude-code-agent-tools.html",
+    "docTitle": "Claude Code Agent 工具設計 - Seeing Like an Agent",
+    "docDate": "2026-02-28",
+    "docSource": "Thariq (@trq212) / Anthropic",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 文章中 TodoWrite 被 Task Tool 取代的根本原因是什麼？這揭示了 Agent 工具設計的什麼原則？ 根本原因不是 TodoWrite 功能不足，而是模型能力提升後，TodoWrite 的設計假設（模型需要被提醒、模型應該遵循固定清單）變成了限制。提醒機制讓 Claude 過度遵循而不敢修改計畫，單一清單架構無法支援多 Agent 協作。 這揭示了「工具退化法則」：工具的價值不是固定的，它是模型能力的函數。當能力跨過某個閾值，原本的輔助工具就變成了束縛。設計者必須持續重新評估工具的必要性。 Q2 產業應用 如果你要為 CDMO 的偏差調查流程設計一個 AI Agent，根據本文的教訓，你會如何設計它的 Action Space？會避免哪些陷阱？ Action Space 設計： 遵循「職責分離」原則，不要讓一個工具同時做 Root Cause 分析和 CAPA 規劃。應拆分為：(1) SearchDeviationHistory - 搜尋歷史偏差記錄 (2) ClassifyDeviation - 分類偏差等級 (3) SuggestRootCause "
+  },
+  {
+    "docFile": "2026-03-01_skillsbench-agent-skills.html",
+    "docTitle": "SkillsBench - Agent Skills 基準測試深度解析",
+    "docDate": "2026-03-01",
+    "docSource": "Xiangyi Li et al. / arXiv:2602.12670",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Research",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這是 第一個將 Agent Skills 作為第一級評估物件的基準測試 。研究團隊在 11 個領域的 84 個任務上，測試了 7 種模型-代理組合，產生 7,308 條執行軌跡。核心發現：人工策劃的 Skills（Curated Skills）平均提升通過率 +16.2 個百分點 ，但效果因領域差異巨大（Healthcare +51.9pp vs Software Engineering +4.5pp）。最震撼的發現： 模型自行生成的 Skills 幾乎無效 -- AI 無法可靠地撰寫它自己受益的程序性知識。此外， 2-3 個聚焦 Skills 優於大量綜合文件 ，小模型搭配好的 Skills 可以擊敗無 Skills 的大模型。"
+  },
+  {
+    "docFile": "2026-03-01_skillsbench-agent-skills.html",
+    "docTitle": "SkillsBench - Agent Skills 基準測試深度解析",
+    "docDate": "2026-03-01",
+    "docSource": "Xiangyi Li et al. / arXiv:2602.12670",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Research",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "Skills 效果衡量 理解 Curated vs Self-generated Skills 的量化差異，以及為何三條件對照實驗設計是關鍵 Skills 設計原則 掌握「2-3 個聚焦 Skills」優於「大量文件」的實證依據，以及最佳 Skills 結構 成本-性能取捨 學會用小模型+Skills 替代大模型，理解 Skills 如何改變模型規模經濟學 SkillsBench 三條件評估框架 Vanilla 無 Skills 基線 Curated Skills 人工策劃 +16.2pp Self-Generated 模型自生 ~0pp Deterministic Verify 程式化 Pass/Fail"
+  },
+  {
+    "docFile": "2026-03-01_skillsbench-agent-skills.html",
+    "docTitle": "SkillsBench - Agent Skills 基準測試深度解析",
+    "docDate": "2026-03-01",
+    "docSource": "Xiangyi Li et al. / arXiv:2602.12670",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Research",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "part-i-agent-skills-是什麼",
+    "sectionTitle": "Part I: Agent Skills 是什麼？",
+    "content": "Agent Skills 是結構化的程序性知識包 ，在推論時增強 LLM Agent 的能力。它不需要微調模型 -- 而是在執行階段提供「標準作業程序（SOP）、領域慣例、任務特定啟發式方法」等指引。 \"Agent Skills are structured packages of procedural knowledge that augment LLM agents at inference time.\" 一個 Skill 包含： SKILL.md （自然語言指令）加上可選的資源（腳本、模板、範例）。這個定義明確排除了 system prompts、few-shot examples、RAG 檢索和工具文件 -- 因為它們缺乏結構性和程序性。 \"A Skill is a structured package comprising instructions, code templates, resources, and verification logic.\" 論文用了一個精妙的類比：基礎模型是 CPU ，Agent Harness（如 Claude Code、Gemini CLI）"
+  },
+  {
+    "docFile": "2026-03-01_skillsbench-agent-skills.html",
+    "docTitle": "SkillsBench - Agent Skills 基準測試深度解析",
+    "docDate": "2026-03-01",
+    "docSource": "Xiangyi Li et al. / arXiv:2602.12670",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Research",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "part-ii-基準測試設計",
+    "sectionTitle": "Part II: 基準測試設計",
+    "content": "SkillsBench 建構在 Harbor 框架 之上，每個任務都是獨立的 Docker 容器，包含環境、Skills、確定性驗證器和 Oracle 解答。最關鍵的方法論創新： 配對評估（Paired Evaluation） -- 每個任務都在「無 Skills」和「有 Skills」兩個條件下執行，直接測量 Skills 效果的 delta。 \"Unlike Terminal-Bench, which evaluates raw model capability, SkillsBench evaluates every task under both vanilla and Skills-augmented conditions, enabling direct measurement of Skills efficacy.\" 嚴格的品質控制體系：任務指令由 人類撰寫 （經 GPTZero 驗證），驗證器使用程式化斷言（ 非 LLM-as-judge ），CI 管線進行洩漏審計確保 Skills 提供指引而非直接答案。322 份候選提交中最終篩選出 86 個任務。 \"Determi"
+  },
+  {
+    "docFile": "2026-03-01_skillsbench-agent-skills.html",
+    "docTitle": "SkillsBench - Agent Skills 基準測試深度解析",
+    "docDate": "2026-03-01",
+    "docSource": "Xiangyi Li et al. / arXiv:2602.12670",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Research",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "part-iii-核心發現----七大結論",
+    "sectionTitle": "Part III: 核心發現 -- 七大結論",
+    "content": "Finding 1：Skills 提供顯著但可變的效益。 Curated Skills 在所有 7 個模型配置中都提升了表現，平均 +16.2pp ，絕對增益從 +13.6pp 到 +23.3pp 不等。 \"Curated Skills raise average pass rate by 16.2 percentage points, but effects vary widely.\" Finding 2：Gemini CLI + Flash 3 達到最高整體表現 （48.7% with Skills），但 Claude Code + Opus 4.5 有最高增益 (+23.3pp)。 Finding 3：Self-generated Skills 幾乎無效。 這是最具顛覆性的發現。模型被要求在解題前先生成自己的 Skills，但 平均效果接近零甚至為負 。軌跡分析揭示兩個失敗模式：(1) 模型知道需要特定 Skills 但生成的程序不夠精確；(2) 對高領域知識任務，模型根本沒意識到需要專業 Skills。 \"Self-generated Skills provide no ben"
+  },
+  {
+    "docFile": "2026-03-01_skillsbench-agent-skills.html",
+    "docTitle": "SkillsBench - Agent Skills 基準測試深度解析",
+    "docDate": "2026-03-01",
+    "docSource": "Xiangyi Li et al. / arXiv:2602.12670",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Research",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "part-iv-skills-設計原則與實務啟示",
+    "sectionTitle": "Part IV: Skills 設計原則與實務啟示",
+    "content": "Skills 的分層消融實驗（L0-L3）揭示了 最大的效能躍升來自 L2 到 L3 -- 也就是加入可執行程式碼範例和參考資源的那一步。僅有 SKILL.md 文字指引是不夠的； 程序性內容（procedural content） 才是驅動改善的關鍵，不僅僅是「額外的上下文」。 \"The biggest performance jump comes from adding executable code examples and reference resources.\" Hacker News 社群對這篇論文提出了重要的補充觀點：論文測試的「Self-generated Skills」是讓模型 從零開始 撰寫 Skills，但實務中更常見的做法是讓模型 從解題過程中歸納經驗 再寫成 Skills。這兩種情境的效果可能截然不同，論文並未涵蓋後者。 \"Having the LLM write down a skill representing the lessons from the struggle you just had to get something done is quit"
+  },
+  {
+    "docFile": "2026-03-01_skillsbench-agent-skills.html",
+    "docTitle": "SkillsBench - Agent Skills 基準測試深度解析",
+    "docDate": "2026-03-01",
+    "docSource": "Xiangyi Li et al. / arXiv:2602.12670",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Research",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Curated Skills 有效但非萬能 平均 +16.2pp 的提升很顯著，但領域差異從 +4.5pp 到 +51.9pp，且 16/84 個任務出現負效果。Skills 部署需要領域特定策略，不是「裝了就好」。 AI 無法自行撰寫有效 Skills Self-generated Skills 效果約等於零。這是對「完全自主 AI Agent」願景的現實校正 -- 程序性知識必須由人類專家策劃，至少在目前階段如此。 Less is More -- 2-3 個 Skills 最佳 Compact Skills (+18.9pp) 比 comprehensive documentation (+5.7pp) 強近 4 倍。聚焦的 SKILL.md 加上可執行範例，優於堆砌大量文件。Agent 跟人一樣：太多資訊反而處理不好。 Skills 改變模型規模經濟學 Haiku + Skills 超越 Opus without Skills。這意味著投資在 Skills 策劃可能比升級到更貴的模型更划算，對成本敏感的企業部署尤其重要。"
+  },
+  {
+    "docFile": "2026-03-01_skillsbench-agent-skills.html",
+    "docTitle": "SkillsBench - Agent Skills 基準測試深度解析",
+    "docDate": "2026-03-01",
+    "docSource": "Xiangyi Li et al. / arXiv:2602.12670",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Research",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼 Self-generated Skills 無效，但 Curated Skills 有效？這告訴我們關於 LLM 能力的什麼？ LLM 擅長 消費 程序性知識（按照指令執行），但不擅長 生產 程序性知識（從零撰寫有效程序）。這反映了「知道怎麼做」和「知道該做什麼」的根本差異。模型在提示下能執行複雜步驟，但缺乏識別和編碼領域專業知識的後設認知能力。 兩個失敗模式：(1) 知道需要但不精確 -- 如「用 pandas 處理數據」但沒有具體 API pattern；(2) 根本不知道需要 -- 對高領域知識任務缺乏意識。這與 Copilot vs Agent 模式的區分完全吻合。 Q2 產業應用 如果你要為 CDMO 的偏差調查流程設計 Agent Skills，基於本論文的發現，你會怎麼設計？ 基於 Finding 4（Healthcare/Manufacturing 受益最大）和 Finding 5（2-3 Skills 最佳），我的設計策略： Skill 1：偏差分類 SOP -- SKILL.md 包含偏差分類決策樹（Critical/Major/Minor）"
   }
 ];
