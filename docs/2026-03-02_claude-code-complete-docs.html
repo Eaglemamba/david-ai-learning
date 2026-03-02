@@ -120,24 +120,6 @@
     padding: 18px 28px 60px;
   }
 
-  /* ── SEARCH ── */
-  .search-input {
-    width: 100%;
-    max-width: 420px;
-    padding: 9px 14px;
-    background: rgba(0,0,0,0.04);
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    color: var(--text-primary);
-    font-size: 13px;
-    font-family: var(--sans);
-    outline: none;
-    margin-bottom: 20px;
-    transition: border-color 0.2s;
-  }
-  .search-input:focus { border-color: rgba(180,122,60,0.4); }
-  .search-input::placeholder { color: var(--text-muted); }
-
   /* ── SECTION ── */
   .section { margin-bottom: 36px; }
   .section-title {
@@ -322,7 +304,6 @@
 <div class="layout">
   <nav class="nav" id="nav"></nav>
   <main class="main" id="main">
-    <input class="search-input" id="search" type="text" placeholder="Search commands, tips, notes...">
     <div id="content"></div>
   </main>
 </div>
@@ -959,25 +940,17 @@ function renderSubsection(sub){
   if(sub.tips) h+=renderBadge('tip','Tip','<ul>'+sub.tips.map(t=>'<li>'+escapeHtml(t)+'</li>').join('')+'</ul>');
   if(sub.notes) sub.notes.forEach(n=>{ h+=renderBadge('note','Note',n); });
   if(sub.warnings) sub.warnings.forEach(w=>{ h+=renderBadge('warning','Warning',w); });
-  return `<div class="subsection" data-search="${escapeHtml(JSON.stringify(sub).toLowerCase())}">${h}</div>`;
+  return `<div class="subsection">${h}</div>`;
 }
 
-function renderAll(filter){
+function renderAll(){
   const el=document.getElementById('content');
-  const f=filter?.toLowerCase()||'';
   let html='';
   sections.forEach(sec=>{
-    const subs=sec.subsections.filter(sub=>{
-      if(!f) return true;
-      return JSON.stringify(sub).toLowerCase().includes(f);
-    });
-    if(!f||sec.title.toLowerCase().includes(f)||subs.length>0){
-      html+=`<div class="section" id="s-${sec.id}"><h2 class="section-title">${escapeHtml(sec.title)}</h2>`;
-      (f?subs:sec.subsections).forEach(sub=>{ html+=renderSubsection(sub); });
-      html+=`</div>`;
-    }
+    html+=`<div class="section" id="s-${sec.id}"><h2 class="section-title">${escapeHtml(sec.title)}</h2>`;
+    sec.subsections.forEach(sub=>{ html+=renderSubsection(sub); });
+    html+=`</div>`;
   });
-  if(!html) html='<p style="color:#586174;font-size:14px;margin-top:20px">No matching content found.</p>';
   el.innerHTML=html;
 }
 
@@ -986,12 +959,6 @@ function renderAll(filter){
 // ══════════════════════════════════════════
 renderNav();
 renderAll();
-
-let debounce;
-document.getElementById('search').addEventListener('input',function(){
-  clearTimeout(debounce);
-  debounce=setTimeout(()=>renderAll(this.value),200);
-});
 </script>
 </body>
 </html>
