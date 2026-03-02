@@ -919,14 +919,14 @@ function renderCmdRow(s){
   return `<div class="cmd-row">
     ${s.step?`<span class="cmd-step">${escapeHtml(s.step)}</span>`:''}
     <code class="cmd-code">${escapeHtml(s.cmd)}</code>
-    <button class="copy-btn" onclick="copyText(${JSON.stringify(s.cmd)},this)">Copy</button>
+    <button class="copy-btn" data-copy="${escapeHtml(s.cmd)}">Copy</button>
   </div>`;
 }
 
 function renderCodeBlock(code){
   return `<div class="code-block-wrap">
     <pre class="code-block">${escapeHtml(code)}</pre>
-    <button class="copy-btn" onclick="copyText(${JSON.stringify(code)},this)">Copy</button>
+    <button class="copy-btn" data-copy="${escapeHtml(code)}">Copy</button>
   </div>`;
 }
 
@@ -986,6 +986,11 @@ function renderAll(filter){
 // ══════════════════════════════════════════
 renderNav();
 renderAll();
+
+document.addEventListener('click',function(e){
+  const btn=e.target.closest('.copy-btn[data-copy]');
+  if(btn) copyText(btn.dataset.copy, btn);
+});
 
 let debounce;
 document.getElementById('search').addEventListener('input',function(){
