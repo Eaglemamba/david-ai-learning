@@ -13404,5 +13404,37 @@ const searchIndex = [
     "sectionId": "practice-questions",
     "sectionTitle": "Practice Questions",
     "content": "Q1 概念理解 為什麼 Self-generated Skills 無效，但 Curated Skills 有效？這告訴我們關於 LLM 能力的什麼？ LLM 擅長 消費 程序性知識（按照指令執行），但不擅長 生產 程序性知識（從零撰寫有效程序）。這反映了「知道怎麼做」和「知道該做什麼」的根本差異。模型在提示下能執行複雜步驟，但缺乏識別和編碼領域專業知識的後設認知能力。 兩個失敗模式：(1) 知道需要但不精確 -- 如「用 pandas 處理數據」但沒有具體 API pattern；(2) 根本不知道需要 -- 對高領域知識任務缺乏意識。這與 Copilot vs Agent 模式的區分完全吻合。 Q2 產業應用 如果你要為 CDMO 的偏差調查流程設計 Agent Skills，基於本論文的發現，你會怎麼設計？ 基於 Finding 4（Healthcare/Manufacturing 受益最大）和 Finding 5（2-3 Skills 最佳），我的設計策略： Skill 1：偏差分類 SOP -- SKILL.md 包含偏差分類決策樹（Critical/Major/Minor）"
+  },
+  {
+    "docFile": "2026-03-02_claude-code-complete-docs.html",
+    "docTitle": "Claude Code 完整文件參考指南",
+    "docDate": "2026-03-02",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 4.5,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "escapehtmlsubsubtitle",
+    "sectionTitle": "${escapeHtml(sub.subtitle)}",
+    "content": "`; if(sub.description) h+=` ${escapeHtml(sub.description)} `; if(sub.bulletPoints) h+=` ${sub.bulletPoints.map(b=>` ${escapeHtml(b)} `).join('')} `; if(sub.steps) h+=` ${sub.steps.map(renderCmdRow).join('')} `; if(sub.codeBlock) h+=renderCodeBlock(sub.codeBlock); if(sub.tableData){ const cols=sub.tableData[0]?.detail?['Item','Description','Details']:['Item','Description']; h+=renderTable(sub.tableData,cols); } if(sub.tips) h+=renderBadge('tip','Tip',' '+sub.tips.map(t=>' '+escapeHtml(t)+' ').joi"
+  },
+  {
+    "docFile": "2026-03-02_claude-code-complete-docs.html",
+    "docTitle": "Claude Code 完整文件參考指南",
+    "docDate": "2026-03-02",
+    "docSource": "Claude Code Docs / code.claude.com",
+    "docRating": 4.5,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "Automation"
+    ],
+    "sectionId": "escapehtmlsectitle",
+    "sectionTitle": "${escapeHtml(sec.title)}",
+    "content": "`; (f?subs:sec.subsections).forEach(sub=>{ html+=renderSubsection(sub); }); html+=` `; } }); if(!html) html=' No matching content found. '; el.innerHTML=html; } // ══════════════════════════════════════════ // INIT // ══════════════════════════════════════════ renderNav(); renderAll(); let debounce; document.getElementById('search').addEventListener('input',function(){ clearTimeout(debounce); debounce=setTimeout(()=>renderAll(this.value),200); });"
   }
 ];
