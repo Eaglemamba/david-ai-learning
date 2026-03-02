@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code -- Complete Documentation Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-root: #f3f0e8;
+    --bg-header: linear-gradient(135deg, #d9cdb8 0%, #e8dcc8 100%);
+    --bg-nav: #eae4d6;
+    --bg-main: #f3f0e8;
+    --bg-card: rgba(0,0,0,0.03);
+    --bg-code: #ede8db;
+    --border: rgba(0,0,0,0.09);
+    --border-accent: rgba(180,120,60,0.4);
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4538;
+    --text-muted: #7a7262;
+    --text-accent: #6b4c1e;
+    --text-heading: #3d2e14;
+    --accent: #b47a3c;
+    --green: #2d7a3a;
+    --green-bg: #e8f3ea;
+    --green-border: #2d7a3a;
+    --green-text: #1a4d24;
+    --blue-bg: #e6eef8;
+    --blue-border: #3b6fb6;
+    --blue-text: #1e3a5f;
+    --amber-bg: #faf3e6;
+    --amber-border: #c27d10;
+    --amber-text: #6b4400;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    --sans: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    font-weight: 500;
+    background: var(--bg-root);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--bg-header);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 28px;
+    flex-shrink: 0;
+    display: flex;
+  }
+  .header h1 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #2a1f0e;
+    letter-spacing: -0.025em;
+  }
+  .header p {
+    margin-top: 3px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    width: 200px;
+    min-width: 200px;
+    background: var(--bg-nav);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 10px 0;
+    flex-shrink: 0;
+  }
+  .nav-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 7px 16px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: var(--sans);
+    transition: all 0.12s;
+    line-height: 1.45;
+  }
+  .nav-btn:hover { color: #1a1a1a; background: rgba(0,0,0,0.04); }
+  .nav-btn.active {
+    background: rgba(180,122,60,0.1);
+    color: #8b5c1e;
+    border-left-color: #b47a3c;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 28px 60px;
+  }
+
+  /* ── SEARCH ── */
+  .search-input {
+    width: 100%;
+    max-width: 420px;
+    padding: 9px 14px;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-family: var(--sans);
+    outline: none;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: rgba(180,122,60,0.4); }
+  .search-input::placeholder { color: var(--text-muted); }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-heading);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+
+  /* ── SUBSECTION ── */
+  .subsection { margin-top: 14px; }
+  .sub-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  .sub-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  /* ── BULLETS ── */
+  .bullet-list {
+    margin: 0 0 10px;
+    padding-left: 20px;
+  }
+  .bullet-list li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2px;
+  }
+
+  /* ── COMMAND ROW ── */
+  .cmd-list { display: flex; flex-direction: column; gap: 5px; }
+  .cmd-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 7px 12px;
+    min-height: 34px;
+  }
+  .cmd-step {
+    font-size: 12px;
+    color: var(--text-muted);
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+  .cmd-code {
+    flex: 1;
+    font-size: 12.5px;
+    color: var(--text-accent);
+    font-family: var(--mono);
+    word-break: break-all;
+    line-height: 1.5;
+  }
+
+  /* ── COPY BTN ── */
+  .copy-btn {
+    background: rgba(0,0,0,0.05);
+    color: #5a5245;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 5px;
+    padding: 2px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: var(--mono);
+    flex-shrink: 0;
+  }
+  .copy-btn:hover { background: rgba(0,0,0,0.1); color: #1a1a1a; }
+  .copy-btn.copied { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* ── CODE BLOCK ── */
+  .code-block-wrap { position: relative; margin-top: 8px; }
+  .code-block {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 14px 16px;
+    font-size: 12px;
+    color: var(--text-heading);
+    font-family: var(--mono);
+    overflow-x: auto;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    margin: 0;
+  }
+  .code-block-wrap .copy-btn { position: absolute; top: 8px; right: 8px; }
+
+  /* ── TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 13px;
+    overflow-x: auto;
+    display: block;
+  }
+  .data-table thead th {
+    text-align: left;
+    padding: 6px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .data-table tbody td {
+    padding: 5px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--text-primary);
+    font-size: 12.5px;
+  }
+  .data-table tbody td:first-child {
+    color: var(--text-heading);
+    font-family: var(--mono);
+  }
+
+  /* ── BADGES ── */
+  .badge {
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .badge-label {
+    font-weight: 700;
+    margin-right: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  .badge ul { margin: 4px 0 0; padding-left: 18px; }
+  .badge li { margin-bottom: 3px; }
+
+  .badge-tip {
+    background: var(--green-bg);
+    border: 1px solid rgba(45,122,58,0.2);
+    border-left: 3px solid var(--green-border);
+    color: var(--green-text);
+  }
+  .badge-note {
+    background: var(--blue-bg);
+    border: 1px solid rgba(59,111,182,0.2);
+    border-left: 3px solid var(--blue-border);
+    color: var(--blue-text);
+  }
+  .badge-warning {
+    background: var(--amber-bg);
+    border: 1px solid rgba(194,125,16,0.2);
+    border-left: 3px solid var(--amber-border);
+    color: var(--amber-text);
+  }
+
+  .hidden { display: none !important; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.22); }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Claude Code -- Complete Documentation Reference</h1>
+    <p>All pages with prompts, commands, tips, notes, warnings & code blocks -- all copyable</p>
+</div>
+
+<div class="layout">
+  <nav class="nav" id="nav"></nav>
+  <main class="main" id="main">
+    <input class="search-input" id="search" type="text" placeholder="Search commands, tips, notes...">
+    <div id="content"></div>
+  </main>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+const sections = [
+  {
+    id:"overview", title:"Overview",
+    subsections:[
+      { subtitle:"Get started in 30 seconds", description:"Claude Code is Anthropic's agentic coding tool that lives in your terminal. It can build features, debug, navigate codebases, and automate tasks.",
+        steps:[
+          {step:"macOS / Linux",cmd:"curl -fsSL https://claude.ai/install.sh | bash"},
+          {step:"Homebrew",cmd:"brew install --cask claude-code"},
+          {step:"Windows",cmd:"irm https://claude.ai/install.ps1 | iex"},
+          {step:"NPM (Node 18+)",cmd:"npm install -g @anthropic-ai/claude-code"},
+          {step:"Start using",cmd:"cd your-project && claude"}
+        ],
+        tips:["See advanced setup at /en/setup for installation options","New VS Code Extension (Beta) available from the marketplace"]
+      },
+      { subtitle:"What Claude Code does",
+        bulletPoints:["Build features from descriptions: Tell Claude what you want in plain English","Debug and fix issues: Paste an error, Claude finds and fixes it","Navigate any codebase: Ask anything, get thoughtful answers with full project awareness","Automate tedious tasks: Lint, merge conflicts, release notes, CI automation"]
+      },
+      { subtitle:"Why developers love it",
+        bulletPoints:["Works in your terminal: Not another IDE or chat window","Takes action: Edits files, runs commands, creates commits. MCP extends to Jira, Drive, etc.","Unix philosophy: Composable and scriptable (pipe-friendly)","Enterprise-ready: API, AWS, GCP hosting with built-in security and compliance"]
+      }
+    ]
+  },
+  {
+    id:"quickstart", title:"Quickstart",
+    subsections:[
+      { subtitle:"Step 1-2: Install & Log in",
+        steps:[{step:"Start Claude Code",cmd:"claude"},{step:"Login command",cmd:"/login"}],
+        notes:["First auth with Console auto-creates a 'Claude Code' workspace for cost tracking","Both Claude.ai (subscription) and Console (API credits) accounts supported under same email"]
+      },
+      { subtitle:"Step 3-4: First session & questions",
+        steps:[
+          {step:"Open in project",cmd:"cd /path/to/your/project && claude"},
+          {step:"Understand project",cmd:"what does this project do?"},
+          {step:"Technologies",cmd:"what technologies does this project use?"},
+          {step:"Entry point",cmd:"where is the main entry point?"},
+          {step:"Folder structure",cmd:"explain the folder structure"},
+          {step:"Ask Claude about itself",cmd:"what can Claude Code do?"},
+          {step:"Slash commands",cmd:"how do I use slash commands in Claude Code?"}
+        ],
+        notes:["Claude reads your files as needed -- you don't have to manually add context. Claude also has access to its own documentation."]
+      },
+      { subtitle:"Step 5-7: Code changes, Git, Bug fixes",
+        steps:[
+          {step:"First code change",cmd:"add a hello world function to the main file"},
+          {step:"Check changes",cmd:"what files have I changed?"},
+          {step:"Commit",cmd:"commit my changes with a descriptive message"},
+          {step:"New branch",cmd:"create a new branch called feature/quickstart"},
+          {step:"Show commits",cmd:"show me the last 5 commits"},
+          {step:"Merge conflicts",cmd:"help me resolve merge conflicts"},
+          {step:"Add feature",cmd:"add input validation to the user registration form"},
+          {step:"Fix bug",cmd:"there's a bug where users can submit empty forms - fix it"}
+        ],
+        notes:["Claude always asks for permission before modifying files. You can approve individual changes or enable 'Accept all' mode."]
+      },
+      { subtitle:"Step 8: Other common workflows",
+        steps:[
+          {step:"Refactor",cmd:"refactor the authentication module to use async/await instead of callbacks"},
+          {step:"Write tests",cmd:"write unit tests for the calculator functions"},
+          {step:"Update docs",cmd:"update the README with installation instructions"},
+          {step:"Code review",cmd:"review my changes and suggest improvements"}
+        ],
+        tips:["Be specific: 'fix the login bug where users see a blank screen after entering wrong credentials' beats 'fix the bug'","Break complex tasks into steps","Let Claude explore first before making changes","Press ? to see all keyboard shortcuts, Tab for completion, \u2191 for history, / for slash commands"]
+      },
+      { subtitle:"Essential commands",
+        tableData:[
+          {scope:"claude",how:"Start interactive mode",detail:"claude"},
+          {scope:'claude "task"',how:"Run a one-time task",detail:'claude "fix the build error"'},
+          {scope:'claude -p "query"',how:"Run one-off query, then exit",detail:'claude -p "explain this function"'},
+          {scope:"claude -c",how:"Continue most recent conversation",detail:"claude -c"},
+          {scope:"claude -r",how:"Resume a previous conversation",detail:"claude -r"},
+          {scope:"claude commit",how:"Create a Git commit",detail:"claude commit"},
+          {scope:"/clear",how:"Clear conversation history",detail:"/clear"},
+          {scope:"/help",how:"Show available commands",detail:"/help"},
+          {scope:"exit / Ctrl+C",how:"Exit Claude Code",detail:"exit"}
+        ]
+      }
+    ]
+  },
+  {
+    id:"workflows", title:"Common Workflows",
+    subsections:[
+      { subtitle:"Understand a codebase",
+        steps:[
+          {step:"Navigate & start",cmd:"cd /path/to/project && claude"},
+          {step:"Overview",cmd:"give me an overview of this codebase"},
+          {step:"Architecture",cmd:"explain the main architecture patterns used here"},
+          {step:"Data models",cmd:"what are the key data models?"},
+          {step:"Auth",cmd:"how is authentication handled?"},
+          {step:"Find files",cmd:"find the files that handle user authentication"},
+          {step:"Interaction",cmd:"how do these authentication files work together?"},
+          {step:"Trace flow",cmd:"trace the login process from front-end to database"}
+        ],
+        tips:["Start broad, then narrow down","Use project domain language","Install code intelligence plugins for precise navigation"]
+      },
+      { subtitle:"Fix bugs",
+        steps:[
+          {step:"Share error",cmd:"I'm seeing an error when I run npm test"},
+          {step:"Fix suggestions",cmd:"suggest a few ways to fix the @ts-ignore in user.ts"},
+          {step:"Apply fix",cmd:"update user.ts to add the null check you suggested"}
+        ],
+        tips:["Tell Claude the command to reproduce and get stack trace","Mention reproduction steps","Note if error is intermittent or consistent"]
+      },
+      { subtitle:"Refactor code",
+        steps:[
+          {step:"Find deprecated APIs",cmd:"find deprecated API usage in our codebase"},
+          {step:"Get suggestions",cmd:"suggest how to refactor utils.js to use modern JavaScript features"},
+          {step:"Apply safely",cmd:"refactor utils.js to use ES2024 features while maintaining the same behavior"},
+          {step:"Verify",cmd:"run tests for the refactored code"}
+        ],
+        tips:["Ask Claude to explain modern approach advantages","Request backward compatibility when needed","Refactor in small, testable increments"]
+      },
+      { subtitle:"Subagents",
+        steps:[
+          {step:"View agents",cmd:"/agents"},
+          {step:"Security review",cmd:"review my recent code changes for security issues"},
+          {step:"Run tests",cmd:"run all tests and fix any failures"},
+          {step:"Specific agent",cmd:"use the code-reviewer subagent to check the auth module"}
+        ],
+        tips:["Create project-specific subagents in .claude/agents/","Use descriptive description fields for auto-delegation","Limit tool access to what each subagent needs"]
+      },
+      { subtitle:"Plan Mode",
+        steps:[
+          {step:"Toggle in session",cmd:"Shift+Tab (cycle permission modes)"},
+          {step:"Start in Plan Mode",cmd:"claude --permission-mode plan"},
+          {step:"Headless query",cmd:'claude --permission-mode plan -p "Analyze the authentication system and suggest improvements"'},
+          {step:"OAuth2 migration",cmd:"I need to refactor our authentication system to use OAuth2. Create a detailed migration plan."}
+        ],
+        tips:["Ctrl+G opens the plan in your default text editor for direct editing","Use for multi-step implementations, codebase exploration, iterative development"],
+        codeBlock:'// .claude/settings.json - Set Plan Mode as default\n{\n  "permissions": {\n    "defaultMode": "plan"\n  }\n}'
+      },
+      { subtitle:"Testing",
+        steps:[
+          {step:"Find untested code",cmd:"find functions in NotificationsService.swift that are not covered by tests"},
+          {step:"Generate tests",cmd:"add tests for the notification service"},
+          {step:"Edge cases",cmd:"add test cases for edge conditions in the notification service"},
+          {step:"Run & verify",cmd:"run the new tests and fix any failures"}
+        ],
+        notes:["Claude checks existing test files to match style, framework, and assertion patterns","Ask Claude to identify edge cases -- it analyzes code paths for boundary values and unexpected inputs"]
+      },
+      { subtitle:"Pull Requests",
+        steps:[
+          {step:"One-step PR",cmd:"/commit-push-pr"},
+          {step:"Summarize",cmd:"summarize the changes I've made to the authentication module"},
+          {step:"Create PR",cmd:"create a pr"},
+          {step:"Enhance description",cmd:"enhance the PR description with more context about the security improvements"}
+        ],
+        notes:["Using gh pr create auto-links the session to the PR. Continue later with claude --from-pr <number>"],
+        tips:["Review Claude-generated PRs before submitting. Ask Claude to highlight potential risks."]
+      },
+      { subtitle:"Documentation",
+        steps:[
+          {step:"Find undocumented",cmd:"find functions without proper JSDoc comments in the auth module"},
+          {step:"Generate docs",cmd:"add JSDoc comments to the undocumented functions in auth.js"},
+          {step:"Enhance",cmd:"improve the generated documentation with more context and examples"},
+          {step:"Validate",cmd:"check if the documentation follows our project standards"}
+        ],
+        tips:["Specify doc style (JSDoc, docstrings, etc.)","Request examples in documentation","Ask for public API, interfaces, and complex logic docs"]
+      },
+      { subtitle:"Images",
+        steps:[
+          {step:"Add image (path)",cmd:"\u5206\u6790\u6b64\u5f71\u50cf\uff1a/path/to/your/image.png"},
+          {step:"Analyze",cmd:"What does this image show?"},
+          {step:"UI elements",cmd:"Describe the UI elements in this screenshot"},
+          {step:"Error screenshot",cmd:"Here's a screenshot of the error. What's causing it?"},
+          {step:"CSS from mockup",cmd:"Generate CSS to match this design mockup"}
+        ],
+        tips:["Drag-drop, Ctrl+V (not Cmd+V), or provide file path","Multiple images per conversation supported","Cmd+Click / Ctrl+Click image references to open in viewer"]
+      },
+      { subtitle:"File & Directory References",
+        steps:[
+          {step:"Single file",cmd:"Explain the logic in @src/utils/auth.js"},
+          {step:"Directory",cmd:"What's the structure of @src/components?"},
+          {step:"MCP resource",cmd:"Show me the data from @github:repos/owner/repo/issues"}
+        ],
+        tips:["Paths can be relative or absolute","@ references auto-add CLAUDE.md from file's directory/parents","Directory refs show file list, not content","Multiple files in one message: @file1.js and @file2.js"]
+      },
+      { subtitle:"Extended Thinking",
+        description:"Enabled by default. Opus 4.6 uses adaptive reasoning based on effort level.",
+        tableData:[
+          {scope:"Effort level",how:"/model or CLAUDE_CODE_EFFORT_LEVEL",detail:"Low, medium, high (default)"},
+          {scope:"Toggle shortcut",how:"Option+T (Mac) / Alt+T (Win/Linux)",detail:"On/off for current session"},
+          {scope:"Global default",how:"/config toggle Thinking Mode",detail:"~/.claude/settings.json alwaysThinkingEnabled"},
+          {scope:"Token budget",how:"MAX_THINKING_TOKENS env var",detail:"e.g. export MAX_THINKING_TOKENS=10000"}
+        ],
+        tips:["Ctrl+O toggles verbose mode to see grey italic internal reasoning","MAX_THINKING_TOKENS=0 disables thinking on any model","CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1 reverts to fixed budget"],
+        warnings:['You pay for all thinking tokens, even with summarized output','"think", "think hard", "ultrathink" are regular prompt instructions, NOT token allocators']
+      },
+      { subtitle:"Continue Conversations",
+        steps:[
+          {step:"Continue recent",cmd:"claude --continue"},
+          {step:"Resume selector",cmd:"claude --resume"},
+          {step:"From PR",cmd:"claude --from-pr 123"},
+          {step:"In-session switch",cmd:"/resume"},
+          {step:"Rename session",cmd:"/rename auth-refactor"},
+          {step:"Resume by name (CLI)",cmd:"claude --resume auth-refactor"},
+          {step:"Resume by name (session)",cmd:"/resume auth-refactor"}
+        ],
+        tableData:[
+          {scope:"\u2191 / \u2193",how:"Navigate sessions"},
+          {scope:"\u2192 / \u2190",how:"Expand/collapse groups"},
+          {scope:"Enter",how:"Select and continue"},
+          {scope:"P",how:"Preview session content"},
+          {scope:"R",how:"Rename session"},
+          {scope:"/",how:"Search/filter sessions"},
+          {scope:"A",how:"Toggle current dir / all projects"},
+          {scope:"B",how:"Filter by current git branch"},
+          {scope:"Esc",how:"Exit selector"}
+        ],
+        tips:["Name sessions early with /rename","Use --continue for quick access to most recent","P to preview before continuing","For scripts: claude --continue --print 'prompt'"]
+      },
+      { subtitle:"Git Worktrees",
+        steps:[
+          {step:"Named worktree",cmd:"claude --worktree feature-auth"},
+          {step:"Another worktree",cmd:"claude --worktree bugfix-123"},
+          {step:"Auto-named",cmd:"claude --worktree"}
+        ],
+        notes:["Worktrees created in <repo>/.claude/worktrees/<n>","No changes = auto-cleanup; changes = Claude prompts to keep/remove"],
+        tips:["Add .claude/worktrees/ to .gitignore","Subagent worktrees: add isolation: worktree to frontmatter","Non-git VCS: configure WorktreeCreate/WorktreeRemove hooks"],
+        codeBlock:'# Manual worktree management\ngit worktree add ../project-feature-a -b feature-a\ngit worktree add ../project-bugfix bugfix-123\ncd ../project-feature-a && claude\ngit worktree list\ngit worktree remove ../project-feature-a'
+      },
+      { subtitle:"Desktop Notifications",
+        steps:[
+          {step:"Open hooks menu",cmd:"/hooks"},
+          {step:"macOS notify",cmd:"osascript -e 'display notification \"Claude Code needs your attention\" with title \"Claude Code\"'"},
+          {step:"Linux notify",cmd:"notify-send 'Claude Code' 'Claude Code needs your attention'"},
+          {step:"Windows notify",cmd:"powershell.exe -Command \"[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.MessageBox]::Show('Claude Code needs your attention', 'Claude Code')\""}
+        ],
+        tableData:[
+          {scope:"permission_prompt",how:"Claude needs tool approval"},
+          {scope:"idle_prompt",how:"Claude finished, waiting for input"},
+          {scope:"auth_success",how:"Authentication completed"},
+          {scope:"elicitation_dialog",how:"Claude asking a question"}
+        ]
+      },
+      { subtitle:"Unix-style Utilities",
+        steps:[
+          {step:"Pipe in/out",cmd:"cat build-error.txt | claude -p 'concisely explain the root cause of this build error' > output.txt"},
+          {step:"Text output",cmd:"cat data.txt | claude -p 'summarize this data' --output-format text > summary.txt"},
+          {step:"JSON output",cmd:"cat code.py | claude -p 'analyze this code for bugs' --output-format json > analysis.json"},
+          {step:"Stream JSON",cmd:"cat log.txt | claude -p 'parse this log file for errors' --output-format stream-json"}
+        ],
+        codeBlock:'// package.json - Add Claude as a linter\n{\n  "scripts": {\n    "lint:claude": "claude -p \'you are a linter. look at changes vs. main and report typos. filename and line on one line, description on second line. no other text.\'"\n  }\n}',
+        tips:["Use pipes to integrate into shell scripts and CI/CD","Combine with other Unix tools","--output-format text for simple, json for metadata, stream-json for real-time"]
+      },
+      { subtitle:"Ask Claude its capabilities",
+        steps:[
+          {step:"PRs",cmd:"can Claude Code create pull requests?"},
+          {step:"Permissions",cmd:"how does Claude Code handle permissions?"},
+          {step:"Skills",cmd:"what skills are available?"},
+          {step:"MCP",cmd:"how do I use MCP with Claude Code?"},
+          {step:"Bedrock",cmd:"how do I configure Claude Code for Amazon Bedrock?"},
+          {step:"Limitations",cmd:"what are the limitations of Claude Code?"}
+        ],
+        tips:["Claude always has access to latest docs regardless of version","Ask specific questions for detailed answers"]
+      }
+    ]
+  },
+  {
+    id:"memory", title:"Memory (CLAUDE.md)",
+    subsections:[
+      { subtitle:"Memory hierarchy",
+        tableData:[
+          {scope:"Enterprise policy",how:"macOS: /Library/Application Support/ClaudeCode/CLAUDE.md",detail:"Org-wide, managed by IT"},
+          {scope:"Project memory",how:"./CLAUDE.md or ./.claude/CLAUDE.md",detail:"Team-shared via source control"},
+          {scope:"User memory",how:"~/.claude/CLAUDE.md",detail:"Personal, all projects"},
+          {scope:"Project local",how:"./CLAUDE.local.md",detail:"Personal, current project only"}
+        ],
+        notes:["CLAUDE.local.md is auto-added to .gitignore","All memory files auto-loaded at launch. Higher hierarchy = higher precedence."]
+      },
+      { subtitle:"CLAUDE.md imports",
+        codeBlock:'See @README for project overview and @package.json for npm commands.\n\n# Additional Instructions\n- git workflow @docs/git-instructions.md\n\n# Individual Preferences (home dir import)\n- @~/.claude/my-project-instructions.md',
+        notes:["Both relative and absolute paths allowed","Imports not evaluated inside code spans/blocks","Recursive imports up to 5 hops deep","Run /memory to see loaded files"]
+      },
+      { subtitle:"Quick add & edit memories",
+        steps:[
+          {step:"Quick add with #",cmd:"# Always use descriptive variable names"},
+          {step:"Edit memories",cmd:"/memory"},
+          {step:"Bootstrap CLAUDE.md",cmd:"/init"}
+        ],
+        tips:["Include frequently used commands (build, test, lint)","Document code style preferences and naming conventions","Add important architectural patterns","Be specific: '2-space indentation' > 'Format code properly'","Use bullet points under markdown headings","Review periodically as project evolves"]
+      }
+    ]
+  },
+  {
+    id:"mcp", title:"MCP (Model Context Protocol)",
+    subsections:[
+      { subtitle:"What you can do",
+        bulletPoints:["Implement features from JIRA issues and create PRs on GitHub","Analyze monitoring data from Sentry and Statsig","Query databases (Postgres, etc.)","Integrate Figma designs posted in Slack","Automate Gmail drafts, Asana tasks, etc."],
+        warnings:["Use third-party MCP servers at your own risk. Anthropic has not verified all servers' correctness or security."]
+      },
+      { subtitle:"Installing MCP servers",
+        steps:[
+          {step:"HTTP (recommended)",cmd:"claude mcp add --transport http notion https://mcp.notion.com/mcp"},
+          {step:"With Bearer token",cmd:'claude mcp add --transport http secure-api https://api.example.com/mcp --header "Authorization: Bearer your-token"'},
+          {step:"SSE (deprecated)",cmd:"claude mcp add --transport sse asana https://mcp.asana.com/sse"},
+          {step:"Stdio server",cmd:"claude mcp add --transport stdio airtable --env AIRTABLE_API_KEY=YOUR_KEY -- npx -y airtable-mcp-server"}
+        ],
+        notes:['The "--" separates Claude CLI flags from the MCP server command+args',"Windows: use cmd /c wrapper for npx servers"]
+      },
+      { subtitle:"Managing servers",
+        steps:[
+          {step:"List all",cmd:"claude mcp list"},
+          {step:"Get details",cmd:"claude mcp get github"},
+          {step:"Remove",cmd:"claude mcp remove github"},
+          {step:"Check status",cmd:"/mcp"},
+          {step:"Import from Desktop",cmd:"claude mcp add-from-claude-desktop"}
+        ],
+        tips:["--scope local (default): you only, current project","--scope project: shared via .mcp.json","--scope user: you, all projects","MCP_TIMEOUT=10000 claude for 10s startup timeout","MAX_MCP_OUTPUT_TOKENS=50000 for large outputs","/mcp to authenticate OAuth 2.0 servers"]
+      },
+      { subtitle:"Examples",
+        steps:[
+          {step:"Sentry monitoring",cmd:"claude mcp add --transport http sentry https://mcp.sentry.dev/mcp"},
+          {step:"GitHub code reviews",cmd:"claude mcp add --transport http github https://api.githubcopilot.com/mcp/"},
+          {step:"PostgreSQL database",cmd:'claude mcp add --transport stdio db -- npx -y @bytebase/dbhub --dsn "postgresql://readonly:pass@prod.db.com:5432/analytics"'}
+        ]
+      },
+      { subtitle:"Use Claude Code AS an MCP server",
+        codeBlock:'# Start Claude as an MCP server\nclaude mcp serve\n\n# claude_desktop_config.json\n{\n  "mcpServers": {\n    "claude-code": {\n      "type": "stdio",\n      "command": "claude",\n      "args": ["mcp", "serve"],\n      "env": {}\n    }\n  }\n}',
+        tips:["Provides access to Claude's tools (View, Edit, LS, etc.)","Use `which claude` to find full path if not in PATH"]
+      },
+      { subtitle:"MCP Resources & Prompts",
+        steps:[
+          {step:"Reference resource",cmd:"Can you analyze @github:issue://123 and suggest a fix?"},
+          {step:"Multiple resources",cmd:"Compare @postgres:schema://users with @docs:file://database/user-model"},
+          {step:"MCP prompt (no args)",cmd:"/mcp__github__list_prs"},
+          {step:"MCP prompt (with args)",cmd:"/mcp__github__pr_review 456"}
+        ]
+      }
+    ]
+  },
+  {
+    id:"headless", title:"Headless Mode",
+    subsections:[
+      { subtitle:"Basic usage",
+        steps:[
+          {step:"Non-interactive",cmd:'claude -p "Stage my changes and write commits" --allowedTools "Bash,Read" --permission-mode acceptEdits'},
+          {step:"Continue recent",cmd:'claude --continue "Now refactor this for better performance"'},
+          {step:"Resume by ID",cmd:'claude --resume 550e8400-e29b-41d4-a716-446655440000 "Update the tests"'},
+          {step:"Non-interactive resume",cmd:'claude --resume 550e8400-e29b-41d4-a716-446655440000 "Fix all linting issues" --no-interactive'}
+        ]
+      },
+      { subtitle:"Key CLI flags",
+        tableData:[
+          {scope:"--print, -p",how:"Run in non-interactive mode"},
+          {scope:"--output-format",how:"text, json, or stream-json"},
+          {scope:"--resume, -r",how:"Resume by session ID"},
+          {scope:"--continue, -c",how:"Continue most recent conversation"},
+          {scope:"--append-system-prompt",how:"Append to system prompt (with -p only)"},
+          {scope:"--allowedTools",how:"Space or comma-separated allowed tools"},
+          {scope:"--disallowedTools",how:"Space or comma-separated denied tools"},
+          {scope:"--mcp-config",how:"Load MCP servers from JSON file"},
+          {scope:"--permission-prompt-tool",how:"MCP tool for permission prompts (with -p)"}
+        ]
+      },
+      { subtitle:"Agent integration examples",
+        codeBlock:'# SRE Incident Response\nclaude -p "Incident: $desc (Severity: $sev)" \\\n  --append-system-prompt "You are an SRE expert." \\\n  --output-format json \\\n  --allowedTools "Bash,Read,WebSearch,mcp__datadog"\n\n# Security Review\ngh pr diff "$pr" | claude -p \\\n  --append-system-prompt "You are a security engineer." \\\n  --output-format json --allowedTools "Read,Grep,WebSearch"\n\n# Multi-turn Legal Assistant\nsid=$(claude -p "Start legal review" --output-format json | jq -r \'.session_id\')\nclaude -p --resume "$sid" "Review contract.pdf for liability"\nclaude -p --resume "$sid" "Check GDPR compliance"\nclaude -p --resume "$sid" "Generate risk summary"',
+        tips:["Use JSON output for programmatic parsing","Handle errors with exit codes and stderr","Use session management for multi-turn context","Add timeouts: timeout 300 claude -p ... || echo 'Timed out'","Respect rate limits with delays between calls"]
+      }
+    ]
+  },
+  {
+    id:"skills", title:"Agent Skills",
+    subsections:[
+      { subtitle:"What are Skills?",
+        description:"Skills package expertise into discoverable, model-invoked capabilities. Each Skill = a SKILL.md file + optional supporting files. Claude autonomously decides when to use them.",
+        bulletPoints:["Extend Claude's capabilities for specific workflows","Share expertise across your team via git","Reduce repetitive prompting","Compose multiple Skills for complex tasks"]
+      },
+      { subtitle:"Create a Skill",
+        steps:[
+          {step:"Personal skill dir",cmd:"mkdir -p ~/.claude/skills/my-skill-name"},
+          {step:"Project skill dir",cmd:"mkdir -p .claude/skills/my-skill-name"},
+          {step:"List skills",cmd:"What Skills are available?"},
+          {step:"Debug mode",cmd:"claude --debug"}
+        ],
+        codeBlock:'---\nname: your-skill-name\ndescription: Brief description of what this Skill does and when to use it\nallowed-tools: Read, Grep, Glob  # Optional: restrict tools\n---\n\n# Your Skill Name\n\n## Instructions\nProvide clear, step-by-step guidance.\n\n## Examples\nShow concrete examples.',
+        notes:["name: lowercase letters, numbers, hyphens only (max 64 chars)","description: max 1024 chars -- critical for Claude to discover when to use it","allowed-tools: optional, restricts what tools Claude can use with this skill"]
+      },
+      { subtitle:"Share & manage Skills",
+        steps:[
+          {step:"Add to project",cmd:"mkdir -p .claude/skills/team-skill"},
+          {step:"Commit",cmd:'git add .claude/skills/ && git commit -m "Add team Skill"'},
+          {step:"Team gets it",cmd:"git pull && claude"},
+          {step:"Remove skill",cmd:"rm -rf .claude/skills/my-skill"}
+        ],
+        tips:["Keep Skills focused: one capability per Skill","Write specific descriptions with trigger terms","Test with teammates for feedback","Document versions in SKILL.md content"]
+      }
+    ]
+  },
+  {
+    id:"subagents", title:"Subagents",
+    subsections:[
+      { subtitle:"Overview",
+        description:"Specialized AI assistants with their own context window, tools, system prompt. Claude delegates tasks automatically or on request.",
+        bulletPoints:["Context preservation: separate context prevents main conversation pollution","Specialized expertise: fine-tuned instructions for specific domains","Reusability: share across projects and team","Flexible permissions: different tool access per subagent"]
+      },
+      { subtitle:"Quick start",
+        steps:[
+          {step:"Open agents UI",cmd:"/agents"},
+          {step:"Explicit invocation",cmd:"Use the code-reviewer subagent to check my recent changes"},
+          {step:"CLI-based agent",cmd:"claude --agents '{\"code-reviewer\": {\"description\": \"Expert code reviewer\", \"prompt\": \"Focus on quality, security, best practices.\", \"tools\": [\"Read\",\"Grep\",\"Glob\",\"Bash\"], \"model\": \"sonnet\"}}'"}
+        ]
+      },
+      { subtitle:"File locations & format",
+        tableData:[
+          {scope:"Project subagents",how:".claude/agents/",detail:"Current project, highest priority"},
+          {scope:"User subagents",how:"~/.claude/agents/",detail:"All projects, lower priority"}
+        ],
+        codeBlock:'---\nname: your-sub-agent-name\ndescription: Description of when this subagent should be invoked\ntools: tool1, tool2, tool3  # Optional\nmodel: sonnet  # Optional: sonnet, opus, haiku, or inherit\npermissionMode: default  # Optional\nskills: skill1, skill2  # Optional\n---\n\nYour subagent system prompt here...'
+      },
+      { subtitle:"Built-in subagents",
+        bulletPoints:[
+          "General-purpose: Sonnet model, all tools, can read/write files -- for complex multi-step tasks",
+          "Plan: Sonnet model, Read/Glob/Grep/Bash -- for codebase research in plan mode",
+          "Explore: Haiku model, read-only (Glob, Grep, Read, limited Bash) -- fast codebase search with quick/medium/very-thorough levels"
+        ]
+      },
+      { subtitle:"Example: Code Reviewer agent",
+        codeBlock:'---\nname: code-reviewer\ndescription: Expert code review. Use immediately after writing or modifying code.\ntools: Read, Grep, Glob, Bash\nmodel: inherit\n---\n\nYou are a senior code reviewer.\n\nWhen invoked:\n1. Run git diff to see changes\n2. Focus on modified files\n3. Begin review immediately\n\nReview: simplicity, naming, duplication, error handling,\nsecurity, input validation, test coverage, performance.\n\nFeedback by priority: Critical > Warnings > Suggestions.',
+        tips:["Start with Claude-generated agents, then customize","Design focused subagents with single responsibilities","Write detailed prompts with examples and constraints","Only grant necessary tools","Version control project subagents","Include 'use PROACTIVELY' in description for auto-delegation"]
+      }
+    ]
+  },
+  {
+    id:"hooks", title:"Hooks",
+    subsections:[
+      { subtitle:"Overview",
+        description:"Hooks let you register shell commands or LLM prompts that run on specific events. Configure in settings files.",
+        codeBlock:'{\n  "hooks": {\n    "EventName": [\n      {\n        "matcher": "ToolPattern",\n        "hooks": [\n          {\n            "type": "command",\n            "command": "your-command-here"\n          }\n        ]\n      }\n    ]\n  }\n}'
+      },
+      { subtitle:"Hook events",
+        tableData:[
+          {scope:"PreToolUse",how:"Before tool executes",detail:"Match: Bash, Read, Edit, Write, Glob, Grep..."},
+          {scope:"PermissionRequest",how:"When permission dialog shown",detail:"Same matchers as PreToolUse"},
+          {scope:"PostToolUse",how:"After tool completes",detail:"Same matchers as PreToolUse"},
+          {scope:"Notification",how:"On notification events",detail:"Match: permission_prompt, idle_prompt, auth_success..."},
+          {scope:"UserPromptSubmit",how:"Before Claude processes prompt",detail:"No matcher needed"},
+          {scope:"Stop / SubagentStop",how:"When agent finishes",detail:"No matcher needed"},
+          {scope:"PreCompact",how:"Before compact operation",detail:"Match: manual, auto"},
+          {scope:"SessionStart",how:"On new/resumed session",detail:"Match: startup, resume, clear, compact"},
+          {scope:"SessionEnd",how:"On session end",detail:"No matcher needed"}
+        ]
+      },
+      { subtitle:"Exit codes & output",
+        tableData:[
+          {scope:"Exit 0",how:"Success. stdout shown in verbose mode (Ctrl+O)"},
+          {scope:"Exit 2",how:"Blocking error. stderr fed back to Claude"},
+          {scope:"Other codes",how:"Non-blocking error. stderr shown in verbose mode"}
+        ],
+        notes:["Prompt-based hooks (type: 'prompt') use LLM evaluation -- useful for Stop/SubagentStop intelligent decisions","Use $CLAUDE_PROJECT_DIR to reference project-relative scripts","SessionStart hooks can persist env vars via $CLAUDE_ENV_FILE"]
+      }
+    ]
+  },
+  {
+    id:"vscode", title:"VS Code Extension",
+    subsections:[
+      { subtitle:"Features (Beta)",
+        bulletPoints:["Native sidebar panel via Spark icon","Plan mode with editing","Auto-accept edits mode","Extended thinking toggle","@-mention files, attach files and images","MCP server usage (configured via CLI)","Conversation history & multiple sessions","Most CLI keyboard shortcuts and slash commands supported"],
+        notes:["Requires VS Code 1.98.0+","Install from Visual Studio Code Extension Marketplace"]
+      },
+      { subtitle:"3rd-party provider config",
+        codeBlock:'// settings.json for Bedrock in VS Code\n{\n  "env": {\n    "CLAUDE_CODE_USE_BEDROCK": "1",\n    "AWS_REGION": "us-east-2",\n    "AWS_PROFILE": "your-profile"\n  }\n}\n\n// Disable login prompt\n{\n  "claudeCode.disableLoginPrompt": true\n}'
+      },
+      { subtitle:"Not yet implemented",
+        bulletPoints:["MCP server and Plugin configuration UI (use /mcp or /plugin in terminal)","Subagents configuration (configure via CLI first)","Checkpoints (save/restore conversation state)","/rewind command","# shortcut for memory, ! for bash","Tab file path completion","Model selection UI for older models"],
+        warnings:["With auto-edit permissions, Claude may modify IDE config files. Consider VS Code Restricted Mode for untrusted workspaces."]
+      },
+      { subtitle:"Legacy CLI integration",
+        description:"Run `claude` from VS Code integrated terminal for auto-install. Features: selection context sharing, IDE diffs, file references (Cmd+Option+K / Alt+Ctrl+K), auto diagnostic sharing. Works with VS Code, Cursor, Windsurf, VSCodium.",
+        notes:["For external terminals, use /ide command to connect"]
+      }
+    ]
+  },
+  {
+    id:"github-actions", title:"GitHub Actions",
+    subsections:[
+      { subtitle:"Overview",
+        description:"AI-powered automation for GitHub. @claude in any PR or issue to analyze code, create PRs, implement features, fix bugs.",
+        steps:[{step:"Quick setup",cmd:"/install-github-app"}],
+        bulletPoints:["Instant PR creation from descriptions","Automated code implementation from issues","Follows CLAUDE.md guidelines and code patterns","Secure: code stays on GitHub's runners"]
+      },
+      { subtitle:"Basic workflow",
+        codeBlock:"name: Claude Code\non:\n  issue_comment:\n    types: [created]\n  pull_request_review_comment:\n    types: [created]\njobs:\n  claude:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: anthropics/claude-code-action@v1\n        with:\n          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}"
+      },
+      { subtitle:"Common @claude commands",
+        steps:[
+          {step:"Implement feature",cmd:"@claude implement this feature based on the issue description"},
+          {step:"Ask question",cmd:"@claude how should I implement user authentication for this endpoint?"},
+          {step:"Fix error",cmd:"@claude fix the TypeError in the user dashboard component"},
+          {step:"Slash command",cmd:'/review (use with prompt: "/review")'}
+        ],
+        warnings:["Never commit API keys to your repository! Always use GitHub Secrets."],
+        tips:["Create CLAUDE.md for code style guidelines and review criteria","Use --max-turns in claude_args to prevent excessive iterations","Set workflow-level timeouts","For AWS Bedrock / Google Vertex AI, see cloud provider setup docs"]
+      },
+      { subtitle:"v1.0 migration from beta",
+        tableData:[
+          {scope:"mode",how:"(Removed -- auto-detected)"},
+          {scope:"direct_prompt",how:"prompt"},
+          {scope:"custom_instructions",how:"claude_args: --system-prompt"},
+          {scope:"max_turns",how:"claude_args: --max-turns"},
+          {scope:"model",how:"claude_args: --model"},
+          {scope:"allowed_tools",how:"claude_args: --allowedTools"},
+          {scope:"claude_env",how:"settings JSON format"}
+        ]
+      }
+    ]
+  },
+  {
+    id:"other-pages", title:"Additional Documentation",
+    subsections:[
+      { subtitle:"Pages available at code.claude.com",
+        description:"The following pages exist in Claude Code documentation but could not be fully retrieved. Visit each URL directly for complete content.",
+        bulletPoints:[
+          "Setup: code.claude.com/docs/en/setup",
+          "CLI Reference: code.claude.com/docs/en/cli-reference",
+          "Settings: code.claude.com/docs/en/settings",
+          "Costs management: code.claude.com/docs/en/costs",
+          "Data usage: code.claude.com/docs/en/data-usage",
+          "Security: code.claude.com/docs/en/security",
+          "Troubleshooting: code.claude.com/docs/en/troubleshooting",
+          "Interactive mode: code.claude.com/docs/en/interactive-mode",
+          "Slash commands: code.claude.com/docs/en/slash-commands",
+          "Checkpointing: code.claude.com/docs/en/checkpointing",
+          "Sandboxing: code.claude.com/docs/en/sandboxing",
+          "Plugins: code.claude.com/docs/en/plugins",
+          "Plugins Reference: code.claude.com/docs/en/plugins-reference",
+          "Plugin Marketplaces: code.claude.com/docs/en/plugin-marketplaces",
+          "Hooks Guide: code.claude.com/docs/en/hooks-guide",
+          "Output Styles: code.claude.com/docs/en/output-styles",
+          "Model Configuration: code.claude.com/docs/en/model-config",
+          "Amazon Bedrock: code.claude.com/docs/en/amazon-bedrock",
+          "Google Vertex AI: code.claude.com/docs/en/google-vertex-ai",
+          "Microsoft Foundry: code.claude.com/docs/en/microsoft-foundry",
+          "LLM Gateway: code.claude.com/docs/en/llm-gateway",
+          "IAM: code.claude.com/docs/en/iam",
+          "Network Config: code.claude.com/docs/en/network-config",
+          "Analytics: code.claude.com/docs/en/analytics",
+          "Monitoring: code.claude.com/docs/en/monitoring-usage",
+          "DevContainer: code.claude.com/docs/en/devcontainer",
+          "Desktop app: code.claude.com/docs/en/desktop",
+          "Claude Code on the web: code.claude.com/docs/en/claude-code-on-the-web",
+          "GitLab CI/CD: code.claude.com/docs/en/gitlab-ci-cd",
+          "JetBrains: code.claude.com/docs/en/jetbrains",
+          "Terminal Config: code.claude.com/docs/en/terminal-config",
+          "Status Line: code.claude.com/docs/en/statusline",
+          "Enterprise deployment: code.claude.com/docs/en/third-party-integrations",
+          "Legal & Compliance: code.claude.com/docs/en/legal-and-compliance",
+          "SDK Migration: code.claude.com/docs/en/sdk/migration-guide"
+        ]
+      }
+    ]
+  }
+];
+
+// ══════════════════════════════════════════
+// RENDER ENGINE
+// ══════════════════════════════════════════
+
+function escapeHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function copyText(text, btn){
+  navigator.clipboard.writeText(text).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=text;
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+  btn.textContent='Copied!';btn.classList.add('copied');
+  setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},1400);
+}
+
+function renderNav(){
+  const nav=document.getElementById('nav');
+  nav.innerHTML=sections.map(s=>
+    `<button class="nav-btn" data-id="${s.id}">${escapeHtml(s.title)}</button>`
+  ).join('');
+  nav.querySelectorAll('.nav-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      nav.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('s-'+btn.dataset.id)?.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+  nav.querySelector('.nav-btn')?.classList.add('active');
+}
+
+function renderCmdRow(s){
+  return `<div class="cmd-row">
+    ${s.step?`<span class="cmd-step">${escapeHtml(s.step)}</span>`:''}
+    <code class="cmd-code">${escapeHtml(s.cmd)}</code>
+    <button class="copy-btn" onclick="copyText(${JSON.stringify(s.cmd)},this)">Copy</button>
+  </div>`;
+}
+
+function renderCodeBlock(code){
+  return `<div class="code-block-wrap">
+    <pre class="code-block">${escapeHtml(code)}</pre>
+    <button class="copy-btn" onclick="copyText(${JSON.stringify(code)},this)">Copy</button>
+  </div>`;
+}
+
+function renderTable(rows,cols){
+  return `<div style="overflow-x:auto;margin-top:8px"><table class="data-table">
+    <thead><tr>${cols.map(c=>`<th>${escapeHtml(c)}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${Object.values(r).map((v,i)=>`<td>${escapeHtml(v)}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+function renderBadge(type,label,content){
+  const isHtml = typeof content==='string' && content.trim().startsWith('<');
+  return `<div class="badge badge-${type}">
+    <span class="badge-label">${label}</span>
+    ${isHtml ? content : escapeHtml(content)}
+  </div>`;
+}
+
+function renderSubsection(sub){
+  let h='';
+  if(sub.subtitle) h+=`<h3 class="sub-title">${escapeHtml(sub.subtitle)}</h3>`;
+  if(sub.description) h+=`<p class="sub-desc">${escapeHtml(sub.description)}</p>`;
+  if(sub.bulletPoints) h+=`<ul class="bullet-list">${sub.bulletPoints.map(b=>`<li>${escapeHtml(b)}</li>`).join('')}</ul>`;
+  if(sub.steps) h+=`<div class="cmd-list">${sub.steps.map(renderCmdRow).join('')}</div>`;
+  if(sub.codeBlock) h+=renderCodeBlock(sub.codeBlock);
+  if(sub.tableData){
+    const cols=sub.tableData[0]?.detail?['Item','Description','Details']:['Item','Description'];
+    h+=renderTable(sub.tableData,cols);
+  }
+  if(sub.tips) h+=renderBadge('tip','Tip','<ul>'+sub.tips.map(t=>'<li>'+escapeHtml(t)+'</li>').join('')+'</ul>');
+  if(sub.notes) sub.notes.forEach(n=>{ h+=renderBadge('note','Note',n); });
+  if(sub.warnings) sub.warnings.forEach(w=>{ h+=renderBadge('warning','Warning',w); });
+  return `<div class="subsection" data-search="${escapeHtml(JSON.stringify(sub).toLowerCase())}">${h}</div>`;
+}
+
+function renderAll(filter){
+  const el=document.getElementById('content');
+  const f=filter?.toLowerCase()||'';
+  let html='';
+  sections.forEach(sec=>{
+    const subs=sec.subsections.filter(sub=>{
+      if(!f) return true;
+      return JSON.stringify(sub).toLowerCase().includes(f);
+    });
+    if(!f||sec.title.toLowerCase().includes(f)||subs.length>0){
+      html+=`<div class="section" id="s-${sec.id}"><h2 class="section-title">${escapeHtml(sec.title)}</h2>`;
+      (f?subs:sec.subsections).forEach(sub=>{ html+=renderSubsection(sub); });
+      html+=`</div>`;
+    }
+  });
+  if(!html) html='<p style="color:#586174;font-size:14px;margin-top:20px">No matching content found.</p>';
+  el.innerHTML=html;
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+renderNav();
+renderAll();
+
+let debounce;
+document.getElementById('search').addEventListener('input',function(){
+  clearTimeout(debounce);
+  debounce=setTimeout(()=>renderAll(this.value),200);
+});
+</script>
+</body>
+</html>
