@@ -13435,6 +13435,6 @@ const searchIndex = [
     ],
     "sectionId": "escapehtmlsectitle",
     "sectionTitle": "${escapeHtml(sec.title)}",
-    "content": "`; (f?subs:sec.subsections).forEach(sub=>{ html+=renderSubsection(sub); }); html+=` `; } }); if(!html) html=' No matching content found. '; el.innerHTML=html; } // ══════════════════════════════════════════ // INIT // ══════════════════════════════════════════ renderNav(); renderAll(); let debounce; document.getElementById('search').addEventListener('input',function(){ clearTimeout(debounce); debounce=setTimeout(()=>renderAll(this.value),200); });"
+    "content": "`; (f?subs:sec.subsections).forEach(sub=>{ html+=renderSubsection(sub); }); html+=` `; } }); if(!html) html=' No matching content found. '; el.innerHTML=html; } // ══════════════════════════════════════════ // INIT // ══════════════════════════════════════════ renderNav(); renderAll(); document.addEventListener('click',function(e){ const btn=e.target.closest('.copy-btn[data-copy]'); if(btn) copyText(btn.dataset.copy, btn); }); let debounce; document.getElementById('search').addEventListener('inp"
   }
 ];
