@@ -13436,5 +13436,37 @@ const searchIndex = [
     "sectionId": "escapehtmlsectitle",
     "sectionTitle": "${escapeHtml(sec.title)}",
     "content": "`; (f?subs:sec.subsections).forEach(sub=>{ html+=renderSubsection(sub); }); html+=` `; } }); if(!html) html=' No matching content found. '; el.innerHTML=html; } // ══════════════════════════════════════════ // INIT // ══════════════════════════════════════════ renderNav(); renderAll(); document.addEventListener('click',function(e){ const btn=e.target.closest('.copy-btn[data-copy]'); if(btn) copyText(btn.dataset.copy, btn); }); let debounce; document.getElementById('search').addEventListener('inp"
+  },
+  {
+    "docFile": "2026-03-05_ai-execs-kids-career.html",
+    "docTitle": "AI 高管的子女職涯建議 - WSJ Career Advice",
+    "docDate": "2026-03-05",
+    "docSource": "Lauren Weber / Wall Street Journal",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent",
+      "LLM"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "《華爾街日報》訪問了五位 AI 產業領袖，詢問他們如何建議自己的孩子面對未來職涯。受訪者包括 Paid.AI、SAP、Wharton、Microsoft、Anthropic 的高階主管或學者。共同浮現的關鍵詞： 彈性 (Flexibility) 、 能力組合 (Skill Combinations) 、 元認知 (Metacognition) 、 責任 (Accountability) 、 同理心 (Empathy) 。這些不是特定技能，而是在變動環境中維持調整空間的結構性能力。 Learning Objectives 辨識 AI 時代的「韌性能力」 理解五位高管建議背後的共同模式：不押注特定技術，而是培養可轉移的結構性能力。 連結到 CDMO 產業情境 將「責任」「監管判斷」「能力組合」對應到製藥業的 O-Ring 瓶頸，理解為何高門檻產業的人類價值更突出。 批判性檢視「特權視角」 辨識這些建議的適用條件與限制：誰有資源培養這些能力？在不同經濟基礎下，策略如何調整？ Five Pillars of AI-Era Career Resilience Flexibility 適應變動 Hanke / SAP + Skill Mix 能力組合 Mollick / Wharton + Metacognition 元認知 Teevan / Microsoft + Accountability 責任承擔 Teevan / Medina + Empathy 人類連結 Amodei / Anthropic Part I ~ V: 五位 AI 領袖的建議 Part I Manny Medina (Paid.AI) -- 產業與價值 Medina 在報導中提到 能源與醫療 ，特別講到核能（\"the atom\"）以及核醫學。他的孩子也投入相關領域。他給孩子三個判準：你喜歡嗎？你擅長嗎？它對別人有用嗎？ He mentioned energy and healthcare, specifically nuclear energy (\"the atom\") and nuclear medicine. His three criteria: Do you like it? Are you good at it? Is it useful to other people? 這三個問題放在任何時代都成立，但放回他談的兩個產業背景，味道就不一樣了。能源與醫療有幾個共同特徵： 需求長期存在、牽涉安全與監管、專業門檻高、社會價值難以被一筆勾銷 。 These three questions work in any era, but placed against the industries he mentioned — energy and healthcare — they carry a different weight: long-term demand, safety/regulatory complexity, high barriers, enduring social value. 換成職涯語言：先選擇一個 長期仍會被需要的世界 ，再把自己的能力與價值放進去。三個判準看似簡單，其實是一套篩選方式：你會不會願意投入？投入後能不能站得住？站得住之後能不能對別人有用？ In career terms: first choose a world that will still be needed long-term, then place your skills and va"
+  },
+  {
+    "docFile": "2026-03-05_claude-code-scraping-nine-ways.html",
+    "docTitle": "Claude Code 資料爬取九大方法 - Aniket Panjwani",
+    "docDate": "2026-03-05",
+    "docSource": "Aniket Panjwani / @aniketapanjwani",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "API",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Aniket Panjwani 整理了九種使用 Claude Code 爬取網路資料的方法，涵蓋從最簡單的「直接叫 Claude Code 爬」到使用 Agent Browser 處理認證登入的進階場景。文章的核心洞察是： 資料爬取的難度取決於目標網站的結構化程度和認證機制 ，而 Claude Code 作為 agentic coding 工具，可以透過搭配不同的外部工具來應對各種場景。這是一份偏「工具清單 + 使用場景」的實戰型文章，技術深度不高但覆蓋面廣，適合作為快速參考手冊。 Learning Objectives 🔍 9 種爬取方法的適用場景 判斷哪種方法最適合你的目標網站 🧰 外部工具生態系統 Firecrawl, Apify, yt-dlp, Agent Browser 的定位 💡 Skill 設計思維 將爬取工具封裝為可複用的 Claude Code Skill Data Scraping Complexity Ladder 資料爬取複雜度階梯 📄 Static 直接爬取 HTML → ⚡ Dynamic 尋找 API endpoint → 🛡️ Protected 付費 API / 反爬蟲 → 📝 Unstructured Markdown + LLM 提取 → 🔐 Authenticated Cookie / Agent Browser Content 內容 Basic 基礎爬取 (1-3) Structured 結構化提取 (4-6) Advanced 進階場景 (7-9) Way 1 Just Ask Claude Code to Scrape 直接叫 Claude Code 爬 對於大量的網站，你可以 直接告訴 Claude Code 去爬取該網站 ，告訴它你要什麼資料，然後請它輸出到 CSV 或 SQLite 檔案。 For a large set of sites, you can just tell Claude Code to scrape the site, tell it what you want scraped, and ask it to write it out to a CSV or a SQLite file. Claude Code 會自行探索網站，可能會寫一個 Python 腳本，執行腳本，甚至可能寫一些單元測試，然後把資料寫到你電腦上的某個位置。 It will poke around the site for you, probably write a Python script, run the script, maybe even write some unit tests, and then just write out the data somewhere on your computer. 🛠️ 實務應用 這是最「零配置」的方法。適用於結構清楚的公開網站（如政府資料、學術機構頁面、公開產品列表）。Claude Code 會自己決定用 requests + BeautifulSoup 還是其他方式。 ⚠️ 重點提示 適用場景： 靜態 HTML 頁面、公開資料集、簡單表格 限制： 動態載入內容（SPA）、需要認證的頁面、有反爬蟲機制的網站 輸出格式： CSV, SQLite, JSON 💡 比喻說明 想像你叫一個很聰明的助理去圖書館幫你影印特定章節 — 如果那本書就在開架區（公開網站），助理自己就能搞定。但如果書鎖在特藏室（需要認證），你得先拿到鑰匙給他。 Way 2"
   }
 ];
