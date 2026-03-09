@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Skill 完整建構指南 - Anthropic 官方教學</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-03-09">
+<meta name="doc-title" content="Claude Skill 建構完整指南 - Anthropic Official">
+<meta name="doc-source" content="Anthropic / resources.anthropic.com">
+<meta name="doc-source-type" content="Anthropic-Docs">
+<meta name="doc-tags" content="Anthropic-Docs,Agent,Tool,Framework,API">
+<meta name="doc-rating" content="4.2">
+<meta name="doc-summary" content="Anthropic 官方 Skill 建構指南。涵蓋設計原則、YAML 規格、5 大 Pattern、MCP 整合與測試迭代。">
+<meta name="doc-file" content="2026-03-09_building-skills-guide.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Tags */
+.tag-container { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 500; }
+.tag-anthropic-docs { background: #fef3c7; color: #d97706; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-framework { background: #e0e7ff; color: #3730a3; }
+.tag-api { background: #ddd6fe; color: #4c1d95; }
+
+.header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+.exec-summary h2 { font-size: 1.15rem; color: #1e3a8a; margin-top: 0; }
+.exec-summary p { font-size: 0.95rem; color: #475569; margin-bottom: 0.75rem; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.3rem; }
+.objective-desc { font-size: 0.82rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+/* Tab Navigation */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.9rem; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Content Grid */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+.content-left { padding: 1.5rem; background: #ffffff; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.content-grid.linear { grid-template-columns: 1fr; }
+.content-grid.linear .content-left { border-right: none; }
+
+.part-label { font-size: 0.75rem; font-weight: 600; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+.section-title { font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+
+/* Bilingual */
+.bilingual-block { margin-bottom: 1rem; }
+.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.3rem; }
+.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
+
+/* Highlight spans */
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content code { font-family: 'Source Code Pro', monospace; background: rgba(0,0,0,0.06); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
+
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Code Blocks */
+pre.code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; overflow-x: auto; line-height: 1.6; margin: 0.75rem 0; }
+pre.code-block .comment { color: #94a3b8; }
+pre.code-block .keyword { color: #93c5fd; }
+pre.code-block .string { color: #86efac; }
+pre.code-block .highlight-line { background: rgba(99,102,241,0.2); display: inline-block; width: 100%; margin: 0 -1rem; padding: 0 1rem; }
+
+/* Comparison Table */
+.comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+.comparison-table th { background: #1e3a5f; color: white; padding: 0.75rem; text-align: left; }
+.comparison-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
+.comparison-table tr:nth-child(even) { background: #f8fafc; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+.summary-card:nth-child(2) { border-left-color: #10b981; }
+.summary-card:nth-child(3) { border-left-color: #8b5cf6; }
+.summary-card:nth-child(4) { border-left-color: #f59e0b; }
+
+/* Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin: 1.5rem 0; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #6366f1; text-decoration: none; }
+
+/* Section Header */
+.section-header { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+
+/* Good/Bad comparison */
+.good-bad { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0.75rem 0; }
+.good-example { background: #f0fdf4; border: 1px solid #86efac; border-radius: 0.5rem; padding: 0.75rem; }
+.bad-example { background: #fef2f2; border: 1px solid #fca5a5; border-radius: 0.5rem; padding: 0.75rem; }
+.good-example::before { content: "Good"; font-weight: 700; color: #047857; display: block; margin-bottom: 0.3rem; font-size: 0.8rem; }
+.bad-example::before { content: "Bad"; font-weight: 700; color: #dc2626; display: block; margin-bottom: 0.3rem; font-size: 0.8rem; }
+
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    .objectives-grid { grid-template-columns: 1fr; }
+    .takeaways-grid { grid-template-columns: 1fr; }
+    .framework-arrow { display: none; }
+    .framework-steps { gap: 1.5rem; }
+    .good-bad { grid-template-columns: 1fr; }
+    .tab-btn { font-size: 0.8rem; padding: 0.6rem 0.5rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-anthropic-docs">Anthropic-Docs</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-framework">Framework</span>
+        <span class="tag tag-api">API</span>
+    </div>
+    <h1>The Complete Guide to Building Skills for Claude</h1>
+    <div class="subtitle">Claude Skill 完整建構指南 -- 從設計原則到 Pattern 實戰</div>
+    <div class="source">Source: Anthropic / resources.anthropic.com (Official Documentation)</div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="exec-summary">
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
+        <span class="rating-high">↑ Practical Value, Timeliness</span>
+        <span class="rating-low">↓ Tool Ecosystem (Claude-centric)</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>Anthropic 官方發布的 Skill 建構完整指南，涵蓋從概念到部署的全流程。Skill 是一組打包成資料夾的指令集，教 Claude 處理特定任務或工作流程。本指南提供了三層漸進式揭露（Progressive Disclosure）的設計原則、YAML frontmatter 規格、五大實戰 Pattern、MCP 整合策略、以及測試迭代方法論。</p>
+    <p>對於已經在使用 Claude.ai Projects 和 Claude Code 的使用者，這份指南將 Skill 從「好用的小技巧」提升為「可複製、可分享、跨平台」的正式能力單元。特別值得注意的是 Skill 作為開放標準的定位 -- 設計上可跨工具平台使用，不僅限於 Claude。</p>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-icon">📁</div>
+        <div class="objective-title">Skill 架構與設計原則</div>
+        <div class="objective-desc">理解 SKILL.md 檔案結構、三層漸進式揭露、YAML frontmatter 規格與安全限制</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #10b981;">
+        <div class="objective-icon">🔧</div>
+        <div class="objective-title">五大 Pattern 實戰應用</div>
+        <div class="objective-desc">掌握 Sequential Workflow、Multi-MCP Coordination、Iterative Refinement 等核心模式</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #8b5cf6;">
+        <div class="objective-icon">🔄</div>
+        <div class="objective-title">測試、迭代與分發</div>
+        <div class="objective-desc">學會 Triggering/Functional/Performance 三層測試、skill-creator 工具使用、分發策略</div>
+    </div>
+</div>
+
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+    <div class="framework-title">Skill 建構四階段流程</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">📋</div>
+            <div class="framework-step-title">Plan</div>
+            <div class="framework-step-desc">定義 Use Cases<br>成功指標</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🏗️</div>
+            <div class="framework-step-title">Build</div>
+            <div class="framework-step-desc">SKILL.md + YAML<br>Scripts & Assets</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🧪</div>
+            <div class="framework-step-title">Test</div>
+            <div class="framework-step-desc">Trigger 測試<br>功能驗證</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🚀</div>
+            <div class="framework-step-title">Deploy</div>
+            <div class="framework-step-desc">GitHub 分發<br>API / 組織部署</div>
+        </div>
+    </div>
+</div>
+
+<!-- TABBED CONTENT -->
+<div class="tab-container">
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-foundations')">Foundations & Planning</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-build')">Build & Test</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-patterns')">Patterns & Troubleshooting</button>
+    </div>
+
+    <!-- TAB 1: FOUNDATIONS & PLANNING -->
+    <div id="tab-foundations" class="tab-content active">
+
+        <!-- Part I: What is a Skill -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part I</div>
+                <div class="section-title">什麼是 Skill？核心設計原則</div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">Skill 是一組打包成簡單資料夾的指令集，教 Claude 如何處理特定任務或工作流程。它是<span class="highlight-concept">客製化 Claude 最強大的方式之一</span>。不需要每次對話都重新解釋你的偏好、流程和領域專業知識，Skill 讓你教一次就能持續受益。</div>
+                    <div class="en-text">A skill is a set of instructions - packaged as a simple folder - that teaches Claude how to handle specific tasks or workflows. Skills are one of the most powerful ways to customize Claude for your specific needs.</div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 三層漸進式揭露 (Progressive Disclosure)</div>
+                    <div class="info-box-content">
+                        <p><strong>第一層 (YAML frontmatter)：</strong>永遠載入 Claude 的系統提示中。提供剛好足夠的資訊，讓 Claude 知道何時該使用這個 Skill。</p>
+                        <p><strong>第二層 (SKILL.md body)：</strong>當 Claude 認為 Skill 與當前任務相關時才載入。包含完整指令與指導。</p>
+                        <p><strong>第三層 (Linked files)：</strong>Skill 目錄中的附加檔案，Claude 僅在需要時才瀏覽和發現。</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #64748b; font-style: italic;">This progressive disclosure minimizes token usage while maintaining specialized expertise.</p>
+                    </div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>可組合性 (Composability)：</strong>Claude 可以同時載入多個 Skill。你的 Skill 應該能與其他 Skill 良好協作，不要假設它是唯一可用的能力。</div>
+                    <div class="en-text">Claude can load multiple skills simultaneously. Your skill should work well alongside others, not assume it's the only capability available.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>可攜性 (Portability)：</strong>Skill 在 Claude.ai、Claude Code 和 API 上的運作方式完全相同。<span class="highlight-key">建立一次，所有介面都能使用</span>。</div>
+                    <div class="en-text">Skills work identically across Claude.ai, Claude Code, and API. Create a skill once and it works across all surfaces without modification.</div>
+                </div>
+            </div>
+
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 廚房比喻：MCP vs Skill</div>
+                    <div class="info-box-content">
+                        <p><strong>MCP = 專業廚房</strong>：提供工具、食材和設備的存取權限。它處理的是「Claude 能做什麼」。</p>
+                        <p><strong>Skill = 食譜</strong>：一步步的指示，教你如何用這些工具創造有價值的東西。它處理的是「Claude 應該怎麼做」。</p>
+                        <p>兩者結合，讓使用者能完成複雜任務，而不需要自己摸索每一步。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-compare">
+                    <div class="info-box-header">⚖️ MCP vs Skills 功能對照</div>
+                    <div class="info-box-content">
+                        <table class="comparison-table">
+                            <tr><th>MCP (Connectivity)</th><th>Skills (Knowledge)</th></tr>
+                            <tr><td>連接 Claude 到你的服務</td><td>教 Claude 如何有效使用你的服務</td></tr>
+                            <tr><td>提供即時資料存取與工具呼叫</td><td>捕捉工作流程與最佳實踐</td></tr>
+                            <tr><td>Claude <em>能</em>做什麼</td><td>Claude <em>應該怎麼</em>做</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 沒有 Skill 的痛點</div>
+                    <div class="info-box-content">
+                        <p>使用者連接 MCP 後不知道下一步該做什麼；每次對話都從零開始；結果不一致因為每個人的提示方式不同；使用者將問題歸咎於 MCP connector，但真正的問題是缺乏工作流程指導。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 Skill 資料夾結構</div>
+                    <div class="info-box-content">
+<pre class="code-block">your-skill-name/
+├── SKILL.md        <span class="comment"># Required - 主要指令檔</span>
+├── scripts/        <span class="comment"># Optional - 可執行程式碼</span>
+│   ├── process_data.py
+│   └── validate.sh
+├── references/     <span class="comment"># Optional - 文件資料</span>
+│   └── api-guide.md
+└── assets/         <span class="comment"># Optional - 模板、字型等</span>
+    └── report-template.md</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part II: Planning & Use Cases -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part II</div>
+                <div class="section-title">規劃與 Use Case 設計</div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">在寫任何程式碼之前，先<span class="highlight-key">確定 2-3 個具體的 Use Case</span>。好的 Use Case 定義包含：觸發條件、步驟流程、和預期結果。</div>
+                    <div class="en-text">Before writing any code, identify 2-3 concrete use cases your skill should enable.</div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 三大 Skill Use Case 類別</div>
+                    <div class="info-box-content">
+                        <p><strong>Category 1: Document & Asset Creation</strong> -- 建立一致、高品質的輸出物（文件、簡報、應用、設計、程式碼）。使用內嵌的風格指南和模板結構。</p>
+                        <p><strong>Category 2: Workflow Automation</strong> -- 多步驟流程，受益於一致的方法論。包含驗證閘門、迭代精煉循環。</p>
+                        <p><strong>Category 3: MCP Enhancement</strong> -- 為 MCP 伺服器提供的工具存取添加工作流程指導。協調多個 MCP 呼叫、嵌入領域專業知識。</p>
+                    </div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>定義成功標準。</strong>量化指標（目標）：Skill 在 90% 的相關查詢中觸發、在 X 次工具呼叫內完成工作流程、每個工作流程 0 次失敗的 API 呼叫。質性指標：使用者不需要提示 Claude 下一步、工作流程不需要使用者修正就能完成、跨 Session 結果一致。</div>
+                    <div class="en-text">These are aspirational targets - rough benchmarks rather than precise thresholds. Aim for rigor but accept that there will be an element of vibes-based assessment.</div>
+                </div>
+            </div>
+
+            <div class="content-right">
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ Use Case 定義範例</div>
+                    <div class="info-box-content">
+<pre class="code-block"><span class="keyword">Use Case:</span> <span class="string">Project Sprint Planning</span>
+<span class="keyword">Trigger:</span> User says "help me plan this sprint"
+<span class="keyword">Steps:</span>
+  1. Fetch current project status (via MCP)
+  2. Analyze team velocity and capacity
+  3. Suggest task prioritization
+  4. Create tasks with labels/estimates
+<span class="keyword">Result:</span> Fully planned sprint with tasks created</pre>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 規劃時問自己的關鍵問題</div>
+                    <div class="info-box-content">
+                        <p>使用者想完成什麼？這需要什麼多步驟工作流程？需要哪些工具（內建或 MCP）？應該嵌入什麼領域知識或最佳實踐？</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 我的 Master Prompt = Category 1 Skill</div>
+                    <div class="info-box-content">
+                        <p>對照三大類別，我的 Master Prompt v1.5.0 就是一個典型的 <strong>Category 1: Document & Asset Creation</strong> Skill -- 內嵌風格指南（Design System）、模板結構（HTML template）、完成前品質檢查（layout_balance_check）。目前它活在 Project Instructions 裡，但理論上可以重構為標準 SKILL.md 格式。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part III: YAML & Writing Skills -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part III</div>
+                <div class="section-title">YAML Frontmatter 與有效指令撰寫</div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">YAML frontmatter 是 Claude 決定是否載入你的 Skill 的依據。<span class="highlight-key">把這個寫好是最關鍵的。</span></div>
+                    <div class="en-text">The YAML frontmatter is how Claude decides whether to load your skill. Get this right.</div>
+                </div>
+
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 最小必要格式</div>
+                    <div class="info-box-content">
+<pre class="code-block"><span class="keyword">---</span>
+<span class="keyword">name:</span> <span class="string">your-skill-name</span>
+<span class="keyword">description:</span> <span class="string">What it does. Use when user asks to [specific phrases].</span>
+<span class="keyword">---</span></pre>
+                        <p style="margin-top: 0.5rem;"><code>name</code>（必要）：kebab-case、無空格、無大寫、應與資料夾名稱一致。<code>description</code>（必要）：必須同時包含「做什麼」和「何時使用」。上限 1024 字元。不可含 XML 標籤。</p>
+                    </div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>Description 的結構公式：</strong><span class="highlight-practical">[做什麼] + [何時使用] + [關鍵能力]</span>。Description 是漸進式揭露的第一層 -- 它出現在 Claude 的系統提示中，提供剛好足夠的資訊讓 Claude 知道何時該使用這個 Skill。</div>
+                    <div class="en-text">This metadata provides just enough information for Claude to know when each skill should be used without loading all of it into context.</div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 安全限制</div>
+                    <div class="info-box-content">
+                        <p>Frontmatter 中<strong>禁止</strong>使用 XML 角括號（&lt; &gt;）-- 因為 frontmatter 出現在 Claude 的系統提示中，惡意內容可能注入指令。Skill 名稱中不可包含 "claude" 或 "anthropic"（保留名稱）。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-right">
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ Good vs Bad Description 對照</div>
+                    <div class="info-box-content">
+                        <div class="good-bad">
+                            <div class="good-example">
+                                <p style="font-size: 0.82rem; margin: 0;">Analyzes Figma design files and generates developer handoff docs. Use when user uploads .fig files, asks for "design specs" or "design-to-code handoff".</p>
+                            </div>
+                            <div class="bad-example">
+                                <p style="font-size: 0.82rem; margin: 0;">Helps with projects.</p>
+                            </div>
+                        </div>
+                        <div class="good-bad" style="margin-top: 0.5rem;">
+                            <div class="good-example">
+                                <p style="font-size: 0.82rem; margin: 0;">End-to-end customer onboarding for PayFlow. Use when user says "onboard new customer" or "create PayFlow account".</p>
+                            </div>
+                            <div class="bad-example">
+                                <p style="font-size: 0.82rem; margin: 0;">Creates sophisticated multi-page documentation systems.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 指令撰寫最佳實踐</div>
+                    <div class="info-box-content">
+                        <p><strong>要具體且可執行。</strong>寫 <code>Run python scripts/validate.py --input {filename}</code>，不要寫「驗證資料後再繼續」。</p>
+                        <p><strong>包含錯誤處理。</strong>列出常見錯誤訊息、原因和解決方案。</p>
+                        <p><strong>使用漸進式揭露。</strong>SKILL.md 專注於核心指令，詳細文件移至 <code>references/</code>。</p>
+                        <p><strong>關鍵驗證用程式碼。</strong>程式碼是確定性的，語言解讀不是。對關鍵驗證，考慮用腳本而非語言指令。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 Critical 命名規則</div>
+                    <div class="info-box-content">
+<pre class="code-block"><span class="comment"># 檔名必須完全一致（大小寫敏感）</span>
+SKILL.md   <span class="string">✅</span>
+SKILL.MD   <span class="comment">❌</span>
+skill.md   <span class="comment">❌</span>
+
+<span class="comment"># 資料夾命名：kebab-case</span>
+notion-project-setup   <span class="string">✅</span>
+Notion Project Setup   <span class="comment">❌</span>
+notion_project_setup   <span class="comment">❌</span>
+
+<span class="comment"># 不可包含 README.md</span>
+<span class="comment"># 所有文件放在 SKILL.md 或 references/</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end tab-foundations -->
+
+    <!-- TAB 2: BUILD & TEST -->
+    <div id="tab-build" class="tab-content">
+        <!-- Part IV: Testing & Iteration -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part IV</div>
+                <div class="section-title">測試與迭代</div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">Skill 可以在不同的嚴謹度等級進行測試：手動測試（Claude.ai 直接執行）、腳本測試（Claude Code 自動化）、程式化測試（Skills API 系統性評估）。<span class="highlight-key">選擇與你的品質需求和 Skill 能見度相匹配的方法。</span></div>
+                    <div class="en-text">Choose the approach that matches your quality requirements and the visibility of your skill.</div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ Pro Tip：先聚焦單一任務</div>
+                    <div class="info-box-content">
+                        <p>最有效的 Skill 建構者會先在單一困難任務上迭代，直到 Claude 成功為止，然後才把成功的方法提取成 Skill。這利用了 Claude 的 in-context learning，比廣泛測試更快獲得信號。有了可運作的基礎之後，再擴展到多個測試案例以覆蓋範圍。</p>
+                        <p style="font-size: 0.85rem; color: #64748b; font-style: italic;">We've found that the most effective skill creators iterate on a single challenging task until Claude succeeds, then extract the winning approach into a skill.</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 三層測試方法</div>
+                    <div class="info-box-content">
+                        <p><strong>1. Triggering 測試：</strong>確保 Skill 在正確時機載入。測試顯而易見的任務（應觸發）、改述過的請求（應觸發）、以及不相關的主題（不應觸發）。</p>
+                        <p><strong>2. Functional 測試：</strong>驗證 Skill 產出正確的結果。有效輸出已生成、API 呼叫成功、錯誤處理有效、邊界案例已覆蓋。</p>
+                        <p><strong>3. Performance 比較：</strong>證明 Skill 改善了基準結果。比較有無 Skill 的來回訊息數、失敗 API 呼叫數、消耗的 Token 數。</p>
+                    </div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>Skill 是活的文件。</strong>根據回饋持續迭代：觸發不足（Under-triggering）→ 在 description 中添加更多關鍵字和觸發詞；過度觸發（Over-triggering）→ 添加否定觸發條件，更具體化；執行問題 → 改善指令，添加錯誤處理。</div>
+                    <div class="en-text">Skills are living documents. Plan to iterate based on feedback.</div>
+                </div>
+            </div>
+
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 Triggering 測試範例</div>
+                    <div class="info-box-content">
+<pre class="code-block"><span class="keyword">Should trigger:</span>
+- "Help me set up a new ProjectHub workspace"
+- "I need to create a project in ProjectHub"
+- "Initialize a ProjectHub project for Q4"
+
+<span class="keyword">Should NOT trigger:</span>
+- "What's the weather in San Francisco?"
+- "Help me write Python code"
+- "Create a spreadsheet"</pre>
+                    </div>
+                </div>
+
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ Performance 比較基準</div>
+                    <div class="info-box-content">
+                        <table class="comparison-table">
+                            <tr><th>指標</th><th>Without Skill</th><th>With Skill</th></tr>
+                            <tr><td>來回訊息數</td><td>15 messages</td><td>2 clarifying Qs</td></tr>
+                            <tr><td>失敗 API 呼叫</td><td>3 retries</td><td>0</td></tr>
+                            <tr><td>Token 消耗</td><td>12,000</td><td>6,000</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 Debug 小技巧</div>
+                    <div class="info-box-content">
+                        <p>問 Claude：「When would you use the [skill name] skill?」Claude 會引用 description 回答。根據缺少的部分來調整你的 description。</p>
+                        <p>如果 Skill 觸發太頻繁，在 description 中加入否定觸發：<code>Do NOT use for simple data exploration (use data-viz skill instead).</code></p>
+                    </div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 skill-creator 工具</div>
+                    <div class="info-box-content">
+                        <p>Claude.ai 內建的 skill-creator skill 可以從自然語言描述生成 Skill、審查並提供改善建議、建議測試案例。使用方式：「Help me build a skill using skill-creator」。如果你有 MCP 伺服器和 2-3 個工作流程，通常 15-30 分鐘就能完成。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part V: Distribution & Sharing -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part V</div>
+                <div class="section-title">分發與共享</div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">Skill 讓你的 MCP 整合更完整。當使用者比較不同的 connector 時，<span class="highlight-practical">有 Skill 的方案能更快創造價值</span>，在純 MCP 替代方案中脫穎而出。</div>
+                    <div class="en-text">Skills make your MCP integration more complete. As users compare connectors, those with skills offer a faster path to value.</div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 當前分發模式（2026 年初）</div>
+                    <div class="info-box-content">
+                        <p><strong>個人使用者：</strong>下載 Skill 資料夾 → 壓縮成 .zip → 上傳至 Claude.ai Settings > Capabilities > Skills，或放在 Claude Code skills 目錄。</p>
+                        <p><strong>組織層級：</strong>管理員可以全工作區部署 Skill（2025/12/18 推出），自動更新、集中管理。</p>
+                        <p><strong>API 使用：</strong><code>/v1/skills</code> endpoint 用於列出和管理 Skill；透過 <code>container.skills</code> 參數添加到 Messages API 請求；支援 Claude Agent SDK。</p>
+                    </div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>開放標準。</strong>Anthropic 將 Agent Skills 發布為開放標準。如同 MCP，他們相信 Skill 應該可以跨工具平台移植 -- 同一個 Skill 無論使用 Claude 或其他 AI 平台都能運作。</div>
+                    <div class="en-text">Like MCP, we believe skills should be portable across tools and platforms.</div>
+                </div>
+            </div>
+
+            <div class="content-right">
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ 推薦的分發策略</div>
+                    <div class="info-box-content">
+                        <p><strong>Step 1:</strong> 在 GitHub 託管公開 repo，清晰的 README（注意：這是 repo-level README，不是 Skill 資料夾內的）、範例用法與截圖。</p>
+                        <p><strong>Step 2:</strong> 在 MCP 文件中加入連結，說明為什麼 Skill + MCP 一起使用更有價值。</p>
+                        <p><strong>Step 3:</strong> 建立安裝指南，降低使用門檻。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-compare">
+                    <div class="info-box-header">⚖️ API vs Claude.ai 使用場景</div>
+                    <div class="info-box-content">
+                        <table class="comparison-table">
+                            <tr><th>Use Case</th><th>Best Surface</th></tr>
+                            <tr><td>終端使用者直接互動</td><td>Claude.ai / Claude Code</td></tr>
+                            <tr><td>手動測試與迭代</td><td>Claude.ai / Claude Code</td></tr>
+                            <tr><td>應用程式程式化使用</td><td>API</td></tr>
+                            <tr><td>大規模生產部署</td><td>API</td></tr>
+                            <tr><td>自動化管線與 Agent 系統</td><td>API</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 定位你的 Skill</div>
+                    <div class="info-box-content">
+                        <p><strong>聚焦成果，不是功能。</strong></p>
+                        <div class="good-bad">
+                            <div class="good-example">
+                                <p style="font-size: 0.82rem; margin: 0;">"enables teams to set up complete project workspaces in seconds"</p>
+                            </div>
+                            <div class="bad-example">
+                                <p style="font-size: 0.82rem; margin: 0;">"a folder containing YAML frontmatter and Markdown instructions"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: PATTERNS & TROUBLESHOOTING -->
+    <div id="tab-patterns" class="tab-content">
+        <!-- Part VI: 5 Patterns -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part VI</div>
+                <div class="section-title">五大 Skill Pattern</div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">這些 Pattern 來自早期採用者和內部團隊建立的 Skill。它們代表常見的有效方法，不是規定性的模板。開始前，先釐清你的方法論：<span class="highlight-key">Problem-first（使用者描述成果，Skill 處理工具）還是 Tool-first（使用者已有工具存取，Skill 提供專業知識）</span>。</div>
+                    <div class="en-text">These patterns emerged from skills created by early adopters and internal teams. They represent common approaches we've seen work well, not prescriptive templates.</div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 Pattern 1: Sequential Workflow Orchestration</div>
+                    <div class="info-box-content">
+                        <p><strong>適用場景：</strong>使用者需要按特定順序執行多步驟流程。</p>
+                        <p><strong>關鍵技巧：</strong>明確的步驟排序、步驟間的相依性、每階段驗證、失敗時的回滾指令。</p>
+                        <p><strong>範例：</strong>客戶入職流程 → Step 1: Create Account → Step 2: Setup Payment (wait for verification) → Step 3: Create Subscription (uses customer_id from Step 1) → Step 4: Send Welcome Email</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 Pattern 2: Multi-MCP Coordination</div>
+                    <div class="info-box-content">
+                        <p><strong>適用場景：</strong>工作流程跨越多個服務。</p>
+                        <p><strong>關鍵技巧：</strong>清晰的階段分離、跨 MCP 的資料傳遞、進入下一階段前的驗證、集中式錯誤處理。</p>
+                        <p><strong>範例：</strong>Design-to-Dev Handoff → Phase 1: Figma MCP (export) → Phase 2: Drive MCP (store assets) → Phase 3: Linear MCP (create tasks) → Phase 4: Slack MCP (notify team)</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 Pattern 3: Iterative Refinement</div>
+                    <div class="info-box-content">
+                        <p><strong>適用場景：</strong>輸出品質透過迭代改善。</p>
+                        <p><strong>關鍵技巧：</strong>明確的品質標準、迭代改善循環、驗證腳本、知道何時停止迭代。</p>
+                        <p><strong>範例：</strong>報告生成 → Initial Draft → Quality Check (run validation script) → Refinement Loop (repeat until threshold) → Finalization</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 Home Depot 比喻</div>
+                    <div class="info-box-content">
+                        <p>你可能帶著問題走進去（「我要修廚房櫃子」→ 員工指引你到正確工具）。或者你可能挑了一個新電鑽，問怎麼用在你的具體工作上。Skill 也一樣運作：<strong>Problem-first</strong> = 描述成果，Skill 安排正確的 MCP 呼叫；<strong>Tool-first</strong> = 已有工具存取，Skill 教最佳工作流程。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 Pattern 4: Context-Aware Tool Selection</div>
+                    <div class="info-box-content">
+                        <p><strong>適用場景：</strong>相同成果，但根據情境使用不同工具。</p>
+                        <p><strong>關鍵技巧：</strong>清晰的決策標準、備用選項、向使用者說明選擇原因。</p>
+                        <p><strong>範例：</strong>Smart File Storage → 大檔案(>10MB) → Cloud Storage MCP；協作文件 → Notion MCP；程式碼 → GitHub MCP；暫存 → Local Storage</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 Pattern 5: Domain-Specific Intelligence</div>
+                    <div class="info-box-content">
+                        <p><strong>適用場景：</strong>Skill 添加超越工具存取的專業領域知識。</p>
+                        <p><strong>關鍵技巧：</strong>領域專業嵌入邏輯中、行動前的合規檢查、全面的文件記錄、清晰的治理。</p>
+                        <p><strong>範例：</strong>Payment Processing with Compliance → 先檢查制裁名單、管轄權許可、風險等級 → 通過才處理交易 → 記錄所有合規檢查的稽核軌跡。</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #047857;"><strong>CDMO 對映：</strong>這與我們的偏差調查工作流程非常類似 -- 先評估影響範圍，再決定 CAPA 等級。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part VII: Troubleshooting -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part VII</div>
+                <div class="section-title">疑難排解</div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ Skill 無法上傳</div>
+                    <div class="info-box-content">
+                        <p><strong>"Could not find SKILL.md"</strong> → 檔名大小寫不正確。必須是 <code>SKILL.md</code>。</p>
+                        <p><strong>"Invalid frontmatter"</strong> → YAML 格式問題。最常見：缺少 <code>---</code> 分隔符、引號未關閉。</p>
+                        <p><strong>"Invalid skill name"</strong> → 名稱含空格或大寫。使用 kebab-case。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ Skill 不觸發 / 過度觸發</div>
+                    <div class="info-box-content">
+                        <p><strong>不觸發：</strong>修改 description。是否太通用？是否包含使用者會實際說的觸發詞？是否提到相關檔案類型？</p>
+                        <p><strong>過度觸發：</strong>添加否定觸發（<code>Do NOT use for...</code>）、更具體化、釐清範圍（<code>Use specifically for online payment workflows, not for general financial queries</code>）。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 指令未被遵循</div>
+                    <div class="info-box-content">
+                        <p><strong>指令太冗長：</strong>保持精簡、使用項目符號和編號清單、詳細參考移至 references/。</p>
+                        <p><strong>指令被埋沒：</strong>關鍵指令放在最前面，使用 <code>## Critical</code> 標題，必要時重複重點。</p>
+                        <p><strong>語言模糊：</strong>不要寫「確保適當驗證」，要寫「CRITICAL: 在呼叫 create_project 之前，驗證 Project name 非空、至少指派一位團隊成員、開始日期不在過去」。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 MCP 連線問題排查清單</div>
+                    <div class="info-box-content">
+<pre class="code-block"><span class="keyword">Checklist:</span>
+1. 確認 MCP server 已連接
+   Claude.ai: Settings > Extensions
+   應顯示 "Connected"
+
+2. 檢查認證
+   - API key 有效且未過期
+   - 權限/scopes 正確
+   - OAuth token 已刷新
+
+3. 獨立測試 MCP（不經過 Skill）
+   "Use [Service] MCP to fetch my projects"
+   <span class="comment"># 如果這也失敗，問題在 MCP 不在 Skill</span>
+
+4. 驗證 tool 名稱
+   <span class="comment"># Tool 名稱大小寫敏感</span>
+   <span class="comment"># 對照 MCP server 文件</span></pre>
+                    </div>
+                </div>
+
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ Large Context 問題</div>
+                    <div class="info-box-content">
+                        <p><strong>症狀：</strong>Skill 似乎變慢或回應品質下降。</p>
+                        <p><strong>原因：</strong>Skill 內容太大、同時啟用太多 Skill、所有內容一次載入而非漸進式揭露。</p>
+                        <p><strong>解決方案：</strong></p>
+                        <p>1. 優化 SKILL.md 大小 -- 詳細文件移至 <code>references/</code>，保持 SKILL.md 在 5,000 字以內。</p>
+                        <p>2. 減少同時啟用的 Skill -- 評估是否超過 20-50 個 Skill。考慮相關能力的 Skill「套件包」。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 對抗模型「偷懶」</div>
+                    <div class="info-box-content">
+                        <p>添加明確的鼓勵語句：「Take your time to do this thoroughly. Quality is more important than speed. Do not skip validation steps.」</p>
+                        <p><strong>重要：</strong>將這些鼓勵語加在 user prompt 中比加在 SKILL.md 中更有效。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end tab-container -->
+
+<!-- KEY TAKEAWAYS -->
+<div class="section-header">Key Takeaways</div>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-title">Skill = 可攜式知識封裝</div>
+        <div class="summary-card-text">Skill 不是程式碼，是指令集。一個資料夾、一個 SKILL.md、跨 Claude.ai / Claude Code / API 完全一致運作。三層漸進式揭露設計最小化 Token 使用，同時保持專業能力。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">Description 決定一切</div>
+        <div class="summary-card-text">YAML frontmatter 的 description 是 Claude 決定何時載入 Skill 的唯一依據。公式：[做什麼] + [何時使用] + [關鍵能力]。包含觸發詞、檔案類型、否定條件。這 1024 字元的欄位比 Skill 內容本身更重要。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">五大 Pattern 覆蓋 90% 場景</div>
+        <div class="summary-card-text">Sequential Workflow（按序執行）、Multi-MCP Coordination（跨服務協調）、Iterative Refinement（品質迭代）、Context-Aware Selection（情境選擇）、Domain Intelligence（領域專業嵌入）。大多數 Skill 是其中一到兩種的組合。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">開放標準的戰略意義</div>
+        <div class="summary-card-text">Anthropic 將 Skill 定位為開放標準，如同 MCP。這表示 Skill 不是 Claude 的專屬功能，而是 AI Agent 生態系的基礎設施。MCP builder 如果同時提供 Skill，在 connector 比較中具有差異化優勢。</div>
+    </div>
+</div>
+
+<!-- PRACTICE -->
+<div class="section-header">Practice Questions</div>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">Skill 的三層漸進式揭露（Progressive Disclosure）中，每一層分別在什麼時候被載入？為什麼這個設計對 Token 效率很重要？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>第一層（YAML frontmatter）</strong>永遠載入 Claude 的系統提示中 -- 這是「門牌」，告訴 Claude 這個 Skill 存在和何時該用它。<strong>第二層（SKILL.md body）</strong>只在 Claude 判斷 Skill 與當前任務相關時才載入 -- 這是「完整指令手冊」。<strong>第三層（Linked files）</strong>只在執行中需要時才瀏覽 -- 這是「參考文件庫」。</p>
+        <p>Token 效率的關鍵在於：如果所有 Skill 的完整內容都在系統提示中，context window 會迅速被佔滿。透過分層，系統提示中只需要放幾百字元的 description（最多 1024），而不是數千字的完整指令。以我們的情境為例，我的 Master Prompt 就有超過 1000 行 -- 如果同時啟用 10 個這樣的 Skill，context window 就直接被塞滿了。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">以 CDMO 的偏差調查流程為例，如果要建構一個 Skill，你會選擇哪個 Pattern？如何設計 Use Case 定義？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>偏差調查最適合 <strong>Pattern 5: Domain-Specific Intelligence</strong> 與 <strong>Pattern 1: Sequential Workflow</strong> 的組合。</p>
+        <p>Pattern 5 的適用原因：偏差調查需要嵌入 GMP 法規知識（PIC/S、Annex 1）、根據偏差類型判斷影響範圍、評估 CAPA 等級 -- 這些都是超越工具存取的領域專業知識。</p>
+        <p>Pattern 1 的適用原因：調查有嚴格的順序要求 -- 先記錄偏差事實、再評估根本原因、然後決定 CAPA 行動、最後追蹤效果確認。</p>
+        <p>Use Case 定義範例：Trigger: "triage this deviation" or "assess deviation impact" → Steps: 1. 收集偏差基本資訊 2. 對照歷史偏差資料庫判斷是否重複發生 3. 評估對產品品質的影響（套用 Decision Tree） 4. 建議 CAPA 等級和初步調查方向 → Result: 結構化的偏差初步評估報告。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">這份指南聲稱 Skill 是「開放標準」，但目前實際上只在 Claude 生態系中運作。這個定位策略有什麼潛在風險和機會？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>機會：</strong>如果其他 AI 平台也採用 Skill 格式，Anthropic 就成為 AI Agent 基礎設施的標準制定者 -- 類似 MCP 在工具連接層的位置。對於 MCP builder 來說，寫一次 Skill 能跨平台使用，降低了投入成本。對企業使用者來說，不會被鎖定在單一 AI 供應商。</p>
+        <p><strong>風險：</strong>「開放標準」聲明目前更像是願景而非現實。指南本身承認 "some skills are designed to take full advantage of a specific platform's capabilities" -- 意味著實務上很多 Skill 仍然有平台依賴性。如果競爭者（OpenAI、Google）推出不同的 Skill/Plugin 標準，可能出現標準碎片化。</p>
+        <p><strong>對我的啟示：</strong>目前投入建構 Skill 是安全的，因為最壞情況下它們仍在 Claude 生態系內有價值。但在設計時應避免過度依賴 Claude 獨有的功能（如特定的 tool calling 語法），以保持未來的可攜性。</p>
+    </div>
+</details>
+
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+    <div class="bottom-line-header">🎯 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">Skill 將我在 Claude.ai Projects 中累積的 Master Prompt 和工作流程知識，從「每個 Project 各自維護」提升為「可攜式、可分享、可版本控制」的標準化格式。最關鍵的設計洞察是 description field 的絕對重要性 -- 這不只是文件，它是 Claude 的決策引擎。三層漸進式揭露的架構設計，完美解釋了為什麼 Claude.ai Projects 和 Claude Code 在 Skill 載入行為上有差異（Projects = 全量注入，Code = 選擇性載入）。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用</div>
+        <div class="bottom-line-text">本週重新審視現有的 Amaran Presentation Skill 和 CDMO Feasibility Assessment Skill 的 description field，確認它們符合 [做什麼 + 何時使用 + 關鍵能力] 的公式。特別檢查是否包含足夠的觸發詞和否定條件。接著，嘗試用 skill-creator 工具從自然語言描述生成一個簡單的新 Skill（例如 CDMO Deviation Triage Skill），測試 15-30 分鐘建構一個可用 Skill 的說法是否成立。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠ 需要補充</div>
+        <div class="bottom-line-text">指南偏向 MCP builder 視角，對「純 standalone Skill」（如我的 Master Prompt 轉換場景）的具體轉換步驟著墨不夠。Performance 測試的量化指標（如 90% 觸發率）在實務中如何系統性測量，需要等 Anthropic 後續提供的測量工具。此外，Skill 與 Claude.ai Project Instructions 的功能重疊如何取捨，指南沒有明確建議 -- 這需要自己實驗。</div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>製作日期：2026-03-09 | Source: <a href="https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf" target="_blank">Anthropic - The Complete Guide to Building Skills for Claude</a></p>
+    <p>Suggested Chat Title: 2026-03-09 [Anthropic-Docs] [Agent] Building Skills Complete Guide</p>
+</div>
+
+</div><!-- end container -->
+
+<script>
+function switchTab(evt, tabId) {
+    const container = evt.currentTarget.closest('.tab-container');
+    container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+</script>
+
+</body>
+</html>
