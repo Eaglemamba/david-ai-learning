@@ -1,5 +1,149 @@
 const searchIndex = [
   {
+    "docFile": "2025-02-13_markdown_ai_guide.html",
+    "docTitle": "AI 時代的 Markdown 終極指南",
+    "docDate": "2025-02-13",
+    "docSource": "AI Learning Guide",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 3.8/5 ↑ Practical Value, Learning Curve ↓ Technical Depth, Timeliness 這篇文章重新定義了 Markdown 在 AI 時代的角色——它不再只是程式設計師的排版工具，而是 人類與 AI 之間的「通用語言協議」 。文章從基礎語法出發，覆蓋標題、強調、列表、程式碼區塊等核心用法，然後跳升到 AI 時代的關鍵應用：結構化 Prompt 模板、RAG 友善的知識庫格式、以及 AI 工作流的最佳實踐。對於已經在使用 Claude Projects 和 Make.com 建構自動化工作流的人來說，這篇文章提供了一個重要的底層基礎—— 你的 Markdown 品質，直接決定了 AI 理解你意圖的精準度 。"
+  },
+  {
+    "docFile": "2025-02-13_markdown_ai_guide.html",
+    "docTitle": "AI 時代的 Markdown 終極指南",
+    "docDate": "2025-02-13",
+    "docSource": "AI Learning Guide",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "理解-markdown-在-ai-時代的戰略定位",
+    "sectionTitle": "理解 Markdown 在 AI 時代的戰略定位",
+    "content": "為什麼所有 LLM 預設輸出 Markdown，以及這對你的工作流意味著什麼 2"
+  },
+  {
+    "docFile": "2025-02-13_markdown_ai_guide.html",
+    "docTitle": "AI 時代的 Markdown 終極指南",
+    "docDate": "2025-02-13",
+    "docSource": "AI Learning Guide",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "掌握核心語法的-9010-法則",
+    "sectionTitle": "掌握核心語法的 90/10 法則",
+    "content": "用最少的語法覆蓋最多的使用場景：標題、強調、列表、程式碼、連結 3"
+  },
+  {
+    "docFile": "2025-02-13_markdown_ai_guide.html",
+    "docTitle": "AI 時代的 Markdown 終極指南",
+    "docDate": "2025-02-13",
+    "docSource": "AI Learning Guide",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "建構-ai-友善的文件格式",
+    "sectionTitle": "建構 AI 友善的文件格式",
+    "content": "學會 Prompt 模板、會議紀要模板、RAG 知識庫條目的標準 Markdown 寫法 Markdown 在 AI 工作流中的三重角色 INPUT 輸入層 結構化 Prompt 提示詞模板 -> PROC 中介層 會議紀要/文件 AI 可解析格式 -> ASSET 資產層 知識庫/RAG 可檢索的知識資產 Part I: 為什麼是 Markdown？ — AI 時代的通用語言協議 在這個被 AI 和大模型席捲的時代，寫作的定義已經發生了根本性的變化。過去，我們寫作是為了給人看；現在，我們的文字不僅要給人看，還要給 AI 看，甚至是由 AI 生成給我們看。無論是 ChatGPT、Claude 還是各種 Agent 智能體，它們吐出的每一個字， 預設都是 Markdown 格式 。這不是巧合。 \"In this era swept by AI and large models, the definition of writing has undergone a fundamental change... Whether it's ChatGPT, Claude, or various A"
+  },
+  {
+    "docFile": "2025-02-13_markdown_ai_guide.html",
+    "docTitle": "AI 時代的 Markdown 終極指南",
+    "docDate": "2025-02-13",
+    "docSource": "AI Learning Guide",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "markdown-ai-的母語",
+    "sectionTitle": "Markdown = AI 的母語",
+    "content": "所有主流 LLM 預設輸出 Markdown，因為它的 Token 效率最高、語義結構最清晰。掌握 Markdown 就是掌握與 AI 溝通的底層協議。"
+  },
+  {
+    "docFile": "2025-02-13_markdown_ai_guide.html",
+    "docTitle": "AI 時代的 Markdown 終極指南",
+    "docDate": "2025-02-13",
+    "docSource": "AI Learning Guide",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "9010-法則少即是多",
+    "sectionTitle": "90/10 法則：少即是多",
+    "content": "標題、粗體、列表、程式碼區塊、連結——這五個語法覆蓋 90% 的使用場景。不要追求完整，追求熟練。"
+  },
+  {
+    "docFile": "2025-02-13_markdown_ai_guide.html",
+    "docTitle": "AI 時代的 Markdown 終極指南",
+    "docDate": "2025-02-13",
+    "docSource": "AI Learning Guide",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "結構決定-ai-理解精度",
+    "sectionTitle": "結構決定 AI 理解精度",
+    "content": "你的 Markdown 結構品質直接影響 Prompt 執行精度、RAG 檢索品質、和 Agent 工作流的可靠性。格式即策略。"
+  },
+  {
+    "docFile": "2025-02-13_markdown_ai_guide.html",
+    "docTitle": "AI 時代的 Markdown 終極指南",
+    "docDate": "2025-02-13",
+    "docSource": "AI Learning Guide",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "安全與簡潔是硬底線",
+    "sectionTitle": "安全與簡潔是硬底線",
+    "content": "脫敏、驗證連結、堅持標準語法、控制層級深度。在 GMP 等法規環境中，這些不只是建議，而是合規要求。"
+  },
+  {
+    "docFile": "2025-02-13_markdown_ai_guide.html",
+    "docTitle": "AI 時代的 Markdown 終極指南",
+    "docDate": "2025-02-13",
+    "docSource": "AI Learning Guide",
+    "docRating": 3.8,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼文章說 Markdown 是 AI 時代的「通用語言協議」而非只是一種排版工具？請從 Token 效率、語義結構、和訓練語料三個角度解釋。 Token 效率 ：Markdown 的標記符號（如 # 、 - 、 ** ）極其精簡，相比 HTML 的開閉標籤或 Word 的二進位格式，相同的語義結構消耗的 Token 數量可能只有 1/3 到 1/5。在按 Token 計費的 API 經濟中，這代表直接的成本節省。 語義結構 ： # 明確表示層級關係， - 明確表示列表項目，模型不需要額外推理「這段粗體文字是標題還是強調」。這種無歧義的語義標記讓 AI 的解析準確率大幅提升。 訓練語料 ：GitHub 上數十億份 README、文件、和技術文章都是 Markdown 格式，構成了 LLM 訓練資料的重要來源。模型對 Markdown 的「理解」是從海量實例中習得的，遠比其他格式深入。 Q2 產業應用 你負責的 CDMO 工廠要建立一個內部知識庫，讓 AI 能檢索 SOP 和偏差調查報告。請設計一個 Markdown 模板，說明你會如何使用 YAML Front Mat"
+  },
+  {
     "docFile": "2025-08-26_human30-life-map.html",
     "docTitle": "Human 3.0 - 通往頂尖 1% 的人生地圖",
     "docDate": "2025-08-26",
@@ -13468,5 +13612,325 @@ const searchIndex = [
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
     "content": "Aniket Panjwani 整理了九種使用 Claude Code 爬取網路資料的方法，涵蓋從最簡單的「直接叫 Claude Code 爬」到使用 Agent Browser 處理認證登入的進階場景。文章的核心洞察是： 資料爬取的難度取決於目標網站的結構化程度和認證機制 ，而 Claude Code 作為 agentic coding 工具，可以透過搭配不同的外部工具來應對各種場景。這是一份偏「工具清單 + 使用場景」的實戰型文章，技術深度不高但覆蓋面廣，適合作為快速參考手冊。 Learning Objectives 🔍 9 種爬取方法的適用場景 判斷哪種方法最適合你的目標網站 🧰 外部工具生態系統 Firecrawl, Apify, yt-dlp, Agent Browser 的定位 💡 Skill 設計思維 將爬取工具封裝為可複用的 Claude Code Skill Data Scraping Complexity Ladder 資料爬取複雜度階梯 📄 Static 直接爬取 HTML → ⚡ Dynamic 尋找 API endpoint → 🛡️ Protected 付費 API / 反爬蟲 → 📝 Unstructured Markdown + LLM 提取 → 🔐 Authenticated Cookie / Agent Browser Content 內容 Basic 基礎爬取 (1-3) Structured 結構化提取 (4-6) Advanced 進階場景 (7-9) Way 1 Just Ask Claude Code to Scrape 直接叫 Claude Code 爬 對於大量的網站，你可以 直接告訴 Claude Code 去爬取該網站 ，告訴它你要什麼資料，然後請它輸出到 CSV 或 SQLite 檔案。 For a large set of sites, you can just tell Claude Code to scrape the site, tell it what you want scraped, and ask it to write it out to a CSV or a SQLite file. Claude Code 會自行探索網站，可能會寫一個 Python 腳本，執行腳本，甚至可能寫一些單元測試，然後把資料寫到你電腦上的某個位置。 It will poke around the site for you, probably write a Python script, run the script, maybe even write some unit tests, and then just write out the data somewhere on your computer. 🛠️ 實務應用 這是最「零配置」的方法。適用於結構清楚的公開網站（如政府資料、學術機構頁面、公開產品列表）。Claude Code 會自己決定用 requests + BeautifulSoup 還是其他方式。 ⚠️ 重點提示 適用場景： 靜態 HTML 頁面、公開資料集、簡單表格 限制： 動態載入內容（SPA）、需要認證的頁面、有反爬蟲機制的網站 輸出格式： CSV, SQLite, JSON 💡 比喻說明 想像你叫一個很聰明的助理去圖書館幫你影印特定章節 — 如果那本書就在開架區（公開網站），助理自己就能搞定。但如果書鎖在特藏室（需要認證），你得先拿到鑰匙給他。 Way 2"
+  },
+  {
+    "docFile": "2026-03-06_labor-market-ai-impact.html",
+    "docTitle": "AI 勞動市場影響 - Observed Exposure 新指標",
+    "docDate": "2026-03-06",
+    "docSource": "Massenkoff & McCrory / Anthropic Research",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Research",
+      "Analysis",
+      "LLM",
+      "Framework"
+    ],
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Anthropic-Eng Research Analysis LLM Framework AI 勞動市場影響：新衡量指標與初步證據 Labor Market Impacts of AI: A New Measure and Early Evidence Massenkoff & McCrory / Anthropic Research | 2026-03-05 Executive Summary 4.4/5 Research Methodology, Framework Rigor Practical Tools, Single-Platform Bias Anthropic 研究團隊提出一個全新的 AI 就業影響衡量框架： Observed Exposure（觀測曝險度） 。不同於過去純粹基於理論可行性的預測，這個指標結合了 LLM 理論能力（來自 Eloundou et al. 的 beta 指標）與 Claude 平台的真實使用數據，並加權「自動化用途」高於「增強用途」。 核心發現： AI 遠未達到理論能力天花板 -- 實際覆蓋率只是理論可行範圍的一小部分。電腦程式設計師以 75% 覆蓋率居首，客服代表和資料輸入員緊隨其後。目前沒有發現高曝險職業的系統性失業增加，但有初步跡象顯示 22-25 歲年輕人進入高曝險職業的 招聘速度正在放緩 。 Learning Objectives 理解 Observed Exposure 指標的構建邏輯：理論能力 x 實際使用 x 自動化權重 掌握「理論可行 vs 實際採用」之間的差距，及其對 AI 衝擊預測的啟示 評估研究方法論的優勢與局限，特別是單一平台數據的代表性問題 Observed Exposure Framework O*NET Tasks 800 職業的任務清單 Theoretical Beta Eloundou et al. LLM 可行性 Claude Usage Economic Index 實際使用 Observed Exposure 加權自動化 > 增強 Content Part I 研究動機：為什麼過去的預測方法不夠好 AI 的快速擴散正引發大量研究試圖衡量和預測其對勞動市場的影響。但 過去的方法記錄讓人需要保持謙遜 。 The rapid diffusion of AI is generating a wave of research measuring and forecasting its impacts on labor markets. But the track record of past approaches gives reason for humility. 例如，一個知名的「工作可離岸外包性」研究認定約四分之一的美國工作面臨風險，但十年後，這些工作大多仍維持健康的就業成長。政府自己的職業成長預測雖然方向正確，但預測價值 幾乎沒有超過簡單的線性外推 。 A prominent attempt to measure job offshorability identified roughly a quarter of US jobs as vulnerable, but a decade on, most of those jobs maintained healthy employment growth. The government's own occupational growth forecasts have added little predictive "
+  },
+  {
+    "docFile": "2026-03-06_morris-discovering-talent.html",
+    "docTitle": "發現天賦方法論 - Morris 認知優勢框架",
+    "docDate": "2026-03-06",
+    "docSource": "Morris (@Morris_LT)",
+    "docRating": 3.6,
+    "docTags": [
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 3.6/5 ↑ 學習曲線, 實務應用 ↓ 技術深度, 工具生態 Morris 重新定義天賦：不是「天生就會」，而是「更容易變強的方向」。提出三個自我觀察方法——注意力方向、「過度」特質轉化、停不下來的行為——作為天賦發現的線索。核心觀點是認知優勢（理解速度）× 興趣偏好（投入動力）× 時間複利（成長速度）三者疊加形成真正的天賦。文章結構清晰、比喻易懂，但缺乏實證研究支撐和具體工具框架。適合作為自我反思的起點，但需要搭配更系統化的評估方法。 Learning Objectives 重新理解天賦定義 區分「天生就會」vs.「更容易變強的方向」，建立成長型天賦觀 掌握三個自我觀察法 注意力追蹤、過度特質轉化、自發投入辨識 連結複利效應思維 理解天賦 × 時間如何產生指數級成長差距 天賦發現與放大模型 觀察信號 注意力 / 過度特質 / 停不下來 驗證匹配 理解速度 / 投入動力 / 成長曲線 持續積累 時間複利 / 優勢放大 / 差距顯現 Part I 天賦的真正定義：更容易變強的方向 天賦並不是某種神秘的、與生俱來的超能力。更準確地說，天賦是一種 認知優勢和興趣偏好的結合 。它意味著在某個領域中，你理解問題的速度更快、投入的動力更強、積累能力更高。 \"天赋并不是某种神秘的、与生俱来的超能力。更准确地说，天赋是一种认知优势和兴趣偏好的结合。它意味着在某个领域中，你理解问题的速度更快、投入的动力更强、积累能力更高。\" 天賦的三個特徵：第一，你在某些事情上 理解得比別人更快 ；第二，你在某些事情上更容易持續投入；第三，你在某些領域的成長速度明顯更快。當這三個因素疊加時，就形成了一種複合優勢。 \"简单来说，天赋往往表现为三个特征：第一，你在某些事情上理解得比别人更快。...第二，你在某些事情上更容易持续投入。...第三，你在某些领域的成长速度明显更快。\" 核心概念 天賦三要素模型： 1. 理解速度 — 同樣內容，你比別人更快抓住核心 2. 投入動力 — 別人覺得累，你覺得有趣 3. 成長斜率 — 同樣時間投入，你的能力曲線更陡 這三者不是獨立運作，而是交互放大：理解快 → 更有成就感 → 更願意投入 → 成長更快 → 形成正向飛輪。 比喻說明 想像學習一門技能像是在不同地形上跑步。天賦不是讓你跑得比別人快（那是訓練），而是讓你跑在 下坡路 上——同樣的努力，你前進的距離就是比在平地上跑的人更遠。問題在於，很多人還沒找到自己的「下坡路」在哪裡。 Part II 為什麼很多人的天賦沒有從小被發現 在學校教育中，最被強調的是考試成績，而考試主要考察的是記憶能力、理解能力和標準化解題能力。但人的 能力結構非常多樣 ，比如洞察力、創造力、系統思維、溝通能力、空間想象力等，這些能力往往很難在標準化考試中體現出來。 \"在学校教育中，最被强调的是考试成绩，而考试主要考察的是记忆能力、理解能力和标准化解题能力。但人的能力结构非常多样，比如洞察力、创造力、系统思维、沟通能力、空间想象力等，这些能力往往很难在标准化考试中体现出来。\" 很多天賦需要長期積累才能顯現。例如寫作能力、商業判斷力、戰略思維、研究能力等，這些能力通常需要大量閱讀、觀察和實踐。而且，很多人早期接觸的領域太少，如果從未接觸過某個領域，自然也很難發現自己在這個領域是否有優勢。 \"很多天赋需要长期积累才能显现。例如写作能力、商业判断力、战略思维、研究能力等...很多人早期接触的领域太少。如果一个人从未接触过某个领域，自然也很难发现自己在这个领域是否有优势。\" 重點提示 天賦被隱藏的三個原因： 1. 評價"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 3.6/5 實務應用, 工具生態 技術深度, 學習曲線 Yanhua 以超過一年、100+ 小時的 Claude 使用經驗，寫成一篇針對新手到中階用戶的全面入門指南。文章涵蓋 Claude 與 ChatGPT 的產品設計差異、三級訂閱方案比較、三段式 Prompt 公式、三模型選擇策略（Sonnet/Opus/Haiku）、基礎功能（Connectors、Projects、Research Mode）、以及進階工具鏈（Claude Code、Cowork、Skills）。 文章最大價值在於提供了一個 經過實戰驗證的使用框架 ：從「問答工具」進化到「工作流核心」。但技術深度偏淺，對有經驗的用戶而言屬於查漏補缺的定位。適合作為推薦給同事或剛接觸 AI 的朋友的「第一篇 Claude 文章」。 Learning Objectives 訂閱決策框架 理解 Free / Pro / Max 三級方案差異，根據使用強度做出合理訂閱決策 三段式 Prompt 公式 掌握 Context + Task + Rules 提示工程框架，提升 90% 的輸出品質 進階工具鏈 了解 Claude "
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "part-i-claude-與-chatgpt-的本質差異",
+    "sectionTitle": "Part I: Claude 與 ChatGPT 的本質差異",
+    "content": "最本質的區別在於： ChatGPT 告訴你怎麼做，Claude 直接幫你做 。你讓 ChatGPT「幫我搭一個博客網站」，它會給你一份詳細的步驟說明。你讓 Claude Code 做同樣的事，它會直接打開你的專案目錄，建立檔案，寫程式碼，跑起來，遇到報錯自己修復。 \"ChatGPT tells you how to do things, Claude actually does them for you... The gap isn't in model intelligence, but in product design philosophy.\" 差距不在模型智力，在 產品設計哲學 。Anthropic 從第一天就奔著「幫你幹活」去的，回答問題只是順帶的事。 \"Anthropic from day one was aiming for 'doing the work for you' — answering questions is just a side effect.\" 比喻說明 想像你要裝修房子。ChatGPT 像一本很好的裝修指南書，告訴你每一步怎麼做。Claude 更像一"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "analysis-commentary",
+    "sectionTitle": "Analysis & Commentary",
+    "content": "重點提示 作者的觀點需要加上脈絡理解。 這裡比較的不是「模型能力」，而是「產品形態」。ChatGPT 最近也推出了 Canvas、GPT-4o with tools 等執行型功能。真正的差異在於 Claude Code 作為 terminal-native agent 的設計，以及 Cowork 的背景執行模式。 對 CDMO 的啟示： 這種「告訴你 vs 幫你做」的區分，對應到我們的場景就是「AI 給你偏差報告建議」vs「AI 直接幫你起草偏差報告初稿」。在 GMP 環境中，後者需要 100% 人工審查（copilot mode），但初稿自動化的價值已經很大。"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "part-ii-訂閱方案選擇",
+    "sectionTitle": "Part II: 訂閱方案選擇",
+    "content": "直說結論：如果你真的想用 Claude 來做事， Pro 版（$20/月）是起步價 。 \"If you really want to use Claude to get things done, Pro ($20/month) is the starting price.\" 免費版的體驗和付費版差距太大，容易讓你誤以為 Claude 不過如此。 \"The gap between free and paid is so large that it can make you wrongly conclude Claude is mediocre.\" 方案 月費 模型 用量 功能 Free $0 Haiku only 嚴格限制 基礎聊天 Pro $20 全部模型 5x Free Projects, Memory, Research, Code, Cowork Max $100 全部模型 5x Pro Pro 全部 + 優先訪問"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "analysis-commentary",
+    "sectionTitle": "Analysis & Commentary",
+    "content": "成本分析 Pro vs Max 的決策點： 作者建議大多數人選 Pro。但如果你像我一樣每天高強度使用（文件處理 + Claude Code + Cowork），Pro 的用量額度經常在月底吃緊。Max 的 5 倍用量差距在重度使用下非常明顯。 隱藏成本： 文章沒提到 Claude Code 使用 API 計費（非訂閱用量），以及 Max 方案包含的 Claude Code 額度。這對開發者是重要的成本考量。 實務應用 訂閱升級時機判斷： 當你連續 3 天在月中就遇到用量限制，就是該升級的信號。不要等到月底才後悔。"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "part-iii-三段式-prompt-公式",
+    "sectionTitle": "Part III: 三段式 Prompt 公式",
+    "content": "人們用 Claude 不滿意，第一反應是「這個 AI 不行」。但 90% 的情況下，問題出在提示詞上 。垃圾輸入，必然得到垃圾輸出。 \"90% of the time, the problem is in the prompt. Garbage in, garbage out.\" 每個有效的 Claude 提示包含三部分： 1. 設定場景（Context） ：告訴 Claude 你是誰，背景是什麼。 2. 定義任務（Task） ：你要它具體做什麼？越明確越好。 3. 說明規則（Rules） ：格式、長度、風格、約束條件。 \"Every effective Claude prompt contains three parts: Context — who you are, what the background is. Task — what specifically you want done. Rules — format, length, style, constraints.\" 進階技巧：上下文管理 Claude 有上下文窗口限制。對話越長，Claude 的「注意力」越分散，輸出"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "analysis-commentary",
+    "sectionTitle": "Analysis & Commentary",
+    "content": "核心概念 Context + Task + Rules 是入門版的 Prompt Engineering。 這個框架有效但過度簡化。更進階的做法是 Anthropic 自己提倡的 Context Engineering（上下文工程），把重點從「寫好提示詞」轉移到「準備好完整的上下文」——包括 System Prompt、Knowledge Files、Examples、Memory 等多層結構。 作者沒提到的關鍵技巧： 1. XML 結構化標籤 ：Claude 對 XML 標籤有特別好的理解能力，用 <context>、<task>、<rules> 包裹比純文字更有效。 2. Few-shot Examples ：給 1-2 個輸出範例，效果往往比長篇描述更好。 3. Projects 的 Custom Instructions ：把常用的 Context 和 Rules 寫進 Project Instructions，每次對話自動注入。 重點提示 上下文管理是真正的進階技能。 作者提到「對話變長就開新聊天」，這個建議正確但不完整。更好的做法是：利用 Projects 保持持久上下文、"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "part-iv-模型選擇策略",
+    "sectionTitle": "Part IV: 模型選擇策略",
+    "content": "Sonnet 4.6：你的日常主力。 80% 的任務應該從 Sonnet 開始 。速度快，品質高，消耗的用量額度少。寫作、分析、腦力激盪、程式碼生成、文件整理，全部用 Sonnet 就夠了。 \"Sonnet 4.6: Your daily workhorse. 80% of tasks should start with Sonnet. Fast, high quality, low usage cost.\" Opus 4.6：深度思考專家。 多步驟的複雜推理、跨領域知識整合、複雜的程式碼架構設計時切換。Opus 的殺手級功能是 Extended Thinking（擴展思考） ，開啟後 Claude 會先展示完整推理鏈路。 \"Opus 4.6: Deep thinking expert... Opus has a killer feature: Extended Thinking. Once enabled, Claude shows its complete reasoning chain before the final answer.\" Haiku 4.5：快速小任務。 翻譯一個"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "analysis-commentary",
+    "sectionTitle": "Analysis & Commentary",
+    "content": "工具比較 模型選擇更精確的思考框架： Sonnet = 80% 場景的最佳性價比。寫作、分析、一般程式碼、對話互動。回應速度和品質的最佳平衡點。 Opus = 需要「深度推理」或「複雜判斷」時。偏差調查根因分析、多因素決策、長文件綜合分析。Extended Thinking 在需要可追溯推理鏈的場景特別有價值。 Haiku = 批次處理、格式轉換、分類任務。在自動化 workflow 中（如 Make.com trigger 後的快速處理），Haiku 的速度和成本優勢最明顯。 實務應用 Extended Thinking 的真正價值： 作者說它是「質檢工具」，這個比喻精準。在 CDMO 情境中，當你讓 Claude 分析一個偏差事件的根因時，Extended Thinking 讓你看到它的推理過程——哪些因素被考慮、哪些被排除、結論的邏輯鏈是否成立。這比直接看結論更重要。"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "part-v-基礎功能寶藏",
+    "sectionTitle": "Part V: 基礎功能寶藏",
+    "content": "連接器（Connectors）： Claude 可以直接連接 Notion、Slack、Google 日曆等工具。連接之後，Claude 能直接讀取你的文件、日曆事件、訊息，不用再手動複製貼上。 \"Claude can connect directly to Notion, Slack, Google Calendar... After connecting, Claude can read your documents, calendar events, messages directly.\" Projects（專案空間）： 這是被嚴重低估的功能。建立一個 Project，上傳參考文件，之後在這個 Project 裡的 所有對話都能共享這些上下文 。 \"Projects: This is a severely underrated feature. Create a Project, upload reference files, and all conversations within this Project share that context.\" 研究模式（Research "
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "analysis-commentary",
+    "sectionTitle": "Analysis & Commentary",
+    "content": "核心概念 Projects 是 Claude 生態系統的核心架構。 作者說「被嚴重低估」完全正確。Projects = 持久上下文 + Custom Instructions + Knowledge Files。我的 Master Prompt 系統就是建立在 Projects 上的。 關鍵理解：Projects 是 全量上下文注入 （full context injection）。每次對話開始時，Project 裡所有的 Instructions 和 Knowledge Files 都會被載入 context window。這意味著你需要精心管理文件大小和數量。 重點提示 Research Mode 的限制： 作者的「初級分析師半天水平」描述有 2-3x discount 的空間。Research Mode 擅長資訊匯整，但在深度分析、因果推論、行業 nuance 方面仍需人工把關。把它當作「初稿生成器」而非「最終報告」更安全。"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "part-vi-進階工具鏈",
+    "sectionTitle": "Part VI: 進階工具鏈",
+    "content": "Claude Code：目前最強的 AI 程式設計工具。 別把它當程式碼補全工具。它能理解你整個專案，在終端裡直接執行命令，是一個完整的 程式設計代理（coding agent） 。它改變了程式設計的工作模式——以前是你寫程式碼，AI 輔助。現在是你描述需求，AI 寫程式碼，你審查。 \"Claude Code: Currently the strongest AI coding tool... It changed the programming workflow. Before: you write code, AI assists. Now: you describe requirements, AI writes code, you review.\" Claude Cowork：後台自主執行的 AI。 跟聊天式 AI 完全不一樣。你給它一個任務，它自己去執行。 它在後台自己跑，是一個真正的 AI Agent 。更厲害的是它能存取你的檔案系統。 \"Claude Cowork: AI that runs autonomously in the background... a true"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "analysis-commentary",
+    "sectionTitle": "Analysis & Commentary",
+    "content": "實務應用 Claude Code 的工作模式轉變： 作者的「你描述需求，AI 寫程式碼，你審查」精準描述了 Agent Mode。但在 GMP 環境中需要謹慎：AI 生成的任何輸出（程式碼、報告、文件）都必須經過人工審查。這是 Copilot Mode 的核心原則。 Skills 的真正威力： 我的 Master Prompt v1.5.0 本質上就是一個巨大的 Skill。差別在於 Skills 是 Anthropic 產品層面的封裝，而 Project Instructions 是更底層的上下文注入。兩者可以疊加使用。 比喻說明 三大工具的角色定位： Claude Code = 你的專屬程式設計師，坐在你旁邊的終端機前，你說什麼它做什麼。 Cowork = 你的遠端助理，你交代任務後去做其他事，它做完通知你。 Skills = 你的 SOP 手冊，把重複性工作標準化，誰來都能執行。"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "part-vii-實際使用建議",
+    "sectionTitle": "Part VII: 實際使用建議",
+    "content": "1. 先從一個固定場景切入。 不要試圖一下子在所有工作中使用 Claude。選一個你最頻繁的任務，先在這一個場景裡把 Claude 用到極致。 \"Start with one fixed scenario. Don't try to use Claude in all your work at once. Pick your most frequent task and master Claude in that one scenario first.\" 2. 建立你的 Project 庫。 為每個長期專案建立一個 Project。這是性價比最高的做法。 \"Build your Project library. Create a Project for each long-term project. This is the highest ROI practice.\" 3. 養成「先 Sonnet 後 Opus」的習慣。 \"Build the habit of 'Sonnet first, Opus second.'\" 4. 不要跟 AI 客氣。 省掉「請你幫我」「如果可以的話」。它不"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "analysis-commentary",
+    "sectionTitle": "Analysis & Commentary",
+    "content": "重點提示 「不要跟 AI 客氣」的 nuance： 這個建議的核心是對的——精確比禮貌更重要。但 Anthropic 的研究實際上顯示，適度的「合作語氣」（如「讓我們一起...」）有時能引導更好的輸出。重點不是去掉禮貌用語，而是確保指令的 精確度和完整度 不被禮貌用語稀釋。 實務應用 「一個固定場景切入」的 CDMO 版本： 最適合作為切入點的 CDMO 場景： 偏差報告初稿 ：結構化程度高、模板固定、AI 容易標準化 文獻回顧摘要 ：Research Mode 可直接使用 SOP 翻譯/在地化 ：雙語需求明確、品質容易驗證"
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "part-viii-判斷標準",
+    "sectionTitle": "Part VIII: 判斷標準",
+    "content": "怎麼知道你有沒有真正學會用 Claude？看你有沒有把它從「問答工具」變成 「工作流的一部分」 。 \"How do you know if you've truly learned to use Claude? See if you've transformed it from a 'Q&A tool' into 'part of your workflow.'\" 真正的用法是：Claude 內嵌在你的工作流程中。你寫程式碼時 Claude Code 在終端裡隨時待命，你做研究時 Research Mode 自動跑，你做內容時 Skills 和 Cowork 幫你自動化重複工作。 它得像你的 IDE 一樣，隨時在線，隨時能用。 \"The real usage is: Claude embedded in your workflow... It should be like your IDE — always online, always available.\""
+  },
+  {
+    "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
+    "docTitle": "Claude 終極入門指南 - Yanhua 100hr 實測",
+    "docDate": "2026-03-07",
+    "docSource": "Yanhua (@yanhua1010) / X (Twitter)",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "LLM",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "analysis-commentary",
+    "sectionTitle": "Analysis & Commentary",
+    "content": "核心概念 這是全文最有價值的一段話。 「從問答工具到工作流核心」這個進化框架，精準描述了 AI 使用成熟度的分水嶺。對應到我的學習系統：我的 Master Prompt + Projects + Skills 就是把 Claude 從「每次重新開始」變成「帶著完整記憶和標準化流程持續運作」。 但缺少關鍵的一環： 作者沒有提到 Memory 功能。Memory 讓 Claude 跨對話記住你的偏好和背景，是「內嵌到工作流」的重要膠水層。沒有 Memory，每個新對話仍然需要重新建立個人化上下文。 Key Takeaways 產品哲學差異定位 Claude 的核心差異不在模型智力，而在產品設計哲學：從「告訴你怎麼做」到「直接幫你做」。理解這一點才能正確設定使用期望。 Context + Task + Rules 公式 三段式 Prompt 是入門的有效框架。進階時加入 XML 結構化、Few-shot Examples、Project Instructions 三層，從 Prompt Engineering 進化到 Context Engineering。 三模型切換策略 Sonnet 8"
+  },
+  {
+    "docFile": "2026-03-09_building-skills-guide.html",
+    "docTitle": "Claude Skill 建構完整指南 - Anthropic Official",
+    "docDate": "2026-03-09",
+    "docSource": "Anthropic / resources.anthropic.com",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Agent",
+      "Tool",
+      "Framework",
+      "API"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Anthropic 官方發布的 Skill 建構完整指南，涵蓋從概念到部署的全流程。Skill 是一組打包成資料夾的指令集，教 Claude 處理特定任務或工作流程。本指南提供了三層漸進式揭露（Progressive Disclosure）的設計原則、YAML frontmatter 規格、五大實戰 Pattern、MCP 整合策略、以及測試迭代方法論。 對於已經在使用 Claude.ai Projects 和 Claude Code 的使用者，這份指南將 Skill 從「好用的小技巧」提升為「可複製、可分享、跨平台」的正式能力單元。特別值得注意的是 Skill 作為開放標準的定位 -- 設計上可跨工具平台使用，不僅限於 Claude。 📁 Skill 架構與設計原則 理解 SKILL.md 檔案結構、三層漸進式揭露、YAML frontmatter 規格與安全限制 🔧 五大 Pattern 實戰應用 掌握 Sequential Workflow、Multi-MCP Coordination、Iterative Refinement 等核心模式 🔄 測試、迭代與分發 學會 Triggering/Functional/Performance 三層測試、skill-creator 工具使用、分發策略 Skill 建構四階段流程 📋 Plan 定義 Use Cases 成功指標 → 🏗️ Build SKILL.md + YAML Scripts & Assets → 🧪 Test Trigger 測試 功能驗證 → 🚀 Deploy GitHub 分發 API / 組織部署 Foundations & Planning Build & Test Patterns & Troubleshooting Part I 什麼是 Skill？核心設計原則 Skill 是一組打包成簡單資料夾的指令集，教 Claude 如何處理特定任務或工作流程。它是 客製化 Claude 最強大的方式之一 。不需要每次對話都重新解釋你的偏好、流程和領域專業知識，Skill 讓你教一次就能持續受益。 A skill is a set of instructions - packaged as a simple folder - that teaches Claude how to handle specific tasks or workflows. Skills are one of the most powerful ways to customize Claude for your specific needs. 📚 三層漸進式揭露 (Progressive Disclosure) 第一層 (YAML frontmatter)： 永遠載入 Claude 的系統提示中。提供剛好足夠的資訊，讓 Claude 知道何時該使用這個 Skill。 第二層 (SKILL.md body)： 當 Claude 認為 Skill 與當前任務相關時才載入。包含完整指令與指導。 第三層 (Linked files)： Skill 目錄中的附加檔案，Claude 僅在需要時才瀏覽和發現。 This progressive disclosure minimizes token usage while maintaining specialized expertise. 可組合性 (Composability)： Claude 可以同時載入多個 Skill。你的 Skill 應該能與"
   }
 ];
