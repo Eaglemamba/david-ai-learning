@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter Digest — {{FETCH_DATE}}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-hover: #334155;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --pharma: #0ea5e9;
+      --hbr: #f59e0b;
+      --ai: #8b5cf6;
+      --success: #22c55e;
+      --danger: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .header .date {
+      color: var(--text-muted);
+      font-family: 'Source Code Pro', monospace;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin: 20px 0 30px;
+      flex-wrap: wrap;
+    }
+
+    .stat-badge {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid;
+    }
+
+    .stat-badge.pharma { border-color: var(--pharma); color: var(--pharma); }
+    .stat-badge.hbr { border-color: var(--hbr); color: var(--hbr); }
+    .stat-badge.ai { border-color: var(--ai); color: var(--ai); }
+    .stat-badge.total { border-color: var(--text-muted); color: var(--text-muted); }
+
+    /* Category sections */
+    .category-section {
+      margin-bottom: 40px;
+    }
+
+    .category-section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    /* Article card */
+    .article-card {
+      display: flex;
+      gap: 16px;
+      padding: 20px;
+      background: var(--surface);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      transition: background 0.2s, transform 0.1s;
+      cursor: pointer;
+    }
+
+    .article-card:hover {
+      background: var(--surface-hover);
+      transform: translateX(4px);
+    }
+
+    .article-card.unchecked {
+      opacity: 0.4;
+    }
+
+    /* Checkbox */
+    .article-checkbox {
+      display: flex;
+      align-items: flex-start;
+      padding-top: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .article-checkbox input[type="checkbox"] {
+      display: none;
+    }
+
+    .checkmark {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .article-checkbox input:checked ~ .checkmark {
+      background: var(--success);
+      border-color: var(--success);
+    }
+
+    .article-checkbox input:checked ~ .checkmark::after {
+      content: "✓";
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    /* Article content */
+    .article-content {
+      flex: 1;
+    }
+
+    .article-source {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .article-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .article-summary {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .article-link {
+      color: var(--ai);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .article-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Action bar */
+    .action-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .action-bar .selected-count {
+      color: var(--text-muted);
+      font-family: 'Source Code Pro', monospace;
+      font-size: 0.9rem;
+    }
+
+    .action-bar .selected-count strong {
+      color: var(--success);
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #16a34a;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger);
+    }
+
+    .btn-danger:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--success);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 500;
+      transform: translateY(-100px);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 200;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Bottom padding for fixed action bar */
+    .container {
+      padding-bottom: 80px;
+    }
+
+    /* Filter buttons */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active {
+      background: var(--surface-hover);
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📰 Daily Newsletter Digest</h1>
+      <div class="date">{{FETCH_DATE}}</div>
+    </div>
+
+    <div class="stats-bar">
+      <span class="stat-badge total">Total: {{TOTAL_COUNT}}</span>
+      <span class="stat-badge pharma">Pharma: {{PHARMA_COUNT}}</span>
+      <span class="stat-badge hbr">Leadership: {{HBR_COUNT}}</span>
+      <span class="stat-badge ai">AI/Tech: {{AI_COUNT}}</span>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="pharma">Pharma</button>
+      <button class="filter-btn" data-filter="hbr">Leadership</button>
+      <button class="filter-btn" data-filter="ai">AI/Tech</button>
+      <button class="filter-btn" data-filter="checked">✓ Selected Only</button>
+    </div>
+
+    <div id="articles">
+      {{ARTICLE_CARDS}}
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <span class="selected-count">Selected: <strong id="selectedCount">0</strong> / {{TOTAL_COUNT}}</span>
+    <button class="btn btn-secondary" onclick="toggleAll()">Toggle All</button>
+    <button class="btn btn-primary" onclick="exportSelected()">Export Selected JSON</button>
+    <button class="btn btn-danger" onclick="clearAll()">Clear All</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Update counts and visual state
+    function updateState() {
+      const checkboxes = document.querySelectorAll('.article-card input[type="checkbox"]');
+      let count = 0;
+      checkboxes.forEach(cb => {
+        const card = cb.closest('.article-card');
+        if (cb.checked) {
+          count++;
+          card.classList.remove('unchecked');
+        } else {
+          card.classList.add('unchecked');
+        }
+      });
+      document.getElementById('selectedCount').textContent = count;
+    }
+
+    // Toggle card checked state on card click
+    document.querySelectorAll('.article-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') return; // Don't toggle on link click
+        const cb = card.querySelector('input[type="checkbox"]');
+        cb.checked = !cb.checked;
+        updateState();
+      });
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.category-section').forEach(section => {
+          if (filter === 'all') {
+            section.style.display = '';
+            section.querySelectorAll('.article-card').forEach(card => card.style.display = '');
+          } else if (filter === 'checked') {
+            section.style.display = '';
+            let hasVisible = false;
+            section.querySelectorAll('.article-card').forEach(card => {
+              const checked = card.querySelector('input[type="checkbox"]').checked;
+              card.style.display = checked ? '' : 'none';
+              if (checked) hasVisible = true;
+            });
+            section.style.display = hasVisible ? '' : 'none';
+          } else {
+            const match = section.dataset.category === filter;
+            section.style.display = match ? '' : 'none';
+          }
+        });
+      });
+    });
+
+    // Toggle all checkboxes
+    function toggleAll() {
+      const checkboxes = document.querySelectorAll('.article-card input[type="checkbox"]');
+      const allChecked = [...checkboxes].every(cb => cb.checked);
+      checkboxes.forEach(cb => cb.checked = !allChecked);
+      updateState();
+    }
+
+    // Clear all checkboxes
+    function clearAll() {
+      document.querySelectorAll('.article-card input[type="checkbox"]').forEach(cb => cb.checked = false);
+      updateState();
+    }
+
+    // Export selected articles as JSON
+    function exportSelected() {
+      const result = {
+        date: '{{FETCH_DATE}}',
+        pharma: [],
+        hbr: [],
+        ai: []
+      };
+
+      document.querySelectorAll('.article-card input[type="checkbox"]:checked').forEach(cb => {
+        const category = cb.dataset.category;
+        if (result[category] !== undefined) {
+          result[category].push({
+            title: cb.dataset.title,
+            source: cb.dataset.source,
+            summary: cb.dataset.summary,
+            url: cb.dataset.url
+          });
+        }
+      });
+
+      const json = JSON.stringify(result, null, 2);
+
+      // Copy to clipboard
+      navigator.clipboard.writeText(json).then(() => {
+        showToast('JSON copied to clipboard! Paste to selections file.');
+      }).catch(() => {
+        // Fallback: download as file
+        downloadJSON(result);
+      });
+    }
+
+    function downloadJSON(data) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${data.date}_selections.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Downloaded selections JSON file.');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Initialize
+    updateState();
+  </script>
+</body>
+</html>

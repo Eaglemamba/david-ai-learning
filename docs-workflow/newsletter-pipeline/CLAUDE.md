@@ -38,10 +38,32 @@ Claude Code runs /loop from here to periodically fetch and process newsletters.
 ## File Structure
 
 ```
-amaran-daily/
-  CLAUDE.md              ← this file
-  newsletter-inbox/      ← raw newsletter content (fetched by /loop)
-  digest-output/         ← generated HTML digests
-  route-selected.sh      ← routes checked articles to repos
-  selections/            ← JSON files of user selections (archive)
+newsletter-pipeline/
+  CLAUDE.md                  ← this file
+  config.json                ← newsletter source definitions & categories
+  generate-digest.py         ← Gmail fetch → categorize → HTML digest
+  digest-template.html       ← interactive HTML template with checkboxes
+  route-selected.sh          ← routes checked articles to 3 GitHub repos
+  sample-selections.json     ← example input for testing route-selected.sh
+  .gitignore                 ← excludes digest-output/
+  digest-output/             ← generated HTML digests (gitignored)
+  github-actions/
+    process-inbox.yml        ← GitHub Actions workflow for Option B
+  repo-templates/
+    pharma-decipher-CLAUDE.md  ← CLAUDE.md template for pharma repo
+    hbr-review-CLAUDE.md       ← CLAUDE.md template for leadership repo
+    ai-articles-CLAUDE.md      ← CLAUDE.md template for AI/tech repo
+```
+
+## Quick Start (Testing)
+
+```bash
+# Generate a mock digest with sample data
+python3 generate-digest.py --mock
+
+# Open the generated HTML in browser
+open digest-output/2026-03-11_digest.html
+
+# After selecting articles & exporting JSON, route to repos
+./route-selected.sh digest-output/2026-03-11_digest.json
 ```
