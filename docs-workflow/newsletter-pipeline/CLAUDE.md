@@ -67,3 +67,76 @@ open digest-output/2026-03-11_digest.html
 # After selecting articles & exporting JSON, route to repos
 ./route-selected.sh digest-output/2026-03-11_digest.json
 ```
+
+## Gmail MCP Setup (Required for Live Mode)
+
+### Prerequisites
+
+- Google Cloud account
+- Claude Code CLI installed
+
+### Step 1: Google Cloud Console
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project (or use existing)
+3. Enable the **Gmail API**:
+   - APIs & Services → Library → search "Gmail API" → Enable
+4. Create OAuth 2.0 credentials:
+   - APIs & Services → Credentials → Create Credentials → OAuth Client ID
+   - Application type: **Desktop Application**
+   - Name: `gmail-mcp-claude`
+   - Click Create → Download JSON
+
+### Step 2: Install & Configure
+
+```bash
+# Create credentials directory
+mkdir -p ~/.gmail-mcp
+
+# Move downloaded OAuth JSON (rename it)
+cp ~/Downloads/client_secret_*.json ~/.gmail-mcp/gcp-oauth.keys.json
+
+# Install Gmail MCP server in Claude Code
+claude mcp add --transport stdio gmail -- npx @gongrzhe/server-gmail-autoauth-mcp
+
+# Or via Smithery (alternative)
+# npx -y @smithery/cli install @gongrzhe/server-gmail-autoauth-mcp --client claude
+```
+
+### Step 3: Authenticate
+
+```bash
+# Run auth flow — opens browser for Google sign-in
+npx @gongrzhe/server-gmail-autoauth-mcp auth
+
+# Grant permissions:
+#   ✓ Read email messages
+#   ✓ Search email
+#   ✓ View email labels
+# A refresh token is saved to ~/.gmail-mcp/credentials.json
+```
+
+### Step 4: Verify
+
+```bash
+# Check MCP server is registered
+claude mcp list
+
+# Inside a Claude Code session, verify it's active
+/mcp
+```
+
+### Troubleshooting
+
+| Issue | Fix |
+|-------|-----|
+| `gcp-oauth.keys.json not found` | Check file is in `~/.gmail-mcp/` with exact filename |
+| OAuth consent screen blocked | Add your email as test user in Google Cloud Console → OAuth consent screen |
+| Token expired | Re-run `npx @gongrzhe/server-gmail-autoauth-mcp auth` |
+| MCP not showing in `/mcp` | Restart Claude Code session after `claude mcp add` |
+
+### Security Notes
+
+- OAuth credentials are stored locally in `~/.gmail-mcp/` — never commit these
+- The MCP server only requests read-only Gmail scopes by default
+- Refresh tokens persist until revoked at [Google Account Permissions](https://myaccount.google.com/permissions)
