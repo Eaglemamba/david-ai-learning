@@ -42,13 +42,15 @@ newsletter-pipeline/
   CLAUDE.md                  ← this file
   config.json                ← newsletter source definitions & categories
   generate-digest.py         ← Gmail fetch → categorize → HTML digest
+  fetch-gmail-api.py         ← Gmail API direct fetch (for CI/CD, no MCP)
   digest-template.html       ← interactive HTML template with checkboxes
   route-selected.sh          ← routes checked articles to 3 GitHub repos
   sample-selections.json     ← example input for testing route-selected.sh
   .gitignore                 ← excludes digest-output/
   digest-output/             ← generated HTML digests (gitignored)
   github-actions/
-    process-inbox.yml        ← GitHub Actions workflow for Option B
+    process-inbox.yml        ← GitHub Actions workflow for downstream repos
+    daily-digest.yml         ← Cron workflow: Gmail fetch → digest (Option C)
   repo-templates/
     pharma-decipher-CLAUDE.md  ← CLAUDE.md template for pharma repo
     hbr-review-CLAUDE.md       ← CLAUDE.md template for leadership repo
@@ -94,11 +96,31 @@ claude mcp add --transport stdio gmail -- npx @gongrzhe/server-gmail-autoauth-mc
 # 執行 auth flow：npx @gongrzhe/server-gmail-autoauth-mcp auth
 ```
 
-### 兩種方式比較
+### 方式 C：GitHub Actions（全自動，推薦長期方案）
 
-| | Claude.ai / Desktop | Claude Code CLI |
-|--|---------------------|-----------------|
-| 設定 | 一鍵授權 | 需設 Google Cloud OAuth |
-| 適用 | 互動式使用、Claude Projects | `/loop` 排程、自動化腳本 |
-| 持久性 | 登入即有 | 需自行維護 token |
-| 本 pipeline 建議 | 手動觸發 digest 時使用 | 搭配 `/loop` 自動排程時使用 |
+不依賴 MCP，直接用 Gmail API + OAuth refresh token：
+
+```bash
+# 1. 一次性設定：跑 OAuth flow 取得 refresh token
+python3 fetch-gmail-api.py --auth
+
+# 2. 把三個值加到 GitHub repo secrets：
+#    GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REFRESH_TOKEN
+
+# 3. 複製 workflow 到 repo
+cp github-actions/daily-digest.yml ../../.github/workflows/
+
+# 4. 完成！每天 7:00 AM (Asia/Taipei) 自動產生 digest
+```
+
+也可以手動觸發：GitHub repo → Actions → Daily Newsletter Digest → Run workflow
+
+### 三種方式比較
+
+| | Claude.ai / Desktop | Claude Code CLI | GitHub Actions |
+|--|---------------------|-----------------|----------------|
+| 設定 | 一鍵授權 | 需設 Google Cloud OAuth | 一次性 OAuth + GitHub secrets |
+| 適用 | 互動式、Claude Projects | `/loop` 排程 | 全自動 cron |
+| 持久性 | 登入即有 | session 掉就沒 | 永久（token 自動續期） |
+| 依賴 | Claude 平台 | 電腦必須開著 | GitHub 雲端 |
+| 本 pipeline 建議 | 現階段手動使用 | 不推薦（CP值低） | **長期目標** |
