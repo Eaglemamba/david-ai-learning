@@ -68,75 +68,37 @@ open digest-output/2026-03-11_digest.html
 ./route-selected.sh digest-output/2026-03-11_digest.json
 ```
 
-## Gmail MCP Setup (Required for Live Mode)
+## Gmail MCP — 連接方式
 
-### Prerequisites
+### 方式 A：Claude.ai / Claude Desktop（推薦，零設定）
 
-- Google Cloud account
-- Claude Code CLI installed
+Gmail MCP 是 Claude 平台內建的整合，不需要自己設 API：
 
-### Step 1: Google Cloud Console
+1. 在 Claude.ai 或 Claude Desktop 開啟 session
+2. 點選 MCP integrations → 連結 Gmail
+3. 瀏覽器跳出 Google 授權頁面 → 允許
+4. 完成。`gmail_search_messages`、`gmail_read_message` 等工具直接可用
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project (or use existing)
-3. Enable the **Gmail API**:
-   - APIs & Services → Library → search "Gmail API" → Enable
-4. Create OAuth 2.0 credentials:
-   - APIs & Services → Credentials → Create Credentials → OAuth Client ID
-   - Application type: **Desktop Application**
-   - Name: `gmail-mcp-claude`
-   - Click Create → Download JSON
+> **注意：** 這就是你目前在 Claude Projects 用的方式，已經可以運作。
 
-### Step 2: Install & Configure
+### 方式 B：Claude Code CLI（本機終端機）
+
+如果要在本機 CLI 環境使用 Gmail MCP（例如搭配 `/loop`），需要自架 MCP server：
 
 ```bash
-# Create credentials directory
-mkdir -p ~/.gmail-mcp
-
-# Move downloaded OAuth JSON (rename it)
-cp ~/Downloads/client_secret_*.json ~/.gmail-mcp/gcp-oauth.keys.json
-
-# Install Gmail MCP server in Claude Code
+# 安裝 Gmail MCP server
 claude mcp add --transport stdio gmail -- npx @gongrzhe/server-gmail-autoauth-mcp
 
-# Or via Smithery (alternative)
-# npx -y @smithery/cli install @gongrzhe/server-gmail-autoauth-mcp --client claude
+# 需要 Google Cloud OAuth credentials（Desktop App 類型）
+# 放置於 ~/.gmail-mcp/gcp-oauth.keys.json
+# 執行 auth flow：npx @gongrzhe/server-gmail-autoauth-mcp auth
 ```
 
-### Step 3: Authenticate
+### 兩種方式比較
 
-```bash
-# Run auth flow — opens browser for Google sign-in
-npx @gongrzhe/server-gmail-autoauth-mcp auth
-
-# Grant permissions:
-#   ✓ Read email messages
-#   ✓ Search email
-#   ✓ View email labels
-# A refresh token is saved to ~/.gmail-mcp/credentials.json
-```
-
-### Step 4: Verify
-
-```bash
-# Check MCP server is registered
-claude mcp list
-
-# Inside a Claude Code session, verify it's active
-/mcp
-```
-
-### Troubleshooting
-
-| Issue | Fix |
-|-------|-----|
-| `gcp-oauth.keys.json not found` | Check file is in `~/.gmail-mcp/` with exact filename |
-| OAuth consent screen blocked | Add your email as test user in Google Cloud Console → OAuth consent screen |
-| Token expired | Re-run `npx @gongrzhe/server-gmail-autoauth-mcp auth` |
-| MCP not showing in `/mcp` | Restart Claude Code session after `claude mcp add` |
-
-### Security Notes
-
-- OAuth credentials are stored locally in `~/.gmail-mcp/` — never commit these
-- The MCP server only requests read-only Gmail scopes by default
-- Refresh tokens persist until revoked at [Google Account Permissions](https://myaccount.google.com/permissions)
+| | Claude.ai / Desktop | Claude Code CLI |
+|--|---------------------|-----------------|
+| 設定 | 一鍵授權 | 需設 Google Cloud OAuth |
+| 適用 | 互動式使用、Claude Projects | `/loop` 排程、自動化腳本 |
+| 持久性 | 登入即有 | 需自行維護 token |
+| 本 pipeline 建議 | 手動觸發 digest 時使用 | 搭配 `/loop` 自動排程時使用 |
