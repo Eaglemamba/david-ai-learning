@@ -13932,5 +13932,356 @@ const searchIndex = [
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
     "content": "Anthropic 官方發布的 Skill 建構完整指南，涵蓋從概念到部署的全流程。Skill 是一組打包成資料夾的指令集，教 Claude 處理特定任務或工作流程。本指南提供了三層漸進式揭露（Progressive Disclosure）的設計原則、YAML frontmatter 規格、五大實戰 Pattern、MCP 整合策略、以及測試迭代方法論。 對於已經在使用 Claude.ai Projects 和 Claude Code 的使用者，這份指南將 Skill 從「好用的小技巧」提升為「可複製、可分享、跨平台」的正式能力單元。特別值得注意的是 Skill 作為開放標準的定位 -- 設計上可跨工具平台使用，不僅限於 Claude。 📁 Skill 架構與設計原則 理解 SKILL.md 檔案結構、三層漸進式揭露、YAML frontmatter 規格與安全限制 🔧 五大 Pattern 實戰應用 掌握 Sequential Workflow、Multi-MCP Coordination、Iterative Refinement 等核心模式 🔄 測試、迭代與分發 學會 Triggering/Functional/Performance 三層測試、skill-creator 工具使用、分發策略 Skill 建構四階段流程 📋 Plan 定義 Use Cases 成功指標 → 🏗️ Build SKILL.md + YAML Scripts & Assets → 🧪 Test Trigger 測試 功能驗證 → 🚀 Deploy GitHub 分發 API / 組織部署 Foundations & Planning Build & Test Patterns & Troubleshooting Part I 什麼是 Skill？核心設計原則 Skill 是一組打包成簡單資料夾的指令集，教 Claude 如何處理特定任務或工作流程。它是 客製化 Claude 最強大的方式之一 。不需要每次對話都重新解釋你的偏好、流程和領域專業知識，Skill 讓你教一次就能持續受益。 A skill is a set of instructions - packaged as a simple folder - that teaches Claude how to handle specific tasks or workflows. Skills are one of the most powerful ways to customize Claude for your specific needs. 📚 三層漸進式揭露 (Progressive Disclosure) 第一層 (YAML frontmatter)： 永遠載入 Claude 的系統提示中。提供剛好足夠的資訊，讓 Claude 知道何時該使用這個 Skill。 第二層 (SKILL.md body)： 當 Claude 認為 Skill 與當前任務相關時才載入。包含完整指令與指導。 第三層 (Linked files)： Skill 目錄中的附加檔案，Claude 僅在需要時才瀏覽和發現。 This progressive disclosure minimizes token usage while maintaining specialized expertise. 可組合性 (Composability)： Claude 可以同時載入多個 Skill。你的 Skill 應該能與"
+  },
+  {
+    "docFile": "2026-03-10_reasoning-messy-future.html",
+    "docTitle": "如何在混亂的未來中推理 - SystematicallyLS Messy Future",
+    "docDate": "2026-03-10",
+    "docSource": "SystematicallyLS (@systematicls)",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent",
+      "LLM"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "一位量化對沖基金經理人的 AI 未來推理框架。作者從管理近 20 人的團隊離開，創立加密貨幣交易公司，本文記錄了他的思考過程。核心論點： 當未來充滿不確定性時，不對稱下注（asymmetric bets）才是關鍵 ——你不需要精確預測未來，只需要方向正確，並確保「早但錯」的代價可承受，而「早且對」的回報不成比例地大。文章提出四大護城河（proprietary data、regulatory friction、authority as service、physical intelligence lag）作為分析框架，但坦承這些護城河只是爭取時間，而非永久安全。"
+  },
+  {
+    "docFile": "2026-03-10_reasoning-messy-future.html",
+    "docTitle": "如何在混亂的未來中推理 - SystematicallyLS Messy Future",
+    "docDate": "2026-03-10",
+    "docSource": "SystematicallyLS (@systematicls)",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent",
+      "LLM"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "理解 AI 時代的四大護城河分類，評估自身工作/產業的防禦力 掌握「不對稱下注」思維框架，在不完整資訊下做出合理決策 識別自身工作中「可被 AI 取代」vs「深度人類防禦」的任務比例 Reasoning Under Uncertainty Framework Read Inputs 辨識已可見的信號 Find Direction 方向正確 > 精準預測 Structure Bets 不對稱風險/報酬 Act & Learn 行動產生資訊"
+  },
+  {
+    "docFile": "2026-03-10_reasoning-messy-future.html",
+    "docTitle": "如何在混亂的未來中推理 - SystematicallyLS Messy Future",
+    "docDate": "2026-03-10",
+    "docSource": "SystematicallyLS (@systematicls)",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent",
+      "LLM"
+    ],
+    "sectionId": "content",
+    "sectionTitle": "Content",
+    "content": "Origin Story Four Moats Framework Action Part I The Trigger + Part II Writing On The Wall 我第一次意識到我們正走向轉折點，是在我聽到音樂在我前一份工作中逐漸停下，即使周圍的人都假裝什麼都不會改變。我在一家對沖基金管理著近 20 人的團隊，做著我多年來一直在做的事。 The first time I realized we were heading towards an inflection point was when I heard the music slowing down at my previous role, even as everyone around me pretended nothing would change. I was managing a team of close to 20 pax in a hedge fund, doing the thing I had been doing for years. 然而， 我從一個人人夢寐以求的職位，轉向從零開始建立一家新創"
+  },
+  {
+    "docFile": "2026-03-10_reasoning-messy-future.html",
+    "docTitle": "如何在混亂的未來中推理 - SystematicallyLS Messy Future",
+    "docDate": "2026-03-10",
+    "docSource": "SystematicallyLS (@systematicls)",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent",
+      "LLM"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "方向正確 > 精準預測 在高度不確定的環境中，你不需要知道確切會發生什麼。你需要的是方向性判斷，以及結構化的不對稱下注——早且錯可存活，早且對回報巨大。 四大護城河只爭取時間 Proprietary Data、Regulatory Friction、Authority as Service、Physical Intelligence Lag 都是真實的防禦，但沒有一個是永久的。它們的價值在於給你準備的時間。 行動創造資訊 在不完整資訊中保持靜止就是衰退。行動會產生回饋，回饋驅動迭代，迭代產生更好的行動。等待「完美時機」本身就是一種代價高昂的選擇。 審計你的工作組成 區分「深度人類防禦」vs「即將被取代」的任務。多做需要長期策略思維、跨系統範圍理解、和人類權威背書的工作。"
+  },
+  {
+    "docFile": "2026-03-10_reasoning-messy-future.html",
+    "docTitle": "如何在混亂的未來中推理 - SystematicallyLS Messy Future",
+    "docDate": "2026-03-10",
+    "docSource": "SystematicallyLS (@systematicls)",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent",
+      "LLM"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 產業應用 用作者的四大護城河框架分析你的 CDMO 工廠。哪個護城河最強？哪個可能最先被侵蝕？具體侵蝕的路徑是什麼？ 分析框架： 最強護城河：Regulatory Friction。 製藥 CDMO 的每一步都需要人類簽署——batch record review、偏差調查、CAPA 結案、QP 放行。這些不只是「蓋章」，而是法律責任的承擔。PIC/S 和 FDA 的查核框架短期內不會接受 AI 簽署。 最先被侵蝕的可能是 Proprietary Data 護城河。 隨著更多 CDMO 將製程數據數位化，前沿模型提供商可能與大型 CDMO 合作，取得製程開發的一般性知識。你的特定設備參數和偏差模式仍然是獨特的，但「如何設計凍乾曲線」這類知識會逐漸商品化。 侵蝕路徑： AI 先處理文件工作（80% 可自動化） 然後進入初步分析（趨勢偵測、偏差分類） 最終挑戰判斷層面（但被法規瓶頸阻擋）。 Q2 批判思考 作者聲稱「行動創造資訊」是不完整資訊下的最佳策略。但在 GMP 環境中，「錯誤的行動」可能導致患者安全風險。如何調和這兩個原則？ 這是一個絕佳的張力點。作者的「行動創造資訊」原則來"
+  },
+  {
+    "docFile": "2026-03-11_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code 互動模式 - Interactive Mode Reference",
+    "docDate": "2026-03-11",
+    "docSource": "Anthropic / Claude Code Docs",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這是 Claude Code 互動模式的完整參考文件，涵蓋鍵盤快捷鍵、內建指令（50+ 個 slash commands）、Vim 編輯模式、背景任務管理、提示建議等功能。本文是操作手冊性質 — 價值在於「需要時能快速查到」而非「讀完有深度洞察」。對於已使用 Claude Code 的開發者，這份文件是提升效率的快捷鍵速查表；對於評估 Claude Code 的管理者，這份文件展示了 CLI 工具的成熟度和功能完整性。"
+  },
+  {
+    "docFile": "2026-03-11_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code 互動模式 - Interactive Mode Reference",
+    "docDate": "2026-03-11",
+    "docSource": "Anthropic / Claude Code Docs",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "掌握核心快捷鍵 學習 Ctrl+C/D/L/R/B 等基礎控制和文字編輯快捷鍵，提升 CLI 操作效率 理解 50+ 內建指令 熟悉 /compact、/diff、/resume、/mcp 等指令的用途和使用時機 善用背景任務與進階功能 掌握 Ctrl+B 背景執行、/btw 側問、Task List 等進階互動模式 Part I-II: 快捷鍵 Part III-IV: 指令與 Vim Part V-VI: 進階功能 Part I 通用控制與文字編輯快捷鍵 Claude Code 的鍵盤快捷鍵可能因 平台和終端機 而異。按下 ? 可查看當前環境可用的快捷鍵。 Keyboard shortcuts may vary by platform and terminal. Press ? to see available shortcuts for your environment. macOS 用戶注意： Option/Alt 鍵快捷鍵（ Alt+B 、 Alt+F 等）需要在終端機中 將 Option 設定為 Meta 鍵 。iTerm2 在 Settings → Profiles → "
+  },
+  {
+    "docFile": "2026-03-11_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code 互動模式 - Interactive Mode Reference",
+    "docDate": "2026-03-11",
+    "docSource": "Anthropic / Claude Code Docs",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Ctrl+B 是最被低估的快捷鍵 把長時間 bash 指令放到背景執行，繼續跟 Claude 對話。這改變了 CLI 工具「等待 → 繼續」的線性工作模式。 /btw 是 Subagent 的反面 Subagent 有工具但沒有對話脈絡；/btw 有完整脈絡但沒有工具。理解這個設計哲學，才能選擇正確的功能。 50+ 指令暗示 CLI-first 設計哲學 Claude Code 不只是「終端機裡的聊天」，而是完整的開發環境。/diff、/security-review、/insights 等指令證明它是專業工具鏈。 Vim 模式是開發者親和力指標 內建 Vim 支援（含 text objects）表明目標使用者是重度終端機用戶。這也暗示 Claude Code 團隊自己就是這類用戶。"
+  },
+  {
+    "docFile": "2026-03-11_claude-code-interactive-mode.html",
+    "docTitle": "Claude Code 互動模式 - Interactive Mode Reference",
+    "docDate": "2026-03-11",
+    "docSource": "Anthropic / Claude Code Docs",
+    "docRating": 4,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 /btw 和 Subagent 的設計哲學差異是什麼？在什麼情境下你會選擇 /btw 而非 Subagent？ /btw 是「用已知脈絡回答問題」，Subagent 是「去發現新資訊」。 /btw 擁有完整的對話脈絡但沒有工具存取權限（不能讀檔、執行指令），成本低因為重用 prompt cache。Subagent 有完整工具但從空白脈絡開始，成本較高。 選擇 /btw 的情境：Claude 已經讀過你的程式碼，你想問「剛才那個 config 檔叫什麼名字？」。選擇 Subagent 的情境：你需要 Claude 去搜尋文件或讀取新檔案來回答問題。 CDMO 類比： /btw 像是在批次記錄審查會議中快速問旁邊的同事一個你們都已知道的問題；Subagent 像是派人去查閱 SOP 原文再回報。 Q2 產業應用 在 CDMO 的技術轉移專案中，如何利用 Claude Code 的背景任務（Ctrl+B）和 Task List 功能來管理多個並行的自動化腳本？ 核心策略：把線性工作流轉為並行。 假設技術轉移需要同時處理：(1) 解析批次記錄 PDF 提取關鍵參數、(2) 比"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Anthropic 官方的 Skill-creator 迎來重大更新，新增四大核心能力： 評估系統 （Evaluation System）讓你量化 Skill 品質、 基準測試 （Benchmarking）提供有 Skill vs 無 Skill 的 A/B 對比數據、 多代理並行測試 （Multi-agent Parallel Testing）在乾淨環境中獨立執行避免上下文污染、 描述調優 （Description Optimization）自動迭代改善 Skill 觸發準確率。這次更新本質上將軟體工程的測試驅動開發（TDD）理念引入 Skills 生態，補上了過去最大的缺口 - 評估機制。 文章以實際案例（YouTube 影片轉講稿 Skill）完整走過描述調優和評估流程，展示了從觸發率優化到品質量化的完整閉環。對所有使用 Claude Skills 的人來說，這是立即可執行的升級。"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "理解四大新能力 掌握評估系統、基準測試、多代理並行、描述調優的功能定位與使用時機 執行 Skill 評估流程 學會用新版 Skill-creator 對既有 Skills 進行觸發率優化和品質評估的完整工作流 區分兩種 Skill 類型 區分「能力提升型」與「編碼偏好型」Skill 的不同評估方向與策略 Skill-creator 完整評估閉環 建立 Skill 用 Skill-creator 生成 描述調優 優化觸發準確率 多代理測試 乾淨環境並行跑 量化評估 基準測試 + 迭代"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "content",
+    "sectionTitle": "Content",
+    "content": "背景與更新概覽 描述調優實戰 評估與基準測試 Skill 類型與策略"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-i-skill-creator-是什麼為何重要",
+    "sectionTitle": "Part I: Skill-creator 是什麼？為何重要？",
+    "content": "Skill-creator 是 Anthropic 官方推出的 Skills 生成器 ，堪稱整個 Skills 生態的基石。你可以用自然語言描述需求，它就能幫你生成一個完整的 Skill。 Skill-creator is Anthropic's official skill generator - the foundation of the entire Skills ecosystem. You describe your needs in natural language, and it creates a complete Skill for you. 作者指出，Claude 之所以能力這麼強， 有一半的原因要歸功於 Skills 。每個 Skill 就像一個技能包，掛載越多，Agent 能做的事情就越多。 The author argues that half of Claude's capability comes from Skills. Each Skill is like a skill pack - the more you attach, the more the"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-ii-四大新能力總覽",
+    "sectionTitle": "Part II: 四大新能力總覽",
+    "content": "這次更新一口氣加入四個全新能力： This update introduces four brand-new capabilities at once: 1. 評估系統（Evaluation System） - 跑完直接告訴你這個 Skill 到底行不行。解決了過去 Skill 建完就是黑盒的問題。 Evaluation System - run it and immediately know if the Skill works. Solves the previous black-box problem. 2. 基準測試（Benchmarking） - 將通過率、耗時、Token 用量全都量化。 有 Skill vs 無 Skill 的對比數據一目了然 。 Benchmarking - quantifies pass rate, execution time, and token consumption. Clear comparison between with-Skill vs without-Skill. 3. 多代理並行測試（Multi-agent Parallel Tes"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-iii-描述調優完整流程",
+    "sectionTitle": "Part III: 描述調優完整流程",
+    "content": "當你有多個相似 Skill 時，最怕的就是 觸發打架 - 該觸發的不觸發，不該觸發的亂觸發。作者的案例：yt-dlp（下載影片）和講稿生成（轉文字）兩個 Skill 的觸發條件都是「給一個影片連結」，極易衝突。 When you have multiple similar Skills, the biggest fear is trigger conflicts - the right one doesn't fire while the wrong one does. The author's case: both yt-dlp (download video) and transcript generation (convert to text) trigger on \"video link input.\" Step 1：自動生成測試查詢 - Skill-creator 會讀取你的 Skill 描述，然後自動生成兩組查詢： 應觸發的 10 條 + 不應觸發的 10 條 。設計巧妙之處在於故意把邊界情況（edge cases）都擺進去，逼模型在模糊地帶做判斷。 Step 1: Aut"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-iv-多代理並行評估",
+    "sectionTitle": "Part IV: 多代理並行評估",
+    "content": "觸發對了不等於 OK - Skill 能穩定觸發之後，還要評估它在實際任務上的表現。作者用講稿生成 Skill 做了完整演示。 Correct triggering doesn't equal OK - after stable triggering, you still need to evaluate actual task performance. The author demonstrates with the transcript Skill. Skill-creator 會先完整讀取你的 Skill 文件，搞清核心流程。然後問你想測哪個方面（可選全面評估）。它會根據 Skill 功能 自動設計三類測試場景 ，同時設計量化驗收標準。 Skill-creator reads your Skill file completely, understands the core flow, then asks what aspect to test (full evaluation available). It auto-designs three test scenario cate"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-v-基準測試量化數據",
+    "sectionTitle": "Part V: 基準測試量化數據",
+    "content": "測試完成後，瀏覽器會彈出評估查看頁面，有兩個標籤頁： After testing, the browser shows an evaluation page with two tabs: 輸出標籤頁： 直接查看每個測試用例的輸出。下方有回饋框，可以標注問題點。 這些回饋會被存起來，下次改進 Skill 時直接使用 。 Output tab: view each test case output directly. Feedback box below for annotating issues. Feedback is saved for use in the next Skill improvement cycle. 基準測試標籤頁： 有 Skill vs 無 Skill 的量化對比。作者案例的數據 - 有 Skill 通過率 100%，無 Skill 基線 9%，差值 91.5%。費用上，有 Skill 每次約 4000 Token，無 Skill 約 1750 Token，差距 2250 Token。 Benchmark tab: quantitative comparison "
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-vi-兩種-skill-類型的不同評估策略",
+    "sectionTitle": "Part VI: 兩種 Skill 類型的不同評估策略",
+    "content": "在評估之前，你得先搞清楚你的 Skill 屬於哪一種。本質上， Skills 分為兩種類型 ： Before evaluating, you need to know which type your Skill is. Fundamentally, Skills fall into two categories: 第一種：能力提升型（Capability Enhancement） - 教 Claude 做它本來不擅長的事。例如官方的前端設計 Skill、文檔創建 Skill，裡面寫了大量技巧，是光靠 Prompt 拿不到的效果。大多數人自己做的 Skill 都屬於這類。 Type 1: Capability Enhancement - teaches Claude to do what it's not naturally good at. Examples: official frontend design Skill, document creation Skill, containing techniques that prompting alone can't achieve."
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-vii-不同類型的評估重點",
+    "sectionTitle": "Part VII: 不同類型的評估重點",
+    "content": "能力提升型的評估重點： 測的是模型更新後這個 Skill 還有沒有存在的必要 。用 A/B 測試對比，有 Skill 和沒 Skill 各跑一次。如果結果差不多，這個 Skill 就可以退休了。 Capability Enhancement evaluation focus: test whether the Skill is still necessary after model updates. A/B test with and without Skill. If results are similar, the Skill can be retired. 編碼偏好型的評估重點： 測的是另一件事 - 有沒有老老實實按你的流程走 ？有沒有漏步驟？有沒有自作主張改了順序？有沒有忘了你特別說過的某個要求？ Coding Preference evaluation focus: did it faithfully follow your process? Any skipped steps? Any unauthorized reordering? Any forgotten speci"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "1. 評估機制是 Skills 生態的轉折點 過去 Skill 建完就是黑盒，現在有了完整的「建立 → 調優 → 測試 → 量化 → 迭代」閉環。這是從「手工作坊」到「工業化生產」的跨越。 2. 描述調優 ROI 最高 10-20 分鐘的一次性投入，就能提升觸發準確率。Anthropic 官方測試 6 個 Skill 中 5 個有提升，且完全自動化。 3. 上下文污染是隱形殺手 多代理並行測試解決了順序評估的根本缺陷 - 確保每個測試結果反映的是 Skill 本身的能力，而非對話歷史的加成。 4. 區分 Skill 類型決定評估方向 能力提升型測「是否還有必要」，編碼偏好型測「是否按流程走」。搞錯方向會浪費評估資源，得出錯誤結論。"
+  },
+  {
+    "docFile": "2026-03-11_skill-creator-epic-update.html",
+    "docTitle": "Skill-creator 史詩級更新 - 四大評估能力全解析",
+    "docDate": "2026-03-11",
+    "docSource": "数字生命卡兹克 / @Khazix0918",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼「多代理並行測試」比「順序測試」更可靠？請用「上下文污染」的概念解釋。 順序測試在同一對話中依次執行多個測試用例，前面任務的對話歷史（包含正確答案的模式、格式範例等）會自動成為後續任務的上下文。這意味著後面的測試可能「借用」了前面的經驗，表現出比 Skill 實際能力更好的結果。 多代理並行測試讓每個測試在完全獨立的環境中運行，各自有獨立的 Token 計數和時間指標。測試結果只反映 Skill 本身的品質，而非累積的對話上下文。這就像藥物臨床試驗中的「雙盲設計」- 確保結果的純淨性。 Q2 產業應用 在你的 CDMO 環境中，artifact-skill（教育文件生成）屬於哪種類型？如果用新版 Skill-creator 評估它，應該關注什麼指標？ artifact-skill 主要是「編碼偏好型」- 它的核心價值不是教 Claude 新能力，而是確保 Claude 按照 Master Prompt v1.5.0 的格式規範走（雙語格式、Tabbed 結構、Rating Bar、Dashboard Meta Tags 等）。 評估時應關注的指標包括：(1) 格式"
+  },
+  {
+    "docFile": "2026-03-12_su-program-the-world.html",
+    "docTitle": "偏鄉程式教育 - 蘇文鈺 Program the World",
+    "docDate": "2026-03-12",
+    "docSource": "商業周刊第2000期 / 程倚華、陳盈螢",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "成大資工系教授蘇文鈺自 2013 年起推動 Program the World 計畫，以 Scratch 視覺化程式教學為起點，深入嘉義東石、台南左鎮、台東、花蓮等偏鄉，累計影響超過上萬名學童。文章核心論點不在「教程式」，而在填補弱勢孩子因資訊不對稱造成的「夢想斷層」(Dream Gap)。蘇文鈺的運作模式更像弱勢教育孵化器：發現缺口、做起來、有人接手後轉身去下一個需求點。對 AI/科技從業者而言，這篇文章提供的不是技術框架，而是一個關於「科技如何真正改變人的生命」的深層思考案例。 Learning Objectives 夢想斷層理論 理解偏鄉教育的核心問題不是成績，而是資訊不對稱造成的想像力空白 孵化器運作模式 分析「發現缺口 → 建立 → 移交 → 轉向」的非營利組織擴展策略 科技教育的本質 反思程式教育的目的是「學習技能」而非「學習知識」的差異 蘇文鈺的弱勢教育孵化器模式 發現缺口 看見孩子需求 先做再說 → 建立課程 帶學生下鄉 播種教學 → 培養接班 學生成師資 移交營運 → 轉向下一站 新需求出現 重啟循環 Part I — 起點：一場手術與一個啟示 2014 年，嘉義東石有一名失去雙親、被教會收容的國中少年，正跟著成大資工系教授蘇文鈺學寫程式。沒有父母照顧的他常在街上閒晃，因此成了 地方宮廟幫派覬覦的對象 。 In 2014, in Dongshi, Chiayi, an orphaned junior high student sheltered by a local church was learning to code with NCKU CS professor Su Wen-yu. Without parental care, his street-wandering made him a target for local temple-affiliated gangs. 少年晚上住在教會，門外則有宮廟派來的人徘徊守候，這場搶孩子的大戰沒有煙硝味，教會老師只能一次次堅定的關上大門，靜靜陪孩子上課、生活。 At night, the boy stayed in the church while gang-affiliated men lingered outside. The teachers could only close the door firmly, quietly accompanying the child through lessons and daily life. 對蘇文鈺而言，學科表現不是重點， 孩子平安長大才是首要目標 。後來少年考進崑山科技大學汽修科，畢業後回到嘉義，開了一間自己的汽車修理公司。 For Su, academic performance was secondary — the child's safe upbringing was the primary goal. The boy later enrolled in automotive repair at Kun Shan University, and eventually returned to Chiayi to open his own car repair business. 時間回到 2012 年，蘇文鈺因為一場手術在病床上躺了三個月。他看到歐巴馬說「每個美國小孩都要學會寫程式」，彷彿天啟般覺悟：既然程式將成為未來世界的基本能力，那麼偏鄉孩子若沒有機會接觸， 差距只會越來越大 。 Back in 2012, Su sp"
   }
 ];
