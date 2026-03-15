@@ -1,5 +1,23 @@
 # Project Rules — david-ai-learning
 
+## Quick Commands
+
+| Task | Command |
+|------|---------|
+| Add new article | `npm run add <filename>` |
+| Rebuild search index | `npm run build` |
+| Normalize HTML batch | `npm run normalize` |
+| Standard commit (single doc) | `git commit -m "Add: <slug> (<date>)"` |
+| Standard commit (batch) | `git commit -m "Batch: <N> articles (<date-range>)"` |
+| Standard commit (fix) | `git commit -m "Fix: <what>"` |
+| Standard commit (feature) | `git commit -m "Feature: <what>"` |
+
+## Context Efficiency
+
+- **NEVER read `index.html`** unless the task specifically requires editing dashboard JS logic. It is 52K with a hardcoded 108-doc array — reading it wastes context on almost every task.
+- Read `docs-workflow/` templates to understand doc format; do not infer format by reading existing docs in `docs/`.
+- `search-index.js` is a generated 981K file — never read it directly.
+
 ## Document Revision Chain
 
 When any document is updated, check and update all related downstream files:
