@@ -30,12 +30,13 @@ When any document is updated, check and update all related downstream files:
 | Change doc metadata (title, tags, rating) | Rebuild search index + update entry in `curriculum-data.js` |
 | Change doc date or year | Grep all related files for stale dates |
 | Add new tag category | Add tag color in `docs/styles.css` (when created) + update README Categories table |
+| Add/remove HTML in `docs/` | Update "Last updated" date in `index.html` header to today's date |
 | Update `docs-workflow/` templates | Check if examples still match template structure |
 
 ## File Relationships
 
 ```
-docs/*.html (120 source files)
+docs/*.html (126 source files)
   ├── index.html          loads dashboard-data.js (built via build-dashboard-data.js)
   ├── dashboard-data.js   built from docs/ via build-dashboard-data.js
   ├── search-index.js     built from docs/ via build-search-index.js
