@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 深度解析：六層架構、上下文治理與工程實踐</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-03-13">
+<meta name="doc-title" content="Claude Code 架構治理與工程實踐 - Tw93">
+<meta name="doc-source" content="Tw93 / X (Twitter)">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Agent,Tool,Framework,API">
+<meta name="doc-rating" content="4.5">
+<meta name="doc-summary" content="Tw93 半年 Claude Code 深度使用經驗。六層架構、上下文治理、Skills/Hooks/Subagents 設計、Prompt Caching 與 CLAUDE.md 最佳實踐。">
+<meta name="doc-file" content="2026-03-13_claude-code-architecture-governance.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Header Styles */
+.header-tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-framework { background: #fde68a; color: #92400e; }
+.tag-api { background: #ddd6fe; color: #4c1d95; }
+.header h1 { font-size: 1.8rem; margin: 0.5rem 0; line-height: 1.3; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-top: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; margin-top: 1rem; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid #3b82f6; }
+.executive-summary h2 { color: #1e3a8a; margin-top: 0; font-size: 1.15rem; }
+.executive-summary p { font-size: 0.95rem; color: #334155; margin-bottom: 0.75rem; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+.objective-desc { font-size: 0.8rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 100px; }
+.framework-icon { font-size: 1.3rem; margin-bottom: 0.5rem; width: 3rem; height: 3rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.85rem; }
+.framework-step-desc { font-size: 0.75rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.3rem; color: #93c5fd; }
+
+/* Tab Navigation */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tab-btn { flex: 1; padding: 0.6rem 0.5rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.8rem; min-width: 100px; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Content Grid */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.content-label { font-size: 0.7rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+.part-title { font-size: 1.1rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+
+/* Linear layout for code-heavy sections */
+.content-grid.linear { grid-template-columns: 1fr; }
+.content-grid.linear .content-left { border-right: none; }
+
+/* Bilingual Content */
+.bilingual-block { margin-bottom: 1rem; }
+.bilingual-block .zh { color: #1e293b; font-size: 0.95rem; line-height: 1.8; }
+.bilingual-block .en { color: #64748b; font-style: italic; font-size: 0.85rem; line-height: 1.6; margin-top: 0.25rem; }
+
+/* Highlights */
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content code { font-family: 'Source Code Pro', monospace; background: rgba(0,0,0,0.06); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.8rem; }
+
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Code Blocks */
+pre.code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; line-height: 1.6; margin: 0.75rem 0; }
+pre.code-block .comment { color: #94a3b8; }
+pre.code-block .keyword { color: #93c5fd; }
+pre.code-block .string { color: #86efac; }
+pre.code-block .highlight-line { background: rgba(59,130,246,0.15); display: block; margin: 0 -1rem; padding: 0 1rem; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card:nth-child(2) { border-left-color: #10b981; }
+.summary-card:nth-child(3) { border-left-color: #8b5cf6; }
+.summary-card:nth-child(4) { border-left-color: #f59e0b; }
+.summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+
+/* Accordion Practice Questions */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Section Headers */
+.section-header { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Comparison Table */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+.compare-table th { background: #f1f5f9; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; color: #334155; border-bottom: 2px solid #e2e8f0; }
+.compare-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #e2e8f0; color: #475569; vertical-align: top; }
+.compare-table tr:hover { background: #f8fafc; }
+
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+    .objectives-grid { grid-template-columns: 1fr; }
+    .takeaways-grid { grid-template-columns: 1fr; }
+    .framework-arrow { display: none; }
+    .framework-steps { gap: 1rem; }
+    .tab-nav { flex-wrap: wrap; }
+    .tab-btn { min-width: 80px; font-size: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-tags">
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-framework">Framework</span>
+        <span class="tag tag-api">API</span>
+    </div>
+    <h1>Claude Code 深度解析：六層架構、上下文治理與工程實踐</h1>
+    <div class="subtitle">從 ChatBot 用法到系統化 Agent 治理 -- 半年踩坑經驗的完整拆解</div>
+    <div class="source">Tw93 (@HiTw93) / X (Twitter) | 2026-03-13 整理</div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="executive-summary">
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.5/5</span>
+        <span class="rating-high">&#8593; Practical Value, Technical Depth</span>
+        <span class="rating-low">&#8595; Tool Ecosystem (single-platform focus)</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>Tw93 基於半年深度使用 Claude Code（雙帳號、每月 40 美元）的實戰經驗，提出了一套<span class="highlight-concept">六層架構模型</span>來理解 Claude Code 的運作本質：上下文層、控制層、工具層、執行層、驗證層與治理層。文章的核心論點是：Claude Code 不是 ChatBot，而是一個循環式的 Agent 系統，卡住的原因幾乎不是模型不夠聰明，而是<span class="highlight-key">上下文被污染、控制層缺失、或驗證閉環斷裂</span>。</p>
+    <p>文章從概念邊界（MCP/Skills/Hooks/Subagents 的區別）出發，深入上下文成本結構（200K 中真正可用的僅約 160-180K）、Skills 的三種設計模式、Hooks 的確定性約束、Subagents 的隔離價值、Prompt Caching 的架構影響，到 CLAUDE.md 的契約式寫法。每個主題都附帶具體配置範例與反模式警告。</p>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<h2 class="section-header">Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-icon">&#127968;</div>
+        <div class="objective-title">六層架構模型</div>
+        <div class="objective-desc">理解 Claude Code 從上下文到驗證的完整運作堆疊</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#128202;</div>
+        <div class="objective-title">上下文成本計算</div>
+        <div class="objective-desc">掌握 200K 上下文的實際分配與 MCP 隱形開銷</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#128295;</div>
+        <div class="objective-title">Skills / Hooks / Subagents</div>
+        <div class="objective-desc">區分三種機制的設計邊界與正確用法</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#128176;</div>
+        <div class="objective-title">Prompt Caching 架構</div>
+        <div class="objective-desc">理解快取對成本與會話設計的深層影響</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#128221;</div>
+        <div class="objective-title">CLAUDE.md 契約寫法</div>
+        <div class="objective-desc">從空白開始，用減法原則建立有效協作契約</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#9989;</div>
+        <div class="objective-title">驗證閉環設計</div>
+        <div class="objective-desc">建立 Agent 可靠運行的判定標準與回退機制</div>
+    </div>
+</div>
+
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+    <div class="framework-title">Claude Code 六層架構模型</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#128218;</div>
+            <div class="framework-step-title">Context</div>
+            <div class="framework-step-desc">CLAUDE.md / Skills / Memory</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128274;</div>
+            <div class="framework-step-title">Control</div>
+            <div class="framework-step-desc">Hooks / Permissions / Sandbox</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128295;</div>
+            <div class="framework-step-title">Tools</div>
+            <div class="framework-step-desc">MCP / Built-in / Custom</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#9881;</div>
+            <div class="framework-step-title">Execute</div>
+            <div class="framework-step-desc">Subagents / Plan Mode</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#9989;</div>
+            <div class="framework-step-title">Verify</div>
+            <div class="framework-step-desc">Test / Lint / Screenshots</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128200;</div>
+            <div class="framework-step-title">Govern</div>
+            <div class="framework-step-desc">Health Check / Iteration</div>
+        </div>
+    </div>
+</div>
+
+<!-- TABBED CONTENT -->
+<div class="tab-container">
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab1')">Architecture & Context</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab2')">Skills & Tools</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab3')">Hooks & Subagents</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab4')">Caching & Verify</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab5')">Commands & CLAUDE.md</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab6')">Practice & Patterns</button>
+    </div>
+
+    <!-- TAB 1: Architecture & Context -->
+    <div id="tab1" class="tab-content active">
+
+        <!-- Part 1: Core Loop -->
+        <div class="part-title">Part I: 核心運作循環與六層模型</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">Claude Code 的本質不是「回答問題」，而是一個<span class="highlight-concept">反覆循環的代理過程</span>：收集上下文 &#8594; 採取行動 &#8594; 驗證結果 &#8594; 完成或回到收集。很多人把它當 ChatBot 用，結果上下文越來越亂、規則越寫越長卻越不遵守。</div>
+                    <div class="en">"Claude Code's core isn't 'answering' -- it's a repeating agent loop: Collect context &#8594; Take action &#8594; Verify results &#8594; [Done or back to collect]"</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh">Tw93 的核心洞察：<span class="highlight-key">卡住的地方幾乎從來不是模型不夠聰明</span>，更多時候是給了錯誤的上下文，或者寫出來了但根本沒法判斷對不對。只強化其中一層，系統就會失衡。</div>
+                    <div class="en">"What gets stuck is almost never that the model isn't smart enough -- more often it's wrong context, or output with no way to verify correctness."</div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#128161; 比喻說明</div>
+                    <div class="info-box-content">
+                        把 Claude Code 想成一個<strong>新進員工 + 公司治理系統</strong>的組合。員工再聰明，如果你給他錯誤的 SOP、沒有驗收標準、沒有權限控制，他一樣會做出問題。CLAUDE.md 是員工手冊、Hooks 是稽核制度、Skills 是作業指導書、Subagents 是外派團隊。少任何一層都會出漏洞。
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Original Key Points</div>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#128218; 六層架構模型</div>
+                    <div class="info-box-content">
+                        <strong>1. Context Layer</strong> - CLAUDE.md / Skills / Memory / Rules<br>
+                        <strong>2. Control Layer</strong> - Hooks / Permissions / Sandbox<br>
+                        <strong>3. Tool Layer</strong> - MCP Servers / Built-in Tools / Custom Tools<br>
+                        <strong>4. Execution Layer</strong> - Subagents / Plan Mode<br>
+                        <strong>5. Verification Layer</strong> - Tests / Lint / Screenshots<br>
+                        <strong>6. Governance Layer</strong> - Health Check / Iteration / Anti-patterns
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                    <div class="info-box-content">
+                        排查問題的思路：結果不穩定 &#8594; 查上下文載入順序；自動化失控 &#8594; 看控制層有沒有設計；長會話品質下降 &#8594; 中間產物污染了上下文，換新會話比反覆調 prompt 有用。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 2: Concept Boundaries -->
+        <div class="part-title">Part II: 概念邊界 -- MCP / Plugin / Tools / Skills / Hooks / Subagents</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">這六個概念常被混用，但設計意圖完全不同。Tw93 的一句話總結：<span class="highlight-practical">給 Claude 新動作能力用 Tool/MCP，給它一套工作方法用 Skill，需要隔離執行環境用 Subagent，要強制約束和審計用 Hook，跨專案分發用 Plugin</span>。</div>
+                    <div class="en">"For new action capabilities use Tool/MCP, for a methodology use Skill, for isolated execution use Subagent, for mandatory constraints use Hook, for cross-project distribution use Plugin."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Comparison Table</div>
+                <table class="compare-table">
+                    <tr><th>Mechanism</th><th>Purpose</th><th>Invocation</th></tr>
+                    <tr><td><strong>Tool/MCP</strong></td><td>新增動作能力（API call、DB query）</td><td>Agent 自動選擇</td></tr>
+                    <tr><td><strong>Skill</strong></td><td>按需載入的工作流 / 領域知識</td><td>描述符常駐 + 內容按需</td></tr>
+                    <tr><td><strong>Hook</strong></td><td>確定性約束（格式化、阻斷、審計）</td><td>事件觸發、不進上下文</td></tr>
+                    <tr><td><strong>Subagent</strong></td><td>隔離執行（掃碼、並行研究）</td><td>主線程派生</td></tr>
+                    <tr><td><strong>Plugin</strong></td><td>跨專案工具分發</td><td>安裝後可用</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Part 3: Context Engineering -->
+        <div class="part-title">Part III: 上下文工程 -- 最重要的系統約束</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">很多人把上下文當「容量問題」，但<span class="highlight-key">真正的問題不是不夠長，而是太吵了</span>。200K 上下文中，固定開銷就吃掉 15-20K（系統指令 + Skill 描述符 + MCP 工具定義 + LSP 狀態），半固定的 CLAUDE.md 和 Memory 再吃 5-10K，動態可用的只剩 160-180K。</div>
+                    <div class="en">"Context gets stuck not because it's not long enough, but because it's too noisy. Useful info gets drowned by irrelevant content."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh">最驚人的發現：<span class="highlight-concept">一個典型 MCP Server 包含 20-30 個工具定義，每個約 200 tokens</span>。接 5 個 Server，光這部分固定開銷就到了 25,000 tokens（12.5%）。在需要讀大量程式碼的場景，這 12.5% 真的很關鍵。</div>
+                    <div class="en">"A typical MCP Server (e.g. GitHub) has 20-30 tool definitions, ~200 tokens each. Connect 5 servers and that's 25,000 tokens (12.5%) in fixed overhead."</div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#128736;&#65039; 上下文分層策略</div>
+                    <div class="info-box-content">
+                        <strong>始終常駐</strong> &#8594; CLAUDE.md：專案契約 / 建構命令 / 禁止事項<br>
+                        <strong>按路徑載入</strong> &#8594; <code>.claude/rules/</code>：語言 / 目錄 / 檔案類型特定規則<br>
+                        <strong>按需載入</strong> &#8594; Skills：工作流 / 領域知識<br>
+                        <strong>隔離載入</strong> &#8594; Subagents：大量探索 / 並行研究<br>
+                        <strong>不進上下文</strong> &#8594; Hooks：確定性腳本 / 審計 / 阻斷
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Context Cost Breakdown</div>
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#128187; 200K 上下文實際分配</div>
+                    <div class="info-box-content">
+<pre class="code-block">200K Total Context
+&#9500;&#9472;&#9472; Fixed Overhead (~15-20K)
+&#9474;   &#9500;&#9472;&#9472; System Instructions: ~2K
+&#9474;   &#9500;&#9472;&#9472; Skill Descriptors: ~1-5K
+&#9474;   &#9500;&#9472;&#9472; <span class="highlight-line">MCP Tool Definitions: ~10-20K  &#8592; Biggest hidden cost</span>
+&#9474;   &#9492;&#9472;&#9472; LSP State: ~2-5K
+&#9474;
+&#9500;&#9472;&#9472; Semi-fixed (~5-10K)
+&#9474;   &#9500;&#9472;&#9472; CLAUDE.md: ~2-5K
+&#9474;   &#9492;&#9472;&#9472; Memory: ~1-2K
+&#9474;
+&#9492;&#9472;&#9472; Dynamic Available (~160-180K)
+    &#9500;&#9472;&#9472; Conversation History
+    &#9500;&#9472;&#9472; File Contents
+    &#9492;&#9472;&#9472; Tool Call Results</pre>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; 壓縮機制的陷阱</div>
+                    <div class="info-box-content">
+                        預設壓縮演算法按「可重新讀取」判斷，早期的 Tool Output 和檔案內容會被優先刪掉，連帶把架構決策和約束理由也丟了。解法：在 CLAUDE.md 裡寫 <code>Compact Instructions</code>，明確指定壓縮時必須保留的優先順序。另一個更主動的方案：讓 Claude 寫一份 <code>HANDOFF.md</code>，記錄當前進度和決策，開新會話時直接讀這個檔案。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end tab1 -->
+
+    <!-- TAB 2: Skills & Tools -->
+    <div id="tab2" class="tab-content">
+
+        <!-- Part 4: Skills Design -->
+        <div class="part-title">Part IV: Skills 設計 -- 按需載入的工作流，不是模板庫</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">Skill 的官方定義是「按需載入的知識與工作流」。關鍵區別：<span class="highlight-concept">描述符（descriptor）常駐上下文，完整內容按需載入</span>。這意味著每個啟用的 Skill 都在偷你的上下文空間，描述符越長，固定開銷越大。</div>
+                    <div class="en">"Skill descriptors are always in context; full content loads on demand. Every enabled Skill steals your context space."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh">好的 Skill 描述應該讓模型知道<span class="highlight-key">「何時該用我」</span>，而不是「我是幹什麼的」-- 這兩個差很多。Claude Code 團隊反覆強調 "progressive disclosure"（漸進式披露）：先索引和導航，再按需拉取細節。</div>
+                    <div class="en">"Description should tell the model 'when to use me', not 'what I do' -- these two are very different."</div>
+                </div>
+                <div class="info-box box-compare">
+                    <div class="info-box-header">&#9878;&#65039; Skill 描述符效率對比</div>
+                    <div class="info-box-content">
+                        <strong>低效（~45 tokens）：</strong><br>
+                        <code>description: This skill helps you review code changes in Rust projects. It checks for common issues like unsafe code, error handling... Use this when you want to ensure code quality before merging.</code><br><br>
+                        <strong>高效（~9 tokens）：</strong><br>
+                        <code>description: Use for PR reviews with focus on correctness.</code>
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Three Skill Types</div>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#128218; 三種 Skill 類型</div>
+                    <div class="info-box-content">
+                        <strong>1. Checklist 型（品質門禁）</strong><br>
+                        發佈前跑一遍，確保不漏項。例：<code>release-check</code> -- cargo build / clippy / version bump / CHANGELOG。<br><br>
+                        <strong>2. Workflow 型（標準化操作）</strong><br>
+                        高風險操作的顯式調用 + 內建回滾步驟。例：<code>config-migration</code> -- backup &#8594; dry-run &#8594; apply &#8594; verify，含 rollback 指令。<br><br>
+                        <strong>3. Domain Expert 型（決策框架）</strong><br>
+                        運行時出問題時按固定路徑收集證據，不要瞎猜。例：<code>runtime-diagnosis</code> -- 收集 doctor 輸出 + logs + plugin state，依 Decision Matrix 分診。
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; auto-invoke 策略</div>
+                    <div class="info-box-content">
+                        <strong>高頻（>1 次/會話）</strong>&#8594; 保持 auto-invoke，優化描述符<br>
+                        <strong>低頻（&lt;1 次/會話）</strong>&#8594; <code>disable-auto-invoke</code>，手動觸發<br>
+                        <strong>極低頻（&lt;1 次/月）</strong>&#8594; 移除 Skill，改為文件中的文檔
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 5: Tool Design -->
+        <div class="part-title">Part V: 工具設計 -- 讓 Claude 少選錯</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">給 Agent 用的工具和給人用的 API 不是一回事。給人用追求功能齊全，<span class="highlight-key">給 Agent 用，重點是讓它更容易用對</span>。名稱前綴按系統分層、對大回應支援 <code>response_format: concise/detailed</code>、錯誤回應要教模型如何修正。</div>
+                    <div class="en">"Tools for agents and APIs for humans are different. For agents, the key is making it easy to use correctly, not feature-complete."</div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#128161; AskUserQuestion 演進案例</div>
+                    <div class="info-box-content">
+                        Claude Code 團隊嘗試了三種方式讓 Agent 在中途停下來問使用者：<br>
+                        <strong>V1：</strong>給 Bash 工具加 question 參數 &#8594; Claude 大多直接忽略<br>
+                        <strong>V2：</strong>要求輸出特定 markdown 格式 &#8594; 格式脆弱，經常忘記<br>
+                        <strong>V3：</strong>做成獨立的 AskUserQuestion 工具 &#8594; 調用即暫停，效果最好<br><br>
+                        教訓：<span class="highlight-practical">如果你就是要 Claude 停下來做某件事，給它一個專門的工具</span>，比加 flag 或約定輸出格式穩定得多。
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Tool Design Principles</div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#128736;&#65039; 工具設計原則</div>
+                    <div class="info-box-content">
+                        <strong>Good Tool:</strong> 名稱語義清晰、單一動作、schema 完整、錯誤可修正<br>
+                        <strong>Bad Tool:</strong> 名稱模糊、參數隱含假設、錯誤碼不透明、回應過大<br><br>
+                        <strong>具體建議：</strong><br>
+                        &#8226; 名稱前綴按系統分層：<code>github_pr_*</code>, <code>jira_issue_*</code><br>
+                        &#8226; 大回應支援 <code>response_format: concise</code><br>
+                        &#8226; 能合併成高層任務工具時，不暴露底層碎片<br>
+                        &#8226; 避免 <code>list_all_*</code> 讓模型自行篩選
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; 什麼時候不該再加 Tool</div>
+                    <div class="info-box-content">
+                        &#8226; 本地 shell 可靠完成的事<br>
+                        &#8226; 只需要靜態知識、不需要外部互動<br>
+                        &#8226; 需求更適合 Skill 的工作流約束<br>
+                        &#8226; 還沒驗證過 schema 能被模型穩定使用
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end tab2 -->
+
+    <!-- TAB 3: Hooks & Subagents -->
+    <div id="tab3" class="tab-content">
+
+        <!-- Part 6: Hooks -->
+        <div class="part-title">Part VI: Hooks -- 強制插入你自己的邏輯</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">Hooks 容易被當成「自動執行的腳本」，但更準確的理解是：<span class="highlight-concept">把不能交給 Claude 臨場發揮的事情，收回到確定性的流程裡</span>。格式化要不要跑、保護檔案能不能改、任務完成後要不要通知 -- 這些事不要指望 Claude 每次都自己記得。</div>
+                    <div class="en">"Hooks are about pulling things that can't be left to Claude's discretion back into deterministic flows."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh">Hook 的執行結果<span class="highlight-key">不進上下文</span>，這和 Tool/Skill 最大的區別。它是旁路的確定性邏輯，不佔上下文空間，不影響模型的推理路徑。在 100 次編輯的會話中，每次節省 30-60 秒，累積節省 1-2 小時。</div>
+                    <div class="en">"Hook output stays outside the context window -- the biggest difference from Tools/Skills."</div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#128736;&#65039; 三層疊加設計</div>
+                    <div class="info-box-content">
+                        <strong>CLAUDE.md：</strong>聲明「提交前必須通過測試和 lint」<br>
+                        <strong>Skill：</strong>告訴 Claude 在什麼順序下運行測試、如何看失敗、如何修復<br>
+                        <strong>Hook：</strong>對關鍵路徑執行硬性校驗，必要時阻斷<br><br>
+                        三樣少任何一層都會有漏洞。只寫 CLAUDE.md，Claude 經常當沒看見；只靠 Hooks，細節判斷又做不了。
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Hook Points & Examples</div>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#128218; 支援的 Hook 點</div>
+                    <div class="info-box-content">
+                        <strong>PreToolUse</strong> -- 工具執行前（可阻斷）<br>
+                        <strong>PostToolUse</strong> -- 工具執行後（自動校驗）<br>
+                        <strong>Notification</strong> -- 任務完成通知<br>
+                        <strong>SessionStart</strong> -- 會話啟動時注入動態上下文
+                    </div>
+                </div>
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#128187; PostToolUse Hook 範例</div>
+                    <div class="info-box-content">
+<pre class="code-block">{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Edit",
+      "pattern": "*.rs",
+      "hooks": [{
+        "type": "command",
+        "command": "cargo check 2>&1 | head -30",
+        "statusMessage": "Running cargo check..."
+      }]
+    }],
+    "Notification": [{
+      "type": "command",
+      "command": "osascript -e '...notification...'"
+    }]
+  }
+}</pre>
+                        <strong>Note:</strong> 限制輸出長度（<code>| head -30</code>），避免 Hook 輸出反而污染上下文。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 7: Subagents -->
+        <div class="part-title">Part VII: Subagents -- 隔離執行，不是平行處理</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">Subagent 是從主對話派出去的獨立 Claude 實例，有自己的上下文窗口。核心價值<span class="highlight-key">不是「並行」，而是隔離</span>：掃程式碼、跑測試、做審查這類會產生大量輸出的事，交給 Subagent，主線程只拿摘要，不被中間過程污染。</div>
+                    <div class="en">"Subagent's core value isn't 'parallelism' but isolation -- main thread gets summary only, not polluted by intermediate output."</div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; Subagent 反模式</div>
+                    <div class="info-box-content">
+                        &#8226; 子代理權限和主線程一樣寬 &#8594; 隔離沒有意義<br>
+                        &#8226; 輸出格式不固定 &#8594; 主線程拿到沒法用<br>
+                        &#8226; 子任務之間強依賴、頻繁共享中間狀態 &#8594; 不適合用 Subagent
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Configuration Guidelines</div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#128736;&#65039; 配置要點</div>
+                    <div class="info-box-content">
+                        <strong>tools / disallowedTools：</strong>限定能用什麼工具，別給和主線程一樣寬的權限<br>
+                        <strong>model：</strong>探索任務用 Haiku/Sonnet，重要審查用 Opus<br>
+                        <strong>maxTurns：</strong>防止跑飛<br>
+                        <strong>isolation: worktree：</strong>需要動檔案時隔離檔案系統<br><br>
+                        內建類型：Explore（唯讀、省成本）、Plan（規劃調研）、General-purpose（通用）
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end tab3 -->
+
+    <!-- TAB 4: Caching & Verify -->
+    <div id="tab4" class="tab-content">
+        <!-- Part 8: Prompt Caching -->
+        <div class="part-title">Part VIII: Prompt Caching -- Claude Code 架構的核心</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">這是很多教程都沒展開講的部分，但它深刻影響 Claude Code 的成本結構和設計取捨。工程界有句話「<span class="highlight-concept">Cache Rules Everything Around Me</span>」，Claude Code 的整個架構都是圍繞 Prompt Caching 構建的。高快取命中率不只降低成本，也幫助獲得更寬鬆的速率限制。</div>
+                    <div class="en">"Claude Code's entire architecture is built around prompt caching. High cache hit rates don't just lower cost -- they also help create more relaxed rate limits."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh"><span class="highlight-key">Prompt Caching 是按前綴匹配工作的</span>：從請求開頭到每個 cache_control 斷點之前的內容都會被快取。所以順序很重要：System Prompt（靜態）&#8594; Tool Definitions（靜態）&#8594; Chat History（動態）&#8594; 當前輸入。</div>
+                    <div class="en">"Prompt caching works on prefix matching -- from the beginning of the request to each cache_control breakpoint."</div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; 破壞快取的常見陷阱</div>
+                    <div class="info-box-content">
+                        &#8226; 在靜態 System Prompt 中放入帶時間戳的內容<br>
+                        &#8226; 非確定性地打亂工具定義順序<br>
+                        &#8226; 會話中途增刪工具<br>
+                        &#8226; <strong>會話中途切換模型</strong> -- 快取是模型唯一的，已和 Opus 對話 100K tokens 後切到 Haiku，要為 Haiku 重建整個快取，反而更貴
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#128161; 比喻說明</div>
+                    <div class="info-box-content">
+                        把 Prompt Cache 想像成一本「前半部固定、後半部手寫」的筆記本。前半部（System + Tools）印好了不能改，所有人都用同一版。一旦你把前半部撕掉重印（改了 System Prompt 或換了模型），之前的快取就全部作廢，要重新花錢印。所以動態資訊（時間戳、Branch 名稱）要放在「手寫」的後半部。
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Caching Architecture Details</div>
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#128187; Prompt Layout for Caching</div>
+                    <div class="info-box-content">
+<pre class="code-block"><span class="comment">// Claude Code Prompt Order (cache-optimized)</span>
+1. System Prompt     <span class="keyword">&#8594; Static, locked</span>
+2. Tool Definitions  <span class="keyword">&#8594; Static, locked</span>
+3. Chat History      <span class="keyword">&#8594; Dynamic, appended</span>
+4. Current Input     <span class="keyword">&#8594; Last position</span>
+
+<span class="comment">// Dynamic info goes in user message,</span>
+<span class="comment">// NOT in system prompt:</span>
+&lt;system-reminder&gt;
+  Current time: 2026-03-13T10:00:00Z
+  Branch: feature/new-ui
+&lt;/system-reminder&gt;</pre>
+                    </div>
+                </div>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#128218; Compaction 實際流程</div>
+                    <div class="info-box-content">
+                        <strong>觸發條件：</strong>上下文快滿時<br>
+                        <strong>執行方式：</strong>Claude Code 開一個 fork 調用，把完整對話歷史喂給模型 + "Summarize this conversation"<br>
+                        <strong>成本：</strong>命中快取所以只需 1/10 價格<br>
+                        <strong>結果：</strong>幾十輪對話被替換成 ~20K tokens 摘要，System + Tools 保留，掛上之前的檔案引用<br><br>
+                        <strong>defer_loading 機制：</strong>數十個 MCP 工具不全量包含，發送輕量級 stub（只有工具名 + <code>defer_loading: true</code>），模型通過 ToolSearch 工具「發現」它們，完整 schema 只在選擇後才載入。快取前綴保持穩定。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 9: Verification -->
+        <div class="part-title">Part IX: 驗證閉環 -- 沒有 Verifier 就沒有工程上的 Agent</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">Tw93 的核心判斷標準：<span class="highlight-key">如果一個任務你都說不清楚「Claude 怎麼才算做對了」，那它大概率也不適合直接交給 Claude 自動完成</span>。驗證標準本身都沒有，Claude 再聰明也跑不出正確答案。</div>
+                    <div class="en">"If you can't articulate 'how does Claude know it's done right', it probably shouldn't be given to Claude for autonomous completion."</div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#128736;&#65039; CDMO 連結：驗證 = 放行標準</div>
+                    <div class="info-box-content">
+                        這和 GMP 的放行判定完全一致：沒有預先定義的驗收標準（acceptance criteria），就不能說產品合格。在 Claude Code 裡，<code>make test</code> + <code>make lint</code> 就是你的 IPC/FPC（In-Process Check / Final Product Check）。寫任務 Prompt 或 Skill 時就把驗收標準定義清楚，就像 batch record 上的 CQA 欄位一樣。
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Verification Hierarchy</div>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#128218; 三層驗證層級</div>
+                    <div class="info-box-content">
+                        <strong>Layer 1 (Minimum):</strong> 命令退出碼、lint、typecheck、unit test<br>
+                        <strong>Layer 2 (Integration):</strong> 整合測試、截圖對比、contract test、smoke test<br>
+                        <strong>Layer 3 (Production):</strong> 生產日誌驗證、監控指標、人工審查清單
+                    </div>
+                </div>
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#128187; 驗證定義範例</div>
+                    <div class="info-box-content">
+<pre class="code-block"><span class="comment">## Verification (in CLAUDE.md)</span>
+
+For backend changes:
+- Run `make test` and `make lint`
+- For API changes, update contract tests
+
+For UI changes:
+- Capture before/after screenshots
+
+Definition of done:
+- All tests pass
+- Lint passes
+- No TODO left behind</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 5: Commands & CLAUDE.md -->
+    <div id="tab5" class="tab-content">
+        <!-- Part 10: Commands -->
+        <div class="part-title">Part X: 高頻命令的工程意義</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">這些命令的共同目的只有一件事：<span class="highlight-concept">主動管理上下文，別等系統自己處理</span>。Tw93 把命令分為三類：上下文管理、能力與治理、會話連續性與並行。</div>
+                    <div class="en">"These commands all do one thing: actively manage context -- don't wait for the system to handle it."</div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; 不常見但很好用的命令</div>
+                    <div class="info-box-content">
+                        <strong>/simplify</strong> -- 對剛改完的程式碼做三維檢查（複用、品質、效率），代替手動 review<br>
+                        <strong>/rewind</strong> -- 回到某個 checkpoint 重新總結，不是撤銷，適合 Claude 沿錯誤路徑探索太久時<br>
+                        <strong>/btw</strong> -- 不打斷主任務的快速旁路問答<br>
+                        <strong>/insight</strong> -- 分析當前會話，提煉值得沉澱到 CLAUDE.md 的內容<br>
+                        <strong>&#9099;&#9099; ESC</strong> -- 回到上一條輸入重新編輯，比重開會話省事<br>
+                        <strong>Ctrl+B</strong> -- 長時間 bash 命令移到背景執行
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Command Categories</div>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#128218; 上下文管理類</div>
+                    <div class="info-box-content">
+                        <code>/context</code> -- 查看 token 佔用結構，排查 MCP 佔比<br>
+                        <code>/clear</code> -- 清空會話，同一問題被糾偏兩次以上就重來<br>
+                        <code>/compact</code> -- 壓縮但保留重點，配合 Compact Instructions<br>
+                        <code>/memory</code> -- 確認哪些 CLAUDE.md 真的被載入了
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#128736;&#65039; 會話連續性類</div>
+                    <div class="info-box-content">
+                        <code>claude --continue</code> -- 恢復最近會話<br>
+                        <code>claude --resume</code> -- 選擇器恢復歷史會話<br>
+                        <code>claude --continue --fork</code> -- 分叉，同起點不同方案<br>
+                        <code>claude --worktree</code> -- 隔離 git worktree<br>
+                        <code>claude -p "prompt"</code> -- 非交互模式，接 CI/腳本<br>
+                        <code>claude -p --output-format json</code> -- 結構化輸出
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 11: CLAUDE.md -->
+        <div class="part-title">Part XI: 如何寫一個好的 CLAUDE.md</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">CLAUDE.md 更像是你和 Claude 之間的<span class="highlight-concept">協作契約</span>，不是團隊文檔，也不是知識庫。裡面只放那些<span class="highlight-key">每次會話都得成立的事</span>。Tw93 的建議很直接：一開始甚至可以什麼都不寫，等你發現自己老是在重複同一件事，再補進去。</div>
+                    <div class="en">"CLAUDE.md is a collaboration contract -- not a team doc or knowledge base. Only put in things that must hold true every single session."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh">Anthropic 官方自己的 CLAUDE.md 大約只有 2.5K tokens。<span class="highlight-practical">每次都要知道的放 CLAUDE.md，只對部分檔案生效的放 rules，只在某類任務中需要的放 Skills</span>。最喜歡的技巧：每次糾正 Claude 的錯誤後，讓它自己更新 CLAUDE.md。</div>
+                    <div class="en">"Anthropic's own CLAUDE.md is only ~2.5K tokens. After correcting Claude, tell it: 'Update your CLAUDE.md so you don't make that mistake again.'"</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">CLAUDE.md Template</div>
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#128187; 高品質模板結構</div>
+                    <div class="info-box-content">
+<pre class="code-block"><span class="comment"># Project Contract</span>
+
+<span class="keyword">## Build And Test</span>
+- Install: `pnpm install`
+- Dev / Test / Typecheck / Lint
+
+<span class="keyword">## Architecture Boundaries</span>
+- HTTP handlers in src/http/handlers/
+- Domain logic in src/domain/
+- Do NOT put persistence in handlers
+
+<span class="keyword">## Safety Rails</span>
+NEVER: modify .env, lockfiles, CI secrets
+ALWAYS: show diff before committing
+
+<span class="keyword">## Verification</span>
+Backend: make test + make lint
+UI: before/after screenshots
+
+<span class="keyword">## Compact Instructions</span>
+Preserve: architecture decisions,
+modified files, verification status,
+open TODOs, rollback notes</pre>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; 不該放的內容</div>
+                    <div class="info-box-content">
+                        &#8226; 大段背景介紹<br>
+                        &#8226; 完整 API 文件<br>
+                        &#8226; 空泛原則如「寫高品質程式碼」<br>
+                        &#8226; Claude 讀 repo 即可推斷的資訊<br>
+                        &#8226; 大量背景資料和低頻任務知識（放 Skills）
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 6: Practice & Patterns -->
+    <div id="tab6" class="tab-content">
+        <!-- Part 12: Real-world Experience -->
+        <div class="part-title">Part XII: 實戰經驗 -- Kaku 專案中的踩坑</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">Tw93 用 Claude Code 開發了開源 terminal 專案 Kaku（Rust + Lua），混合語言加上自定義配置系統暴露出典型的 agent 協作問題。核心發現：<span class="highlight-concept">環境透明比你想像中重要</span>。Claude Code 調用的都是真實的 shell、git、package manager，只要有一層不透明，它就只能開始猜。</div>
+                    <div class="en">"Environment transparency matters more than you think. Once Claude starts guessing about the environment, reliability drops fast."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh">解法：在 CLI 中加入 <code>doctor</code> 命令，把環境狀態、依賴和配置收成結構化健康報告。同時確保 CLI 有 <code>init</code>、<code>config</code>、<code>reset</code> 等語義清楚的子命令，<span class="highlight-practical">先把狀態收斂住，再暴露編輯入口</span>，順序一反過來就很容易亂。</div>
+                    <div class="en">"Converge state first, then expose edit entry points. Reverse the order and things get messy fast."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Project Layout Reference</div>
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#128187; 完整工程化佈局</div>
+                    <div class="info-box-content">
+<pre class="code-block">Project/
+&#9500;&#9472;&#9472; CLAUDE.md
+&#9500;&#9472;&#9472; .claude/
+&#9474;   &#9500;&#9472;&#9472; rules/
+&#9474;   &#9474;   &#9500;&#9472;&#9472; core.md
+&#9474;   &#9474;   &#9500;&#9472;&#9472; config.md
+&#9474;   &#9474;   &#9492;&#9472;&#9472; release.md
+&#9474;   &#9500;&#9472;&#9472; skills/
+&#9474;   &#9474;   &#9500;&#9472;&#9472; runtime-diagnosis/
+&#9474;   &#9474;   &#9500;&#9472;&#9472; config-migration/
+&#9474;   &#9474;   &#9500;&#9472;&#9472; release-check/
+&#9474;   &#9474;   &#9492;&#9472;&#9472; incident-triage/
+&#9474;   &#9500;&#9472;&#9472; agents/
+&#9474;   &#9492;&#9472;&#9472; settings.json
+&#9492;&#9472;&#9472; docs/ai/</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 13-14: Anti-patterns & Health Check -->
+        <div class="part-title">Part XIII: 常見反模式與配置健康檢查</div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="content-label">Analysis / &#20998;&#26512;</div>
+                <div class="bilingual-block">
+                    <div class="zh">Tw93 列出的反模式清單，本質上就是六層架構中每一層可能出錯的地方。從上下文層的「CLAUDE.md 寫太長自己先污染自己」到執行層的「Subagent 權限太寬」到治理層的「跳過驗證就提交」。</div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; 核心反模式</div>
+                    <div class="info-box-content">
+                        <strong>Context:</strong> CLAUDE.md 500+ 行、MCP 全開不斷開閒置、不用 /compact 等自動壓縮<br>
+                        <strong>Skills:</strong> 描述太短觸發太廣（<code>help with backend</code>）、正文太長、一個 Skill 覆蓋五件事<br>
+                        <strong>Tools:</strong> 暴露太多底層碎片、錯誤碼不透明、沒驗證過 schema 穩定性<br>
+                        <strong>Hooks:</strong> 放入需要語義判斷的複雜邏輯（應放 Skill）<br>
+                        <strong>Subagent:</strong> 權限和主線程一樣寬、輸出格式不固定<br>
+                        <strong>Verify:</strong> 跳過驗證就提交、沒有 Definition of Done
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="content-label">Health Check Tool</div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#128736;&#65039; claude-health 健康檢查</div>
+                    <div class="info-box-content">
+                        Tw93 基於六層架構框架整理成開源 Skill：<br><br>
+                        <code>npx skills add tw93/claude-health</code><br><br>
+                        在任意會話跑 <code>/health</code>，自動識別專案複雜度，對 CLAUDE.md、rules、skills、hooks、allowedTools 和實際行為模式各跑一遍檢查，輸出優先級報告：<br>
+                        &#128308; 需要立刻修<br>
+                        &#128992; 結構性問題<br>
+                        &#128994; 可以慢慢做
+                    </div>
+                </div>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#128218; 三階段成長模型</div>
+                    <div class="info-box-content">
+                        <strong>Stage 1:</strong> 當 ChatBot 用（問答式）<br>
+                        <strong>Stage 2:</strong> 當工具用（功能驅動）<br>
+                        <strong>Stage 3:</strong> 當系統治理（約束下自主運行）<br><br>
+                        從「這個功能怎麼用」變成「怎麼讓 agent 在約束下自己跑起來」-- 兩件事感覺差很多。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end tab-container -->
+
+<!-- KEY TAKEAWAYS -->
+<h2 class="section-header">Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-title">Context is the Bottleneck</div>
+        <div class="summary-card-text">200K 上下文中真正可用的僅 160-180K。MCP 工具定義是最大隱形成本（5 個 Server 佔 12.5%）。上下文治理比 Prompt 技巧更重要。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">Layer Your Controls</div>
+        <div class="summary-card-text">CLAUDE.md 宣告規則、Skills 定義工作流、Hooks 強制執行。三層少任何一層都會出漏洞，這和 GMP 的 SOP + WI + 稽核三層設計一模一樣。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">Design for Cache</div>
+        <div class="summary-card-text">Prompt Caching 是按前綴匹配，靜態內容（System Prompt、Tool Definitions）放前面，動態內容放後面。中途切模型 = 重建整個 Cache，通常更貴。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">Verify or It Didn't Happen</div>
+        <div class="summary-card-text">「Claude 說完成了」沒有意義。如果你說不清楚「什麼叫做完」，就不適合直接交給 Claude 自主完成。驗證標準本身都沒有，再聰明也跑不出正確答案。</div>
+    </div>
+</div>
+
+<!-- PRACTICE QUESTIONS -->
+<h2 class="section-header">Practice Questions</h2>
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">Tw93 說「卡住的地方幾乎從來不是模型不夠聰明」。在他的六層架構中，當 Claude Code 的輸出品質在長會話中逐漸下降時，最可能是哪一層出了問題？該如何排查和修復？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>最可能是<strong>Context Layer</strong>（上下文層）出了問題。長會話中，中間產物（Tool Output、讀取的檔案內容）不斷累積，佔據了原本給「有用資訊」的空間。當系統自動壓縮（Compaction）啟動時，預設演算法會按「可重新讀取」判斷，把早期的架構決策和約束理由一起丟掉。</p>
+        <p><strong>排查步驟：</strong>(1) 用 <code>/context</code> 檢查 token 消耗結構，看 MCP 固定開銷和歷史對話佔比；(2) 檢查 CLAUDE.md 是否有 Compact Instructions，確保壓縮時保留架構決策；(3) 考慮用 <code>/clear</code> 開新會話，或讓 Claude 先寫一份 HANDOFF.md 再交接。</p>
+        <p><strong>修復：</strong>在 CLAUDE.md 加入 Compact Instructions，依優先順序列出壓縮時必須保留的資訊（架構決策 > 修改檔案 > 驗證狀態 > TODO > Tool 輸出）。對於任務切換用 <code>/clear</code>，同一任務進入新階段用 <code>/compact</code>。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">在 CDMO 的 GMP 環境中，你正在考慮用 Claude Code 來自動化 batch record review 流程。根據 Tw93 的六層架構和 Copilot/Agent 邊界，你會如何設計 CLAUDE.md、Skills、Hooks 這三層的分工？哪些環節絕對不能讓 Claude 自主完成？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>CLAUDE.md（協作契約）：</strong>聲明核心規則 -- batch record review 必須在 human review 完成前不得標記為 "Pass"；所有 CQA（Critical Quality Attribute）欄位必須逐一驗證；NEVER 自動修改原始數據；ALWAYS 輸出完整的偏差摘要。</p>
+        <p><strong>Skills（工作流）：</strong>建立 <code>batch-review</code> Skill，定義步驟：(1) 讀取 batch record PDF，(2) 對照 CQA 規格逐欄檢查，(3) 標記異常值，(4) 生成偏差摘要報告，(5) 停在「等待人工確認」。每個步驟有明確的輸入/輸出格式和停止條件。</p>
+        <p><strong>Hooks（強制約束）：</strong>PreToolUse Hook 阻斷任何嘗試修改原始 batch record 的操作；PostToolUse Hook 在生成報告後自動執行格式檢查（是否包含所有必要欄位）。</p>
+        <p><strong>絕對不能自主完成的環節：</strong>最終放行判定（release decision）、OOS/OOT 的根本原因判斷（root cause determination）、任何涉及數據完整性的修改（ALCOA+ 原則）。這些是 O-Ring Bottleneck -- AI 在周圍加速，但這些節點的人類判斷不可替代。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">Tw93 的文章幾乎所有案例都來自軟體開發場景（Rust、TypeScript、CI/CD）。他的六層架構模型在非程式碼的知識工作（如文件撰寫、策略分析、專案管理）中是否同樣適用？有哪些層會失效或需要重新定義？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>仍然適用的層：</strong>Context Layer（上下文治理在任何 LLM 工作流中都是核心約束）、Control Layer 的部分功能（如 Compact Instructions、Plan Mode）、Governance Layer（反模式識別、健康檢查思維）。</p>
+        <p><strong>需要重新定義的層：</strong></p>
+        <p><strong>Verification Layer</strong> 是最大挑戰。程式碼有 <code>make test</code> 和 lint 提供客觀判定，但文件撰寫和策略分析的「正確性」高度主觀。你需要把 Verifier 從「自動化測試」轉換為「結構化 checklist」-- 例如「報告是否包含所有必要章節」「數據來源是否引用」「結論是否與分析一致」。</p>
+        <p><strong>Tool Layer</strong> 在非程式碼場景中大幅簡化（可能只需要檔案讀寫和搜尋），但 Skill Layer 的重要性反而上升 -- 你需要更精確的 domain-specific 工作流指引來替代程式碼世界中 compiler 和 linter 提供的即時回饋。</p>
+        <p><strong>Hooks Layer</strong> 在非 CLI 場景幾乎失效。目前 Hooks 依賴檔案匹配和 shell 命令，對於 Claude.ai Projects 或 Make.com 自動化，等價物可能是 Make.com 的 Router + Error Handler 或 Claude.ai 的 System Prompt 硬約束。這是文章的明確盲點。</p>
+    </div>
+</details>
+
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+    <div class="bottom-line-header">&#127919; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#10004; 核心洞察</div>
+        <div class="bottom-line-text">Claude Code 的六層架構模型完美映射到我在 CDMO 環境中已經熟悉的品質系統思維：CLAUDE.md = 品質手冊、Skills = SOP/WI、Hooks = 稽核/CAPA 自動觸發、Subagents = 外包 QC 實驗室。「Copilot vs Agent」的邊界在 Claude Code 中更加具體：Hooks 和 Verification 就是確保人類保持 100% 審查的機制層。這篇文章將我對 Claude Code 的理解從「工具使用」提升到「系統治理」層次。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#128200; 立即應用</div>
+        <div class="bottom-line-text">1. 用 <code>/context</code> 檢查目前 Claude Code 會話的 token 消耗結構，特別是 MCP 固定開銷。2. 為現有 Claude Code 專案寫一份精簡的 CLAUDE.md（&lt;2.5K tokens），包含 build/test 指令和 Compact Instructions。3. 安裝 <code>tw93/claude-health</code> 跑一次 <code>/health</code>，取得配置基線報告。4. 把常用的 artifact-skill 描述符從 ~45 tokens 壓縮到 ~9 tokens，釋放上下文空間。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#9888; 需要補充</div>
+        <div class="bottom-line-text">文章聚焦於軟體開發場景，對於 CDMO/GMP 環境中的非程式碼工作流（如 batch record review、deviation triage）如何套用這些治理模式，需要自行調適。Hooks 在非 CLI 場景的等價物是什麼？Subagent 的隔離概念如何對應到 Make.com 的線性自動化？另外，文章對 Prompt Caching 的成本數據缺乏具體的美元對照，需要另外查 Anthropic 定價頁面。建議 2-3 個月後重讀，屆時 Skills 生態應該更成熟。</div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>&#128218; 製作日期：2026-03-13 | 來源：<a href="https://x.com/HiTw93" target="_blank">Tw93 (@HiTw93) / X</a></p>
+    <p>Suggested Chat Title: <strong>2026-03-13 [Agent] Tw93 - Claude Code Architecture Governance</strong></p>
+    <p>Master Prompt v1.5.0 | Filename: 2026-03-13_claude-code-architecture-governance.html</p>
+</div>
+
+</div><!-- end container -->
+
+<script>
+function switchTab(evt, tabId) {
+    const container = evt.currentTarget.closest('.tab-container');
+    container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>

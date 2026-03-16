@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1M Context 不等於無限 — 長對話 Agent 的 Compaction 工程實踐</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-03-16">
+<meta name="doc-title" content="1M Context Compaction - Agent Context Engineering Runbook">
+<meta name="doc-source" content="Nyk (@nyk_builderz) / X Thread">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Agent,LLM,API,Framework">
+<meta name="doc-rating" content="4.0">
+<meta name="doc-summary" content="三種 context rot 失敗模式、Compaction API 設定、CLAUDE.md 記憶層級架構，實戰操作清單。">
+<meta name="doc-file" content="2026-03-16_1m-context-compaction.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
+
+/* Tags */
+.tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin: 0.15rem; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-llm { background: #bfdbfe; color: #1e3a8a; }
+.tag-api { background: #ddd6fe; color: #4c1d95; }
+.tag-framework { background: #fde68a; color: #92400e; }
+
+/* Header content */
+.header-subtitle { font-size: 1rem; opacity: 0.9; margin-top: 0.5rem; }
+.header-source { font-size: 0.85rem; opacity: 0.75; margin-top: 0.75rem; }
+.header h1 { font-size: 1.6rem; margin: 0.75rem 0 0.25rem; line-height: 1.4; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.exec-summary h2 { font-size: 1.1rem; color: #1e3a8a; margin-top: 0; }
+.exec-summary p { font-size: 0.95rem; color: #475569; line-height: 1.8; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-text { font-size: 0.9rem; color: #334155; font-weight: 500; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Section Headers */
+.section-header { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* Content Grid Columns */
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+@media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+
+/* Bilingual blocks */
+.bilingual-block { margin-bottom: 1.25rem; }
+.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.3rem; }
+.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.7; }
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 0.75rem; font-size: 0.88rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Code blocks */
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; line-height: 1.6; margin: 1rem 0; }
+code { font-family: 'Source Code Pro', monospace; }
+.code-label { font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.25rem; display: block; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.88rem; color: #475569; line-height: 1.7; }
+
+/* Accordion Practice */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; margin-top: 2rem; border-top: 1px solid #e2e8f0; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Critical Analysis Box */
+.critical-box { background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+.critical-box-title { font-weight: 700; color: #991b1b; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.critical-box-text { font-size: 0.88rem; color: #7f1d1d; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-llm">LLM</span>
+        <span class="tag tag-api">API</span>
+        <span class="tag tag-framework">Framework</span>
+    </div>
+    <h1>1M Context 不等於無限 — 長對話 Agent 的 Compaction 工程實踐</h1>
+    <div class="header-subtitle">How I Run Claude Agents on 1M Context Without Drift</div>
+    <div class="header-source">Nyk (@nyk_builderz) / X Thread | 2026-03-16</div>
+</div>
+
+<!-- Container -->
+<div class="container">
+
+<!-- Executive Summary -->
+<div class="exec-summary">
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+        <span class="rating-high">↑ Practical Value, Timeliness</span>
+        <span class="rating-low">↓ Tool Ecosystem, Learning Curve</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>Anthropic 於 2026 年 3 月 13 日宣布 Opus 4.6 和 Sonnet 4.6 的 1M token context window 正式 GA。本文作者 Nyk 從實戰角度提出警告：<strong>更大的 context window 不等於更好的 agent 表現</strong>。文章系統性地定義了三種 context rot 失敗模式（Context Saturation、Instruction Dilution、Reasoning Loop Collapse），並提出以 Compaction API + CLAUDE.md 記憶層級 + Adaptive Thinking 組成的結構化解決方案。內容包含可複製的 API 設定碼、Claude Code 操作紀律、以及完整的操作檢查清單。</p>
+    <p style="font-size:0.85rem; color:#64748b; margin-top:0.5rem;"><strong>批判性提醒：</strong>作者宣稱的「failure rate 從 40% 降至 3%」缺乏方法論說明與樣本量揭露，應以 2-3x discount 看待。部分技術細節（如 scoped rules 的 paths frontmatter）尚未在 Anthropic 官方文件中完整記載。</p>
+</div>
+
+<!-- Learning Objectives -->
+<h2 class="section-header">Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-icon">🧠</div>
+        <div class="objective-text">辨識三種 context rot 失敗模式，理解為什麼更大的 window 可能讓效能更差</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">🔧</div>
+        <div class="objective-text">設定 Compaction API 的 trigger、custom instructions 與 Claude Code /compact 操作紀律</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">🏗️</div>
+        <div class="objective-text">設計 CLAUDE.md 多層記憶架構，用 scoped rules 控制 context 訊噪比</div>
+    </div>
+</div>
+
+<!-- Framework Visual -->
+<div class="framework-visual">
+    <div class="framework-title">Context Engineering 核心循環：辨識 → 壓縮 → 保鮮</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">🚨</div>
+            <div class="framework-step-title">辨識失敗模式</div>
+            <div class="framework-step-desc">Saturation / Dilution / Loop</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🗜️</div>
+            <div class="framework-step-title">結構化壓縮</div>
+            <div class="framework-step-desc">Compaction API + /compact</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">📋</div>
+            <div class="framework-step-title">訊號保鮮</div>
+            <div class="framework-step-desc">CLAUDE.md hierarchy + scoped rules</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">⚡</div>
+            <div class="framework-step-title">效能調控</div>
+            <div class="framework-step-desc">Adaptive Thinking effort</div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART 1: Three Failure Modes ==================== -->
+<h2 class="section-header">Part I: 三種 Context Rot 失敗模式</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text">作者開宗明義：<span class="highlight-key">問題從來不是 window 大小，而是 context rot</span> — 效能隨著對話填充而退化，不是因為模型「忘記」，而是因為訊號淹沒在雜訊中。</div>
+            <div class="en-text">"The problem was never the window size. It was context rot — performance degrades as conversations fill, not because the model forgets, but because signal drowns in noise."</div>
+        </div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 Failure 1: Context Saturation（上下文飽和）</div>
+            <div class="info-box-content">
+                Agent 累積 tool call 結果、檔案內容、搜尋輸出和推理軌跡。到 100K tokens 時，window 中約 60% 是雜訊。模型對 window 中所有內容賦予大致相同的注意力權重 — 它無法區分 50 次 tool call 前讀取的檔案和 3 秒前打開的檔案。<br><br>
+                <strong>關鍵洞察：</strong>一個 800K tokens 雜訊的 1M window，表現比 150K tokens 精選訊號的 200K window 更差。
+            </div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ Failure 2: Instruction Dilution（指令稀釋）</div>
+            <div class="info-box-content">
+                你的 system prompt 說「使用 pnpm」，CLAUDE.md 說「commit 前跑測試」，README 說「使用 npm」。到 200K tokens 時，這些指令和 150K tokens 對話歷史競爭注意力。<span class="highlight-key">一開始佔 context 5% 的指令，到 200K tokens 時只佔 0.5%</span>。<br><br>
+                這不是幻覺問題，是<strong>注意力預算</strong>問題。Anthropic 內部測試發現指令遵從度會隨 context 填充而明顯下降。
+            </div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">💡 Failure 3: Reasoning Loop Collapse（推理迴圈崩潰）</div>
+            <div class="info-box-content">
+                Agent 遇到 bug → 生成修復 → 測試 → 新錯誤 → 再修復… 到第五次迭代時，每次嘗試及其錯誤軌跡都在 window 中。模型開始混合第 2 次的推理和第 4 次的程式碼，提出已經試過的修復方案。<br><br>
+                <strong>這是最燒 token 且產出最低的失敗模式。</strong>Agent 不是缺乏智慧，而是 context 中包含五條矛盾的推理鏈。
+            </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-compare">
+            <div class="info-box-header">⚖️ 三種失敗模式對照表</div>
+            <div class="info-box-content">
+                <table style="width:100%; font-size:0.82rem; border-collapse:collapse;">
+                    <tr style="border-bottom:1px solid #a5b4fc;">
+                        <th style="text-align:left; padding:0.4rem;">失敗模式</th>
+                        <th style="text-align:left; padding:0.4rem;">根因</th>
+                        <th style="text-align:left; padding:0.4rem;">修復</th>
+                    </tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;">
+                        <td style="padding:0.4rem;">Context Saturation</td>
+                        <td style="padding:0.4rem;">舊 tool results 累積為雜訊</td>
+                        <td style="padding:0.4rem;">填滿前壓縮</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;">
+                        <td style="padding:0.4rem;">Instruction Dilution</td>
+                        <td style="padding:0.4rem;">指令佔比隨歷史增長而下降</td>
+                        <td style="padding:0.4rem;">壓縮後重新注入指令</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.4rem;">Reasoning Loop</td>
+                        <td style="padding:0.4rem;">矛盾推理鏈共存</td>
+                        <td style="padding:0.4rem;">壓縮保留當前狀態，丟棄舊嘗試</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ CDMO 場景對應</div>
+            <div class="info-box-content">
+                <strong>Context Saturation → 偏差調查 Agent：</strong>如果 Agent 讀取了 30 份 batch records 和 10 份 SOP，早期讀取的檔案內容成為雜訊，干擾對當前偏差的分析。<br><br>
+                <strong>Instruction Dilution → 合規檢查 Agent：</strong>GMP 規則在 system prompt 中，但經過 200K tokens 的文件處理後，模型可能遺漏 21 CFR Part 11 的電子簽章要求。<br><br>
+                <strong>Reasoning Loop → Tech Transfer 除錯：</strong>Agent 在試調充填參數時，第五次嘗試的推理混入了第二次的失敗參數。
+            </div>
+        </div>
+
+        <div class="critical-box">
+            <div class="critical-box-title">🔍 批判性分析</div>
+            <div class="critical-box-text">
+                「三種失敗模式」的分類框架直觀有用，但作者沒有提供定量證據。「60% 雜訊」和「5% 降至 0.5%」是概念性估算，非實測數據。此外，Anthropic 的 MRCR v2 benchmark（76% at 1M tokens）顯示長 context 檢索能力已大幅提升，失敗模式的嚴重程度可能隨模型世代改善而降低。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART 2: Compaction API ==================== -->
+<h2 class="section-header">Part II: Compaction Harness — API Level 設定</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text">Anthropic 隨 Opus 4.6 推出了 <span class="highlight-concept">Compaction API</span>（beta），當 input tokens 超過閾值時自動觸發，摘要較舊的 context 並以壓縮狀態繼續。</div>
+            <div class="en-text">"Anthropic shipped the Compaction API as a beta feature with Opus 4.6. It triggers automatically when input tokens exceed a threshold, summarizes older context, and continues with a compressed state."</div>
+        </div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 核心參數解析</div>
+            <div class="info-box-content">
+                <strong>trigger.value：</strong>壓縮觸發時機。預設 150,000 tokens。作者設為 80,000 — 提早壓縮能保留更多訊號。最低下限為 50,000 tokens。<br><br>
+                <strong>instructions：</strong>自訂摘要提示詞，完全取代預設摘要邏輯。用它告訴壓縮器要保留什麼（當前任務狀態、檔案路徑、測試結果）和丟棄什麼（舊搜尋結果、放棄的方法）。<br><br>
+                <strong>pause_after_compaction：</strong>生成摘要後暫停，允許你檢視或修改摘要再繼續。開發時有用，生產環境關閉。
+            </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">作者建議用<span class="highlight-practical">領域專屬的壓縮指令</span>取代預設的通用壓縮器。自訂指令明確指定保留項目（任務目標、檔案路徑、最新測試輸出、branch 名稱）和丟棄項目（超過 5 次 tool call 的檔案內容、未被採用的搜尋結果、放棄的推理軌跡）。</div>
+            <div class="en-text">"The default compactor is generic. For production agents, replace it with domain-specific instructions."</div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 定價注意</div>
+            <div class="info-box-content">
+                原文宣稱「zero price premium」，但需注意：Opus 4.6 原始發布時，超過 200K tokens 的請求有 long-context premium（$10/$37.50 per million tokens）。2026/3/13 的 GA 公告移除了此溢價，但 Anthropic 官方頁面上仍可見舊定價資訊。使用前務必確認當前定價政策。
+            </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">💻 Compaction API 基礎設定</div>
+            <div class="info-box-content">
+                <span class="code-label">Python — 啟用 Compaction（beta header 必須）</span>
+<pre>import anthropic
+
+client = anthropic.Anthropic()
+
+response = client.beta.messages.create(
+  betas=["compact-2026-01-12"],
+  model="claude-opus-4-6",
+  max_tokens=16000,
+  thinking={"type": "adaptive"},
+  messages=messages,
+  context_management={
+    "edits": [{
+      "type": "compact_20260112",
+      "trigger": {
+        "type": "input_tokens",
+        "value": 80000   # 作者建議比預設 150K 更早觸發
+      },
+    }]
+  },
+)</pre>
+            </div>
+        </div>
+
+        <div class="info-box box-code">
+            <div class="info-box-header">💻 自訂 Compaction Instructions</div>
+            <div class="info-box-content">
+                <span class="code-label">YAML-style 壓縮指令範本（放入 instructions 參數）</span>
+<pre>preserve:
+  - current task objective and acceptance criteria
+  - file paths of all files being modified
+  - most recent test output (pass/fail, errors)
+  - active branch name and commit context
+  - any numbered step sequence in progress
+
+discard:
+  - file contents from reads older than 5 tool calls
+  - search results that were not acted on
+  - reasoning traces from abandoned approaches
+  - duplicate error messages from retry loops
+
+format the summary as:
+## Current State
+[task + branch + files]
+## Recent Results
+[last test output + last tool result]
+## Active Constraints
+[CLAUDE.md rules still in effect]</pre>
+            </div>
+        </div>
+
+        <div class="critical-box">
+            <div class="critical-box-title">🔍 需要驗證</div>
+            <div class="critical-box-text">
+                作者聲稱自訂壓縮指令讓 post-compaction failure rate 降低約一半（相較預設摘要），但未提供 A/B 測試方法論。Anthropic 官方文件目前僅記載 <code>instructions</code> 參數的存在，尚未發布最佳實踐指南。這個 YAML 格式是作者個人實踐，非官方推薦格式。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART 3: Claude Code /compact ==================== -->
+<h2 class="section-header">Part III: Claude Code — /compact 操作紀律</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text">在 Claude Code 中，compaction 會在 context 接近約 85% 容量時自動執行。但作者認為 <span class="highlight-key">85% 已經太晚</span> — 在壓縮觸發前效能就已經退化了。</div>
+            <div class="en-text">"If you use Claude Code, compaction runs automatically when context approaches ~85% capacity. The problem is that 85% is already too late — performance has degraded before compaction fires."</div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 操作紀律清單</div>
+            <div class="info-box-content">
+                <strong>50% 手動 /compact：</strong>在 context 用量到 50% 時主動執行（用 cost display 檢查）。<br><br>
+                <strong>/clear 切換主題前：</strong>不要讓任務 A 的陳舊 context 污染任務 B。<br><br>
+                <strong>大量資料讀取後 /compact：</strong>任何一次超過 20K tokens 的檔案讀取或搜尋操作後，立即壓縮。
+            </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="highlight-concept">CLAUDE.md 完全存活於 compaction 之後。</span>每次 /compact 後，Claude 會從磁碟重新讀取 CLAUDE.md 並重新注入。這就是為什麼 CLAUDE.md 中的指令會持續，但僅在對話中給予的指令會消失。</div>
+            <div class="en-text">"CLAUDE.md fully survives compaction. After /compact, Claude rereads your CLAUDE.md from disk and re-injects it fresh. This is why instructions in CLAUDE.md persist, but instructions given only in conversation disappear."</div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 自訂 /compact 指令</div>
+            <div class="info-box-content">
+                Claude Code 支援在 /compact 後面附加自訂指令：<br>
+                <code>/compact Focus on code samples and API usage</code><br><br>
+                你也可以在 CLAUDE.md 中設定預設的壓縮行為。這讓每次壓縮都按照你的領域需求保留關鍵資訊。
+            </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-analogy">
+            <div class="info-box-header">💡 比喻：Context 管理就像 GMP 批次紀錄</div>
+            <div class="info-box-content">
+                想像你在管理一個 aseptic fill 的批次紀錄。每個步驟都有詳細記錄，但到了 deviation investigation 時，你不會把整份 500 頁的 batch record 攤在桌上 — 你會摘要關鍵事件時間線，只保留與偏差相關的參數紀錄。<br><br>
+                Compaction 就是 Agent 的「偏差調查摘要」：保留決策紀錄和當前狀態，丟棄已完成步驟的原始細節。
+            </div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">⚖️ 對話指令 vs CLAUDE.md 指令</div>
+            <div class="info-box-content">
+                <table style="width:100%; font-size:0.82rem; border-collapse:collapse;">
+                    <tr style="border-bottom:1px solid #a5b4fc;">
+                        <th style="text-align:left; padding:0.4rem;">特性</th>
+                        <th style="text-align:left; padding:0.4rem;">對話中指令</th>
+                        <th style="text-align:left; padding:0.4rem;">CLAUDE.md 指令</th>
+                    </tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;">
+                        <td style="padding:0.4rem;">Compaction 存活</td>
+                        <td style="padding:0.4rem; color:#dc2626;">否 — 被摘要吞噬</td>
+                        <td style="padding:0.4rem; color:#059669;">是 — 從磁碟重新注入</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;">
+                        <td style="padding:0.4rem;">注意力權重</td>
+                        <td style="padding:0.4rem;">隨 context 增長而稀釋</td>
+                        <td style="padding:0.4rem;">每次壓縮後以完整強度重現</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.4rem;">適用場景</td>
+                        <td style="padding:0.4rem;">臨時性、單次任務指令</td>
+                        <td style="padding:0.4rem;">永久性規則和約束</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="critical-box">
+            <div class="critical-box-title">🔍 批判性分析</div>
+            <div class="critical-box-text">
+                「50% 就壓縮」是相當激進的建議。Anthropic 官方 1M GA 公告強調的價值點恰恰是「更少的壓縮、更完整的對話」。過於頻繁的壓縮本身就是訊號損失 — 每次壓縮都丟失細節。最佳 trigger 點應取決於任務類型：例行性 tool call 密集型工作可能適合早壓縮，但需要全局推理的分析任務可能需要保留更多原始 context。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART 4: CLAUDE.md Architecture ==================== -->
+<h2 class="section-header">Part IV: CLAUDE.md 記憶層級架構</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text">作者提出核心論點：<span class="highlight-key">沒有結構化記憶的 1M token window 就是一個 1M token 垃圾收集器</span>。CLAUDE.md 層級架構是維持訊噪比的關鍵機制。</div>
+            <div class="en-text">"A 1M token window without structured memory is a 1M token garbage collector. The CLAUDE.md hierarchy is how you keep signal density high as context grows."</div>
+        </div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 三層記憶架構</div>
+            <div class="info-box-content">
+                <strong>Global（~/.claude/CLAUDE.md）：</strong>你的工具、風格偏好、絕對不可違反的規則。跨所有專案生效。<br><br>
+                <strong>Project（./CLAUDE.md）：</strong>技術棧、測試指令、專案慣例。僅在該專案目錄下生效。<br><br>
+                <strong>Scoped（./.claude/rules/*.md）：</strong>按需載入。<strong>只有當 Agent 觸碰到匹配檔案時才載入</strong>。例如 API 設計規則只在編輯 API 檔案時載入。
+            </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">人們忽略的關鍵洞察：<span class="highlight-concept">子目錄中的 CLAUDE.md 檔案是按需載入，不是啟動時全部載入</span>。一個 500 行的專案根目錄 CLAUDE.md 浪費 context。應該拆分成 scoped rules，只在 Agent 觸碰匹配檔案時載入。</div>
+            <div class="en-text">"CLAUDE.md files in subdirectories load on demand, not at startup. A 500-line CLAUDE.md at the project root wastes context. Split it into scoped rules that load only when the agent touches matching files."</div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ Auto Memory 管理</div>
+            <div class="info-box-content">
+                Claude 會自動在 <code>~/.claude/projects/&lt;project&gt;/memory/MEMORY.md</code> 寫入筆記 — 失敗的 build 指令、除錯洞察、架構模式。<br><br>
+                <strong>限制：</strong>MEMORY.md 的前 200 行在 session 開始時載入，超過 200 行的部分被截斷。10 個 session 後會累積約 30% 冗餘條目。<br><br>
+                <strong>維護紀律：</strong>每 10 個 session 審查一次 → 刪除與 CLAUDE.md 重複的條目 → 將詳細筆記移到主題檔案（debugging.md, patterns.md）→ 保持 MEMORY.md 作為簡潔索引。
+            </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">💻 記憶層級結構</div>
+            <div class="info-box-content">
+<pre>~/.claude/CLAUDE.md          # Global: 工具、風格、不可違反規則
+./CLAUDE.md                  # Project: 技術棧、測試指令
+./.claude/rules/
+  api-design.md              # Scoped: 只在觸碰 API 檔案時載入
+  testing.md                 # Scoped: 只在觸碰測試檔案時載入</pre>
+            </div>
+        </div>
+
+        <div class="info-box box-code">
+            <div class="info-box-header">💻 Scoped Rule 範例（含 paths frontmatter）</div>
+            <div class="info-box-content">
+                <span class="code-label">.claude/rules/api-design.md</span>
+<pre>paths:
+  - "src/api/**/*.ts"
+
+# API Rules
+
+- all endpoints include input validation
+- use standard error response format
+  from src/api/errors.ts
+- include OpenAPI documentation comments</pre>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ CDMO 應用：CLAUDE.md 設計</div>
+            <div class="info-box-content">
+                <strong>Global：</strong>GMP 合規基本規則、ALCOA+ 數據完整性原則、所有輸出必須可追溯<br><br>
+                <strong>Project（deviation-agent/）：</strong>偏差分類標準 SOP 編號、CAPA 流程步驟、21 CFR Part 211 相關條款<br><br>
+                <strong>Scoped（rules/batch-review.md）：</strong>批次紀錄審查特定規則 — 只在 Agent 讀取 batch record 檔案時載入，不污染其他任務的 context
+            </div>
+        </div>
+
+        <div class="critical-box">
+            <div class="critical-box-title">🔍 需要驗證</div>
+            <div class="critical-box-text">
+                Scoped rules 的 <code>paths</code> frontmatter 功能在 Anthropic 官方文件中有記載，但作者描述的自動按需載入行為的具體機制細節有限。「前 200 行載入」和「30% 冗餘」是作者觀察，非 Anthropic 官方數據。實際行為可能隨 Claude Code 版本更新而變化。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART 5: Adaptive Thinking + Checklist ==================== -->
+<h2 class="section-header">Part V: Adaptive Thinking 與操作檢查清單</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text">Opus 4.6 的 <span class="highlight-concept">Adaptive Thinking</span> 讓模型自行決定何時及多深入地推理。這與 context 管理的互動方式很少有人注意到。</div>
+            <div class="en-text">"Opus 4.6 ships adaptive thinking — the model decides when and how much to reason. This interacts with context management in a way few operators have noticed."</div>
+        </div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 四個 Effort 層級</div>
+            <div class="info-box-content">
+                <strong>Low：</strong>簡單查找、格式化、快速回答 — 最少 thinking tokens<br>
+                <strong>Medium：</strong>例行操作的平衡點<br>
+                <strong>High（預設）：</strong>大多數任務的推薦設定<br>
+                <strong>Max：</strong>最深度推理，最多 thinking tokens<br><br>
+                <span class="highlight-practical">Context 預算策略：</span>對例行 tool call（檔案讀取、搜尋）使用 medium effort，對決策（選擇哪個修復、是否繼續或升級）使用 high effort。低 effort = 短 thinking traces = 更慢的 context 累積 = 更少的 compaction 事件。
+            </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">作者的核心邏輯：<span class="highlight-key">每次 compaction 事件都會損失一些訊號</span>。透過 effort 管理將 compaction 頻率降低 40%，直接轉化為更好的任務完成率。</div>
+            <div class="en-text">"Every compaction event loses some signal. Reducing compaction frequency by 40% through effort management translates directly to better task completion rates."</div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 完整操作檢查清單</div>
+            <div class="info-box-content">
+                ☐ Compaction trigger 設為 80K tokens（非預設 150K）<br>
+                ☐ 撰寫自訂 compaction instructions（保留任務狀態、丟棄雜訊）<br>
+                ☐ 將 CLAUDE.md 拆分為 scoped rules（使用 .claude/rules/ + paths）<br>
+                ☐ 保持 MEMORY.md 在 200 行以內（細節移至主題檔案）<br>
+                ☐ 例行操作用 medium effort，決策用 high effort<br>
+                ☐ Claude Code 中在 50% context 時手動 /compact<br>
+                ☐ 切換主題前 /clear — 不讓陳舊 context 污染新任務
+            </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">💻 Adaptive Thinking 設定</div>
+            <div class="info-box-content">
+                <span class="code-label">Python — 取代舊的 budget_tokens 設定</span>
+<pre>response = client.messages.create(
+  model="claude-opus-4-6",
+  max_tokens=16000,
+  thinking={"type": "adaptive"},
+  # effort 可設為: low, medium, high, max
+  messages=messages,
+)</pre>
+                <span class="code-label" style="margin-top:0.5rem;">注意：thinking: {"type": "enabled"} 和 budget_tokens 在 Opus 4.6 上已 deprecated</span>
+            </div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">⚖️ Evidence Snapshot（作者引用的數據）</div>
+            <div class="info-box-content" style="font-size:0.82rem;">
+                <table style="width:100%; border-collapse:collapse;">
+                    <tr style="border-bottom:1px solid #e2e8f0;">
+                        <td style="padding:0.3rem; font-weight:600;">MRCR v2 (8-needle, 1M)</td>
+                        <td style="padding:0.3rem;">Opus 4.6: 76% vs Sonnet 4.5: 18.5%</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;">
+                        <td style="padding:0.3rem; font-weight:600;">Compaction API</td>
+                        <td style="padding:0.3rem;">beta, trigger 最低 50K tokens</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;">
+                        <td style="padding:0.3rem; font-weight:600;">1M Context GA</td>
+                        <td style="padding:0.3rem;">2026/3/13, 標準定價</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;">
+                        <td style="padding:0.3rem; font-weight:600;">Max Output</td>
+                        <td style="padding:0.3rem;">128K tokens（前代 2 倍）</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0.3rem; font-weight:600;">Adaptive Thinking</td>
+                        <td style="padding:0.3rem;">low / medium / high / max</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="critical-box">
+            <div class="critical-box-title">🔍 文章整體盲點</div>
+            <div class="critical-box-text">
+                <strong>1）缺少成本分析：</strong>每次 compaction 本身就是一次額外 API call，作者未討論壓縮的成本與頻率。<br>
+                <strong>2）未比較替代方案：</strong>完全沒有討論 RAG、外部記憶儲存或 context editing（clear_tool_uses）等替代策略。<br>
+                <strong>3）單一平台視角：</strong>僅針對 Claude，未討論 GPT-5.2 或 Gemini 3 的長 context 策略。<br>
+                <strong>4）「40% → 3%」未驗證：</strong>核心數據缺乏方法論、樣本量、任務類型說明。
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== Key Takeaways ==================== -->
+<h2 class="section-header">Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-title">🧠 Context Rot > Window Size</div>
+        <div class="summary-card-text">更大的 window 不等於更好的效能。800K tokens 的雜訊比 150K tokens 的精選訊號更差。Context Engineering 的核心是維持訊噪比，而非追求更大的容量。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">🗜️ 提早壓縮，用自訂指令</div>
+        <div class="summary-card-text">Compaction trigger 設為 80K（非預設 150K），用領域專屬指令取代通用摘要。明確指定保留項目和丟棄項目，壓縮後的摘要品質決定後續任務表現。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">📋 CLAUDE.md 是持久記憶</div>
+        <div class="summary-card-text">對話中的指令在壓縮後消失，CLAUDE.md 從磁碟重新注入。永久性規則放 CLAUDE.md，臨時指令放對話。Scoped rules 按需載入，避免浪費 context。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">⚡ Effort = Context Budget</div>
+        <div class="summary-card-text">Adaptive Thinking 的 effort 層級不只影響推理品質，也影響 context 累積速度。例行操作用 medium、決策用 high，減少壓縮頻率就是減少訊號損失。</div>
+    </div>
+</div>
+
+<!-- ==================== Practice Questions ==================== -->
+<h2 class="section-header">Practice Questions</h2>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">為什麼作者認為 1M token window 加上 800K tokens 的累積內容，效能會比 200K window 加上 150K tokens 更差？這和模型的 attention 機制有什麼關係？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>因為 <strong>Context Saturation</strong>：模型對 window 中所有內容賦予大致相同的注意力權重。當 800K tokens 中有 60%+ 是過時的 tool results、放棄的推理路徑和已過期的搜尋結果時，模型需要從龐大的雜訊中找到訊號。這比在 150K tokens 的精選內容中找到訊號更難。</p>
+        <p>從 attention 機制角度看：Transformer 的 self-attention 讓每個 token 和所有其他 token 互動。更多的雜訊 token 意味著更多不相關的 attention connection，稀釋了對真正重要內容的注意力。Anthropic 的 MRCR v2 benchmark 提升（76%）確實改善了這個問題，但 benchmark 場景（needle retrieval）和實際 agent 工作（在雜訊中做決策）有本質差異。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">假設你正在為 CDMO 的偏差調查系統設計一個 Claude Agent，需要讀取多份 batch records、SOP 和過去的 CAPA 報告。你會如何設計 compaction instructions 來避免三種失敗模式？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>針對 Context Saturation：</strong>在 compaction instructions 的 discard 區段指定「已完成審查且結論已記錄的 batch record 原始內容」和「已確認不相關的 SOP 版本」。保留項目應包含「當前偏差的事件時間線」和「已識別的根因候選項」。</p>
+        <p><strong>針對 Instruction Dilution：</strong>將 GMP 合規規則放在 CLAUDE.md（而非對話中），確保壓縮後規則會重新注入。特別是 ALCOA+ 數據完整性要求和 21 CFR Part 211 的關鍵條款。</p>
+        <p><strong>針對 Reasoning Loop：</strong>在 discard 區段指定「已排除的根因假設及其驗證過程」，在 preserve 區段保留「當前最可能的根因假設和支持證據」。format 區段應要求摘要按照偏差調查報告的結構（事件描述 → 根因分析進度 → 待驗證項目）。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">作者主張「50% context 就手動 /compact」，但 Anthropic 的 1M GA 公告強調的賣點是「更少壓縮、更完整的對話」。這兩個立場矛盾嗎？什麼情境下各自正確？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>不矛盾，但適用場景不同。</strong></p>
+        <p>Anthropic 的「更少壓縮」論點針對的是<strong>需要全局推理的任務</strong>：法律文件審查、跨檔案程式碼依賴分析、長期研究。這些任務中，保留完整 context 的價值超過雜訊成本。</p>
+        <p>作者的「50% 就壓縮」論點針對的是<strong>tool call 密集的 agent 工作</strong>：大量檔案讀取、搜尋、測試迴圈。這些操作快速累積低價值的中間結果，壓縮的收益高於保留的價值。</p>
+        <p><strong>真正的原則應該是：</strong>根據 context 中「活躍訊號」vs「已處理資料」的比例來決定壓縮時機，而非使用固定的百分比閾值。一個讀了 500K tokens 法律文件的對話可能不需要壓縮，一個做了 50 次 tool call 只用了 100K tokens 的 agent 可能立即需要壓縮。</p>
+    </div>
+</details>
+
+<!-- ==================== Bottom Line ==================== -->
+<div class="bottom-line" style="margin-top: 2rem;">
+    <div class="bottom-line-header">🎯 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">Context Engineering 的本質是<strong>訊噪比管理</strong>，不是容量管理。這和 GMP 環境的文件管理邏輯一致 — 在偏差調查中，500 頁 batch record 的價值不在於頁數多寡，在於你能多快找到異常參數。同理，1M tokens 的價值不在 window 大小，在於 Agent 能否在其中找到當前決策所需的訊號。CLAUDE.md 作為 IF-ELSE directory 的設計理念（Context Engineering 原則）在這篇文章中得到了具體的技術落地。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用</div>
+        <div class="bottom-line-text">本週在 Claude Code 工作流中實踐：(1) 將 CLAUDE.md 拆分，把 GMP 合規規則保留在主檔，把 deviation triage 專屬規則移到 .claude/rules/deviation.md；(2) 在長時間 coding session 中，養成 50% context 時主動 /compact 的習慣，搭配 /cost 檢查 context 用量；(3) 測試在 Compaction API 的 instructions 參數中加入 CDMO 領域的 preserve/discard 清單。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠ 需要補充</div>
+        <div class="bottom-line-text">文章缺少三個關鍵面向：(1) Compaction 的成本模型 — 每次壓縮本身消耗多少 tokens？高頻壓縮的累積成本如何？(2) 與 RAG 和 context editing（clear_tool_uses_20250919）等替代方案的比較；(3) 作者的效能數據（40% → 3%）完全未驗證，應用時需以自身任務做 A/B 測試。建議 3 個月後 Anthropic 發布 compaction best practices 時重新閱讀此文。</div>
+    </div>
+</div>
+
+<!-- ==================== Footer ==================== -->
+<div class="footer">
+    <p>製作日期：2026-03-16 | 來源：<a href="https://x.com/nyk_builderz" target="_blank">Nyk (@nyk_builderz) X Thread</a></p>
+    <p>參考驗證：<a href="https://platform.claude.com/docs/en/build-with-claude/compaction" target="_blank">Anthropic Compaction API Docs</a> | <a href="https://claude.com/blog/1m-context-ga" target="_blank">1M Context GA Announcement</a> | <a href="https://www.anthropic.com/news/claude-opus-4-6" target="_blank">Opus 4.6 Release</a></p>
+    <p>建議 Chat Title：<code>2026-03-16 [Agent] Nyk - 1M Context Compaction Runbook</code></p>
+    <p>檔案：<code>2026-03-16_1m-context-compaction.html</code></p>
+</div>
+
+</div><!-- end container -->
+</body>
+</html>
