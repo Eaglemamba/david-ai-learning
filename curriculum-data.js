@@ -26,6 +26,7 @@ const stages = [
       { file: '2026-03-05_ai-execs-kids-career.html', title: 'AI 高管的子女職涯建議 ★4.0', required: false, why: 'AI 時代職涯韌性的五大支柱' },
       { file: '2026-03-10_reasoning-messy-future.html', title: '混亂未來推理框架 SystematicallyLS ★3.6', required: false, why: '量化交易員的 AI 未來推理框架：四大護城河與不對稱下注' },
       { file: '2026-03-12_su-program-the-world.html', title: '偏鄉程式教育 蘇文鈺 Program the World ★3.6', required: false, why: '成大教授十年偏鄉程式教育，填補弱勢孩子的想像力斷層' },
+      { file: '2026-03-14_apple-ai-affordable-strategy.html', title: '蘋果 AI 平價戰略 ★3.4', required: false, why: '蘋果用低價硬體搶佔 AI 生態入口的策略分析' },
     ]
   },
   {
@@ -45,6 +46,7 @@ const stages = [
       { file: '2025-11-04_ai-prompts-insight-creator.html', title: '四個 Prompts 洞見創造者 ★3.5', required: false, why: '從資訊收集到洞見創造' },
       { file: '2025-12-16_data-literacy-loop.html', title: 'Data Literacy Loop ★3.5', required: false, why: '打造具數據素養的 AI 協作' },
       { file: '2025-02-13_markdown_ai_guide.html', title: 'Markdown 終極指南 ★3.8', required: false, why: 'Markdown 是 AI 的母語，掌握格式提升溝通效率' },
+      { file: '2026-03-16_agent-handoff-successor-prompt.html', title: 'Agent 繼任者 Prompt ★4.0', required: false, why: '長上下文退化時的 Agent 交接 Prompt 模板' },
     ]
   },
   {
@@ -71,6 +73,8 @@ const stages = [
       { file: '2026-03-05_claude-code-scraping-nine-ways.html', title: 'Claude Code 資料爬取九大方法 ★4.0', required: false, why: '9 種資料爬取方法從基礎到 Agent Browser' },
       { file: '2026-03-07_yanhua-claude-ultimate-guide.html', title: 'Claude 終極入門指南 Yanhua ★3.6', required: false, why: '百小時實測的 Claude 全方位入門' },
       { file: '2026-03-11_claude-code-interactive-mode.html', title: 'Claude Code 互動模式完全指南 ★4.0', required: false, why: '鍵盤快捷鍵、Vim 模式、內建指令、背景任務完整參考' },
+      { file: '2026-03-16_claude-architect-certification.html', title: 'Claude Architect 認證自學 ★4.3', required: false, why: 'Claude Certified Architect 五大 Domain 完整拆解' },
+      { file: '2026-03-16_claude-code-release-evolution.html', title: 'Claude Code v2.1.49-76 釋出演進 ★4.2', required: false, why: '28 版本深度分析：Multi-Agent、記憶體工程、Plugin 生態' },
     ]
   },
   {
@@ -99,6 +103,8 @@ const stages = [
       { file: '2026-03-01_skillsbench-agent-skills.html', title: 'SkillsBench Agent Skills 基準測試 ★4.5', required: false, why: '首個 Agent Skills 評測基準' },
       { file: '2026-03-09_building-skills-guide.html', title: 'Claude Skill 建構完整指南 ★4.2', required: false, why: 'Anthropic 官方 Skill 設計原則與 5 大 Pattern' },
       { file: '2026-03-11_skill-creator-epic-update.html', title: 'Skill-creator 史詩級更新 四大評估能力 ★4.0', required: false, why: '評估系統、基準測試、多代理並行、描述調優全面解析' },
+      { file: '2026-03-13_claude-code-architecture-governance.html', title: 'Claude Code 架構治理 Tw93 ★4.5', required: false, why: '六層架構、上下文治理、Skills/Hooks/Subagents 設計' },
+      { file: '2026-03-16_1m-context-compaction.html', title: '1M Context Compaction Runbook ★4.0', required: false, why: 'Context rot 失敗模式與 Compaction API 實戰操作' },
     ]
   },
   {
@@ -151,6 +157,8 @@ const topicClusters = [
           { title: '完整文件參考指南 ★4.5', file: '2026-03-02_claude-code-complete-docs.html' },
           { title: '資料爬取九大方法 ★4.0', file: '2026-03-05_claude-code-scraping-nine-ways.html' },
           { title: '互動模式完全指南 ★4.0', file: '2026-03-11_claude-code-interactive-mode.html' },
+          { title: '架構治理與工程實踐 Tw93 ★4.5', file: '2026-03-13_claude-code-architecture-governance.html' },
+          { title: 'v2.1.49-76 釋出演進 28 版本分析 ★4.2', file: '2026-03-16_claude-code-release-evolution.html' },
         ]
       },
       {
@@ -188,6 +196,7 @@ const topicClusters = [
           { title: 'AI Context 一次設定 ★4.2', file: '2026-01-19_ai-context-setup.html' },
           { title: 'Shared AI Context Files 團隊共享 ★3.8', file: '2026-02-25_shared-ai-context-files.html' },
           { title: 'Claude 終極入門指南 Yanhua ★3.6', file: '2026-03-07_yanhua-claude-ultimate-guide.html' },
+          { title: 'Claude Architect 認證自學 ★4.3', file: '2026-03-16_claude-architect-certification.html' },
         ]
       }
     ]
@@ -213,6 +222,8 @@ const topicClusters = [
         docs: [
           { title: 'Context Engineering 深度指南 ★4.6', file: '2026-01-08_context-engineering-agents.html' },
           { title: 'NotebookLM Source Control ★3.2', file: '2026-02-03_notebooklm-source-control.html' },
+          { title: '1M Context Compaction Runbook ★4.0', file: '2026-03-16_1m-context-compaction.html' },
+          { title: 'Agent 繼任者 Prompt ★4.0', file: '2026-03-16_agent-handoff-successor-prompt.html' },
         ]
       }
     ]
@@ -328,6 +339,7 @@ const topicClusters = [
           { title: 'Batch 331 學習指南 ★4.2', file: '2025-12-10_batch-331-study-guide.html' },
           { title: 'AI 勞動市場影響 Observed Exposure ★4.4', file: '2026-03-06_labor-market-ai-impact.html' },
           { title: '混亂未來推理框架 SystematicallyLS ★3.6', file: '2026-03-10_reasoning-messy-future.html' },
+          { title: '蘋果 AI 平價戰略 ★3.4', file: '2026-03-14_apple-ai-affordable-strategy.html' },
         ]
       }
     ]
