@@ -14283,5 +14283,655 @@ const searchIndex = [
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
     "content": "成大資工系教授蘇文鈺自 2013 年起推動 Program the World 計畫，以 Scratch 視覺化程式教學為起點，深入嘉義東石、台南左鎮、台東、花蓮等偏鄉，累計影響超過上萬名學童。文章核心論點不在「教程式」，而在填補弱勢孩子因資訊不對稱造成的「夢想斷層」(Dream Gap)。蘇文鈺的運作模式更像弱勢教育孵化器：發現缺口、做起來、有人接手後轉身去下一個需求點。對 AI/科技從業者而言，這篇文章提供的不是技術框架，而是一個關於「科技如何真正改變人的生命」的深層思考案例。 Learning Objectives 夢想斷層理論 理解偏鄉教育的核心問題不是成績，而是資訊不對稱造成的想像力空白 孵化器運作模式 分析「發現缺口 → 建立 → 移交 → 轉向」的非營利組織擴展策略 科技教育的本質 反思程式教育的目的是「學習技能」而非「學習知識」的差異 蘇文鈺的弱勢教育孵化器模式 發現缺口 看見孩子需求 先做再說 → 建立課程 帶學生下鄉 播種教學 → 培養接班 學生成師資 移交營運 → 轉向下一站 新需求出現 重啟循環 Part I — 起點：一場手術與一個啟示 2014 年，嘉義東石有一名失去雙親、被教會收容的國中少年，正跟著成大資工系教授蘇文鈺學寫程式。沒有父母照顧的他常在街上閒晃，因此成了 地方宮廟幫派覬覦的對象 。 In 2014, in Dongshi, Chiayi, an orphaned junior high student sheltered by a local church was learning to code with NCKU CS professor Su Wen-yu. Without parental care, his street-wandering made him a target for local temple-affiliated gangs. 少年晚上住在教會，門外則有宮廟派來的人徘徊守候，這場搶孩子的大戰沒有煙硝味，教會老師只能一次次堅定的關上大門，靜靜陪孩子上課、生活。 At night, the boy stayed in the church while gang-affiliated men lingered outside. The teachers could only close the door firmly, quietly accompanying the child through lessons and daily life. 對蘇文鈺而言，學科表現不是重點， 孩子平安長大才是首要目標 。後來少年考進崑山科技大學汽修科，畢業後回到嘉義，開了一間自己的汽車修理公司。 For Su, academic performance was secondary — the child's safe upbringing was the primary goal. The boy later enrolled in automotive repair at Kun Shan University, and eventually returned to Chiayi to open his own car repair business. 時間回到 2012 年，蘇文鈺因為一場手術在病床上躺了三個月。他看到歐巴馬說「每個美國小孩都要學會寫程式」，彷彿天啟般覺悟：既然程式將成為未來世界的基本能力，那麼偏鄉孩子若沒有機會接觸， 差距只會越來越大 。 Back in 2012, Su sp"
+  },
+  {
+    "docFile": "2026-03-13_claude-code-architecture-governance.html",
+    "docTitle": "Claude Code 架構治理與工程實踐 - Tw93",
+    "docDate": "2026-03-13",
+    "docSource": "Tw93 / X (Twitter)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "API"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Tw93 基於半年深度使用 Claude Code（雙帳號、每月 40 美元）的實戰經驗，提出了一套 六層架構模型 來理解 Claude Code 的運作本質：上下文層、控制層、工具層、執行層、驗證層與治理層。文章的核心論點是：Claude Code 不是 ChatBot，而是一個循環式的 Agent 系統，卡住的原因幾乎不是模型不夠聰明，而是 上下文被污染、控制層缺失、或驗證閉環斷裂 。 文章從概念邊界（MCP/Skills/Hooks/Subagents 的區別）出發，深入上下文成本結構（200K 中真正可用的僅約 160-180K）、Skills 的三種設計模式、Hooks 的確定性約束、Subagents 的隔離價值、Prompt Caching 的架構影響，到 CLAUDE.md 的契約式寫法。每個主題都附帶具體配置範例與反模式警告。"
+  },
+  {
+    "docFile": "2026-03-13_claude-code-architecture-governance.html",
+    "docTitle": "Claude Code 架構治理與工程實踐 - Tw93",
+    "docDate": "2026-03-13",
+    "docSource": "Tw93 / X (Twitter)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "API"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "六層架構模型 理解 Claude Code 從上下文到驗證的完整運作堆疊 上下文成本計算 掌握 200K 上下文的實際分配與 MCP 隱形開銷 Skills / Hooks / Subagents 區分三種機制的設計邊界與正確用法 Prompt Caching 架構 理解快取對成本與會話設計的深層影響 CLAUDE.md 契約寫法 從空白開始，用減法原則建立有效協作契約 驗證閉環設計 建立 Agent 可靠運行的判定標準與回退機制 Claude Code 六層架構模型 Context CLAUDE.md / Skills / Memory Control Hooks / Permissions / Sandbox Tools MCP / Built-in / Custom Execute Subagents / Plan Mode Verify Test / Lint / Screenshots Govern Health Check / Iteration Architecture & Context Skills & Tools Hooks & Subagents Caching "
+  },
+  {
+    "docFile": "2026-03-13_claude-code-architecture-governance.html",
+    "docTitle": "Claude Code 架構治理與工程實踐 - Tw93",
+    "docDate": "2026-03-13",
+    "docSource": "Tw93 / X (Twitter)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "API"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Context is the Bottleneck 200K 上下文中真正可用的僅 160-180K。MCP 工具定義是最大隱形成本（5 個 Server 佔 12.5%）。上下文治理比 Prompt 技巧更重要。 Layer Your Controls CLAUDE.md 宣告規則、Skills 定義工作流、Hooks 強制執行。三層少任何一層都會出漏洞，這和 GMP 的 SOP + WI + 稽核三層設計一模一樣。 Design for Cache Prompt Caching 是按前綴匹配，靜態內容（System Prompt、Tool Definitions）放前面，動態內容放後面。中途切模型 = 重建整個 Cache，通常更貴。 Verify or It Didn't Happen 「Claude 說完成了」沒有意義。如果你說不清楚「什麼叫做完」，就不適合直接交給 Claude 自主完成。驗證標準本身都沒有，再聰明也跑不出正確答案。"
+  },
+  {
+    "docFile": "2026-03-13_claude-code-architecture-governance.html",
+    "docTitle": "Claude Code 架構治理與工程實踐 - Tw93",
+    "docDate": "2026-03-13",
+    "docSource": "Tw93 / X (Twitter)",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "API"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Tw93 說「卡住的地方幾乎從來不是模型不夠聰明」。在他的六層架構中，當 Claude Code 的輸出品質在長會話中逐漸下降時，最可能是哪一層出了問題？該如何排查和修復？ 最可能是 Context Layer （上下文層）出了問題。長會話中，中間產物（Tool Output、讀取的檔案內容）不斷累積，佔據了原本給「有用資訊」的空間。當系統自動壓縮（Compaction）啟動時，預設演算法會按「可重新讀取」判斷，把早期的架構決策和約束理由一起丟掉。 排查步驟： (1) 用 /context 檢查 token 消耗結構，看 MCP 固定開銷和歷史對話佔比；(2) 檢查 CLAUDE.md 是否有 Compact Instructions，確保壓縮時保留架構決策；(3) 考慮用 /clear 開新會話，或讓 Claude 先寫一份 HANDOFF.md 再交接。 修復： 在 CLAUDE.md 加入 Compact Instructions，依優先順序列出壓縮時必須保留的資訊（架構決策 > 修改檔案 > 驗證狀態 > TODO > Tool 輸出）。對於任務切換用 /cle"
+  },
+  {
+    "docFile": "2026-03-14_apple-ai-affordable-strategy.html",
+    "docTitle": "蘋果 AI 平價戰略 - 低價硬體搶佔 AI 生態入口",
+    "docDate": "2026-03-14",
+    "docSource": "FOMO研究院KP / 商業周刊 第2000期",
+    "docRating": 3.4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.4/5 時效性, 學習曲線 技術深度, 工具生態 蘋果在 2026 年推出 $599 的 iPhone 17e 和 MacBook Neo，表面是「降價搶市場」，實質是一場 AI 平台圈地戰。核心邏輯：先用便宜硬體把新用戶拉進 Apple Intelligence 生態系，讓 AI 花時間學習你、懂你，兩年後你面對的不是「要不要換手機」，而是「要不要放棄一個已經懂你的 AI」。這是比 App 生態更深的護城河。 文章是一篇結構清晰的商業策略分析，把蘋果的產品線動作串成一個完整敘事。但缺乏技術細節（Apple Intelligence 實際能力、on-device model 規模）、未提供第三方數據佐證「AI 鎖定效應」的強度，且對 Google Gemini 合作的風險分析偏淺。本文件補充批判視角與 CDMO 產業類比。 AI 鎖定效應 理解「AI 個人化」如何成為比 App 生態更深的 switching cost 飛輪經濟學 拆解「硬體虧損 → 生態獲利」的平台策略邏輯 批判分析 識別文章的敘事盲點與未驗證假設，建立獨立判斷 Apple AI Lock-in Flywheel"
+  },
+  {
+    "docFile": "2026-03-14_apple-ai-affordable-strategy.html",
+    "docTitle": "蘋果 AI 平價戰略 - 低價硬體搶佔 AI 生態入口",
+    "docDate": "2026-03-14",
+    "docSource": "FOMO研究院KP / 商業周刊 第2000期",
+    "docRating": 3.4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "AI 鎖定 > 資料鎖定 App 可以重裝、照片可以轉移，但一個花兩年被你訓練出來的 AI 助理帶不走。Apple Intelligence 要成為比 iOS 生態系更深的護城河。 入門機策略質變 iPhone 17e 不再是閹割版，而是「AI 功能完整、硬體精簡」。A19 晶片 + 256GB 是讓飛輪轉起來的最低配置，不是慈善。 供應鏈才是真護城河 AI 鎖定論述漂亮但未驗證。真正可信的是蘋果把已折舊的 A18 Pro 裝進 $599 筆電的供應鏈執行力——這是競爭對手短期內複製不了的。 敵人即供應商 Apple x Google 的 Gemini 合作反映科技業常態：競合關係。蘋果借 Google 的 AI 大腦爭取時間，但 Google 為什麼願意賣，比蘋果為什麼買更值得追問。"
+  },
+  {
+    "docFile": "2026-03-14_apple-ai-affordable-strategy.html",
+    "docTitle": "蘋果 AI 平價戰略 - 低價硬體搶佔 AI 生態入口",
+    "docDate": "2026-03-14",
+    "docSource": "FOMO研究院KP / 商業周刊 第2000期",
+    "docRating": 3.4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 「AI 鎖定效應」與傳統「資料鎖定效應」的本質差異是什麼？為什麼文章認為前者更深？ 資料鎖定是「你的東西在這裡」——照片、檔案、購買紀錄。理論上可以搬（雖然很麻煩）。AI 鎖定是「這裡有一個懂你的智能體」——它學會了你的寫作風格、行為模式、偏好習慣，這些不是檔案，無法打包匯出。 但要注意：這是文章的論述框架，不是已驗證的事實。目前沒有數據證明 Apple Intelligence 的個人化程度真的達到「捨不得放棄」的水準。如果 AI 個人化只是「記住你常用的幾個 App」這種淺層，鎖定效應就很弱。 Q2 產業應用 蘋果的「低價硬體搶入口 → AI 個人化鎖定 → 生態變現」飛輪，能否套用到 CDMO 產業？如果你是 CDMO 的 COO，會怎麼設計類似的飛輪？ 可以類比的部分： CDMO 也有「低價搶入口」的策略——對新客戶的首個專案壓低報價，目的是把客戶的製程驗證數據、法規文件、品質紀錄累積在你的系統裡。一旦累積到一定程度，tech transfer 的成本就變成護城河。 CDMO 飛輪設計： 低價首單 → 累積製程 know-how → 建立法規信任（FDA/PIC"
+  },
+  {
+    "docFile": "2026-03-16_1m-context-compaction.html",
+    "docTitle": "1M Context Compaction - Agent Context Engineering Runbook",
+    "docDate": "2026-03-16",
+    "docSource": "Nyk (@nyk_builderz) / X Thread",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Anthropic 於 2026 年 3 月 13 日宣布 Opus 4.6 和 Sonnet 4.6 的 1M token context window 正式 GA。本文作者 Nyk 從實戰角度提出警告： 更大的 context window 不等於更好的 agent 表現 。文章系統性地定義了三種 context rot 失敗模式（Context Saturation、Instruction Dilution、Reasoning Loop Collapse），並提出以 Compaction API + CLAUDE.md 記憶層級 + Adaptive Thinking 組成的結構化解決方案。內容包含可複製的 API 設定碼、Claude Code 操作紀律、以及完整的操作檢查清單。 批判性提醒： 作者宣稱的「failure rate 從 40% 降至 3%」缺乏方法論說明與樣本量揭露，應以 2-3x discount 看待。部分技術細節（如 scoped rules 的 paths frontmatter）尚未在 Anthropic 官方文件中完整記載。"
+  },
+  {
+    "docFile": "2026-03-16_1m-context-compaction.html",
+    "docTitle": "1M Context Compaction - Agent Context Engineering Runbook",
+    "docDate": "2026-03-16",
+    "docSource": "Nyk (@nyk_builderz) / X Thread",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "🧠 辨識三種 context rot 失敗模式，理解為什麼更大的 window 可能讓效能更差 🔧 設定 Compaction API 的 trigger、custom instructions 與 Claude Code /compact 操作紀律 🏗️ 設計 CLAUDE.md 多層記憶架構，用 scoped rules 控制 context 訊噪比 Context Engineering 核心循環：辨識 → 壓縮 → 保鮮 🚨 辨識失敗模式 Saturation / Dilution / Loop → 🗜️ 結構化壓縮 Compaction API + /compact → 📋 訊號保鮮 CLAUDE.md hierarchy + scoped rules → ⚡ 效能調控 Adaptive Thinking effort"
+  },
+  {
+    "docFile": "2026-03-16_1m-context-compaction.html",
+    "docTitle": "1M Context Compaction - Agent Context Engineering Runbook",
+    "docDate": "2026-03-16",
+    "docSource": "Nyk (@nyk_builderz) / X Thread",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-i-三種-context-rot-失敗模式",
+    "sectionTitle": "Part I: 三種 Context Rot 失敗模式",
+    "content": "作者開宗明義： 問題從來不是 window 大小，而是 context rot — 效能隨著對話填充而退化，不是因為模型「忘記」，而是因為訊號淹沒在雜訊中。 \"The problem was never the window size. It was context rot — performance degrades as conversations fill, not because the model forgets, but because signal drowns in noise.\" 📚 Failure 1: Context Saturation（上下文飽和） Agent 累積 tool call 結果、檔案內容、搜尋輸出和推理軌跡。到 100K tokens 時，window 中約 60% 是雜訊。模型對 window 中所有內容賦予大致相同的注意力權重 — 它無法區分 50 次 tool call 前讀取的檔案和 3 秒前打開的檔案。 關鍵洞察： 一個 800K tokens 雜訊的 1M window，表現比 150K tokens 精選訊號的 200K wind"
+  },
+  {
+    "docFile": "2026-03-16_1m-context-compaction.html",
+    "docTitle": "1M Context Compaction - Agent Context Engineering Runbook",
+    "docDate": "2026-03-16",
+    "docSource": "Nyk (@nyk_builderz) / X Thread",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-ii-compaction-harness-api-level-設定",
+    "sectionTitle": "Part II: Compaction Harness — API Level 設定",
+    "content": "Anthropic 隨 Opus 4.6 推出了 Compaction API （beta），當 input tokens 超過閾值時自動觸發，摘要較舊的 context 並以壓縮狀態繼續。 \"Anthropic shipped the Compaction API as a beta feature with Opus 4.6. It triggers automatically when input tokens exceed a threshold, summarizes older context, and continues with a compressed state.\" 📚 核心參數解析 trigger.value： 壓縮觸發時機。預設 150,000 tokens。作者設為 80,000 — 提早壓縮能保留更多訊號。最低下限為 50,000 tokens。 instructions： 自訂摘要提示詞，完全取代預設摘要邏輯。用它告訴壓縮器要保留什麼（當前任務狀態、檔案路徑、測試結果）和丟棄什麼（舊搜尋結果、放棄的方法）。 pause_after_compaction："
+  },
+  {
+    "docFile": "2026-03-16_1m-context-compaction.html",
+    "docTitle": "1M Context Compaction - Agent Context Engineering Runbook",
+    "docDate": "2026-03-16",
+    "docSource": "Nyk (@nyk_builderz) / X Thread",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-iii-claude-code-compact-操作紀律",
+    "sectionTitle": "Part III: Claude Code — /compact 操作紀律",
+    "content": "在 Claude Code 中，compaction 會在 context 接近約 85% 容量時自動執行。但作者認為 85% 已經太晚 — 在壓縮觸發前效能就已經退化了。 \"If you use Claude Code, compaction runs automatically when context approaches ~85% capacity. The problem is that 85% is already too late — performance has degraded before compaction fires.\" 🛠️ 操作紀律清單 50% 手動 /compact： 在 context 用量到 50% 時主動執行（用 cost display 檢查）。 /clear 切換主題前： 不要讓任務 A 的陳舊 context 污染任務 B。 大量資料讀取後 /compact： 任何一次超過 20K tokens 的檔案讀取或搜尋操作後，立即壓縮。 CLAUDE.md 完全存活於 compaction 之後。 每次 /compact 後，Claude 會從"
+  },
+  {
+    "docFile": "2026-03-16_1m-context-compaction.html",
+    "docTitle": "1M Context Compaction - Agent Context Engineering Runbook",
+    "docDate": "2026-03-16",
+    "docSource": "Nyk (@nyk_builderz) / X Thread",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-iv-claudemd-記憶層級架構",
+    "sectionTitle": "Part IV: CLAUDE.md 記憶層級架構",
+    "content": "作者提出核心論點： 沒有結構化記憶的 1M token window 就是一個 1M token 垃圾收集器 。CLAUDE.md 層級架構是維持訊噪比的關鍵機制。 \"A 1M token window without structured memory is a 1M token garbage collector. The CLAUDE.md hierarchy is how you keep signal density high as context grows.\" 📚 三層記憶架構 Global（~/.claude/CLAUDE.md）： 你的工具、風格偏好、絕對不可違反的規則。跨所有專案生效。 Project（./CLAUDE.md）： 技術棧、測試指令、專案慣例。僅在該專案目錄下生效。 Scoped（./.claude/rules/*.md）： 按需載入。 只有當 Agent 觸碰到匹配檔案時才載入 。例如 API 設計規則只在編輯 API 檔案時載入。 人們忽略的關鍵洞察： 子目錄中的 CLAUDE.md 檔案是按需載入，不是啟動時全部載入 。一個 500 行的專案根"
+  },
+  {
+    "docFile": "2026-03-16_1m-context-compaction.html",
+    "docTitle": "1M Context Compaction - Agent Context Engineering Runbook",
+    "docDate": "2026-03-16",
+    "docSource": "Nyk (@nyk_builderz) / X Thread",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "part-v-adaptive-thinking-與操作檢查清單",
+    "sectionTitle": "Part V: Adaptive Thinking 與操作檢查清單",
+    "content": "Opus 4.6 的 Adaptive Thinking 讓模型自行決定何時及多深入地推理。這與 context 管理的互動方式很少有人注意到。 \"Opus 4.6 ships adaptive thinking — the model decides when and how much to reason. This interacts with context management in a way few operators have noticed.\" 📚 四個 Effort 層級 Low： 簡單查找、格式化、快速回答 — 最少 thinking tokens Medium： 例行操作的平衡點 High（預設）： 大多數任務的推薦設定 Max： 最深度推理，最多 thinking tokens Context 預算策略： 對例行 tool call（檔案讀取、搜尋）使用 medium effort，對決策（選擇哪個修復、是否繼續或升級）使用 high effort。低 effort = 短 thinking traces = 更慢的 context 累積 = 更少的 comp"
+  },
+  {
+    "docFile": "2026-03-16_1m-context-compaction.html",
+    "docTitle": "1M Context Compaction - Agent Context Engineering Runbook",
+    "docDate": "2026-03-16",
+    "docSource": "Nyk (@nyk_builderz) / X Thread",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "🧠 Context Rot > Window Size 更大的 window 不等於更好的效能。800K tokens 的雜訊比 150K tokens 的精選訊號更差。Context Engineering 的核心是維持訊噪比，而非追求更大的容量。 🗜️ 提早壓縮，用自訂指令 Compaction trigger 設為 80K（非預設 150K），用領域專屬指令取代通用摘要。明確指定保留項目和丟棄項目，壓縮後的摘要品質決定後續任務表現。 📋 CLAUDE.md 是持久記憶 對話中的指令在壓縮後消失，CLAUDE.md 從磁碟重新注入。永久性規則放 CLAUDE.md，臨時指令放對話。Scoped rules 按需載入，避免浪費 context。 ⚡ Effort = Context Budget Adaptive Thinking 的 effort 層級不只影響推理品質，也影響 context 累積速度。例行操作用 medium、決策用 high，減少壓縮頻率就是減少訊號損失。"
+  },
+  {
+    "docFile": "2026-03-16_1m-context-compaction.html",
+    "docTitle": "1M Context Compaction - Agent Context Engineering Runbook",
+    "docDate": "2026-03-16",
+    "docSource": "Nyk (@nyk_builderz) / X Thread",
+    "docRating": 4,
+    "docTags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼作者認為 1M token window 加上 800K tokens 的累積內容，效能會比 200K window 加上 150K tokens 更差？這和模型的 attention 機制有什麼關係？ 因為 Context Saturation ：模型對 window 中所有內容賦予大致相同的注意力權重。當 800K tokens 中有 60%+ 是過時的 tool results、放棄的推理路徑和已過期的搜尋結果時，模型需要從龐大的雜訊中找到訊號。這比在 150K tokens 的精選內容中找到訊號更難。 從 attention 機制角度看：Transformer 的 self-attention 讓每個 token 和所有其他 token 互動。更多的雜訊 token 意味著更多不相關的 attention connection，稀釋了對真正重要內容的注意力。Anthropic 的 MRCR v2 benchmark 提升（76%）確實改善了這個問題，但 benchmark 場景（needle retrieval）和實際 agent 工作（在雜訊中做決策）有"
+  },
+  {
+    "docFile": "2026-03-16_agent-handoff-successor-prompt.html",
+    "docTitle": "Agent 繼任者 Prompt - 長上下文退化的優雅解法",
+    "docDate": "2026-03-16",
+    "docSource": "周尔复 (@cholf5) / X",
+    "docRating": 4,
+    "docTags": [
+      "Prompt",
+      "Agent",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "使用 Claude Code、Codex 或 Gemini CLI 等 AI coding agent 時，對話越長，模型的幻覺 (Hallucination) 和錯誤率會明顯上升。周尔复提出「繼任者 Prompt」(Successor Prompt) 技巧：在結束過長對話前，讓 AI 產出一份結構化的「交接文件」給下一個新會話中的 AI，確保工作脈絡不丟失。v2.0 版本提供了完整的七段式交接模板，涵蓋任務目標、進展、上下文、發現、未完成事項、建議路徑和風險提醒。同時延伸出「Prompt 自舉」(Prompt Bootstrap) 的 meta 技巧 先寫粗稿 Prompt，再讓 AI 自己打磨。 Learning Objectives 辨識長上下文退化問題 理解為什麼 agent 對話越長越容易出錯，以及何時該「斷點重啟」 掌握結構化交接模板 學會使用七段式繼任者 Prompt v2.0，確保跨會話的知識無損傳遞 應用 Prompt 自舉技巧 理解「先寫粗稿，再讓 AI 打磨」的迭代式 Prompt 開發方法論 Agent Handoff Workflow Detect 辨識上下文退化 幻覺增多、問題反覆 Handoff 產出交接文件 七段式結構化摘要 Resume 新會話接手 讀取交接 → 繼續推進 Part I 問題：長上下文退化 (Long Context Degradation) 使用 Codex / Claude Code / Gemini CLI 的一個技巧：如果對話太長， AI 的幻覺越來越多，問題越來越難以解決 ，不妨開一個新的會話。 A tip for Codex / Claude Code / Gemini CLI: if the conversation gets too long and AI hallucinations increase, making problems harder to solve, consider starting a new session. 這不是模型本身變笨了，而是 Context Window 中累積的噪音（失敗嘗試、重複指令、矛盾信息）稀釋了有效上下文的「 信噪比 」(Signal-to-Noise Ratio)。 The model hasn't gotten dumber accumulated noise in the Context Window (failed attempts, repeated instructions, contradictory information) dilutes the signal-to-noise ratio of effective context. 比喻說明 想像你在一間白板上寫滿字的會議室裡討論。當白板上 70% 的內容是已經被否定的方案和過時的筆記時，你不斷回頭參照這些內容只會越來越混亂。最有效的做法是：把結論記下來，擦掉白板，從乾淨的狀態重新開始。繼任者 Prompt 就是那份「結論筆記」。 核心概念：Context Window 的 Attention 機制 LLM 的 Transformer 架構使用 Attention 機制處理上下文。當上下文長度增加，模型需要在更多 token 之間分配注意力權重。關鍵信息被「淹沒」在無關 token 中，導致： 1. Lost in the Middle 效應 上下文中間的信息容易被忽略 2. 矛盾累積 早期的錯誤嘗試和後來的修正共存，模型難以判斷哪個版本有效 3. 指令稀釋 原始意"
+  },
+  {
+    "docFile": "2026-03-16_claude-architect-certification.html",
+    "docTitle": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "docDate": "2026-03-16",
+    "docSource": "@hooeem / X (Twitter)",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "4.3/5 Practical Value, Timeliness Learning Curve (info density extreme) @hooeem 將 Claude Certified Architect (Foundations) 認證考試的完整考綱拆解為 5 大 Domain，涵蓋 Agentic Architecture (27%)、Tool Design & MCP (18%)、Claude Code Configuration (20%)、Prompt Engineering (20%)、Context Management (15%)。每個 Domain 附帶反模式辨識、建構練習、學習資源連結，以及一個完整的 Domain-specific study prompt。 核心觀點：你不需要認證資格才能成為 Claude Architect，你需要的是 理解這些知識並能實作 。文章的最大價值在於將散落的 Anthropic 文件、SDK 文件、工程部落格，整合成一條結構化的學習路徑。 批判觀察： 文章本身不教概念，而是「教你怎麼學」——提供學習地圖和 study p"
+  },
+  {
+    "docFile": "2026-03-16_claude-architect-certification.html",
+    "docTitle": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "docDate": "2026-03-16",
+    "docSource": "@hooeem / X (Twitter)",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "Agentic Architecture 掌握 agentic loop、multi-agent orchestration、hooks、session management 的設計模式與反模式 Tool & MCP Design 理解 tool description 的關鍵作用、error response 結構、tool_choice 配置、MCP server 整合 Production Configuration 學會 CLAUDE.md hierarchy、path-specific rules、plan mode、CI/CD integration 的實務配置 Claude Certified Architect - 5 Domain Exam Map D1: Agentic 27% - Loops, Orchestration, Hooks D2: Tools 18% - MCP, Descriptions, Errors D3: Config 20% - CLAUDE.md, Rules, CI/CD D4: Prompt 20% - Criteria, Schema"
+  },
+  {
+    "docFile": "2026-03-16_claude-architect-certification.html",
+    "docTitle": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "docDate": "2026-03-16",
+    "docSource": "@hooeem / X (Twitter)",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "domain-1-agentic-architecture-orchestration-27",
+    "sectionTitle": "Domain 1: Agentic Architecture & Orchestration 27%",
+    "content": "1.1 Agentic Loops stop_reason 是唯一的真理 Agentic loop 的生命週期很簡單：送 request 給 Claude 檢查 stop_reason 如果是 \"tool_use\" 就執行工具、把結果附回對話歷史、再送回 Claude 如果是 \"end_turn\" 就結束。 工具結果必須 append 到對話歷史 ，模型才能在下一輪推理新資訊。 \"Tool results must be appended to conversation history so the model can reason about new information on the next iteration.\" 考試測試三個你必須一眼辨認的 反模式 ： 反模式 1： 解析自然語言判斷迴圈結束（例如檢查助手是否說了「I'm done」）。自然語言模糊不可靠，stop_reason 才是正解。 反模式 2： 任意迭代次數上限作為主要停止機制（例如「跑 10 次就停」）。要嘛截斷有用工作，要嘛跑不必要的迭代。 反模式 3： 檢查助手回覆是否包含 text 作為完成指標。模型可以同"
+  },
+  {
+    "docFile": "2026-03-16_claude-architect-certification.html",
+    "docTitle": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "docDate": "2026-03-16",
+    "docSource": "@hooeem / X (Twitter)",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "domain-2-tool-design-mcp-integration-18",
+    "sectionTitle": "Domain 2: Tool Design & MCP Integration 18%",
+    "content": "2.1 Tool Interface Design 描述決定一切 Tool descriptions 是 Claude 選擇工具的主要機制。 不是輔助功能，就是「那個」機制。如果描述模糊或重疊，選擇就會不可靠。 \"Tool descriptions are the primary mechanism Claude uses for tool selection.\" 考試的 Q2 情境： get_customer 和 lookup_order 的描述幾乎一樣，導致持續 misrouting。正確修正不是 few-shot examples、不是 routing classifier、不是 tool consolidation—— 而是改善 descriptions 。好的描述包含：工具用途、輸入格式、適用查詢範例、邊界情況、與相似工具的明確區分。 Tool 拆分原則： 把 analyze_document 這種通用工具拆成 extract_data_points 、 summarize_content 、 verify_claim_against_source ，每個有明確的 input"
+  },
+  {
+    "docFile": "2026-03-16_claude-architect-certification.html",
+    "docTitle": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "docDate": "2026-03-16",
+    "docSource": "@hooeem / X (Twitter)",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "domain-3-claude-code-configuration-workflows-20",
+    "sectionTitle": "Domain 3: Claude Code Configuration & Workflows 20%",
+    "content": "3.1-3.2 CLAUDE.md Hierarchy & Custom Commands CLAUDE.md 有三個層級， 層級決定誰能看到指令 ： User-level ~/.claude/CLAUDE.md ：只有你自己。不受版控、不共享。新團隊成員 clone repo 不會 得到這些指令。 Project-level .claude/CLAUDE.md ：所有人。版控、共享。團隊標準放這裡。 Directory-level （子目錄 CLAUDE.md）：在該目錄工作時才適用。 考試最愛的陷阱： 新團隊成員沒收到指令。根本原因：指令在 user-level config 而非 project-level。 Commands vs Skills 的區分： .claude/commands/ = project-scoped，版控共享 ~/.claude/commands/ = 個人，不共享 .claude/skills/ + SKILL.md = on-demand invocation，有 frontmatter 配置 Skills 是任務特定的 workflow（需要時調用"
+  },
+  {
+    "docFile": "2026-03-16_claude-architect-certification.html",
+    "docTitle": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "docDate": "2026-03-16",
+    "docSource": "@hooeem / X (Twitter)",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "domain-4-prompt-engineering-structured-output-20",
+    "sectionTitle": "Domain 4: Prompt Engineering & Structured Output 20%",
+    "content": "4.1-4.2 Explicit Criteria & Few-Shot Prompting 整個 Domain 4 的核心兩個字： be explicit 。「Be conservative」不會改善精確度。「Only report high-confidence findings」不會降低 false positives。 無效指令： \"Be conservative.\" / \"Only report high-confidence findings.\" 有效指令： \"Flag comments only when claimed behaviour contradicts actual code behaviour. Report bugs and security vulnerabilities. Skip minor style preferences and local patterns.\" False positive trust 問題： 某一類別的高 false positive rate 會摧毀 所有類別 的信任。解法：暫時停用高 false positive 的類別"
+  },
+  {
+    "docFile": "2026-03-16_claude-architect-certification.html",
+    "docTitle": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "docDate": "2026-03-16",
+    "docSource": "@hooeem / X (Twitter)",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "domain-5-context-management-reliability-15",
+    "sectionTitle": "Domain 5: Context Management & Reliability 15%",
+    "content": "5.1-5.2 Context Preservation & Escalation Progressive Summarisation 陷阱： 壓縮對話歷史會把「客戶要求退款 $247.83，訂單 #8891，3月3日」變成「客戶想退款」。數字、日期、百分比、客戶期望全消失。 解法： 把交易事實提取到 persistent \"case facts\" block，每次 prompt 都帶入，永不壓縮。 \"Lost in the middle\" 效應： 模型可靠處理長輸入的 開頭和結尾 ，中間的 findings 可能被遺漏。解法：關鍵摘要放開頭，全文用明確 section headers。 三個有效的 escalation triggers： 1. 客戶明確要求人工（ 立即執行 ，不要先嘗試解決） 2. 政策例外或空白（請求超出文件化政策） 3. 無法取得實質進展 兩個不可靠的 triggers： Sentiment-based escalation（挫折感 ≠ 案件複雜度）、Self-reported confidence scores（模型在困難案件上常過度自信，簡單案件上反而不確定"
+  },
+  {
+    "docFile": "2026-03-16_claude-architect-certification.html",
+    "docTitle": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "docDate": "2026-03-16",
+    "docSource": "@hooeem / X (Twitter)",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Deterministic > Probabilistic 高風險場景（財務、安全、合規）必須用 programmatic enforcement（hooks / gates），不能只靠 prompt。這是整份考試最一致的設計哲學，也是 production AI 系統與 demo AI 系統的根本分界線。 Tool Description 就是一切 Claude 選擇工具的唯一機制是 tool description。描述模糊 = misrouting。修正 description 是第一優先步驟，在 routing classifier 或 few-shot examples 之前。每個 agent 限 4-5 tools。 Configuration 必須 Team-Visible CLAUDE.md 的三層 hierarchy 是考試高頻考點。指令放 user-level = 新成員看不到。Path-specific rules 用 glob pattern 跨目錄生效，比 directory-level CLAUDE.md 更精確且省 token。 Context 是有限資源"
+  },
+  {
+    "docFile": "2026-03-16_claude-architect-certification.html",
+    "docTitle": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "docDate": "2026-03-16",
+    "docSource": "@hooeem / X (Twitter)",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 一個 customer support agent 在 8% 的案例中未驗證帳戶所有權就處理退款。最佳修正方案是什麼？ 正確答案： Programmatic prerequisite gate（hooks），在退款工具執行前強制要求帳戶驗證完成。 為什麼不是其他選項： Enhanced system prompt 概率性解決方案，8% 失敗率意味著真實財務損失，不可接受。 Few-shot examples 高 token overhead，而且根本原因不是模型不理解（它理解），是偶爾跳過步驟。 Routing classifier 過度工程化，問題不在路由而在流程控制。 考試原則： 財務/安全後果 = 確定性 enforcement，不接受概率性方案。 Q2 產業應用 你在設計 CDMO 的 deviation triage agent。如何確保 Critical deviation 一定經過 QA Head review，而不只是「偶爾」經過？ 套用 Domain 1 (Task 1.4) 的 enforcement spectrum： GMP 環境中，deviat"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "概念解析-原文對照",
+    "sectionTitle": "概念解析 + 原文對照",
+    "content": "v2.1.49 引入了 --worktree 旗標 ，讓 Claude 在獨立的 git worktree 中運行。這不是單純的目錄切換，而是 程序隔離 的基礎設施。Subagent 同時支援 isolation: \"worktree\" ，意味著每個子代理在獨立的程式碼快照中工作，互不干擾。 \"Added --worktree (-w) flag to start Claude in an isolated git worktree\" / \"Subagents support isolation: worktree for working in a temporary git worktree\" v2.1.49 同時加入了 Background Agent 概念：在 agent 定義中設定 background: true ，該代理就會在背景執行。搭配 Ctrl+F 可批量終止背景代理（需兩次確認）。這是「一主多僕」架構的雛形。 \"Agent definitions support background: true to always run as a background task\""
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "technical-details-code",
+    "sectionTitle": "Technical Details & Code",
+    "content": "Agent 隔離模型演進 # v2.1.49: Worktree 啟動 claude --worktree # Agent 定義 (YAML frontmatter) --- name: code-reviewer isolation: worktree background: true --- # v2.1.50: 列出所有 agents claude agents # v2.1.72: ExitWorktree 工具 # Agent 可主動離開 worktree # v2.1.76: Sparse worktree # settings.json { \"worktree\": { \"sparsePaths\": [\"packages/core\", \"libs/shared\"] } } Agent 記憶體修復清單 v2.1.50 : Completed teammate tasks 未被 GC v2.1.50 : Completed task state 未從 AppState 移除 v2.1.59 : Completed subagent task state 未釋放 v2.1.63 "
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "概念解析-原文對照",
+    "sectionTitle": "概念解析 + 原文對照",
+    "content": "這批版本中最顯眼的主題是 記憶體洩漏修復 。超過 20 項獨立的記憶體問題被修正，涵蓋 WASM 線性記憶體、Tree-sitter 解析器、CircularBuffer、Shell 子行程、LSP 診斷資料、MCP 快取等多個子系統。 \"Fixed unbounded WASM memory growth during long sessions by periodically resetting the tree-sitter parser\" / \"Fixed memory leak in CircularBuffer where cleared items were retained in the backing array\" 啟動效能也是重點。v2.1.49 開始批量化 MCP tool token counting 為單一 API 呼叫，快取 MCP auth 失敗以避免重複連線嘗試，並在 headless 模式跳過不必要的 API 呼叫。v2.1.50 進一步將 Yoga WASM 和 UI 元件匯入延遲到需要時才載入。 \"Improved startup performa"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "technical-details",
+    "sectionTitle": "Technical Details",
+    "content": "效能改善量化 # 記憶體管理策略演進 v2.1.49: Tree-sitter parser 定期重置 v2.1.50: File history snapshots 加上上限 v2.1.50: Tool results > 50K 持久化到磁碟 (v2.1.51 降低至 50K, 原為 100K) v2.1.63: Compaction 後清理內部快取 v2.1.63: Heavy progress payloads 被剝離 v2.1.69: React memoCache 舊版本清理 v2.1.76: Auto-compaction 斷路器 (連續失敗 3 次後停止) # 啟動效能改善 v2.1.49: MCP auth 失敗快取 v2.1.49: Analytics token counting 減少 v2.1.49: MCP tool counting 批量化 v2.1.50: Yoga WASM 延遲匯入 v2.1.70: 啟動記憶體 -426KB v2.1.72: Bundle size -510KB Compaction 改進 v2.1.70 : Compaction 現"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "概念解析-原文對照",
+    "sectionTitle": "概念解析 + 原文對照",
+    "content": "Plugin 系統在這批版本中快速迭代。v2.1.49 開始讓 plugin 附帶 settings.json 作為預設配置。v2.1.51 支援自訂 npm registry 和版本固定。v2.1.63 加入了關鍵的 HTTP Hooks 可以 POST JSON 到外部 URL 並接收 JSON 回應，而非僅能執行本機 shell 指令。 \"Plugins can ship settings.json for default configuration\" / \"Added HTTP hooks, which can POST JSON to a URL and receive JSON instead of running a shell command\" Hooks 事件持續擴充： ConfigChange （v2.1.49）、 WorktreeCreate/Remove （v2.1.50）、 InstructionsLoaded （v2.1.69）、 PostCompact （v2.1.76）、 Elicitation/ElicitationResult （v2.1.76）。這"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "technical-details-code",
+    "sectionTitle": "Technical Details & Code",
+    "content": "Hook Events 完整清單 # 生命週期 Hooks（截至 v2.1.76） SessionStart # 工作階段啟動 SessionEnd # 工作階段結束（可設 timeout） ConfigChange # 設定檔變更 InstructionsLoaded # CLAUDE.md / rules 載入 PostCompact # Compaction 完成後 # Agent Hooks WorktreeCreate # Worktree 建立 WorktreeRemove # Worktree 移除 TeammateIdle # 隊友閒置 TaskCompleted # 任務完成 # MCP Hooks (v2.1.76 NEW) Elicitation # MCP 請求使用者輸入 ElicitationResult # 使用者回應 # Hook 類型 Shell Hook: 執行本機指令 HTTP Hook: POST JSON 到 URL (v2.1.63+) # Hook 事件欄位 (v2.1.69+) agent_id, agent_type, worktree "
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "概念解析-原文對照",
+    "sectionTitle": "概念解析 + 原文對照",
+    "content": "MCP（Model Context Protocol）在這批版本中經歷了從「能用」到「可靠」的轉變。v2.1.49 開始快取 MCP auth 失敗；v2.1.59 修復了多實例同時運行時的 OAuth token refresh 競爭條件；v2.1.63 修復了大量 MCP 相關的記憶體洩漏。 \"Fixed MCP OAuth token refresh race condition when running multiple Claude Code instances simultaneously\" / \"Fixed MCP tool/resource cache leak on server reconnect\" v2.1.76 帶來了架構級突破： MCP Elicitation 。MCP server 現在可以在任務執行中途，透過互動式對話框向使用者請求結構化輸入。這不再是單純的「工具呼叫 結果回傳」，而是 MCP server 主動發起的雙向對話。 \"Added MCP elicitation support MCP servers can now request struc"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "technical-details",
+    "sectionTitle": "Technical Details",
+    "content": "MCP 改善時間線 # OAuth 與連線穩定性 v2.1.49: Auth failure caching v2.1.59: Multi-instance OAuth 競爭修復 v2.1.63: Manual URL paste fallback v2.1.69: macOS keychain 損壞修復 v2.1.69: oauth.authServerMetadataUrl 選項 v2.1.74: OAuth refresh token 過期處理 v2.1.74: Callback port 佔用處理 # 記憶體與效能 v2.1.63: Tool/resource cache leak 修復 v2.1.63: Server fetch cache 斷開清理 v2.1.70: Prompt-cache bust 修復 # 功能擴展 v2.1.63: HTTP hooks (POST JSON) v2.1.69: Binary content (PDF, Office, Audio) v2.1.76: Elicitation (結構化互動對話) v2.1.76: Elicitation"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "概念解析-原文對照",
+    "sectionTitle": "概念解析 + 原文對照",
+    "content": "Remote Control 功能從 v2.1.51 開始以獨立子指令出現，v2.1.58 擴展至更多使用者。到 v2.1.69 加入了可選的 name 參數，v2.1.73 改善了 spawn mode 選擇提示。這條演進線代表的是： Claude Code 不再綁定於桌面終端 。 \"Added claude remote-control subcommand for external builds\" / \"Expand Remote Control to more users\" / \"Added optional name argument to /remote-control\" Voice Mode 從 v2.1.69 開始大幅擴展，新增 10 種語言的語音轉文字支援（總計 20 種），包含俄語、波蘭語、土耳其語等。Push-to-talk 按鍵可自訂綁定（v2.1.71），且 v2.1.72 改善了 repo 名稱和常見開發用語的轉錄準確度。 \"Added Voice STT support for 10 new languages (20 total)\" / \"Added v"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "technical-details",
+    "sectionTitle": "Technical Details",
+    "content": "Remote Control 演進 # Remote Control 使用 claude remote-control # 基本啟動 claude remote-control --name \"batch-review\" # v2.1.76 修復項目 - Sessions 靜默死亡 - 快速訊息排隊為逐一處理 - JWT refresh 後 stale work items - WebSocket 長時間斷線恢復 - 圖片經 Remote Control 傳送時 media_type 錯誤 # Voice Mode 語言支援 (v2.1.69+) # 新增：RU, PL, TR, NL, UK, EL, CS, DA, SV, NO # 合計 20 種語言 # Push-to-talk 自訂 (v2.1.71) # keybindings.json { \"voice:pushToTalk\": \"ctrl+shift+v\" } CDMO 應用情境 移動辦公場景 ：在工廠巡檢時，用手機 Claude App 透過 Remote Control 連接家中 MacBook Air 上的 Cla"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "概念解析-原文對照",
+    "sectionTitle": "概念解析 + 原文對照",
+    "content": "v2.1.59 引入 Auto-Memory ：Claude 自動將有用的上下文存入記憶體，可透過 /memory 管理。v2.1.74 進一步加入 autoMemoryDirectory 設定，可自訂記憶體儲存目錄。搭配 v2.1.75 的 last-modified timestamps，記憶體系統終於有了完整的生命週期管理。 \"Claude automatically saves useful context to auto-memory. Manage with /memory\" / \"Added autoMemoryDirectory setting to configure a custom directory for auto-memory storage\" v2.1.71 的 /loop 指令是另一個重要里程碑：可以按照固定間隔重複執行 prompt 或 slash command。搭配 cron scheduling tools，Claude Code 具備了「定時排程任務」的能力。這從根本上改變了 Claude Code 從「互動工具」到「自動化平台」的定位。 \"A"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "technical-details",
+    "sectionTitle": "Technical Details",
+    "content": "新指令速查表 # 記憶體管理 /memory # 管理 auto-memory /context # 檢視 context 使用狀況 # v2.1.74: 識別 context-heavy # tools、memory bloat # 排程與迴圈 /loop # 定期執行 prompt (v2.1.71) CLAUDE_CODE_DISABLE_CRON=true # 停用 cron # 檔案與輸出 /copy # 互動式選取 code blocks /copy # 'w' 鍵直接寫入檔案 (v2.1.72) /export # 匯出完整路徑 (v2.1.76 修復) # 模型與效能 /effort # 設定 effort level (v2.1.76) /model # 含 human-readable labels /color # 設定 prompt-bar 顏色 (v2.1.75) # 其他 /plan [desc] # 可選描述 (v2.1.72) /rename # prompt bar 顯示名稱 /simplify # 簡化模式 (v2.1.63) /batch # 批次"
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "概念解析-原文對照",
+    "sectionTitle": "概念解析 + 原文對照",
+    "content": "Managed Settings 是企業治理的核心機制。v2.1.51 開始支援 macOS plist 和 Windows Registry 管理設定，v2.1.69 加入 pluginTrustMessage 和 strictKnownMarketplaces 。v2.1.74 修復了 managed policy 的 ask 規則被使用者 allow 規則繞過的問題 這是嚴重的合規漏洞。 \"Managed settings can now be set via macOS plist or Windows Registry\" / \"Fixed managed policy ask rules being bypassed by user allow rules or skill allowed-tools\" 模型遷移也是企業關注點。v2.1.49 移除 Sonnet 4.5（1M context），改為 Sonnet 4.6。v2.1.68 移除 Opus 4 和 4.1，使用者自動遷移至 Opus 4.6。v2.1.69 修復了 --model claude-opus-4-0 "
+  },
+  {
+    "docFile": "2026-03-16_claude-code-release-evolution.html",
+    "docTitle": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "docDate": "2026-03-16",
+    "docSource": "Anthropic / Claude Code Release Notes",
+    "docRating": 4.2,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "technical-details",
+    "sectionTitle": "Technical Details",
+    "content": "模型遷移時間線 # Sonnet 系列 v2.1.49: Sonnet 4.5 (1M) removed -> Sonnet 4.6 (1M) replaced v2.1.69: Sonnet 4.5 Pro/Max/Team -> auto-migrated to 4.6 # Opus 系列 v2.1.49: Opus 4.6 available v2.1.50: Opus 4.6 fast mode (1M) v2.1.68: Opus 4/4.1 removed -> auto-migrated to 4.6 v2.1.68: Default effort = medium v2.1.73: Bedrock/Vertex/Foundry default Opus -> 4.6 v2.1.75: Opus 4.6 1M context (Max/Team/Enterprise) 跨平台修復亮點 Windows : panic 修復、大量 spawn crash、RTL 文字渲染、CMD 2>nul 處理、WSL clipboard Linux : glibc 2.26+ 相容（Am"
   }
 ];

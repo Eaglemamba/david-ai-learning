@@ -1,5 +1,94 @@
 const documents = [
   {
+    "date": "2026-03-16",
+    "title": "1M Context Compaction - Agent Context Engineering Runbook",
+    "source": "Nyk (@nyk_builderz) / X Thread",
+    "tags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "rating": 4,
+    "summary": "三種 context rot 失敗模式、Compaction API 設定、CLAUDE.md 記憶層級架構，實戰操作清單。",
+    "lines": 772,
+    "file": "2026-03-16_1m-context-compaction.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "Agent 繼任者 Prompt - 長上下文退化的優雅解法",
+    "source": "周尔复 (@cholf5) / X",
+    "tags": [
+      "Prompt",
+      "Agent",
+      "Framework"
+    ],
+    "rating": 4,
+    "summary": "長上下文退化時的 Agent 交接 Prompt 模板，含 v2.0 結構化七段交接格式與 Prompt 自舉技巧。",
+    "lines": 549,
+    "file": "2026-03-16_agent-handoff-successor-prompt.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "source": "@hooeem / X (Twitter)",
+    "tags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "rating": 4.3,
+    "summary": "拆解 Claude Certified Architect 考試五大 Domain，含反模式、建構練習、學習資源。",
+    "lines": 906,
+    "file": "2026-03-16_claude-architect-certification.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "source": "Anthropic / Claude Code Release Notes",
+    "tags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "rating": 4.2,
+    "summary": "28 個版本釋出分析：Multi-Agent 架構、記憶體工程、Plugin 生態、MCP Elicitation、Remote Control 演進",
+    "lines": 1033,
+    "file": "2026-03-16_claude-code-release-evolution.html"
+  },
+  {
+    "date": "2026-03-14",
+    "title": "蘋果 AI 平價戰略 - 低價硬體搶佔 AI 生態入口",
+    "source": "FOMO研究院KP / 商業周刊 第2000期",
+    "tags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "rating": 3.4,
+    "summary": "蘋果用 iPhone 17e 與 MacBook Neo 搶平價市場，真正目的是讓 Apple Intelligence 成為最懂你的 AI。",
+    "lines": 609,
+    "file": "2026-03-14_apple-ai-affordable-strategy.html"
+  },
+  {
+    "date": "2026-03-13",
+    "title": "Claude Code 架構治理與工程實踐 - Tw93",
+    "source": "Tw93 / X (Twitter)",
+    "tags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "API"
+    ],
+    "rating": 4.5,
+    "summary": "Tw93 半年 Claude Code 深度使用經驗。六層架構、上下文治理、Skills/Hooks/Subagents 設計、Prompt Caching 與 CLAUDE.md 最佳實踐。",
+    "lines": 1047,
+    "file": "2026-03-13_claude-code-architecture-governance.html"
+  },
+  {
     "date": "2026-03-12",
     "title": "偏鄉程式教育 - 蘇文鈺 Program the World",
     "source": "商業周刊第2000期 / 程倚華、陳盈螢",
