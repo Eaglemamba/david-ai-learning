@@ -1,0 +1,37 @@
+name: Build generated files
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/*.html'
+      - 'build-search-index.js'
+      - 'build-dashboard-data.js'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Rebuild dashboard-data.js
+        run: node build-dashboard-data.js
+
+      - name: Rebuild search-index.js
+        run: node build-search-index.js
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dashboard-data.js search-index.js
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-build: rebuild dashboard-data.js and search-index.js"
+            git push
+          fi
