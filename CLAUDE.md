@@ -26,9 +26,8 @@ When any document is updated, check and update all related downstream files:
 |---------|-----------------|
 | Add/remove HTML in `docs/` | `node build-search-index.js` to rebuild `search-index.js` |
 | Add/remove HTML in `docs/` | `node build-dashboard-data.js` to rebuild `dashboard-data.js` |
-| Add/remove HTML in `docs/` | Add/remove entry in `mindmap.html` |
-| Add/remove HTML in `docs/` | Add/remove entry in `learning-path.html` |
-| Change doc metadata (title, tags, rating) | Rebuild search index + update mindmap entry + update learning-path entry |
+| Add/remove HTML in `docs/` | Add/remove entry in `curriculum-data.js` (feeds both mindmap + learning-path) |
+| Change doc metadata (title, tags, rating) | Rebuild search index + update entry in `curriculum-data.js` |
 | Change doc date or year | Grep all related files for stale dates |
 | Add new tag category | Add tag color in `docs/styles.css` (when created) + update README Categories table |
 | Update `docs-workflow/` templates | Check if examples still match template structure |
@@ -40,8 +39,9 @@ docs/*.html (120 source files)
   ├── index.html          loads dashboard-data.js (built via build-dashboard-data.js)
   ├── dashboard-data.js   built from docs/ via build-dashboard-data.js
   ├── search-index.js     built from docs/ via build-search-index.js
-  ├── mindmap.html         manually curated topic clusters
-  ├── learning-path.html   structured learning progression
+  ├── curriculum-data.js   single source of truth for stages + topic clusters
+  ├── mindmap.html         loads curriculum-data.js → generates markmap
+  ├── learning-path.html   loads curriculum-data.js → renders progress tracker
   └── docs-workflow/       MD essence/cheatsheet summaries
 ```
 
