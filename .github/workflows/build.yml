@@ -7,6 +7,7 @@ on:
       - 'docs/*.html'
       - 'build-search-index.js'
       - 'build-dashboard-data.js'
+      - 'auto-classify.js'
 
 permissions:
   contents: write
@@ -21,6 +22,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Auto-classify new docs into curriculum-data.js
+        run: node auto-classify.js
+
       - name: Rebuild dashboard-data.js
         run: node build-dashboard-data.js
 
@@ -31,10 +35,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add dashboard-data.js search-index.js
+          git add curriculum-data.js dashboard-data.js search-index.js
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Auto-build: rebuild dashboard-data.js and search-index.js"
+            git commit -m "Auto-build: classify new docs + rebuild indices"
             git push
           fi
