@@ -1,5 +1,35 @@
 const documents = [
   {
+    "date": "2026-03-18",
+    "title": "Lessons from Building Claude Code Skills",
+    "source": "Thariq / Anthropic Engineering Blog",
+    "tags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework"
+    ],
+    "rating": 4.4,
+    "summary": "Anthropic 內部 Skills 實戰經驗：9 大類型、撰寫技巧、分發策略。",
+    "lines": 829,
+    "file": "2026-03-18_claude-code-skills-lessons.html"
+  },
+  {
+    "date": "2026-03-18",
+    "title": "NotebookLM 三大隱藏連接 - Gemini Canvas, Gems, Antigravity",
+    "source": "Wyndo (AI Maker Labs) / Gencay (LearnAIWithMe)",
+    "tags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "API"
+    ],
+    "rating": 3.4,
+    "summary": "NotebookLM 連接 Gemini Canvas 建 App、Gems 建永久助手、Antigravity MCP 自動化研究。實用但多為 Google 生態圈限定。",
+    "lines": 549,
+    "file": "2026-03-18_notebooklm-hidden-features.html"
+  },
+  {
     "date": "2026-03-16",
     "title": "1M Context Compaction - Agent Context Engineering Runbook",
     "source": "Nyk (@nyk_builderz) / X Thread",
@@ -58,6 +88,35 @@ const documents = [
     "summary": "28 個版本釋出分析：Multi-Agent 架構、記憶體工程、Plugin 生態、MCP Elicitation、Remote Control 演進",
     "lines": 1033,
     "file": "2026-03-16_claude-code-release-evolution.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "Karpathy autoresearch - Agent 自主研究 Feedback Loop 設計典範",
+    "source": "karpathy/autoresearch GitHub Repo + Community Analysis",
+    "tags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "Research"
+    ],
+    "rating": 4.5,
+    "summary": "Karpathy autoresearch 拆解：三檔案極簡架構、program.md 核心設計、Shopify 53% 效能提升實證、CDMO 閉環應用",
+    "lines": 760,
+    "file": "2026-03-16_karpathy-autoresearch.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "YC 創辦人戰略提問框架 - Strategic Prompting",
+    "source": "Anonymous LinkedIn/X Post (YC Founder Observation)",
+    "tags": [
+      "Prompt",
+      "Framework",
+      "Analysis"
+    ],
+    "rating": 3.6,
+    "summary": "YC 創辦人用四層提問策略將 Claude 變成戰略思考夥伴，3小時完成市場研究。",
+    "lines": 571,
+    "file": "2026-03-16_yc-founder-strategic-prompting.html"
   },
   {
     "date": "2026-03-14",
