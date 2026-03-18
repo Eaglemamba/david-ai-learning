@@ -47,6 +47,7 @@ const stages = [
       { file: '2025-12-16_data-literacy-loop.html', title: 'Data Literacy Loop ★3.5', required: false, why: '打造具數據素養的 AI 協作' },
       { file: '2025-02-13_markdown_ai_guide.html', title: 'Markdown 終極指南 ★3.8', required: false, why: 'Markdown 是 AI 的母語，掌握格式提升溝通效率' },
       { file: '2026-03-16_agent-handoff-successor-prompt.html', title: 'Agent 繼任者 Prompt ★4.0', required: false, why: '長上下文退化時的 Agent 交接 Prompt 模板' },
+      { file: '2026-03-16_yc-founder-strategic-prompting.html', title: 'YC 創辦人戰略提問框架 ★3.6', required: false, why: '3 小時完成 3 個月研究的戰略級提問設計' },
     ]
   },
   {
@@ -75,6 +76,7 @@ const stages = [
       { file: '2026-03-11_claude-code-interactive-mode.html', title: 'Claude Code 互動模式完全指南 ★4.0', required: false, why: '鍵盤快捷鍵、Vim 模式、內建指令、背景任務完整參考' },
       { file: '2026-03-16_claude-architect-certification.html', title: 'Claude Architect 認證自學 ★4.3', required: false, why: 'Claude Certified Architect 五大 Domain 完整拆解' },
       { file: '2026-03-16_claude-code-release-evolution.html', title: 'Claude Code v2.1.49-76 釋出演進 ★4.2', required: false, why: '28 版本深度分析：Multi-Agent、記憶體工程、Plugin 生態' },
+      { file: '2026-03-18_notebooklm-hidden-features.html', title: 'NotebookLM 三大隱藏連接 ★3.4', required: false, why: '從研究工具到 AI 指揮中心：三大隱藏整合功能' },
     ]
   },
   {
@@ -105,6 +107,8 @@ const stages = [
       { file: '2026-03-11_skill-creator-epic-update.html', title: 'Skill-creator 史詩級更新 四大評估能力 ★4.0', required: false, why: '評估系統、基準測試、多代理並行、描述調優全面解析' },
       { file: '2026-03-13_claude-code-architecture-governance.html', title: 'Claude Code 架構治理 Tw93 ★4.5', required: false, why: '六層架構、上下文治理、Skills/Hooks/Subagents 設計' },
       { file: '2026-03-16_1m-context-compaction.html', title: '1M Context Compaction Runbook ★4.0', required: false, why: 'Context rot 失敗模式與 Compaction API 實戰操作' },
+      { file: '2026-03-16_karpathy-autoresearch.html', title: 'Karpathy autoresearch Agent 自主研究 ★4.5', required: false, why: 'Agent 自主研究的 Feedback Loop 設計典範' },
+      { file: '2026-03-18_claude-code-skills-lessons.html', title: 'Lessons from Building Claude Code Skills ★4.4', required: false, why: 'Anthropic Engineering：Skills 設計原則與 Pattern 實戰' },
     ]
   },
   {
@@ -186,6 +190,7 @@ const topicClusters = [
           { title: 'Agent Skills 模組化架構 ★4.0', file: '2026-02-27_agent-skills-architecture.html' },
           { title: 'Claude Skill 建構完整指南 ★4.2', file: '2026-03-09_building-skills-guide.html' },
           { title: 'Skill-creator 史詩級更新 ★4.0', file: '2026-03-11_skill-creator-epic-update.html' },
+          { title: 'Lessons from Building Claude Code Skills ★4.4', file: '2026-03-18_claude-code-skills-lessons.html' },
         ]
       },
       {
@@ -215,6 +220,7 @@ const topicClusters = [
           { title: '3-Prompt Pipeline 管道系統 ★3.6', file: '2025-12-02_prompt-pipeline.html' },
           { title: '四個 Prompts 洞見創造者 ★3.5', file: '2025-11-04_ai-prompts-insight-creator.html' },
           { title: 'Markdown 終極指南 ★3.8', file: '2025-02-13_markdown_ai_guide.html' },
+          { title: 'YC 創辦人戰略提問框架 ★3.6', file: '2026-03-16_yc-founder-strategic-prompting.html' },
         ]
       },
       {
@@ -257,6 +263,7 @@ const topicClusters = [
         name: 'Agent 研究',
         docs: [
           { title: 'SkillsBench Agent Skills 基準測試 ★4.5', file: '2026-03-01_skillsbench-agent-skills.html' },
+          { title: 'Karpathy autoresearch Agent 自主研究 ★4.5', file: '2026-03-16_karpathy-autoresearch.html' },
         ]
       },
       {
@@ -306,6 +313,7 @@ const topicClusters = [
           { title: 'AI 工具排毒指南 ★3.8', file: '2026-01-15_ai-tool-detox.html' },
           { title: 'Data Literacy Loop ★3.5', file: '2025-12-16_data-literacy-loop.html' },
           { title: 'Cursor 非工程用途指南 ★4.0', file: '2026-02-25_cursor-non-engineering.html' },
+          { title: 'NotebookLM 三大隱藏連接 ★3.4', file: '2026-03-18_notebooklm-hidden-features.html' },
         ]
       }
     ]

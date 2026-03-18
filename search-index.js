@@ -14933,5 +14933,132 @@ const searchIndex = [
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
     "content": "模型遷移時間線 # Sonnet 系列 v2.1.49: Sonnet 4.5 (1M) removed -> Sonnet 4.6 (1M) replaced v2.1.69: Sonnet 4.5 Pro/Max/Team -> auto-migrated to 4.6 # Opus 系列 v2.1.49: Opus 4.6 available v2.1.50: Opus 4.6 fast mode (1M) v2.1.68: Opus 4/4.1 removed -> auto-migrated to 4.6 v2.1.68: Default effort = medium v2.1.73: Bedrock/Vertex/Foundry default Opus -> 4.6 v2.1.75: Opus 4.6 1M context (Max/Team/Enterprise) 跨平台修復亮點 Windows : panic 修復、大量 spawn crash、RTL 文字渲染、CMD 2>nul 處理、WSL clipboard Linux : glibc 2.26+ 相容（Am"
+  },
+  {
+    "docFile": "2026-03-16_karpathy-autoresearch.html",
+    "docTitle": "Karpathy autoresearch - Agent 自主研究 Feedback Loop 設計典範",
+    "docDate": "2026-03-16",
+    "docSource": "karpathy/autoresearch GitHub Repo + Community Analysis",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "Research"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Andrej Karpathy 於 2026 年 3 月釋出 autoresearch ，一個僅 630 行 Python + 40 行 Markdown 的極簡框架，讓 AI Agent 在單顆 GPU 上自主進行機器學習實驗。核心理念： 人類寫研究策略（program.md），Agent 執行局部搜索（train.py） 。5 天內超過 32K GitHub stars，Shopify CEO Tobi Lutke 用同一模式一夜之間讓 0.8B 模型超越手動調校的 1.6B 模型（+19%），更進一步將 Liquid 模板引擎效能提升 53%。本文深度拆解 repo 架構、program.md 設計哲學，並連結到 CDMO 環境中的 Feedback Loop 應用。 Learning Objectives 學習目標 三檔案架構設計 理解 prepare.py / train.py / program.md 的分工與約束，以及為何極簡設計是 Agent 成功的前提 program.md 設計哲學 掌握「用 Markdown 寫給 Agent 的研究規則」這個新型態的 human-agent interface 設計 Feedback Loop 泛化應用 將 autoresearch 的 ratchet 機制拆解為可套用於營運、品質優化等非 ML 場景的通用框架 autoresearch Ratchet Loop program.md Human 定義策略與約束 Agent 改 train.py 修改架構/超參數 5 min 訓練 固定時間預算 val_bpb 評估 改善? git commit : git reset Loop Forever ~12 實驗/hr, ~100/夜 Part I Karpathy 是誰？為什麼他做的東西值得認真看 Andrej Karpathy 是 OpenAI 早期成員 之一，曾在 Tesla 主導自駕 AI 團隊，後來做了大量對開發者影響深遠的 AI 教學與開源專案：nanoGPT、micrograd、nanochat 等。他不只是研究者，更是少數能 同時橋接研究與工程落地 的人。 Former co-founder of OpenAI, former Director of AI at Tesla. Creator of nanoGPT, micrograd, nanochat — projects that bridged research and engineering practice. 所以這次他釋出 autoresearch，不只是又一個 AI demo，而是一個深刻理解模型訓練、研究流程和工程落地的人， 親自示範 AI 參與研究本身的最小可行架構 。repo 發布 5 天內達到 32.6K stars，成為 2026 年成長最快的 GitHub 專案之一。 The repo hit 32,600+ GitHub stars in five days, becoming one of the fastest-growing repositories of 2026. Not just a demo — a minimal viable architecture for AI participating in research itself. 核心概念 為什麼 Karpathy 的背景很重要？ autoresearch 不是一個理論概念，而是一個 已經被創建者自己驗證過的系統 。Karpathy "
+  },
+  {
+    "docFile": "2026-03-16_yc-founder-strategic-prompting.html",
+    "docTitle": "YC 創辦人戰略提問框架 - Strategic Prompting",
+    "docDate": "2026-03-16",
+    "docSource": "Anonymous LinkedIn/X Post (YC Founder Observation)",
+    "docRating": 3.6,
+    "docTags": [
+      "Prompt",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "一位 YC 創辦人展示了四層戰略提問法，將 Claude 從「更快的 Google」變成「沒有自尊心的戰略思考夥伴」。核心方法：先餵入大量一手資料（競爭對手頁面、財報電話會議、客戶評論），再用層層遞進的提問挖掘市場的 隱性假設 、 脆弱共識 和 攻擊面 。 批判提醒 這是匿名社群貼文，無法驗證具體案例。「3小時 vs 3個月」的說法屬於行銷誇大——真正的市場研究需要客戶訪談、數據驗證和迭代測試，LLM 無法替代。但提問框架本身有實用價值。 Learning Objectives 1 理解「Context Loading（上下文裝載）」為什麼比直接提問更重要，以及如何選擇正確的一手資料 2 掌握四層戰略提問的遞進邏輯：從隱性洞察 → 假設解構 → 壓力測試 → 最強反論 3 將此框架遷移到 CDMO 場景：客戶可行性評估、市場進入策略、競爭分析 Four-Layer Strategic Prompting Framework 1 Context Load 餵入一手資料 2 Unspoken Insight 挖隱性共識 3 Assumption Attack 解構市場假設 4 Stress Test 投資人級壓力測試 Part I: Context Loading — 上下文裝載的藝術 Part I 先餵資料，不要先問問題 這位創辦人的第一步不是叫 Claude 去「研究市場」。他 餵入了 8 個競爭對手的 landing page、3 份財報電話會議逐字稿、12 則客戶評論，和一個 Reddit 抱怨串 。 First: he didn't ask Claude to \"research the market.\" He fed it 8 competitor landing pages, 3 earnings call transcripts, 12 customer reviews, and a Reddit thread of complaints. 這是 Context Engineering（上下文工程）的核心原則： 你給 LLM 的資料品質，決定了它思考的品質 。大多數人給 Claude 一個模糊問題，然後對模糊答案感到失望。這位創辦人反過來——他先把自己會看的資料全部灌進去，讓 Claude 站在和他一樣的資訊起點。 Most people treat Claude like a faster Google. These founders are using it like a thinking partner who has read everything and has no ego about being wrong. Context Loading 原則 一手資料優先： 不是叫 AI 去搜尋（AI 會給你平均觀點），而是餵入你自己策展的原始資料。競爭對手怎麼向客戶說話（landing page）、管理層對投資人說什麼（earnings call）、客戶真正的痛點是什麼（reviews + Reddit）——這三者的交叉比對，才能產出有價值的洞察。 比喻：偵探的案件卷宗 想像你是一個偵探。你不會跟助手說「去查一下這個案子」——你會把所有證物、證詞、監視器畫面攤在桌上，然後問助手：「你看到什麼我沒看到的？」Context Loading 就是把案件卷宗攤開的動作。 CDMO 場景遷移 評估新客戶的可行性時，同樣可以把一手資料先載入：客戶的 CMC 文件摘要、FDA/EMA 審查歷史、同類產品的市場規模資料、類似案例的 deviati"
+  },
+  {
+    "docFile": "2026-03-18_claude-code-skills-lessons.html",
+    "docTitle": "Lessons from Building Claude Code Skills",
+    "docDate": "2026-03-18",
+    "docSource": "Thariq / Anthropic Engineering Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Anthropic 內部已有數百個 Skills 在使用中。本文由工程師 Thariq 整理出 9 大 Skill 類型分類法 、 10+ 項撰寫最佳實踐 、以及 Marketplace 分發策略 。對於已經在使用 Claude Code Skills 的人而言，這是第一份來自 Anthropic 內部的系統性經驗分享，從「Skill 是資料夾不是檔案」的核心觀念出發，涵蓋 Progressive Disclosure、Gotchas Section、On-Demand Hooks 等進階技巧。"
+  },
+  {
+    "docFile": "2026-03-18_claude-code-skills-lessons.html",
+    "docTitle": "Lessons from Building Claude Code Skills",
+    "docDate": "2026-03-18",
+    "docSource": "Thariq / Anthropic Engineering Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "9 大 Skill 類型 掌握 Library Reference 到 Runbook 的完整分類框架，識別自己組織缺少哪些類型 撰寫最佳實踐 學會 Gotchas Section、Progressive Disclosure、On-Demand Hooks 等進階技巧 分發與管理 理解 Repo check-in vs Plugin Marketplace 的取捨，以及有機品質管控流程 Skill Lifecycle: Identify Write Distribute Measure Identify Type 9 categories taxonomy Write Well Gotchas, progressive disclosure Distribute Repo vs Marketplace Measure PreToolUse hook logging"
+  },
+  {
+    "docFile": "2026-03-18_claude-code-skills-lessons.html",
+    "docTitle": "Lessons from Building Claude Code Skills",
+    "docDate": "2026-03-18",
+    "docSource": "Thariq / Anthropic Engineering Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "content",
+    "sectionTitle": "Content",
+    "content": "Skill Types (1-9) Writing Tips Distribution Part I Skills = Folder, Not File 關於 Skills 最常見的誤解是它們「只是 Markdown 檔案」。但 Skills 最有趣的地方在於 它們不只是文字檔，而是可以包含腳本、資源、資料等的資料夾 ，讓 Agent 可以探索和操作。 \"A common misconception we hear about skills is that they are 'just markdown files', but the most interesting part of skills is that they're not just text files. They're folders that can include scripts, assets, data, etc.\" 在 Claude Code 中，Skills 還有各種設定選項，包括 註冊動態 Hooks 。Anthropic 發現最有趣的 Skills 正是那些創造性地使用這些設定選項和資料夾結構的 Ski"
+  },
+  {
+    "docFile": "2026-03-18_claude-code-skills-lessons.html",
+    "docTitle": "Lessons from Building Claude Code Skills",
+    "docDate": "2026-03-18",
+    "docSource": "Thariq / Anthropic Engineering Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Skill = Folder, Not File SKILL.md 是入口，但真正的價值在整個資料夾結構：scripts/、references/、assets/。把檔案系統當作 Context Engineering 和 Progressive Disclosure 的載體。 Gotchas = Highest Signal 任何 Skill 中最高價值的內容是 Gotchas Section。從 Agent 的實際失敗點逐步累積，就像 CAPA log 一樣持續改善。 9 Types, Single Responsibility 最好的 Skill 清楚屬於一個類別（Library Reference、Verification、Runbook 等）。橫跨多類的 Skill 會讓 Agent 困惑，就像混合 SOP 和 Batch Record 一樣。 Description = Trigger, Not Summary Skill description 是給模型看的觸發條件，不是給人看的摘要。寫得好，Agent 自動觸發；寫得差，Skill 形同虛設。"
+  },
+  {
+    "docFile": "2026-03-18_claude-code-skills-lessons.html",
+    "docTitle": "Lessons from Building Claude Code Skills",
+    "docDate": "2026-03-18",
+    "docSource": "Thariq / Anthropic Engineering Blog",
+    "docRating": 4.4,
+    "docTags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Thariq 說「最好的 Skills 清楚屬於一個類別」。如果你要建立一個同時做 deviation investigation + root cause analysis + CAPA tracking 的 Skill，根據本文的原則，你會怎麼拆分？ 根據 9 大分類和 Single Responsibility 原則，應該拆分為三個 Skills： 1. deviation-triage (Runbook, #8)： 接收症狀（OOS 結果、環控偏差），走過多系統調查流程，產出結構化報告。 2. root-cause-analyzer (Data Fetching & Analysis, #3)： 連接 TrackWise、環控系統、training records，提供資料整合和相關性分析。 3. capa-creator (Business Process, #4)： 根據調查結果，自動生成 CAPA 草稿，套用組織的模板和必填欄位。 這三個 Skills 可以透過 Composing Skills 的方式互相引用，但各自保持單一職責。 Q2 產業應用 文章提"
+  },
+  {
+    "docFile": "2026-03-18_notebooklm-hidden-features.html",
+    "docTitle": "NotebookLM 三大隱藏連接 - Gemini Canvas, Gems, Antigravity",
+    "docDate": "2026-03-18",
+    "docSource": "Wyndo (AI Maker Labs) / Gencay (LearnAIWithMe)",
+    "docRating": 3.4,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "API"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.4/5 Practical Value, Tool Ecosystem Technical Depth, Timeliness Google NotebookLM 除了基本的上傳文件 + 聊天功能外，還能透過三條「隱藏連接」擴展能力：(1) Gemini Canvas 把筆記本內容直接轉成互動 App，(2) Gems 建立具有永久記憶的專屬 AI 助手，(3) Antigravity IDE + MCP 實現 32 種 NotebookLM 功能的程式化自動控制。文章以 Prompt Advisor 為貫穿範例，演示三種連接的操作流程。屬於 Google 生態系整合教學，對非 Google 生態的使用者直接價值有限。 Learning Objectives NotebookLM + Gemini Canvas 理解如何將 NotebookLM 資料轉為互動 Web App，及其能力邊界 Gems 永久記憶助手 比較 Gems vs Claude Projects vs CustomGPT 的知識持久化架構差異 MCP 自動化研究 評估 NotebookLM MCP 的 32 個函數在自動化研究工作流中的實際價值 NotebookLM 三層連接架構 NotebookLM 上傳來源 + 訓練 Gemini Canvas 即時建 App Gems 永久記憶助手 Antigravity MCP 32 函數自動化 Part I: NotebookLM 基礎與訓練方法 NotebookLM 是 Google 的 AI 學習工具，能從 任何來源 進行學習和研究。你可以上傳 YouTube 影片、PDF、Google Docs、網站、文字，甚至 Gemini 深度研究報告。它會讀取所有內容並儲存到記憶體中。 \"NotebookLM is Google's AI tool for learning from any source. Or doing research. You can upload sources like: YT Videos, PDFs, Google Docs, Websites, Text, Deep research (done by Gemini). It reads everything and saves it to memory.\" 兩個核心優勢讓它值得使用： 更少幻覺 （它只根據你的來源回答，不會憑空捏造）以及 完全免費 （無需信用卡，無使用限制）。 \"Two reasons make it worth your time: Less hallucination: It sticks to your sources. No making things up. It's free: Full access. No credit card. No usage limits.\" 訓練方式很簡單：建立新的 Notebook，加入來源，它會自動開始訓練。文章以 Anthropic 官方 Prompt Engineering 影片作為範例來源，訓練一個 Prompt Advisor 。設定 Custom Instructions：「Act as a prompt advisor and optimize the given prompts based on your sources.」 \"In this scenario, we'll use Anthropic's official prompt engineering video "
   }
 ];
