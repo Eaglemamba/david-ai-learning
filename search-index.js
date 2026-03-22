@@ -14283,5 +14283,215 @@ const searchIndex = [
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
     "content": "成大資工系教授蘇文鈺自 2013 年起推動 Program the World 計畫，以 Scratch 視覺化程式教學為起點，深入嘉義東石、台南左鎮、台東、花蓮等偏鄉，累計影響超過上萬名學童。文章核心論點不在「教程式」，而在填補弱勢孩子因資訊不對稱造成的「夢想斷層」(Dream Gap)。蘇文鈺的運作模式更像弱勢教育孵化器：發現缺口、做起來、有人接手後轉身去下一個需求點。對 AI/科技從業者而言，這篇文章提供的不是技術框架，而是一個關於「科技如何真正改變人的生命」的深層思考案例。 Learning Objectives 夢想斷層理論 理解偏鄉教育的核心問題不是成績，而是資訊不對稱造成的想像力空白 孵化器運作模式 分析「發現缺口 → 建立 → 移交 → 轉向」的非營利組織擴展策略 科技教育的本質 反思程式教育的目的是「學習技能」而非「學習知識」的差異 蘇文鈺的弱勢教育孵化器模式 發現缺口 看見孩子需求 先做再說 → 建立課程 帶學生下鄉 播種教學 → 培養接班 學生成師資 移交營運 → 轉向下一站 新需求出現 重啟循環 Part I — 起點：一場手術與一個啟示 2014 年，嘉義東石有一名失去雙親、被教會收容的國中少年，正跟著成大資工系教授蘇文鈺學寫程式。沒有父母照顧的他常在街上閒晃，因此成了 地方宮廟幫派覬覦的對象 。 In 2014, in Dongshi, Chiayi, an orphaned junior high student sheltered by a local church was learning to code with NCKU CS professor Su Wen-yu. Without parental care, his street-wandering made him a target for local temple-affiliated gangs. 少年晚上住在教會，門外則有宮廟派來的人徘徊守候，這場搶孩子的大戰沒有煙硝味，教會老師只能一次次堅定的關上大門，靜靜陪孩子上課、生活。 At night, the boy stayed in the church while gang-affiliated men lingered outside. The teachers could only close the door firmly, quietly accompanying the child through lessons and daily life. 對蘇文鈺而言，學科表現不是重點， 孩子平安長大才是首要目標 。後來少年考進崑山科技大學汽修科，畢業後回到嘉義，開了一間自己的汽車修理公司。 For Su, academic performance was secondary — the child's safe upbringing was the primary goal. The boy later enrolled in automotive repair at Kun Shan University, and eventually returned to Chiayi to open his own car repair business. 時間回到 2012 年，蘇文鈺因為一場手術在病床上躺了三個月。他看到歐巴馬說「每個美國小孩都要學會寫程式」，彷彿天啟般覺悟：既然程式將成為未來世界的基本能力，那麼偏鄉孩子若沒有機會接觸， 差距只會越來越大 。 Back in 2012, Su sp"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "roche-nvidia製藥業最大-ai-工廠",
+    "sectionTitle": "Roche × Nvidia：製藥業最大 AI 工廠",
+    "content": "Roche 和 Nvidia 宣布合作建造他們稱為製藥業 最大的混合雲 AI 工廠 （largest announced hybrid-cloud AI factory）。這是繼 Eli Lilly 宣布自建 AI 超級電腦之後的最新軍備競賽動作。 Roche's Genentech originally signed a deal with Nvidia in 2023. The newly expanded agreement covers the broader Roche enterprise, spanning its drugs and diagnostics businesses. 關鍵數據： 公司 GPU 數量 型號 應用範圍 Roche 3,500+ 顆 Nvidia Blackwell 研發、製造、銷售 Eli Lilly 1,016 顆 Nvidia（未公開型號） AI 藥物研發 Roche 的覆蓋範圍跨越整個企業： discovery（藥物發現） 、 manufacturing（製造） 、 sales（銷售） 。這不只是研發工具，而是要改造整個藥品生命週期。"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "mfn-藥價政策的產業影響",
+    "sectionTitle": "MFN 藥價政策的產業影響",
+    "content": "Trump 政府推動的 最惠國待遇（MFN） 藥價政策正在改變授權交易的結構。16 家大型製藥公司已簽署 MFN 協議。 律師們收到的新問題：生技公司能否要求海外合作夥伴延遲上市，避免產生可能壓低美國售價的參考價格？"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "structure-therapeutics-口服-glp-1",
+    "sectionTitle": "Structure Therapeutics 口服 GLP-1",
+    "content": "每日一次口服藥 aleniglipron 在 Phase 2 中達到 16.3% 安慰劑校正體重減少 （180mg 劑量，44 週）。Phase 3 計劃 2026 下半年啟動，目前不打算找合作夥伴。"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "verily-脫離-alphabet-控制",
+    "sectionTitle": "Verily 脫離 Alphabet 控制",
+    "content": "Google 母公司 Alphabet 的醫療子公司 Verily 募集 3 億美元外部資金，結束 Alphabet 的多數控股地位。聚焦 AI 醫療平台 Pre ，整合個人健康紀錄、加速臨床研究。"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "cdc-疫苗時程表暫停",
+    "sectionTitle": "CDC 疫苗時程表暫停",
+    "content": "聯邦法官暫停 CDC 今年一月降級 6 種兒童疫苗建議的決定，也暫停了 13 名 ACIP 委員的任命。美國兒科學會等機構提起訴訟。"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "一句話總結",
+    "sectionTitle": "一句話總結",
+    "content": "製藥巨頭正在用 GPU 數量宣示 AI 決心，但真正的變革在於 AI 開始滲透到製造和銷售端 — 這對 CDMO 是直接的訊號。"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "核心觀念-1ai-軍備競賽從研發擴展到製造",
+    "sectionTitle": "核心觀念 1：AI 軍備競賽從研發擴展到製造",
+    "content": "白話解釋： 過去藥廠談 AI 都聚焦在「找新藥」（drug discovery）。但 Roche 這次明確把 manufacturing（製造） 列為 AI 工廠的應用範圍。這代表 AI 不再只是實驗室的玩具，它要進生產線了。 金句： \"The newly expanded agreement covers discovery, manufacturing and sales.\" — 這三個字並列出現，在製藥業 AI 新聞中非常罕見。"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "比喻說明gpu-就像無菌充填線的等級",
+    "sectionTitle": "比喻說明：GPU 就像無菌充填線的等級",
+    "content": "想像 GPU 數量就像你的無菌充填產線的等級： Lilly 的 1,016 顆 GPU = 一條高速充填線（專精但有限） Roche 的 3,500+ 顆 GPU = 一整個廠區的多條產線（全面覆蓋） 但就像充填線一樣， 有硬體不代表有 GMP 驗證 。Roche 有 GPU，但能不能把 AI 模型驗證到可以用在 GMP 製造環境？這才是真正的挑戰。"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "核心觀念-2mfn-正在改變全球藥品授權遊戲規則",
+    "sectionTitle": "核心觀念 2：MFN 正在改變全球藥品授權遊戲規則",
+    "content": "白話解釋： 以前藥廠把藥授權給海外夥伴，各國定各國的價。現在 MFN 說「美國藥價要跟最低國家看齊」。結果是：藥廠開始考慮叫海外夥伴「晚點上市」，避免先在便宜國家設定了參考價格。 金句： \"Biotechs are asking whether they can delay overseas launches to avoid having a reference price that could lower the price in the US.\""
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "cdmo-營運者必讀這對我們意味什麼",
+    "sectionTitle": "CDMO 營運者必讀：這對我們意味什麼？",
+    "content": "直接影響： AI 在製造端的需求即將爆發 — 當 Roche 把 AI 用在 manufacturing，他們的 CDMO 合作夥伴也會被要求跟上。預期未來 RFP 中會出現「AI readiness」要求。 MFN 可能改變上市時程 — 如果客戶延遲海外上市，代工生產的排程和產能規劃會受影響。需要更靈活的產能調配。 口服 GLP-1 的崛起 — Structure 的口服藥如果進 Phase 3，代表未來的 GLP-1 不只是注射劑型。固體劑型 CDMO 也會有機會。"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "核心觀念-3verily-的-ai-平台策略值得關注",
+    "sectionTitle": "核心觀念 3：Verily 的 AI 平台策略值得關注",
+    "content": "白話解釋： Google 的醫療 AI 子公司脫離母公司獨立，聚焦在一個叫 Pre 的平台 — 整合健康數據、加速臨床試驗、提供個人化照護。這是科技公司進入醫療的新模式：不賣硬體，賣平台。 金句： \"Verily has been making moves to step out of Alphabet's shadow, with plans to eventually go public.\""
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "行動結論-action-items",
+    "sectionTitle": "行動結論 Action Items",
+    "content": "核心洞察： AI 在製藥業的應用正從「研發輔助」升級到「全生命週期整合」。CDMO 如果只把 AI 當 IT 專案，會錯過這波轉型。 立即應用： 盤點目前的 AI 應用現況 — 是否只停留在文件管理？可以擴展到製程優化嗎？ 關注 Roche 接下來的 AI manufacturing 案例 — 會成為業界標竿 MFN 對客戶上市計劃的影響 — 主動跟 BD 團隊討論產能調配 注意事項： GPU 數量是宣示性的，真正的 GMP 環境 AI 部署需要驗證（IQ/OQ/PQ）。不要被硬體數字迷惑，重點是 validated use case。"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "練習思考-practice-questions",
+    "sectionTitle": "練習思考 Practice Questions",
+    "content": "如果你的 CDMO 客戶問「你們有 AI 能力嗎？」，你會怎麼回答？列出三個可以展示的具體應用場景。 MFN 政策下，如果一個客戶要求延遲歐洲市場的生產但提前美國市場，你的產能規劃要怎麼調整？ Roche 把 AI 用在 manufacturing — 你認為最可能的第一個應用場景是什麼？（製程監控？偏差調查？批次紀錄審查？）"
+  },
+  {
+    "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
+    "docTitle": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "docDate": "2026-03-23",
+    "docSource": "Endpoints News Weekly",
+    "docRating": 4,
+    "docTags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "本文重點摘要-key-takeaways",
+    "sectionTitle": "本文重點摘要 Key Takeaways",
+    "content": "Roche + Nvidia 建造製藥業最大 AI 工廠（3,500+ Blackwell GPU），覆蓋研發、製造、銷售三大領域 AI 在製造端的應用 是新訊號 — CDMO 應開始準備「AI readiness」能力 MFN 藥價政策 正在改變全球授權結構，可能影響生產排程和產能規劃 口服 GLP-1 （Structure Therapeutics）可能開啟固體劑型 CDMO 的新機會 Verily 獨立 代表科技公司進入醫療的新模式：AI 平台即服務 CDMO 的 AI 策略不能只停在 IT 專案層級，需要升級到 營運策略 層級"
   }
 ];

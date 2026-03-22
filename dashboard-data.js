@@ -1,5 +1,19 @@
 const documents = [
   {
+    "date": "2026-03-23",
+    "title": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
+    "source": "Endpoints News Weekly",
+    "tags": [
+      "Analysis",
+      "Framework",
+      "Agent"
+    ],
+    "rating": 4,
+    "summary": "Roche與Nvidia合建製藥業最大AI工廠，解析AI基礎建設軍備競賽對CDMO的影響與機會",
+    "lines": 442,
+    "file": "2026-03-23_roche-nvidia-ai-factory-pharma.html"
+  },
+  {
     "date": "2026-03-12",
     "title": "偏鄉程式教育 - 蘇文鈺 Program the World",
     "source": "商業周刊第2000期 / 程倚華、陳盈螢",
