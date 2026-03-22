@@ -10,7 +10,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Roche與Nvidia合建製藥業最大AI工廠，解析AI基礎建設軍備競賽對CDMO的影響與機會",
-    "lines": 442,
+    "lines": 488,
     "file": "2026-03-23_roche-nvidia-ai-factory-pharma.html"
   },
   {
