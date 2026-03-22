@@ -14,6 +14,154 @@ const documents = [
     "file": "2026-03-23_roche-nvidia-ai-factory-pharma.html"
   },
   {
+    "date": "2026-03-18",
+    "title": "Lessons from Building Claude Code Skills",
+    "source": "Thariq / Anthropic Engineering Blog",
+    "tags": [
+      "Anthropic-Eng",
+      "Agent",
+      "Tool",
+      "Framework"
+    ],
+    "rating": 4.4,
+    "summary": "Anthropic 內部 Skills 實戰經驗：9 大類型、撰寫技巧、分發策略。",
+    "lines": 829,
+    "file": "2026-03-18_claude-code-skills-lessons.html"
+  },
+  {
+    "date": "2026-03-18",
+    "title": "NotebookLM 三大隱藏連接 - Gemini Canvas, Gems, Antigravity",
+    "source": "Wyndo (AI Maker Labs) / Gencay (LearnAIWithMe)",
+    "tags": [
+      "Tool",
+      "Agent",
+      "Automation",
+      "API"
+    ],
+    "rating": 3.4,
+    "summary": "NotebookLM 連接 Gemini Canvas 建 App、Gems 建永久助手、Antigravity MCP 自動化研究。實用但多為 Google 生態圈限定。",
+    "lines": 549,
+    "file": "2026-03-18_notebooklm-hidden-features.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "1M Context Compaction - Agent Context Engineering Runbook",
+    "source": "Nyk (@nyk_builderz) / X Thread",
+    "tags": [
+      "Agent",
+      "LLM",
+      "API",
+      "Framework"
+    ],
+    "rating": 4,
+    "summary": "三種 context rot 失敗模式、Compaction API 設定、CLAUDE.md 記憶層級架構，實戰操作清單。",
+    "lines": 772,
+    "file": "2026-03-16_1m-context-compaction.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "Agent 繼任者 Prompt - 長上下文退化的優雅解法",
+    "source": "周尔复 (@cholf5) / X",
+    "tags": [
+      "Prompt",
+      "Agent",
+      "Framework"
+    ],
+    "rating": 4,
+    "summary": "長上下文退化時的 Agent 交接 Prompt 模板，含 v2.0 結構化七段交接格式與 Prompt 自舉技巧。",
+    "lines": 549,
+    "file": "2026-03-16_agent-handoff-successor-prompt.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "Claude Architect 認證自學 - hooeem 5 Domain 完整拆解",
+    "source": "@hooeem / X (Twitter)",
+    "tags": [
+      "Agent",
+      "API",
+      "Tool",
+      "Framework"
+    ],
+    "rating": 4.3,
+    "summary": "拆解 Claude Certified Architect 考試五大 Domain，含反模式、建構練習、學習資源。",
+    "lines": 906,
+    "file": "2026-03-16_claude-architect-certification.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析",
+    "source": "Anthropic / Claude Code Release Notes",
+    "tags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "API",
+      "Framework"
+    ],
+    "rating": 4.2,
+    "summary": "28 個版本釋出分析：Multi-Agent 架構、記憶體工程、Plugin 生態、MCP Elicitation、Remote Control 演進",
+    "lines": 1033,
+    "file": "2026-03-16_claude-code-release-evolution.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "Karpathy autoresearch - Agent 自主研究 Feedback Loop 設計典範",
+    "source": "karpathy/autoresearch GitHub Repo + Community Analysis",
+    "tags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "Research"
+    ],
+    "rating": 4.5,
+    "summary": "Karpathy autoresearch 拆解：三檔案極簡架構、program.md 核心設計、Shopify 53% 效能提升實證、CDMO 閉環應用",
+    "lines": 760,
+    "file": "2026-03-16_karpathy-autoresearch.html"
+  },
+  {
+    "date": "2026-03-16",
+    "title": "YC 創辦人戰略提問框架 - Strategic Prompting",
+    "source": "Anonymous LinkedIn/X Post (YC Founder Observation)",
+    "tags": [
+      "Prompt",
+      "Framework",
+      "Analysis"
+    ],
+    "rating": 3.6,
+    "summary": "YC 創辦人用四層提問策略將 Claude 變成戰略思考夥伴，3小時完成市場研究。",
+    "lines": 571,
+    "file": "2026-03-16_yc-founder-strategic-prompting.html"
+  },
+  {
+    "date": "2026-03-14",
+    "title": "蘋果 AI 平價戰略 - 低價硬體搶佔 AI 生態入口",
+    "source": "FOMO研究院KP / 商業周刊 第2000期",
+    "tags": [
+      "Analysis",
+      "Framework",
+      "LLM"
+    ],
+    "rating": 3.4,
+    "summary": "蘋果用 iPhone 17e 與 MacBook Neo 搶平價市場，真正目的是讓 Apple Intelligence 成為最懂你的 AI。",
+    "lines": 609,
+    "file": "2026-03-14_apple-ai-affordable-strategy.html"
+  },
+  {
+    "date": "2026-03-13",
+    "title": "Claude Code 架構治理與工程實踐 - Tw93",
+    "source": "Tw93 / X (Twitter)",
+    "tags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "API"
+    ],
+    "rating": 4.5,
+    "summary": "Tw93 半年 Claude Code 深度使用經驗。六層架構、上下文治理、Skills/Hooks/Subagents 設計、Prompt Caching 與 CLAUDE.md 最佳實踐。",
+    "lines": 1047,
+    "file": "2026-03-13_claude-code-architecture-governance.html"
+  },
+  {
     "date": "2026-03-12",
     "title": "偏鄉程式教育 - 蘇文鈺 Program the World",
     "source": "商業周刊第2000期 / 程倚華、陳盈螢",

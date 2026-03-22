@@ -21,8 +21,7 @@ const readline = require('readline');
 // ─── Paths ───
 const ROOT = __dirname;
 const INDEX_HTML = path.join(ROOT, 'index.html');
-const MINDMAP_HTML = path.join(ROOT, 'mindmap.html');
-const LEARNING_PATH_HTML = path.join(ROOT, 'learning-path.html');
+const CURRICULUM_DATA = path.join(ROOT, 'curriculum-data.js');
 
 // ─── Stage definitions (mirrors learning-path.html) ───
 const STAGES = [
@@ -350,29 +349,28 @@ function updateIndexHtml(meta) {
 }
 
 /**
- * Append to learning-path.html stages[].docs
+ * Append to curriculum-data.js stages[].docs (feeds both learning-path + mindmap)
  */
-function updateLearningPath(meta, stageId, required) {
-  let html = fs.readFileSync(LEARNING_PATH_HTML, 'utf-8');
+function updateCurriculumStage(meta, stageId, required) {
+  let src = fs.readFileSync(CURRICULUM_DATA, 'utf-8');
 
-  const docEntry = `      { file: '${meta.file}', title: '${meta.title.replace(/'/g, "\\'")} ★${meta.rating}', required: ${required}, why: '${meta.summary.slice(0, 30).replace(/'/g, "\\'")}' },`;
+  const docEntry = `      { file: '${meta.file}', title: '${meta.title.replace(/'/g, "\\'")} ★${meta.rating}', required: ${required}, why: '${meta.summary.slice(0, 60).replace(/'/g, "\\'")}' },`;
 
   // Find the stage's docs array and append before the closing ]
-  // Strategy: find "id: N," then find the next "]" that closes that stage's docs
   const stagePattern = new RegExp(`id:\\s*${stageId},`);
-  const stageMatch = stagePattern.exec(html);
-  if (!stageMatch) throw new Error(`Cannot find stage ${stageId} in learning-path.html`);
+  const stageMatch = stagePattern.exec(src);
+  if (!stageMatch) throw new Error(`Cannot find stage ${stageId} in curriculum-data.js`);
 
   // Find "docs: [" after this stage id
-  const docsStart = html.indexOf('docs: [', stageMatch.index);
+  const docsStart = src.indexOf('docs: [', stageMatch.index);
   if (docsStart === -1) throw new Error(`Cannot find docs array for stage ${stageId}`);
 
   // Find the closing "]" for this docs array
   let bracketCount = 0;
   let docsEnd = -1;
-  for (let i = docsStart + 6; i < html.length; i++) {
-    if (html[i] === '[') bracketCount++;
-    if (html[i] === ']') {
+  for (let i = docsStart + 6; i < src.length; i++) {
+    if (src[i] === '[') bracketCount++;
+    if (src[i] === ']') {
       if (bracketCount === 0) { docsEnd = i; break; }
       bracketCount--;
     }
@@ -380,98 +378,105 @@ function updateLearningPath(meta, stageId, required) {
   if (docsEnd === -1) throw new Error(`Cannot find end of docs array for stage ${stageId}`);
 
   // Insert before the closing ]
-  html = html.slice(0, docsEnd) + '\n' + docEntry + '\n    ' + html.slice(docsEnd);
+  src = src.slice(0, docsEnd) + '\n' + docEntry + '\n    ' + src.slice(docsEnd);
 
-  fs.writeFileSync(LEARNING_PATH_HTML, html, 'utf-8');
+  fs.writeFileSync(CURRICULUM_DATA, src, 'utf-8');
   return true;
 }
 
 /**
- * Append to mindmap.html — both mdPath and mdTopic
+ * Append to curriculum-data.js topicClusters
  */
-function updateMindmap(meta, stageId, topicCluster, required) {
-  let html = fs.readFileSync(MINDMAP_HTML, 'utf-8');
-  const linkText = `- [${meta.title} ★${meta.rating}](docs/${meta.file})`;
+function updateCurriculumTopic(meta, topicClusterId) {
+  let src = fs.readFileSync(CURRICULUM_DATA, 'utf-8');
+  const tc = TOPIC_CLUSTERS.find(t => t.id === topicClusterId);
+  if (!tc) throw new Error(`Unknown topic cluster: ${topicClusterId}`);
 
-  // ─── Update mdPath (learning path view) ───
-  // Find the stage section in mdPath, then the 必讀/選讀 subsection
-  const stageHeadings = {
-    1: '## 🧠 Stage 1：AI 基礎認知',
-    2: '## 💬 Stage 2：Prompt 與溝通技巧',
-    3: '## 🛠 Stage 3：AI 工具實戰',
-    4: '## 🤖 Stage 4：Agent 架構與自動化',
-    5: '## 🏢 Stage 5：組織導入與領導力'
-  };
+  const docEntry = `          { title: '${meta.title.replace(/'/g, "\\'")} ★${meta.rating}', file: '${meta.file}' },`;
 
-  if (stageId >= 1 && stageId <= 5) {
-    const stageHeading = stageHeadings[stageId];
-    const stageIdx = html.indexOf(stageHeading);
-    if (stageIdx !== -1) {
-      // Find the subsection (必讀 or 選讀)
-      const subsection = required ? '### 必讀' : '### 選讀';
-      let subIdx = html.indexOf(subsection, stageIdx);
-      if (subIdx === -1) {
-        // Fallback: use 必讀 if 選讀 not found
-        subIdx = html.indexOf('### 必讀', stageIdx);
-      }
-      if (subIdx !== -1) {
-        // Find the next heading (## or ###) after this subsection to determine end
-        const nextHeading = html.substring(subIdx + subsection.length).search(/\n##/);
-        let insertPos;
-        if (nextHeading !== -1) {
-          insertPos = subIdx + subsection.length + nextHeading;
-        } else {
-          // End of mdPath string — find the closing backtick
-          insertPos = html.indexOf('`;', subIdx);
-        }
-        html = html.slice(0, insertPos) + '\n' + linkText + html.slice(insertPos);
-      }
-    }
-  } else {
-    // Stage 6+ → supplementary section (## 📖 補充學習)
-    // Put under the most relevant sub-heading or at the end
-    const suppIdx = html.indexOf('## 📖 補充學習');
-    if (suppIdx !== -1) {
-      const nextSection = html.indexOf('\n## ', suppIdx + 5);
-      const insertPos = nextSection !== -1 ? nextSection : html.indexOf('`;', suppIdx);
-      html = html.slice(0, insertPos) + '\n' + linkText + html.slice(insertPos);
+  // Find the subcluster heading in the file
+  const headingPattern = `name: '${tc.heading}'`;
+  let tcIdx = src.indexOf(headingPattern);
+  if (tcIdx === -1) {
+    // Try with the parent name for flat clusters (name: null)
+    const parentPattern = `name: '${tc.parent}'`;
+    tcIdx = src.indexOf(parentPattern);
+  }
+  if (tcIdx === -1) throw new Error(`Cannot find topic cluster '${tc.heading}' in curriculum-data.js`);
+
+  // Find "docs: [" after this point
+  const docsStart = src.indexOf('docs: [', tcIdx);
+  if (docsStart === -1) throw new Error(`Cannot find docs array for topic '${tc.heading}'`);
+
+  // Find the closing "]"
+  let bracketCount = 0;
+  let docsEnd = -1;
+  for (let i = docsStart + 6; i < src.length; i++) {
+    if (src[i] === '[') bracketCount++;
+    if (src[i] === ']') {
+      if (bracketCount === 0) { docsEnd = i; break; }
+      bracketCount--;
     }
   }
+  if (docsEnd === -1) throw new Error(`Cannot find end of docs array for topic '${tc.heading}'`);
 
-  // ─── Update mdTopic (topic clusters view) ───
-  if (topicCluster) {
-    const tc = TOPIC_CLUSTERS.find(t => t.id === topicCluster);
-    if (tc) {
-      // Find the heading line in mdTopic
-      // Try "### heading" first, then "## heading"
-      let headingPattern = `### ${tc.heading}`;
-      let tcIdx = html.indexOf(headingPattern);
-      if (tcIdx === -1) {
-        headingPattern = `## ${tc.heading}`;
-        tcIdx = html.indexOf(headingPattern);
-      }
-      if (tcIdx === -1) {
-        headingPattern = `## ${tc.parent}`;
-        tcIdx = html.indexOf(headingPattern);
-      }
+  src = src.slice(0, docsEnd) + '\n' + docEntry + '\n        ' + src.slice(docsEnd);
 
-      if (tcIdx !== -1) {
-        // Find next heading after this one
-        const afterHeading = tcIdx + headingPattern.length;
-        const nextH = html.substring(afterHeading).search(/\n##/);
-        let insertPos;
-        if (nextH !== -1) {
-          insertPos = afterHeading + nextH;
-        } else {
-          insertPos = html.indexOf('`;', afterHeading);
-        }
-        html = html.slice(0, insertPos) + '\n' + linkText + html.slice(insertPos);
-      }
-    }
-  }
-
-  fs.writeFileSync(MINDMAP_HTML, html, 'utf-8');
+  fs.writeFileSync(CURRICULUM_DATA, src, 'utf-8');
   return true;
+}
+
+/**
+ * Validate curriculum-data.js after mutation — ensures the file is still valid JS.
+ */
+function validateCurriculumData() {
+  // Clear require cache to force re-read
+  delete require.cache[require.resolve(CURRICULUM_DATA)];
+  try {
+    const data = require(CURRICULUM_DATA);
+    const errors = [];
+
+    // Check stages exist and have docs
+    if (!Array.isArray(data.stages) || data.stages.length === 0) {
+      errors.push('stages array is missing or empty');
+    } else {
+      for (const stage of data.stages) {
+        if (!stage.id || !stage.title) errors.push(`Stage missing id/title`);
+        if (!Array.isArray(stage.docs)) errors.push(`Stage ${stage.id} missing docs array`);
+        for (const doc of stage.docs || []) {
+          if (!doc.file) errors.push(`Stage ${stage.id}: doc missing file field`);
+          if (!doc.title) errors.push(`Stage ${stage.id}: doc missing title field`);
+        }
+      }
+    }
+
+    // Check topic clusters
+    if (!Array.isArray(data.topicClusters) || data.topicClusters.length === 0) {
+      errors.push('topicClusters array is missing or empty');
+    }
+
+    // Check markdown generation works
+    if (typeof data.generatePathMarkdown !== 'function') {
+      errors.push('generatePathMarkdown function missing');
+    } else {
+      const md = data.generatePathMarkdown();
+      if (!md || md.length < 100) errors.push('generatePathMarkdown produced empty/short output');
+    }
+
+    if (typeof data.generateTopicMarkdown !== 'function') {
+      errors.push('generateTopicMarkdown function missing');
+    } else {
+      const md = data.generateTopicMarkdown();
+      if (!md || md.length < 100) errors.push('generateTopicMarkdown produced empty/short output');
+    }
+
+    if (errors.length > 0) {
+      return { valid: false, errors };
+    }
+    return { valid: true, errors: [] };
+  } catch (e) {
+    return { valid: false, errors: [`Failed to parse curriculum-data.js: ${e.message}`] };
+  }
 }
 
 // ─── Main ───
@@ -589,23 +594,20 @@ async function main() {
 
   // ─── Summary before applying ───
   console.log('\n─── Changes to apply ───\n');
-  console.log(`   1. index.html       → Add to documents[] array`);
-  if (stageId !== null) {
-    if (stageId >= 1 && stageId <= 5) {
-      console.log(`   2. learning-path.html → Stage ${stageId} (${STAGES[stageId-1].title}), ${required ? '必讀' : '選讀'}`);
-    } else {
-      console.log(`   2. learning-path.html → (skip — supplementary articles not in learning path)`);
-    }
+  console.log(`   1. dashboard-data.js → Rebuild via build-dashboard-data.js`);
+  if (stageId !== null && stageId >= 1 && stageId <= 5) {
+    console.log(`   2. curriculum-data.js → Stage ${stageId} (${STAGES[stageId-1].title}), ${required ? '必讀' : '選讀'}`);
   } else {
-    console.log(`   2. learning-path.html → (skipped)`);
+    console.log(`   2. curriculum-data.js → (skipped for stages)`);
   }
   if (chosenTopic !== 's') {
     const tc = TOPIC_CLUSTERS.find(t => t.id === chosenTopic);
-    console.log(`   3. mindmap.html      → Path: Stage ${stageId || 'supp'} | Topic: ${tc ? tc.parent + ' > ' + tc.heading : chosenTopic}`);
+    console.log(`   3. curriculum-data.js → Topic: ${tc ? tc.parent + ' > ' + tc.heading : chosenTopic}`);
   } else {
-    console.log(`   3. mindmap.html      → (skipped)`);
+    console.log(`   3. curriculum-data.js → (skipped for topics)`);
   }
   console.log(`   4. search-index.js   → Rebuild via build-search-index.js`);
+  console.log(`   5. Validation        → Parse and validate curriculum-data.js`);
 
   if (dryRun) {
     console.log('\n   🔍 DRY RUN — no files modified.\n');
@@ -614,39 +616,54 @@ async function main() {
 
   console.log('\n   Applying changes...\n');
 
-  // 1. Update index.html
-  try {
-    updateIndexHtml(meta);
-    console.log('   ✅ index.html updated');
-  } catch (e) {
-    console.error(`   ❌ index.html failed: ${e.message}`);
-  }
+  // Backup curriculum-data.js before mutations
+  const backupSrc = fs.readFileSync(CURRICULUM_DATA, 'utf-8');
 
-  // 2. Update learning-path.html
+  // 1. Update curriculum-data.js — stage
   if (stageId >= 1 && stageId <= 5) {
     try {
-      updateLearningPath(meta, stageId, required);
-      console.log('   ✅ learning-path.html updated');
+      updateCurriculumStage(meta, stageId, required);
+      console.log(`   ✅ curriculum-data.js stage ${stageId} updated`);
     } catch (e) {
-      console.error(`   ❌ learning-path.html failed: ${e.message}`);
+      console.error(`   ❌ curriculum-data.js stage update failed: ${e.message}`);
     }
   } else {
-    console.log('   ⏭  learning-path.html skipped');
+    console.log('   ⏭  curriculum stage skipped');
   }
 
-  // 3. Update mindmap.html
+  // 2. Update curriculum-data.js — topic cluster
   if (chosenTopic !== 's') {
     try {
-      updateMindmap(meta, stageId || 0, chosenTopic, required);
-      console.log('   ✅ mindmap.html updated');
+      updateCurriculumTopic(meta, chosenTopic);
+      console.log(`   ✅ curriculum-data.js topic cluster updated`);
     } catch (e) {
-      console.error(`   ❌ mindmap.html failed: ${e.message}`);
+      console.error(`   ❌ curriculum-data.js topic update failed: ${e.message}`);
     }
   } else {
-    console.log('   ⏭  mindmap.html skipped');
+    console.log('   ⏭  curriculum topic skipped');
   }
 
-  // 4. Rebuild search index
+  // 3. Validate curriculum-data.js
+  const validation = validateCurriculumData();
+  if (!validation.valid) {
+    console.error('\n   ❌ VALIDATION FAILED — rolling back curriculum-data.js:');
+    validation.errors.forEach(e => console.error(`      - ${e}`));
+    fs.writeFileSync(CURRICULUM_DATA, backupSrc, 'utf-8');
+    console.log('   ↩  curriculum-data.js restored from backup');
+    process.exit(1);
+  }
+  console.log('   ✅ curriculum-data.js validation passed');
+
+  // 4. Rebuild dashboard-data.js
+  try {
+    const { execSync } = require('child_process');
+    execSync('node build-dashboard-data.js', { cwd: ROOT, stdio: 'inherit' });
+    console.log('   ✅ dashboard-data.js rebuilt');
+  } catch (e) {
+    console.error(`   ❌ dashboard-data.js rebuild failed: ${e.message}`);
+  }
+
+  // 5. Rebuild search index
   try {
     const { execSync } = require('child_process');
     execSync('node build-search-index.js', { cwd: ROOT, stdio: 'inherit' });
@@ -655,18 +672,8 @@ async function main() {
     console.error(`   ❌ search-index.js rebuild failed: ${e.message}`);
   }
 
-  // 5. Update doc count in mindmap stats
-  try {
-    let mm = fs.readFileSync(MINDMAP_HTML, 'utf-8');
-    const docCount = fs.readdirSync(path.join(ROOT, 'docs')).filter(f => f.endsWith('.html')).length;
-    mm = mm.replace(/\d+ 篇/g, `${docCount} 篇`);
-    fs.writeFileSync(MINDMAP_HTML, mm, 'utf-8');
-    console.log(`   ✅ mindmap stats updated (${docCount} 篇)`);
-  } catch (e) {
-    // non-critical
-  }
-
   console.log('\n   🎉 Done! All files updated.\n');
+  console.log('   Note: learning-path.html and mindmap.html auto-load from curriculum-data.js — no direct edits needed.\n');
 }
 
 main().catch(err => {

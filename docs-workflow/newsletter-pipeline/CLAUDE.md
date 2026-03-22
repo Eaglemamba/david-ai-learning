@@ -1,5 +1,13 @@
 # Newsletter Automation — amaran-daily
 
+> **Status:** Experimental. Requires Gmail MCP server and target repos (pharma-decipher, hbr-review, ai-articles) to be cloned locally. See prerequisites below.
+
+## Prerequisites
+
+- Node.js + Python 3 installed
+- Gmail access via Claude Code MCP or API
+- Target repos cloned at `~/github/` (or set `PHARMA_REPO`, `HBR_REPO`, `AI_REPO` env vars)
+
 ## Purpose
 
 This is the working directory for the daily newsletter digest automation pipeline.

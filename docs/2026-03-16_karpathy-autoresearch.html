@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karpathy autoresearch：Agent 自主研究的 Feedback Loop 設計典範</title>
+
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-03-16">
+    <meta name="doc-title" content="Karpathy autoresearch - Agent 自主研究 Feedback Loop 設計典範">
+    <meta name="doc-source" content="karpathy/autoresearch GitHub Repo + Community Analysis">
+    <meta name="doc-source-type" content="">
+    <meta name="doc-tags" content="Agent,Framework,Tool,Research">
+    <meta name="doc-rating" content="4.5">
+    <meta name="doc-summary" content="Karpathy autoresearch 拆解：三檔案極簡架構、program.md 核心設計、Shopify 53% 效能提升實證、CDMO 閉環應用">
+    <meta name="doc-file" content="2026-03-16_karpathy-autoresearch.html">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* === v1.4.3 MANDATORY PAGE LAYOUT === */
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+            color: white;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .content-grid { grid-template-columns: 1fr !important; }
+        }
+
+        /* Header */
+        .header-tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .header-tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-framework { background: #ddd6fe; color: #4c1d95; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-research { background: #bfdbfe; color: #1e3a8a; }
+        .header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+        .header .source { font-size: 0.85rem; opacity: 0.75; }
+        .header .source a { color: #93c5fd; text-decoration: none; }
+        .header .source a:hover { text-decoration: underline; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .exec-summary h2 { color: #1e3a8a; margin-top: 0; font-size: 1.2rem; }
+        .exec-summary p { font-size: 0.95rem; color: #334155; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Learning Objectives */
+        .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .objective-desc { font-size: 0.85rem; color: #64748b; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Section Titles */
+        .section-label { font-size: 0.8rem; font-weight: 700; color: #6d28d9; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .section-title { font-size: 1.4rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+
+        /* Bilingual */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .chinese-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; }
+        .chinese-text .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .chinese-text .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .chinese-text .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .english-text { font-size: 0.9rem; color: #64748b; font-style: italic; margin-top: 0.25rem; line-height: 1.6; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
+
+        /* Code blocks */
+        .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; overflow-x: auto; line-height: 1.6; margin: 0.75rem 0; }
+        .code-block .comment { color: #94a3b8; }
+        .code-block .keyword { color: #93c5fd; }
+        .code-block .string { color: #86efac; }
+        .code-block .file { color: #fbbf24; }
+
+        /* Key Takeaways */
+        .takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card-icon { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+
+        /* Practice Accordion */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #6d28d9; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Table */
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+        .comparison-table th { background: #1e3a5f; color: white; padding: 0.75rem; text-align: left; font-size: 0.85rem; }
+        .comparison-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
+        .comparison-table tr:nth-child(even) { background: #f8fafc; }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-tags">
+        <span class="header-tag tag-agent">Agent</span>
+        <span class="header-tag tag-framework">Framework</span>
+        <span class="header-tag tag-tool">Tool</span>
+        <span class="header-tag tag-research">Research</span>
+    </div>
+    <h1>Karpathy autoresearch：Agent 自主研究的 Feedback Loop 設計典範</h1>
+    <div class="subtitle">三檔案極簡架構 + program.md 核心設計 + 實證案例拆解</div>
+    <div class="source">
+        Source: <a href="https://github.com/karpathy/autoresearch" target="_blank">karpathy/autoresearch</a> (GitHub, March 2026) &nbsp;|&nbsp;
+        Facebook 社群原文分析 + Repo 深度導讀
+    </div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-summary">
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.5/5</span>
+            <span class="rating-high">&uarr; 實務應用, 工具生態</span>
+            <span class="rating-low">&darr; 學習曲線（需 GPU 環境）</span>
+        </div>
+        <h2>Executive Summary</h2>
+        <p>
+            Andrej Karpathy 於 2026 年 3 月釋出 <strong>autoresearch</strong>，一個僅 630 行 Python + 40 行 Markdown 的極簡框架，讓 AI Agent 在單顆 GPU 上自主進行機器學習實驗。核心理念：<span class="highlight-key">人類寫研究策略（program.md），Agent 執行局部搜索（train.py）</span>。5 天內超過 32K GitHub stars，Shopify CEO Tobi Lutke 用同一模式一夜之間讓 0.8B 模型超越手動調校的 1.6B 模型（+19%），更進一步將 Liquid 模板引擎效能提升 53%。本文深度拆解 repo 架構、program.md 設計哲學，並連結到 CDMO 環境中的 Feedback Loop 應用。
+        </p>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="section-label">Learning Objectives</div>
+    <div class="section-title">學習目標</div>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">&#128736;</div>
+            <div class="objective-title">三檔案架構設計</div>
+            <div class="objective-desc">理解 prepare.py / train.py / program.md 的分工與約束，以及為何極簡設計是 Agent 成功的前提</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#128221;</div>
+            <div class="objective-title">program.md 設計哲學</div>
+            <div class="objective-desc">掌握「用 Markdown 寫給 Agent 的研究規則」這個新型態的 human-agent interface 設計</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#128200;</div>
+            <div class="objective-title">Feedback Loop 泛化應用</div>
+            <div class="objective-desc">將 autoresearch 的 ratchet 機制拆解為可套用於營運、品質優化等非 ML 場景的通用框架</div>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">autoresearch Ratchet Loop</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#128221;</div>
+                <div class="framework-step-title">program.md</div>
+                <div class="framework-step-desc">Human 定義策略與約束</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#9997;</div>
+                <div class="framework-step-title">Agent 改 train.py</div>
+                <div class="framework-step-desc">修改架構/超參數</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#9201;</div>
+                <div class="framework-step-title">5 min 訓練</div>
+                <div class="framework-step-desc">固定時間預算</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128202;</div>
+                <div class="framework-step-title">val_bpb 評估</div>
+                <div class="framework-step-desc">改善? git commit : git reset</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128257;</div>
+                <div class="framework-step-title">Loop Forever</div>
+                <div class="framework-step-desc">~12 實驗/hr, ~100/夜</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== PART I ====== -->
+    <div class="section-label">Part I</div>
+    <div class="section-title">Karpathy 是誰？為什麼他做的東西值得認真看</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    Andrej Karpathy 是 <span class="highlight-concept">OpenAI 早期成員</span>之一，曾在 Tesla 主導自駕 AI 團隊，後來做了大量對開發者影響深遠的 AI 教學與開源專案：nanoGPT、micrograd、nanochat 等。他不只是研究者，更是少數能<span class="highlight-key">同時橋接研究與工程落地</span>的人。
+                </div>
+                <div class="english-text">
+                    Former co-founder of OpenAI, former Director of AI at Tesla. Creator of nanoGPT, micrograd, nanochat — projects that bridged research and engineering practice.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    所以這次他釋出 autoresearch，不只是又一個 AI demo，而是一個深刻理解模型訓練、研究流程和工程落地的人，<span class="highlight-practical">親自示範 AI 參與研究本身的最小可行架構</span>。repo 發布 5 天內達到 32.6K stars，成為 2026 年成長最快的 GitHub 專案之一。
+                </div>
+                <div class="english-text">
+                    The repo hit 32,600+ GitHub stars in five days, becoming one of the fastest-growing repositories of 2026. Not just a demo — a minimal viable architecture for AI participating in research itself.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念</div>
+                <div class="info-box-content">
+                    <strong>為什麼 Karpathy 的背景很重要？</strong><br>
+                    autoresearch 不是一個理論概念，而是一個<strong>已經被創建者自己驗證過的系統</strong>。Karpathy 在自己手動優化過的 nanochat 上跑 autoresearch，Agent 仍然找到了他遺漏的改進——包括 QK-Norm 缺少 scalar multiplier 這個已經存在很久的 bug。這代表 Agent 不是靠運氣，而是靠<span class="highlight-concept">耐心和覆蓋率</span>取勝。
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
+                    想像你是一位資深藥師，每天親手檢查 100 批次的批次紀錄。你很厲害，但注意力是有限的。autoresearch 的邏輯是：如果我給一個不會累的「助手」一套明確的檢查規則、一個固定的評估標準，讓它 24 小時不停檢查，它不需要比你聰明——它只需要比你有耐心。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== PART II ====== -->
+    <div class="section-label">Part II</div>
+    <div class="section-title">三檔案極簡架構：為什麼「小」是設計目的</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    整個 repo 最重要的只有三個檔案：<span class="highlight-concept">prepare.py</span>（固定常數、資料準備、tokenizer、evaluation）、<span class="highlight-concept">train.py</span>（模型架構、optimizer、訓練迴圈——Agent 唯一可改的檔案）、<span class="highlight-concept">program.md</span>（給 Agent 的研究指令——Human 唯一需改的檔案）。
+                </div>
+                <div class="english-text">
+                    The repo is deliberately kept small and only really has three files that matter: prepare.py (fixed), train.py (agent edits), program.md (human edits).
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    這個設計<span class="highlight-key">不是因為 Karpathy 偷懶，而是刻意為之</span>。整個 codebase 只有約 630 行 Python，剛好能塞進一個現代 LLM 的 Context Window。這意味著 Agent 可以一次讀完全部程式碼，在腦中保持「完整理解」，而不需要 RAG 或複雜的工具鏈。
+                </div>
+                <div class="english-text">
+                    The ~630-line constraint ensures that the entire codebase fits within the context window of modern LLMs, minimizing errors and allowing the agent to maintain a holistic understanding.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    <span class="highlight-practical">Single file to modify</span>：Agent 只能改 train.py。這讓改動範圍可控、diff 可 review。對比過去那些讓 Agent 在整個 codebase 自由修改的嘗試，這個約束反而是讓 Agent 能力最大化的關鍵。
+                </div>
+                <div class="english-text">
+                    The agent only touches train.py. This keeps the scope manageable and diffs reviewable.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">&#128187; 專案結構</div>
+                <div class="info-box-content">
+                    <div class="code-block">
+<span class="file">prepare.py</span>  <span class="comment"># 固定：資料準備 + runtime 工具（不可改）</span>
+<span class="file">train.py</span>    <span class="comment"># Agent 修改：模型、optimizer、訓練 loop</span>
+<span class="file">program.md</span>  <span class="comment"># Human 修改：Agent 的研究指令</span>
+<span class="file">pyproject.toml</span> <span class="comment"># 依賴管理</span>
+                    </div>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                <div class="info-box-content">
+                    <strong>Context Window Fit 設計原則</strong><br>
+                    整份 train.py（~630 行）刻意控制在 LLM 一次能讀完的大小。這不是巧合。如果 codebase 太大，Agent 就需要 RAG、需要 retrieval、需要分段理解——每一層都會引入錯誤和延遲。autoresearch 的極簡正是為了讓 Agent 的推理品質最大化。這跟 Context Engineering 的核心原則完全一致：<span class="highlight-key">精準和相關性比大量資訊更重要</span>。
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; CDMO 映射</div>
+                <div class="info-box-content">
+                    這個「只准改一個檔案」的約束，跟 GMP 環境的變更控制邏輯高度相似。你不會讓一個新進人員同時改 SOP、設備參數和原料規格——你會把<strong>可變範圍限縮到最小</strong>，其他東西都鎖住。autoresearch 對 Agent 做的事完全一樣。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== PART III ====== -->
+    <div class="section-label">Part III</div>
+    <div class="section-title">program.md 導讀：寫給 Agent 的研究協定</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    program.md 是整個 repo <span class="highlight-key">真正的核心</span>。它不是程式碼，而是一份寫給 Agent 的純文字研究協定（research protocol）。The New Stack 的分析指出，這份 Markdown 同時承載了三種溝通：<span class="highlight-concept">指令</span>（Agent 應搜索什麼）、<span class="highlight-concept">約束</span>（什麼不能改）、<span class="highlight-concept">停止條件</span>（什麼時候結束並報告）。
+                </div>
+                <div class="english-text">
+                    program.md simultaneously carries three registers of communication: instructions (what the agent should search for), constraints (what must not change), and stopping criteria (when the loop should wrap up and report).
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    <strong>Setup 階段</strong>：Agent 先建立實驗 branch（例如 <code>autoresearch/mar5</code>），讀取三個核心檔案以建立完整理解，確認資料目錄存在，初始化 results.tsv，然後等人類確認後開始。
+                </div>
+                <div class="english-text">
+                    Create the branch from current master. Read the in-scope files for full context. Verify data exists. Initialize results.tsv with just the header row. Confirm and go.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    <strong>Experiment Loop</strong>：每次實驗是一個固定流程——(1) 修改 train.py (2) 執行 <code>uv run train.py > run.log 2>&1</code>（重點：<span class="highlight-key">把輸出重導到 log，不要灌進 Agent 的 context</span>）(3) 用 grep 讀取 val_bpb 結果 (4) 記錄到 TSV (5) 改善就 git commit，沒改善就 git reset。
+                </div>
+                <div class="english-text">
+                    Tune train.py with an experimental idea. Run the experiment with output redirected. Read out the results via grep. If val_bpb improved, keep the commit. If equal or worse, git reset back.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    <strong>NEVER STOP 指令</strong>：program.md 包含一條全大寫的核心指令——<span class="highlight-key">永不停止</span>。一旦迴圈開始，Agent 不應暫停詢問人類任何事，必須持續跑到被手動停止。這不是對話，是一個無限研究迴圈。值得注意的是，Codex 無法遵守這個指令（會自行停止），而 Claude 能持續執行 12+ 小時、118 次實驗。
+                </div>
+                <div class="english-text">
+                    NEVER STOP. Once the loop begins, the agent must not pause to ask the human anything. It runs until manually killed. This is not a dialogue. It's an infinite research loop.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">&#128187; program.md 核心流程</div>
+                <div class="info-box-content">
+                    <div class="code-block">
+<span class="comment"># 1. Setup</span>
+<span class="keyword">git checkout -b</span> autoresearch/&lt;tag&gt;
+<span class="comment"># 讀取 README.md, prepare.py, train.py</span>
+<span class="comment"># 確認 ~/.cache/autoresearch/ 資料存在</span>
+<span class="comment"># 初始化 results.tsv</span>
+
+<span class="comment"># 2. Experiment Loop</span>
+<span class="keyword">while</span> true:
+  <span class="comment"># 修改 train.py（架構/超參數/optimizer）</span>
+  <span class="keyword">uv run</span> train.py > run.log 2>&1
+  <span class="keyword">grep</span> <span class="string">"^val_bpb:\|^peak_vram_mb:"</span> run.log
+  <span class="comment"># 記錄到 results.tsv</span>
+  <span class="keyword">if</span> val_bpb improved:
+    <span class="keyword">git commit</span>  <span class="comment"># keep</span>
+  <span class="keyword">else</span>:
+    <span class="keyword">git reset</span>   <span class="comment"># discard</span>
+                    </div>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念</div>
+                <div class="info-box-content">
+                    <strong>program.md = Agent Skill</strong><br>
+                    Karpathy 自己說 program.md 本質上就是一個超輕量的「skill」。這跟 Anthropic 的 Agent Skills 架構異曲同工——都是用結構化文字定義 Agent 的行為邊界、工作流程和品質標準。差別在於 autoresearch 的 skill 只需要一份 40 行 Markdown，而 Anthropic 的 SKILL.md 有更完整的 YAML frontmatter 和生命週期管理。
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
+                    <strong>把 Agent 的 log 重導，不灌進 context</strong><br>
+                    這個設計細節非常值得學習。想像你請一位助手做實驗，如果他每次實驗都把所有原始數據唸給你聽，你的注意力很快就會被耗盡。正確做法是：<strong>實驗結果存檔，只報告關鍵指標</strong>。<code>> run.log 2>&1</code> 就是在保護 Agent 的 context window 不被無關輸出污染。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== PART IV ====== -->
+    <div class="section-label">Part IV</div>
+    <div class="section-title">四個設計決策：為什麼 Agent 在這裡突然變得有用</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    autoresearch 做了四件關鍵的事，讓原本「什麼都不太行」的 Agent 突然變得非常高效：
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    <strong>1. 只准改一個檔案</strong>：避免 Agent 在整個 codebase 亂跑。搜索空間被壓縮到一個 630 行的文件裡。<br><br>
+                    <strong>2. 固定 5 分鐘時間預算</strong>：不管 Agent 改了什麼（模型大小、batch size、架構），每次實驗都跑一樣久。這讓每次實驗可以直接比較，也意味著<span class="highlight-key">每小時約 12 次實驗，一整夜約 100 次</span>。<br><br>
+                    <strong>3. 單一標量 Metric</strong>：val_bpb（validation bits per byte），越低越好，且不受 vocabulary size 影響。Agent 不需要做任何主觀判斷——數字低就是好的。<br><br>
+                    <strong>4. 失敗即回退</strong>：沒有改善就 git reset，模型永遠只會往好的方向走。這是一個 <span class="highlight-concept">ratchet mechanism（棘輪機制）</span>——只進不退。
+                </div>
+                <div class="english-text">
+                    Single file to modify. Fixed 5-minute time budget. One scalar metric (val_bpb). Git reset on regression — the model never goes backwards.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    這四個約束把原本開放式的研究問題，轉化成 Agent 最擅長處理的東西：<span class="highlight-practical">高頻迭代 + 明確回饋 + 可回退的局部優化</span>。
+                </div>
+                <div class="english-text">
+                    The open-ended research problem becomes what agents handle best: high-frequency iteration + clear feedback + reversible local optimization.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#9878;&#65039; 設計決策比較</div>
+                <div class="info-box-content">
+                    <table class="comparison-table">
+                        <tr><th>設計面向</th><th>autoresearch</th><th>傳統 Agent 嘗試</th></tr>
+                        <tr><td>可改範圍</td><td>1 個檔案（630 行）</td><td>整個 codebase</td></tr>
+                        <tr><td>實驗長度</td><td>固定 5 min</td><td>不定（可能跑數小時）</td></tr>
+                        <tr><td>成功指標</td><td>單一數值（val_bpb）</td><td>多維度/主觀判斷</td></tr>
+                        <tr><td>失敗處理</td><td>git reset（自動回退）</td><td>常常累積錯誤</td></tr>
+                        <tr><td>每夜實驗量</td><td>~100</td><td>~5-10</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                <div class="info-box-content">
+                    <strong>Git as Memory</strong><br>
+                    autoresearch 用 Git 作為 Agent 的記憶系統。成功的改動是 commits，失敗的改動被 reset。Agent 可以用 <code>git log</code> 看過去什麼有效，用 <code>results.tsv</code> 看已經試過什麼。沒有向量資料庫、沒有 embeddings——就是 commits 和一個 TSV 檔。這種極簡的「記憶」設計值得借鏡。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== PART V ====== -->
+    <div class="section-label">Part V</div>
+    <div class="section-title">實證結果：數字會說話</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    <strong>Karpathy 自己的 nanochat 測試</strong>：在已經手動優化過的 GPT-2 訓練碼上跑 autoresearch，兩天內 Agent 執行約 700 次實驗，找到約 20 個真正的改進。堆疊起來，<span class="highlight-key">Time-to-GPT-2 從 2.02 小時降到 1.80 小時（快 11%）</span>。更關鍵的是，這些在小模型（depth-12）發現的改進，<span class="highlight-concept">全部都能轉移到大模型（depth-24）</span>。
+                </div>
+                <div class="english-text">
+                    Over two days, ~700 experiments, ~20 real improvements. Time-to-GPT-2 dropped from 2.02 to 1.80 hours (11% faster). All improvements transferred from depth-12 to depth-24 models.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    <strong>Shopify CEO Tobi Lutke 的實驗</strong>：第一輪——用 autoresearch 模式優化 QMD（本地搜尋工具）的 query-expansion model。8 小時 37 次實驗後，<span class="highlight-practical">0.8B 模型超越了手動調校的 1.6B 模型（+19% validation score）</span>。小模型打敗了兩倍大的模型。
+                </div>
+                <div class="english-text">
+                    After 37 experiments in 8 hours, a 0.8B model scored 19% higher than the previous 1.6B hand-tuned model.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    <strong>Tobi 第二輪——Liquid 模板引擎</strong>：把 autoresearch 模式套到 Shopify 用了 20 年的 Liquid Ruby 程式庫上。120 次自動化實驗、93 個 commits 後：<span class="highlight-key">parse+render 時間降低 53%，記憶體分配減少 61%</span>。974 個單元測試全數通過，零回歸。這是一個被數百名貢獻者優化了 20 年的 codebase，Agent 在兩天內找到了人類漏掉的微優化。
+                </div>
+                <div class="english-text">
+                    53% faster combined parse+render time, 61% fewer object allocations on a 20-year-old codebase. Zero test regressions — all 974 unit tests pass.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-cost">
+                <div class="info-box-header">&#128176; 實證數據摘要</div>
+                <div class="info-box-content">
+                    <table class="comparison-table">
+                        <tr><th>實驗者</th><th>目標</th><th>結果</th></tr>
+                        <tr><td>Karpathy</td><td>nanochat GPT-2</td><td>11% 加速 / 20 個改進</td></tr>
+                        <tr><td>Lutke #1</td><td>QMD 0.8B model</td><td>+19% / 小模型贏大模型</td></tr>
+                        <tr><td>Lutke #2</td><td>Liquid Ruby</td><td>53% 更快 / 61% 更省</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; 實務應用</div>
+                <div class="info-box-content">
+                    <strong>Liquid 案例的泛化意義</strong><br>
+                    Liquid 的例子特別重要，因為它證明 autoresearch 模式<strong>不只適用於 ML 訓練</strong>。只要你的優化目標有：(1) 明確的 benchmark script (2) 完整的測試套件可確認無回歸 (3) 可量化的改善指標——Agent 就能在裡面跑 autoresearch loop。Tobi 自己總結：建一個 <code>auto/</code> 資料夾，放一份 <code>program.md</code> 和一個 benchmark script，就能開始。
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 批判視角</div>
+                <div class="info-box-content">
+                    <strong>打個折扣</strong>：Tobi 自己承認 53% 的改善數字「可能有些 overfit」。Karpathy 的 700 次實驗中只有約 3% 是真正的改進。這些初期結果令人興奮，但都是小規模、非受控的。真正的問題是：在更複雜的系統上，這個模式是否同樣成立？答案目前未知。適用 2-3x 折扣原則。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== PART VI ====== -->
+    <div class="section-label">Part VI</div>
+    <div class="section-title">真正的範式轉移：從「親手做」到「設計做的系統」</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    很多人看 autoresearch 第一眼覺得：「AI 幫自己改 training code」。但真正重要的不是這個，而是背後的 <span class="highlight-key">interaction model 轉變</span>：人類不再直接改所有 code，而是開始設計 Agent 的研究規則。
+                </div>
+                <div class="english-text">
+                    The real shift: humans no longer directly modify all code. Instead, they design the agent's research rules.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    Karpathy 的原話：<span class="highlight-concept">「你不是在編輯 Python 檔案。你是在 programming program.md——那些提供 context 給 AI agents、設定你的自主研究組織的 Markdown 檔案。」</span>這代表高價值工作正在從「親手做」轉向「設計那個會自己做的系統」。
+                </div>
+                <div class="english-text">
+                    "You're not touching any of the Python files like you normally would as a researcher. Instead, you are programming the program.md Markdown files that provide context to the AI agents and set up your autonomous research org."
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    這個轉變適用範圍遠超 AI 研究。<span class="highlight-practical">行銷、內容、銷售、營運、產品實驗</span>——本質上都是一樣的模式：把任務縮小、把評估標準明確化、把流程標準化、讓 Agent 在裡面反覆迭代。
+                </div>
+                <div class="english-text">
+                    The pattern applies beyond AI research: marketing, content, sales, operations, product experiments. Narrow the task, clarify the metric, standardize the process, let the agent iterate.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念</div>
+                <div class="info-box-content">
+                    <strong>O-Ring 理論的完美例證</strong><br>
+                    autoresearch 精確示範了 O-Ring Bottleneck Theory：Agent 接管了可自動化的高頻迭代（局部搜索），而人類退到了不可替代的判斷節點——定義研究方向、設計評估指標、決定什麼「問題」值得問。<span class="highlight-key">真正的瓶頸不是「跑實驗」，而是「設計值得跑的實驗框架」</span>。
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; CDMO 映射</div>
+                <div class="info-box-content">
+                    <strong>營運主管的新角色模型</strong><br>
+                    這個轉變對 COO-track 的人特別有意義。未來的營運領導者不只是「最會做 SOP 的人」，而是「<strong>最會設計 Agent 能有效執行的 SOP 結構的人</strong>」。你的 program.md 等價於一份精確定義了目標指標、可改範圍、回退條件的 SOP——只不過執行者從人變成了 Agent。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== PART VII ====== -->
+    <div class="section-label">Part VII</div>
+    <div class="section-title">限制與 Goodhart's Law：Agent 會 Game 你的 Metric</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    autoresearch 不是萬能的，它有非常明確的邊界。目前優化的 val_bpb 是一個 <span class="highlight-key">proxy metric</span>——而 proxy 被優化到極致時，不一定等於你真正想要的結果。
+                </div>
+                <div class="english-text">
+                    The metric you optimize is not necessarily the outcome you truly want. Goodhart's Law applies with particular force when the agent runs 100 experiments per night.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    val_bpb 變好，不代表下游任務一定更好。loss 變好，不代表 sample quality 一定更好。局部最優，不一定等於真正的研究突破。Agent 做的是 <span class="highlight-concept">bounded empirical research</span>（有邊界的經驗性研究），不是會自己提出全新科學問題、重寫 evaluation paradigm 的 autonomous scientist。
+                </div>
+                <div class="english-text">
+                    It does bounded empirical research — not autonomous science that poses new questions or rewrites evaluation paradigms.
+                </div>
+            </div>
+            <div class="bilingual-block">
+                <div class="chinese-text">
+                    此外還有幾個實務限制：(1) 需要 NVIDIA GPU（有 Mac/Windows fork 但非官方）(2) 結果不可跨平台比較（因為 5 分鐘時間預算在不同硬體上跑出不同量的 training）(3) Agent 跑多了之後會「沒靈感」，開始做隨機改動 (4) 改進是堆疊的，很難拆解個別貢獻。
+                </div>
+                <div class="english-text">
+                    Requires NVIDIA GPU. Results not comparable across platforms. Agent runs out of ideas and resorts to random changes. Improvements are stacked, making individual contributions unclear.
+                </div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                <div class="info-box-content">
+                    <strong>Goodhart's Law in Agentic Loops</strong><br>
+                    「當一個指標變成目標時，它就不再是好的指標。」在 autoresearch 裡，Agent 以 100 次/夜的速度優化 val_bpb，Goodhart 效應的風險被放大。任何<strong>需要委員會才能判斷的 metric</strong>，或者優化 proxy 而非實際結果的 metric，都會被自主迴圈無情地「exploit」。這是設計 Agent 研究閉環時最需要警惕的事。
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; CDMO 映射</div>
+                <div class="info-box-content">
+                    <strong>Metric 選擇 = Deviation Triage 的核心</strong><br>
+                    GMP 環境中的偏差分類也面臨同樣的問題：如果你用「關閉速度」作為唯一 KPI，Agent（或人）就會學會快速關閉偏差而不是深入調查根因。autoresearch 的啟示是：<span class="highlight-key">在設計任何 Agent 閉環之前，先確認你的 metric 真正代表你想要的結果</span>。
+                </div>
+            </div>
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#9878;&#65039; 適用 vs 不適用場景</div>
+                <div class="info-box-content">
+                    <strong>適合 autoresearch 模式：</strong>訓練細節優化、hyperparameter 搜尋、效能 benchmark 改善、小型架構調整、有明確 pass/fail 的程式碼優化<br><br>
+                    <strong>不適合 autoresearch 模式：</strong>需要主觀判斷的品質評估、多目標權衡（速度 vs 準確度 vs 成本）、需要跨系統互動的複雜工作流、沒有穩定 feedback signal 的創意工作
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== KEY TAKEAWAYS ====== -->
+    <div class="section-label">Key Takeaways</div>
+    <div class="section-title">重點整理</div>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <div class="summary-card-icon">&#128270;</div>
+            <div class="summary-card-title">Feedback Loop > Model Power</div>
+            <div class="summary-card-text">Agent 的威力不在於它多像人，而在於你能不能把工作切成一個它可以持續獲得回饋的閉環。autoresearch 的核心創新不是模型本身，而是那個 5 分鐘 ratchet loop 的設計。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-icon">&#128221;</div>
+            <div class="summary-card-title">program.md = 新型態的「程式設計」</div>
+            <div class="summary-card-text">未來有價值的不只是寫程式碼，而是寫「Agent 的研究協定」。program.md 同時承載指令、約束和停止條件——這是一種用自然語言做系統設計的新技能。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-icon">&#128295;</div>
+            <div class="summary-card-title">極簡設計是 Agent 成功的前提</div>
+            <div class="summary-card-text">630 行程式碼、1 個可改檔案、1 個 metric、5 分鐘時間預算。每一個約束都是在幫 Agent 聚焦。最可怕的不是 Agent 不夠聰明，而是搜索空間太大、feedback 太模糊。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-icon">&#9888;</div>
+            <div class="summary-card-title">Goodhart 警告：Metric 選擇是最高風險決策</div>
+            <div class="summary-card-text">Agent 會以 100 次/夜的速度優化你給的 metric。如果 metric 是 proxy 而非真正目標，你會得到一個完美優化了錯誤東西的結果。設計閉環的第一步是確認 metric 代表真正的品質。</div>
+        </div>
+    </div>
+
+    <!-- ====== PRACTICE ====== -->
+    <div class="section-label">Practice</div>
+    <div class="section-title">練習題</div>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">autoresearch 的 program.md 同時承載哪三種溝通功能？為什麼 YAML 或 JSON 無法取代 Markdown 扮演這個角色？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>program.md 承載三種溝通：<strong>指令</strong>（Agent 應搜索什麼方向）、<strong>約束</strong>（什麼不能改）、<strong>停止條件</strong>（何時結束並報告）。</p>
+            <p>YAML 擅長編碼結構但缺乏敘事能力，JSON 是可執行格式但不具備策略表達力，Python 可執行但對非工程師不友善。Markdown 的獨特優勢在於它是<strong>人類可讀的敘事格式</strong>，能同時表達「為什麼」和「怎麼做」。LLM 原生理解 Markdown——它是目前最接近「人類意圖」的結構化表達方式。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">在你的 CDMO 環境中，如果要設計一個類似 autoresearch 的 Agent 閉環來優化偏差調查效率，你的 prepare.py / train.py / program.md 分別對應什麼？val_bpb 等價於什麼 metric？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>一個可能的映射：<strong>prepare.py</strong>（不可改的固定環境）= 法規要求（21 CFR Part 211）、SOP 模板結構、偏差分類標準。<strong>train.py</strong>（Agent 可改的部分）= 偏差調查報告的撰寫模板、根因分析邏輯、CAPA 建議格式。<strong>program.md</strong>（Human 設計的研究指令）= 偏差分類規則、品質標準、回退條件。</p>
+            <p><strong>val_bpb 的等價物</strong>：這是最困難的部分。理想 metric 應該是「偏差調查品質評分」——但這需要先建立一個可自動化評估的 rubric。可能的 proxy：調查結論被 QA 退回的比率（越低越好）、從偏差開案到根因確認的天數、CAPA 有效性追蹤分數。但任何 proxy 都有 Goodhart 風險——如果 Agent 學會用模板化語言快速通過 QA 審查而非真正深入調查，反而會降低品質。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">原文作者說「誰能把一件事切成 Agent 能穩定跑的閉環，誰就比較有機會先拿到效率紅利」。這個觀點有什麼盲點？在什麼情況下，建立閉環反而會造成負面效果？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>這個觀點的最大盲點是<strong>假設所有有價值的工作都可以被切成閉環</strong>。但很多高價值工作的本質是「發現新問題」而非「優化已知問題」——而 autoresearch 模式只能處理後者。</p>
+            <p>建立閉環反而有害的情況：(1) <strong>Metric 錯誤</strong>——Agent 以每夜 100 次的速度往錯誤方向奔跑，比人類犯錯快得多 (2) <strong>過早收斂</strong>——閉環找到局部最優後停滯，而真正的突破需要打破現有框架 (3) <strong>機會成本</strong>——投入大量時間設計 Agent 閉環，但問題本身可能不值得這樣的投資 (4) <strong>合規風險</strong>——在 GMP 環境中，自動化迭代若未經適當的變更控制和人類審查，可能違反法規要求。autoresearch 模式的價值是在 Copilot 層級，不是在 Autonomous Agent 層級。</p>
+        </div>
+    </details>
+
+    <!-- ====== BOTTOM LINE ====== -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#127919; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#10004; 核心洞察</div>
+            <div class="bottom-line-text">
+                autoresearch 最深刻的啟示不是「AI 會做研究了」，而是：<strong>Agent 的效能瓶頸不在模型能力，而在 feedback loop 設計品質</strong>。630 行程式碼 + 40 行 Markdown 就能讓 Agent 一夜跑出 100 次有效實驗——限制因素從來不是 AI 不夠聰明，而是我們不夠擅長把問題「切成 Agent 友善的閉環」。這跟 CDMO 營運裡「把複雜問題拆成可追蹤步驟」的邏輯完全一致。
+            </div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#128200; 立即應用</div>
+            <div class="bottom-line-text">
+                本週行動：選一個目前在做的重複性優化工作（例如 deviation triage 分類的前處理步驟），嘗試用 autoresearch 的框架思考：什麼是「不可改的 prepare.py」（法規要求）？什麼是「Agent 可改的 train.py」（報告模板/分類邏輯）？什麼是「我需要寫的 program.md」（品質標準/回退條件）？什麼是「val_bpb」（品質指標）？先在紙上畫出這個閉環，不急著實作。
+            </div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#9888; 需要補充</div>
+            <div class="bottom-line-text">
+                原文（Facebook 社群文章）的分析偏向「這東西很厲害」的敘事，缺少對 Goodhart's Law 風險的深度討論。實際 repo 的 program.md 很短（~40 行），說明現階段的 Agent 研究指令還非常初期。Karpathy 下一步計劃做的「多 Agent 協作」和「SETI@home 式分散研究」才是這個框架真正的潛力所在。需要追蹤 repo 後續發展，特別是當 program.md 的複雜度增加後，Agent 的表現如何變化。
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>製作日期：2026-03-16 &nbsp;|&nbsp; Source: <a href="https://github.com/karpathy/autoresearch" target="_blank">karpathy/autoresearch</a> (GitHub)</p>
+        <p>建議 Chat Title：<strong>2026-03-16 [Agent] Karpathy - autoresearch Feedback Loop</strong></p>
+        <p>建議檔名：<strong>2026-03-16_karpathy-autoresearch.html</strong></p>
+    </div>
+
+</div><!-- end container -->
+</body>
+</html>

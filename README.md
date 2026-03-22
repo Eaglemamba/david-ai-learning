@@ -4,7 +4,7 @@
 
 ## What This Is
 
-87 interactive HTML learning guides created from deep analysis of AI industry articles, research papers, and technical documentation. Each document transforms source material into structured educational content with:
+120+ interactive HTML learning guides created from deep analysis of AI industry articles, research papers, and technical documentation. Each document transforms source material into structured educational content with:
 
 - Bilingual content (Traditional Chinese + English)
 - Executive summaries with article ratings
@@ -48,32 +48,82 @@ Created by an Operations Director in pharmaceutical manufacturing (CDMO), explor
 ```
 david-ai-learning/
 ├── index.html               ← Dashboard with search UI
+├── learning-path.html       ← 5-stage structured learning progression
 ├── mindmap.html             ← Interactive knowledge mind map (11 topic clusters)
-├── search-index.js          ← Full-text search index (770 entries)
-├── build-search-index.js    ← Index builder script
-├── normalize_html.py        ← Batch HTML normalization script
+├── curriculum-data.js       ← Single source of truth for stages + topic clusters
+├── dashboard-data.js        ← Generated document metadata array
+├── search-index.js          ← Full-text search index (770+ entries)
+├── add-doc.js               ← Smart doc insertion with ML classification
+├── build-search-index.js    ← Search index builder
+├── build-dashboard-data.js  ← Dashboard data builder
+├── normalize_html.py        ← Batch HTML normalization
+├── test-integrity.js        ← Integration tests
 ├── CLAUDE.md                ← Project rules & document revision chain
-├── docs/                    ← 87 educational HTML documents
-│   ├── 2026-02-20_claude-cowork-agentic-workflows.html
-│   ├── 2026-02-20_prompt-caching-claude.html
-│   └── ...
+├── docs/                    ← 120+ educational HTML documents
+│   ├── styles.css               ← Shared stylesheet for all docs
+│   └── YYYY-MM-DD_slug.html     ← Individual doc files
 └── docs-workflow/           ← Templates & workflow documentation
-    ├── essence-template.md      ← Concept article summary template
-    ├── essence-example.md       ← Example (PDCA optimization)
-    ├── cheatsheet-template.md   ← Technical article cheatsheet template
-    ├── cheatsheet-example.md    ← Example (Claude Code power tips)
-    └── 2026-02-22_search-index-workflow.md
+    ├── essence-template.md
+    ├── cheatsheet-template.md
+    └── newsletter-pipeline/     ← Experimental daily digest automation
 ```
 
-### Rebuilding the Search Index
+## Development
 
-When documents are added or updated:
+### Adding a new document
+
+The recommended workflow uses `add-doc.js`, which reads meta tags, classifies the doc, and updates all data files:
 
 ```bash
-node build-search-index.js
+npm run add docs/2026-03-15_new-article.html        # interactive
+npm run add docs/2026-03-15_new-article.html --dry-run  # preview only
 ```
 
-This parses all `docs/*.html`, extracts meta tags and h2/h3 sections, and regenerates `search-index.js`.
+This will:
+1. Read meta tags from the HTML file
+2. Score and suggest a learning-path stage and mindmap topic cluster
+3. Update `curriculum-data.js` (single source for both learning-path + mindmap)
+4. Rebuild `dashboard-data.js` and `search-index.js`
+5. Validate the result — auto-rollback if invalid
+
+### Rebuilding generated files
+
+```bash
+npm run build              # Rebuild search-index.js
+npm run build:dashboard    # Rebuild dashboard-data.js
+npm run normalize          # Batch-normalize HTML docs (fixes styles, classes, lang)
+npm run test               # Run integration tests
+```
+
+### Running tests
+
+```bash
+npm test
+```
+
+Validates: meta tag completeness, file reference integrity, doc counts, curriculum-data.js validity.
+
+### Document requirements
+
+Every HTML file in `docs/` must include these meta tags:
+
+```html
+<meta name="doc-date" content="2026-03-15">
+<meta name="doc-title" content="Article Title">
+<meta name="doc-source" content="Source Name">
+<meta name="doc-tags" content="Agent,Tool,Framework">
+<meta name="doc-rating" content="4.0">
+<meta name="doc-summary" content="One-line summary">
+<meta name="doc-file" content="2026-03-15_slug.html">
+```
+
+### File naming convention
+
+```
+YYYY-MM-DD_slug.html
+```
+
+Example: `2026-03-15_claude-code-tips.html`
 
 ## License
 
