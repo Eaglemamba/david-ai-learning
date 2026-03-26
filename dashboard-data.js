@@ -1,5 +1,20 @@
 const documents = [
   {
+    "date": "2026-03-27",
+    "title": "Claude Code 版本更新總覽 v2.1.74–v2.1.84",
+    "source": "GitHub / Anthropic Claude Code Releases",
+    "tags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Agent",
+      "LLM"
+    ],
+    "rating": 4,
+    "summary": "Claude Code 近 10 版 (v2.1.74–v2.1.84) 完整更新紀錄，涵蓋新功能、改進、錯誤修復三大類",
+    "lines": 663,
+    "file": "2026-03-27_claude-code-version-changelog.html"
+  },
+  {
     "date": "2026-03-23",
     "title": "Roche × Nvidia AI 工廠：製藥業最大 AI 基礎建設競賽的啟示",
     "source": "Endpoints News Weekly",

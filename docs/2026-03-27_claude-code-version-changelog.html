@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-03-27">
+    <meta name="doc-title" content="Claude Code 版本更新總覽 v2.1.74–v2.1.84">
+    <meta name="doc-source" content="GitHub / Anthropic Claude Code Releases">
+    <meta name="doc-source-type" content="Anthropic-Docs">
+    <meta name="doc-tags" content="Anthropic-Docs,Tool,Agent,LLM">
+    <meta name="doc-rating" content="4">
+    <meta name="doc-summary" content="Claude Code 近 10 版 (v2.1.74–v2.1.84) 完整更新紀錄，涵蓋新功能、改進、錯誤修復三大類">
+    <meta name="doc-file" content="2026-03-27_claude-code-version-changelog.html">
+    <title>Claude Code 版本更新總覽 v2.1.74–v2.1.84</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Version changelog specific styles */
+        .version-section {
+            margin-bottom: 2.5rem;
+        }
+        .version-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .version-header h3 {
+            color: white;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        .version-date {
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+        .changelog-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+            border: 1px solid var(--border);
+            border-top: none;
+        }
+        .changelog-table th {
+            background: #334155;
+            color: white;
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+            font-size: 0.8rem;
+            width: 50%;
+        }
+        .changelog-table td {
+            padding: 0.5rem 0.8rem;
+            vertical-align: top;
+            border: 1px solid var(--border);
+            line-height: 1.6;
+        }
+        .changelog-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        .changelog-table tr:hover {
+            background: #f1f5f9;
+        }
+        .category-row td {
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.6rem 0.8rem;
+        }
+        .cat-feature td {
+            background: var(--concept-bg) !important;
+            color: var(--concept-text);
+            border-bottom: 2px solid var(--concept-border);
+        }
+        .cat-improve td {
+            background: var(--compare-bg) !important;
+            color: var(--compare-text);
+            border-bottom: 2px solid var(--compare-border);
+        }
+        .cat-bugfix td {
+            background: var(--warning-bg) !important;
+            color: var(--warning-text);
+            border-bottom: 2px solid var(--warning-border);
+        }
+        .item-zh { color: var(--text); }
+        .item-en { color: var(--text-light); font-size: 0.82rem; }
+        .badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+        .badge-feature { background: #bbf7d0; color: #166534; }
+        .badge-improve { background: #c7d2fe; color: #3730a3; }
+        .badge-bugfix { background: #fecaca; color: #991b1b; }
+        .stats-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+        .toc {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+            columns: 2;
+        }
+        .toc li {
+            margin-bottom: 0.3rem;
+        }
+        .toc a {
+            font-size: 0.85rem;
+        }
+        .unavailable-note {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: #92400e;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .toc ul { columns: 1; }
+            .stats-bar { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="article-header">
+    <h1>Claude Code 版本更新總覽</h1>
+    <p class="article-subtitle">v2.1.74 – v2.1.84 完整 Changelog｜新功能・改進・錯誤修復</p>
+    <div class="header-meta">
+        <span>📅 2026-03-27</span>
+        <span>📦 10 Versions</span>
+        <span>🔗 Source: GitHub anthropics/claude-code</span>
+    </div>
+</header>
+
+<div class="stats-bar">
+    <div class="stat-item">
+        <div class="stat-number">10</div>
+        <div class="stat-label">版本 Versions</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">53</div>
+        <div class="stat-label">新功能 Features</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">47</div>
+        <div class="stat-label">改進 Improvements</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">120+</div>
+        <div class="stat-label">修復 Bug Fixes</div>
+    </div>
+</div>
+
+<div class="toc">
+    <h3>版本目錄 Table of Contents</h3>
+    <ul>
+        <li><a href="#v2184">v2.1.84 — 2026-03-26</a></li>
+        <li><a href="#v2183">v2.1.83 — 2026-03-25</a></li>
+        <li><a href="#v2181">v2.1.81 — 2026-03-20</a></li>
+        <li><a href="#v2180">v2.1.80 — 2026-03-19</a></li>
+        <li><a href="#v2179">v2.1.79 — 2026-03-18</a></li>
+        <li><a href="#v2178">v2.1.78 — 2026-03-17</a></li>
+        <li><a href="#v2177">v2.1.77 — 2026-03-17</a></li>
+        <li><a href="#v2176">v2.1.76 — 2026-03-14</a></li>
+        <li><a href="#v2175">v2.1.75 — 2026-03-13</a></li>
+        <li><a href="#v2174">v2.1.74 — 2026-03-12</a></li>
+    </ul>
+</div>
+
+<!-- ==================== v2.1.84 ==================== -->
+<div class="version-section" id="v2184">
+<div class="version-header">
+    <h3>v2.1.84</h3>
+    <span class="version-date">2026-03-26</span>
+</div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th></tr>
+
+<tr class="category-row cat-feature"><td colspan="2"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">Windows 新增 PowerShell 工具（預覽版）</td><td class="item-en">PowerShell Tool for Windows — opt-in preview</td></tr>
+<tr><td class="item-zh">新增環境變數自訂模型配置：覆蓋 effort/thinking 偵測、自訂 model picker 標籤、串流閒置逾時閾值</td><td class="item-en">Environment variables for model config: <code>ANTHROPIC_DEFAULT_{OPUS,SONNET,HAIKU}_MODEL_SUPPORTS</code>, <code>_MODEL_NAME/_DESCRIPTION</code>, <code>CLAUDE_STREAM_IDLE_TIMEOUT_MS</code></td></tr>
+<tr><td class="item-zh">新增 <code>TaskCreated</code> Hook — Task 建立時觸發</td><td class="item-en"><code>TaskCreated</code> Hook fires when a task is created via <code>TaskCreate</code></td></tr>
+<tr><td class="item-zh">WorktreeCreate Hook 支援 HTTP type；可回傳 worktree 路徑</td><td class="item-en"><code>WorktreeCreate</code> Hook — <code>type: "http"</code> support; return worktree path via <code>hookSpecificOutput</code></td></tr>
+<tr><td class="item-zh">頻道外掛白名單：<code>allowedChannelPlugins</code> 受管設定</td><td class="item-en">Channel Plugin Allowlist — <code>allowedChannelPlugins</code> managed setting for admins</td></tr>
+<tr><td class="item-zh">Deep Links：<code>claude-cli://</code> 可在偏好終端機開啟</td><td class="item-en">Deep Links — <code>claude-cli://</code> now opens in preferred terminal</td></tr>
+<tr><td class="item-zh">Rules/Skills 的 <code>paths:</code> 支援 YAML 清單格式</td><td class="item-en">Rules/Skills YAML List Support — <code>paths:</code> frontmatter accepts YAML list of globs</td></tr>
+<tr><td class="item-zh">閒置超過 75 分鐘回來會提示 <code>/clear</code>，減少舊 context 重新 cache 的浪費</td><td class="item-en">Idle-Return Prompt — nudges users returning after 75+ min to <code>/clear</code></td></tr>
+
+<tr class="category-row cat-improve"><td colspan="2"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">MCP 工具描述上限 2KB，防止 context 膨脹</td><td class="item-en">MCP Tool Context Optimization — descriptions and server instructions capped at 2KB</td></tr>
+<tr><td class="item-zh">MCP Server 去重：本地與 claude.ai 重複設定時本地優先</td><td class="item-en">MCP Server Deduplication — local config wins over claude.ai</td></tr>
+<tr><td class="item-zh">背景 Bash 卡在互動提示時，45 秒後顯示通知</td><td class="item-en">Interactive Prompt Detection — notification after ~45s for stuck background bash</td></tr>
+<tr><td class="item-zh">Token 計數 ≥1M 顯示為 "1.5m"</td><td class="item-en">Token Count Display — counts ≥1M show as "1.5m" instead of "1512.6k"</td></tr>
+<tr><td class="item-zh">System-prompt caching 搭配 ToolSearch / MCP 工具也正常運作</td><td class="item-en">System-Prompt Caching now works with <code>ToolSearch</code> and MCP tools</td></tr>
+<tr><td class="item-zh">API 除錯新增 <code>x-client-request-id</code> header</td><td class="item-en">API Debugging — added <code>x-client-request-id</code> header</td></tr>
+<tr><td class="item-zh">啟動速度提升 ~30ms（<code>setup()</code> 平行執行）</td><td class="item-en">Startup Performance — improved ~30ms by running <code>setup()</code> in parallel</td></tr>
+<tr><td class="item-zh">MCP server 的 <code>claude "prompt"</code> 立即渲染，不再阻塞</td><td class="item-en">REPL Rendering — <code>claude "prompt"</code> with MCP servers renders immediately</td></tr>
+<tr><td class="item-zh">遠端控制顯示具體阻擋原因</td><td class="item-en">Remote Control Messaging — shows specific blocking reason</td></tr>
+<tr><td class="item-zh">減少長對話中捲動跳頂</td><td class="item-en">Reduced scroll-to-top resets in long sessions</td></tr>
+<tr><td class="item-zh">減少動畫進度列捲出畫面時的閃爍</td><td class="item-en">Reduced flickering when animated tool progress scrolls above viewport</td></tr>
+<tr><td class="item-zh">Issue/PR 引用格式 <code>owner/repo#123</code> 才可點擊</td><td class="item-en">Issue/PR References — only <code>owner/repo#123</code> format becomes clickable</td></tr>
+<tr><td class="item-zh">不可用的 slash command 自動隱藏</td><td class="item-en">Slash commands unavailable for current auth now hidden</td></tr>
+<tr><td class="item-zh">VSCode 新增用量百分比與重置時間警示</td><td class="item-en">[VSCode] Rate limit warning banner with usage percentage and reset time</td></tr>
+<tr><td class="item-zh"><code>/stats</code> 截圖 <code>Ctrl+S</code> 快 16 倍</td><td class="item-en"><code>Ctrl+S</code> in <code>/stats</code> now works in all builds and is 16× faster</td></tr>
+
+<tr class="category-row cat-bugfix"><td colspan="2"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正語音 Push-to-Talk 字元外洩與位置插入問題</td><td class="item-en">Fixed Voice Push-to-Talk character leakage and transcript insertion position</td></tr>
+<tr><td class="item-zh">修正上下鍵在 footer 聚焦時無反應</td><td class="item-en">Fixed arrow keys unresponsive when footer item is focused</td></tr>
+<tr><td class="item-zh">修正 <code>Ctrl+U</code> 在行邊界無效</td><td class="item-en">Fixed <code>Ctrl+U</code> (kill-to-line-start) being no-op at line boundaries</td></tr>
+<tr><td class="item-zh">修正 chord binding null 解綁仍進入 chord-wait 模式</td><td class="item-en">Fixed null-unbinding default chord binding still entering chord-wait mode</td></tr>
+<tr><td class="item-zh">修正 transcript 搜尋時滑鼠事件插入 "mouse" 文字</td><td class="item-en">Fixed transcript search mouse events inserting literal "mouse" text</td></tr>
+<tr><td class="item-zh">修正 workflow subagent 使用 <code>--json-schema</code> 時 API 400 錯誤</td><td class="item-en">Fixed Workflow Subagents API 400 failures with <code>--json-schema</code></td></tr>
+<tr><td class="item-zh">修正 emoji 在某些終端機缺少背景色</td><td class="item-en">Fixed emoji background color missing in user message bubbles</td></tr>
+<tr><td class="item-zh">修正編輯設定權限不持久</td><td class="item-en">Fixed "allow Claude to edit settings" permission not persisting</td></tr>
+<tr><td class="item-zh">修正大檔案編輯時產生附件掛起</td><td class="item-en">Fixed attachment generation hang for large edited files</td></tr>
+<tr><td class="item-zh">修正 MCP 工具快取在 server 重連時洩漏</td><td class="item-en">Fixed MCP tool cache leak on server reconnect</td></tr>
+<tr><td class="item-zh">修正 Partial Clone 儲存庫啟動效能（觸發大量 blob 下載）</td><td class="item-en">Fixed startup performance issue with Scalar/GVFS partial clone repos</td></tr>
+<tr><td class="item-zh">修正原生游標不追蹤文字游標；IME 組字現在內嵌渲染</td><td class="item-en">Fixed native cursor not tracking text input caret; IME composition renders inline</td></tr>
+<tr><td class="item-zh">修正 macOS Keychain 間歇性「未登入」錯誤</td><td class="item-en">Fixed spurious "Not logged in" errors from transient keychain read failures</td></tr>
+<tr><td class="item-zh">修正冷啟動競態導致核心工具被延遲載入</td><td class="item-en">Fixed cold-start race condition — core tools deferred without bypass active</td></tr>
+<tr><td class="item-zh">改善 Windows 磁碟根目錄保護偵測</td><td class="item-en">Improved Windows drive root protection detection</td></tr>
+</table>
+</div>
+
+<!-- ==================== v2.1.83 ==================== -->
+<div class="version-section" id="v2183">
+<div class="version-header">
+    <h3>v2.1.83</h3>
+    <span class="version-date">2026-03-25</span>
+</div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th></tr>
+
+<tr class="category-row cat-feature"><td colspan="2"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 <code>managed-settings.d/</code> drop-in 目錄，讓不同團隊部署獨立政策片段</td><td class="item-en"><code>managed-settings.d/</code> drop-in directory for independent policy fragments</td></tr>
+<tr><td class="item-zh">新增 <code>CwdChanged</code> 和 <code>FileChanged</code> Hook 事件（如 direnv 場景）</td><td class="item-en"><code>CwdChanged</code> and <code>FileChanged</code> hook events for reactive environment management</td></tr>
+<tr><td class="item-zh">新增 <code>sandbox.failIfUnavailable</code>：sandbox 無法啟動時直接報錯退出</td><td class="item-en"><code>sandbox.failIfUnavailable</code> setting — exit with error instead of running unsandboxed</td></tr>
+<tr><td class="item-zh">新增 <code>disableDeepLinkRegistration</code> 設定</td><td class="item-en"><code>disableDeepLinkRegistration</code> setting to prevent protocol handler registration</td></tr>
+<tr><td class="item-zh">新增 <code>CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1</code> 從子程序環境移除認證資訊</td><td class="item-en"><code>CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1</code> strips credentials from subprocess environments</td></tr>
+<tr><td class="item-zh">Transcript 搜尋：按 <code>/</code> 搜尋、<code>n/N</code> 跳轉</td><td class="item-en">Transcript search — press <code>/</code> to search, <code>n</code>/<code>N</code> to step through matches</td></tr>
+<tr><td class="item-zh">新增 <code>Ctrl+X Ctrl+E</code> 開啟外部編輯器</td><td class="item-en"><code>Ctrl+X Ctrl+E</code> alias for external editor</td></tr>
+<tr><td class="item-zh">貼上圖片會在游標處插入 <code>[Image #N]</code> chip</td><td class="item-en">Pasted images insert <code>[Image #N]</code> chip at cursor for positional reference</td></tr>
+<tr><td class="item-zh">Agent 可在 frontmatter 宣告 <code>initialPrompt</code> 自動送出第一輪</td><td class="item-en">Agents can declare <code>initialPrompt</code> in frontmatter to auto-submit first turn</td></tr>
+<tr><td class="item-zh"><code>chat:killAgents</code> 和 <code>chat:fastMode</code> 可自訂快捷鍵</td><td class="item-en"><code>chat:killAgents</code> and <code>chat:fastMode</code> rebindable via keybindings.json</td></tr>
+
+<tr class="category-row cat-improve"><td colspan="2"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">Bedrock SDK 冷啟動延遲改善（profile fetch 平行化）</td><td class="item-en">Improved Bedrock SDK cold-start latency by overlapping profile fetch</td></tr>
+<tr><td class="item-zh"><code>--resume</code> 大型 session 記憶體用量與啟動延遲改善</td><td class="item-en">Improved <code>--resume</code> memory usage and startup latency on large sessions</td></tr>
+<tr><td class="item-zh">Plugin 啟動改善：commands/skills/agents 從磁碟快取載入</td><td class="item-en">Plugin startup — commands, skills, agents load from disk cache</td></tr>
+<tr><td class="item-zh">Remote Control session 標題幾秒內就由 AI 生成</td><td class="item-en">Remote Control AI-generated titles appear within seconds</td></tr>
+<tr><td class="item-zh"><code>WebFetch</code> 以 <code>Claude-User</code> 身份識別，方便網站白名單</td><td class="item-en"><code>WebFetch</code> identifies as <code>Claude-User</code> for <code>robots.txt</code> allowlisting</td></tr>
+<tr><td class="item-zh">降低 <code>WebFetch</code> 大頁面尖峰記憶體用量</td><td class="item-en">Reduced <code>WebFetch</code> peak memory usage for large pages</td></tr>
+<tr><td class="item-zh">長對話捲動重置從每輪一次降到約每 50 訊息一次</td><td class="item-en">Reduced scrollback resets from once per turn to once per ~50 messages</td></tr>
+<tr><td class="item-zh">無認證 HTTP/SSE MCP 的 <code>claude -p</code> 啟動快 ~600ms</td><td class="item-en">Faster <code>claude -p</code> startup with unauthenticated MCP servers (~600ms saved)</td></tr>
+<tr><td class="item-zh">Bash ghost-text 建議立即包含剛送出的指令</td><td class="item-en">Bash ghost-text suggestions include just-submitted commands immediately</td></tr>
+<tr><td class="item-zh">非串流 fallback token 上限 21k→64k、timeout 120s→300s</td><td class="item-en">Increased non-streaming fallback token cap (21k→64k) and timeout (120s→300s)</td></tr>
+<tr><td class="item-zh">回應前中斷會自動還原輸入，可直接編輯重送</td><td class="item-en">Interrupting before response auto-restores input for edit and resubmit</td></tr>
+<tr><td class="item-zh"><code>/status</code> 可在 Claude 回應期間使用</td><td class="item-en"><code>/status</code> now works while Claude is responding</td></tr>
+<tr><td class="item-zh">Plugin MCP server 與 org connector 重複時自動抑制</td><td class="item-en">Plugin MCP servers duplicating org connector are suppressed</td></tr>
+<tr><td class="item-zh">Linux：respect <code>XDG_DATA_HOME</code></td><td class="item-en">Linux: respect <code>XDG_DATA_HOME</code> for protocol handler registration</td></tr>
+<tr><td class="item-zh">「停止所有背景 agent」快捷鍵改為 <code>Ctrl+X Ctrl+K</code></td><td class="item-en">Stop all agents keybinding changed from <code>Ctrl+F</code> to <code>Ctrl+X Ctrl+K</code></td></tr>
+<tr><td class="item-zh"><code>TaskOutput</code> 已棄用，改用 <code>Read</code></td><td class="item-en">Deprecated <code>TaskOutput</code> in favor of <code>Read</code></td></tr>
+<tr><td class="item-zh">[VSCode] 後端無回應 60 秒後 spinner 變紅色</td><td class="item-en">[VSCode] Spinner turns red with "Not responding" after 60s</td></tr>
+
+<tr class="category-row cat-bugfix"><td colspan="2"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正退出後滑鼠追蹤跳脫序列洩漏到 shell</td><td class="item-en">Fixed mouse tracking escape sequences leaking to shell after exit</td></tr>
+<tr><td class="item-zh">修正 macOS 退出時掛起</td><td class="item-en">Fixed hanging on exit on macOS</td></tr>
+<tr><td class="item-zh">修正閒置幾秒後螢幕閃白</td><td class="item-en">Fixed screen flashing blank after being idle</td></tr>
+<tr><td class="item-zh">修正大檔案 diff 掛起（5 秒 timeout 後 fallback）</td><td class="item-en">Fixed hang when diffing very large files — timeout after 5s with fallback</td></tr>
+<tr><td class="item-zh">修正語音輸入啟用時啟動 UI 凍結 1–8 秒</td><td class="item-en">Fixed 1–8s UI freeze on startup with voice input enabled</td></tr>
+<tr><td class="item-zh">修正啟動時等待 claude.ai MCP 配置 ~3 秒</td><td class="item-en">Fixed startup regression waiting ~3s for claude.ai MCP config</td></tr>
+<tr><td class="item-zh">修正 <code>--mcp-config</code> 繞過 managed policy</td><td class="item-en">Fixed <code>--mcp-config</code> bypassing <code>allowedMcpServers/deniedMcpServers</code> policy</td></tr>
+<tr><td class="item-zh">修正 claude.ai MCP connectors 在 <code>--print</code> 模式不可用</td><td class="item-en">Fixed claude.ai MCP connectors not available in <code>--print</code> mode</td></tr>
+<tr><td class="item-zh">修正 <code>caffeinate</code> 程序退出後未終止（Mac 無法休眠）</td><td class="item-en">Fixed <code>caffeinate</code> process not terminating on exit</td></tr>
+<tr><td class="item-zh">修正 <code>!</code> 前綴指令 tab 補全後 bash 模式未啟動</td><td class="item-en">Fixed bash mode not activating when tab-accepting <code>!</code>-prefixed commands</td></tr>
+<tr><td class="item-zh">修正 slash command 選擇顯示錯誤高亮</td><td class="item-en">Fixed stale slash command selection showing wrong highlighted command</td></tr>
+<tr><td class="item-zh">修正 <code>/config</code> 選單同時顯示搜尋游標與清單選擇</td><td class="item-en">Fixed <code>/config</code> showing both search cursor and list selection</td></tr>
+<tr><td class="item-zh">修正背景 subagent context 壓縮後隱形（可能產生重複 agent）</td><td class="item-en">Fixed background subagents becoming invisible after compaction</td></tr>
+<tr><td class="item-zh">修正背景 agent 任務在 cleanup 掛起時卡在 "running"</td><td class="item-en">Fixed background agent tasks stuck in "running" during cleanup hangs</td></tr>
+<tr><td class="item-zh">修正 <code>--channels</code> 升級後首次啟動顯示不可用</td><td class="item-en">Fixed <code>--channels</code> showing "not available" on first launch after upgrade</td></tr>
+<tr><td class="item-zh">修正已移除 plugin hooks 繼續觸發</td><td class="item-en">Fixed uninstalled plugin hooks continuing to fire</td></tr>
+<tr><td class="item-zh">修正串流回應時佇列指令閃爍</td><td class="item-en">Fixed queued commands flickering during streaming</td></tr>
+<tr><td class="item-zh">修正處理訊息時 slash command 被當文字送出</td><td class="item-en">Fixed slash commands sent as text when submitted during processing</td></tr>
+<tr><td class="item-zh">修正多處捲動跳動問題（折疊群組、thinking 開始/停止）</td><td class="item-en">Fixed scrollback jumping issues (collapsed groups, thinking start/stop)</td></tr>
+<tr><td class="item-zh">修正 SDK session 恢復時歷史遺失</td><td class="item-en">Fixed SDK session history loss on resume from hook messages forking parentUuid</td></tr>
+<tr><td class="item-zh">修正滑鼠釋放在視窗外時 copy-on-select 不觸發</td><td class="item-en">Fixed copy-on-select not firing when mouse released outside terminal window</td></tr>
+<tr><td class="item-zh">修正高度受限清單溢出時出現幽靈字元</td><td class="item-en">Fixed ghost characters in height-constrained lists</td></tr>
+<tr><td class="item-zh">修正 <code>Ctrl+B</code> 在閒置提示時干擾 readline</td><td class="item-en">Fixed <code>Ctrl+B</code> interfering with readline at idle prompt</td></tr>
+<tr><td class="item-zh">修正工具結果檔案未依設定清理</td><td class="item-en">Fixed tool result files never cleaned up (ignoring <code>cleanupPeriodDays</code>)</td></tr>
+<tr><td class="item-zh">修正語音放開後空白鍵被吞 3 秒</td><td class="item-en">Fixed space key swallowed for up to 3s after releasing voice hold-to-talk</td></tr>
+<tr><td class="item-zh">修正 Linux 無音訊硬體時 ALSA 錯誤破壞 UI</td><td class="item-en">Fixed ALSA errors corrupting terminal UI on Linux without audio</td></tr>
+<tr><td class="item-zh">修正 Termux/Android 語音模式 SoX 偵測</td><td class="item-en">Fixed voice mode SoX detection on Termux/Android</td></tr>
+<tr><td class="item-zh">修正 Remote Control session 顯示為 Idle</td><td class="item-en">Fixed Remote Control sessions showing as Idle while actively running</td></tr>
+<tr><td class="item-zh">修正 footer 導覽選到隱形 Remote Control pill</td><td class="item-en">Fixed footer navigation selecting invisible Remote Control pill</td></tr>
+<tr><td class="item-zh">修正遠端 session 記憶體洩漏（tool use ID 無限累積）</td><td class="item-en">Fixed memory leak in remote sessions — tool use IDs accumulate indefinitely</td></tr>
+<tr><td class="item-zh">[VSCode] 修正 URL 重開 session 歷史未正確載入</td><td class="item-en">[VSCode] Fixed session history not loading on reopen via URL</td></tr>
+</table>
+</div>
+
+<!-- ==================== v2.1.81 ==================== -->
+<div class="version-section" id="v2181">
+<div class="version-header">
+    <h3>v2.1.81</h3>
+    <span class="version-date">2026-03-20</span>
+</div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th></tr>
+
+<tr class="category-row cat-feature"><td colspan="2"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 <code>--bare</code> 旗標：腳本化 <code>-p</code> 呼叫跳過 hooks/LSP/plugin</td><td class="item-en"><code>--bare</code> flag for scripted <code>-p</code> calls — skips hooks, LSP, plugin sync</td></tr>
+<tr><td class="item-zh">新增 <code>--channels</code> 權限轉發至手機審批工具</td><td class="item-en"><code>--channels</code> permission relay — channel servers forward approval prompts to phone</td></tr>
+
+<tr class="category-row cat-improve"><td colspan="2"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">MCP read/search 工具呼叫折疊為一行（<code>Ctrl+O</code> 展開）</td><td class="item-en">MCP read/search calls collapse into single "Queried {server}" line</td></tr>
+<tr><td class="item-zh"><code>!</code> bash 模式可發現性提升</td><td class="item-en">Improved <code>!</code> bash mode discoverability</td></tr>
+<tr><td class="item-zh">ref-tracked plugins 每次載入重新 clone</td><td class="item-en">Ref-tracked plugins re-clone on every load for freshness</td></tr>
+<tr><td class="item-zh">Remote Control session 標題第三則訊息後更新</td><td class="item-en">Remote Control session titles refresh after third message</td></tr>
+<tr><td class="item-zh">MCP OAuth 支援 CIMD (SEP-991)</td><td class="item-en">MCP OAuth supports Client ID Metadata Document (CIMD / SEP-991)</td></tr>
+<tr><td class="item-zh">Plan 模式預設隱藏「清除 context」選項</td><td class="item-en">Plan mode hides "clear context" by default</td></tr>
+<tr><td class="item-zh">Windows/WSL 停用逐行回應串流</td><td class="item-en">Disabled line-by-line streaming on Windows/WSL due to rendering issues</td></tr>
+<tr><td class="item-zh">恢復 session 時自動切回 worktree</td><td class="item-en">Resuming session in worktree switches back to that worktree</td></tr>
+
+<tr class="category-row cat-bugfix"><td colspan="2"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正多個 session OAuth token 重複認證問題</td><td class="item-en">Fixed multiple sessions requiring re-auth when one refreshes OAuth token</td></tr>
+<tr><td class="item-zh">修正語音模式靜默吞掉重試失敗</td><td class="item-en">Fixed voice mode silently swallowing retry failures</td></tr>
+<tr><td class="item-zh">修正語音 WebSocket 斷線後音訊無法恢復</td><td class="item-en">Fixed voice mode audio not recovering after WebSocket drop</td></tr>
+<tr><td class="item-zh">修正 <code>CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS</code> 未抑制 beta header</td><td class="item-en">Fixed <code>CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS</code> not suppressing structured-outputs beta</td></tr>
+<tr><td class="item-zh">修正 <code>--channels</code> 在無 managed settings 的 Team/Enterprise 繞過</td><td class="item-en">Fixed <code>--channels</code> bypass for orgs without managed settings</td></tr>
+<tr><td class="item-zh">修正 Node.js 18 崩潰</td><td class="item-en">Fixed crash on Node.js 18</td></tr>
+<tr><td class="item-zh">修正含破折號字串的 Bash 指令不必要權限提示</td><td class="item-en">Fixed unnecessary permission prompts for Bash commands with dashes</td></tr>
+<tr><td class="item-zh">修正 plugin 目錄刪除時 hook 阻塞送出</td><td class="item-en">Fixed plugin hooks blocking when plugin directory deleted mid-session</td></tr>
+<tr><td class="item-zh">修正背景 agent 任務輸出掛起競態條件</td><td class="item-en">Fixed race condition where background agent task output could hang</td></tr>
+<tr><td class="item-zh">修正 <code>/btw</code> 回傳主 agent 輸出而非側問題答案</td><td class="item-en">Fixed <code>/btw</code> returning main agent's output instead of side answer</td></tr>
+<tr><td class="item-zh">修正 tmux 下快速 Cmd+Tab 後貼上競態</td><td class="item-en">Fixed race where fast Cmd+Tab + paste could beat clipboard under tmux</td></tr>
+<tr><td class="item-zh">修正終端機 tab 標題不更新</td><td class="item-en">Fixed terminal tab title not updating with session description</td></tr>
+<tr><td class="item-zh">修正隱形 hook 附件膨脹訊息計數</td><td class="item-en">Fixed invisible hook attachments inflating message count</td></tr>
+<tr><td class="item-zh">修正 Remote Control 標題、<code>/rename</code> 同步、<code>/exit</code> 歸檔問題</td><td class="item-en">Fixed Remote Control title, <code>/rename</code> sync, and <code>/exit</code> archiving issues</td></tr>
+<tr><td class="item-zh">[VSCode] 修正 Windows Git Bash PATH 繼承</td><td class="item-en">[VSCode] Fixed Windows PATH inheritance for Git Bash (regression in v2.1.78)</td></tr>
+</table>
+</div>
+
+<!-- ==================== v2.1.80 ==================== -->
+<div class="version-section" id="v2180">
+<div class="version-header">
+    <h3>v2.1.80</h3>
+    <span class="version-date">2026-03-19</span>
+</div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th></tr>
+
+<tr class="category-row cat-feature"><td colspan="2"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">Statusline 腳本新增 <code>rate_limits</code> 欄位（5 小時/7 天用量百分比與重置時間）</td><td class="item-en"><code>rate_limits</code> field for statusline scripts (5h/7d windows with usage % and reset time)</td></tr>
+<tr><td class="item-zh">新增 <code>source: 'settings'</code> plugin marketplace 來源</td><td class="item-en"><code>source: 'settings'</code> plugin marketplace source — inline in settings.json</td></tr>
+<tr><td class="item-zh">Plugin tips 新增 CLI 工具使用偵測</td><td class="item-en">CLI tool usage detection added to plugin tips</td></tr>
+<tr><td class="item-zh">Skills/slash commands 新增 <code>effort</code> frontmatter 覆蓋模型 effort level</td><td class="item-en"><code>effort</code> frontmatter for skills/commands to override model effort level</td></tr>
+<tr><td class="item-zh">新增 <code>--channels</code> 研究預覽：MCP server 可推送訊息到 session</td><td class="item-en"><code>--channels</code> (research preview) — MCP servers push messages into session</td></tr>
+
+<tr class="category-row cat-improve"><td colspan="2"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">大型 git repo 的 <code>@</code> 檔案自動完成更快</td><td class="item-en">Improved <code>@</code> file autocomplete responsiveness in large git repos</td></tr>
+<tr><td class="item-zh"><code>/effort</code> 顯示 auto 實際解析結果</td><td class="item-en"><code>/effort</code> shows what auto currently resolves to</td></tr>
+<tr><td class="item-zh"><code>/permissions</code> Tab 和方向鍵導覽改善</td><td class="item-en"><code>/permissions</code> — Tab and arrow keys switch tabs from within list</td></tr>
+<tr><td class="item-zh">背景任務面板左鍵可從清單關閉</td><td class="item-en">Background tasks panel — left arrow closes from list view</td></tr>
+<tr><td class="item-zh">Plugin 安裝提示簡化為一步</td><td class="item-en">Simplified plugin install tips to single <code>/plugin install</code> command</td></tr>
+<tr><td class="item-zh">大型 repo 啟動記憶體減少 ~80 MB</td><td class="item-en">Reduced startup memory ~80 MB on 250k-file repos</td></tr>
+
+<tr class="category-row cat-bugfix"><td colspan="2"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 <code>--resume</code> 丟棄平行工具結果（顯示 <code>[Tool result missing]</code>）</td><td class="item-en">Fixed <code>--resume</code> dropping parallel tool results</td></tr>
+<tr><td class="item-zh">修正語音 WebSocket 因 Cloudflare bot 偵測失敗</td><td class="item-en">Fixed voice mode WebSocket failures from Cloudflare bot detection</td></tr>
+<tr><td class="item-zh">修正 API proxy/Bedrock/Vertex 的 fine-grained tool streaming 400 錯誤</td><td class="item-en">Fixed 400 errors with fine-grained tool streaming through proxies</td></tr>
+<tr><td class="item-zh">修正 <code>/remote-control</code> 在不支援部署中出現</td><td class="item-en">Fixed <code>/remote-control</code> appearing for unsupported deployments</td></tr>
+<tr><td class="item-zh">修正 <code>/sandbox</code> tab 切換無反應</td><td class="item-en">Fixed <code>/sandbox</code> tab switching not responding</td></tr>
+<tr><td class="item-zh">修正 managed settings 在啟動時未從快取套用</td><td class="item-en">Fixed managed settings not applied at startup from cached <code>remote-settings.json</code></td></tr>
+</table>
+</div>
+
+<!-- ==================== v2.1.79 ==================== -->
+<div class="version-section" id="v2179">
+<div class="version-header">
+    <h3>v2.1.79</h3>
+    <span class="version-date">2026-03-18</span>
+</div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th></tr>
+
+<tr class="category-row cat-feature"><td colspan="2"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh"><code>claude auth login</code> 新增 <code>--console</code> 旗標（Anthropic Console API 計費認證）</td><td class="item-en"><code>--console</code> flag for <code>claude auth login</code> (API billing auth)</td></tr>
+<tr><td class="item-zh"><code>/config</code> 新增「顯示回合時間」開關</td><td class="item-en">"Show turn duration" toggle in <code>/config</code> menu</td></tr>
+<tr><td class="item-zh">[VSCode] 新增 <code>/remote-control</code> — 可從瀏覽器/手機繼續 session</td><td class="item-en">[VSCode] <code>/remote-control</code> — bridge session to claude.ai/code</td></tr>
+<tr><td class="item-zh">[VSCode] Session tab 自動產生 AI 標題</td><td class="item-en">[VSCode] Session tabs get AI-generated titles from first message</td></tr>
+
+<tr class="category-row cat-improve"><td colspan="2"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">啟動記憶體減少 ~18MB</td><td class="item-en">Improved startup memory usage by ~18MB</td></tr>
+<tr><td class="item-zh">非串流 API fallback 每次嘗試 2 分鐘 timeout</td><td class="item-en">Non-streaming API fallback with 2-minute per-attempt timeout</td></tr>
+<tr><td class="item-zh"><code>CLAUDE_CODE_PLUGIN_SEED_DIR</code> 支援多目錄</td><td class="item-en"><code>CLAUDE_CODE_PLUGIN_SEED_DIR</code> supports multiple directories</td></tr>
+
+<tr class="category-row cat-bugfix"><td colspan="2"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 <code>claude -p</code> 無 stdin 時掛起</td><td class="item-en">Fixed <code>claude -p</code> hanging without explicit stdin</td></tr>
+<tr><td class="item-zh">修正 <code>-p</code> 模式 Ctrl+C 無效</td><td class="item-en">Fixed Ctrl+C not working in <code>-p</code> mode</td></tr>
+<tr><td class="item-zh">修正 <code>/btw</code> 在串流中回傳主 agent 輸出</td><td class="item-en">Fixed <code>/btw</code> returning main agent output during streaming</td></tr>
+<tr><td class="item-zh">修正設定 <code>voiceEnabled: true</code> 啟動時語音模式未正確啟動</td><td class="item-en">Fixed voice mode not activating on startup with <code>voiceEnabled: true</code></td></tr>
+<tr><td class="item-zh">修正 <code>/permissions</code> 左右鍵 tab 導覽</td><td class="item-en">Fixed left/right arrow tab navigation in <code>/permissions</code></td></tr>
+<tr><td class="item-zh">修正 <code>CLAUDE_CODE_DISABLE_TERMINAL_TITLE</code> 未生效</td><td class="item-en">Fixed <code>CLAUDE_CODE_DISABLE_TERMINAL_TITLE</code> not preventing title set on startup</td></tr>
+<tr><td class="item-zh">修正 workspace trust 阻擋時自訂 statusline 空白</td><td class="item-en">Fixed custom status line showing nothing when workspace trust blocking</td></tr>
+<tr><td class="item-zh">修正企業用戶 429 rate limit 無法重試</td><td class="item-en">Fixed enterprise users unable to retry on rate limit (429)</td></tr>
+<tr><td class="item-zh">修正切換 session 時 <code>SessionEnd</code> hook 未觸發</td><td class="item-en">Fixed <code>SessionEnd</code> hooks not firing on interactive <code>/resume</code></td></tr>
+<tr><td class="item-zh">[VSCode] 修正 thinking pill 顯示 "Thinking" 而非 "Thought for Ns"</td><td class="item-en">[VSCode] Fixed thinking pill showing "Thinking" instead of "Thought for Ns"</td></tr>
+<tr><td class="item-zh">[VSCode] 修正 sidebar 開啟 session 缺少 diff 按鈕</td><td class="item-en">[VSCode] Fixed missing session diff button from sidebar</td></tr>
+</table>
+</div>
+
+<!-- ==================== v2.1.78 ==================== -->
+<div class="version-section" id="v2178">
+<div class="version-header">
+    <h3>v2.1.78</h3>
+    <span class="version-date">2026-03-17</span>
+</div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th></tr>
+
+<tr class="category-row cat-feature"><td colspan="2"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 <code>StopFailure</code> Hook：API 錯誤導致回合結束時觸發</td><td class="item-en"><code>StopFailure</code> hook event fires on API errors (rate limit, auth failure)</td></tr>
+<tr><td class="item-zh">新增 <code>${CLAUDE_PLUGIN_DATA}</code> 持久狀態目錄</td><td class="item-en"><code>${CLAUDE_PLUGIN_DATA}</code> for plugin persistent state surviving updates</td></tr>
+<tr><td class="item-zh">Plugin agent frontmatter 支援 <code>effort</code>、<code>maxTurns</code>、<code>disallowedTools</code></td><td class="item-en"><code>effort</code>, <code>maxTurns</code>, <code>disallowedTools</code> frontmatter for plugin agents</td></tr>
+<tr><td class="item-zh">終端機通知可穿透 tmux（需 <code>allow-passthrough on</code>）</td><td class="item-en">Terminal notifications passthrough tmux with <code>allow-passthrough on</code></td></tr>
+<tr><td class="item-zh">回應文字逐行串流</td><td class="item-en">Response text streams line-by-line</td></tr>
+<tr><td class="item-zh">新增 <code>ANTHROPIC_CUSTOM_MODEL_OPTION</code> 環境變數自訂 model picker</td><td class="item-en"><code>ANTHROPIC_CUSTOM_MODEL_OPTION</code> env var for custom model picker entry</td></tr>
+
+<tr class="category-row cat-improve"><td colspan="2"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">恢復大型 session 的記憶體與啟動時間改善</td><td class="item-en">Improved memory usage and startup time when resuming large sessions</td></tr>
+
+<tr class="category-row cat-bugfix"><td colspan="2"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 sandbox 內 <code>git log HEAD</code> 失敗</td><td class="item-en">Fixed <code>git log HEAD</code> failing inside sandboxed Bash on Linux</td></tr>
+<tr><td class="item-zh">修正 <code>cc log</code>/<code>--resume</code> 大型 session 歷史靜默截斷</td><td class="item-en">Fixed <code>cc log</code>/<code>--resume</code> truncating history on large sessions (>5 MB)</td></tr>
+<tr><td class="item-zh">修正 API 錯誤觸發 stop hooks 無限循環</td><td class="item-en">Fixed infinite loop when API errors triggered stop hooks</td></tr>
+<tr><td class="item-zh">修正 <code>deny</code> 權限規則未移除 MCP server 工具</td><td class="item-en">Fixed <code>deny: ["mcp__servername"]</code> not removing tools before sending to model</td></tr>
+<tr><td class="item-zh">修正 <code>sandbox.filesystem.allowWrite</code> 絕對路徑不生效</td><td class="item-en">Fixed <code>sandbox.filesystem.allowWrite</code> not working with absolute paths</td></tr>
+<tr><td class="item-zh">修正 <code>/sandbox</code> 在 macOS 顯示 Linux 先決條件</td><td class="item-en">Fixed <code>/sandbox</code> Dependencies showing Linux info on macOS</td></tr>
+<tr><td class="item-zh">安全性：修正 sandbox 相依性缺失時靜默停用</td><td class="item-en">Security: Fixed silent sandbox disable when dependencies missing — now shows warning</td></tr>
+<tr><td class="item-zh">修正 <code>bypassPermissions</code> 模式下受保護目錄可寫入</td><td class="item-en">Fixed protected directories writable in <code>bypassPermissions</code> mode</td></tr>
+<tr><td class="item-zh">修正 <code>Ctrl+U</code> 在一般模式捲動而非 kill-line</td><td class="item-en">Fixed <code>Ctrl+U</code> in normal mode scrolling instead of readline kill-line</td></tr>
+<tr><td class="item-zh">修正語音模式修飾鍵組合需要長按而非立即啟動</td><td class="item-en">Fixed voice mode modifier-combo push-to-talk requiring hold instead of immediate</td></tr>
+<tr><td class="item-zh">修正 WSL2/WSLg 語音模式</td><td class="item-en">Fixed voice mode not working on WSL2 with WSLg</td></tr>
+<tr><td class="item-zh">修正 <code>--worktree</code> 未載入 worktree 目錄的 skills/hooks</td><td class="item-en">Fixed <code>--worktree</code> not loading skills/hooks from worktree directory</td></tr>
+<tr><td class="item-zh">修正 git 指令和 <code>includeGitInstructions</code> 設定未抑制 system prompt</td><td class="item-en">Fixed <code>CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS</code> not suppressing git section</td></tr>
+<tr><td class="item-zh">修正 VS Code 從 Dock/Spotlight 啟動時 Bash 找不到 Homebrew</td><td class="item-en">Fixed Bash not finding Homebrew binaries when VS Code launched from Dock/Spotlight</td></tr>
+<tr><td class="item-zh">修正 VS Code 終端機 Claude 橙色褪色</td><td class="item-en">Fixed washed-out Claude orange in terminals without truecolor support</td></tr>
+<tr><td class="item-zh">修正 <code>ANTHROPIC_BETAS</code> 使用 Haiku 時被忽略</td><td class="item-en">Fixed <code>ANTHROPIC_BETAS</code> silently ignored with Haiku models</td></tr>
+<tr><td class="item-zh">修正佇列提示未換行分隔</td><td class="item-en">Fixed queued prompts concatenated without newline separator</td></tr>
+<tr><td class="item-zh">[VSCode] 修正已認證時短暫閃過登入畫面</td><td class="item-en">[VSCode] Fixed brief flash of login screen while authenticated</td></tr>
+<tr><td class="item-zh">[VSCode] 修正選 Opus 時 rate limit 錯誤</td><td class="item-en">[VSCode] Fixed rate limit error when selecting Opus for unknown plan tier</td></tr>
+</table>
+</div>
+
+<!-- ==================== v2.1.77 ==================== -->
+<div class="version-section" id="v2177">
+<div class="version-header">
+    <h3>v2.1.77</h3>
+    <span class="version-date">2026-03-17</span>
+</div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th></tr>
+
+<tr class="category-row cat-feature"><td colspan="2"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">Opus 4.6 預設最大輸出 token 提高至 64k，上限 128k</td><td class="item-en">Default max output tokens for Opus 4.6 raised to 64k, upper bound 128k</td></tr>
+<tr><td class="item-zh">新增 <code>allowRead</code> sandbox 設定（在 denyRead 區域內重新允許讀取）</td><td class="item-en"><code>allowRead</code> sandbox setting to re-allow reads within <code>denyRead</code> regions</td></tr>
+<tr><td class="item-zh"><code>/copy N</code> 可複製第 N 個最新回應</td><td class="item-en"><code>/copy N</code> copies the Nth-latest assistant response</td></tr>
+<tr><td class="item-zh">背景 bash 任務輸出超過 5GB 自動 kill</td><td class="item-en">Background bash tasks killed if output exceeds 5GB</td></tr>
+<tr><td class="item-zh">接受 plan 時自動命名 session</td><td class="item-en">Sessions auto-named from plan content on accept</td></tr>
+<tr><td class="item-zh"><code>/fork</code> 改名為 <code>/branch</code>（<code>/fork</code> 仍可用）</td><td class="item-en"><code>/fork</code> renamed to <code>/branch</code> (<code>/fork</code> still works)</td></tr>
+<tr><td class="item-zh"><code>SendMessage</code> 自動在背景恢復已停止的 agent</td><td class="item-en"><code>SendMessage</code> auto-resumes stopped agents in background</td></tr>
+<tr><td class="item-zh">Agent 工具不再接受 <code>resume</code> 參數，改用 <code>SendMessage</code></td><td class="item-en">Agent tool no longer accepts <code>resume</code> — use <code>SendMessage</code> instead</td></tr>
+
+<tr class="category-row cat-improve"><td colspan="2"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">macOS 啟動快 ~60ms（keychain 平行讀取）</td><td class="item-en">Faster startup on macOS (~60ms) by reading keychain in parallel</td></tr>
+<tr><td class="item-zh"><code>--resume</code> fork-heavy session 快 45%、記憶體少 ~100-150MB</td><td class="item-en"><code>--resume</code> up to 45% faster, ~100-150MB less peak memory on fork-heavy sessions</td></tr>
+<tr><td class="item-zh">Esc 可中止進行中的非串流 API 請求</td><td class="item-en">Improved Esc to abort in-flight non-streaming API requests</td></tr>
+<tr><td class="item-zh"><code>claude plugin validate</code> 檢查 frontmatter 與 hooks.json 格式</td><td class="item-en"><code>claude plugin validate</code> checks frontmatter and <code>hooks.json</code> schema</td></tr>
+<tr><td class="item-zh">headless 模式 plugin 安裝與 <code>PLUGIN_SEED_DIR</code> 正確組合</td><td class="item-en">Headless plugin installation composes with <code>PLUGIN_SEED_DIR</code></td></tr>
+<tr><td class="item-zh"><code>apiKeyHelper</code> 超過 10 秒顯示提示</td><td class="item-en">Notice when <code>apiKeyHelper</code> takes longer than 10s</td></tr>
+<tr><td class="item-zh">[VSCode] Plan 預覽標題改用 plan 的 heading</td><td class="item-en">[VSCode] Plan preview tab titles use plan's heading</td></tr>
+<tr><td class="item-zh">[VSCode] option+click 未觸發原生選取時提示設定</td><td class="item-en">[VSCode] Points to <code>macOptionClickForcesSelection</code> setting</td></tr>
+
+<tr class="category-row cat-bugfix"><td colspan="2"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 "Always Allow" 複合 bash 指令只存一條規則</td><td class="item-en">Fixed "Always Allow" saving single rule for compound bash instead of per-subcommand</td></tr>
+<tr><td class="item-zh">修正 auto-updater 重複下載耗用數十 GB 記憶體</td><td class="item-en">Fixed auto-updater starting overlapping downloads, accumulating GBs of memory</td></tr>
+<tr><td class="item-zh">修正 <code>--resume</code> 因寫入競態靜默截斷歷史</td><td class="item-en">Fixed <code>--resume</code> truncating history due to memory-extraction write race</td></tr>
+<tr><td class="item-zh">修正 PreToolUse hook <code>"allow"</code> 繞過 <code>deny</code> 權限規則</td><td class="item-en">Fixed PreToolUse hooks <code>"allow"</code> bypassing <code>deny</code> rules including managed settings</td></tr>
+<tr><td class="item-zh">修正 Write 工具在 CRLF 檔案靜默轉換換行符</td><td class="item-en">Fixed Write tool silently converting line endings in CRLF files</td></tr>
+<tr><td class="item-zh">修正長時間 session progress 訊息導致記憶體成長</td><td class="item-en">Fixed memory growth from progress messages surviving compaction</td></tr>
+<tr><td class="item-zh">修正非串流模式未追蹤費用和 token 用量</td><td class="item-en">Fixed cost/token usage not tracked when falling back to non-streaming</td></tr>
+<tr><td class="item-zh">修正 beta 工具 schema 未從 proxy gateway 請求移除</td><td class="item-en">Fixed beta tool-schema fields not stripped, causing proxy rejections</td></tr>
+<tr><td class="item-zh">修正暫存目錄含空格時 Bash 工具誤報錯誤</td><td class="item-en">Fixed Bash tool reporting errors when temp directory path has spaces</td></tr>
+<tr><td class="item-zh">修正貼上後立即打字導致貼上遺失</td><td class="item-en">Fixed paste being lost when typing immediately after pasting</td></tr>
+<tr><td class="item-zh">修正 <code>/feedback</code> 中 Ctrl+D 的行為</td><td class="item-en">Fixed Ctrl+D in <code>/feedback</code> deleting forward instead of exiting</td></tr>
+<tr><td class="item-zh">修正拖曳 0 byte 圖片時 API 錯誤</td><td class="item-en">Fixed API error when dragging 0-byte image file</td></tr>
+<tr><td class="item-zh">修正 Claude Desktop 誤用 CLI API key</td><td class="item-en">Fixed Claude Desktop incorrectly using terminal CLI's API key</td></tr>
+<tr><td class="item-zh">修正同 monorepo 不同子目錄 plugin 快取碰撞</td><td class="item-en">Fixed git-subdir plugins at different subdirectories colliding in cache</td></tr>
+<tr><td class="item-zh">修正有序清單數字未渲染</td><td class="item-en">Fixed ordered list numbers not rendering</td></tr>
+<tr><td class="item-zh">修正舊 worktree 清理競態可能刪除剛恢復的 agent worktree</td><td class="item-en">Fixed stale-worktree cleanup race deleting agent worktree just resumed</td></tr>
+<tr><td class="item-zh">修正開啟對話框時輸入死鎖</td><td class="item-en">Fixed input deadlock when opening dialogs while agent running</td></tr>
+<tr><td class="item-zh">修正 vim NORMAL 模式 Backspace/Delete 無效</td><td class="item-en">Fixed Backspace/Delete not working in vim NORMAL mode</td></tr>
+<tr><td class="item-zh">修正 vim 模式切換時 statusline 不更新</td><td class="item-en">Fixed status line not updating on vim mode toggle</td></tr>
+<tr><td class="item-zh">修正 VS Code/Cursor 中 Cmd+click 超連結開兩次</td><td class="item-en">Fixed hyperlinks opening twice on Cmd+click in xterm.js terminals</td></tr>
+<tr><td class="item-zh">修正 tmux 預設配置中背景色問題</td><td class="item-en">Fixed background colors rendering as terminal-default inside tmux</td></tr>
+<tr><td class="item-zh">修正 iTerm2 tmux SSH 選取文字 session 崩潰</td><td class="item-en">Fixed iTerm2 session crash when selecting text inside tmux over SSH</td></tr>
+<tr><td class="item-zh">修正 tmux 剪貼簿複製靜默失敗</td><td class="item-en">Fixed clipboard copy silently failing in tmux sessions</td></tr>
+<tr><td class="item-zh">修正設定/權限/sandbox 對話中方向鍵誤切 tab</td><td class="item-en">Fixed arrow keys accidentally switching tabs in dialogs while navigating lists</td></tr>
+<tr><td class="item-zh">修正 tmux/screen 內 IDE 整合自動連線</td><td class="item-en">Fixed IDE integration not auto-connecting inside tmux/screen</td></tr>
+<tr><td class="item-zh">修正 CJK 字元在右邊界溢出</td><td class="item-en">Fixed CJK characters visually bleeding at right edge</td></tr>
+<tr><td class="item-zh">修正 leader 退出時 teammate panes 未關閉</td><td class="item-en">Fixed teammate panes not closing when leader exits</td></tr>
+<tr><td class="item-zh">修正 iTerm2 auto mode 未偵測 iTerm2</td><td class="item-en">Fixed iTerm2 auto mode not detecting iTerm2 for native split-pane</td></tr>
+</table>
+</div>
+
+<!-- ==================== v2.1.76 ==================== -->
+<div class="version-section" id="v2176">
+<div class="version-header">
+    <h3>v2.1.76</h3>
+    <span class="version-date">2026-03-14</span>
+</div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th></tr>
+
+<tr class="category-row cat-feature"><td colspan="2"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">MCP elicitation 支援 — MCP server 可在任務中透過對話框請求結構化輸入</td><td class="item-en">MCP elicitation — servers request structured input mid-task via interactive dialog</td></tr>
+<tr><td class="item-zh">新增 <code>Elicitation</code> 和 <code>ElicitationResult</code> Hooks</td><td class="item-en"><code>Elicitation</code> and <code>ElicitationResult</code> hooks to intercept responses</td></tr>
+<tr><td class="item-zh">新增 <code>-n</code> / <code>--name</code> CLI 旗標設定 session 顯示名稱</td><td class="item-en"><code>-n</code> / <code>--name</code> CLI flag for session display name</td></tr>
+<tr><td class="item-zh">新增 <code>worktree.sparsePaths</code> 設定（大型 monorepo 只 checkout 需要的目錄）</td><td class="item-en"><code>worktree.sparsePaths</code> for sparse-checkout in large monorepos</td></tr>
+<tr><td class="item-zh">新增 <code>PostCompact</code> Hook（compaction 完成後觸發）</td><td class="item-en"><code>PostCompact</code> hook fires after compaction completes</td></tr>
+<tr><td class="item-zh">新增 <code>/effort</code> slash command 設定模型 effort level</td><td class="item-en"><code>/effort</code> slash command to set model effort level</td></tr>
+<tr><td class="item-zh">新增 session 品質問卷（企業可設定 <code>feedbackSurveyRate</code>）</td><td class="item-en">Session quality survey — configurable via <code>feedbackSurveyRate</code></td></tr>
+
+<tr class="category-row cat-improve"><td colspan="2"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh"><code>--worktree</code> 啟動效能改善（直接讀 git refs，跳過多餘 fetch）</td><td class="item-en">Improved <code>--worktree</code> startup by reading git refs directly</td></tr>
+<tr><td class="item-zh">kill 背景 agent 時保留部分結果到 context</td><td class="item-en">Killing background agent preserves partial results in context</td></tr>
+<tr><td class="item-zh">Model fallback 通知永遠可見（不再需要 verbose mode）</td><td class="item-en">Model fallback notifications always visible with human-friendly names</td></tr>
+<tr><td class="item-zh">深色主題 blockquote 改善（斜體 + 左邊條）</td><td class="item-en">Improved blockquote readability on dark themes — italic with left bar</td></tr>
+<tr><td class="item-zh">中斷平行 run 後自動清理舊 worktree</td><td class="item-en">Stale worktrees from interrupted parallel runs auto-cleaned</td></tr>
+<tr><td class="item-zh">Remote Control session 標題改用首則提示而非預設文字</td><td class="item-en">Remote Control titles derived from first prompt</td></tr>
+<tr><td class="item-zh"><code>/voice</code> 啟用時顯示聽寫語言並警告不支援語言</td><td class="item-en"><code>/voice</code> shows dictation language and warns if unsupported</td></tr>
+<tr><td class="item-zh"><code>--plugin-dir</code> 只接受一個路徑（多目錄用重複旗標）</td><td class="item-en"><code>--plugin-dir</code> accepts one path; use repeated flag for multiple</td></tr>
+
+<tr class="category-row cat-bugfix"><td colspan="2"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 deferred tools (ToolSearch) compaction 後失去 input schema</td><td class="item-en">Fixed deferred tools losing input schemas after compaction</td></tr>
+<tr><td class="item-zh">修正 slash commands 顯示 "Unknown skill"</td><td class="item-en">Fixed slash commands showing "Unknown skill"</td></tr>
+<tr><td class="item-zh">修正 plan 已接受後仍要求重新確認</td><td class="item-en">Fixed plan mode asking for re-approval after accepted</td></tr>
+<tr><td class="item-zh">修正權限對話或 plan editor 開啟時語音模式吞按鍵</td><td class="item-en">Fixed voice mode swallowing keypresses during permission dialog</td></tr>
+<tr><td class="item-zh">修正 Windows npm 安裝時 <code>/voice</code> 不生效</td><td class="item-en">Fixed <code>/voice</code> not working on Windows via npm</td></tr>
+<tr><td class="item-zh">修正 1M context session 調用含 <code>model:</code> frontmatter 的 skill 時假性 context limit</td><td class="item-en">Fixed spurious "Context limit reached" with skill <code>model:</code> frontmatter</td></tr>
+<tr><td class="item-zh">修正非標準 model string 的 adaptive thinking 錯誤</td><td class="item-en">Fixed "adaptive thinking not supported" error for non-standard models</td></tr>
+<tr><td class="item-zh">修正含 <code>#</code> 的 <code>Bash(cmd:*)</code> 權限規則不匹配</td><td class="item-en">Fixed <code>Bash(cmd:*)</code> rules not matching quoted args with <code>#</code></td></tr>
+<tr><td class="item-zh">修正 Bash 權限「不再詢問」顯示原始完整指令</td><td class="item-en">Fixed "don't ask again" showing full raw command for pipes</td></tr>
+<tr><td class="item-zh">修正 auto-compaction 連續失敗後無限重試（3 次斷路器）</td><td class="item-en">Fixed auto-compaction retrying indefinitely — circuit breaker after 3 attempts</td></tr>
+<tr><td class="item-zh">修正 MCP 重連 spinner 重連成功後不消失</td><td class="item-en">Fixed MCP reconnect spinner persisting after success</td></tr>
+<tr><td class="item-zh">修正 LSP plugins 在 marketplace 調和前未註冊 server</td><td class="item-en">Fixed LSP plugins not registering before marketplace reconciliation</td></tr>
+<tr><td class="item-zh">修正 tmux SSH 剪貼簿複製</td><td class="item-en">Fixed clipboard copying in tmux over SSH</td></tr>
+<tr><td class="item-zh">修正 <code>/export</code> 成功訊息只顯示檔名而非完整路徑</td><td class="item-en">Fixed <code>/export</code> showing filename instead of full path</td></tr>
+<tr><td class="item-zh">修正選取文字後 transcript 不自動捲動</td><td class="item-en">Fixed transcript not auto-scrolling after selecting text</td></tr>
+<tr><td class="item-zh">修正 Escape 無法離開登入選擇畫面</td><td class="item-en">Fixed Escape not exiting login method selection</td></tr>
+<tr><td class="item-zh">修正 Remote Control 多項問題（session 靜默死亡、訊息排隊、JWT 重傳）</td><td class="item-en">Fixed Remote Control issues: session dying, message queuing, JWT redelivery</td></tr>
+<tr><td class="item-zh">修正橋接 session 長時間 WebSocket 斷線後無法恢復</td><td class="item-en">Fixed bridge sessions failing to recover after extended WebSocket disconnect</td></tr>
+<tr><td class="item-zh">修正精確輸入隱藏 slash command 名稱時找不到</td><td class="item-en">Fixed slash commands not found when typing exact name of soft-hidden command</td></tr>
+<tr><td class="item-zh">[VSCode] 修正含逗號的 gitignore 模式排除整個檔案類型</td><td class="item-en">[VSCode] Fixed gitignore patterns with commas excluding filetypes from @-mention</td></tr>
+</table>
+</div>
+
+<!-- ==================== v2.1.75 ==================== -->
+<div class="version-section" id="v2175">
+<div class="version-header">
+    <h3>v2.1.75</h3>
+    <span class="version-date">2026-03-13</span>
+</div>
+<div class="unavailable-note">
+    此版本的 Release Notes 在 GitHub 頁面無法載入（頁面錯誤）。<br>
+    Release notes for this version could not be loaded from GitHub (page rendering error).<br>
+    <a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.75">View on GitHub →</a>
+</div>
+</div>
+
+<!-- ==================== v2.1.74 ==================== -->
+<div class="version-section" id="v2174">
+<div class="version-header">
+    <h3>v2.1.74</h3>
+    <span class="version-date">2026-03-12</span>
+</div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th></tr>
+
+<tr class="category-row cat-feature"><td colspan="2"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh"><code>/context</code> 指令新增可操作建議（識別 context 重的工具、memory 膨脹、容量警告）</td><td class="item-en"><code>/context</code> command with actionable suggestions for optimization</td></tr>
+<tr><td class="item-zh">新增 <code>autoMemoryDirectory</code> 設定自訂 auto-memory 儲存目錄</td><td class="item-en"><code>autoMemoryDirectory</code> setting for custom auto-memory storage directory</td></tr>
+
+<tr class="category-row cat-improve"><td colspan="2"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh"><code>--plugin-dir</code> 本地開發版覆蓋同名 marketplace plugin</td><td class="item-en"><code>--plugin-dir</code> local dev copies override installed marketplace plugins</td></tr>
+<tr><td class="item-zh">[VSCode] 整合終端機滾輪回應更靈敏</td><td class="item-en">[VSCode] Improved scroll wheel responsiveness with terminal-aware acceleration</td></tr>
+
+<tr class="category-row cat-bugfix"><td colspan="2"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正串流 API 回應 buffer 未釋放導致 RSS 無限成長</td><td class="item-en">Fixed memory leak — streaming API response buffers not released on early termination</td></tr>
+<tr><td class="item-zh">修正 managed policy <code>ask</code> 規則被 user <code>allow</code> 規則繞過</td><td class="item-en">Fixed managed policy <code>ask</code> rules bypassed by user <code>allow</code> rules</td></tr>
+<tr><td class="item-zh">修正 agent frontmatter <code>model:</code> 不接受完整 model ID</td><td class="item-en">Fixed full model IDs ignored in agent frontmatter <code>model:</code> field</td></tr>
+<tr><td class="item-zh">修正 MCP OAuth callback port 已使用時認證掛起</td><td class="item-en">Fixed MCP OAuth authentication hanging when callback port in use</td></tr>
+<tr><td class="item-zh">修正 MCP OAuth refresh token 過期後不提示重新認證</td><td class="item-en">Fixed MCP OAuth refresh never prompting re-auth after token expiry</td></tr>
+<tr><td class="item-zh">修正 macOS native binary 語音模式未觸發麥克風權限提示</td><td class="item-en">Fixed voice mode on macOS native binary not prompting for microphone permission</td></tr>
+<tr><td class="item-zh">修正 <code>SessionEnd</code> hooks 1.5 秒後被 kill（現可透過環境變數設定）</td><td class="item-en">Fixed <code>SessionEnd</code> hooks killed after 1.5s — now configurable via env var</td></tr>
+<tr><td class="item-zh">修正 REPL 內 marketplace plugin 安裝失敗</td><td class="item-en">Fixed <code>/plugin install</code> failing inside REPL for marketplace plugins</td></tr>
+<tr><td class="item-zh">修正 marketplace 更新未同步 git submodules</td><td class="item-en">Fixed marketplace update not syncing git submodules</td></tr>
+<tr><td class="item-zh">修正未知 slash command 帶參數時靜默丟棄輸入</td><td class="item-en">Fixed unknown slash commands with arguments silently dropping input</td></tr>
+<tr><td class="item-zh">修正希伯來文、阿拉伯文等 RTL 文字在 Windows Terminal 渲染問題</td><td class="item-en">Fixed Hebrew, Arabic, RTL text rendering in Windows Terminal</td></tr>
+<tr><td class="item-zh">修正 Windows 上 LSP server 因 file URI 格式錯誤不運作</td><td class="item-en">Fixed LSP servers not working on Windows due to malformed file URIs</td></tr>
+<tr><td class="item-zh">[VSCode] 修正 Untitled session 刪除按鈕無效</td><td class="item-en">[VSCode] Fixed delete button not working for Untitled sessions</td></tr>
+</table>
+</div>
+
+<footer>
+    <p>Claude Code Version Changelog v2.1.74–v2.1.84</p>
+    <p>Generated: 2026-03-27 | Source: GitHub anthropics/claude-code releases</p>
+    <p>Compiled by David (Kuo Li-hung) with Claude Code</p>
+</footer>
+
+</body>
+</html>
