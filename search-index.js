@@ -15241,7 +15241,7 @@ const searchIndex = [
     ],
     "sectionId": "v2184",
     "sectionTitle": "v2.1.84",
-    "content": "2026-03-26 繁體中文 English Features 新功能 Windows 新增 PowerShell 工具（預覽版） PowerShell Tool for Windows — opt-in preview 新增環境變數自訂模型配置：覆蓋 effort/thinking 偵測、自訂 model picker 標籤、串流閒置逾時閾值 Environment variables for model config: ANTHROPIC_DEFAULT_{OPUS,SONNET,HAIKU}_MODEL_SUPPORTS , _MODEL_NAME/_DESCRIPTION , CLAUDE_STREAM_IDLE_TIMEOUT_MS 新增 TaskCreated Hook — Task 建立時觸發 TaskCreated Hook fires when a task is created via TaskCreate WorktreeCreate Hook 支援 HTTP type；可回傳 worktree 路徑 WorktreeCreate Hook — type: \"h"
+    "content": "2026-03-26 繁體中文 English 應用場景 Scenario Features 新功能 Windows 新增 PowerShell 工具（預覽版） PowerShell Tool for Windows — opt-in preview 你用 macOS — 不影響，但未來跨平台協作可留意 新增環境變數自訂模型配置：覆蓋 effort/thinking 偵測、自訂 model picker 標籤、串流閒置逾時閾值 Environment variables for model config: ANTHROPIC_DEFAULT_{OPUS,SONNET,HAIKU}_MODEL_SUPPORTS , _MODEL_NAME/_DESCRIPTION , CLAUDE_STREAM_IDLE_TIMEOUT_MS 可在 .zshrc 設定串流 timeout — 長時間 skill 執行不被誤判斷線 新增 TaskCreated Hook — Task 建立時觸發 TaskCreated Hook fires when a task is created via TaskC"
   },
   {
     "docFile": "2026-03-27_claude-code-version-changelog.html",
@@ -15257,7 +15257,7 @@ const searchIndex = [
     ],
     "sectionId": "v2183",
     "sectionTitle": "v2.1.83",
-    "content": "2026-03-25 繁體中文 English Features 新功能 新增 managed-settings.d/ drop-in 目錄，讓不同團隊部署獨立政策片段 managed-settings.d/ drop-in directory for independent policy fragments 新增 CwdChanged 和 FileChanged Hook 事件（如 direnv 場景） CwdChanged and FileChanged hook events for reactive environment management 新增 sandbox.failIfUnavailable ：sandbox 無法啟動時直接報錯退出 sandbox.failIfUnavailable setting — exit with error instead of running unsandboxed 新增 disableDeepLinkRegistration 設定 disableDeepLinkRegistration setting to prevent protoc"
+    "content": "2026-03-25 繁體中文 English 應用場景 Scenario Features 新功能 新增 managed-settings.d/ drop-in 目錄，讓不同團隊部署獨立政策片段 managed-settings.d/ drop-in directory for independent policy fragments 企業管理功能 — 個人使用暫不影響 新增 CwdChanged 和 FileChanged Hook 事件（如 direnv 場景） CwdChanged and FileChanged hook events for reactive environment management 切換 coo-track 與 david-ai-learning 時可自動觸發 hook 載入對應設定 新增 sandbox.failIfUnavailable ：sandbox 無法啟動時直接報錯退出 sandbox.failIfUnavailable setting — exit with error instead of running unsandboxed 安全性"
   },
   {
     "docFile": "2026-03-27_claude-code-version-changelog.html",
@@ -15273,7 +15273,7 @@ const searchIndex = [
     ],
     "sectionId": "v2181",
     "sectionTitle": "v2.1.81",
-    "content": "2026-03-20 繁體中文 English Features 新功能 新增 --bare 旗標：腳本化 -p 呼叫跳過 hooks/LSP/plugin --bare flag for scripted -p calls — skips hooks, LSP, plugin sync 新增 --channels 權限轉發至手機審批工具 --channels permission relay — channel servers forward approval prompts to phone Improvements 改進 MCP read/search 工具呼叫折疊為一行（ Ctrl+O 展開） MCP read/search calls collapse into single \"Queried {server}\" line ! bash 模式可發現性提升 Improved ! bash mode discoverability ref-tracked plugins 每次載入重新 clone Ref-tracked plugins re-clone on every load"
+    "content": "2026-03-20 繁體中文 English 應用場景 Scenario Features 新功能 新增 --bare 旗標：腳本化 -p 呼叫跳過 hooks/LSP/plugin --bare flag for scripted -p calls — skips hooks, LSP, plugin sync 腳本化批次處理（如 npm run build）更快 — 跳過不必要的載入 新增 --channels 權限轉發至手機審批工具 --channels permission relay — channel servers forward approval prompts to phone Telegram channel 可轉發權限請求到手機審批 Improvements 改進 MCP read/search 工具呼叫折疊為一行（ Ctrl+O 展開） MCP read/search calls collapse into single \"Queried {server}\" line Gmail/Telegram MCP 呼叫摺疊顯示 — 畫面更乾淨 ! bash 模式可發現"
   },
   {
     "docFile": "2026-03-27_claude-code-version-changelog.html",
@@ -15289,7 +15289,7 @@ const searchIndex = [
     ],
     "sectionId": "v2180",
     "sectionTitle": "v2.1.80",
-    "content": "2026-03-19 繁體中文 English Features 新功能 Statusline 腳本新增 rate_limits 欄位（5 小時/7 天用量百分比與重置時間） rate_limits field for statusline scripts (5h/7d windows with usage % and reset time) 新增 source: 'settings' plugin marketplace 來源 source: 'settings' plugin marketplace source — inline in settings.json Plugin tips 新增 CLI 工具使用偵測 CLI tool usage detection added to plugin tips Skills/slash commands 新增 effort frontmatter 覆蓋模型 effort level effort frontmatter for skills/commands to override model effort level 新增 --cha"
+    "content": "2026-03-19 繁體中文 English 應用場景 Scenario Features 新功能 Statusline 腳本新增 rate_limits 欄位（5 小時/7 天用量百分比與重置時間） rate_limits field for statusline scripts (5h/7d windows with usage % and reset time) 自訂 statusline 可顯示用量百分比 — 控制 API 費用 新增 source: 'settings' plugin marketplace 來源 source: 'settings' plugin marketplace source — inline in settings.json plugin 可直接在 settings.json 定義 — 不需額外安裝 Plugin tips 新增 CLI 工具使用偵測 CLI tool usage detection added to plugin tips 系統會建議你安裝相關 plugin — 提高效率 Skills/slash commands 新增 eff"
   },
   {
     "docFile": "2026-03-27_claude-code-version-changelog.html",
@@ -15305,7 +15305,7 @@ const searchIndex = [
     ],
     "sectionId": "v2179",
     "sectionTitle": "v2.1.79",
-    "content": "2026-03-18 繁體中文 English Features 新功能 claude auth login 新增 --console 旗標（Anthropic Console API 計費認證） --console flag for claude auth login (API billing auth) /config 新增「顯示回合時間」開關 \"Show turn duration\" toggle in /config menu [VSCode] 新增 /remote-control — 可從瀏覽器/手機繼續 session [VSCode] /remote-control — bridge session to claude.ai/code [VSCode] Session tab 自動產生 AI 標題 [VSCode] Session tabs get AI-generated titles from first message Improvements 改進 啟動記憶體減少 ~18MB Improved startup memory usage by ~18MB 非串流 A"
+    "content": "2026-03-18 繁體中文 English 應用場景 Scenario Features 新功能 claude auth login 新增 --console 旗標（Anthropic Console API 計費認證） --console flag for claude auth login (API billing auth) 切換 API 計費方案時用 — 直接在終端機認證 /config 新增「顯示回合時間」開關 \"Show turn duration\" toggle in /config menu 可看每回合花多少時間 — 優化 prompt 效率 [VSCode] 新增 /remote-control — 可從瀏覽器/手機繼續 session [VSCode] /remote-control — bridge session to claude.ai/code VSCode 專屬 — 不影響終端機版 [VSCode] Session tab 自動產生 AI 標題 [VSCode] Session tabs get AI-generated titles from fir"
   },
   {
     "docFile": "2026-03-27_claude-code-version-changelog.html",
@@ -15321,7 +15321,7 @@ const searchIndex = [
     ],
     "sectionId": "v2178",
     "sectionTitle": "v2.1.78",
-    "content": "2026-03-17 繁體中文 English Features 新功能 新增 StopFailure Hook：API 錯誤導致回合結束時觸發 StopFailure hook event fires on API errors (rate limit, auth failure) 新增 ${CLAUDE_PLUGIN_DATA} 持久狀態目錄 ${CLAUDE_PLUGIN_DATA} for plugin persistent state surviving updates Plugin agent frontmatter 支援 effort 、 maxTurns 、 disallowedTools effort , maxTurns , disallowedTools frontmatter for plugin agents 終端機通知可穿透 tmux（需 allow-passthrough on ） Terminal notifications passthrough tmux with allow-passthrough on 回應文字逐行串流 Response text"
+    "content": "2026-03-17 繁體中文 English 應用場景 Scenario Features 新功能 新增 StopFailure Hook：API 錯誤導致回合結束時觸發 StopFailure hook event fires on API errors (rate limit, auth failure) 可用 hook 在 API 失敗時自動通知 Telegram 新增 ${CLAUDE_PLUGIN_DATA} 持久狀態目錄 ${CLAUDE_PLUGIN_DATA} for plugin persistent state surviving updates plugin 資料在更新後保留 — 不需重新設定 Plugin agent frontmatter 支援 effort 、 maxTurns 、 disallowedTools effort , maxTurns , disallowedTools frontmatter for plugin agents 精細控制 agent 行為 — 限制回合數和可用工具 終端機通知可穿透 tmux（需 allow-passthro"
   },
   {
     "docFile": "2026-03-27_claude-code-version-changelog.html",
@@ -15337,7 +15337,7 @@ const searchIndex = [
     ],
     "sectionId": "v2177",
     "sectionTitle": "v2.1.77",
-    "content": "2026-03-17 繁體中文 English Features 新功能 Opus 4.6 預設最大輸出 token 提高至 64k，上限 128k Default max output tokens for Opus 4.6 raised to 64k, upper bound 128k 新增 allowRead sandbox 設定（在 denyRead 區域內重新允許讀取） allowRead sandbox setting to re-allow reads within denyRead regions /copy N 可複製第 N 個最新回應 /copy N copies the Nth-latest assistant response 背景 bash 任務輸出超過 5GB 自動 kill Background bash tasks killed if output exceeds 5GB 接受 plan 時自動命名 session Sessions auto-named from plan content on accept /fork 改名為 /branch （ /f"
+    "content": "2026-03-17 繁體中文 English 應用場景 Scenario Features 新功能 Opus 4.6 預設最大輸出 token 提高至 64k，上限 128k Default max output tokens for Opus 4.6 raised to 64k, upper bound 128k 你用 Opus 4.6 — 單次回應可更長，適合大型文件生成 新增 allowRead sandbox 設定（在 denyRead 區域內重新允許讀取） allowRead sandbox setting to re-allow reads within denyRead regions sandbox 權限更精細 — 可在禁區中開放特定檔案讀取 /copy N 可複製第 N 個最新回應 /copy N copies the Nth-latest assistant response 快速複製前幾則回應 — 貼到 Substack 或 LinkedIn 文章 背景 bash 任務輸出超過 5GB 自動 kill Background bash tasks killed i"
   },
   {
     "docFile": "2026-03-27_claude-code-version-changelog.html",
@@ -15353,7 +15353,7 @@ const searchIndex = [
     ],
     "sectionId": "v2176",
     "sectionTitle": "v2.1.76",
-    "content": "2026-03-14 繁體中文 English Features 新功能 MCP elicitation 支援 — MCP server 可在任務中透過對話框請求結構化輸入 MCP elicitation — servers request structured input mid-task via interactive dialog 新增 Elicitation 和 ElicitationResult Hooks Elicitation and ElicitationResult hooks to intercept responses 新增 -n / --name CLI 旗標設定 session 顯示名稱 -n / --name CLI flag for session display name 新增 worktree.sparsePaths 設定（大型 monorepo 只 checkout 需要的目錄） worktree.sparsePaths for sparse-checkout in large monorepos 新增 PostCompact Hook（compac"
+    "content": "2026-03-14 繁體中文 English 應用場景 Scenario Features 新功能 MCP elicitation 支援 — MCP server 可在任務中透過對話框請求結構化輸入 MCP elicitation — servers request structured input mid-task via interactive dialog Gmail/Telegram MCP 可在任務中跳出互動對話框要求確認 新增 Elicitation 和 ElicitationResult Hooks Elicitation and ElicitationResult hooks to intercept responses 可用 hook 攔截 MCP 對話框回應 — 自動化審批流程 新增 -n / --name CLI 旗標設定 session 顯示名稱 -n / --name CLI flag for session display name claude --name \"weekly-review\" 命名 session — 之後好找 新增 worktree.sp"
   },
   {
     "docFile": "2026-03-27_claude-code-version-changelog.html",
@@ -15385,6 +15385,6 @@ const searchIndex = [
     ],
     "sectionId": "v2174",
     "sectionTitle": "v2.1.74",
-    "content": "2026-03-12 繁體中文 English Features 新功能 /context 指令新增可操作建議（識別 context 重的工具、memory 膨脹、容量警告） /context command with actionable suggestions for optimization 新增 autoMemoryDirectory 設定自訂 auto-memory 儲存目錄 autoMemoryDirectory setting for custom auto-memory storage directory Improvements 改進 --plugin-dir 本地開發版覆蓋同名 marketplace plugin --plugin-dir local dev copies override installed marketplace plugins [VSCode] 整合終端機滾輪回應更靈敏 [VSCode] Improved scroll wheel responsiveness with terminal-aware acceleration Bug Fixe"
+    "content": "2026-03-12 繁體中文 English 應用場景 Scenario Features 新功能 /context 指令新增可操作建議（識別 context 重的工具、memory 膨脹、容量警告） /context command with actionable suggestions for optimization 隨時用 /context 檢查 context 用量 — 識別哪些工具吃最多 新增 autoMemoryDirectory 設定自訂 auto-memory 儲存目錄 autoMemoryDirectory setting for custom auto-memory storage directory 可指定 MEMORY.md 存放位置 — 跨專案共享記憶 Improvements 改進 --plugin-dir 本地開發版覆蓋同名 marketplace plugin --plugin-dir local dev copies override installed marketplace plugins 本地開發 plugin 優先 — 方便測試 [VSCo"
   }
 ];
