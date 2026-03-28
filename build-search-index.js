@@ -29,8 +29,10 @@ console.log(`Processing ${htmlFiles.length} files...`);
  * Extract meta tag content by name attribute
  */
 function getMeta(html, name) {
-  const re = new RegExp(`<meta\\s+name="${name}"\\s+content="([^"]*)"`, 'i');
-  const match = html.match(re);
+  // Support both name="..." content="..." and content="..." name="..." attribute orders
+  const re1 = new RegExp(`<meta\\s+name="${name}"\\s+content="([^"]*)"`, 'i');
+  const re2 = new RegExp(`<meta\\s+content="([^"]*)"\\s+name="${name}"`, 'i');
+  const match = html.match(re1) || html.match(re2);
   return match ? match[1] : null;
 }
 
