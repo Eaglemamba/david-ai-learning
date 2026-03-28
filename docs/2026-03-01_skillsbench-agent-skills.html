@@ -1,600 +1,421 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SkillsBench - Agent Skills 基準測試研究</title>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkillsBench - Agent Skills 基準測試研究</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 <!-- Dashboard Index Meta -->
-<meta name="doc-date" content="2026-03-01">
-<meta name="doc-title" content="SkillsBench - Agent Skills 基準測試深度解析">
-<meta name="doc-source" content="Xiangyi Li et al. / arXiv:2602.12670">
-<meta name="doc-source-type" content="">
-<meta name="doc-tags" content="Agent,Research,Framework,Tool">
-<meta name="doc-rating" content="4.5">
-<meta name="doc-summary" content="首個 Agent Skills 基準測試。Curated Skills +16.2pp，Self-generated 無效，2-3 Skills 最佳。">
-<meta name="doc-file" content="2026-03-01_skillsbench-agent-skills.html">
+<meta content="2026-03-01" name="doc-date"/>
+<meta content="SkillsBench - Agent Skills 基準測試深度解析" name="doc-title"/>
+<meta content="Xiangyi Li et al. / arXiv:2602.12670" name="doc-source"/>
+<meta content="" name="doc-source-type"/>
+<meta content="Agent,Research,Framework,Tool" name="doc-tags"/>
+<meta content="4.5" name="doc-rating"/>
+<meta content="首個 Agent Skills 基準測試。Curated Skills +16.2pp，Self-generated 無效，2-3 Skills 最佳。" name="doc-summary"/>
+<meta content="2026-03-01_skillsbench-agent-skills.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-/* === v1.4.3 MANDATORY PAGE LAYOUT === */
-body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
-.header {
-    text-align: center;
-    padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-    color: white;
-}
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-}
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    margin-bottom: 2rem;
-}
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .content-grid { grid-template-columns: 1fr; }
-}
 
-/* Tags */
-.tag-container { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
-.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; }
-.tag-agent { background: #c7d2fe; color: #3730a3; }
-.tag-research { background: #fde68a; color: #92400e; }
-.tag-framework { background: #a7f3d0; color: #065f46; }
-.tag-tool { background: #fecdd3; color: #9f1239; }
-
-.header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
-.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
-.header .source { font-size: 0.85rem; opacity: 0.8; }
-.header .source a { color: #93c5fd; text-decoration: none; }
-.header .source a:hover { text-decoration: underline; }
-
-/* Executive Summary */
-.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
-.exec-summary h2 { color: #1e3a5f; margin-top: 0; font-size: 1.2rem; }
-.exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
-
-/* Rating Bar */
-.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-.rating-stars { color: #f59e0b; letter-spacing: 1px; }
-.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-/* Learning Objectives */
-.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
-.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.objective-item .obj-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.objective-item .obj-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.25rem; }
-.objective-item .obj-desc { font-size: 0.85rem; color: #64748b; }
-
-/* Framework Visual */
-.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
-.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.framework-step { text-align: center; min-width: 120px; }
-.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-.framework-step-title { font-weight: 700; font-size: 0.95rem; }
-.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-/* Section Headers */
-.section-header { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
-
-/* Content Grid Internals */
-.content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; background: white; }
-.content-right { padding: 1.5rem; background: #f8fafc; }
-@media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
-
-.bilingual-block { margin-bottom: 1.25rem; }
-.bilingual-block .zh { font-size: 0.95rem; line-height: 1.8; color: #1e293b; }
-.bilingual-block .en { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; margin-top: 0.25rem; }
-
-.highlight-concept { background: #a5d6a7; padding: 0 0.25rem; border-radius: 3px; }
-.highlight-key { background: #ffcc80; padding: 0 0.25rem; border-radius: 3px; }
-.highlight-practical { background: #6ee7b7; padding: 0 0.25rem; border-radius: 3px; }
-
-/* Info Boxes */
-.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
-.info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
-.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
-.info-box-content ul { margin: 0.5rem 0; padding-left: 1.5rem; }
-.info-box-content li { margin-bottom: 0.3rem; }
-.info-box-content code { font-family: 'Source Code Pro', monospace; background: rgba(0,0,0,0.06); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
-
-.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
-.box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-
-/* Data Tables */
-.data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
-.data-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; }
-.data-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
-.data-table tr:nth-child(even) { background: #f8fafc; }
-.data-table tr:hover { background: #e0f2fe; }
-.data-table .highlight-row { background: #d1fae5 !important; font-weight: 600; }
-.data-table .negative { color: #dc2626; }
-.data-table .positive { color: #059669; }
-
-/* Key Takeaways */
-.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
-@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
-.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.summary-card .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.summary-card .card-title { font-weight: 700; color: #1e3a5f; margin-bottom: 0.5rem; font-size: 0.95rem; }
-.summary-card .card-text { font-size: 0.85rem; color: #475569; line-height: 1.6; }
-
-/* Practice Accordion */
-.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-.question-header::-webkit-details-marker { display: none; }
-.question-number { font-weight: 700; color: #6d28d9; }
-.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-details[open] .accordion-icon { transform: rotate(180deg); }
-.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-.question-answer p:last-child { margin-bottom: 0; }
-
-/* Bottom Line */
-.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin: 2rem 0; }
-.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-.bottom-line-item { margin-bottom: 1rem; }
-.bottom-line-item:last-child { margin-bottom: 0; }
-.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-/* Footer */
-.footer { text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-.footer a { color: #3b82f6; text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
-</style>
 </head>
 <body>
-
 <!-- HEADER -->
-<div class="header">
-    <div class="tag-container">
-        <span class="tag tag-agent">Agent</span>
-        <span class="tag tag-research">Research</span>
-        <span class="tag tag-framework">Framework</span>
-        <span class="tag tag-tool">Tool</span>
-    </div>
-    <h1>SkillsBench: Agent Skills 到底有多有效？</h1>
-    <div class="subtitle">首個系統性基準測試 - 86 任務、11 領域、7,308 軌跡的實證研究</div>
-    <div class="source">
+<header class="header">
+<div class="tag-container">
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-research">Research</span>
+<span class="tag tag-framework">Framework</span>
+<span class="tag tag-tool">Tool</span>
+</div>
+<h1>SkillsBench: Agent Skills 到底有多有效？</h1>
+<div class="subtitle">首個系統性基準測試 - 86 任務、11 領域、7,308 軌跡的實證研究</div>
+<div class="source">
         Source: Xiangyi Li et al. (BenchFlow / Amazon / 多校聯合) |
         <a href="https://arxiv.org/abs/2602.12670" target="_blank">arXiv:2602.12670</a> |
         Feb 2026 Preprint
     </div>
-</div>
-
+</header>
 <!-- CONTAINER -->
 <div class="container">
-
 <!-- EXECUTIVE SUMMARY -->
 <div class="exec-summary">
-    <div class="rating-bar">
-        <span class="rating-score"><span class="rating-stars">★★★★★</span> 4.5/5</span>
-        <span class="rating-high">↑ Technical Depth, Practical Value</span>
-        <span class="rating-low">↓ Timeliness (Preprint)</span>
-    </div>
-    <h2>Executive Summary</h2>
-    <p>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★★</span> 4.5/5</span>
+<span class="rating-high">↑ Technical Depth, Practical Value</span>
+<span class="rating-low">↓ Timeliness (Preprint)</span>
+</div>
+<h2>Executive Summary</h2>
+<p>
         這是<span class="highlight-key">第一個將 Agent Skills 作為第一級評估物件的基準測試</span>。研究團隊在 11 個領域的 84 個任務上，測試了 7 種模型-代理組合，產生 7,308 條執行軌跡。核心發現：人工策劃的 Skills（Curated Skills）平均提升通過率 <span class="highlight-concept">+16.2 個百分點</span>，但效果因領域差異巨大（Healthcare +51.9pp vs Software Engineering +4.5pp）。最震撼的發現：<span class="highlight-key">模型自行生成的 Skills 幾乎無效</span> -- AI 無法可靠地撰寫它自己受益的程序性知識。此外，<span class="highlight-practical">2-3 個聚焦 Skills 優於大量綜合文件</span>，小模型搭配好的 Skills 可以擊敗無 Skills 的大模型。
     </p>
 </div>
-
 <!-- LEARNING OBJECTIVES -->
 <h2 class="section-header">Learning Objectives</h2>
 <div class="objectives-grid">
-    <div class="objective-item">
-        <div class="obj-icon">&#x1F9EA;</div>
-        <div class="obj-title">Skills 效果衡量</div>
-        <div class="obj-desc">理解 Curated vs Self-generated Skills 的量化差異，以及為何三條件對照實驗設計是關鍵</div>
-    </div>
-    <div class="objective-item">
-        <div class="obj-icon">&#x1F3AF;</div>
-        <div class="obj-title">Skills 設計原則</div>
-        <div class="obj-desc">掌握「2-3 個聚焦 Skills」優於「大量文件」的實證依據，以及最佳 Skills 結構</div>
-    </div>
-    <div class="objective-item">
-        <div class="obj-icon">&#x1F4B0;</div>
-        <div class="obj-title">成本-性能取捨</div>
-        <div class="obj-desc">學會用小模型+Skills 替代大模型，理解 Skills 如何改變模型規模經濟學</div>
-    </div>
+<div class="objective-item">
+<div class="obj-icon">🧪</div>
+<div class="obj-title">Skills 效果衡量</div>
+<div class="obj-desc">理解 Curated vs Self-generated Skills 的量化差異，以及為何三條件對照實驗設計是關鍵</div>
 </div>
-
+<div class="objective-item">
+<div class="obj-icon">🎯</div>
+<div class="obj-title">Skills 設計原則</div>
+<div class="obj-desc">掌握「2-3 個聚焦 Skills」優於「大量文件」的實證依據，以及最佳 Skills 結構</div>
+</div>
+<div class="objective-item">
+<div class="obj-icon">💰</div>
+<div class="obj-title">成本-性能取捨</div>
+<div class="obj-desc">學會用小模型+Skills 替代大模型，理解 Skills 如何改變模型規模經濟學</div>
+</div>
+</div>
 <!-- FRAMEWORK VISUAL -->
 <div class="framework-visual">
-    <div class="framework-title">SkillsBench 三條件評估框架</div>
-    <div class="framework-steps">
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F6AB;</div>
-            <div class="framework-step-title">Vanilla</div>
-            <div class="framework-step-desc">無 Skills 基線</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F4DD;</div>
-            <div class="framework-step-title">Curated Skills</div>
-            <div class="framework-step-desc">人工策劃 +16.2pp</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F916;</div>
-            <div class="framework-step-title">Self-Generated</div>
-            <div class="framework-step-desc">模型自生 ~0pp</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x2705;</div>
-            <div class="framework-step-title">Deterministic Verify</div>
-            <div class="framework-step-desc">程式化 Pass/Fail</div>
-        </div>
-    </div>
+<div class="framework-title">SkillsBench 三條件評估框架</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">🚫</div>
+<div class="framework-step-title">Vanilla</div>
+<div class="framework-step-desc">無 Skills 基線</div>
 </div>
-
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📝</div>
+<div class="framework-step-title">Curated Skills</div>
+<div class="framework-step-desc">人工策劃 +16.2pp</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🤖</div>
+<div class="framework-step-title">Self-Generated</div>
+<div class="framework-step-desc">模型自生 ~0pp</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">✅</div>
+<div class="framework-step-title">Deterministic Verify</div>
+<div class="framework-step-desc">程式化 Pass/Fail</div>
+</div>
+</div>
+</div>
 <!-- ==================== CONTENT SECTIONS ==================== -->
-
 <!-- PART I: What Are Agent Skills -->
 <h2 class="section-header">Part I: Agent Skills 是什麼？</h2>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="bilingual-block">
-            <div class="zh">
-                <span class="highlight-concept">Agent Skills 是結構化的程序性知識包</span>，在推論時增強 LLM Agent 的能力。它不需要微調模型 -- 而是在執行階段提供「標準作業程序（SOP）、領域慣例、任務特定啟發式方法」等指引。
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">
+<span class="highlight-concept">Agent Skills 是結構化的程序性知識包</span>，在推論時增強 LLM Agent 的能力。它不需要微調模型 -- 而是在執行階段提供「標準作業程序（SOP）、領域慣例、任務特定啟發式方法」等指引。
             </div>
-            <div class="en">"Agent Skills are structured packages of procedural knowledge that augment LLM agents at inference time."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
+<div class="en-text">"Agent Skills are structured packages of procedural knowledge that augment LLM agents at inference time."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                 一個 Skill 包含：<span class="highlight-practical">SKILL.md</span>（自然語言指令）加上可選的資源（腳本、模板、範例）。這個定義明確排除了 system prompts、few-shot examples、RAG 檢索和工具文件 -- 因為它們缺乏結構性和程序性。
             </div>
-            <div class="en">"A Skill is a structured package comprising instructions, code templates, resources, and verification logic."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
+<div class="en-text">"A Skill is a structured package comprising instructions, code templates, resources, and verification logic."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                 論文用了一個精妙的類比：基礎模型是 <span class="highlight-key">CPU</span>，Agent Harness（如 Claude Code、Gemini CLI）是<span class="highlight-key">作業系統</span>，Skills 則是<span class="highlight-key">應用程式</span>。這個三層架構解釋了為何 Skills 可以跨模型、跨平台移植。
             </div>
-            <div class="en">"Foundation models provide base capabilities (analogous to CPUs), agent harnesses orchestrate context and tools (operating systems), and Skills extend competence to specialized domains (applications)."</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-analogy">
-            <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-            <div class="info-box-content">
-                <p>想像你雇了一個非常聰明的新員工（LLM）。他什麼都能聊、邏輯很好，但不知道你們公司的 SOP。</p>
-                <p><strong>Vanilla（無 Skills）</strong> = 把任務丟給他，讓他自己摸索</p>
-                <p><strong>Curated Skills</strong> = 給他一份資深同事寫的操作手冊</p>
-                <p><strong>Self-Generated Skills</strong> = 讓他自己先寫操作手冊，再照著做</p>
-                <p>研究證實：給手冊有效（+16.2pp），讓他自己寫手冊則幾乎沒幫助。</p>
-            </div>
-        </div>
-        <div class="info-box box-concept">
-            <div class="info-box-header">&#x1F4DA; Skill 組成結構</div>
-            <div class="info-box-content">
-                <ul>
-                    <li><code>SKILL.md</code> -- 自然語言指令（工作流程、SOP、領域慣例）</li>
-                    <li><code>Resources/</code> -- 可執行腳本、程式碼模板、參考文件、範例</li>
-                    <li>基於檔案系統 -- 易於編輯、版本控制、分享、跨平台使用</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<div class="en-text">"Foundation models provide base capabilities (analogous to CPUs), agent harnesses orchestrate context and tools (operating systems), and Skills extend competence to specialized domains (applications)."</div>
 </div>
-
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>想像你雇了一個非常聰明的新員工（LLM）。他什麼都能聊、邏輯很好，但不知道你們公司的 SOP。</p>
+<p><strong>Vanilla（無 Skills）</strong> = 把任務丟給他，讓他自己摸索</p>
+<p><strong>Curated Skills</strong> = 給他一份資深同事寫的操作手冊</p>
+<p><strong>Self-Generated Skills</strong> = 讓他自己先寫操作手冊，再照著做</p>
+<p>研究證實：給手冊有效（+16.2pp），讓他自己寫手冊則幾乎沒幫助。</p>
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 Skill 組成結構</div>
+<div class="info-box-content">
+<ul>
+<li><code>SKILL.md</code> -- 自然語言指令（工作流程、SOP、領域慣例）</li>
+<li><code>Resources/</code> -- 可執行腳本、程式碼模板、參考文件、範例</li>
+<li>基於檔案系統 -- 易於編輯、版本控制、分享、跨平台使用</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 <!-- PART II: Benchmark Design -->
 <h2 class="section-header">Part II: 基準測試設計</h2>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="bilingual-block">
-            <div class="zh">
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">
                 SkillsBench 建構在 <span class="highlight-concept">Harbor 框架</span>之上，每個任務都是獨立的 Docker 容器，包含環境、Skills、確定性驗證器和 Oracle 解答。最關鍵的方法論創新：<span class="highlight-key">配對評估（Paired Evaluation）</span> -- 每個任務都在「無 Skills」和「有 Skills」兩個條件下執行，直接測量 Skills 效果的 delta。
             </div>
-            <div class="en">"Unlike Terminal-Bench, which evaluates raw model capability, SkillsBench evaluates every task under both vanilla and Skills-augmented conditions, enabling direct measurement of Skills efficacy."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
+<div class="en-text">"Unlike Terminal-Bench, which evaluates raw model capability, SkillsBench evaluates every task under both vanilla and Skills-augmented conditions, enabling direct measurement of Skills efficacy."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                 嚴格的品質控制體系：任務指令由<span class="highlight-practical">人類撰寫</span>（經 GPTZero 驗證），驗證器使用程式化斷言（<span class="highlight-key">非 LLM-as-judge</span>），CI 管線進行洩漏審計確保 Skills 提供指引而非直接答案。322 份候選提交中最終篩選出 86 個任務。
             </div>
-            <div class="en">"Deterministic verifiers with programmatic assertions - no LLM-as-judge variance."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
+<div class="en-text">"Deterministic verifiers with programmatic assertions - no LLM-as-judge variance."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                 任務按難度分層：Core（17 題，&lt;60 分鐘）、Extended（42 題，1-4 小時）、Extreme（26 題，&gt;4 小時）。涵蓋 11 個領域，從軟體工程到醫療保健、製造業、金融等。
             </div>
-            <div class="en">"86 tasks spanning 11 domains, stratified by difficulty based on estimated human completion time."</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-key">
-            <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：為什麼是 Deterministic Verifier？</div>
-            <div class="info-box-content">
-                <p>許多 AI 評測使用「LLM-as-judge」（讓另一個 AI 打分），但這引入了主觀性和可變性。SkillsBench 使用 <code>pytest</code> 程式化斷言：答案對就是對、錯就是錯，0 或 1。</p>
-                <p>這對 CDMO 產業來說特別有共鳴 -- 就像我們的品質檢驗不能用「看起來差不多」來判定，必須有明確的規格標準。</p>
-            </div>
-        </div>
-        <div class="info-box box-compare">
-            <div class="info-box-header">&#x2696;&#xFE0F; Agent Harness 比較</div>
-            <div class="info-box-content">
-                <p>測試了三個主要 Agent Harness：</p>
-                <ul>
-                    <li><strong>Claude Code</strong> (Anthropic) -- 原生 Skills 整合，支援 4 個模型（Opus 4.5/4.6, Sonnet 4.5, Haiku 4.5）</li>
-                    <li><strong>Gemini CLI</strong> (Google) -- Flash 3 / Pro 3</li>
-                    <li><strong>Codex CLI</strong> (OpenAI) -- GPT-5.2</li>
-                </ul>
-                <p>Claude Code + Opus 4.5 展現最高絕對增益 (+23.3pp)，反映其對 Skills 規範的原生優化。</p>
-            </div>
-        </div>
-    </div>
+<div class="en-text">"86 tasks spanning 11 domains, stratified by difficulty based on estimated human completion time."</div>
 </div>
-
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示：為什麼是 Deterministic Verifier？</div>
+<div class="info-box-content">
+<p>許多 AI 評測使用「LLM-as-judge」（讓另一個 AI 打分），但這引入了主觀性和可變性。SkillsBench 使用 <code>pytest</code> 程式化斷言：答案對就是對、錯就是錯，0 或 1。</p>
+<p>這對 CDMO 產業來說特別有共鳴 -- 就像我們的品質檢驗不能用「看起來差不多」來判定，必須有明確的規格標準。</p>
+</div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ Agent Harness 比較</div>
+<div class="info-box-content">
+<p>測試了三個主要 Agent Harness：</p>
+<ul>
+<li><strong>Claude Code</strong> (Anthropic) -- 原生 Skills 整合，支援 4 個模型（Opus 4.5/4.6, Sonnet 4.5, Haiku 4.5）</li>
+<li><strong>Gemini CLI</strong> (Google) -- Flash 3 / Pro 3</li>
+<li><strong>Codex CLI</strong> (OpenAI) -- GPT-5.2</li>
+</ul>
+<p>Claude Code + Opus 4.5 展現最高絕對增益 (+23.3pp)，反映其對 Skills 規範的原生優化。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- PART III: Core Findings -->
 <h2 class="section-header">Part III: 核心發現 -- 七大結論</h2>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="bilingual-block">
-            <div class="zh">
-                <strong>Finding 1：Skills 提供顯著但可變的效益。</strong>Curated Skills 在所有 7 個模型配置中都提升了表現，平均 <span class="highlight-concept">+16.2pp</span>，絕對增益從 +13.6pp 到 +23.3pp 不等。
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">
+<strong>Finding 1：Skills 提供顯著但可變的效益。</strong>Curated Skills 在所有 7 個模型配置中都提升了表現，平均 <span class="highlight-concept">+16.2pp</span>，絕對增益從 +13.6pp 到 +23.3pp 不等。
             </div>
-            <div class="en">"Curated Skills raise average pass rate by 16.2 percentage points, but effects vary widely."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
-                <strong>Finding 2：Gemini CLI + Flash 3 達到最高整體表現</strong>（48.7% with Skills），但 Claude Code + Opus 4.5 有最高增益 (+23.3pp)。
-            </div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
-                <strong>Finding 3：Self-generated Skills 幾乎無效。</strong>這是最具顛覆性的發現。模型被要求在解題前先生成自己的 Skills，但<span class="highlight-key">平均效果接近零甚至為負</span>。軌跡分析揭示兩個失敗模式：(1) 模型知道需要特定 Skills 但生成的程序不夠精確；(2) 對高領域知識任務，模型根本沒意識到需要專業 Skills。
-            </div>
-            <div class="en">"Self-generated Skills provide no benefit on average, showing that models cannot reliably author the procedural knowledge they benefit from consuming."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
-                <strong>Finding 4：Skills 效益因領域差異極大。</strong><span class="highlight-practical">Healthcare (+51.9pp)</span> 和 Manufacturing (+41.9pp) 受益巨大，而 Software Engineering (+4.5pp) 和 Mathematics (+6.0pp) 效益極小。解釋：模型在訓練數據充足的領域已經很強，外部程序性指引的邊際效益低。
-            </div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
-                <strong>Finding 5：2-3 個 Skills 是最佳數量。</strong>超過 4 個 Skills 出現邊際遞減。<span class="highlight-concept">聚焦、精簡的程序性指引每次都勝過詳盡的文件庫。</span>
-            </div>
-            <div class="en">"Focused Skills with 2-3 modules outperform comprehensive documentation."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
-                <strong>Finding 6：中等長度 Skills 優於綜合性文件。</strong>Compact Skills delta +18.9pp，而 comprehensive documentation 僅 +5.7pp -- 差距近 4 倍。Agent 難以從冗長內容中提取相關資訊。
-            </div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
-                <strong>Finding 7：小模型+Skills 可以超越無 Skills 的大模型。</strong><span class="highlight-key">Claude Haiku 4.5 with Skills (27.7%) 顯著超越 Opus 4.5 without Skills (22.0%)</span>。這對成本敏感的部署方案有重大意義。
-            </div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-key">
-            <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：模型排行榜</div>
-            <div class="info-box-content">
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Agent + Model</th><th>No Skills</th><th>+Skills</th><th>Delta</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Gemini CLI (Flash 3)</td><td>31.3%</td><td>48.7%</td><td class="positive">+17.4</td></tr>
-                        <tr class="highlight-row"><td>Claude Code (Opus 4.5)</td><td>22.0%</td><td>45.3%</td><td class="positive">+23.3</td></tr>
-                        <tr><td>Codex (GPT-5.2)</td><td>30.6%</td><td>44.7%</td><td class="positive">+14.1</td></tr>
-                        <tr><td>Claude Code (Opus 4.6)</td><td>30.6%</td><td>44.5%</td><td class="positive">+13.9</td></tr>
-                        <tr><td>Gemini CLI (Pro 3)</td><td>27.6%</td><td>41.2%</td><td class="positive">+13.6</td></tr>
-                        <tr><td>Claude Code (Sonnet 4.5)</td><td>17.3%</td><td>31.8%</td><td class="positive">+14.5</td></tr>
-                        <tr><td>Claude Code (Haiku 4.5)</td><td>11.0%</td><td>27.7%</td><td class="positive">+16.7</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#x1F6E0;&#xFE0F; 領域效益差異</div>
-            <div class="info-box-content">
-                <table class="data-table">
-                    <thead>
-                        <tr><th>Domain</th><th>Skills Delta</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Healthcare</td><td class="positive">+51.9pp</td></tr>
-                        <tr><td>Manufacturing</td><td class="positive">+41.9pp</td></tr>
-                        <tr><td>Mathematics</td><td class="positive">+6.0pp</td></tr>
-                        <tr><td>Software Engineering</td><td class="positive">+4.5pp</td></tr>
-                    </tbody>
-                </table>
-                <p><strong>16/84 個任務出現負 delta</strong> -- 盲目套用 Skills 可能反而有害。</p>
-            </div>
-        </div>
-        <div class="info-box box-analogy">
-            <div class="info-box-header">&#x1F4A1; CDMO 視角解讀</div>
-            <div class="info-box-content">
-                <p>Healthcare +51.9pp 和 Manufacturing +41.9pp 這兩個數字對我們特別有意義。這些領域的共同特點：<strong>高度程序化、嚴格合規要求、專業知識密集</strong> -- 正是 CDMO 的核心特徵。</p>
-                <p>這暗示：為我們的偏差調查、批次記錄管理、Tech Transfer 流程撰寫精準的 Skills，可能帶來遠超平均水平的效益。</p>
-            </div>
-        </div>
-    </div>
+<div class="en-text">"Curated Skills raise average pass rate by 16.2 percentage points, but effects vary widely."</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text">
+<strong>Finding 2：Gemini CLI + Flash 3 達到最高整體表現</strong>（48.7% with Skills），但 Claude Code + Opus 4.5 有最高增益 (+23.3pp)。
+            </div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
+<strong>Finding 3：Self-generated Skills 幾乎無效。</strong>這是最具顛覆性的發現。模型被要求在解題前先生成自己的 Skills，但<span class="highlight-key">平均效果接近零甚至為負</span>。軌跡分析揭示兩個失敗模式：(1) 模型知道需要特定 Skills 但生成的程序不夠精確；(2) 對高領域知識任務，模型根本沒意識到需要專業 Skills。
+            </div>
+<div class="en-text">"Self-generated Skills provide no benefit on average, showing that models cannot reliably author the procedural knowledge they benefit from consuming."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
+<strong>Finding 4：Skills 效益因領域差異極大。</strong><span class="highlight-practical">Healthcare (+51.9pp)</span> 和 Manufacturing (+41.9pp) 受益巨大，而 Software Engineering (+4.5pp) 和 Mathematics (+6.0pp) 效益極小。解釋：模型在訓練數據充足的領域已經很強，外部程序性指引的邊際效益低。
+            </div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
+<strong>Finding 5：2-3 個 Skills 是最佳數量。</strong>超過 4 個 Skills 出現邊際遞減。<span class="highlight-concept">聚焦、精簡的程序性指引每次都勝過詳盡的文件庫。</span>
+</div>
+<div class="en-text">"Focused Skills with 2-3 modules outperform comprehensive documentation."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
+<strong>Finding 6：中等長度 Skills 優於綜合性文件。</strong>Compact Skills delta +18.9pp，而 comprehensive documentation 僅 +5.7pp -- 差距近 4 倍。Agent 難以從冗長內容中提取相關資訊。
+            </div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
+<strong>Finding 7：小模型+Skills 可以超越無 Skills 的大模型。</strong><span class="highlight-key">Claude Haiku 4.5 with Skills (27.7%) 顯著超越 Opus 4.5 without Skills (22.0%)</span>。這對成本敏感的部署方案有重大意義。
+            </div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示：模型排行榜</div>
+<div class="info-box-content">
+<table class="data-table">
+<thead>
+<tr><th>Agent + Model</th><th>No Skills</th><th>+Skills</th><th>Delta</th></tr>
+</thead>
+<tbody>
+<tr><td>Gemini CLI (Flash 3)</td><td>31.3%</td><td>48.7%</td><td class="positive">+17.4</td></tr>
+<tr class="highlight-row"><td>Claude Code (Opus 4.5)</td><td>22.0%</td><td>45.3%</td><td class="positive">+23.3</td></tr>
+<tr><td>Codex (GPT-5.2)</td><td>30.6%</td><td>44.7%</td><td class="positive">+14.1</td></tr>
+<tr><td>Claude Code (Opus 4.6)</td><td>30.6%</td><td>44.5%</td><td class="positive">+13.9</td></tr>
+<tr><td>Gemini CLI (Pro 3)</td><td>27.6%</td><td>41.2%</td><td class="positive">+13.6</td></tr>
+<tr><td>Claude Code (Sonnet 4.5)</td><td>17.3%</td><td>31.8%</td><td class="positive">+14.5</td></tr>
+<tr><td>Claude Code (Haiku 4.5)</td><td>11.0%</td><td>27.7%</td><td class="positive">+16.7</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 領域效益差異</div>
+<div class="info-box-content">
+<table class="data-table">
+<thead>
+<tr><th>Domain</th><th>Skills Delta</th></tr>
+</thead>
+<tbody>
+<tr><td>Healthcare</td><td class="positive">+51.9pp</td></tr>
+<tr><td>Manufacturing</td><td class="positive">+41.9pp</td></tr>
+<tr><td>Mathematics</td><td class="positive">+6.0pp</td></tr>
+<tr><td>Software Engineering</td><td class="positive">+4.5pp</td></tr>
+</tbody>
+</table>
+<p><strong>16/84 個任務出現負 delta</strong> -- 盲目套用 Skills 可能反而有害。</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 CDMO 視角解讀</div>
+<div class="info-box-content">
+<p>Healthcare +51.9pp 和 Manufacturing +41.9pp 這兩個數字對我們特別有意義。這些領域的共同特點：<strong>高度程序化、嚴格合規要求、專業知識密集</strong> -- 正是 CDMO 的核心特徵。</p>
+<p>這暗示：為我們的偏差調查、批次記錄管理、Tech Transfer 流程撰寫精準的 Skills，可能帶來遠超平均水平的效益。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- PART IV: Skills Design & Practical Implications -->
 <h2 class="section-header">Part IV: Skills 設計原則與實務啟示</h2>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="bilingual-block">
-            <div class="zh">
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">
                 Skills 的分層消融實驗（L0-L3）揭示了<span class="highlight-key">最大的效能躍升來自 L2 到 L3</span> -- 也就是加入可執行程式碼範例和參考資源的那一步。僅有 SKILL.md 文字指引是不夠的；<span class="highlight-concept">程序性內容（procedural content）</span>才是驅動改善的關鍵，不僅僅是「額外的上下文」。
             </div>
-            <div class="en">"The biggest performance jump comes from adding executable code examples and reference resources."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
+<div class="en-text">"The biggest performance jump comes from adding executable code examples and reference resources."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                 Hacker News 社群對這篇論文提出了重要的補充觀點：論文測試的「Self-generated Skills」是讓模型<span class="highlight-key">從零開始</span>撰寫 Skills，但實務中更常見的做法是讓模型<span class="highlight-practical">從解題過程中歸納經驗</span>再寫成 Skills。這兩種情境的效果可能截然不同，論文並未涵蓋後者。
             </div>
-            <div class="en">"Having the LLM write down a skill representing the lessons from the struggle you just had to get something done is quite different from what they're referring to." -- Hacker News commenter</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh">
+<div class="en-text">"Having the LLM write down a skill representing the lessons from the struggle you just had to get something done is quite different from what they're referring to." -- Hacker News commenter</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                 Skills 不是萬靈丹。<span class="highlight-key">16/84 個任務出現負面效果</span>，最嚴重的 taxonomy-tree-merge 下降了 39.3pp。這意味著：盲目套用 Skills 是有害的 -- 必須針對特定領域和任務進行部署策略評估。
             </div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：Skills 設計清單</div>
-            <div class="info-box-content">
-                <p><strong>Do:</strong></p>
-                <ul>
-                    <li>聚焦 2-3 個 Skills，每個針對一類任務</li>
-                    <li>在 SKILL.md 中包含可執行的程式碼範例</li>
-                    <li>保持精簡 -- compact > comprehensive</li>
-                    <li>針對模型訓練數據不足的領域優先部署</li>
-                    <li>建立 A/B 測試機制衡量 Skills 實際效果</li>
-                </ul>
-                <p><strong>Don't:</strong></p>
-                <ul>
-                    <li>把所有文件堆成一個巨大的 Skills 包</li>
-                    <li>依賴模型自行生成 Skills</li>
-                    <li>對已知模型表現良好的領域強加 Skills</li>
-                    <li>忽略 Skills 可能造成負面效果的風險</li>
-                </ul>
-            </div>
-        </div>
-        <div class="info-box box-cost">
-            <div class="info-box-header">&#x1F4B0; 成本分析啟示</div>
-            <div class="info-box-content">
-                <p><strong>Haiku 4.5 + Skills (27.7%)</strong> vs <strong>Opus 4.5 without Skills (22.0%)</strong></p>
-                <p>如果 Haiku 的 API 成本是 Opus 的 1/10 -- 那麼好的 Skills 投資帶來的 ROI 是驚人的。策略：在受控環境中先用小模型+Skills 測試，確認可行後再決定是否需要升級模型。</p>
-            </div>
-        </div>
-    </div>
 </div>
-
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用：Skills 設計清單</div>
+<div class="info-box-content">
+<p><strong>Do:</strong></p>
+<ul>
+<li>聚焦 2-3 個 Skills，每個針對一類任務</li>
+<li>在 SKILL.md 中包含可執行的程式碼範例</li>
+<li>保持精簡 -- compact &gt; comprehensive</li>
+<li>針對模型訓練數據不足的領域優先部署</li>
+<li>建立 A/B 測試機制衡量 Skills 實際效果</li>
+</ul>
+<p><strong>Don't:</strong></p>
+<ul>
+<li>把所有文件堆成一個巨大的 Skills 包</li>
+<li>依賴模型自行生成 Skills</li>
+<li>對已知模型表現良好的領域強加 Skills</li>
+<li>忽略 Skills 可能造成負面效果的風險</li>
+</ul>
+</div>
+</div>
+<div class="info-box box-cost">
+<div class="info-box-header">💰 成本分析啟示</div>
+<div class="info-box-content">
+<p><strong>Haiku 4.5 + Skills (27.7%)</strong> vs <strong>Opus 4.5 without Skills (22.0%)</strong></p>
+<p>如果 Haiku 的 API 成本是 Opus 的 1/10 -- 那麼好的 Skills 投資帶來的 ROI 是驚人的。策略：在受控環境中先用小模型+Skills 測試，確認可行後再決定是否需要升級模型。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- KEY TAKEAWAYS -->
 <h2 class="section-header">Key Takeaways</h2>
 <div class="takeaways-grid">
-    <div class="summary-card">
-        <div class="card-icon">&#x1F4CA;</div>
-        <div class="card-title">Curated Skills 有效但非萬能</div>
-        <div class="card-text">平均 +16.2pp 的提升很顯著，但領域差異從 +4.5pp 到 +51.9pp，且 16/84 個任務出現負效果。Skills 部署需要領域特定策略，不是「裝了就好」。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #ef4444;">
-        <div class="card-icon">&#x1F6A8;</div>
-        <div class="card-title">AI 無法自行撰寫有效 Skills</div>
-        <div class="card-text">Self-generated Skills 效果約等於零。這是對「完全自主 AI Agent」願景的現實校正 -- 程序性知識必須由人類專家策劃，至少在目前階段如此。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #10b981;">
-        <div class="card-icon">&#x2702;&#xFE0F;</div>
-        <div class="card-title">Less is More -- 2-3 個 Skills 最佳</div>
-        <div class="card-text">Compact Skills (+18.9pp) 比 comprehensive documentation (+5.7pp) 強近 4 倍。聚焦的 SKILL.md 加上可執行範例，優於堆砌大量文件。Agent 跟人一樣：太多資訊反而處理不好。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #8b5cf6;">
-        <div class="card-icon">&#x1F4B1;</div>
-        <div class="card-title">Skills 改變模型規模經濟學</div>
-        <div class="card-text">Haiku + Skills 超越 Opus without Skills。這意味著投資在 Skills 策劃可能比升級到更貴的模型更划算，對成本敏感的企業部署尤其重要。</div>
-    </div>
+<div class="summary-card">
+<div class="card-icon">📊</div>
+<div class="card-title">Curated Skills 有效但非萬能</div>
+<div class="card-text">平均 +16.2pp 的提升很顯著，但領域差異從 +4.5pp 到 +51.9pp，且 16/84 個任務出現負效果。Skills 部署需要領域特定策略，不是「裝了就好」。</div>
 </div>
-
+<div class="summary-card" style="border-left-color: #ef4444;">
+<div class="card-icon">🚨</div>
+<div class="card-title">AI 無法自行撰寫有效 Skills</div>
+<div class="card-text">Self-generated Skills 效果約等於零。這是對「完全自主 AI Agent」願景的現實校正 -- 程序性知識必須由人類專家策劃，至少在目前階段如此。</div>
+</div>
+<div class="summary-card" style="border-left-color: #10b981;">
+<div class="card-icon">✂️</div>
+<div class="card-title">Less is More -- 2-3 個 Skills 最佳</div>
+<div class="card-text">Compact Skills (+18.9pp) 比 comprehensive documentation (+5.7pp) 強近 4 倍。聚焦的 SKILL.md 加上可執行範例，優於堆砌大量文件。Agent 跟人一樣：太多資訊反而處理不好。</div>
+</div>
+<div class="summary-card" style="border-left-color: #8b5cf6;">
+<div class="card-icon">💱</div>
+<div class="card-title">Skills 改變模型規模經濟學</div>
+<div class="card-text">Haiku + Skills 超越 Opus without Skills。這意味著投資在 Skills 策劃可能比升級到更貴的模型更划算，對成本敏感的企業部署尤其重要。</div>
+</div>
+</div>
 <!-- PRACTICE QUESTIONS -->
 <h2 class="section-header">Practice Questions</h2>
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q1</span>
-        <span class="question-type">概念理解</span>
-        <span class="question-text">為什麼 Self-generated Skills 無效，但 Curated Skills 有效？這告訴我們關於 LLM 能力的什麼？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>LLM 擅長<strong>消費</strong>程序性知識（按照指令執行），但不擅長<strong>生產</strong>程序性知識（從零撰寫有效程序）。這反映了「知道怎麼做」和「知道該做什麼」的根本差異。模型在提示下能執行複雜步驟，但缺乏識別和編碼領域專業知識的後設認知能力。</p>
-        <p>兩個失敗模式：(1) 知道需要但不精確 -- 如「用 pandas 處理數據」但沒有具體 API pattern；(2) 根本不知道需要 -- 對高領域知識任務缺乏意識。這與 Copilot vs Agent 模式的區分完全吻合。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">為什麼 Self-generated Skills 無效，但 Curated Skills 有效？這告訴我們關於 LLM 能力的什麼？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>LLM 擅長<strong>消費</strong>程序性知識（按照指令執行），但不擅長<strong>生產</strong>程序性知識（從零撰寫有效程序）。這反映了「知道怎麼做」和「知道該做什麼」的根本差異。模型在提示下能執行複雜步驟，但缺乏識別和編碼領域專業知識的後設認知能力。</p>
+<p>兩個失敗模式：(1) 知道需要但不精確 -- 如「用 pandas 處理數據」但沒有具體 API pattern；(2) 根本不知道需要 -- 對高領域知識任務缺乏意識。這與 Copilot vs Agent 模式的區分完全吻合。</p>
+</div>
 </details>
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q2</span>
-        <span class="question-type">產業應用</span>
-        <span class="question-text">如果你要為 CDMO 的偏差調查流程設計 Agent Skills，基於本論文的發現，你會怎麼設計？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>基於 Finding 4（Healthcare/Manufacturing 受益最大）和 Finding 5（2-3 Skills 最佳），我的設計策略：</p>
-        <p><strong>Skill 1：偏差分類 SOP</strong> -- SKILL.md 包含偏差分類決策樹（Critical/Major/Minor）、根據 PIC/S 和 21 CFR Part 211 的判定標準，加上 2-3 個歷史案例作為範例。</p>
-        <p><strong>Skill 2：根因分析模板</strong> -- 魚骨圖結構化提示、5 Why 分析框架、CAPA 連結邏輯。包含可執行的模板（Finding 6：程式碼範例帶來最大躍升）。</p>
-        <p>不要做：不要把整個 SOP 庫塞進去（comprehensive documentation 只有 +5.7pp），不要讓 AI 自己生成流程（Self-generated ~0pp）。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">如果你要為 CDMO 的偏差調查流程設計 Agent Skills，基於本論文的發現，你會怎麼設計？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>基於 Finding 4（Healthcare/Manufacturing 受益最大）和 Finding 5（2-3 Skills 最佳），我的設計策略：</p>
+<p><strong>Skill 1：偏差分類 SOP</strong> -- SKILL.md 包含偏差分類決策樹（Critical/Major/Minor）、根據 PIC/S 和 21 CFR Part 211 的判定標準，加上 2-3 個歷史案例作為範例。</p>
+<p><strong>Skill 2：根因分析模板</strong> -- 魚骨圖結構化提示、5 Why 分析框架、CAPA 連結邏輯。包含可執行的模板（Finding 6：程式碼範例帶來最大躍升）。</p>
+<p>不要做：不要把整個 SOP 庫塞進去（comprehensive documentation 只有 +5.7pp），不要讓 AI 自己生成流程（Self-generated ~0pp）。</p>
+</div>
 </details>
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q3</span>
-        <span class="question-type">批判思考</span>
-        <span class="question-text">Hacker News 社群指出論文的 Self-generated Skills 測試方法與實務差異。你如何評估這個批評？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>這個批評<strong>非常合理且重要</strong>。論文測試的是「從零生成 Skills」（cold start），但實務中更常見的模式是「從經驗歸納 Skills」（reflection-based）-- 讓 AI 在執行任務後，把學到的經驗整理成 Skills 供未來使用。</p>
-        <p>這兩者的差異類似於：讓新人「憑空寫 SOP」 vs 讓資深員工「把他的經驗整理成 SOP」。後者的成功率顯然更高。</p>
-        <p>但這並不完全推翻論文結論 -- 即使是 reflection-based Skills，品質仍可能不如人類專家策劃的版本。更可能的結論是：<strong>AI-assisted + Human-reviewed Skills</strong> 才是最佳實務，而非純粹的 AI 或純粹的人類。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">Hacker News 社群指出論文的 Self-generated Skills 測試方法與實務差異。你如何評估這個批評？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>這個批評<strong>非常合理且重要</strong>。論文測試的是「從零生成 Skills」（cold start），但實務中更常見的模式是「從經驗歸納 Skills」（reflection-based）-- 讓 AI 在執行任務後，把學到的經驗整理成 Skills 供未來使用。</p>
+<p>這兩者的差異類似於：讓新人「憑空寫 SOP」 vs 讓資深員工「把他的經驗整理成 SOP」。後者的成功率顯然更高。</p>
+<p>但這並不完全推翻論文結論 -- 即使是 reflection-based Skills，品質仍可能不如人類專家策劃的版本。更可能的結論是：<strong>AI-assisted + Human-reviewed Skills</strong> 才是最佳實務，而非純粹的 AI 或純粹的人類。</p>
+</div>
 </details>
-
 <!-- BOTTOM LINE -->
 <div class="bottom-line">
-    <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x2714; 核心洞察</div>
-        <div class="bottom-line-text">這篇論文用 7,308 條軌跡的硬數據證實了我一直在實踐的「Copilot 模式」哲學 -- AI 需要人類撰寫的結構化指引才能真正發揮價值。Self-generated Skills 的失敗直接支持了「wetware before software」原則：程序性知識的策劃是不可替代的人類判斷工作。Healthcare (+51.9pp) 和 Manufacturing (+41.9pp) 的數據更確認了 CDMO 是 Skills 高回報領域。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
-        <div class="bottom-line-text">本週行動：(1) 審視我目前的 Claude Project Knowledge，用「2-3 個聚焦 Skills」原則重構，確保每個 Skill 包含可執行範例而非只有文字描述。(2) 為 CDMO Feasibility Assessment Skill 加入具體的決策樹和計算模板（L2→L3 提升）。(3) 將此論文的數據納入我的「AI 在製藥業 ROI」簡報素材 -- 特別是「小模型+Skills 超越大模型」的成本論點。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x26A0; 需要補充</div>
-        <div class="bottom-line-text">論文未涵蓋 reflection-based Skills 生成（HN 社群的有效批評）。也未測試 Skills 的長期維護成本 -- 在快速迭代的 AI 工具環境中，Skills 多久需要更新？此外，11 個領域中沒有直接對應「藥品製造 GMP 合規」的任務，Healthcare 類別的具體任務內容值得進一步查看。3 個月後重讀時，應同時查看是否有 follow-up 研究填補了 reflection-based Skills 的空白。</div>
-    </div>
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">這篇論文用 7,308 條軌跡的硬數據證實了我一直在實踐的「Copilot 模式」哲學 -- AI 需要人類撰寫的結構化指引才能真正發揮價值。Self-generated Skills 的失敗直接支持了「wetware before software」原則：程序性知識的策劃是不可替代的人類判斷工作。Healthcare (+51.9pp) 和 Manufacturing (+41.9pp) 的數據更確認了 CDMO 是 Skills 高回報領域。</div>
 </div>
-
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">本週行動：(1) 審視我目前的 Claude Project Knowledge，用「2-3 個聚焦 Skills」原則重構，確保每個 Skill 包含可執行範例而非只有文字描述。(2) 為 CDMO Feasibility Assessment Skill 加入具體的決策樹和計算模板（L2→L3 提升）。(3) 將此論文的數據納入我的「AI 在製藥業 ROI」簡報素材 -- 特別是「小模型+Skills 超越大模型」的成本論點。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">論文未涵蓋 reflection-based Skills 生成（HN 社群的有效批評）。也未測試 Skills 的長期維護成本 -- 在快速迭代的 AI 工具環境中，Skills 多久需要更新？此外，11 個領域中沒有直接對應「藥品製造 GMP 合規」的任務，Healthcare 類別的具體任務內容值得進一步查看。3 個月後重讀時，應同時查看是否有 follow-up 研究填補了 reflection-based Skills 的空白。</div>
+</div>
+</div>
 <!-- FOOTER -->
-<div class="footer">
-    <p>製作日期：2026-03-01 | 來源：<a href="https://arxiv.org/abs/2602.12670" target="_blank">arXiv:2602.12670</a> | <a href="https://www.skillsbench.ai/" target="_blank">SkillsBench.ai</a></p>
-    <p>建議 Chat Title：<strong>2026-03-01 [Agent] SkillsBench - Skills Efficacy Benchmark</strong></p>
-    <p>建議檔名：<code>2026-03-01_skillsbench-agent-skills.html</code></p>
-</div>
-
+<footer class="footer">
+<p>製作日期：2026-03-01 | 來源：<a href="https://arxiv.org/abs/2602.12670" target="_blank">arXiv:2602.12670</a> | <a href="https://www.skillsbench.ai/" target="_blank">SkillsBench.ai</a></p>
+<p>建議 Chat Title：<strong>2026-03-01 [Agent] SkillsBench - Skills Efficacy Benchmark</strong></p>
+<p>建議檔名：<code>2026-03-01_skillsbench-agent-skills.html</code></p>
+</footer>
 </div><!-- end container -->
 </body>
 </html>

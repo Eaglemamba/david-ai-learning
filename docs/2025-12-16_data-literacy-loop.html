@@ -1,1193 +1,553 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2025-12-16">
-    <meta name="doc-title" content="Data Literacy Loop 學習指南">
-    <meta name="doc-source" content="Wyndo & Hodman Murad / AI Maker">
-    <meta name="doc-tags" content="Prompt,LLM,Analysis">
-    <meta name="doc-rating" content="3.5">
-    <meta name="doc-summary" content="打造具數據素養的AI夥伴，超越提示詞的商業分析協作方法">
-    <meta name="doc-file" content="2025-12-16_data-literacy-loop.html">
-    <title>Data Literacy Loop 學習指南 | 打造具數據素養的 AI 夥伴</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2025-12-16" name="doc-date"/>
+<meta content="Data Literacy Loop 學習指南" name="doc-title"/>
+<meta content="Wyndo &amp; Hodman Murad / AI Maker" name="doc-source"/>
+<meta content="Prompt,LLM,Analysis" name="doc-tags"/>
+<meta content="3.5" name="doc-rating"/>
+<meta content="打造具數據素養的AI夥伴，超越提示詞的商業分析協作方法" name="doc-summary"/>
+<meta content="2025-12-16_data-literacy-loop.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>Data Literacy Loop 學習指南 | 打造具數據素養的 AI 夥伴</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            line-height: 1.8;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: white;
-            padding: 50px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .header h1 {
-            font-size: 2.4em;
-            margin-bottom: 12px;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header .subtitle {
-            font-size: 1.3em;
-            opacity: 0.95;
-            margin-bottom: 20px;
-            color: #a8d8ff;
-        }
-
-        .header .meta {
-            font-size: 0.95em;
-            opacity: 0.85;
-            line-height: 1.6;
-        }
-
-        .header a {
-            color: #7dd3fc;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .header a:hover {
-            color: #bae6fd;
-            text-decoration: underline;
-        }
-
-        .tag-container {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: rgba(255,255,255,0.15);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            backdrop-filter: blur(10px);
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 1700px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
-
-        /* Two Column Layout */
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 35px;
-        }
-
-        .left-column {
-            background: #ffffff;
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            border-top: 5px solid #64748b;
-        }
-
-        .right-column {
-            background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            border-top: 5px solid #0284c7;
-        }
-
-        /* Column Headers */
-        .column-header {
-            font-size: 1.15em;
-            font-weight: 700;
-            color: #1e40af;
-            margin-bottom: 25px;
-            padding-bottom: 12px;
-            border-bottom: 3px solid #3b82f6;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .left-column .column-header {
-            color: #475569;
-            border-bottom-color: #94a3b8;
-        }
-
-        /* Section Headers */
-        .section-title {
-            font-size: 1.5em;
-            color: #1e293b;
-            margin: 30px 0 20px 0;
-            font-weight: 700;
-            position: relative;
-            padding-left: 15px;
-        }
-
-        .section-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 5px;
-            background: linear-gradient(180deg, #3b82f6, #8b5cf6);
-            border-radius: 3px;
-        }
-
-        /* Content Styling */
-        p {
-            margin-bottom: 16px;
-        }
-
-        /* Key Terms - Green Box */
-        .key-term {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            border-left: 5px solid #059669;
-            padding: 20px 25px;
-            margin: 20px 0;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.15);
-        }
-
-        .key-term-title {
-            font-weight: 700;
-            color: #065f46;
-            margin-bottom: 12px;
-            font-size: 1.05em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Analogy Box - Yellow */
-        .analogy {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-left: 5px solid #d97706;
-            padding: 20px 25px;
-            margin: 20px 0;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.15);
-        }
-
-        .analogy-title {
-            font-weight: 700;
-            color: #92400e;
-            margin-bottom: 12px;
-            font-size: 1.05em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Key Note - Orange */
-        .key-note {
-            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
-            border-left: 5px solid #ea580c;
-            padding: 20px 25px;
-            margin: 20px 0;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.15);
-        }
-
-        .key-note-title {
-            font-weight: 700;
-            color: #9a3412;
-            margin-bottom: 12px;
-            font-size: 1.05em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Practice Box - Purple */
-        .practice {
-            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
-            border-left: 5px solid #7c3aed;
-            padding: 20px 25px;
-            margin: 20px 0;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.15);
-        }
-
-        .practice-title {
-            font-weight: 700;
-            color: #5b21b6;
-            margin-bottom: 12px;
-            font-size: 1.05em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Quote Box */
-        .quote-box {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            border-left: 5px solid #475569;
-            padding: 20px 25px;
-            margin: 20px 0;
-            font-style: italic;
-            border-radius: 0 12px 12px 0;
-            color: #334155;
-            position: relative;
-        }
-
-        .quote-box::before {
-            content: '"';
-            font-size: 3em;
-            color: #94a3b8;
-            position: absolute;
-            top: 5px;
-            left: 10px;
-            line-height: 1;
-        }
-
-        /* Highlighted Terms */
-        .highlight {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .highlight-blue {
-            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        /* List Styling */
-        ul, ol {
-            margin: 16px 0 16px 28px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        /* Code/Technical */
-        .code-block {
-            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
-            color: #e2e8f0;
-            padding: 20px;
-            border-radius: 12px;
-            font-family: 'Monaco', 'Consolas', 'Fira Code', monospace;
-            font-size: 0.9em;
-            overflow-x: auto;
-            margin: 20px 0;
-            white-space: pre-wrap;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            border: 1px solid #404040;
-        }
-
-        /* Framework Box */
-        .framework-box {
-            background: white;
-            border: 2px solid #3b82f6;
-            border-radius: 16px;
-            padding: 25px;
-            margin: 25px 0;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
-        }
-
-        .framework-title {
-            font-size: 1.25em;
-            color: #1e40af;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .framework-steps {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .step-box {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            flex: 1;
-            min-width: 160px;
-            border: 2px solid #93c5fd;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .step-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
-        }
-
-        .step-number {
-            font-size: 2em;
-            font-weight: 700;
-            color: #1e40af;
-            margin-bottom: 5px;
-        }
-
-        .step-name {
-            font-weight: 600;
-            color: #1e3a5f;
-            font-size: 1.1em;
-        }
-
-        /* Arrow between steps */
-        .step-arrow {
-            display: flex;
-            align-items: center;
-            color: #3b82f6;
-            font-size: 1.5em;
-        }
-
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 20px 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .comparison-table th {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: white;
-            padding: 14px 16px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .comparison-table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #e2e8f0;
-            background: white;
-        }
-
-        .comparison-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .comparison-table tr:nth-child(even) td {
-            background: #f8fafc;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .two-column {
-                grid-template-columns: 1fr;
-            }
-
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            .framework-steps {
-                flex-direction: column;
-            }
-
-            .step-arrow {
-                transform: rotate(90deg);
-                justify-content: center;
-            }
-        }
-
-        /* Section Divider */
-        .section-divider {
-            height: 4px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #f97316);
-            margin: 50px 0;
-            border-radius: 2px;
-            opacity: 0.8;
-        }
-
-        /* Summary Box */
-        .summary-box {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-            border: 3px solid #0ea5e9;
-            border-radius: 20px;
-            padding: 35px;
-            margin: 35px 0;
-            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.15);
-        }
-
-        .summary-title {
-            font-size: 1.4em;
-            color: #0369a1;
-            font-weight: 700;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        /* Workflow Box */
-        .workflow-box {
-            background: #f8fafc;
-            border: 2px solid #cbd5e1;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .workflow-title {
-            font-weight: 700;
-            color: #334155;
-            margin-bottom: 15px;
-            font-size: 1.05em;
-        }
-
-        /* Footer */
-        .footer {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: #94a3b8;
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        .footer a {
-            color: #7dd3fc;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* TOC */
-        .toc {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 35px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .toc-title {
-            font-size: 1.3em;
-            color: #1e40af;
-            font-weight: 700;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #3b82f6;
-        }
-
-        .toc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .toc-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 15px;
-            background: #f8fafc;
-            border-radius: 8px;
-            color: #334155;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .toc-item:hover {
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .toc-number {
-            background: #3b82f6;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85em;
-            font-weight: 700;
-        }
-
-        /* Checklist styling */
-        .checklist {
-            list-style: none;
-            margin-left: 0;
-        }
-
-        .checklist li {
-            padding-left: 30px;
-            position: relative;
-        }
-
-        .checklist li::before {
-            content: '☐';
-            position: absolute;
-            left: 0;
-            color: #3b82f6;
-            font-size: 1.2em;
-        }
-
-        /* Icon styling */
-        .icon {
-            font-size: 1.2em;
-        }
-    </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <h1>Beyond Prompting: Building a Data Literate AI Partner</h1>
-            <div class="subtitle">超越提示詞：打造具數據素養的 AI 夥伴</div>
-            <div class="meta">
-                原文作者：Wyndo & Hodman Murad | The AI Maker | 2024年12月16日<br>
+<header class="header">
+<div class="header-content">
+<h1>Beyond Prompting: Building a Data Literate AI Partner</h1>
+<div class="subtitle">超越提示詞：打造具數據素養的 AI 夥伴</div>
+<div class="meta">
+                原文作者：Wyndo &amp; Hodman Murad | The AI Maker | 2024年12月16日<br/>
                 原文連結：<a href="https://www.theaimaker.io/p/beyond-prompting-building-a-data" target="_blank">https://www.theaimaker.io/p/beyond-prompting-building-a-data</a>
-            </div>
-            <div class="tag-container">
-                <span class="tag">AI Collaboration</span>
-                <span class="tag">Data Literacy</span>
-                <span class="tag">Prompt Engineering</span>
-                <span class="tag">Business Analytics</span>
-            </div>
-        </div>
-    </header>
-
-    <div class="container">
-
-        <!-- Table of Contents -->
-        <div class="toc">
-            <div class="toc-title">目錄 Table of Contents</div>
-            <div class="toc-grid">
-                <div class="toc-item">
-                    <span class="toc-number">1</span>
-                    <span>The Problem: Context Ceiling 脈絡天花板</span>
-                </div>
-                <div class="toc-item">
-                    <span class="toc-number">2</span>
-                    <span>The Framework: Data Literacy Loop 數據素養循環</span>
-                </div>
-                <div class="toc-item">
-                    <span class="toc-number">3</span>
-                    <span>Step 1: Define 建立共同詞彙</span>
-                </div>
-                <div class="toc-item">
-                    <span class="toc-number">4</span>
-                    <span>Step 2: Illustrate 透過範例展示</span>
-                </div>
-                <div class="toc-item">
-                    <span class="toc-number">5</span>
-                    <span>Step 3: Interrogate 壓力測試理解</span>
-                </div>
-                <div class="toc-item">
-                    <span class="toc-number">6</span>
-                    <span>Real-World Application 實際應用案例</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Introduction Section -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="column-header"><span class="icon">📄</span> Original Content 原文內容</div>
-                
-                <p>As part of my year-end review, I asked Claude to analyze why my newsletter was growing.</p>
-                
-                <p>Number of subscriber was up <span class="highlight">47%</span>. Engagement rate steady at <span class="highlight">8-10%</span>. Paid conversions increased by <span class="highlight">28%</span>.</p>
-                
-                <p>The AI's analysis:</p>
-                
-                <div class="quote-box">
+</div>
+<div class="tag-container">
+<span class="tag">AI Collaboration</span>
+<span class="tag">Data Literacy</span>
+<span class="tag">Prompt Engineering</span>
+<span class="tag">Business Analytics</span>
+</div>
+</div>
+</header>
+<div class="container">
+<!-- Table of Contents -->
+<div class="toc">
+<div class="toc-title">目錄 Table of Contents</div>
+<div class="toc-grid">
+<div class="toc-item">
+<span class="toc-number">1</span>
+<span>The Problem: Context Ceiling 脈絡天花板</span>
+</div>
+<div class="toc-item">
+<span class="toc-number">2</span>
+<span>The Framework: Data Literacy Loop 數據素養循環</span>
+</div>
+<div class="toc-item">
+<span class="toc-number">3</span>
+<span>Step 1: Define 建立共同詞彙</span>
+</div>
+<div class="toc-item">
+<span class="toc-number">4</span>
+<span>Step 2: Illustrate 透過範例展示</span>
+</div>
+<div class="toc-item">
+<span class="toc-number">5</span>
+<span>Step 3: Interrogate 壓力測試理解</span>
+</div>
+<div class="toc-item">
+<span class="toc-number">6</span>
+<span>Real-World Application 實際應用案例</span>
+</div>
+</div>
+</div>
+<!-- Introduction Section -->
+<div class="content-grid">
+<div class="content-left">
+<div class="column-header"><span class="icon">📄</span> Original Content 原文內容</div>
+<p>As part of my year-end review, I asked Claude to analyze why my newsletter was growing.</p>
+<p>Number of subscriber was up <span class="highlight">47%</span>. Engagement rate steady at <span class="highlight">8-10%</span>. Paid conversions increased by <span class="highlight">28%</span>.</p>
+<p>The AI's analysis:</p>
+<div class="quote-box">
                     Your content strategy is working. Engagement metrics show strong audience resonance. Continue current approach.
                 </div>
-                
-                <p>But I knew something the AI didn't: those numbers had almost nothing to do with my content strategy.</p>
-                
-                <p>My growth came from one viral post about NotebookLM that hit at the perfect moment. I also wrote a guest post for Michael Spencer covering my in-depth NotebookLM analysis. The "strategic content pillars" I'd been carefully crafting for months showed decent result, but not what was actually driving new subscribers exponentially.</p>
-                
-                <p><strong>The AI had all my data. It just didn't understand my whole newsletter growth context.</strong></p>
-            </div>
-            
-            <div class="right-column">
-                <div class="column-header"><span class="icon">💡</span> Commentary 教學解析</div>
-                
-                <div class="key-term">
-                    <div class="key-term-title"><span class="icon">🔑</span> 關鍵術語：Context (脈絡/情境)</div>
-                    <p>Context 在 AI 領域指的是「讓 AI 理解特定情況的背景資訊」。數據本身只是數字，但 <strong>Context</strong> 告訴 AI 這些數字在你的業務中代表什麼意義。</p>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：醫生看診 vs 機器讀數</div>
-                    <p>想像你去看醫生，血壓測量顯示 140/90。</p>
-                    <ul>
-                        <li><strong>沒有 Context 的機器</strong>：「血壓偏高，建議降壓。」</li>
-                        <li><strong>有 Context 的醫生</strong>：「你剛跑步上樓、今天又很緊張面試，這個數字在這情況下其實正常。下週休息狀態再測一次。」</li>
-                    </ul>
-                    <p>同樣的數字，<strong>理解背景的人做出完全不同的判斷</strong>。</p>
-                </div>
-                
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> 重點提示：數據 ≠ 洞察</div>
-                    <p>作者的 AI 看到 47% 成長，就判斷「策略有效」。但實際上：</p>
-                    <ul>
-                        <li>真正驅動成長的是「一篇病毒式傳播的文章」</li>
-                        <li>精心規劃的「內容支柱策略」貢獻有限</li>
-                    </ul>
-                    <p><strong>AI 有數據，但缺乏「業務直覺」來正確歸因。</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Context Ceiling Section -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">The Context Ceiling</div>
-                
-                <p>I call this the <span class="highlight-blue">Context Ceiling</span>: the invisible barrier where your AI has access to all your data but understands none of your reality. It sees 'conversion rate: 3.2%,' but doesn't know whether that's strong or alarming for your business.</p>
-                
-                <p>It can calculate customer lifetime value, but doesn't understand that Enterprise customers require a completely different strategy than SMB customers, even when the numbers look similar.</p>
-                
-                <p><strong>AI can learn these distinctions.</strong> The challenge is that we've been treating AI like a search engine when we need to treat it like a new analyst joining our team. New analysts need proper onboarding, not just database access.</p>
-                
-                <div class="quote-box">
+<p>But I knew something the AI didn't: those numbers had almost nothing to do with my content strategy.</p>
+<p>My growth came from one viral post about NotebookLM that hit at the perfect moment. I also wrote a guest post for Michael Spencer covering my in-depth NotebookLM analysis. The "strategic content pillars" I'd been carefully crafting for months showed decent result, but not what was actually driving new subscribers exponentially.</p>
+<p><strong>The AI had all my data. It just didn't understand my whole newsletter growth context.</strong></p>
+</div>
+<div class="content-right">
+<div class="column-header"><span class="icon">💡</span> Commentary 教學解析</div>
+<div class="key-term">
+<div class="key-term-title"><span class="icon">🔑</span> 關鍵術語：Context (脈絡/情境)</div>
+<p>Context 在 AI 領域指的是「讓 AI 理解特定情況的背景資訊」。數據本身只是數字，但 <strong>Context</strong> 告訴 AI 這些數字在你的業務中代表什麼意義。</p>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：醫生看診 vs 機器讀數</div>
+<p>想像你去看醫生，血壓測量顯示 140/90。</p>
+<ul>
+<li><strong>沒有 Context 的機器</strong>：「血壓偏高，建議降壓。」</li>
+<li><strong>有 Context 的醫生</strong>：「你剛跑步上樓、今天又很緊張面試，這個數字在這情況下其實正常。下週休息狀態再測一次。」</li>
+</ul>
+<p>同樣的數字，<strong>理解背景的人做出完全不同的判斷</strong>。</p>
+</div>
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> 重點提示：數據 ≠ 洞察</div>
+<p>作者的 AI 看到 47% 成長，就判斷「策略有效」。但實際上：</p>
+<ul>
+<li>真正驅動成長的是「一篇病毒式傳播的文章」</li>
+<li>精心規劃的「內容支柱策略」貢獻有限</li>
+</ul>
+<p><strong>AI 有數據，但缺乏「業務直覺」來正確歸因。</strong></p>
+</div>
+</div>
+</div>
+<!-- Context Ceiling Section -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">The Context Ceiling</div>
+<p>I call this the <span class="highlight-blue">Context Ceiling</span>: the invisible barrier where your AI has access to all your data but understands none of your reality. It sees 'conversion rate: 3.2%,' but doesn't know whether that's strong or alarming for your business.</p>
+<p>It can calculate customer lifetime value, but doesn't understand that Enterprise customers require a completely different strategy than SMB customers, even when the numbers look similar.</p>
+<p><strong>AI can learn these distinctions.</strong> The challenge is that we've been treating AI like a search engine when we need to treat it like a new analyst joining our team. New analysts need proper onboarding, not just database access.</p>
+<div class="quote-box">
                     AI without data will lose its meaning
                 </div>
-            </div>
-            
-            <div class="right-column">
-                <div class="key-term">
-                    <div class="key-term-title"><span class="icon">🔑</span> 核心概念：Context Ceiling (脈絡天花板)</div>
-                    <p><strong>定義</strong>：AI 擁有所有數據存取權限，但無法理解你的業務現實的那道隱形障礙。</p>
-                    <p><strong>症狀</strong>：</p>
-                    <ul>
-                        <li>AI 給出「技術上正確但策略上無用」的建議</li>
-                        <li>AI 無法區分對你重要和不重要的指標</li>
-                        <li>每次對話都要重新解釋相同的業務背景</li>
-                    </ul>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：新進員工 vs 資料庫</div>
-                    <p>想像你的公司新來一位分析師：</p>
-                    <ul>
-                        <li><strong>錯誤做法</strong>：給他資料庫密碼，說「自己看數據」</li>
-                        <li><strong>正確做法</strong>：花時間 onboarding（入職培訓），教他公司術語、業務邏輯、歷史脈絡</li>
-                    </ul>
-                    <p><strong>我們對待 AI 常常像前者，但應該像後者。</strong></p>
-                </div>
-                
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> 關鍵洞見：Onboarding 的重要性</div>
-                    <p>作者的核心論點：</p>
-                    <ul>
-                        <li>問題不在 AI 能力不足</li>
-                        <li>問題在於<strong>我們沒有正確「培訓」AI</strong></li>
-                        <li>解決方案不是寫更好的 prompt，而是建立系統化的教學流程</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- The Framework Introduction -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">Introducing The Data Literacy Loop</div>
-                
-                <p>The loop is a three-step cycle that transforms your AI from a generic assistant into a knowledgeable partner who understands your context.</p>
-                
-                <div class="framework-box">
-                    <div class="framework-title">Data Literacy Loop 數據素養循環</div>
-                    <div class="framework-steps">
-                        <div class="step-box">
-                            <div class="step-number">1</div>
-                            <div class="step-name">Define<br>定義</div>
-                        </div>
-                        <div class="step-arrow">→</div>
-                        <div class="step-box">
-                            <div class="step-number">2</div>
-                            <div class="step-name">Illustrate<br>示例</div>
-                        </div>
-                        <div class="step-arrow">→</div>
-                        <div class="step-box">
-                            <div class="step-number">3</div>
-                            <div class="step-name">Interrogate<br>檢驗</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <p>This framework has dramatically reduced the time I spend explaining and re-explaining the same concepts in every conversation. Instead of correcting my AI's misunderstandings in every conversation, I invest time once to teach it properly.</p>
-                
-                <p>The result is an AI partner that anticipates the nuances I care about, catches the mistakes I would see, and asks the questions I would ask.</p>
-            </div>
-            
-            <div class="right-column">
-                <div class="key-term">
-                    <div class="key-term-title"><span class="icon">🔑</span> 核心框架：Data Literacy Loop (數據素養循環)</div>
-                    <p>一個三步驟的循環系統，將泛用型 AI 助理轉化為理解你特定業務脈絡的知識夥伴。</p>
-                    <table class="comparison-table">
-                        <tr>
-                            <th>步驟</th>
-                            <th>目的</th>
-                            <th>類比</th>
-                        </tr>
-                        <tr>
-                            <td><strong>Define</strong></td>
-                            <td>建立共同詞彙</td>
-                            <td>發給新員工的公司術語手冊</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Illustrate</strong></td>
-                            <td>透過範例展示邊界</td>
-                            <td>新員工培訓案例研討</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Interrogate</strong></td>
-                            <td>測試理解程度</td>
-                            <td>新員工試用期考核</td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：學徒制培訓</div>
-                    <p>這個框架就像傳統的<strong>學徒制</strong>：</p>
-                    <ol>
-                        <li><strong>定義</strong>：師傅先教徒弟行話和專業術語</li>
-                        <li><strong>示例</strong>：師傅示範「這個做法對」和「這個做法錯」</li>
-                        <li><strong>檢驗</strong>：讓徒弟獨立處理，師傅在旁觀察糾正</li>
-                    </ol>
-                    <p>循環往復，徒弟逐漸能獨立判斷。</p>
-                </div>
-                
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> 投資報酬率思維</div>
-                    <p><strong>一次性投資 vs 重複成本</strong></p>
-                    <ul>
-                        <li>❌ 舊方法：每次對話花 10 分鐘解釋背景</li>
-                        <li>✅ 新方法：花 2 小時建立完整定義，之後省下無數次解釋</li>
-                    </ul>
-                    <p>這是典型的「前期投入換取長期效率」策略。</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- Step 1: Define -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">Step 1: Define (Create a Shared Vocabulary)</div>
-                
-                <p>The first step is the most overlooked: creating a <span class="highlight-blue">Master Definition List</span> for your key concepts. Not the textbook definition, but the working definition that reflects how these terms actually function in your world.</p>
-                
-                <p>When I was analyzing engagement for a SaaS product, 'Active User' seemed straightforward until three different stakeholders gave me three different definitions.</p>
-                
-                <ul>
-                    <li><strong>Marketing</strong> counted anyone who logged in once per month.</li>
-                    <li><strong>Product</strong> wanted users who performed a core action.</li>
-                    <li><strong>Finance</strong> needed a definition that aligned with our revenue recognition policies.</li>
-                </ul>
-                
-                <p>None of them was wrong, but without clarity, every analysis became a debate over definitions rather than a decision.</p>
-                
-                <p>The solution was to create a standardized format that captured the definition and its context.</p>
-                
-                <div class="workflow-box">
-                    <div class="workflow-title">Master Definition Format 主定義格式</div>
-                    <ol>
-                        <li>A formal definition that includes the calculation or logic</li>
-                        <li>A practical example showing when this concept applies</li>
-                        <li>A practical example showing when it doesn't apply</li>
-                        <li>Common pitfalls or misinterpretations to watch for</li>
-                    </ol>
-                </div>
-            </div>
-            
-            <div class="right-column">
-                <div class="key-term">
-                    <div class="key-term-title"><span class="icon">🔑</span> 核心概念：Master Definition List (主定義清單)</div>
-                    <p><strong>定義</strong>：針對你業務中的關鍵術語，建立一份標準化的定義文件，包含實際運作方式而非教科書定義。</p>
-                    <p><strong>四個必要元素</strong>：</p>
-                    <ol>
-                        <li>正式定義（含計算公式或邏輯）</li>
-                        <li>正面範例（什麼情況適用）</li>
-                        <li>反面範例（什麼情況不適用）</li>
-                        <li>常見陷阱（容易誤解的地方）</li>
-                    </ol>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：法律合約的定義條款</div>
-                    <p>法律合約為什麼開頭都有一大段「定義」？</p>
-                    <p>例如租約會寫：「『房東』指本合約中的出租方張三；『租期』指2024年1月1日至2024年12月31日...」</p>
-                    <p><strong>原因</strong>：避免後續任何條款的解讀歧義。</p>
-                    <p>你的 AI 需要同樣明確的「定義條款」。</p>
-                </div>
-                
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> 真實案例：「活躍用戶」的三種定義</div>
-                    <p>同一家公司，三個部門對「Active User」的定義：</p>
-                    <table class="comparison-table">
-                        <tr>
-                            <th>部門</th>
-                            <th>定義</th>
-                            <th>目的</th>
-                        </tr>
-                        <tr>
-                            <td>行銷</td>
-                            <td>每月登入 1 次</td>
-                            <td>報告用戶規模</td>
-                        </tr>
-                        <tr>
-                            <td>產品</td>
-                            <td>執行核心動作</td>
-                            <td>衡量功能使用</td>
-                        </tr>
-                        <tr>
-                            <td>財務</td>
-                            <td>符合營收認列政策</td>
-                            <td>合規報表</td>
-                        </tr>
-                    </table>
-                    <p><strong>三個都對，但用錯定義會導出錯誤結論。</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Define Example -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">Master Definition Example</div>
-                
-                <div class="framework-box">
-                    <div class="framework-title">Example: Active User Definition</div>
-                    <p><strong>Formal Definition:</strong></p>
-                    <p>A user who has performed at least one core action (document creation, collaboration, or file sharing) within the last 30 days.</p>
-                    
-                    <p><strong>Applies When:</strong></p>
-                    <ul>
-                        <li>User created a document last week</li>
-                        <li>User commented on a shared file 3 days ago</li>
-                        <li>User shared a folder with team members this month</li>
-                    </ul>
-                    
-                    <p><strong>Does NOT Apply When:</strong></p>
-                    <ul>
-                        <li>User only logged in to check notifications</li>
-                        <li>User only viewed documents without interacting</li>
-                        <li>User's last core action was 35 days ago</li>
-                    </ul>
-                    
-                    <p><strong>Common Pitfalls:</strong></p>
-                    <ul>
-                        <li>Counting logins without core actions inflates "active" counts</li>
-                        <li>Different teams may use different timeframes (7 days vs 30 days)</li>
-                        <li>Automated API calls should be excluded from user activity</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="right-column">
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：健身房「活躍會員」</div>
-                    <p>健身房如何定義「活躍會員」？</p>
-                    <ul>
-                        <li>❌ <strong>登入刷卡就算</strong>：可能只是來洗澡或吹冷氣</li>
-                        <li>✅ <strong>實際使用設備</strong>：跑步機、重訓、上課</li>
-                    </ul>
-                    <p>同理，SaaS 的「活躍用戶」應該看<strong>核心價值行為</strong>，不是單純登入。</p>
-                </div>
-                
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> 定義的力量：消除歧義</div>
-                    <p>注意這個定義如何運作：</p>
-                    <ol>
-                        <li><strong>量化標準</strong>：「至少一個核心動作」「30天內」</li>
-                        <li><strong>明確邊界</strong>：列出什麼算、什麼不算</li>
-                        <li><strong>預防誤用</strong>：提醒常見陷阱</li>
-                    </ol>
-                    <p>有了這份定義，AI 就不會把「只登入看通知的用戶」誤算為活躍用戶。</p>
-                </div>
-                
-                <div class="practice">
-                    <div class="practice-title"><span class="icon">🧠</span> 練習思考 #1</div>
-                    <p>假設你經營一個線上課程平台，請思考：</p>
-                    <ol>
-                        <li>你會如何定義「Course Completion Rate（課程完成率）」？</li>
-                        <li>哪些行為應該算「完成」？哪些不算？</li>
-                        <li>有什麼常見陷阱可能導致這個指標被誤解？</li>
-                    </ol>
-                    <p><em>提示：考慮「看完影片」vs「通過測驗」vs「取得證書」的差異。</em></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- Step 2: Illustrate -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">Step 2: Illustrate (Show, Don't Just Tell)</div>
-                
-                <p>Definitions alone aren't enough. Just as you wouldn't expect a new analyst to master your business from a glossary, your AI needs examples that demonstrate the boundaries and edge cases of each concept.</p>
-                
-                <p>This is where most people stop too early. They provide one example and assume understanding, but in my experience training both humans and AI, <strong>learning happens most effectively in the contrast between what something is and what it isn't</strong>.</p>
-                
-                <div class="workflow-box">
-                    <div class="workflow-title">Example Structure 範例結構</div>
-                    <ul>
-                        <li>2 positive examples that clearly demonstrate this concept in action</li>
-                        <li>2 negative examples that might look similar but don't qualify</li>
-                        <li>For each example, include: Specific metrics or behaviors, Why it does or doesn't meet our definition, The business outcome (if relevant)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="right-column">
-                <div class="key-term">
-                    <div class="key-term-title"><span class="icon">🔑</span> 核心原則：Contrastive Learning (對比學習)</div>
-                    <p>人類和 AI 最有效的學習方式是透過<strong>對比</strong>：</p>
-                    <ul>
-                        <li>「這個是 A」＋「這個不是 A」</li>
-                        <li>「這個看起來像 A 但其實是 B」</li>
-                    </ul>
-                    <p>只給正面例子 → AI 可能過度泛化</p>
-                    <p>只給反面例子 → AI 可能過度限縮</p>
-                    <p><strong>兩者都給 → AI 學會精確判斷邊界</strong></p>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：品酒師的培訓</div>
-                    <p>培訓品酒師時，師傅不會只說「這是好酒」。</p>
-                    <p>而是會讓學徒：</p>
-                    <ol>
-                        <li>嚐好酒，說明為什麼好</li>
-                        <li>嚐劣酒，說明為什麼差</li>
-                        <li>嚐看起來很像但品質不同的酒，訓練辨別能力</li>
-                    </ol>
-                    <p><strong>對比之下，細微差異才會浮現。</strong></p>
-                </div>
-                
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> 常見錯誤：只給一個例子</div>
-                    <p>很多人教 AI 時會說：「活躍用戶就是像 User A 這樣的人」。</p>
-                    <p><strong>問題</strong>：AI 不知道 User A 的哪些特徵是關鍵的。</p>
-                    <ul>
-                        <li>是因為登入 20 次？</li>
-                        <li>是因為創建 12 份文件？</li>
-                        <li>是因為邀請 3 個隊友？</li>
-                        <li>還是這些的組合？</li>
-                    </ul>
-                    <p>需要對比例子才能讓 AI 理解真正的判斷標準。</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Illustrate Examples -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">Real Engagement Score Examples</div>
-                
-                <p><strong>Positive Examples (These ARE high engagement):</strong></p>
-                
-                <p><span class="highlight">User A</span>: 85 engagement score. Created 12 documents, collaborated on eight projects, logged in 20 times. Invited three teammates. Result: Renewed annual subscription early.</p>
-                
-                <p><span class="highlight">User B</span>: 78 engagement score. Created only three documents, but all were heavily collaborated on (15+ collaborators each). Built templates used across the team. Result: Upgraded to the Enterprise plan.</p>
-                
-                <p><strong>Negative Examples (These are NOT high engagement despite appearing active):</strong></p>
-                
-                <p><span class="highlight">User C</span>: 45 engagement score despite 40 logins. All sessions are under 2 minutes. Zero document creation. Classic "tire-kicker" behavior. Result: Churned after trial.</p>
-                
-                <p><span class="highlight">User D</span>: 35 engagement score. Created 10 documents but never returned after the first week. High initial burst, zero sustained engagement. Result: Dormant account.</p>
-                
-                <div class="quote-box">
+</div>
+<div class="content-right">
+<div class="key-term">
+<div class="key-term-title"><span class="icon">🔑</span> 核心概念：Context Ceiling (脈絡天花板)</div>
+<p><strong>定義</strong>：AI 擁有所有數據存取權限，但無法理解你的業務現實的那道隱形障礙。</p>
+<p><strong>症狀</strong>：</p>
+<ul>
+<li>AI 給出「技術上正確但策略上無用」的建議</li>
+<li>AI 無法區分對你重要和不重要的指標</li>
+<li>每次對話都要重新解釋相同的業務背景</li>
+</ul>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：新進員工 vs 資料庫</div>
+<p>想像你的公司新來一位分析師：</p>
+<ul>
+<li><strong>錯誤做法</strong>：給他資料庫密碼，說「自己看數據」</li>
+<li><strong>正確做法</strong>：花時間 onboarding（入職培訓），教他公司術語、業務邏輯、歷史脈絡</li>
+</ul>
+<p><strong>我們對待 AI 常常像前者，但應該像後者。</strong></p>
+</div>
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> 關鍵洞見：Onboarding 的重要性</div>
+<p>作者的核心論點：</p>
+<ul>
+<li>問題不在 AI 能力不足</li>
+<li>問題在於<strong>我們沒有正確「培訓」AI</strong></li>
+<li>解決方案不是寫更好的 prompt，而是建立系統化的教學流程</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section-divider"></div>
+<!-- The Framework Introduction -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">Introducing The Data Literacy Loop</div>
+<p>The loop is a three-step cycle that transforms your AI from a generic assistant into a knowledgeable partner who understands your context.</p>
+<div class="framework-box">
+<div class="framework-title">Data Literacy Loop 數據素養循環</div>
+<div class="framework-steps">
+<div class="step-box">
+<div class="step-number">1</div>
+<div class="step-name">Define<br/>定義</div>
+</div>
+<div class="step-arrow">→</div>
+<div class="step-box">
+<div class="step-number">2</div>
+<div class="step-name">Illustrate<br/>示例</div>
+</div>
+<div class="step-arrow">→</div>
+<div class="step-box">
+<div class="step-number">3</div>
+<div class="step-name">Interrogate<br/>檢驗</div>
+</div>
+</div>
+</div>
+<p>This framework has dramatically reduced the time I spend explaining and re-explaining the same concepts in every conversation. Instead of correcting my AI's misunderstandings in every conversation, I invest time once to teach it properly.</p>
+<p>The result is an AI partner that anticipates the nuances I care about, catches the mistakes I would see, and asks the questions I would ask.</p>
+</div>
+<div class="content-right">
+<div class="key-term">
+<div class="key-term-title"><span class="icon">🔑</span> 核心框架：Data Literacy Loop (數據素養循環)</div>
+<p>一個三步驟的循環系統，將泛用型 AI 助理轉化為理解你特定業務脈絡的知識夥伴。</p>
+<table class="comparison-table">
+<tr>
+<th>步驟</th>
+<th>目的</th>
+<th>類比</th>
+</tr>
+<tr>
+<td><strong>Define</strong></td>
+<td>建立共同詞彙</td>
+<td>發給新員工的公司術語手冊</td>
+</tr>
+<tr>
+<td><strong>Illustrate</strong></td>
+<td>透過範例展示邊界</td>
+<td>新員工培訓案例研討</td>
+</tr>
+<tr>
+<td><strong>Interrogate</strong></td>
+<td>測試理解程度</td>
+<td>新員工試用期考核</td>
+</tr>
+</table>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：學徒制培訓</div>
+<p>這個框架就像傳統的<strong>學徒制</strong>：</p>
+<ol>
+<li><strong>定義</strong>：師傅先教徒弟行話和專業術語</li>
+<li><strong>示例</strong>：師傅示範「這個做法對」和「這個做法錯」</li>
+<li><strong>檢驗</strong>：讓徒弟獨立處理，師傅在旁觀察糾正</li>
+</ol>
+<p>循環往復，徒弟逐漸能獨立判斷。</p>
+</div>
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> 投資報酬率思維</div>
+<p><strong>一次性投資 vs 重複成本</strong></p>
+<ul>
+<li>❌ 舊方法：每次對話花 10 分鐘解釋背景</li>
+<li>✅ 新方法：花 2 小時建立完整定義，之後省下無數次解釋</li>
+</ul>
+<p>這是典型的「前期投入換取長期效率」策略。</p>
+</div>
+</div>
+</div>
+<div class="section-divider"></div>
+<!-- Step 1: Define -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">Step 1: Define (Create a Shared Vocabulary)</div>
+<p>The first step is the most overlooked: creating a <span class="highlight-blue">Master Definition List</span> for your key concepts. Not the textbook definition, but the working definition that reflects how these terms actually function in your world.</p>
+<p>When I was analyzing engagement for a SaaS product, 'Active User' seemed straightforward until three different stakeholders gave me three different definitions.</p>
+<ul>
+<li><strong>Marketing</strong> counted anyone who logged in once per month.</li>
+<li><strong>Product</strong> wanted users who performed a core action.</li>
+<li><strong>Finance</strong> needed a definition that aligned with our revenue recognition policies.</li>
+</ul>
+<p>None of them was wrong, but without clarity, every analysis became a debate over definitions rather than a decision.</p>
+<p>The solution was to create a standardized format that captured the definition and its context.</p>
+<div class="workflow-box">
+<div class="workflow-title">Master Definition Format 主定義格式</div>
+<ol>
+<li>A formal definition that includes the calculation or logic</li>
+<li>A practical example showing when this concept applies</li>
+<li>A practical example showing when it doesn't apply</li>
+<li>Common pitfalls or misinterpretations to watch for</li>
+</ol>
+</div>
+</div>
+<div class="content-right">
+<div class="key-term">
+<div class="key-term-title"><span class="icon">🔑</span> 核心概念：Master Definition List (主定義清單)</div>
+<p><strong>定義</strong>：針對你業務中的關鍵術語，建立一份標準化的定義文件，包含實際運作方式而非教科書定義。</p>
+<p><strong>四個必要元素</strong>：</p>
+<ol>
+<li>正式定義（含計算公式或邏輯）</li>
+<li>正面範例（什麼情況適用）</li>
+<li>反面範例（什麼情況不適用）</li>
+<li>常見陷阱（容易誤解的地方）</li>
+</ol>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：法律合約的定義條款</div>
+<p>法律合約為什麼開頭都有一大段「定義」？</p>
+<p>例如租約會寫：「『房東』指本合約中的出租方張三；『租期』指2024年1月1日至2024年12月31日...」</p>
+<p><strong>原因</strong>：避免後續任何條款的解讀歧義。</p>
+<p>你的 AI 需要同樣明確的「定義條款」。</p>
+</div>
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> 真實案例：「活躍用戶」的三種定義</div>
+<p>同一家公司，三個部門對「Active User」的定義：</p>
+<table class="comparison-table">
+<tr>
+<th>部門</th>
+<th>定義</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>行銷</td>
+<td>每月登入 1 次</td>
+<td>報告用戶規模</td>
+</tr>
+<tr>
+<td>產品</td>
+<td>執行核心動作</td>
+<td>衡量功能使用</td>
+</tr>
+<tr>
+<td>財務</td>
+<td>符合營收認列政策</td>
+<td>合規報表</td>
+</tr>
+</table>
+<p><strong>三個都對，但用錯定義會導出錯誤結論。</strong></p>
+</div>
+</div>
+</div>
+<!-- Define Example -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">Master Definition Example</div>
+<div class="framework-box">
+<div class="framework-title">Example: Active User Definition</div>
+<p><strong>Formal Definition:</strong></p>
+<p>A user who has performed at least one core action (document creation, collaboration, or file sharing) within the last 30 days.</p>
+<p><strong>Applies When:</strong></p>
+<ul>
+<li>User created a document last week</li>
+<li>User commented on a shared file 3 days ago</li>
+<li>User shared a folder with team members this month</li>
+</ul>
+<p><strong>Does NOT Apply When:</strong></p>
+<ul>
+<li>User only logged in to check notifications</li>
+<li>User only viewed documents without interacting</li>
+<li>User's last core action was 35 days ago</li>
+</ul>
+<p><strong>Common Pitfalls:</strong></p>
+<ul>
+<li>Counting logins without core actions inflates "active" counts</li>
+<li>Different teams may use different timeframes (7 days vs 30 days)</li>
+<li>Automated API calls should be excluded from user activity</li>
+</ul>
+</div>
+</div>
+<div class="content-right">
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：健身房「活躍會員」</div>
+<p>健身房如何定義「活躍會員」？</p>
+<ul>
+<li>❌ <strong>登入刷卡就算</strong>：可能只是來洗澡或吹冷氣</li>
+<li>✅ <strong>實際使用設備</strong>：跑步機、重訓、上課</li>
+</ul>
+<p>同理，SaaS 的「活躍用戶」應該看<strong>核心價值行為</strong>，不是單純登入。</p>
+</div>
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> 定義的力量：消除歧義</div>
+<p>注意這個定義如何運作：</p>
+<ol>
+<li><strong>量化標準</strong>：「至少一個核心動作」「30天內」</li>
+<li><strong>明確邊界</strong>：列出什麼算、什麼不算</li>
+<li><strong>預防誤用</strong>：提醒常見陷阱</li>
+</ol>
+<p>有了這份定義，AI 就不會把「只登入看通知的用戶」誤算為活躍用戶。</p>
+</div>
+<div class="practice">
+<div class="practice-title"><span class="icon">🧠</span> 練習思考 #1</div>
+<p>假設你經營一個線上課程平台，請思考：</p>
+<ol>
+<li>你會如何定義「Course Completion Rate（課程完成率）」？</li>
+<li>哪些行為應該算「完成」？哪些不算？</li>
+<li>有什麼常見陷阱可能導致這個指標被誤解？</li>
+</ol>
+<p><em>提示：考慮「看完影片」vs「通過測驗」vs「取得證書」的差異。</em></p>
+</div>
+</div>
+</div>
+<div class="section-divider"></div>
+<!-- Step 2: Illustrate -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">Step 2: Illustrate (Show, Don't Just Tell)</div>
+<p>Definitions alone aren't enough. Just as you wouldn't expect a new analyst to master your business from a glossary, your AI needs examples that demonstrate the boundaries and edge cases of each concept.</p>
+<p>This is where most people stop too early. They provide one example and assume understanding, but in my experience training both humans and AI, <strong>learning happens most effectively in the contrast between what something is and what it isn't</strong>.</p>
+<div class="workflow-box">
+<div class="workflow-title">Example Structure 範例結構</div>
+<ul>
+<li>2 positive examples that clearly demonstrate this concept in action</li>
+<li>2 negative examples that might look similar but don't qualify</li>
+<li>For each example, include: Specific metrics or behaviors, Why it does or doesn't meet our definition, The business outcome (if relevant)</li>
+</ul>
+</div>
+</div>
+<div class="content-right">
+<div class="key-term">
+<div class="key-term-title"><span class="icon">🔑</span> 核心原則：Contrastive Learning (對比學習)</div>
+<p>人類和 AI 最有效的學習方式是透過<strong>對比</strong>：</p>
+<ul>
+<li>「這個是 A」＋「這個不是 A」</li>
+<li>「這個看起來像 A 但其實是 B」</li>
+</ul>
+<p>只給正面例子 → AI 可能過度泛化</p>
+<p>只給反面例子 → AI 可能過度限縮</p>
+<p><strong>兩者都給 → AI 學會精確判斷邊界</strong></p>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：品酒師的培訓</div>
+<p>培訓品酒師時，師傅不會只說「這是好酒」。</p>
+<p>而是會讓學徒：</p>
+<ol>
+<li>嚐好酒，說明為什麼好</li>
+<li>嚐劣酒，說明為什麼差</li>
+<li>嚐看起來很像但品質不同的酒，訓練辨別能力</li>
+</ol>
+<p><strong>對比之下，細微差異才會浮現。</strong></p>
+</div>
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> 常見錯誤：只給一個例子</div>
+<p>很多人教 AI 時會說：「活躍用戶就是像 User A 這樣的人」。</p>
+<p><strong>問題</strong>：AI 不知道 User A 的哪些特徵是關鍵的。</p>
+<ul>
+<li>是因為登入 20 次？</li>
+<li>是因為創建 12 份文件？</li>
+<li>是因為邀請 3 個隊友？</li>
+<li>還是這些的組合？</li>
+</ul>
+<p>需要對比例子才能讓 AI 理解真正的判斷標準。</p>
+</div>
+</div>
+</div>
+<!-- Illustrate Examples -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">Real Engagement Score Examples</div>
+<p><strong>Positive Examples (These ARE high engagement):</strong></p>
+<p><span class="highlight">User A</span>: 85 engagement score. Created 12 documents, collaborated on eight projects, logged in 20 times. Invited three teammates. Result: Renewed annual subscription early.</p>
+<p><span class="highlight">User B</span>: 78 engagement score. Created only three documents, but all were heavily collaborated on (15+ collaborators each). Built templates used across the team. Result: Upgraded to the Enterprise plan.</p>
+<p><strong>Negative Examples (These are NOT high engagement despite appearing active):</strong></p>
+<p><span class="highlight">User C</span>: 45 engagement score despite 40 logins. All sessions are under 2 minutes. Zero document creation. Classic "tire-kicker" behavior. Result: Churned after trial.</p>
+<p><span class="highlight">User D</span>: 35 engagement score. Created 10 documents but never returned after the first week. High initial burst, zero sustained engagement. Result: Dormant account.</p>
+<div class="quote-box">
                     The contrast makes the difference. Your AI learns that engagement depends on the pattern, not any single metric. User B had fewer documents than User D, but the quality and collaboration made all the difference.
                 </div>
-            </div>
-            
-            <div class="right-column">
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> 深度解析：四個用戶的對比</div>
-                    <table class="comparison-table">
-                        <tr>
-                            <th>用戶</th>
-                            <th>表面數據</th>
-                            <th>實際評估</th>
-                            <th>結果</th>
-                        </tr>
-                        <tr>
-                            <td>User A</td>
-                            <td>登入20次、12份文件</td>
-                            <td>✅ 高度參與</td>
-                            <td>提前續約</td>
-                        </tr>
-                        <tr>
-                            <td>User B</td>
-                            <td>只有3份文件</td>
-                            <td>✅ 高度參與</td>
-                            <td>升級方案</td>
-                        </tr>
-                        <tr>
-                            <td>User C</td>
-                            <td>登入40次（最多！）</td>
-                            <td>❌ 低度參與</td>
-                            <td>試用後流失</td>
-                        </tr>
-                        <tr>
-                            <td>User D</td>
-                            <td>10份文件</td>
-                            <td>❌ 低度參與</td>
-                            <td>帳號閒置</td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：餐廳顧客行為</div>
-                    <p>餐廳老闆如何判斷「忠實顧客」？</p>
-                    <ul>
-                        <li><strong>User A 類型</strong>：常來、點很多、帶朋友 → VIP</li>
-                        <li><strong>User B 類型</strong>：來得少、但每次都辦派對 → VIP</li>
-                        <li><strong>User C 類型</strong>：天天來、只喝免費水、從不點餐 → 不是真顧客</li>
-                        <li><strong>User D 類型</strong>：開幕那週天天來、然後再也沒出現 → 獵奇者</li>
-                    </ul>
-                    <p><strong>單看「來店次數」會完全誤判！</strong></p>
-                </div>
-                
-                <div class="key-term">
-                    <div class="key-term-title"><span class="icon">🔑</span> 關鍵洞見：Pattern > Metric</div>
-                    <p>這個例子教我們：</p>
-                    <ul>
-                        <li>User C 登入 40 次 > User A 的 20 次</li>
-                        <li>User D 創建 10 份文件 > User B 的 3 份</li>
-                    </ul>
-                    <p>但 A 和 B 才是真正高參與用戶。</p>
-                    <p><strong>關鍵不是單一指標的數字大小，而是行為模式的品質。</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- Step 3: Interrogate -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">Step 3: Interrogate (Stress Test the Understanding)</div>
-                
-                <p>The final step is where you transform teaching into a partnership. Once you've defined your concepts and illustrated them with examples, you need to verify that your AI truly understands and can apply this knowledge independently.</p>
-                
-                <p>I use three types of interrogation prompts, each designed to test a different level of understanding:</p>
-                
-                <div class="framework-box">
-                    <div class="framework-title">Three Levels of Interrogation</div>
-                    
-                    <p><strong>Level 1: Relationship Testing</strong></p>
-                    <p>"Explain the relationship between Engagement Score and Churn Risk in our business. What patterns have you learned?"</p>
-                    
-                    <p><strong>Level 2: Risk Assessment</strong></p>
-                    <p>"Based on our definition of Active User, what are the biggest risks to improving this metric? What behaviors might we inadvertently incentivize that would damage the business?"</p>
-                    
-                    <p><strong>Level 3: Edge Case Classification</strong></p>
-                    <p>"Does this scenario qualify as [your concept]? Why or why not?"</p>
-                    <p><em>Scenario: A user logged in 25 times last month but only to check notifications. They created zero documents and collaborated on nothing.</em></p>
-                </div>
-            </div>
-            
-            <div class="right-column">
-                <div class="key-term">
-                    <div class="key-term-title"><span class="icon">🔑</span> 核心概念：Interrogate (檢驗/壓力測試)</div>
-                    <p>三個層級的測試，檢驗 AI 是否真正理解：</p>
-                    <table class="comparison-table">
-                        <tr>
-                            <th>層級</th>
-                            <th>測試內容</th>
-                            <th>目的</th>
-                        </tr>
-                        <tr>
-                            <td>Level 1</td>
-                            <td>關係理解</td>
-                            <td>AI 能否連結不同概念</td>
-                        </tr>
-                        <tr>
-                            <td>Level 2</td>
-                            <td>風險評估</td>
-                            <td>AI 能否識別潛在問題</td>
-                        </tr>
-                        <tr>
-                            <td>Level 3</td>
-                            <td>邊界判斷</td>
-                            <td>AI 能否處理模糊案例</td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：駕訓班的三階段考試</div>
-                    <p>就像學開車有不同階段的測驗：</p>
-                    <ol>
-                        <li><strong>筆試</strong>（Level 1）：理解交通規則的關係，例如「紅燈和停車的關係是什麼？」</li>
-                        <li><strong>模擬情境</strong>（Level 2）：「如果路上有行人但沒有斑馬線，你會怎麼處理？有什麼風險？」</li>
-                        <li><strong>路考</strong>（Level 3）：實際上路面對真實複雜情況</li>
-                    </ol>
-                    <p>AI 也需要這三個階段的測試才能確保真正理解。</p>
-                </div>
-                
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> 如何解讀 AI 的回答</div>
-                    <ul>
-                        <li><strong>模糊回答</strong> → 需要更多範例</li>
-                        <li><strong>過度自信但忽略陷阱</strong> → 需要強調邊界</li>
-                        <li><strong>能引用你的具體脈絡</strong> → 教學成功！</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Interrogate Templates -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">Ready-to-Use Interrogation Prompts</div>
-                
-                <div class="code-block">1. "Given our definition of [Concept], analyze this scenario: [describe edge case].
+</div>
+<div class="content-right">
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> 深度解析：四個用戶的對比</div>
+<table class="comparison-table">
+<tr>
+<th>用戶</th>
+<th>表面數據</th>
+<th>實際評估</th>
+<th>結果</th>
+</tr>
+<tr>
+<td>User A</td>
+<td>登入20次、12份文件</td>
+<td>✅ 高度參與</td>
+<td>提前續約</td>
+</tr>
+<tr>
+<td>User B</td>
+<td>只有3份文件</td>
+<td>✅ 高度參與</td>
+<td>升級方案</td>
+</tr>
+<tr>
+<td>User C</td>
+<td>登入40次（最多！）</td>
+<td>❌ 低度參與</td>
+<td>試用後流失</td>
+</tr>
+<tr>
+<td>User D</td>
+<td>10份文件</td>
+<td>❌ 低度參與</td>
+<td>帳號閒置</td>
+</tr>
+</table>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：餐廳顧客行為</div>
+<p>餐廳老闆如何判斷「忠實顧客」？</p>
+<ul>
+<li><strong>User A 類型</strong>：常來、點很多、帶朋友 → VIP</li>
+<li><strong>User B 類型</strong>：來得少、但每次都辦派對 → VIP</li>
+<li><strong>User C 類型</strong>：天天來、只喝免費水、從不點餐 → 不是真顧客</li>
+<li><strong>User D 類型</strong>：開幕那週天天來、然後再也沒出現 → 獵奇者</li>
+</ul>
+<p><strong>單看「來店次數」會完全誤判！</strong></p>
+</div>
+<div class="key-term">
+<div class="key-term-title"><span class="icon">🔑</span> 關鍵洞見：Pattern &gt; Metric</div>
+<p>這個例子教我們：</p>
+<ul>
+<li>User C 登入 40 次 &gt; User A 的 20 次</li>
+<li>User D 創建 10 份文件 &gt; User B 的 3 份</li>
+</ul>
+<p>但 A 和 B 才是真正高參與用戶。</p>
+<p><strong>關鍵不是單一指標的數字大小，而是行為模式的品質。</strong></p>
+</div>
+</div>
+</div>
+<div class="section-divider"></div>
+<!-- Step 3: Interrogate -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">Step 3: Interrogate (Stress Test the Understanding)</div>
+<p>The final step is where you transform teaching into a partnership. Once you've defined your concepts and illustrated them with examples, you need to verify that your AI truly understands and can apply this knowledge independently.</p>
+<p>I use three types of interrogation prompts, each designed to test a different level of understanding:</p>
+<div class="framework-box">
+<div class="framework-title">Three Levels of Interrogation</div>
+<p><strong>Level 1: Relationship Testing</strong></p>
+<p>"Explain the relationship between Engagement Score and Churn Risk in our business. What patterns have you learned?"</p>
+<p><strong>Level 2: Risk Assessment</strong></p>
+<p>"Based on our definition of Active User, what are the biggest risks to improving this metric? What behaviors might we inadvertently incentivize that would damage the business?"</p>
+<p><strong>Level 3: Edge Case Classification</strong></p>
+<p>"Does this scenario qualify as [your concept]? Why or why not?"</p>
+<p><em>Scenario: A user logged in 25 times last month but only to check notifications. They created zero documents and collaborated on nothing.</em></p>
+</div>
+</div>
+<div class="content-right">
+<div class="key-term">
+<div class="key-term-title"><span class="icon">🔑</span> 核心概念：Interrogate (檢驗/壓力測試)</div>
+<p>三個層級的測試，檢驗 AI 是否真正理解：</p>
+<table class="comparison-table">
+<tr>
+<th>層級</th>
+<th>測試內容</th>
+<th>目的</th>
+</tr>
+<tr>
+<td>Level 1</td>
+<td>關係理解</td>
+<td>AI 能否連結不同概念</td>
+</tr>
+<tr>
+<td>Level 2</td>
+<td>風險評估</td>
+<td>AI 能否識別潛在問題</td>
+</tr>
+<tr>
+<td>Level 3</td>
+<td>邊界判斷</td>
+<td>AI 能否處理模糊案例</td>
+</tr>
+</table>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：駕訓班的三階段考試</div>
+<p>就像學開車有不同階段的測驗：</p>
+<ol>
+<li><strong>筆試</strong>（Level 1）：理解交通規則的關係，例如「紅燈和停車的關係是什麼？」</li>
+<li><strong>模擬情境</strong>（Level 2）：「如果路上有行人但沒有斑馬線，你會怎麼處理？有什麼風險？」</li>
+<li><strong>路考</strong>（Level 3）：實際上路面對真實複雜情況</li>
+</ol>
+<p>AI 也需要這三個階段的測試才能確保真正理解。</p>
+</div>
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> 如何解讀 AI 的回答</div>
+<ul>
+<li><strong>模糊回答</strong> → 需要更多範例</li>
+<li><strong>過度自信但忽略陷阱</strong> → 需要強調邊界</li>
+<li><strong>能引用你的具體脈絡</strong> → 教學成功！</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Interrogate Templates -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">Ready-to-Use Interrogation Prompts</div>
+<div class="code-block">1. "Given our definition of [Concept], analyze this scenario: [describe edge case].
    Does it qualify? Why or why not? What additional information would help you decide?"
 
 2. "Compare these two situations and tell me which demonstrates stronger [Concept]:
@@ -1198,260 +558,222 @@
 3. "What would be a red flag that we're measuring [Concept] incorrectly?"
 
 4. "What behaviors might game this metric?"</div>
-                
-                <p>The responses will tell you immediately whether your teaching has landed. Vague answers mean you need more examples. Overly confident answers that ignore your pitfalls mean you need to reinforce boundaries. Thoughtful answers that reference your specific context mean you've succeeded.</p>
-            </div>
-            
-            <div class="right-column">
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> Prompt 模板解析</div>
-                    <p>這四個 prompt 各有不同測試目的：</p>
-                    <ol>
-                        <li><strong>情境分析</strong>：測試 AI 能否應用定義到新情況</li>
-                        <li><strong>比較判斷</strong>：測試 AI 能否區分程度差異</li>
-                        <li><strong>紅旗警示</strong>：測試 AI 能否識別測量錯誤</li>
-                        <li><strong>作弊行為</strong>：測試 AI 能否預見系統被濫用的方式</li>
-                    </ol>
-                </div>
-                
-                <div class="practice">
-                    <div class="practice-title"><span class="icon">🧠</span> 練習思考 #2</div>
-                    <p>使用第 4 個 prompt 模板，思考：</p>
-                    <p><strong>「哪些行為可能會 game（鑽漏洞）『課程完成率』這個指標？」</strong></p>
-                    <p>請列出至少 3 種可能的作弊行為，以及這些行為為什麼會讓指標失真。</p>
-                    <p><em>提示：考慮快轉影片、多帳號、外包做作業等情境。</em></p>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：Goodhart's Law</div>
-                    <p>經濟學有一條著名的 <strong>Goodhart's Law（古德哈特定律）</strong>：</p>
-                    <p><em>「當一個指標變成目標時，它就不再是好的指標。」</em></p>
-                    <p>例如：學校以「升學率」為目標 → 老師只教考試會考的 → 學生真正學習能力下降</p>
-                    <p>第 3、4 個 prompt 就是在測試 AI 是否理解這個風險。</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- Real World Example -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">Putting It All Together: A Real-World Workflow</div>
-                
-                <p><strong>The Question:</strong> "Why did our Active User count increase by 15% but our Engagement Score only increased by 3%?"</p>
-                
-                <p><strong>Without the Data Literacy Loop</strong>, my AI would have given me generic possibilities: 'Users might be logging in more but not engaging deeply' or 'Check your data for anomalies.' Technically accurate, practically useless.</p>
-                
-                <p><strong>With the Data Literacy Loop:</strong></p>
-                
-                <ul>
-                    <li><strong>Step 1 (Define):</strong> I had already taught my AI our specific definitions of Active User and Engagement Score.</li>
-                    <li><strong>Step 2 (Illustrate):</strong> My AI had seen examples of "false activity"—high login counts without meaningful engagement.</li>
-                    <li><strong>Step 3 (Interrogate):</strong> When I asked the question, my AI immediately hypothesized...</li>
-                </ul>
-                
-                <div class="quote-box">
+<p>The responses will tell you immediately whether your teaching has landed. Vague answers mean you need more examples. Overly confident answers that ignore your pitfalls mean you need to reinforce boundaries. Thoughtful answers that reference your specific context mean you've succeeded.</p>
+</div>
+<div class="content-right">
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> Prompt 模板解析</div>
+<p>這四個 prompt 各有不同測試目的：</p>
+<ol>
+<li><strong>情境分析</strong>：測試 AI 能否應用定義到新情況</li>
+<li><strong>比較判斷</strong>：測試 AI 能否區分程度差異</li>
+<li><strong>紅旗警示</strong>：測試 AI 能否識別測量錯誤</li>
+<li><strong>作弊行為</strong>：測試 AI 能否預見系統被濫用的方式</li>
+</ol>
+</div>
+<div class="practice">
+<div class="practice-title"><span class="icon">🧠</span> 練習思考 #2</div>
+<p>使用第 4 個 prompt 模板，思考：</p>
+<p><strong>「哪些行為可能會 game（鑽漏洞）『課程完成率』這個指標？」</strong></p>
+<p>請列出至少 3 種可能的作弊行為，以及這些行為為什麼會讓指標失真。</p>
+<p><em>提示：考慮快轉影片、多帳號、外包做作業等情境。</em></p>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：Goodhart's Law</div>
+<p>經濟學有一條著名的 <strong>Goodhart's Law（古德哈特定律）</strong>：</p>
+<p><em>「當一個指標變成目標時，它就不再是好的指標。」</em></p>
+<p>例如：學校以「升學率」為目標 → 老師只教考試會考的 → 學生真正學習能力下降</p>
+<p>第 3、4 個 prompt 就是在測試 AI 是否理解這個風險。</p>
+</div>
+</div>
+</div>
+<div class="section-divider"></div>
+<!-- Real World Example -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">Putting It All Together: A Real-World Workflow</div>
+<p><strong>The Question:</strong> "Why did our Active User count increase by 15% but our Engagement Score only increased by 3%?"</p>
+<p><strong>Without the Data Literacy Loop</strong>, my AI would have given me generic possibilities: 'Users might be logging in more but not engaging deeply' or 'Check your data for anomalies.' Technically accurate, practically useless.</p>
+<p><strong>With the Data Literacy Loop:</strong></p>
+<ul>
+<li><strong>Step 1 (Define):</strong> I had already taught my AI our specific definitions of Active User and Engagement Score.</li>
+<li><strong>Step 2 (Illustrate):</strong> My AI had seen examples of "false activity"—high login counts without meaningful engagement.</li>
+<li><strong>Step 3 (Interrogate):</strong> When I asked the question, my AI immediately hypothesized...</li>
+</ul>
+<div class="quote-box">
                     This pattern suggests you have more users crossing the minimum threshold for Active (one core action) without sustained engagement. You may be seeing an influx of trial users or a successful activation campaign that's getting users to first value, but not to habit formation.
                 </div>
-                
-                <p>It then suggested: "Segment your new Active Users by their first core action type. I suspect you'll find document viewers increased while document creators stayed flat. Based on your examples, viewers rarely convert to engaged users."</p>
-                
-                <p><strong>That analysis was correct.</strong> We ran a campaign encouraging users to "explore a sample document," which drove up Active User counts but didn't foster lasting engagement.</p>
-            </div>
-            
-            <div class="right-column">
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> Before vs After 對比</div>
-                    <table class="comparison-table">
-                        <tr>
-                            <th>沒有框架</th>
-                            <th>使用框架</th>
-                        </tr>
-                        <tr>
-                            <td>「用戶可能登入多但參與少」（泛泛之談）</td>
-                            <td>精準假設：trial users 跨過最低門檻但未形成習慣</td>
-                        </tr>
-                        <tr>
-                            <td>「檢查數據異常」（沒有方向）</td>
-                            <td>具體建議：按首次動作類型分群</td>
-                        </tr>
-                        <tr>
-                            <td>花數小時探索死胡同</td>
-                            <td>數分鐘內驗證假設</td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：老中醫 vs 新手醫生</div>
-                    <p>病人說「我最近常頭痛」：</p>
-                    <ul>
-                        <li><strong>新手醫生</strong>：「可能是壓力大，多休息」（萬用回答）</li>
-                        <li><strong>老中醫</strong>（看過病歷）：「你上次說開始喝咖啡減肥，咖啡因戒斷會頭痛。先停咖啡三天看看。」</li>
-                    </ul>
-                    <p>老中醫有<strong>病人的完整 context</strong>，所以能給出精準判斷。</p>
-                </div>
-                
-                <div class="key-term">
-                    <div class="key-term-title"><span class="icon">🔑</span> 關鍵概念：First Value vs Habit Formation</div>
-                    <p>這個案例揭示了產品成長的重要區分：</p>
-                    <ul>
-                        <li><strong>First Value（首次價值）</strong>：用戶第一次體驗到產品價值</li>
-                        <li><strong>Habit Formation（習慣養成）</strong>：用戶持續回來使用</li>
-                    </ul>
-                    <p>「看範例文件」讓用戶達到 First Value，但沒有觸發 Habit Formation。</p>
-                    <p><strong>受過訓練的 AI 能區分這兩個階段。</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- Strategic Benefits -->
-        <div class="two-column">
-            <div class="left-column">
-                <div class="section-title">The Strategic Dividend</div>
-                
-                <p>The Data Literacy Loop transforms your collaboration with AI, making it more efficient rather than simply making your AI smarter. Every hour you invest in teaching pays back tenfold in analysis that fits your reality.</p>
-                
-                <p><strong>The benefits compound:</strong></p>
-                
-                <ul>
-                    <li><strong>Fewer correction cycles:</strong> Your AI gets it right the first time because it understands your context</li>
-                    <li><strong>Deeper insights:</strong> Your AI can spot patterns you've trained it to recognize, including ones you might miss</li>
-                    <li><strong>Faster onboarding:</strong> When your business evolves, updating your definitions is faster than re-explaining context in every conversation</li>
-                    <li><strong>Better questions:</strong> An educated AI asks clarifying questions that sharpen your own thinking</li>
-                </ul>
-                
-                <p>Most importantly, you shift from prompting for answers to building a genuine analytical partner. Your questions evolve from, 'Can you analyze this data?' to, 'What should we be worried about here?'</p>
-                
-                <div class="quote-box">
+<p>It then suggested: "Segment your new Active Users by their first core action type. I suspect you'll find document viewers increased while document creators stayed flat. Based on your examples, viewers rarely convert to engaged users."</p>
+<p><strong>That analysis was correct.</strong> We ran a campaign encouraging users to "explore a sample document," which drove up Active User counts but didn't foster lasting engagement.</p>
+</div>
+<div class="content-right">
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> Before vs After 對比</div>
+<table class="comparison-table">
+<tr>
+<th>沒有框架</th>
+<th>使用框架</th>
+</tr>
+<tr>
+<td>「用戶可能登入多但參與少」（泛泛之談）</td>
+<td>精準假設：trial users 跨過最低門檻但未形成習慣</td>
+</tr>
+<tr>
+<td>「檢查數據異常」（沒有方向）</td>
+<td>具體建議：按首次動作類型分群</td>
+</tr>
+<tr>
+<td>花數小時探索死胡同</td>
+<td>數分鐘內驗證假設</td>
+</tr>
+</table>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：老中醫 vs 新手醫生</div>
+<p>病人說「我最近常頭痛」：</p>
+<ul>
+<li><strong>新手醫生</strong>：「可能是壓力大，多休息」（萬用回答）</li>
+<li><strong>老中醫</strong>（看過病歷）：「你上次說開始喝咖啡減肥，咖啡因戒斷會頭痛。先停咖啡三天看看。」</li>
+</ul>
+<p>老中醫有<strong>病人的完整 context</strong>，所以能給出精準判斷。</p>
+</div>
+<div class="key-term">
+<div class="key-term-title"><span class="icon">🔑</span> 關鍵概念：First Value vs Habit Formation</div>
+<p>這個案例揭示了產品成長的重要區分：</p>
+<ul>
+<li><strong>First Value（首次價值）</strong>：用戶第一次體驗到產品價值</li>
+<li><strong>Habit Formation（習慣養成）</strong>：用戶持續回來使用</li>
+</ul>
+<p>「看範例文件」讓用戶達到 First Value，但沒有觸發 Habit Formation。</p>
+<p><strong>受過訓練的 AI 能區分這兩個階段。</strong></p>
+</div>
+</div>
+</div>
+<div class="section-divider"></div>
+<!-- Strategic Benefits -->
+<div class="content-grid">
+<div class="content-left">
+<div class="section-title">The Strategic Dividend</div>
+<p>The Data Literacy Loop transforms your collaboration with AI, making it more efficient rather than simply making your AI smarter. Every hour you invest in teaching pays back tenfold in analysis that fits your reality.</p>
+<p><strong>The benefits compound:</strong></p>
+<ul>
+<li><strong>Fewer correction cycles:</strong> Your AI gets it right the first time because it understands your context</li>
+<li><strong>Deeper insights:</strong> Your AI can spot patterns you've trained it to recognize, including ones you might miss</li>
+<li><strong>Faster onboarding:</strong> When your business evolves, updating your definitions is faster than re-explaining context in every conversation</li>
+<li><strong>Better questions:</strong> An educated AI asks clarifying questions that sharpen your own thinking</li>
+</ul>
+<p>Most importantly, you shift from prompting for answers to building a genuine analytical partner. Your questions evolve from, 'Can you analyze this data?' to, 'What should we be worried about here?'</p>
+<div class="quote-box">
                     The framework is simple, but the impact is transformational. Start with your three most important business concepts. Define them with specificity. Illustrate them thoroughly. Interrogate the understanding. Then watch as your AI goes from assistant to advisor.
                 </div>
-            </div>
-            
-            <div class="right-column">
-                <div class="key-term">
-                    <div class="key-term-title"><span class="icon">🔑</span> 核心概念：Compounding Benefits (複利效益)</div>
-                    <p>這個框架的四大複利效益：</p>
-                    <ol>
-                        <li><strong>減少修正循環</strong>：AI 第一次就對</li>
-                        <li><strong>更深洞察</strong>：AI 能發現你訓練它辨識的模式</li>
-                        <li><strong>快速更新</strong>：業務變化時只需更新定義</li>
-                        <li><strong>更好問題</strong>：AI 會問出讓你思考更清晰的問題</li>
-                    </ol>
-                </div>
-                
-                <div class="analogy">
-                    <div class="analogy-title"><span class="icon">🎯</span> 比喻說明：培養老員工 vs 不斷換新人</div>
-                    <p>兩種管理策略的對比：</p>
-                    <ul>
-                        <li><strong>策略 A</strong>：員工做錯就換人 → 永遠在教基礎</li>
-                        <li><strong>策略 B</strong>：投資培訓讓員工成長 → 逐漸能託付更複雜任務</li>
-                    </ul>
-                    <p>大多數人使用 AI 像策略 A（每次都從零開始），但 Data Literacy Loop 讓你實踐策略 B。</p>
-                </div>
-                
-                <div class="key-note">
-                    <div class="key-note-title"><span class="icon">⚡</span> 關鍵轉變：從 Assistant 到 Advisor</div>
-                    <p>問題的演進：</p>
-                    <ul>
-                        <li><strong>Before</strong>：「你能分析這個數據嗎？」（請 AI 執行任務）</li>
-                        <li><strong>After</strong>：「我們應該擔心什麼？」（請 AI 提供策略建議）</li>
-                    </ul>
-                    <p>這是從「工具使用者」到「策略夥伴」的根本轉變。</p>
-                </div>
-                
-                <div class="practice">
-                    <div class="practice-title"><span class="icon">🧠</span> 練習思考 #3</div>
-                    <p>思考你自己的工作或業務：</p>
-                    <ol>
-                        <li>列出你最重要的 3 個業務概念或指標</li>
-                        <li>這些概念在你的組織中是否有清晰的定義？</li>
-                        <li>如果要教 AI 理解這些概念，你會用什麼正面和反面範例？</li>
-                    </ol>
-                    <p><em>這個練習是開始實踐 Data Literacy Loop 的第一步。</em></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Summary Section -->
-        <div class="summary-box">
-            <div class="summary-title">📋 全文總結 Summary</div>
-            
-            <div class="two-column" style="gap: 30px; margin-bottom: 0;">
-                <div>
-                    <h4 style="color: #0369a1; margin-bottom: 15px;">核心問題：Context Ceiling</h4>
-                    <p>AI 有你所有的數據，但不理解你的業務現實。它能計算數字，但無法判斷這些數字在你的脈絡中代表什麼。</p>
-                    
-                    <h4 style="color: #0369a1; margin: 20px 0 15px 0;">解決方案：Data Literacy Loop</h4>
-                    <ol>
-                        <li><strong>Define (定義)</strong>：建立主定義清單，包含正式定義、正反範例、常見陷阱</li>
-                        <li><strong>Illustrate (示例)</strong>：透過對比學習，展示什麼是、什麼不是</li>
-                        <li><strong>Interrogate (檢驗)</strong>：三層級測試驗證 AI 是否真正理解</li>
-                    </ol>
-                </div>
-                
-                <div>
-                    <h4 style="color: #0369a1; margin-bottom: 15px;">核心心態轉變</h4>
-                    <ul>
-                        <li>從「把 AI 當搜尋引擎」→「把 AI 當新進分析師來培訓」</li>
-                        <li>從「每次對話重新解釋」→「一次教好，持續受益」</li>
-                        <li>從「請求 AI 執行任務」→「與 AI 進行策略討論」</li>
-                    </ul>
-                    
-                    <h4 style="color: #0369a1; margin: 20px 0 15px 0;">立即行動</h4>
-                    <p>選擇你業務中最重要的 3 個概念，為每個概念建立完整的主定義（正式定義 + 正反範例 + 常見陷阱），然後用三層級測試檢驗 AI 的理解。</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Implementation Checklist -->
-        <div class="framework-box">
-            <div class="framework-title">🚀 Implementation Checklist 實作清單</div>
-            <div class="two-column" style="gap: 30px; margin-bottom: 0;">
-                <div>
-                    <h4 style="margin-bottom: 15px; color: #1e40af;">Step 1: Define 定義</h4>
-                    <ul class="checklist">
-                        <li>列出你業務中 3-5 個最重要的概念/指標</li>
-                        <li>為每個概念寫出正式定義（含計算邏輯）</li>
-                        <li>加入 2 個正面範例和 2 個反面範例</li>
-                        <li>記錄常見陷阱和誤解</li>
-                    </ul>
-                    
-                    <h4 style="margin: 20px 0 15px 0; color: #1e40af;">Step 2: Illustrate 示例</h4>
-                    <ul class="checklist">
-                        <li>準備真實數據案例（正面）</li>
-                        <li>準備「看起來像但不是」的案例（反面）</li>
-                        <li>每個案例包含具體數字和業務結果</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 15px; color: #1e40af;">Step 3: Interrogate 檢驗</h4>
-                    <ul class="checklist">
-                        <li>Level 1：詢問概念間的關係</li>
-                        <li>Level 2：詢問潛在風險和作弊行為</li>
-                        <li>Level 3：測試邊界案例判斷</li>
-                    </ul>
-                    
-                    <h4 style="margin: 20px 0 15px 0; color: #1e40af;">持續優化 Continuous Improvement</h4>
-                    <ul class="checklist">
-                        <li>根據 AI 回答品質調整定義</li>
-                        <li>業務變化時更新定義清單</li>
-                        <li>收集新的正反範例持續訓練</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <footer class="footer">
-        <p><strong>原文來源</strong>：<a href="https://www.theaimaker.io/p/beyond-prompting-building-a-data" target="_blank">The AI Maker - Beyond Prompting: Building a Data Literate AI Partner</a></p>
-        <p>作者：Wyndo & Hodman Murad | 學習指南製作日期：2024年12月</p>
-        <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">本學習指南為教育目的製作，所有原文內容版權歸原作者所有。</p>
-    </footer>
-
+</div>
+<div class="content-right">
+<div class="key-term">
+<div class="key-term-title"><span class="icon">🔑</span> 核心概念：Compounding Benefits (複利效益)</div>
+<p>這個框架的四大複利效益：</p>
+<ol>
+<li><strong>減少修正循環</strong>：AI 第一次就對</li>
+<li><strong>更深洞察</strong>：AI 能發現你訓練它辨識的模式</li>
+<li><strong>快速更新</strong>：業務變化時只需更新定義</li>
+<li><strong>更好問題</strong>：AI 會問出讓你思考更清晰的問題</li>
+</ol>
+</div>
+<div class="analogy">
+<div class="analogy-title"><span class="icon">🎯</span> 比喻說明：培養老員工 vs 不斷換新人</div>
+<p>兩種管理策略的對比：</p>
+<ul>
+<li><strong>策略 A</strong>：員工做錯就換人 → 永遠在教基礎</li>
+<li><strong>策略 B</strong>：投資培訓讓員工成長 → 逐漸能託付更複雜任務</li>
+</ul>
+<p>大多數人使用 AI 像策略 A（每次都從零開始），但 Data Literacy Loop 讓你實踐策略 B。</p>
+</div>
+<div class="key-note">
+<div class="key-note-title"><span class="icon">⚡</span> 關鍵轉變：從 Assistant 到 Advisor</div>
+<p>問題的演進：</p>
+<ul>
+<li><strong>Before</strong>：「你能分析這個數據嗎？」（請 AI 執行任務）</li>
+<li><strong>After</strong>：「我們應該擔心什麼？」（請 AI 提供策略建議）</li>
+</ul>
+<p>這是從「工具使用者」到「策略夥伴」的根本轉變。</p>
+</div>
+<div class="practice">
+<div class="practice-title"><span class="icon">🧠</span> 練習思考 #3</div>
+<p>思考你自己的工作或業務：</p>
+<ol>
+<li>列出你最重要的 3 個業務概念或指標</li>
+<li>這些概念在你的組織中是否有清晰的定義？</li>
+<li>如果要教 AI 理解這些概念，你會用什麼正面和反面範例？</li>
+</ol>
+<p><em>這個練習是開始實踐 Data Literacy Loop 的第一步。</em></p>
+</div>
+</div>
+</div>
+<!-- Summary Section -->
+<div class="summary-box">
+<div class="summary-title">📋 全文總結 Summary</div>
+<div class="content-grid" style="gap: 30px; margin-bottom: 0;">
+<div>
+<h4 style="color: #0369a1; margin-bottom: 15px;">核心問題：Context Ceiling</h4>
+<p>AI 有你所有的數據，但不理解你的業務現實。它能計算數字，但無法判斷這些數字在你的脈絡中代表什麼。</p>
+<h4 style="color: #0369a1; margin: 20px 0 15px 0;">解決方案：Data Literacy Loop</h4>
+<ol>
+<li><strong>Define (定義)</strong>：建立主定義清單，包含正式定義、正反範例、常見陷阱</li>
+<li><strong>Illustrate (示例)</strong>：透過對比學習，展示什麼是、什麼不是</li>
+<li><strong>Interrogate (檢驗)</strong>：三層級測試驗證 AI 是否真正理解</li>
+</ol>
+</div>
+<div>
+<h4 style="color: #0369a1; margin-bottom: 15px;">核心心態轉變</h4>
+<ul>
+<li>從「把 AI 當搜尋引擎」→「把 AI 當新進分析師來培訓」</li>
+<li>從「每次對話重新解釋」→「一次教好，持續受益」</li>
+<li>從「請求 AI 執行任務」→「與 AI 進行策略討論」</li>
+</ul>
+<h4 style="color: #0369a1; margin: 20px 0 15px 0;">立即行動</h4>
+<p>選擇你業務中最重要的 3 個概念，為每個概念建立完整的主定義（正式定義 + 正反範例 + 常見陷阱），然後用三層級測試檢驗 AI 的理解。</p>
+</div>
+</div>
+</div>
+<!-- Implementation Checklist -->
+<div class="framework-box">
+<div class="framework-title">🚀 Implementation Checklist 實作清單</div>
+<div class="content-grid" style="gap: 30px; margin-bottom: 0;">
+<div>
+<h4 style="margin-bottom: 15px; color: #1e40af;">Step 1: Define 定義</h4>
+<ul class="checklist">
+<li>列出你業務中 3-5 個最重要的概念/指標</li>
+<li>為每個概念寫出正式定義（含計算邏輯）</li>
+<li>加入 2 個正面範例和 2 個反面範例</li>
+<li>記錄常見陷阱和誤解</li>
+</ul>
+<h4 style="margin: 20px 0 15px 0; color: #1e40af;">Step 2: Illustrate 示例</h4>
+<ul class="checklist">
+<li>準備真實數據案例（正面）</li>
+<li>準備「看起來像但不是」的案例（反面）</li>
+<li>每個案例包含具體數字和業務結果</li>
+</ul>
+</div>
+<div>
+<h4 style="margin-bottom: 15px; color: #1e40af;">Step 3: Interrogate 檢驗</h4>
+<ul class="checklist">
+<li>Level 1：詢問概念間的關係</li>
+<li>Level 2：詢問潛在風險和作弊行為</li>
+<li>Level 3：測試邊界案例判斷</li>
+</ul>
+<h4 style="margin: 20px 0 15px 0; color: #1e40af;">持續優化 Continuous Improvement</h4>
+<ul class="checklist">
+<li>根據 AI 回答品質調整定義</li>
+<li>業務變化時更新定義清單</li>
+<li>收集新的正反範例持續訓練</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<footer class="footer">
+<p><strong>原文來源</strong>：<a href="https://www.theaimaker.io/p/beyond-prompting-building-a-data" target="_blank">The AI Maker - Beyond Prompting: Building a Data Literate AI Partner</a></p>
+<p>作者：Wyndo &amp; Hodman Murad | 學習指南製作日期：2024年12月</p>
+<p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">本學習指南為教育目的製作，所有原文內容版權歸原作者所有。</p>
+</footer>
 </body>
 </html>

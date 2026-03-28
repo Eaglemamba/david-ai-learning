@@ -1,715 +1,544 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>九種用 Claude Code 爬取資料的方法</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>九種用 Claude Code 爬取資料的方法</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<!-- Dashboard Index Meta -->
+<meta content="2026-03-05" name="doc-date"/>
+<meta content="Claude Code 資料爬取九大方法 - Aniket Panjwani" name="doc-title"/>
+<meta content="Aniket Panjwani / @aniketapanjwani" name="doc-source"/>
+<meta content="" name="doc-source-type"/>
+<meta content="Tool,Agent,API,Automation" name="doc-tags"/>
+<meta content="4.0" name="doc-rating"/>
+<meta content="Claude Code 爬取資料完整指南：9 種方法從直接爬取到 Agent Browser 認證登入。" name="doc-summary"/>
+<meta content="2026-03-05_claude-code-scraping-nine-ways.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-    <!-- Dashboard Index Meta -->
-    <meta name="doc-date" content="2026-03-05">
-    <meta name="doc-title" content="Claude Code 資料爬取九大方法 - Aniket Panjwani">
-    <meta name="doc-source" content="Aniket Panjwani / @aniketapanjwani">
-    <meta name="doc-source-type" content="">
-    <meta name="doc-tags" content="Tool,Agent,API,Automation">
-    <meta name="doc-rating" content="4.0">
-    <meta name="doc-summary" content="Claude Code 爬取資料完整指南：9 種方法從直接爬取到 Agent Browser 認證登入。">
-    <meta name="doc-file" content="2026-03-05_claude-code-scraping-nine-ways.html">
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-
-    <style>
-        /* === v1.4.3 MANDATORY PAGE LAYOUT === */
-        body {
-            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            text-align: center;
-            padding: 2.5rem 2rem;
-            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-            color: white;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
-        .tag-container { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-        .tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .tag-agent { background: #c7d2fe; color: #3730a3; }
-        .tag-api { background: #ddd6fe; color: #4c1d95; }
-        .tag-automation { background: #a7f3d0; color: #065f46; }
-        .header h1 { font-size: 1.8rem; margin: 0 0 0.5rem; font-weight: 700; }
-        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
-        .header .source { font-size: 0.85rem; opacity: 0.8; }
-        .header .source a { color: #93c5fd; text-decoration: none; }
-        .header .source a:hover { text-decoration: underline; }
-        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
-        .executive-summary h2 { color: #1e3a5f; font-size: 1.2rem; margin-top: 0; }
-        .executive-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
-        .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .objective-title { font-weight: 700; color: #1e3a5f; font-size: 0.9rem; margin-bottom: 0.25rem; }
-        .objective-desc { font-size: 0.8rem; color: #64748b; }
-        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: flex-start; gap: 0.5rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 90px; max-width: 110px; }
-        .framework-icon { font-size: 1.3rem; margin-bottom: 0.3rem; width: 3rem; height: 3rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.3rem; }
-        .framework-step-title { font-weight: 700; font-size: 0.8rem; }
-        .framework-step-desc { font-size: 0.7rem; opacity: 0.9; margin-top: 0.15rem; }
-        .framework-arrow { font-size: 1.2rem; color: #93c5fd; margin-top: 0.8rem; }
-        .tab-container { margin: 1.5rem 0; }
-        .tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
-        .tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; }
-        .tab-btn:hover { color: #334155; }
-        .tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
-        .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
-        .content-right { padding: 1.5rem; background: #f8fafc; }
-        .part-label { font-size: 0.75rem; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-        .part-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
-        .bilingual-block { margin-bottom: 1.25rem; }
-        .zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
-        .en-text { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
-        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
-        .info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
-        .info-box-content p { margin: 0 0 0.5rem; }
-        .info-box-content p:last-child { margin-bottom: 0; }
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
-        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-        .hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .hl-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; color: #6d28d9; }
-        .takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .summary-card:nth-child(2) { border-left-color: #10b981; }
-        .summary-card:nth-child(3) { border-left-color: #8b5cf6; }
-        .summary-card:nth-child(4) { border-left-color: #f59e0b; }
-        .summary-card-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.5rem; }
-        .summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
-        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-        .question-answer p:last-child { margin-bottom: 0; }
-        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
-        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-        .section-title { font-size: 1.2rem; font-weight: 700; color: #1e3a5f; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
-        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-        .footer a { color: #6366f1; text-decoration: none; }
-        .footer a:hover { text-decoration: underline; }
-        .comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
-        .comparison-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
-        .comparison-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #e2e8f0; }
-        .comparison-table tr:nth-child(even) td { background: #f8fafc; }
-        .comparison-table tr:hover td { background: #eef2ff; }
-        @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            .content-grid { grid-template-columns: 1fr; }
-            .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
-            .objectives-grid { grid-template-columns: 1fr; }
-            .takeaways-grid { grid-template-columns: 1fr; }
-            .framework-arrow { display: none; }
-            .framework-steps { gap: 1rem; }
-            .tab-nav { flex-wrap: wrap; }
-            .tab-btn { font-size: 0.8rem; padding: 0.5rem 0.75rem; }
-        }
-    </style>
 </head>
 <body>
-
-<div class="header">
-    <div class="header-content">
-        <div class="tag-container">
-            <span class="tag tag-tool">Tool</span>
-            <span class="tag tag-agent">Agent</span>
-            <span class="tag tag-api">API</span>
-            <span class="tag tag-automation">Automation</span>
-        </div>
-        <h1>Nine Ways to Scrape Data with Claude Code</h1>
-        <div class="subtitle">九種用 Claude Code 爬取資料的方法 - 從直接爬取到 Agent Browser 完整指南</div>
-        <div class="source">Aniket Panjwani / @aniketapanjwani | <a href="https://youtu.be/4jQJdCfjPcw?si=Iv0F54vCa-JrdEUK">YouTube Video</a></div>
-    </div>
+<header class="header">
+<div class="header-content">
+<div class="tag-container">
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-api">API</span>
+<span class="tag tag-automation">Automation</span>
 </div>
-
+<h1>Nine Ways to Scrape Data with Claude Code</h1>
+<div class="subtitle">九種用 Claude Code 爬取資料的方法 - 從直接爬取到 Agent Browser 完整指南</div>
+<div class="source">Aniket Panjwani / @aniketapanjwani | <a href="https://youtu.be/4jQJdCfjPcw?si=Iv0F54vCa-JrdEUK">YouTube Video</a></div>
+</div>
+</header>
 <div class="container">
-
-    <!-- EXECUTIVE SUMMARY -->
-    <div class="executive-summary">
-        <div class="rating-bar">
-            <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
-            <span class="rating-high">↑ Practical Value, Tool Ecosystem</span>
-            <span class="rating-low">↓ Technical Depth, Learning Curve</span>
-        </div>
-        <h2>Executive Summary</h2>
-        <p>
-            Aniket Panjwani 整理了九種使用 Claude Code 爬取網路資料的方法，涵蓋從最簡單的「直接叫 Claude Code 爬」到使用 Agent Browser 處理認證登入的進階場景。文章的核心洞察是：<span class="hl-key">資料爬取的難度取決於目標網站的結構化程度和認證機制</span>，而 Claude Code 作為 agentic coding 工具，可以透過搭配不同的外部工具來應對各種場景。這是一份偏「工具清單 + 使用場景」的實戰型文章，技術深度不高但覆蓋面廣，適合作為快速參考手冊。
-        </p>
-    </div>
-
-    <!-- LEARNING OBJECTIVES -->
-    <div class="section-title">Learning Objectives</div>
-    <div class="objectives-grid">
-        <div class="objective-item">
-            <div class="objective-icon">🔍</div>
-            <div class="objective-title">9 種爬取方法的適用場景</div>
-            <div class="objective-desc">判斷哪種方法最適合你的目標網站</div>
-        </div>
-        <div class="objective-item" style="border-left-color: #10b981;">
-            <div class="objective-icon">🧰</div>
-            <div class="objective-title">外部工具生態系統</div>
-            <div class="objective-desc">Firecrawl, Apify, yt-dlp, Agent Browser 的定位</div>
-        </div>
-        <div class="objective-item" style="border-left-color: #8b5cf6;">
-            <div class="objective-icon">💡</div>
-            <div class="objective-title">Skill 設計思維</div>
-            <div class="objective-desc">將爬取工具封裝為可複用的 Claude Code Skill</div>
-        </div>
-    </div>
-
-    <!-- FRAMEWORK VISUAL -->
-    <div class="framework-visual">
-        <div class="framework-title">Data Scraping Complexity Ladder 資料爬取複雜度階梯</div>
-        <div class="framework-steps">
-            <div class="framework-step">
-                <div class="framework-icon">📄</div>
-                <div class="framework-step-title">Static</div>
-                <div class="framework-step-desc">直接爬取 HTML</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">⚡</div>
-                <div class="framework-step-title">Dynamic</div>
-                <div class="framework-step-desc">尋找 API endpoint</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">🛡️</div>
-                <div class="framework-step-title">Protected</div>
-                <div class="framework-step-desc">付費 API / 反爬蟲</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">📝</div>
-                <div class="framework-step-title">Unstructured</div>
-                <div class="framework-step-desc">Markdown + LLM 提取</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">🔐</div>
-                <div class="framework-step-title">Authenticated</div>
-                <div class="framework-step-desc">Cookie / Agent Browser</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TABBED CONTENT -->
-    <div class="section-title">Content 內容</div>
-    <div class="tab-container">
-        <div class="tab-nav">
-            <button class="tab-btn active" onclick="switchTab(event, 'tab-basic')">Basic 基礎爬取 (1-3)</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-structured')">Structured 結構化提取 (4-6)</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-advanced')">Advanced 進階場景 (7-9)</button>
-        </div>
-
-        <!-- TAB 1: Basic -->
-        <div id="tab-basic" class="tab-content active">
-
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="part-label">Way 1</div>
-                    <div class="part-title">Just Ask Claude Code to Scrape 直接叫 Claude Code 爬</div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">對於大量的網站，你可以<span class="hl-concept">直接告訴 Claude Code 去爬取該網站</span>，告訴它你要什麼資料，然後請它輸出到 CSV 或 SQLite 檔案。</div>
-                        <div class="en-text">For a large set of sites, you can just tell Claude Code to scrape the site, tell it what you want scraped, and ask it to write it out to a CSV or a SQLite file.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">Claude Code 會自行探索網站，可能會寫一個 Python 腳本，執行腳本，甚至可能寫一些單元測試，然後把資料寫到你電腦上的某個位置。</div>
-                        <div class="en-text">It will poke around the site for you, probably write a Python script, run the script, maybe even write some unit tests, and then just write out the data somewhere on your computer.</div>
-                    </div>
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">🛠️ 實務應用</div>
-                        <div class="info-box-content">
-                            <p>這是最「零配置」的方法。適用於結構清楚的公開網站（如政府資料、學術機構頁面、公開產品列表）。Claude Code 會自己決定用 requests + BeautifulSoup 還是其他方式。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-key">
-                        <div class="info-box-header">⚠️ 重點提示</div>
-                        <div class="info-box-content">
-                            <p><strong>適用場景：</strong>靜態 HTML 頁面、公開資料集、簡單表格</p>
-                            <p><strong>限制：</strong>動態載入內容（SPA）、需要認證的頁面、有反爬蟲機制的網站</p>
-                            <p><strong>輸出格式：</strong>CSV, SQLite, JSON</p>
-                        </div>
-                    </div>
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">💡 比喻說明</div>
-                        <div class="info-box-content">
-                            <p>想像你叫一個很聰明的助理去圖書館幫你影印特定章節 — 如果那本書就在開架區（公開網站），助理自己就能搞定。但如果書鎖在特藏室（需要認證），你得先拿到鑰匙給他。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="part-label">Way 2</div>
-                    <div class="part-title">Ask Claude Code to Find Endpoints 尋找 API 端點</div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">很多有趣的資料不是以靜態頁面呈現，而是<span class="hl-concept">透過某個 API 呼叫動態載入</span>。有時候 Claude Code 會自行逆向工程找到那個 API 呼叫，但有時候你需要推它一把，明確告訴它去找。</div>
-                        <div class="en-text">A lot of interesting data is not rendered as a static page, but is being loaded dynamically via some API call. Sometimes Claude Code will reverse engineer that API call itself, but sometimes you have to nudge it along.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">唯一的差別是：<span class="hl-key">在這個方法中你要求它尋找 endpoint</span>。只要給出那個詞、那個小小的提示，有時候就能得到比直接叫它爬取更好的結果。</div>
-                        <div class="en-text">The only difference is that in this method you ask it to look for endpoints. Just giving that word, that little nudge, will sometimes get you better results.</div>
-                    </div>
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">📚 核心概念：Prompt Nudge</div>
-                        <div class="info-box-content">
-                            <p><strong>Prompt Nudge 提示推力：</strong>Claude Code 本身有能力做很多事，但特定關鍵字能引導它走更有效率的路徑。「endpoint」這個詞就像告訴它：別爬 HTML，去找背後的 JSON API。這和 Prompt Engineering 的 specificity principle 完全一致。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-key">
-                        <div class="info-box-header">⚠️ 重點提示</div>
-                        <div class="info-box-content">
-                            <p><strong>適用場景：</strong>SPA (Single Page App)、動態載入的資料表、需要 AJAX 呼叫的網站</p>
-                            <p><strong>關鍵詞提示：</strong>在 prompt 中使用 "find the API endpoint"、"look for the data endpoint"、"reverse engineer the API"</p>
-                            <p><strong>優勢：</strong>直接拿到結構化 JSON，省去 HTML 解析</p>
-                        </div>
-                    </div>
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">🛠️ CDMO 應用</div>
-                        <div class="info-box-content">
-                            <p>如果你需要爬取藥品定價資料庫、臨床試驗資料（如 ClinicalTrials.gov 的 API），或供應商報價平台，這種「找 endpoint」的方法往往比直接爬 HTML 更穩定、更快。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="part-label">Way 3</div>
-                    <div class="part-title">ScrapeCreators 社群媒體專用 API</div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">大多數社群媒體網站上有很多有用的資料是可以爬取的，但它們<span class="hl-key">把 endpoint 設計得特別難逆向工程</span>。它們有自己的反機器人規則，而且每週都會更換 selector 的運作方式。</div>
-                        <div class="en-text">A lot of useful data on most social media sites is scrapeable, but they make their endpoints particularly difficult to reverse engineer. They have their own anti-bot rules, and they change the way selectors work each week.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">作者推薦使用 <span class="hl-practical">Scrape Creators</span>（scrapecreators.com），它提供幾乎每個社群媒體的 API 端點。作者建議<span class="hl-key">建立一個 Skill 來封裝這些端點</span>，作為一次性工具讓 agentic coding 工具永遠可以存取。</div>
-                        <div class="en-text">I would recommend creating a skill for the Scrape Creators endpoints as a one-time utility that then your agentic coding tool will always have access to.</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">📚 Skill 設計模式</div>
-                        <div class="info-box-content">
-                            <p>重要的架構概念：<strong>將外部 API 封裝為 Claude Code Skill</strong>。一次性設定好 API key、端點格式、常用參數，之後每次爬取只需告訴 Claude Code「用 ScrapeCreators 爬取 X」。</p>
-                            <p>這和 Master Prompt 系統的設計思維一致 — 前期投資建立可複用模板，後期邊際成本趨近於零。</p>
-                        </div>
-                    </div>
-                    <div class="info-box box-cost">
-                        <div class="info-box-header">💰 成本分析</div>
-                        <div class="info-box-content">
-                            <p><strong>ScrapeCreators：</strong>付費 API 服務</p>
-                            <p><strong>ROI 考量：</strong>如果每週都需要爬社群媒體，付費服務的穩定性遠勝自行維護 scraper。偶爾用的話可能不值得。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- TAB 2: Structured Extraction -->
-        <div id="tab-structured" class="tab-content">
-
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="part-label">Way 4</div>
-                    <div class="part-title">Apify Actor 爬蟲市集</div>
-                    <div class="bilingual-block">
-                        <div class="zh-text"><span class="hl-concept">Apify 是一個爬蟲市集</span>。對於很多難以爬取的網站，已經有人做好了可租用的爬蟲，在 Apify 上叫做「actors」。</div>
-                        <div class="en-text">Apify is a marketplace of scrapers. For a lot of difficult-to-scrape websites, people have made rentable scrapers that are available on Apify (called "actors").</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">作者喜歡用的一個是 <span class="hl-practical">Google Maps 爬蟲</span>，對社會科學家做直接分析或建立代理指標很有用，也適合商業人士做競爭分析或尋找當地潛在客戶。</div>
-                        <div class="en-text">One scraper I like to use is the Google Maps scraper, which can be quite useful for social scientists or for business people to do competition analysis or to find local leads.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">唯一的問題是<span class="hl-cost">你必須付費</span>。有些按使用量計費，有些需要按月租用。</div>
-                        <div class="en-text">The only problem is you have to pay for these. Some you pay by usage. Some you have to rent by month.</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-compare">
-                        <div class="info-box-header">⚖️ 工具比較</div>
-                        <div class="info-box-content">
-                            <p><strong>Apify vs ScrapeCreators：</strong>ScrapeCreators 專注社群媒體；Apify 是通用市集，覆蓋 Google Maps、電商、新聞等更廣泛場景。</p>
-                            <p><strong>Apify vs 自建爬蟲：</strong>自建零成本但維護成本高（網站改版就壞）；Apify actor 由社群維護，穩定性較高但需付費。</p>
-                        </div>
-                    </div>
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">🛠️ CDMO 應用</div>
-                        <div class="info-box-content">
-                            <p>Google Maps 爬蟲可用於市場調查 — 搜尋特定區域的 CDMO 設施、診所分布、藥局密度等，作為 Feasibility Assessment 的輔助資料來源。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="part-label">Way 5</div>
-                    <div class="part-title">Firecrawl → Markdown → Structured Extraction</div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">很多你想要的資料<span class="hl-key">並不是高度結構化的</span>。例如作者在做 EconNow 專案時，需要爬取大量經濟學求職市場候選人頁面，每個頁面都有自己的 HTML 結構。</div>
-                        <div class="en-text">A lot of data that you're going to want to get is not going to be highly structured. Each of these pages had their own HTML structure.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">常見的技術是<span class="hl-concept">將網頁轉為 Markdown，然後讓 LLM 解析 Markdown 並建立結構化輸出</span>。Firecrawl 是一個付費服務，可以輕鬆將網頁轉為 Markdown。</div>
-                        <div class="en-text">A common technique is to turn the web page into Markdown and then have an LLM parse the Markdown and create some kind of structured output.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">如果你正確設定了 structured outputs，你就能讓 LLM <span class="hl-practical">從不同的非結構化網站中解析出特定欄位</span>。</div>
-                        <div class="en-text">If you set up your structured outputs correctly, you'll be able to get the LLM to parse out particular kinds of fields from these different varying unstructured websites.</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">📚 HTML → Markdown → JSON Pipeline</div>
-                        <div class="info-box-content">
-                            <p>三階段資料管線：</p>
-                            <p><strong>1. HTML → Markdown：</strong>去除樣式和結構雜訊，保留純內容</p>
-                            <p><strong>2. Markdown → LLM：</strong>用 LLM 理解語義，不依賴固定 selector</p>
-                            <p><strong>3. LLM → Structured JSON：</strong>透過 structured outputs 確保輸出格式一致</p>
-                            <p>關鍵優勢：<span class="hl-key">不需要為每個網站寫不同的 scraper</span>。</p>
-                        </div>
-                    </div>
-                    <div class="info-box box-cost">
-                        <div class="info-box-header">💰 成本分析</div>
-                        <div class="info-box-content">
-                            <p><strong>Firecrawl：</strong>付費服務，edge case 處理好</p>
-                            <p><strong>OpenAI Structured Outputs：</strong>API 呼叫費用，規模化時需計算 token 成本</p>
-                            <p><strong>作者建議：</strong>預算有限就用免費替代方案</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="part-label">Way 6</div>
-                    <div class="part-title">DIY HTML → Markdown → Structured Extraction</div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">你可能會問：為什麼要付費用 Firecrawl？自己轉成 Markdown 不就好了？答案是<span class="hl-concept">可以的</span>。有免費工具：<code>turndown</code>（mixmark-io）和 <code>markitdown</code>（Microsoft）。</div>
-                        <div class="en-text">Can't you just turn it into Markdown yourself? And the answer is yeah, you can. There are tools that allow you to do that yourself too.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">作者使用 Firecrawl 的原因是它在<span class="hl-key">邊緣情境的處理更好</span>。預算小的話就用免費套件。</div>
-                        <div class="en-text">The reason I use Firecrawl is because I find it handles certain edge cases better. If you're on a small budget, just use one of these packages instead.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">另一個重點：對於<span class="hl-practical">小規模的資料，你甚至不需要呼叫外部 API</span>。可以讓 Claude Code 自己做結構化提取。但數千份文件的話就不實際了。</div>
-                        <div class="en-text">You don't even need to send the Markdown to an external API call for small-scale stuff. You could just have Claude Code itself do the structured extraction.</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-compare">
-                        <div class="info-box-header">⚖️ Firecrawl vs DIY</div>
-                        <div class="info-box-content">
-                            <table class="comparison-table">
-                                <tr><th>面向</th><th>Firecrawl</th><th>DIY</th></tr>
-                                <tr><td>成本</td><td>付費</td><td>免費</td></tr>
-                                <tr><td>Edge case</td><td>較好</td><td>基本</td></tr>
-                                <tr><td>設定</td><td>低（API call）</td><td>中</td></tr>
-                                <tr><td>適用規模</td><td>大規模</td><td>小到中</td></tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="info-box box-key">
-                        <div class="info-box-header">⚠️ 規模決策點</div>
-                        <div class="info-box-content">
-                            <p><strong>~100 頁：</strong>Claude Code 直接做結構化提取</p>
-                            <p><strong>100-1000 頁：</strong>DIY Markdown + OpenAI API</p>
-                            <p><strong>1000+ 頁：</strong>Firecrawl + OpenAI API batch</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- TAB 3: Advanced -->
-        <div id="tab-advanced" class="tab-content">
-
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="part-label">Way 7</div>
-                    <div class="part-title">yt-dlp — YouTube 資料爬取</div>
-                    <div class="bilingual-block">
-                        <div class="zh-text"><code>yt-dlp</code> 是一個工具，可以<span class="hl-concept">爬取任何 YouTube 影片、其 metadata 和字幕</span>。</div>
-                        <div class="en-text">yt-dlp is a tool which lets you scrape any YouTube video, its metadata, and the subtitles of the videos.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">作者基本上不再看影片了。他<span class="hl-practical">下載字幕，然後讓 Claude Code 為他建立個人化摘要</span>，將影片套用到他實際關心的脈絡中。</div>
-                        <div class="en-text">I basically never watch videos anymore. I'll just download the subtitles and then have Claude Code create a personalized summary for me.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">YouTube 影片中有大量有用的資料，作者認為<span class="hl-key">這個工具特別被低估</span>。</div>
-                        <div class="en-text">There is a ton of useful data in YouTube videos, and I really think that this tool in particular is highly under-exploited.</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">🛠️ 學習系統整合</div>
-                        <div class="info-box-content">
-                            <p>這和我們的 AI 學習系統高度相關。目前 source 以文章為主，但 YouTube 頻道（AI Maker Labs, Ethan Mollick 演講等）也有大量知識。</p>
-                            <p><strong>潛在 workflow：</strong>yt-dlp 下載字幕 → Claude Code 轉為結構化筆記 → 匯入 Master Prompt 系統生成教育文件。</p>
-                        </div>
-                    </div>
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">💡 比喻說明</div>
-                        <div class="info-box-content">
-                            <p>把 yt-dlp 想像成「影片→文字」的翻譯機。就像我們把文章餵進 Master Prompt 系統一樣，yt-dlp + Claude Code 可以把影片餵進同樣的知識管線。影片不再是「需要花時間看」的內容，而是可以被程式化處理的資料來源。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="part-label">Way 8</div>
-                    <div class="part-title">Reddit JSON Endpoint</div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">Reddit 有一個 JSON 端點，可以用來<span class="hl-concept">找到幾乎任何內容</span>。你只需在 Reddit URL 的末尾加上 <code>.json</code>，你的 agentic coding 工具就能以 JSON 文件存取 Reddit 的所有資料。</div>
-                        <div class="en-text">Reddit has a JSON endpoint. You just add on ".json" to the end of a Reddit URL, and then your agentic coding tool has access to everything on that part of Reddit as a JSON document.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">作者設定了一些 Skill，用來<span class="hl-practical">追蹤各種他關心的 subreddit 上的討論動態</span>。那些 Skill 就是 Claude Code 去打 Reddit 的 JSON 端點。</div>
-                        <div class="en-text">I have some skills set up to keep a pulse on what people are talking about on a large variety of subreddits. Those skills are just Claude Code hitting the JSON Reddit endpoints.</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-code">
-                        <div class="info-box-header">💻 技術細節</div>
-                        <div class="info-box-content">
-                            <p><strong>範例端點：</strong></p>
-                            <p><code>https://old.reddit.com/r/claudecode.json</code></p>
-                            <p>直接回傳 JSON 結構，包含 post 標題、內容、投票數、留言等。不需要 API key，不需要 OAuth — 最低門檻的結構化資料來源。</p>
-                        </div>
-                    </div>
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">🛠️ Skill 設計靈感</div>
-                        <div class="info-box-content">
-                            <p>可建立一個 Skill，定期爬取指定 subreddit（如 r/claudecode, r/pharmaceutical 等），摘要熱門話題，追蹤特定關鍵字趨勢。這是 Claude Code 作為「情報收集 agent」的實戰範例。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="part-label">Way 9</div>
-                    <div class="part-title">Agent Browser + Credentials 認證瀏覽</div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">有很多網站受到某種認證保護。要通過認證，有兩種方式。</div>
-                        <div class="en-text">There's a lot of sites that are protected behind some kind of authentication. You have two possible approaches.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">第一，你可以進行認證交換，取得 cookie，然後 <span class="hl-concept">Claude Code 使用該 cookie 來認證並查看需要登入的內容</span>。</div>
-                        <div class="en-text">First, you can do that authentication exchange. Then you will sometimes get a cookie, and then Claude Code can use that cookie to authenticate.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">另一個選擇是使用 Vercel 的 <span class="hl-practical">Agent Browser</span>（agent-browser.dev）— 一個<span class="hl-key">為 agent 優化的瀏覽器自動化 CLI</span>。</div>
-                        <div class="en-text">The other option is to use Agent Browser by Vercel. It's a browser automation CLI created by Vercel which is optimized for use by agents.</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh-text">你可以將登入憑證存放在 Claude Code 可存取的地方（安全金鑰交換，或直接放在 <code>.env</code> 檔案中），然後建立一個 Skill 讓 Claude Code 用 Agent Browser 登入、爬取資料。</div>
-                        <div class="en-text">You could store your login credentials somewhere that Claude Code has access to, either in some online vault or just yolo it and store it in your environment variables or in some .env file.</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-key">
-                        <div class="info-box-header">⚠️ 安全性注意</div>
-                        <div class="info-box-content">
-                            <p><strong>憑證管理：</strong>作者提到可以「yolo」直接存在 .env — 個人使用或許可接受，企業環境中絕對不行。</p>
-                            <p><strong>GMP 環境警示：</strong>在製藥/CDMO 環境中，任何涉及認證的自動化都需要考慮 21 CFR Part 11 的電子記錄和電子簽名要求。即使是「above the GMP line」的研究工具，憑證管理也應遵循基本安全原則。</p>
-                        </div>
-                    </div>
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">📚 Agent Browser 定位</div>
-                        <div class="info-box-content">
-                            <p>Agent Browser 是 Vercel 推出的工具，讓 AI agent 能像人類一樣瀏覽網頁。它解決了傳統 headless browser（如 Puppeteer）在 agent 整合上的痛點 — 更簡單的 CLI 介面、更好的錯誤處理、針對 agentic workflow 優化。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- TOOL COMPARISON TABLE -->
-    <div class="section-title">Tool Comparison 工具比較總覽</div>
-    <div style="overflow-x: auto; margin-bottom: 2rem;">
-        <table class="comparison-table">
-            <tr>
-                <th>方法</th>
-                <th>適用場景</th>
-                <th>成本</th>
-                <th>技術門檻</th>
-                <th>穩定性</th>
-            </tr>
-            <tr><td><strong>1. Direct Scrape</strong></td><td>靜態公開網站</td><td>免費</td><td>低</td><td>中</td></tr>
-            <tr><td><strong>2. Find Endpoints</strong></td><td>SPA / 動態網站</td><td>免費</td><td>低-中</td><td>高</td></tr>
-            <tr><td><strong>3. ScrapeCreators</strong></td><td>社群媒體</td><td>付費</td><td>低</td><td>高</td></tr>
-            <tr><td><strong>4. Apify Actor</strong></td><td>難爬網站 / Google Maps</td><td>付費</td><td>低</td><td>高</td></tr>
-            <tr><td><strong>5. Firecrawl + LLM</strong></td><td>非結構化頁面</td><td>付費</td><td>中</td><td>高</td></tr>
-            <tr><td><strong>6. DIY Markdown + LLM</strong></td><td>預算有限的非結構化</td><td>免費/低</td><td>中</td><td>中</td></tr>
-            <tr><td><strong>7. yt-dlp</strong></td><td>YouTube 字幕/metadata</td><td>免費</td><td>低</td><td>高</td></tr>
-            <tr><td><strong>8. Reddit JSON</strong></td><td>Reddit 資料</td><td>免費</td><td>極低</td><td>高</td></tr>
-            <tr><td><strong>9. Agent Browser</strong></td><td>需要登入的網站</td><td>免費</td><td>中-高</td><td>中</td></tr>
-        </table>
-    </div>
-
-    <!-- KEY TAKEAWAYS -->
-    <div class="section-title">Key Takeaways 重點整理</div>
-    <div class="takeaways-grid">
-        <div class="summary-card">
-            <div class="summary-card-title">1. 複雜度決定方法</div>
-            <div class="summary-card-text">從靜態 HTML（Way 1）到認證登入（Way 9），選擇方法的核心考量是目標網站的複雜度和結構化程度。永遠從最簡單的方法開始嘗試。</div>
-        </div>
-        <div class="summary-card">
-            <div class="summary-card-title">2. Prompt Nudge 的威力</div>
-            <div class="summary-card-text">Way 2 的核心洞察：只要在 prompt 中加入 "endpoint" 這個詞，就能引導 Claude Code 走更有效的路徑。關鍵字的選擇就是 prompt engineering 的實戰。</div>
-        </div>
-        <div class="summary-card">
-            <div class="summary-card-title">3. Skill 封裝是力量倍增器</div>
-            <div class="summary-card-text">將外部工具（ScrapeCreators, Reddit JSON, yt-dlp）封裝為 Claude Code Skill，是一次性投資、長期回報的架構決策。和 Master Prompt 系統的設計哲學一致。</div>
-        </div>
-        <div class="summary-card">
-            <div class="summary-card-title">4. LLM 取代 Selector</div>
-            <div class="summary-card-text">HTML → Markdown → LLM 的管線（Ways 5-6）代表爬蟲技術的典範轉移：從依賴脆弱的 CSS selector 到使用 LLM 的語義理解。降低維護成本但增加 token 成本。</div>
-        </div>
-    </div>
-
-    <!-- PRACTICE QUESTIONS -->
-    <div class="section-title">Practice Questions 練習題</div>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q1</span>
-            <span class="question-type">概念理解</span>
-            <span class="question-text">Way 1（直接爬取）和 Way 2（尋找 endpoint）的結果有什麼本質差異？在什麼情況下 Way 2 會比 Way 1 好？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>本質差異：</strong>Way 1 爬取的是 rendered HTML（瀏覽器看到的頁面），需要解析 DOM 結構；Way 2 找到的是底層 API 回傳的 JSON 資料，已經是結構化的。</p>
-            <p><strong>Way 2 更好的情況：</strong>當網站是 SPA（Single Page Application）時，HTML 只是一個空殼，實際資料都是透過 API 動態載入。直接爬 HTML 只會拿到一個空的 div，而找到 endpoint 則能直接拿到完整的結構化資料。此外，API 端點通常比 HTML 結構更穩定，不會因為前端 redesign 而失效。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q2</span>
-            <span class="question-type">產業應用</span>
-            <span class="question-text">在 CDMO 的日常工作中，哪三種爬取方法最有可能派上用場？請考慮合規性限制。</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>最可能有用的三種：</strong></p>
-            <p>1. <strong>Way 2（Find Endpoints）：</strong>適合爬取 ClinicalTrials.gov、FDA database 等有公開 API 的政府資料庫。資料公開，無合規顧慮。</p>
-            <p>2. <strong>Way 7（yt-dlp）：</strong>適合爬取產業研討會、KOL 演講的字幕，轉為知識筆記。不涉及機密資料，適合「above the GMP line」的學習和市場情報收集。</p>
-            <p>3. <strong>Way 5/6（Markdown + LLM）：</strong>適合爬取競爭對手的公開網站進行 competitive intelligence 分析。注意：即使資料公開，仍需確認不違反網站的 Terms of Service。</p>
-            <p><strong>合規性提醒：</strong>爬取到的資料如果用於決策文件（如 Feasibility Assessment），必須作為「參考資料」而非「官方來源」，並標注資料來源和取得方式。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q3</span>
-            <span class="question-type">批判思考</span>
-            <span class="question-text">作者對 Agent Browser + credentials 的態度是「yolo it」。從資安和 AI agent 治理的角度，這種態度的風險是什麼？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>風險分析：</strong></p>
-            <p>1. <strong>憑證洩漏：</strong>.env 檔案如果不小心 commit 到 Git repo，憑證就公開了。這是最常見也最危險的情境。</p>
-            <p>2. <strong>Agent 權限邊界不清：</strong>給 AI agent 完整的登入憑證，等於讓它可以做「你能做的所有事情」。如果 agent 行為不符預期，造成的損害可能超出爬取範圍。</p>
-            <p>3. <strong>稽核追蹤缺失：</strong>Agent 用你的帳號登入後的操作，在 audit log 中記錄為「你」的操作。你需要為此負責。</p>
-            <p><strong>建議做法：</strong>使用專門的「bot 帳號」、限制 API scope、使用 vault（如 1Password CLI）而非 .env、確保每次 agent 操作都有本地 log。</p>
-        </div>
-    </details>
-
-    <!-- BOTTOM LINE -->
-    <div class="bottom-line">
-        <div class="bottom-line-header">🎯 我的行動結論</div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">✔ 核心洞察</div>
-            <div class="bottom-line-text">資料爬取不是「一種方法用到底」— 它是一個工具選擇矩陣，根據目標網站的複雜度（靜態/動態/認證）和資料結構化程度來決定最佳方法。最重要的設計模式是「將工具封裝為 Skill」，這和我目前 Master Prompt 系統的設計哲學完全一致：前期投資 → 長期複用。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">📈 立即應用</div>
-            <div class="bottom-line-text">本週可做：(1) 測試 yt-dlp 下載一支 AI 影片的字幕，用 Claude Code 生成摘要，驗證是否可以整合進學習系統的 source pipeline；(2) 試打 Reddit JSON endpoint（r/claudecode.json），評估是否值得建立一個定期監測 Skill。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">⚠ 需要補充</div>
-            <div class="bottom-line-text">文章缺少：(1) 反爬蟲機制的深度討論（rate limiting, CAPTCHA, IP blocking）；(2) 法律和 Terms of Service 的考量 — 能爬不代表該爬；(3) 資料品質驗證 — LLM 提取的結構化資料如何確保準確性。建議 3 個月後重讀，屆時 Agent Browser 和 Claude Code 可能都有重大更新。</div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        <p>製作日期：2026-03-05 | 來源：Aniket Panjwani / @aniketapanjwani</p>
-        <p>影片連結：<a href="https://youtu.be/4jQJdCfjPcw?si=Iv0F54vCa-JrdEUK">Nine Ways to Scrape Data with Claude Code</a></p>
-        <p>工具連結：<a href="https://scrapecreators.com/">ScrapeCreators</a> | <a href="https://apify.com/">Apify</a> | <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> | <a href="https://agent-browser.dev/">Agent Browser</a> | <a href="https://github.com/mixmark-io/turndown">Turndown</a> | <a href="https://github.com/microsoft/markitdown">MarkItDown</a></p>
-        <p style="margin-top: 0.5rem; color: #6366f1;">建議 Chat Title：2026-03-05 [Tool] Panjwani - Claude Code Scraping 9 Ways</p>
-    </div>
-
+<!-- EXECUTIVE SUMMARY -->
+<div class="executive-summary">
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+<span class="rating-high">↑ Practical Value, Tool Ecosystem</span>
+<span class="rating-low">↓ Technical Depth, Learning Curve</span>
 </div>
-
+<h2>Executive Summary</h2>
+<p>
+            Aniket Panjwani 整理了九種使用 Claude Code 爬取網路資料的方法，涵蓋從最簡單的「直接叫 Claude Code 爬」到使用 Agent Browser 處理認證登入的進階場景。文章的核心洞察是：<span class="highlight-key">資料爬取的難度取決於目標網站的結構化程度和認證機制</span>，而 Claude Code 作為 agentic coding 工具，可以透過搭配不同的外部工具來應對各種場景。這是一份偏「工具清單 + 使用場景」的實戰型文章，技術深度不高但覆蓋面廣，適合作為快速參考手冊。
+        </p>
+</div>
+<!-- LEARNING OBJECTIVES -->
+<div class="section-title">Learning Objectives</div>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-icon">🔍</div>
+<div class="objective-title">9 種爬取方法的適用場景</div>
+<div class="objective-desc">判斷哪種方法最適合你的目標網站</div>
+</div>
+<div class="objective-item" style="border-left-color: #10b981;">
+<div class="objective-icon">🧰</div>
+<div class="objective-title">外部工具生態系統</div>
+<div class="objective-desc">Firecrawl, Apify, yt-dlp, Agent Browser 的定位</div>
+</div>
+<div class="objective-item" style="border-left-color: #8b5cf6;">
+<div class="objective-icon">💡</div>
+<div class="objective-title">Skill 設計思維</div>
+<div class="objective-desc">將爬取工具封裝為可複用的 Claude Code Skill</div>
+</div>
+</div>
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+<div class="framework-title">Data Scraping Complexity Ladder 資料爬取複雜度階梯</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">📄</div>
+<div class="framework-step-title">Static</div>
+<div class="framework-step-desc">直接爬取 HTML</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">⚡</div>
+<div class="framework-step-title">Dynamic</div>
+<div class="framework-step-desc">尋找 API endpoint</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🛡️</div>
+<div class="framework-step-title">Protected</div>
+<div class="framework-step-desc">付費 API / 反爬蟲</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📝</div>
+<div class="framework-step-title">Unstructured</div>
+<div class="framework-step-desc">Markdown + LLM 提取</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🔐</div>
+<div class="framework-step-title">Authenticated</div>
+<div class="framework-step-desc">Cookie / Agent Browser</div>
+</div>
+</div>
+</div>
+<!-- TABBED CONTENT -->
+<div class="section-title">Content 內容</div>
+<div class="tab-container">
+<div class="tab-nav">
+<button class="tab-btn active" onclick="switchTab(event, 'tab-basic')">Basic 基礎爬取 (1-3)</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-structured')">Structured 結構化提取 (4-6)</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-advanced')">Advanced 進階場景 (7-9)</button>
+</div>
+<!-- TAB 1: Basic -->
+<div class="tab-content active" id="tab-basic">
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Way 1</div>
+<div class="part-title">Just Ask Claude Code to Scrape 直接叫 Claude Code 爬</div>
+<div class="bilingual-block">
+<div class="zh-text">對於大量的網站，你可以<span class="highlight-concept">直接告訴 Claude Code 去爬取該網站</span>，告訴它你要什麼資料，然後請它輸出到 CSV 或 SQLite 檔案。</div>
+<div class="en-text">For a large set of sites, you can just tell Claude Code to scrape the site, tell it what you want scraped, and ask it to write it out to a CSV or a SQLite file.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Claude Code 會自行探索網站，可能會寫一個 Python 腳本，執行腳本，甚至可能寫一些單元測試，然後把資料寫到你電腦上的某個位置。</div>
+<div class="en-text">It will poke around the site for you, probably write a Python script, run the script, maybe even write some unit tests, and then just write out the data somewhere on your computer.</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用</div>
+<div class="info-box-content">
+<p>這是最「零配置」的方法。適用於結構清楚的公開網站（如政府資料、學術機構頁面、公開產品列表）。Claude Code 會自己決定用 requests + BeautifulSoup 還是其他方式。</p>
+</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p><strong>適用場景：</strong>靜態 HTML 頁面、公開資料集、簡單表格</p>
+<p><strong>限制：</strong>動態載入內容（SPA）、需要認證的頁面、有反爬蟲機制的網站</p>
+<p><strong>輸出格式：</strong>CSV, SQLite, JSON</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>想像你叫一個很聰明的助理去圖書館幫你影印特定章節 — 如果那本書就在開架區（公開網站），助理自己就能搞定。但如果書鎖在特藏室（需要認證），你得先拿到鑰匙給他。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Way 2</div>
+<div class="part-title">Ask Claude Code to Find Endpoints 尋找 API 端點</div>
+<div class="bilingual-block">
+<div class="zh-text">很多有趣的資料不是以靜態頁面呈現，而是<span class="highlight-concept">透過某個 API 呼叫動態載入</span>。有時候 Claude Code 會自行逆向工程找到那個 API 呼叫，但有時候你需要推它一把，明確告訴它去找。</div>
+<div class="en-text">A lot of interesting data is not rendered as a static page, but is being loaded dynamically via some API call. Sometimes Claude Code will reverse engineer that API call itself, but sometimes you have to nudge it along.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">唯一的差別是：<span class="highlight-key">在這個方法中你要求它尋找 endpoint</span>。只要給出那個詞、那個小小的提示，有時候就能得到比直接叫它爬取更好的結果。</div>
+<div class="en-text">The only difference is that in this method you ask it to look for endpoints. Just giving that word, that little nudge, will sometimes get you better results.</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：Prompt Nudge</div>
+<div class="info-box-content">
+<p><strong>Prompt Nudge 提示推力：</strong>Claude Code 本身有能力做很多事，但特定關鍵字能引導它走更有效率的路徑。「endpoint」這個詞就像告訴它：別爬 HTML，去找背後的 JSON API。這和 Prompt Engineering 的 specificity principle 完全一致。</p>
+</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p><strong>適用場景：</strong>SPA (Single Page App)、動態載入的資料表、需要 AJAX 呼叫的網站</p>
+<p><strong>關鍵詞提示：</strong>在 prompt 中使用 "find the API endpoint"、"look for the data endpoint"、"reverse engineer the API"</p>
+<p><strong>優勢：</strong>直接拿到結構化 JSON，省去 HTML 解析</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 應用</div>
+<div class="info-box-content">
+<p>如果你需要爬取藥品定價資料庫、臨床試驗資料（如 ClinicalTrials.gov 的 API），或供應商報價平台，這種「找 endpoint」的方法往往比直接爬 HTML 更穩定、更快。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Way 3</div>
+<div class="part-title">ScrapeCreators 社群媒體專用 API</div>
+<div class="bilingual-block">
+<div class="zh-text">大多數社群媒體網站上有很多有用的資料是可以爬取的，但它們<span class="highlight-key">把 endpoint 設計得特別難逆向工程</span>。它們有自己的反機器人規則，而且每週都會更換 selector 的運作方式。</div>
+<div class="en-text">A lot of useful data on most social media sites is scrapeable, but they make their endpoints particularly difficult to reverse engineer. They have their own anti-bot rules, and they change the way selectors work each week.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">作者推薦使用 <span class="highlight-practical">Scrape Creators</span>（scrapecreators.com），它提供幾乎每個社群媒體的 API 端點。作者建議<span class="highlight-key">建立一個 Skill 來封裝這些端點</span>，作為一次性工具讓 agentic coding 工具永遠可以存取。</div>
+<div class="en-text">I would recommend creating a skill for the Scrape Creators endpoints as a one-time utility that then your agentic coding tool will always have access to.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">📚 Skill 設計模式</div>
+<div class="info-box-content">
+<p>重要的架構概念：<strong>將外部 API 封裝為 Claude Code Skill</strong>。一次性設定好 API key、端點格式、常用參數，之後每次爬取只需告訴 Claude Code「用 ScrapeCreators 爬取 X」。</p>
+<p>這和 Master Prompt 系統的設計思維一致 — 前期投資建立可複用模板，後期邊際成本趨近於零。</p>
+</div>
+</div>
+<div class="info-box box-cost">
+<div class="info-box-header">💰 成本分析</div>
+<div class="info-box-content">
+<p><strong>ScrapeCreators：</strong>付費 API 服務</p>
+<p><strong>ROI 考量：</strong>如果每週都需要爬社群媒體，付費服務的穩定性遠勝自行維護 scraper。偶爾用的話可能不值得。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 2: Structured Extraction -->
+<div class="tab-content" id="tab-structured">
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Way 4</div>
+<div class="part-title">Apify Actor 爬蟲市集</div>
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-concept">Apify 是一個爬蟲市集</span>。對於很多難以爬取的網站，已經有人做好了可租用的爬蟲，在 Apify 上叫做「actors」。</div>
+<div class="en-text">Apify is a marketplace of scrapers. For a lot of difficult-to-scrape websites, people have made rentable scrapers that are available on Apify (called "actors").</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">作者喜歡用的一個是 <span class="highlight-practical">Google Maps 爬蟲</span>，對社會科學家做直接分析或建立代理指標很有用，也適合商業人士做競爭分析或尋找當地潛在客戶。</div>
+<div class="en-text">One scraper I like to use is the Google Maps scraper, which can be quite useful for social scientists or for business people to do competition analysis or to find local leads.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">唯一的問題是<span class="highlight-cost">你必須付費</span>。有些按使用量計費，有些需要按月租用。</div>
+<div class="en-text">The only problem is you have to pay for these. Some you pay by usage. Some you have to rent by month.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 工具比較</div>
+<div class="info-box-content">
+<p><strong>Apify vs ScrapeCreators：</strong>ScrapeCreators 專注社群媒體；Apify 是通用市集，覆蓋 Google Maps、電商、新聞等更廣泛場景。</p>
+<p><strong>Apify vs 自建爬蟲：</strong>自建零成本但維護成本高（網站改版就壞）；Apify actor 由社群維護，穩定性較高但需付費。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 應用</div>
+<div class="info-box-content">
+<p>Google Maps 爬蟲可用於市場調查 — 搜尋特定區域的 CDMO 設施、診所分布、藥局密度等，作為 Feasibility Assessment 的輔助資料來源。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Way 5</div>
+<div class="part-title">Firecrawl → Markdown → Structured Extraction</div>
+<div class="bilingual-block">
+<div class="zh-text">很多你想要的資料<span class="highlight-key">並不是高度結構化的</span>。例如作者在做 EconNow 專案時，需要爬取大量經濟學求職市場候選人頁面，每個頁面都有自己的 HTML 結構。</div>
+<div class="en-text">A lot of data that you're going to want to get is not going to be highly structured. Each of these pages had their own HTML structure.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">常見的技術是<span class="highlight-concept">將網頁轉為 Markdown，然後讓 LLM 解析 Markdown 並建立結構化輸出</span>。Firecrawl 是一個付費服務，可以輕鬆將網頁轉為 Markdown。</div>
+<div class="en-text">A common technique is to turn the web page into Markdown and then have an LLM parse the Markdown and create some kind of structured output.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">如果你正確設定了 structured outputs，你就能讓 LLM <span class="highlight-practical">從不同的非結構化網站中解析出特定欄位</span>。</div>
+<div class="en-text">If you set up your structured outputs correctly, you'll be able to get the LLM to parse out particular kinds of fields from these different varying unstructured websites.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">📚 HTML → Markdown → JSON Pipeline</div>
+<div class="info-box-content">
+<p>三階段資料管線：</p>
+<p><strong>1. HTML → Markdown：</strong>去除樣式和結構雜訊，保留純內容</p>
+<p><strong>2. Markdown → LLM：</strong>用 LLM 理解語義，不依賴固定 selector</p>
+<p><strong>3. LLM → Structured JSON：</strong>透過 structured outputs 確保輸出格式一致</p>
+<p>關鍵優勢：<span class="highlight-key">不需要為每個網站寫不同的 scraper</span>。</p>
+</div>
+</div>
+<div class="info-box box-cost">
+<div class="info-box-header">💰 成本分析</div>
+<div class="info-box-content">
+<p><strong>Firecrawl：</strong>付費服務，edge case 處理好</p>
+<p><strong>OpenAI Structured Outputs：</strong>API 呼叫費用，規模化時需計算 token 成本</p>
+<p><strong>作者建議：</strong>預算有限就用免費替代方案</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Way 6</div>
+<div class="part-title">DIY HTML → Markdown → Structured Extraction</div>
+<div class="bilingual-block">
+<div class="zh-text">你可能會問：為什麼要付費用 Firecrawl？自己轉成 Markdown 不就好了？答案是<span class="highlight-concept">可以的</span>。有免費工具：<code>turndown</code>（mixmark-io）和 <code>markitdown</code>（Microsoft）。</div>
+<div class="en-text">Can't you just turn it into Markdown yourself? And the answer is yeah, you can. There are tools that allow you to do that yourself too.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">作者使用 Firecrawl 的原因是它在<span class="highlight-key">邊緣情境的處理更好</span>。預算小的話就用免費套件。</div>
+<div class="en-text">The reason I use Firecrawl is because I find it handles certain edge cases better. If you're on a small budget, just use one of these packages instead.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">另一個重點：對於<span class="highlight-practical">小規模的資料，你甚至不需要呼叫外部 API</span>。可以讓 Claude Code 自己做結構化提取。但數千份文件的話就不實際了。</div>
+<div class="en-text">You don't even need to send the Markdown to an external API call for small-scale stuff. You could just have Claude Code itself do the structured extraction.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ Firecrawl vs DIY</div>
+<div class="info-box-content">
+<table class="comparison-table">
+<tr><th>面向</th><th>Firecrawl</th><th>DIY</th></tr>
+<tr><td>成本</td><td>付費</td><td>免費</td></tr>
+<tr><td>Edge case</td><td>較好</td><td>基本</td></tr>
+<tr><td>設定</td><td>低（API call）</td><td>中</td></tr>
+<tr><td>適用規模</td><td>大規模</td><td>小到中</td></tr>
+</table>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 規模決策點</div>
+<div class="info-box-content">
+<p><strong>~100 頁：</strong>Claude Code 直接做結構化提取</p>
+<p><strong>100-1000 頁：</strong>DIY Markdown + OpenAI API</p>
+<p><strong>1000+ 頁：</strong>Firecrawl + OpenAI API batch</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 3: Advanced -->
+<div class="tab-content" id="tab-advanced">
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Way 7</div>
+<div class="part-title">yt-dlp — YouTube 資料爬取</div>
+<div class="bilingual-block">
+<div class="zh-text"><code>yt-dlp</code> 是一個工具，可以<span class="highlight-concept">爬取任何 YouTube 影片、其 metadata 和字幕</span>。</div>
+<div class="en-text">yt-dlp is a tool which lets you scrape any YouTube video, its metadata, and the subtitles of the videos.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">作者基本上不再看影片了。他<span class="highlight-practical">下載字幕，然後讓 Claude Code 為他建立個人化摘要</span>，將影片套用到他實際關心的脈絡中。</div>
+<div class="en-text">I basically never watch videos anymore. I'll just download the subtitles and then have Claude Code create a personalized summary for me.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">YouTube 影片中有大量有用的資料，作者認為<span class="highlight-key">這個工具特別被低估</span>。</div>
+<div class="en-text">There is a ton of useful data in YouTube videos, and I really think that this tool in particular is highly under-exploited.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 學習系統整合</div>
+<div class="info-box-content">
+<p>這和我們的 AI 學習系統高度相關。目前 source 以文章為主，但 YouTube 頻道（AI Maker Labs, Ethan Mollick 演講等）也有大量知識。</p>
+<p><strong>潛在 workflow：</strong>yt-dlp 下載字幕 → Claude Code 轉為結構化筆記 → 匯入 Master Prompt 系統生成教育文件。</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>把 yt-dlp 想像成「影片→文字」的翻譯機。就像我們把文章餵進 Master Prompt 系統一樣，yt-dlp + Claude Code 可以把影片餵進同樣的知識管線。影片不再是「需要花時間看」的內容，而是可以被程式化處理的資料來源。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Way 8</div>
+<div class="part-title">Reddit JSON Endpoint</div>
+<div class="bilingual-block">
+<div class="zh-text">Reddit 有一個 JSON 端點，可以用來<span class="highlight-concept">找到幾乎任何內容</span>。你只需在 Reddit URL 的末尾加上 <code>.json</code>，你的 agentic coding 工具就能以 JSON 文件存取 Reddit 的所有資料。</div>
+<div class="en-text">Reddit has a JSON endpoint. You just add on ".json" to the end of a Reddit URL, and then your agentic coding tool has access to everything on that part of Reddit as a JSON document.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">作者設定了一些 Skill，用來<span class="highlight-practical">追蹤各種他關心的 subreddit 上的討論動態</span>。那些 Skill 就是 Claude Code 去打 Reddit 的 JSON 端點。</div>
+<div class="en-text">I have some skills set up to keep a pulse on what people are talking about on a large variety of subreddits. Those skills are just Claude Code hitting the JSON Reddit endpoints.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-code">
+<div class="info-box-header">💻 技術細節</div>
+<div class="info-box-content">
+<p><strong>範例端點：</strong></p>
+<p><code>https://old.reddit.com/r/claudecode.json</code></p>
+<p>直接回傳 JSON 結構，包含 post 標題、內容、投票數、留言等。不需要 API key，不需要 OAuth — 最低門檻的結構化資料來源。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Skill 設計靈感</div>
+<div class="info-box-content">
+<p>可建立一個 Skill，定期爬取指定 subreddit（如 r/claudecode, r/pharmaceutical 等），摘要熱門話題，追蹤特定關鍵字趨勢。這是 Claude Code 作為「情報收集 agent」的實戰範例。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Way 9</div>
+<div class="part-title">Agent Browser + Credentials 認證瀏覽</div>
+<div class="bilingual-block">
+<div class="zh-text">有很多網站受到某種認證保護。要通過認證，有兩種方式。</div>
+<div class="en-text">There's a lot of sites that are protected behind some kind of authentication. You have two possible approaches.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">第一，你可以進行認證交換，取得 cookie，然後 <span class="highlight-concept">Claude Code 使用該 cookie 來認證並查看需要登入的內容</span>。</div>
+<div class="en-text">First, you can do that authentication exchange. Then you will sometimes get a cookie, and then Claude Code can use that cookie to authenticate.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">另一個選擇是使用 Vercel 的 <span class="highlight-practical">Agent Browser</span>（agent-browser.dev）— 一個<span class="highlight-key">為 agent 優化的瀏覽器自動化 CLI</span>。</div>
+<div class="en-text">The other option is to use Agent Browser by Vercel. It's a browser automation CLI created by Vercel which is optimized for use by agents.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">你可以將登入憑證存放在 Claude Code 可存取的地方（安全金鑰交換，或直接放在 <code>.env</code> 檔案中），然後建立一個 Skill 讓 Claude Code 用 Agent Browser 登入、爬取資料。</div>
+<div class="en-text">You could store your login credentials somewhere that Claude Code has access to, either in some online vault or just yolo it and store it in your environment variables or in some .env file.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 安全性注意</div>
+<div class="info-box-content">
+<p><strong>憑證管理：</strong>作者提到可以「yolo」直接存在 .env — 個人使用或許可接受，企業環境中絕對不行。</p>
+<p><strong>GMP 環境警示：</strong>在製藥/CDMO 環境中，任何涉及認證的自動化都需要考慮 21 CFR Part 11 的電子記錄和電子簽名要求。即使是「above the GMP line」的研究工具，憑證管理也應遵循基本安全原則。</p>
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 Agent Browser 定位</div>
+<div class="info-box-content">
+<p>Agent Browser 是 Vercel 推出的工具，讓 AI agent 能像人類一樣瀏覽網頁。它解決了傳統 headless browser（如 Puppeteer）在 agent 整合上的痛點 — 更簡單的 CLI 介面、更好的錯誤處理、針對 agentic workflow 優化。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TOOL COMPARISON TABLE -->
+<div class="section-title">Tool Comparison 工具比較總覽</div>
+<div style="overflow-x: auto; margin-bottom: 2rem;">
+<table class="comparison-table">
+<tr>
+<th>方法</th>
+<th>適用場景</th>
+<th>成本</th>
+<th>技術門檻</th>
+<th>穩定性</th>
+</tr>
+<tr><td><strong>1. Direct Scrape</strong></td><td>靜態公開網站</td><td>免費</td><td>低</td><td>中</td></tr>
+<tr><td><strong>2. Find Endpoints</strong></td><td>SPA / 動態網站</td><td>免費</td><td>低-中</td><td>高</td></tr>
+<tr><td><strong>3. ScrapeCreators</strong></td><td>社群媒體</td><td>付費</td><td>低</td><td>高</td></tr>
+<tr><td><strong>4. Apify Actor</strong></td><td>難爬網站 / Google Maps</td><td>付費</td><td>低</td><td>高</td></tr>
+<tr><td><strong>5. Firecrawl + LLM</strong></td><td>非結構化頁面</td><td>付費</td><td>中</td><td>高</td></tr>
+<tr><td><strong>6. DIY Markdown + LLM</strong></td><td>預算有限的非結構化</td><td>免費/低</td><td>中</td><td>中</td></tr>
+<tr><td><strong>7. yt-dlp</strong></td><td>YouTube 字幕/metadata</td><td>免費</td><td>低</td><td>高</td></tr>
+<tr><td><strong>8. Reddit JSON</strong></td><td>Reddit 資料</td><td>免費</td><td>極低</td><td>高</td></tr>
+<tr><td><strong>9. Agent Browser</strong></td><td>需要登入的網站</td><td>免費</td><td>中-高</td><td>中</td></tr>
+</table>
+</div>
+<!-- KEY TAKEAWAYS -->
+<div class="section-title">Key Takeaways 重點整理</div>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="summary-card-title">1. 複雜度決定方法</div>
+<div class="summary-card-text">從靜態 HTML（Way 1）到認證登入（Way 9），選擇方法的核心考量是目標網站的複雜度和結構化程度。永遠從最簡單的方法開始嘗試。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-title">2. Prompt Nudge 的威力</div>
+<div class="summary-card-text">Way 2 的核心洞察：只要在 prompt 中加入 "endpoint" 這個詞，就能引導 Claude Code 走更有效的路徑。關鍵字的選擇就是 prompt engineering 的實戰。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-title">3. Skill 封裝是力量倍增器</div>
+<div class="summary-card-text">將外部工具（ScrapeCreators, Reddit JSON, yt-dlp）封裝為 Claude Code Skill，是一次性投資、長期回報的架構決策。和 Master Prompt 系統的設計哲學一致。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-title">4. LLM 取代 Selector</div>
+<div class="summary-card-text">HTML → Markdown → LLM 的管線（Ways 5-6）代表爬蟲技術的典範轉移：從依賴脆弱的 CSS selector 到使用 LLM 的語義理解。降低維護成本但增加 token 成本。</div>
+</div>
+</div>
+<!-- PRACTICE QUESTIONS -->
+<div class="section-title">Practice Questions 練習題</div>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">Way 1（直接爬取）和 Way 2（尋找 endpoint）的結果有什麼本質差異？在什麼情況下 Way 2 會比 Way 1 好？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>本質差異：</strong>Way 1 爬取的是 rendered HTML（瀏覽器看到的頁面），需要解析 DOM 結構；Way 2 找到的是底層 API 回傳的 JSON 資料，已經是結構化的。</p>
+<p><strong>Way 2 更好的情況：</strong>當網站是 SPA（Single Page Application）時，HTML 只是一個空殼，實際資料都是透過 API 動態載入。直接爬 HTML 只會拿到一個空的 div，而找到 endpoint 則能直接拿到完整的結構化資料。此外，API 端點通常比 HTML 結構更穩定，不會因為前端 redesign 而失效。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在 CDMO 的日常工作中，哪三種爬取方法最有可能派上用場？請考慮合規性限制。</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>最可能有用的三種：</strong></p>
+<p>1. <strong>Way 2（Find Endpoints）：</strong>適合爬取 ClinicalTrials.gov、FDA database 等有公開 API 的政府資料庫。資料公開，無合規顧慮。</p>
+<p>2. <strong>Way 7（yt-dlp）：</strong>適合爬取產業研討會、KOL 演講的字幕，轉為知識筆記。不涉及機密資料，適合「above the GMP line」的學習和市場情報收集。</p>
+<p>3. <strong>Way 5/6（Markdown + LLM）：</strong>適合爬取競爭對手的公開網站進行 competitive intelligence 分析。注意：即使資料公開，仍需確認不違反網站的 Terms of Service。</p>
+<p><strong>合規性提醒：</strong>爬取到的資料如果用於決策文件（如 Feasibility Assessment），必須作為「參考資料」而非「官方來源」，並標注資料來源和取得方式。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">作者對 Agent Browser + credentials 的態度是「yolo it」。從資安和 AI agent 治理的角度，這種態度的風險是什麼？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>風險分析：</strong></p>
+<p>1. <strong>憑證洩漏：</strong>.env 檔案如果不小心 commit 到 Git repo，憑證就公開了。這是最常見也最危險的情境。</p>
+<p>2. <strong>Agent 權限邊界不清：</strong>給 AI agent 完整的登入憑證，等於讓它可以做「你能做的所有事情」。如果 agent 行為不符預期，造成的損害可能超出爬取範圍。</p>
+<p>3. <strong>稽核追蹤缺失：</strong>Agent 用你的帳號登入後的操作，在 audit log 中記錄為「你」的操作。你需要為此負責。</p>
+<p><strong>建議做法：</strong>使用專門的「bot 帳號」、限制 API scope、使用 vault（如 1Password CLI）而非 .env、確保每次 agent 操作都有本地 log。</p>
+</div>
+</details>
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">資料爬取不是「一種方法用到底」— 它是一個工具選擇矩陣，根據目標網站的複雜度（靜態/動態/認證）和資料結構化程度來決定最佳方法。最重要的設計模式是「將工具封裝為 Skill」，這和我目前 Master Prompt 系統的設計哲學完全一致：前期投資 → 長期複用。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">本週可做：(1) 測試 yt-dlp 下載一支 AI 影片的字幕，用 Claude Code 生成摘要，驗證是否可以整合進學習系統的 source pipeline；(2) 試打 Reddit JSON endpoint（r/claudecode.json），評估是否值得建立一個定期監測 Skill。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">文章缺少：(1) 反爬蟲機制的深度討論（rate limiting, CAPTCHA, IP blocking）；(2) 法律和 Terms of Service 的考量 — 能爬不代表該爬；(3) 資料品質驗證 — LLM 提取的結構化資料如何確保準確性。建議 3 個月後重讀，屆時 Agent Browser 和 Claude Code 可能都有重大更新。</div>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="footer">
+<p>製作日期：2026-03-05 | 來源：Aniket Panjwani / @aniketapanjwani</p>
+<p>影片連結：<a href="https://youtu.be/4jQJdCfjPcw?si=Iv0F54vCa-JrdEUK">Nine Ways to Scrape Data with Claude Code</a></p>
+<p>工具連結：<a href="https://scrapecreators.com/">ScrapeCreators</a> | <a href="https://apify.com/">Apify</a> | <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> | <a href="https://agent-browser.dev/">Agent Browser</a> | <a href="https://github.com/mixmark-io/turndown">Turndown</a> | <a href="https://github.com/microsoft/markitdown">MarkItDown</a></p>
+<p style="margin-top: 0.5rem; color: #6366f1;">建議 Chat Title：2026-03-05 [Tool] Panjwani - Claude Code Scraping 9 Ways</p>
+</footer>
+</div>
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');
@@ -719,6 +548,5 @@ function switchTab(evt, tabId) {
     evt.currentTarget.classList.add('active');
 }
 </script>
-
 </body>
 </html>

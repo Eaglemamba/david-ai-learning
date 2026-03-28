@@ -1,691 +1,194 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2026-01-20">
-    <meta name="doc-title" content="A2UI：Google 的 Agent 驅動使用者介面框架解析">
-    <meta name="doc-source" content="Department of Product Knowledge Series #97">
-    <meta name="doc-tags" content="Agent,Tool">
-    <meta name="doc-rating" content="3.8">
-    <meta name="doc-summary" content="Google A2UI Agent 驅動使用者介面框架解析。">
-    <meta name="doc-file" content="2026-01-20_a2ui-framework.html">
-    <title>A2UI：Google 的 Agent 驅動使用者介面框架解析</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1e3a8a;
-            --secondary: #3b82f6;
-            --accent: #7c3aed;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body {
-            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.8;
-            color: var(--text);
-            background: var(--bg);
-            font-size: 16px;
-        }
-        
-        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-        
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #1e3a8a 100%);
-            color: white;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-        }
-        .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.3; }
-        .header-subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem; }
-        
-        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; }
-        .tag { padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem; font-weight: 600; }
-        .tag-agent { background: #c7d2fe; color: #3730a3; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .tag-automation { background: #a7f3d0; color: #065f46; }
-        .tag-api { background: #ddd6fe; color: #4c1d95; }
-        
-        .source-info { font-size: 0.85rem; opacity: 0.8; }
-        .source-info a { color: #93c5fd; }
-        
-        /* Rating Bar */
-        .rating-bar {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding: 0.6rem 1rem;
-            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
-            border-radius: 8px;
-            flex-wrap: wrap;
-            border: 1px solid #bae6fd;
-        }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        
-        /* Executive Summary */
-        .executive-summary {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-        .executive-summary h2 {
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .executive-summary p { font-size: 0.95rem; line-height: 1.8; color: #374151; }
-        
-        /* Learning Objectives */
-        .objectives-section {
-            background: linear-gradient(135deg, #eff6ff, #f0f9ff);
-            padding: 2rem;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-        }
-        .objectives-section h2 {
-            color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .objectives-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-        .objective-item {
-            background: white;
-            padding: 1.25rem;
-            border-radius: 0.75rem;
-            border-left: 4px solid var(--secondary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .objective-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .objective-title { font-weight: 600; color: var(--primary); margin-bottom: 0.3rem; font-size: 0.95rem; }
-        .objective-desc { font-size: 0.85rem; color: var(--text-light); }
-        
-        /* Framework Visual */
-        .framework-visual {
-            background: linear-gradient(135deg, #1e3a5f, #3b5998);
-            border-radius: 1rem;
-            padding: 2rem;
-            color: white;
-            margin: 2rem 0;
-        }
-        .framework-title {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-        .framework-steps {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-        .framework-step {
-            text-align: center;
-            min-width: 100px;
-            max-width: 130px;
-        }
-        .framework-icon {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            width: 3.5rem;
-            height: 3.5rem;
-            background: rgba(255,255,255,0.2);
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.5rem;
-        }
-        .framework-step-title { font-weight: 700; font-size: 0.85rem; }
-        .framework-step-desc { font-size: 0.75rem; opacity: 0.9; margin-top: 0.25rem; }
-        .framework-arrow { font-size: 1.25rem; color: #93c5fd; }
-        @media (max-width: 700px) {
-            .framework-arrow { display: none; }
-            .framework-steps { gap: 1.5rem; }
-        }
-        
-        /* Tabbed Content */
-        .tab-container { margin: 1.5rem 0; }
-        .tab-nav {
-            display: flex;
-            gap: 0.25rem;
-            background: #f1f5f9;
-            padding: 0.25rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-        .tab-btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 0.75rem 1rem;
-            border: none;
-            background: transparent;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            color: #64748b;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-        .tab-btn:hover { color: #334155; }
-        .tab-btn.active {
-            background: white;
-            color: #1e3a8a;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        
-        /* Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        @media (max-width: 768px) {
-            .content-grid { grid-template-columns: 1fr; }
-        }
-        
-        .original-content {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            border: 1px solid #e2e8f0;
-        }
-        .original-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.75rem;
-        }
-        .original-text { font-size: 0.9rem; line-height: 1.7; color: #374151; }
-        .original-text .en-quote {
-            color: #64748b;
-            font-style: italic;
-            font-size: 0.85rem;
-            display: block;
-            margin-top: 0.5rem;
-        }
-        
-        .explanation {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            border-left: 4px solid var(--secondary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .explanation-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.75rem;
-        }
-        .explanation p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-        .explanation p:last-child { margin-bottom: 0; }
-        
-        /* Highlights */
-        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        
-        /* Info Boxes */
-        .info-box {
-            margin: 1.5rem 0;
-            border-radius: 0.75rem;
-            overflow: hidden;
-        }
-        .info-box-header {
-            padding: 0.75rem 1rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .info-box-content { padding: 1rem 1.25rem; font-size: 0.9rem; line-height: 1.7; }
-        
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-        
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-        
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-        
-        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
-        
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-        
-        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
-        
-        /* Code Blocks */
-        pre {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            overflow-x: auto;
-            font-family: 'Source Code Pro', monospace;
-            font-size: 0.85rem;
-            line-height: 1.6;
-            margin: 1rem 0;
-        }
-        code {
-            font-family: 'Source Code Pro', monospace;
-            background: #f1f5f9;
-            padding: 0.15rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.85em;
-            color: #7c3aed;
-        }
-        pre code { background: none; padding: 0; color: inherit; }
-        
-        /* Section Headers */
-        .section-header {
-            background: linear-gradient(135deg, #1e3a5f, #3b5998);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 0.75rem;
-            margin: 2rem 0 1.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        
-        /* Key Takeaways */
-        .takeaways-section {
-            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
-            padding: 2rem;
-            border-radius: 1rem;
-            margin: 2rem 0;
-        }
-        .takeaways-section h2 {
-            color: var(--accent);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .takeaways-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-        }
-        .summary-card {
-            background: white;
-            padding: 1.25rem;
-            border-radius: 0.75rem;
-            border-left: 4px solid var(--accent);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .summary-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        .summary-card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .summary-card-title { font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; font-size: 0.95rem; }
-        .summary-card-text { font-size: 0.85rem; color: #374151; line-height: 1.6; }
-        
-        /* Practice Questions - Accordion */
-        .practice-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            margin: 2rem 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-        .practice-section h2 {
-            color: var(--accent);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .question-accordion {
-            background: white;
-            border-radius: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid #e9d5ff;
-            overflow: hidden;
-        }
-        .question-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.25rem;
-            cursor: pointer;
-            list-style: none;
-        }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #6d28d9;
-            background: #e9d5ff;
-            padding: 0.2rem 0.5rem;
-            border-radius: 0.25rem;
-        }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            transition: transform 0.2s;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
-        }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer {
-            padding: 1rem 1.25rem;
-            background: #faf5ff;
-            border-top: 1px solid #e9d5ff;
-        }
-        .question-answer p {
-            font-size: 0.9rem;
-            line-height: 1.7;
-            color: #374151;
-            margin-bottom: 0.75rem;
-        }
-        .question-answer p:last-child { margin-bottom: 0; }
-        .question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
-        .question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
-        
-        /* Bottom Line */
-        .bottom-line {
-            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
-            margin: 2rem 0;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid #7c3aed;
-        }
-        .bottom-line-header {
-            font-weight: 700;
-            color: #5b21b6;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.1rem;
-        }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-            color: var(--text-light);
-            font-size: 0.85rem;
-        }
-        .footer a { color: var(--secondary); }
-        .chat-title {
-            background: #f1f5f9;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            display: inline-block;
-            margin-top: 1rem;
-            font-family: 'Source Code Pro', monospace;
-            font-size: 0.8rem;
-        }
-        
-        /* Comparison Table */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-        }
-        .comparison-table th {
-            background: #1e3a5f;
-            color: white;
-            padding: 0.75rem 1rem;
-            text-align: left;
-            font-weight: 600;
-        }
-        .comparison-table td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .comparison-table tr:nth-child(even) { background: #f8fafc; }
-        .comparison-table tr:hover { background: #f0f9ff; }
-    </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2026-01-20" name="doc-date"/>
+<meta content="A2UI：Google 的 Agent 驅動使用者介面框架解析" name="doc-title"/>
+<meta content="Department of Product Knowledge Series #97" name="doc-source"/>
+<meta content="Agent,Tool" name="doc-tags"/>
+<meta content="3.8" name="doc-rating"/>
+<meta content="Google A2UI Agent 驅動使用者介面框架解析。" name="doc-summary"/>
+<meta content="2026-01-20_a2ui-framework.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>A2UI：Google 的 Agent 驅動使用者介面框架解析</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+
+
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="tags">
-                <span class="tag tag-agent">Agent</span>
-                <span class="tag tag-tool">Tool</span>
-                <span class="tag tag-automation">Automation</span>
-                <span class="tag tag-api">API</span>
-            </div>
-            <h1>A2UI：Google 的 Agent 驅動使用者介面框架解析</h1>
-            <p class="header-subtitle">Agent-to-UI Protocol - 當 AI 代理人動態生成個人化介面</p>
-            <p class="source-info">
-                來源：Department of Product Knowledge Series #97 | 2026-01-20<br>
-                <a href="https://www.deptofproduct.com" target="_blank">www.deptofproduct.com</a>
-            </p>
-        </header>
-        
-        <!-- Executive Summary -->
-        <section class="executive-summary">
-            <h2>📋 快速摘要 Executive Summary</h2>
-            
-            <div class="rating-bar">
-                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
-                <span class="rating-high">↑ 實務應用, 工具生態</span>
-                <span class="rating-low">↓ 技術深度, 時效性</span>
-            </div>
-            
-            <p>
+<div class="container">
+<!-- Header -->
+<header class="header">
+<div class="tags">
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-automation">Automation</span>
+<span class="tag tag-api">API</span>
+</div>
+<h1>A2UI：Google 的 Agent 驅動使用者介面框架解析</h1>
+<p class="header-subtitle">Agent-to-UI Protocol - 當 AI 代理人動態生成個人化介面</p>
+<p class="source-info">
+                來源：Department of Product Knowledge Series #97 | 2026-01-20<br/>
+<a href="https://www.deptofproduct.com" target="_blank">www.deptofproduct.com</a>
+</p>
+</header>
+<!-- Executive Summary -->
+<section class="executive-summary">
+<h2>📋 快速摘要 Executive Summary</h2>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
+<span class="rating-high">↑ 實務應用, 工具生態</span>
+<span class="rating-low">↓ 技術深度, 時效性</span>
+</div>
+<p>
                 Google 前 CEO Eric Schmidt 預測未來的使用者介面將「消失」，取而代之的是 AI 根據使用者意圖即時生成的個人化介面。A2UI（Agent-to-UI）是 Google 悄悄發布的新協議，讓 AI 代理人能夠動態產生 UI 元件，而非傳統的純文字對話。這篇文章解析 A2UI 的六步驟工作流程、Google 內部的實際應用案例，以及對產品團隊的策略意涵。對於正在探索 AI Agent 架構的你，這是一個值得關注的 multi-agent 生態系統標準。
             </p>
-        </section>
-        
-        <!-- Learning Objectives -->
-        <section class="objectives-section">
-            <h2>🎯 學習目標 Learning Objectives</h2>
-            <div class="objectives-grid">
-                <div class="objective-item">
-                    <div class="objective-icon">🔧</div>
-                    <div class="objective-title">理解 A2UI 核心機制</div>
-                    <div class="objective-desc">掌握六步驟工作流程：從使用者請求到 UI 渲染的完整技術鏈</div>
-                </div>
-                <div class="objective-item">
-                    <div class="objective-icon">🏢</div>
-                    <div class="objective-title">評估企業應用場景</div>
-                    <div class="objective-desc">了解 Google 如何在 Opal 和內部產品中部署 A2UI，以及 multi-agent 整合模式</div>
-                </div>
-                <div class="objective-item">
-                    <div class="objective-icon">📊</div>
-                    <div class="objective-title">辨識策略機會</div>
-                    <div class="objective-desc">分析「無頭代理人」商業模式和 Component Library 的策略價值</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Framework Visual -->
-        <div class="framework-visual">
-            <div class="framework-title">A2UI 六步驟工作流程</div>
-            <div class="framework-steps">
-                <div class="framework-step">
-                    <div class="framework-icon">💬</div>
-                    <div class="framework-step-title">1. 使用者請求</div>
-                    <div class="framework-step-desc">自然語言輸入</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">🤖</div>
-                    <div class="framework-step-title">2. Agent 接收</div>
-                    <div class="framework-step-desc">內部或第三方</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">📝</div>
-                    <div class="framework-step-title">3. 生成 JSON</div>
-                    <div class="framework-step-desc">UI 藍圖結構</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">📤</div>
-                    <div class="framework-step-title">4. 傳送至客戶端</div>
-                    <div class="framework-step-desc">安全資料傳輸</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">📚</div>
-                    <div class="framework-step-title">5. 元件庫映射</div>
-                    <div class="framework-step-desc">預核准元件集</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">✨</div>
-                    <div class="framework-step-title">6. 渲染 UI</div>
-                    <div class="framework-step-desc">品牌一致呈現</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tabbed Content Navigation -->
-        <div class="tab-container">
-            <div class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab(event, 'tab-core')">核心概念</button>
-                <button class="tab-btn" onclick="switchTab(event, 'tab-workflow')">工作流程詳解</button>
-                <button class="tab-btn" onclick="switchTab(event, 'tab-cases')">實際案例</button>
-                <button class="tab-btn" onclick="switchTab(event, 'tab-implications')">策略意涵</button>
-            </div>
-            
-            <!-- Tab 1: 核心概念 -->
-            <div id="tab-core" class="tab-content active">
-                <div class="section-header">Part I：什麼是 A2UI？核心概念解析</div>
-                
-                <div class="content-grid">
-                    <div class="original-content">
-                        <div class="original-label">原文摘要</div>
-                        <div class="original-text">
+</section>
+<!-- Learning Objectives -->
+<section class="objectives-section">
+<h2>🎯 學習目標 Learning Objectives</h2>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-icon">🔧</div>
+<div class="objective-title">理解 A2UI 核心機制</div>
+<div class="objective-desc">掌握六步驟工作流程：從使用者請求到 UI 渲染的完整技術鏈</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">🏢</div>
+<div class="objective-title">評估企業應用場景</div>
+<div class="objective-desc">了解 Google 如何在 Opal 和內部產品中部署 A2UI，以及 multi-agent 整合模式</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">📊</div>
+<div class="objective-title">辨識策略機會</div>
+<div class="objective-desc">分析「無頭代理人」商業模式和 Component Library 的策略價值</div>
+</div>
+</div>
+</section>
+<!-- Framework Visual -->
+<div class="framework-visual">
+<div class="framework-title">A2UI 六步驟工作流程</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">💬</div>
+<div class="framework-step-title">1. 使用者請求</div>
+<div class="framework-step-desc">自然語言輸入</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🤖</div>
+<div class="framework-step-title">2. Agent 接收</div>
+<div class="framework-step-desc">內部或第三方</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📝</div>
+<div class="framework-step-title">3. 生成 JSON</div>
+<div class="framework-step-desc">UI 藍圖結構</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📤</div>
+<div class="framework-step-title">4. 傳送至客戶端</div>
+<div class="framework-step-desc">安全資料傳輸</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📚</div>
+<div class="framework-step-title">5. 元件庫映射</div>
+<div class="framework-step-desc">預核准元件集</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">✨</div>
+<div class="framework-step-title">6. 渲染 UI</div>
+<div class="framework-step-desc">品牌一致呈現</div>
+</div>
+</div>
+</div>
+<!-- Tabbed Content Navigation -->
+<div class="tab-container">
+<div class="tab-nav">
+<button class="tab-btn active" onclick="switchTab(event, 'tab-core')">核心概念</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-workflow')">工作流程詳解</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-cases')">實際案例</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-implications')">策略意涵</button>
+</div>
+<!-- Tab 1: 核心概念 -->
+<div class="tab-content active" id="tab-core">
+<div class="section-header">Part I：什麼是 A2UI？核心概念解析</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="original-label">原文摘要</div>
+<div class="original-text">
                             A2UI 讓 AI 代理人能夠在對話過程中判斷何時需要產生可點擊的互動介面，而非繼續純文字對話。
                             <span class="en-quote">"A text only agent would involve a series of back and forth conversations while a product built with A2UI would understand when and how to generate a UI on the fly to make the UX easier for the user to achieve their goal."</span>
-                        </div>
-                    </div>
-                    <div class="explanation">
-                        <div class="explanation-label">深度解析</div>
-                        <p>想像你和一位超級聰明的助理對話。傳統 AI 助理就像只會用 Line 文字聊天的朋友——你問「幫我訂明天 7 點的餐廳」，它會一個問題一個問題問你：「幾個人？」「什麼餐廳類型？」「有預算嗎？」</p>
-                        <p>A2UI 則讓這位助理變成會<span class="highlight-concept">即時畫出表單</span>的人：它聽完你的需求後，直接遞給你一張已經填好部分資訊的預約單，你只需要確認或調整即可。這是從<span class="highlight-key">「對話式」到「介面式」</span>的典範轉移。</p>
-                    </div>
-                </div>
-                
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">💡 比喻說明</div>
-                    <div class="info-box-content">
-                        <p>把 A2UI 想成<strong>「智慧餐廳服務生」</strong>的進化：</p>
-                        <p><strong>傳統服務生（純文字 Agent）：</strong>逐一詢問你要點什麼，你用嘴巴回答每一題</p>
-                        <p><strong>A2UI 服務生：</strong>聽到「我想要清淡一點的海鮮」後，直接遞給你一個客製化的菜單平板，上面只顯示符合條件的餐點，你用手指點選即可</p>
-                        <p>關鍵差異：<span class="highlight-practical">Agent 判斷什麼時候「說話」不如「給你工具」更有效率</span></p>
-                    </div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="original-content">
-                        <div class="original-label">UX 對比</div>
-                        <div class="original-text">
-                            <strong>純文字 Agent：</strong><br>
-                            使用者：「訂明天 5 點 4 人的餐廳」<br>
-                            AI：「好的，請問是哪一天？」<br>
-                            使用者：「明天」<br>
-                            AI：「什麼時間？」<br>
-                            使用者：「我說了 5 點」<br>
-                            <span class="en-quote">"Your app's AI: 'Got it. And for how many people?'"</span>
-                        </div>
-                    </div>
-                    <div class="explanation">
-                        <div class="explanation-label">為什麼這很重要</div>
-                        <p>這個對比揭示了<span class="highlight-key">對話式 AI 的根本限制</span>：它把使用者當成「資料輸入源」，而非「決策者」。</p>
-                        <p>在 CDMO 場景中想像：當客戶詢問「我們的 QS-21 可以做 5 萬支的批次嗎」，與其來回確認規格，不如直接顯示一個<span class="highlight-practical">產能計算器</span>，讓客戶自己調整參數看結果。這是 A2UI 對製藥產業的潛在應用。</p>
-                    </div>
-                </div>
-                
-                <div class="info-box box-concept">
-                    <div class="info-box-header">📚 核心概念：宣告式 UI（Declarative UI）</div>
-                    <div class="info-box-content">
-                        <p>A2UI 的技術核心是<strong>宣告式 UI</strong>設計：Agent 不產生實際的 HTML 或 JavaScript 程式碼，而是產生一份「藍圖」（JSON 結構），描述<em>需要什麼元件</em>，而非<em>如何渲染</em>。</p>
-                        <p>這就像建築師畫設計圖給包商，而不是自己去砌磚——<span class="highlight-concept">關注點分離（Separation of Concerns）</span>讓系統更安全、更靈活。</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Tab 2: 工作流程詳解 -->
-            <div id="tab-workflow" class="tab-content">
-                <div class="section-header">Part II：六步驟工作流程深度解析</div>
-                
-                <div class="content-grid">
-                    <div class="original-content">
-                        <div class="original-label">步驟 1-2：請求與處理</div>
-                        <div class="original-text">
+</div>
+</div>
+<div class="explanation">
+<div class="explanation-label">深度解析</div>
+<p>想像你和一位超級聰明的助理對話。傳統 AI 助理就像只會用 Line 文字聊天的朋友——你問「幫我訂明天 7 點的餐廳」，它會一個問題一個問題問你：「幾個人？」「什麼餐廳類型？」「有預算嗎？」</p>
+<p>A2UI 則讓這位助理變成會<span class="highlight-concept">即時畫出表單</span>的人：它聽完你的需求後，直接遞給你一張已經填好部分資訊的預約單，你只需要確認或調整即可。這是從<span class="highlight-key">「對話式」到「介面式」</span>的典範轉移。</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>把 A2UI 想成<strong>「智慧餐廳服務生」</strong>的進化：</p>
+<p><strong>傳統服務生（純文字 Agent）：</strong>逐一詢問你要點什麼，你用嘴巴回答每一題</p>
+<p><strong>A2UI 服務生：</strong>聽到「我想要清淡一點的海鮮」後，直接遞給你一個客製化的菜單平板，上面只顯示符合條件的餐點，你用手指點選即可</p>
+<p>關鍵差異：<span class="highlight-practical">Agent 判斷什麼時候「說話」不如「給你工具」更有效率</span></p>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="original-label">UX 對比</div>
+<div class="original-text">
+<strong>純文字 Agent：</strong><br/>
+                            使用者：「訂明天 5 點 4 人的餐廳」<br/>
+                            AI：「好的，請問是哪一天？」<br/>
+                            使用者：「明天」<br/>
+                            AI：「什麼時間？」<br/>
+                            使用者：「我說了 5 點」<br/>
+<span class="en-quote">"Your app's AI: 'Got it. And for how many people?'"</span>
+</div>
+</div>
+<div class="explanation">
+<div class="explanation-label">為什麼這很重要</div>
+<p>這個對比揭示了<span class="highlight-key">對話式 AI 的根本限制</span>：它把使用者當成「資料輸入源」，而非「決策者」。</p>
+<p>在 CDMO 場景中想像：當客戶詢問「我們的 QS-21 可以做 5 萬支的批次嗎」，與其來回確認規格，不如直接顯示一個<span class="highlight-practical">產能計算器</span>，讓客戶自己調整參數看結果。這是 A2UI 對製藥產業的潛在應用。</p>
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：宣告式 UI（Declarative UI）</div>
+<div class="info-box-content">
+<p>A2UI 的技術核心是<strong>宣告式 UI</strong>設計：Agent 不產生實際的 HTML 或 JavaScript 程式碼，而是產生一份「藍圖」（JSON 結構），描述<em>需要什麼元件</em>，而非<em>如何渲染</em>。</p>
+<p>這就像建築師畫設計圖給包商，而不是自己去砌磚——<span class="highlight-concept">關注點分離（Separation of Concerns）</span>讓系統更安全、更靈活。</p>
+</div>
+</div>
+</div>
+<!-- Tab 2: 工作流程詳解 -->
+<div class="tab-content" id="tab-workflow">
+<div class="section-header">Part II：六步驟工作流程深度解析</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="original-label">步驟 1-2：請求與處理</div>
+<div class="original-text">
                             使用者發出自然語言請求，Agent（內部或第三方）接收並處理。Agent 判斷已有哪些資訊、還缺什麼、以及什麼樣的介面最適合這次互動。
                             <span class="en-quote">"The agent processes the user's intent, determines what information it already has, what it still needs, and what kind of interface would best serve this interaction."</span>
-                        </div>
-                    </div>
-                    <div class="explanation">
-                        <div class="explanation-label">關鍵洞察</div>
-                        <p>這裡有兩個重點：</p>
-                        <p>1. <span class="highlight-key">Multi-Agent 架構</span>：你的 App 可以接收外部 Agent 的 UI 指令。想像 OpenTable 的訂位 Agent 可以在你的 App 裡渲染它設計的介面。</p>
-                        <p>2. <span class="highlight-concept">意圖萃取</span>：Agent 從「訂明天 7 點 2 人的餐廳」中萃取出三個欄位的預設值（日期、時間、人數），這是 NLU（Natural Language Understanding）的實戰應用。</p>
-                    </div>
-                </div>
-                
-                <div class="info-box box-code">
-                    <div class="info-box-header">💻 程式碼/API：JSON 藍圖範例</div>
-                    <div class="info-box-content">
-                        <p>Agent 產生的 JSON 結構如下：</p>
+</div>
+</div>
+<div class="explanation">
+<div class="explanation-label">關鍵洞察</div>
+<p>這裡有兩個重點：</p>
+<p>1. <span class="highlight-key">Multi-Agent 架構</span>：你的 App 可以接收外部 Agent 的 UI 指令。想像 OpenTable 的訂位 Agent 可以在你的 App 裡渲染它設計的介面。</p>
+<p>2. <span class="highlight-concept">意圖萃取</span>：Agent 從「訂明天 7 點 2 人的餐廳」中萃取出三個欄位的預設值（日期、時間、人數），這是 NLU（Natural Language Understanding）的實戰應用。</p>
+</div>
+</div>
+<div class="info-box box-code">
+<div class="info-box-header">💻 程式碼/API：JSON 藍圖範例</div>
+<div class="info-box-content">
+<p>Agent 產生的 JSON 結構如下：</p>
 <pre><code>{
   "components": [
     { "type": "text", "content": "Reservation Details" },
@@ -695,334 +198,313 @@
     { "type": "button", "label": "Submit Reservation", "action": "submit" }
   ]
 }</code></pre>
-                        <p>注意：這只是<strong>資料結構</strong>，不是程式碼。Client 端的 Component Library 負責把 <code>datePicker</code> 渲染成實際的日期選擇器。</p>
-                    </div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="original-content">
-                        <div class="original-label">步驟 3-4：安全性設計</div>
-                        <div class="original-text">
+<p>注意：這只是<strong>資料結構</strong>，不是程式碼。Client 端的 Component Library 負責把 <code>datePicker</code> 渲染成實際的日期選擇器。</p>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="original-label">步驟 3-4：安全性設計</div>
+<div class="original-text">
                             JSON 傳輸到客戶端時只是純資料，沒有可執行程式碼。客戶端只渲染它「認識」的元件類型，惡意 Agent 無法注入任意程式碼。
                             <span class="en-quote">"There's nothing to execute, no scripts to sandbox. The client receives a shopping list of components to render, and it only renders components it already trusts."</span>
-                        </div>
-                    </div>
-                    <div class="explanation">
-                        <div class="explanation-label">安全架構解析</div>
-                        <p>這是<span class="highlight-key">白名單式安全模型</span>的實踐：</p>
-                        <p>傳統 iframe 嵌入第三方內容有 XSS（跨站腳本）風險，因為你讓別人的程式碼在你的網站上執行。A2UI 的做法是：別人只能「點菜」，但「廚房」（Component Library）是你自己的。</p>
-                        <p>在 GMP 合規的角度，這很像<span class="highlight-practical">「核准供應商清單」</span>——只有通過驗證的元件才能進入系統。</p>
-                    </div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="original-content">
-                        <div class="original-label">步驟 5-6：元件庫與渲染</div>
-                        <div class="original-text">
+</div>
+</div>
+<div class="explanation">
+<div class="explanation-label">安全架構解析</div>
+<p>這是<span class="highlight-key">白名單式安全模型</span>的實踐：</p>
+<p>傳統 iframe 嵌入第三方內容有 XSS（跨站腳本）風險，因為你讓別人的程式碼在你的網站上執行。A2UI 的做法是：別人只能「點菜」，但「廚房」（Component Library）是你自己的。</p>
+<p>在 GMP 合規的角度，這很像<span class="highlight-practical">「核准供應商清單」</span>——只有通過驗證的元件才能進入系統。</p>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="original-label">步驟 5-6：元件庫與渲染</div>
+<div class="original-text">
                             客戶端維護自己的元件庫：按鈕、輸入欄、日期選擇器、卡片、圖表等。JSON 中的 type 會映射到這些預先核准的實作。
                             <span class="en-quote">"A date picker from the agent renders as your date picker, matching the rest of your product's design."</span>
-                        </div>
-                    </div>
-                    <div class="explanation">
-                        <div class="explanation-label">Design System 的價值</div>
-                        <p>這裡凸顯了<span class="highlight-concept">Design System（設計系統）</span>在 AI 時代的新角色：它不再只是「讓設計一致」的工具，而是<span class="highlight-key">Agent 可以操作的「API」</span>。</p>
-                        <p>對產品團隊的啟示：你的 Component Library 的完整性和文件品質，決定了 Agent 能產生多豐富的 UI。這是新的技術債項目。</p>
-                    </div>
-                </div>
-                
-                <div class="info-box box-key">
-                    <div class="info-box-header">⚠️ 重點提示：Agent 的 UI 詞彙表</div>
-                    <div class="info-box-content">
-                        <p>A2UI 的核心限制：<strong>Agent 只能使用你定義過的元件類型</strong>。</p>
-                        <p>這意味著產品團隊需要思考「什麼樣的 UI 模式是 Agent 可能需要的？」並提前建置。常見的元件類型包括：</p>
-                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li>輸入類：text input, date picker, time picker, dropdown, checkbox</li>
-                            <li>展示類：card, image, chart, table, map</li>
-                            <li>動作類：button, link, form submit</li>
-                            <li>進階類：file upload, video player, signature pad</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Tab 3: 實際案例 -->
-            <div id="tab-cases" class="tab-content">
-                <div class="section-header">Part III：Google 的實際應用案例</div>
-                
-                <div class="content-grid">
-                    <div class="original-content">
-                        <div class="original-label">案例一：Opal 平台</div>
-                        <div class="original-text">
+</div>
+</div>
+<div class="explanation">
+<div class="explanation-label">Design System 的價值</div>
+<p>這裡凸顯了<span class="highlight-concept">Design System（設計系統）</span>在 AI 時代的新角色：它不再只是「讓設計一致」的工具，而是<span class="highlight-key">Agent 可以操作的「API」</span>。</p>
+<p>對產品團隊的啟示：你的 Component Library 的完整性和文件品質，決定了 Agent 能產生多豐富的 UI。這是新的技術債項目。</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示：Agent 的 UI 詞彙表</div>
+<div class="info-box-content">
+<p>A2UI 的核心限制：<strong>Agent 只能使用你定義過的元件類型</strong>。</p>
+<p>這意味著產品團隊需要思考「什麼樣的 UI 模式是 Agent 可能需要的？」並提前建置。常見的元件類型包括：</p>
+<ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+<li>輸入類：text input, date picker, time picker, dropdown, checkbox</li>
+<li>展示類：card, image, chart, table, map</li>
+<li>動作類：button, link, form submit</li>
+<li>進階類：file upload, video player, signature pad</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Tab 3: 實際案例 -->
+<div class="tab-content" id="tab-cases">
+<div class="section-header">Part III：Google 的實際應用案例</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="original-label">案例一：Opal 平台</div>
+<div class="original-text">
                             Opal 是 Google 的 vibe-coding 工具，讓使用者建立 AI 驅動的 mini apps。它已整合進 Gemini 網頁應用，使用者可以創建稱為 Gems 的客製化應用。
                             <span class="en-quote">"A2UI is foundational to our work. It gives us the flexibility to let the AI drive the user experience in novel ways, without being constrained by a fixed front-end." - Dimitri Glazkov, Principal Engineer</span>
-                        </div>
-                    </div>
-                    <div class="explanation">
-                        <div class="explanation-label">Opal 的意義</div>
-                        <p>Opal 驗證了<span class="highlight-concept">「AI 原生應用」</span>的新典範：應用程式的 UI 不是預先設計好的，而是<span class="highlight-key">AI 根據使用者需求即時組裝</span>的。</p>
-                        <p>這對「低程式碼/無程式碼」平台是重大威脅——為什麼要拖拉元件建立 App，當你可以直接<em>描述</em>你要什麼？</p>
-                    </div>
-                </div>
-                
-                <div class="info-box box-practical">
-                    <div class="info-box-header">🛠️ 實務應用：Google 內部採用</div>
-                    <div class="info-box-content">
-                        <p>Google Staff Engineer James Wren 表示，A2UI 讓內部團隊能快速開發「以豐富 UI 為常態」的 Agent，而非「以 UI 為例外」。</p>
-                        <p><strong>關鍵引言：</strong><em>"This has been incredibly powerful for internal teams, allowing them to rapidly develop agents where rich user interfaces are the norm, not the exception."</em></p>
-                        <p>這暗示 Google 內部可能有數十甚至數百個基於 A2UI 的內部工具正在開發中。</p>
-                    </div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="original-content">
-                        <div class="original-label">案例二：Disco 瀏覽器</div>
-                        <div class="original-text">
+</div>
+</div>
+<div class="explanation">
+<div class="explanation-label">Opal 的意義</div>
+<p>Opal 驗證了<span class="highlight-concept">「AI 原生應用」</span>的新典範：應用程式的 UI 不是預先設計好的，而是<span class="highlight-key">AI 根據使用者需求即時組裝</span>的。</p>
+<p>這對「低程式碼/無程式碼」平台是重大威脅——為什麼要拖拉元件建立 App，當你可以直接<em>描述</em>你要什麼？</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用：Google 內部採用</div>
+<div class="info-box-content">
+<p>Google Staff Engineer James Wren 表示，A2UI 讓內部團隊能快速開發「以豐富 UI 為常態」的 Agent，而非「以 UI 為例外」。</p>
+<p><strong>關鍵引言：</strong><em>"This has been incredibly powerful for internal teams, allowing them to rapidly develop agents where rich user interfaces are the norm, not the exception."</em></p>
+<p>這暗示 Google 內部可能有數十甚至數百個基於 A2UI 的內部工具正在開發中。</p>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="original-label">案例二：Disco 瀏覽器</div>
+<div class="original-text">
                             Disco 是一個實驗性瀏覽器，可以根據使用者的瀏覽頁籤內容，自動生成互動式 mini apps。例如，在研究旅行時，它可以創建一個客製化的行程規劃器。
                             <span class="en-quote">"In this example, you can see how researching a trip could involve the creation of custom mini app that lets you narrow down your search and filter activities based on your own preferences."</span>
-                        </div>
-                    </div>
-                    <div class="explanation">
-                        <div class="explanation-label">Context-Aware UI 的願景</div>
-                        <p>Disco 雖然不直接使用 A2UI 協議，但體現了相同的核心概念：<span class="highlight-key">UI 應該根據情境動態生成</span>。</p>
-                        <p>想像在 CDMO 情境中：當你在查看多個客戶的批次紀錄時，系統自動生成一個「跨客戶產能比較器」，而不需要你去開一個新的報表。</p>
-                    </div>
-                </div>
-                
-                <div class="info-box box-compare">
-                    <div class="info-box-header">⚖️ 工具比較：A2UI vs 傳統整合方式</div>
-                    <div class="info-box-content">
-                        <table class="comparison-table">
-                            <tr>
-                                <th>特性</th>
-                                <th>A2UI</th>
-                                <th>iframe 嵌入</th>
-                                <th>API + 自建 UI</th>
-                            </tr>
-                            <tr>
-                                <td>視覺一致性</td>
-                                <td>高（使用宿主元件庫）</td>
-                                <td>低（第三方樣式）</td>
-                                <td>高（需自行開發）</td>
-                            </tr>
-                            <tr>
-                                <td>安全性</td>
-                                <td>高（白名單元件）</td>
-                                <td>中（需 sandbox）</td>
-                                <td>高（完全控制）</td>
-                            </tr>
-                            <tr>
-                                <td>開發成本</td>
-                                <td>中（需維護元件庫）</td>
-                                <td>低（直接嵌入）</td>
-                                <td>高（完整開發）</td>
-                            </tr>
-                            <tr>
-                                <td>Agent 整合</td>
-                                <td>原生支援</td>
-                                <td>不支援</td>
-                                <td>需自行設計</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Tab 4: 策略意涵 -->
-            <div id="tab-implications" class="tab-content">
-                <div class="section-header">Part IV：對產品團隊的策略意涵</div>
-                
-                <div class="content-grid">
-                    <div class="original-content">
-                        <div class="original-label">對設計師的影響</div>
-                        <div class="original-text">
+</div>
+</div>
+<div class="explanation">
+<div class="explanation-label">Context-Aware UI 的願景</div>
+<p>Disco 雖然不直接使用 A2UI 協議，但體現了相同的核心概念：<span class="highlight-key">UI 應該根據情境動態生成</span>。</p>
+<p>想像在 CDMO 情境中：當你在查看多個客戶的批次紀錄時，系統自動生成一個「跨客戶產能比較器」，而不需要你去開一個新的報表。</p>
+</div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 工具比較：A2UI vs 傳統整合方式</div>
+<div class="info-box-content">
+<table class="comparison-table">
+<tr>
+<th>特性</th>
+<th>A2UI</th>
+<th>iframe 嵌入</th>
+<th>API + 自建 UI</th>
+</tr>
+<tr>
+<td>視覺一致性</td>
+<td>高（使用宿主元件庫）</td>
+<td>低（第三方樣式）</td>
+<td>高（需自行開發）</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>高（白名單元件）</td>
+<td>中（需 sandbox）</td>
+<td>高（完全控制）</td>
+</tr>
+<tr>
+<td>開發成本</td>
+<td>中（需維護元件庫）</td>
+<td>低（直接嵌入）</td>
+<td>高（完整開發）</td>
+</tr>
+<tr>
+<td>Agent 整合</td>
+<td>原生支援</td>
+<td>不支援</td>
+<td>需自行設計</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<!-- Tab 4: 策略意涵 -->
+<div class="tab-content" id="tab-implications">
+<div class="section-header">Part IV：對產品團隊的策略意涵</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="original-label">對設計師的影響</div>
+<div class="original-text">
                             A2UI 將 UX 思維從「規劃螢幕」轉變為「定義 Agent 可組合的 UI 詞彙」。設計師需要設計能在無法完全預測的組合中良好運作的彈性元件。
                             <span class="en-quote">"For designers, this means thinking less about specific screen layouts and more about designing flexible components that will work well in combinations you can't fully predict."</span>
-                        </div>
-                    </div>
-                    <div class="explanation">
-                        <div class="explanation-label">新的設計技能</div>
-                        <p>這是<span class="highlight-key">設計原子化（Atomic Design）</span>的極致演繹：</p>
-                        <p>傳統設計是「頁面導向」——先想好使用者流程，再設計每個頁面。A2UI 時代需要「元件導向」——設計<span class="highlight-concept">高度通用且可組合的元件</span>，然後讓 Agent 決定如何組裝。</p>
-                        <p>這很像藥品配方研發：你準備好各種原料藥和賦形劑，配方師（Agent）根據需求組合出不同劑型。</p>
-                    </div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="original-content">
-                        <div class="original-label">對工程師的影響</div>
-                        <div class="original-text">
+</div>
+</div>
+<div class="explanation">
+<div class="explanation-label">新的設計技能</div>
+<p>這是<span class="highlight-key">設計原子化（Atomic Design）</span>的極致演繹：</p>
+<p>傳統設計是「頁面導向」——先想好使用者流程，再設計每個頁面。A2UI 時代需要「元件導向」——設計<span class="highlight-concept">高度通用且可組合的元件</span>，然後讓 Agent 決定如何組裝。</p>
+<p>這很像藥品配方研發：你準備好各種原料藥和賦形劑，配方師（Agent）根據需求組合出不同劑型。</p>
+</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="original-label">對工程師的影響</div>
+<div class="original-text">
                             工程團隊的工作重心從「建構特定畫面」轉移到「建構能詮釋 A2UI 訊息的渲染管線」，並確保元件能優雅處理邊緣情況。
                             <span class="en-quote">"Engineers would need to ensure components handle edge cases gracefully (things like unexpected data lengths, missing values, error states)."</span>
-                        </div>
-                    </div>
-                    <div class="explanation">
-                        <div class="explanation-label">新的技術債</div>
-                        <p>這裡暗示了一個關鍵的<span class="highlight-key">技術投資方向</span>：</p>
-                        <p>1. <strong>元件健壯性</strong>：每個元件都要能處理 Agent 可能傳來的「意外」資料</p>
-                        <p>2. <strong>渲染管線</strong>：需要一個穩定的 JSON → UI 解析器</p>
-                        <p>3. <strong>錯誤處理</strong>：當 Agent 請求未知元件時，系統要能優雅降級</p>
-                    </div>
-                </div>
-                
-                <div class="info-box box-key">
-                    <div class="info-box-header">⚠️ 重點提示：「無頭代理人」商業模式</div>
-                    <div class="info-box-content">
-                        <p>文章提到一個有趣的商業模式：<strong>Headless Agent</strong>（無頭代理人）</p>
-                        <p>你可以把你的專業 Agent（例如旅行訂票、費用管理、CRM）暴露給其他平台，UI 渲染由合作夥伴的 App 處理。這像是 API 經濟的進化版——你提供<span class="highlight-practical">智慧</span>，夥伴提供<span class="highlight-practical">介面</span>。</p>
-                        <p><strong>潛在機會：</strong>擁有豐富 Component Library 的平台會成為更有價值的 Agent 宿主，這可能成為新的平台競爭維度。</p>
-                    </div>
-                </div>
-                
-                <div class="info-box box-practical">
-                    <div class="info-box-header">🛠️ 實務應用：CDMO 情境思考</div>
-                    <div class="info-box-content">
-                        <p>雖然 A2UI 目前主要是消費級應用的技術，但可以思考<strong>製藥產業的潛在應用</strong>：</p>
-                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><strong>客戶詢價介面</strong>：客戶問「能不能做 500L 規模的 mRNA 疫苗？」，Agent 動態生成產能評估表單</li>
-                            <li><strong>Tech Transfer 追蹤</strong>：根據專案進度，Agent 自動組裝相關的文件清單和核准狀態儀表板</li>
-                            <li><strong>偏差調查輔助</strong>：輸入偏差描述後，Agent 產生可能原因的檢核表和調查流程圖</li>
-                        </ul>
-                        <p><strong>注意：</strong>任何涉及 GMP 紀錄的應用都需要符合 21 CFR Part 11 的電子簽章和稽核軌跡要求。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Key Takeaways -->
-        <section class="takeaways-section">
-            <h2>💎 重點整理 Key Takeaways</h2>
-            <div class="takeaways-grid">
-                <div class="summary-card">
-                    <div class="summary-card-icon">🔄</div>
-                    <div class="summary-card-title">典範轉移</div>
-                    <div class="summary-card-text">A2UI 將 AI 互動從「純對話」升級為「對話 + 動態介面」，Agent 自主判斷何時需要 UI</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-icon">🔐</div>
-                    <div class="summary-card-title">安全架構</div>
-                    <div class="summary-card-text">宣告式 JSON 藍圖 + 白名單元件庫，實現安全的 Multi-Agent UI 整合</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-icon">📚</div>
-                    <div class="summary-card-title">元件庫戰略</div>
-                    <div class="summary-card-text">Design System 成為 Agent 的操作 API，元件庫完整性決定 AI 能力上限</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-icon">💼</div>
-                    <div class="summary-card-title">新商業模式</div>
-                    <div class="summary-card-text">Headless Agent 模式：提供智慧，讓夥伴平台提供介面，類似 API 經濟進化版</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Practice Questions -->
-        <section class="practice-section">
-            <h2>📝 練習題 Practice Questions</h2>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q1</span>
-                    <span class="question-type">概念理解</span>
-                    <span class="question-text">為什麼 A2UI 使用 JSON 藍圖而非直接讓 Agent 產生 HTML/JavaScript？這種設計選擇解決了什麼問題？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p><strong>核心原因：安全性與關注點分離</strong></p>
-                    <p>如果 Agent 直接產生 HTML/JavaScript，會有兩大風險：</p>
-                    <ul>
-                        <li><strong>安全風險</strong>：惡意或被駭的 Agent 可能注入 XSS 攻擊程式碼，竊取使用者資料</li>
-                        <li><strong>一致性問題</strong>：不同 Agent 產生的 UI 風格會不一致，破壞使用者體驗</li>
-                    </ul>
-                    <p>JSON 藍圖是<strong>宣告式（Declarative）</strong>設計：Agent 只「描述」要什麼（What），Client 決定「如何」渲染（How）。這實現了：</p>
-                    <ul>
-                        <li><strong>白名單安全</strong>：Client 只渲染認識的元件類型，未知指令會被忽略</li>
-                        <li><strong>視覺一致性</strong>：所有 UI 都用宿主 App 的元件庫渲染，符合品牌識別</li>
-                        <li><strong>跨平台適應</strong>：同一份 JSON 可以在 Web、iOS、Android 上用各自的原生元件渲染</li>
-                    </ul>
-                </div>
-            </details>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q2</span>
-                    <span class="question-type">產業應用</span>
-                    <span class="question-text">在 CDMO 的 Feasibility Assessment 流程中，A2UI 可以如何應用？需要考慮哪些法規合規要點？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p><strong>可能的應用場景：</strong></p>
-                    <p>當客戶詢問「我們有一個 monoclonal antibody 產品，需要 10,000L 規模的無菌充填，可以評估嗎？」時，A2UI Agent 可以動態生成：</p>
-                    <ul>
-                        <li>產品類型選擇器（mAb / vaccine / cell therapy）</li>
-                        <li>規模和批次大小的數值輸入欄</li>
-                        <li>設備需求檢核表（隔離器規格、充填速度）</li>
-                        <li>時程估算表單（Takt time 計算器）</li>
-                    </ul>
-                    <p><strong>法規合規考量：</strong></p>
-                    <ul>
-                        <li><strong>21 CFR Part 11</strong>：如果生成的 UI 涉及電子紀錄，需要有電子簽章、稽核軌跡、存取控制</li>
-                        <li><strong>ALCOA+ 原則</strong>：動態生成的表單資料必須是可歸屬（Attributable）、清晰（Legible）、同步（Contemporaneous）、原始（Original）、準確（Accurate）的</li>
-                        <li><strong>驗證要求</strong>：元件庫本身需要經過 CSV（Computer System Validation）驗證</li>
-                        <li><strong>風險評估</strong>：Agent 的「判斷」（何時顯示什麼 UI）是否影響 GxP 決策？如果是，可能需要更高的驗證層級</li>
-                    </ul>
-                </div>
-            </details>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q3</span>
-                    <span class="question-type">批判思考</span>
-                    <span class="question-text">Eric Schmidt 預測「UI 將會消失」。請批判這個觀點：在什麼場景下動態生成的 UI 會優於預先設計的 UI？又在什麼場景下傳統 UI 仍然更好？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p><strong>動態 UI 較優的場景：</strong></p>
-                    <ul>
-                        <li><strong>高度個人化需求</strong>：每個使用者需要不同的欄位組合（如客製化報表）</li>
-                        <li><strong>一次性任務</strong>：使用者只用一次的功能，不值得設計完整流程</li>
-                        <li><strong>探索性互動</strong>：使用者不確定自己要什麼，需要 AI 引導</li>
-                        <li><strong>Multi-Agent 整合</strong>：整合多個外部服務，無法預先設計所有可能的 UI</li>
-                    </ul>
-                    <p><strong>傳統 UI 較優的場景：</strong></p>
-                    <ul>
-                        <li><strong>高頻率重複任務</strong>：使用者需要建立肌肉記憶，固定位置的按鈕更有效率</li>
-                        <li><strong>關鍵操作</strong>：涉及金錢、安全、法規的操作，需要經過驗證的固定流程</li>
-                        <li><strong>無障礙需求</strong>：螢幕閱讀器使用者依賴穩定的頁面結構</li>
-                        <li><strong>離線環境</strong>：無法連接 AI 服務時，需要預先載入的 UI</li>
-                        <li><strong>品牌體驗</strong>：高度精緻的視覺設計難以透過 JSON 描述完整呈現</li>
-                    </ul>
-                    <p><strong>結論：</strong>Schmidt 的預測可能過於極端。更可能的未來是<strong>混合模式</strong>——核心流程用傳統 UI，邊緣情境和個人化需求用動態 UI 補充。</p>
-                </div>
-            </details>
-        </section>
-        
-        <!-- Bottom Line -->
-        <div class="bottom-line">
-            <div class="bottom-line-header">🎯 我的行動結論</div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">✔ 核心洞察</div>
-                <div class="bottom-line-text">A2UI 代表了「AI 控制 UI」的技術基礎設施正在成形。對於正在建構 AI 輔助工作流程的我，這意味著<strong>元件化設計不再只是工程實踐，而是 AI 能力的基礎</strong>。我的 Master Prompt 系統產生的 HTML 輸出，本質上也是一種「Agent 產生 UI」的實踐。</div>
-            </div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">📈 立即應用</div>
-                <div class="bottom-line-text">盤點目前 CDMO 工作中「高度重複但每次略有不同」的表單和報告場景（如 Feasibility Assessment、Tech Transfer Checklist），評估這些是否適合改為「Agent 動態生成」模式。本週先列出 3 個候選場景。</div>
-            </div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">⚠ 需要補充</div>
-                <div class="bottom-line-text">文章缺乏技術實作細節（A2UI 的 JSON schema 規格、錯誤處理機制）。另外，完全沒討論 latency 和效能問題——Agent 生成 UI 需要多少時間？這會影響 UX。下次閱讀 A2UI 官方文件（a2ui.org）時需要補充這些資訊。</div>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <footer class="footer">
-            <p>製作日期：2026-01-20</p>
-            <p>原文來源：<a href="https://www.deptofproduct.com" target="_blank">Department of Product - Knowledge Series #97</a></p>
-            <p>延伸閱讀：<a href="https://a2ui.org" target="_blank">A2UI 官方文件</a> | <a href="https://a2ui-composer.ag-ui.com" target="_blank">A2UI Composer 工具</a></p>
-            <div class="chat-title">建議 Chat Title: [Agent] A2UI - Google 動態 UI 框架解析</div>
-        </footer>
-    </div>
-
-    <script>
+</div>
+</div>
+<div class="explanation">
+<div class="explanation-label">新的技術債</div>
+<p>這裡暗示了一個關鍵的<span class="highlight-key">技術投資方向</span>：</p>
+<p>1. <strong>元件健壯性</strong>：每個元件都要能處理 Agent 可能傳來的「意外」資料</p>
+<p>2. <strong>渲染管線</strong>：需要一個穩定的 JSON → UI 解析器</p>
+<p>3. <strong>錯誤處理</strong>：當 Agent 請求未知元件時，系統要能優雅降級</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示：「無頭代理人」商業模式</div>
+<div class="info-box-content">
+<p>文章提到一個有趣的商業模式：<strong>Headless Agent</strong>（無頭代理人）</p>
+<p>你可以把你的專業 Agent（例如旅行訂票、費用管理、CRM）暴露給其他平台，UI 渲染由合作夥伴的 App 處理。這像是 API 經濟的進化版——你提供<span class="highlight-practical">智慧</span>，夥伴提供<span class="highlight-practical">介面</span>。</p>
+<p><strong>潛在機會：</strong>擁有豐富 Component Library 的平台會成為更有價值的 Agent 宿主，這可能成為新的平台競爭維度。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用：CDMO 情境思考</div>
+<div class="info-box-content">
+<p>雖然 A2UI 目前主要是消費級應用的技術，但可以思考<strong>製藥產業的潛在應用</strong>：</p>
+<ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+<li><strong>客戶詢價介面</strong>：客戶問「能不能做 500L 規模的 mRNA 疫苗？」，Agent 動態生成產能評估表單</li>
+<li><strong>Tech Transfer 追蹤</strong>：根據專案進度，Agent 自動組裝相關的文件清單和核准狀態儀表板</li>
+<li><strong>偏差調查輔助</strong>：輸入偏差描述後，Agent 產生可能原因的檢核表和調查流程圖</li>
+</ul>
+<p><strong>注意：</strong>任何涉及 GMP 紀錄的應用都需要符合 21 CFR Part 11 的電子簽章和稽核軌跡要求。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Takeaways -->
+<section class="takeaways-section">
+<h2>💎 重點整理 Key Takeaways</h2>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="summary-card-icon">🔄</div>
+<div class="summary-card-title">典範轉移</div>
+<div class="summary-card-text">A2UI 將 AI 互動從「純對話」升級為「對話 + 動態介面」，Agent 自主判斷何時需要 UI</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-icon">🔐</div>
+<div class="summary-card-title">安全架構</div>
+<div class="summary-card-text">宣告式 JSON 藍圖 + 白名單元件庫，實現安全的 Multi-Agent UI 整合</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-icon">📚</div>
+<div class="summary-card-title">元件庫戰略</div>
+<div class="summary-card-text">Design System 成為 Agent 的操作 API，元件庫完整性決定 AI 能力上限</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-icon">💼</div>
+<div class="summary-card-title">新商業模式</div>
+<div class="summary-card-text">Headless Agent 模式：提供智慧，讓夥伴平台提供介面，類似 API 經濟進化版</div>
+</div>
+</div>
+</section>
+<!-- Practice Questions -->
+<section class="practice-section">
+<h2>📝 練習題 Practice Questions</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">為什麼 A2UI 使用 JSON 藍圖而非直接讓 Agent 產生 HTML/JavaScript？這種設計選擇解決了什麼問題？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>核心原因：安全性與關注點分離</strong></p>
+<p>如果 Agent 直接產生 HTML/JavaScript，會有兩大風險：</p>
+<ul>
+<li><strong>安全風險</strong>：惡意或被駭的 Agent 可能注入 XSS 攻擊程式碼，竊取使用者資料</li>
+<li><strong>一致性問題</strong>：不同 Agent 產生的 UI 風格會不一致，破壞使用者體驗</li>
+</ul>
+<p>JSON 藍圖是<strong>宣告式（Declarative）</strong>設計：Agent 只「描述」要什麼（What），Client 決定「如何」渲染（How）。這實現了：</p>
+<ul>
+<li><strong>白名單安全</strong>：Client 只渲染認識的元件類型，未知指令會被忽略</li>
+<li><strong>視覺一致性</strong>：所有 UI 都用宿主 App 的元件庫渲染，符合品牌識別</li>
+<li><strong>跨平台適應</strong>：同一份 JSON 可以在 Web、iOS、Android 上用各自的原生元件渲染</li>
+</ul>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在 CDMO 的 Feasibility Assessment 流程中，A2UI 可以如何應用？需要考慮哪些法規合規要點？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>可能的應用場景：</strong></p>
+<p>當客戶詢問「我們有一個 monoclonal antibody 產品，需要 10,000L 規模的無菌充填，可以評估嗎？」時，A2UI Agent 可以動態生成：</p>
+<ul>
+<li>產品類型選擇器（mAb / vaccine / cell therapy）</li>
+<li>規模和批次大小的數值輸入欄</li>
+<li>設備需求檢核表（隔離器規格、充填速度）</li>
+<li>時程估算表單（Takt time 計算器）</li>
+</ul>
+<p><strong>法規合規考量：</strong></p>
+<ul>
+<li><strong>21 CFR Part 11</strong>：如果生成的 UI 涉及電子紀錄，需要有電子簽章、稽核軌跡、存取控制</li>
+<li><strong>ALCOA+ 原則</strong>：動態生成的表單資料必須是可歸屬（Attributable）、清晰（Legible）、同步（Contemporaneous）、原始（Original）、準確（Accurate）的</li>
+<li><strong>驗證要求</strong>：元件庫本身需要經過 CSV（Computer System Validation）驗證</li>
+<li><strong>風險評估</strong>：Agent 的「判斷」（何時顯示什麼 UI）是否影響 GxP 決策？如果是，可能需要更高的驗證層級</li>
+</ul>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">Eric Schmidt 預測「UI 將會消失」。請批判這個觀點：在什麼場景下動態生成的 UI 會優於預先設計的 UI？又在什麼場景下傳統 UI 仍然更好？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>動態 UI 較優的場景：</strong></p>
+<ul>
+<li><strong>高度個人化需求</strong>：每個使用者需要不同的欄位組合（如客製化報表）</li>
+<li><strong>一次性任務</strong>：使用者只用一次的功能，不值得設計完整流程</li>
+<li><strong>探索性互動</strong>：使用者不確定自己要什麼，需要 AI 引導</li>
+<li><strong>Multi-Agent 整合</strong>：整合多個外部服務，無法預先設計所有可能的 UI</li>
+</ul>
+<p><strong>傳統 UI 較優的場景：</strong></p>
+<ul>
+<li><strong>高頻率重複任務</strong>：使用者需要建立肌肉記憶，固定位置的按鈕更有效率</li>
+<li><strong>關鍵操作</strong>：涉及金錢、安全、法規的操作，需要經過驗證的固定流程</li>
+<li><strong>無障礙需求</strong>：螢幕閱讀器使用者依賴穩定的頁面結構</li>
+<li><strong>離線環境</strong>：無法連接 AI 服務時，需要預先載入的 UI</li>
+<li><strong>品牌體驗</strong>：高度精緻的視覺設計難以透過 JSON 描述完整呈現</li>
+</ul>
+<p><strong>結論：</strong>Schmidt 的預測可能過於極端。更可能的未來是<strong>混合模式</strong>——核心流程用傳統 UI，邊緣情境和個人化需求用動態 UI 補充。</p>
+</div>
+</details>
+</section>
+<!-- Bottom Line -->
+<div class="bottom-line">
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">A2UI 代表了「AI 控制 UI」的技術基礎設施正在成形。對於正在建構 AI 輔助工作流程的我，這意味著<strong>元件化設計不再只是工程實踐，而是 AI 能力的基礎</strong>。我的 Master Prompt 系統產生的 HTML 輸出，本質上也是一種「Agent 產生 UI」的實踐。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">盤點目前 CDMO 工作中「高度重複但每次略有不同」的表單和報告場景（如 Feasibility Assessment、Tech Transfer Checklist），評估這些是否適合改為「Agent 動態生成」模式。本週先列出 3 個候選場景。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">文章缺乏技術實作細節（A2UI 的 JSON schema 規格、錯誤處理機制）。另外，完全沒討論 latency 和效能問題——Agent 生成 UI 需要多少時間？這會影響 UX。下次閱讀 A2UI 官方文件（a2ui.org）時需要補充這些資訊。</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+<p>製作日期：2026-01-20</p>
+<p>原文來源：<a href="https://www.deptofproduct.com" target="_blank">Department of Product - Knowledge Series #97</a></p>
+<p>延伸閱讀：<a href="https://a2ui.org" target="_blank">A2UI 官方文件</a> | <a href="https://a2ui-composer.ag-ui.com" target="_blank">A2UI Composer 工具</a></p>
+<div class="chat-title">建議 Chat Title: [Agent] A2UI - Google 動態 UI 框架解析</div>
+</footer>
+</div>
+<script>
         function switchTab(evt, tabId) {
             const container = evt.currentTarget.closest('.tab-container');
             container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));

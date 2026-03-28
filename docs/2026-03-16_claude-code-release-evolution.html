@@ -1,370 +1,177 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Code v2.1.49–2.1.76 Release Evolution</title>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claude Code v2.1.49–2.1.76 Release Evolution</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 <!-- Dashboard Index Meta -->
-<meta name="doc-date" content="2026-03-16">
-<meta name="doc-title" content="Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析">
-<meta name="doc-source" content="Anthropic / Claude Code Release Notes">
-<meta name="doc-source-type" content="Anthropic-Docs">
-<meta name="doc-tags" content="Anthropic-Docs,Tool,Agent,API,Framework">
-<meta name="doc-rating" content="4.2">
-<meta name="doc-summary" content="28 個版本釋出分析：Multi-Agent 架構、記憶體工程、Plugin 生態、MCP Elicitation、Remote Control 演進">
-<meta name="doc-file" content="2026-03-16_claude-code-release-evolution.html">
+<meta content="2026-03-16" name="doc-date"/>
+<meta content="Claude Code v2.1.49-76 釋出演進 - 28 版本深度分析" name="doc-title"/>
+<meta content="Anthropic / Claude Code Release Notes" name="doc-source"/>
+<meta content="Anthropic-Docs" name="doc-source-type"/>
+<meta content="Anthropic-Docs,Tool,Agent,API,Framework" name="doc-tags"/>
+<meta content="4.2" name="doc-rating"/>
+<meta content="28 個版本釋出分析：Multi-Agent 架構、記憶體工程、Plugin 生態、MCP Elicitation、Remote Control 演進" name="doc-summary"/>
+<meta content="2026-03-16_claude-code-release-evolution.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-/* === v1.4.3 MANDATORY PAGE LAYOUT === */
-body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
-.header {
-    text-align: center;
-    padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-    color: white;
-}
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-}
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    margin-bottom: 2rem;
-}
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .content-grid { grid-template-columns: 1fr; }
-}
 
-/* Tags */
-.tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 500; margin: 0.15rem; }
-.tag-anthropic-docs { background: #fef3c7; color: #d97706; }
-.tag-tool { background: #fecdd3; color: #9f1239; }
-.tag-agent { background: #c7d2fe; color: #3730a3; }
-.tag-api { background: #ddd6fe; color: #4c1d95; }
-.tag-framework { background: #bfdbfe; color: #1e3a8a; }
-
-/* Header content */
-.header-subtitle { font-size: 1rem; opacity: 0.9; margin-top: 0.5rem; }
-.header-source { font-size: 0.85rem; opacity: 0.7; margin-top: 0.75rem; }
-h1 { font-size: 1.8rem; margin: 0.75rem 0 0.25rem; font-weight: 700; }
-
-/* Section titles */
-.section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
-.part-label { font-size: 0.8rem; font-weight: 600; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-
-/* Rating Bar */
-.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-.rating-stars { color: #f59e0b; letter-spacing: 1px; }
-.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-/* Executive Summary */
-.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; border: 1px solid #e2e8f0; }
-.exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin: 0.5rem 0; }
-
-/* Learning Objectives */
-.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
-.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #6366f1; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
-.objective-text { font-size: 0.9rem; color: #334155; line-height: 1.6; }
-
-/* Framework Visual */
-.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
-.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.framework-step { text-align: center; min-width: 120px; }
-.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-.framework-step-title { font-weight: 700; font-size: 0.95rem; }
-.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-/* Tabs */
-.tab-container { margin: 1.5rem 0; }
-.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
-.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; }
-.tab-btn:hover { color: #334155; }
-.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* Content Grid Columns */
-.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
-.content-right { padding: 1.5rem; background: #f8fafc; }
-.content-left h3 { font-size: 1rem; color: #1e3a8a; margin: 0 0 1rem; }
-.content-right h3 { font-size: 1rem; color: #475569; margin: 0 0 1rem; }
-
-/* Bilingual blocks */
-.bilingual-block { margin-bottom: 1.25rem; }
-.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.3rem; }
-.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
-.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-/* Info Boxes */
-.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1.25rem; }
-.info-box-header { padding: 0.5rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
-.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
-.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
-
-/* Code blocks */
-pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.5; margin: 0.75rem 0; }
-code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
-.inline-code { background: #f1f5f9; color: #e11d48; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
-
-/* Key Takeaways */
-.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
-.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.summary-card-title { font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem; font-size: 0.95rem; }
-.summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.6; }
-
-/* Accordion */
-.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-.question-header::-webkit-details-marker { display: none; }
-.question-number { font-weight: 700; color: #6d28d9; }
-.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-details[open] .accordion-icon { transform: rotate(180deg); }
-.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-.question-answer p:last-child { margin-bottom: 0; }
-
-/* Bottom Line */
-.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
-.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-.bottom-line-item { margin-bottom: 1rem; }
-.bottom-line-item:last-child { margin-bottom: 0; }
-.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-/* Footer */
-.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-.footer a { color: #6366f1; text-decoration: none; }
-
-/* Version badge */
-.version-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin: 0.15rem; }
-
-/* Stat grid */
-.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin: 1rem 0; }
-@media (max-width: 768px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
-.stat-item { text-align: center; background: white; padding: 1rem; border-radius: 0.75rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-.stat-number { font-size: 1.5rem; font-weight: 700; color: #1e3a8a; }
-.stat-label { font-size: 0.8rem; color: #64748b; margin-top: 0.25rem; }
-
-/* Timeline */
-.timeline-item { display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start; }
-.timeline-version { font-weight: 700; color: #6366f1; font-size: 0.85rem; white-space: nowrap; min-width: 60px; }
-.timeline-desc { font-size: 0.9rem; color: #334155; line-height: 1.6; }
-</style>
 </head>
 <body>
-
 <!-- Header -->
-<div class="header">
-    <div class="header-content">
-        <div>
-            <span class="tag tag-anthropic-docs">Anthropic-Docs</span>
-            <span class="tag tag-tool">Tool</span>
-            <span class="tag tag-agent">Agent</span>
-            <span class="tag tag-api">API</span>
-        </div>
-        <h1>Claude Code v2.1.49 – v2.1.76 釋出演進</h1>
-        <div class="header-subtitle">28 個版本、487 行 Changelog 的深度主題分析</div>
-        <div class="header-source">Source: Anthropic Official Release Notes | 分析日期：2026-03-16</div>
-    </div>
+<header class="header">
+<div class="header-content">
+<div>
+<span class="tag tag-anthropic-docs">Anthropic-Docs</span>
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-api">API</span>
 </div>
-
+<h1>Claude Code v2.1.49 – v2.1.76 釋出演進</h1>
+<div class="header-subtitle">28 個版本、487 行 Changelog 的深度主題分析</div>
+<div class="header-source">Source: Anthropic Official Release Notes | 分析日期：2026-03-16</div>
+</div>
+</header>
 <!-- Container -->
 <div class="container">
-
 <!-- Executive Summary -->
 <div class="section-title">Executive Summary</div>
 <div class="exec-summary">
-    <div class="rating-bar">
-        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.2/5</span>
-        <span class="rating-high">&uarr; Timeliness, Practical Value</span>
-        <span class="rating-low">&darr; Learning Curve (assumes CLI familiarity)</span>
-    </div>
-    <p>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
+<span class="rating-high">↑ Timeliness, Practical Value</span>
+<span class="rating-low">↓ Learning Curve (assumes CLI familiarity)</span>
+</div>
+<p>
         這份分析涵蓋 Claude Code 從 v2.1.49 到 v2.1.76 共 28 個版本的演進。表面上是 release notes，實質上揭示了 Anthropic 對 <span class="highlight-concept">CLI-native AI Agent 平台</span>的架構野心。從 Worktree 隔離、Multi-Agent Teams、到 MCP Elicitation，Claude Code 正從「終端裡的聊天機器人」進化為「軟體工程的作業系統」。
     </p>
-    <p>
+<p>
         對 CDMO 營運者而言，核心觀察是：Claude Code 的 <span class="highlight-key">Plugin + Hooks + Managed Settings</span> 三層架構，已具備企業級合規治理能力。記憶體工程的大量修復（20+ 項記憶體洩漏修正）意味著長時間無人值守任務終於可靠。Remote Control + Voice Mode 的成熟則拓展了非桌面情境的使用可能。
     </p>
-
-    <div class="stat-grid">
-        <div class="stat-item">
-            <div class="stat-number">28</div>
-            <div class="stat-label">版本釋出</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">20+</div>
-            <div class="stat-label">Memory Leak 修復</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">15+</div>
-            <div class="stat-label">新 CLI 指令</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-number">5</div>
-            <div class="stat-label">架構級新功能</div>
-        </div>
-    </div>
+<div class="stat-grid">
+<div class="stat-item">
+<div class="stat-number">28</div>
+<div class="stat-label">版本釋出</div>
 </div>
-
+<div class="stat-item">
+<div class="stat-number">20+</div>
+<div class="stat-label">Memory Leak 修復</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">15+</div>
+<div class="stat-label">新 CLI 指令</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">5</div>
+<div class="stat-label">架構級新功能</div>
+</div>
+</div>
+</div>
 <!-- Learning Objectives -->
 <div class="section-title">Learning Objectives</div>
 <div class="objectives-grid">
-    <div class="objective-item">
-        <div class="objective-icon">&#x1F9E9;</div>
-        <div class="objective-text">理解 Claude Code Multi-Agent 架構（Worktree + Subagent + Background Agent + Teams）的設計邏輯與隔離模型</div>
-    </div>
-    <div class="objective-item">
-        <div class="objective-icon">&#x2699;</div>
-        <div class="objective-text">掌握 Plugin/Hooks/Managed Settings 三層治理體系，評估企業級部署可行性</div>
-    </div>
-    <div class="objective-item">
-        <div class="objective-icon">&#x1F4F1;</div>
-        <div class="objective-text">識別 Remote Control + Voice + MCP Elicitation 如何拓展非桌面操作情境</div>
-    </div>
+<div class="objective-item">
+<div class="objective-icon">🧩</div>
+<div class="objective-text">理解 Claude Code Multi-Agent 架構（Worktree + Subagent + Background Agent + Teams）的設計邏輯與隔離模型</div>
 </div>
-
+<div class="objective-item">
+<div class="objective-icon">⚙</div>
+<div class="objective-text">掌握 Plugin/Hooks/Managed Settings 三層治理體系，評估企業級部署可行性</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">📱</div>
+<div class="objective-text">識別 Remote Control + Voice + MCP Elicitation 如何拓展非桌面操作情境</div>
+</div>
+</div>
 <!-- Framework Visual -->
 <div class="framework-visual">
-    <div class="framework-title">Claude Code 平台演進路線圖（v2.1.49 &rarr; v2.1.76）</div>
-    <div class="framework-steps">
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F333;</div>
-            <div class="framework-step-title">Worktree 隔離</div>
-            <div class="framework-step-desc">v2.1.49: git 工作樹</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F916;</div>
-            <div class="framework-step-title">Multi-Agent</div>
-            <div class="framework-step-desc">v2.1.50-63: 團隊協作</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F50C;</div>
-            <div class="framework-step-title">Plugin 生態</div>
-            <div class="framework-step-desc">v2.1.63-69: Hooks + 市集</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F4AC;</div>
-            <div class="framework-step-title">MCP Elicitation</div>
-            <div class="framework-step-desc">v2.1.76: 結構化互動</div>
-        </div>
-    </div>
+<div class="framework-title">Claude Code 平台演進路線圖（v2.1.49 → v2.1.76）</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">🌳</div>
+<div class="framework-step-title">Worktree 隔離</div>
+<div class="framework-step-desc">v2.1.49: git 工作樹</div>
 </div>
-
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🤖</div>
+<div class="framework-step-title">Multi-Agent</div>
+<div class="framework-step-desc">v2.1.50-63: 團隊協作</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🔌</div>
+<div class="framework-step-title">Plugin 生態</div>
+<div class="framework-step-desc">v2.1.63-69: Hooks + 市集</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">💬</div>
+<div class="framework-step-title">MCP Elicitation</div>
+<div class="framework-step-desc">v2.1.76: 結構化互動</div>
+</div>
+</div>
+</div>
 <!-- TABBED CONTENT (7 Parts grouped into 4 tabs) -->
 <div class="tab-container">
-    <div class="tab-nav">
-        <button class="tab-btn active" onclick="switchTab(event, 'tab-arch')">Architecture</button>
-        <button class="tab-btn" onclick="switchTab(event, 'tab-eco')">Ecosystem</button>
-        <button class="tab-btn" onclick="switchTab(event, 'tab-ux')">Interface &amp; DX</button>
-        <button class="tab-btn" onclick="switchTab(event, 'tab-ent')">Enterprise</button>
-    </div>
-
-    <!-- ==================== TAB 1: ARCHITECTURE ==================== -->
-    <div id="tab-arch" class="tab-content active">
-
-        <!-- Part I: Multi-Agent -->
-        <div class="part-label">Part I</div>
-        <div class="section-title">Multi-Agent Architecture：從隔離到協作</div>
-
-        <div class="content-grid">
-            <div class="content-left">
-                <h3>概念解析 + 原文對照</h3>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+<div class="tab-nav">
+<button class="tab-btn active" onclick="switchTab(event, 'tab-arch')">Architecture</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-eco')">Ecosystem</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-ux')">Interface &amp; DX</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-ent')">Enterprise</button>
+</div>
+<!-- ==================== TAB 1: ARCHITECTURE ==================== -->
+<div class="tab-content active" id="tab-arch">
+<!-- Part I: Multi-Agent -->
+<div class="part-label">Part I</div>
+<div class="section-title">Multi-Agent Architecture：從隔離到協作</div>
+<div class="content-grid">
+<div class="content-left">
+<h3>概念解析 + 原文對照</h3>
+<div class="bilingual-block">
+<div class="zh-text">
                         v2.1.49 引入了 <span class="highlight-concept"><code class="inline-code">--worktree</code> 旗標</span>，讓 Claude 在獨立的 git worktree 中運行。這不是單純的目錄切換，而是<span class="highlight-key">程序隔離</span>的基礎設施。Subagent 同時支援 <code class="inline-code">isolation: "worktree"</code>，意味著每個子代理在獨立的程式碼快照中工作，互不干擾。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Added --worktree (-w) flag to start Claude in an isolated git worktree" / "Subagents support isolation: worktree for working in a temporary git worktree"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                         v2.1.49 同時加入了 <span class="highlight-concept">Background Agent</span> 概念：在 agent 定義中設定 <code class="inline-code">background: true</code>，該代理就會在背景執行。搭配 <code class="inline-code">Ctrl+F</code> 可批量終止背景代理（需兩次確認）。這是「一主多僕」架構的雛形。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Agent definitions support background: true to always run as a background task" / "Added Ctrl+F keybinding to kill background agents (two-press confirmation)"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
-                        到 v2.1.50，<code class="inline-code">claude agents</code> CLI 指令正式登場，可列出所有已設定的 agent。Agent Teams 的記憶體洩漏也開始被大量修復 &#8212; 已完成的 teammate task 過去從未被垃圾回收。
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
+                        到 v2.1.50，<code class="inline-code">claude agents</code> CLI 指令正式登場，可列出所有已設定的 agent。Agent Teams 的記憶體洩漏也開始被大量修復 — 已完成的 teammate task 過去從未被垃圾回收。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Added claude agents CLI command to list all configured agents" / "Fixed memory leak in agent teams where completed teammate tasks were never garbage collected"
                     </div>
-                </div>
-
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-                    <div class="info-box-content">
-                        把 Worktree 想像成 GMP 潔淨室的「獨立氣鎖」。每個 subagent 進入自己的氣鎖工作，不會交叉汙染主線程式碼。Background Agent 則像是 24 小時運行的環境監控系統 &#8212; 你不需要盯著它，但它隨時在背景收集資料。
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+                        把 Worktree 想像成 GMP 潔淨室的「獨立氣鎖」。每個 subagent 進入自己的氣鎖工作，不會交叉汙染主線程式碼。Background Agent 則像是 24 小時運行的環境監控系統 — 你不需要盯著它，但它隨時在背景收集資料。
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                         v2.1.76 進一步加入 <code class="inline-code">worktree.sparsePaths</code> 設定，專為大型 monorepo 設計。這解決了一個實務痛點：在 100GB+ 的 monorepo 中建立 worktree 會複製整個倉庫，sparse checkout 讓你只拉取需要的子目錄。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Added worktree.sparsePaths setting for claude --worktree in large monorepos"
                     </div>
-                </div>
-            </div>
-
-            <div class="content-right">
-                <h3>Technical Details &amp; Code</h3>
-
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; Agent 隔離模型演進</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="content-right">
+<h3>Technical Details &amp; Code</h3>
+<div class="info-box box-code">
+<div class="info-box-header">💻 Agent 隔離模型演進</div>
+<div class="info-box-content">
 <pre># v2.1.49: Worktree 啟動
 claude --worktree
 
@@ -388,84 +195,74 @@ claude agents
     "sparsePaths": ["packages/core", "libs/shared"]
   }
 }</pre>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Agent 記憶體修復清單</div>
+<div class="info-box-content">
+<strong>v2.1.50</strong>: Completed teammate tasks 未被 GC<br/>
+<strong>v2.1.50</strong>: Completed task state 未從 AppState 移除<br/>
+<strong>v2.1.59</strong>: Completed subagent task state 未釋放<br/>
+<strong>v2.1.63</strong>: Long-running teammates 保留所有 messages<br/>
+<strong>v2.1.69</strong>: Long-running SDK/CCR sessions 洩漏<br/>
+<strong>v2.1.72</strong>: Team agents 不繼承 leader 的 model<br/>
+<strong>v2.1.76</strong>: Killing background agent 現保留部分結果
                     </div>
-                </div>
-
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; Agent 記憶體修復清單</div>
-                    <div class="info-box-content">
-                        <strong>v2.1.50</strong>: Completed teammate tasks 未被 GC<br>
-                        <strong>v2.1.50</strong>: Completed task state 未從 AppState 移除<br>
-                        <strong>v2.1.59</strong>: Completed subagent task state 未釋放<br>
-                        <strong>v2.1.63</strong>: Long-running teammates 保留所有 messages<br>
-                        <strong>v2.1.69</strong>: Long-running SDK/CCR sessions 洩漏<br>
-                        <strong>v2.1.72</strong>: Team agents 不繼承 leader 的 model<br>
-                        <strong>v2.1.76</strong>: Killing background agent 現保留部分結果
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 應用情境</div>
+<div class="info-box-content">
+<strong>Deviation Investigation Agent Team</strong>：主 Agent 負責逸差分類，Background Agent 1 同步搜尋歷史逸差資料庫，Background Agent 2 檢查相關 SOP 版本。各自在獨立 worktree 中操作，避免檔案衝突。最終由主 Agent 整合報告。
                     </div>
-                </div>
-
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; CDMO 應用情境</div>
-                    <div class="info-box-content">
-                        <strong>Deviation Investigation Agent Team</strong>：主 Agent 負責逸差分類，Background Agent 1 同步搜尋歷史逸差資料庫，Background Agent 2 檢查相關 SOP 版本。各自在獨立 worktree 中操作，避免檔案衝突。最終由主 Agent 整合報告。
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Part II: Memory & Performance -->
-        <div class="part-label">Part II</div>
-        <div class="section-title">Memory &amp; Performance Engineering：長時運行的可靠性革命</div>
-
-        <div class="content-grid">
-            <div class="content-left">
-                <h3>概念解析 + 原文對照</h3>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+</div>
+</div>
+<!-- Part II: Memory & Performance -->
+<div class="part-label">Part II</div>
+<div class="section-title">Memory &amp; Performance Engineering：長時運行的可靠性革命</div>
+<div class="content-grid">
+<div class="content-left">
+<h3>概念解析 + 原文對照</h3>
+<div class="bilingual-block">
+<div class="zh-text">
                         這批版本中最顯眼的主題是<span class="highlight-key">記憶體洩漏修復</span>。超過 20 項獨立的記憶體問題被修正，涵蓋 WASM 線性記憶體、Tree-sitter 解析器、CircularBuffer、Shell 子行程、LSP 診斷資料、MCP 快取等多個子系統。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Fixed unbounded WASM memory growth during long sessions by periodically resetting the tree-sitter parser" / "Fixed memory leak in CircularBuffer where cleared items were retained in the backing array"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                         啟動效能也是重點。v2.1.49 開始批量化 MCP tool token counting 為單一 API 呼叫，快取 MCP auth 失敗以避免重複連線嘗試，並在 headless 模式跳過不必要的 API 呼叫。v2.1.50 進一步將 Yoga WASM 和 UI 元件匯入延遲到需要時才載入。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Improved startup performance by batching MCP tool token counting into a single API call" / "Improved startup performance for headless mode (-p flag) by deferring Yoga WASM and UI component imports"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                         v2.1.70 報告了具體數據：<span class="highlight-practical">prompt input re-render 減少約 74%</span>，啟動記憶體減少約 426KB。v2.1.72 則減少了約 510KB 的 bundle size。這些微優化累積起來對長時運行至關重要。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Reduced prompt input re-renders during turns by ~74%" / "Reduced startup memory by ~426KB" / "Reduced bundle size by ~510 KB"
                     </div>
-                </div>
-
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-                    <div class="info-box-content">
-                        記憶體洩漏修復就像 GMP 設施的「管線清潔驗證」(CIP Validation)。每條管線（子系統）都可能殘留物質（未釋放的記憶體），如果不逐一驗證和清理，長時間運行後設備效能會急劇下降 &#8212; 這正是 Claude Code 長 session 變慢的原因。
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+                        記憶體洩漏修復就像 GMP 設施的「管線清潔驗證」(CIP Validation)。每條管線（子系統）都可能殘留物質（未釋放的記憶體），如果不逐一驗證和清理，長時間運行後設備效能會急劇下降 — 這正是 Claude Code 長 session 變慢的原因。
                     </div>
-                </div>
-            </div>
-
-            <div class="content-right">
-                <h3>Technical Details</h3>
-
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; 效能改善量化</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="content-right">
+<h3>Technical Details</h3>
+<div class="info-box box-code">
+<div class="info-box-header">💻 效能改善量化</div>
+<div class="info-box-content">
 <pre># 記憶體管理策略演進
 v2.1.49: Tree-sitter parser 定期重置
 v2.1.50: File history snapshots 加上上限
-v2.1.50: Tool results > 50K 持久化到磁碟
+v2.1.50: Tool results &gt; 50K 持久化到磁碟
          (v2.1.51 降低至 50K, 原為 100K)
 v2.1.63: Compaction 後清理內部快取
 v2.1.63: Heavy progress payloads 被剝離
@@ -480,74 +277,64 @@ v2.1.49: MCP tool counting 批量化
 v2.1.50: Yoga WASM 延遲匯入
 v2.1.70: 啟動記憶體 -426KB
 v2.1.72: Bundle size -510KB</pre>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Compaction 改進</div>
+<div class="info-box-content">
+<strong>v2.1.70</strong>: Compaction 現在保留圖片<br/>
+<strong>v2.1.72</strong>: Prompt cache invalidation 修復，input token 成本最高降低 12x<br/>
+<strong>v2.1.76</strong>: Auto-compaction 加入斷路器，連續 3 次失敗後停止重試<br/>
+<strong>v2.1.76</strong>: Deferred tools 不再在 compaction 後遺失 input schemas
                     </div>
-                </div>
-
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; Compaction 改進</div>
-                    <div class="info-box-content">
-                        <strong>v2.1.70</strong>: Compaction 現在保留圖片<br>
-                        <strong>v2.1.72</strong>: Prompt cache invalidation 修復，input token 成本最高降低 12x<br>
-                        <strong>v2.1.76</strong>: Auto-compaction 加入斷路器，連續 3 次失敗後停止重試<br>
-                        <strong>v2.1.76</strong>: Deferred tools 不再在 compaction 後遺失 input schemas
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== TAB 2: ECOSYSTEM ==================== -->
+<div class="tab-content" id="tab-eco">
+<!-- Part III: Plugin & Hooks -->
+<div class="part-label">Part III</div>
+<div class="section-title">Plugin &amp; Hooks 生態：可程式化的 CLI 擴展</div>
+<div class="content-grid">
+<div class="content-left">
+<h3>概念解析 + 原文對照</h3>
+<div class="bilingual-block">
+<div class="zh-text">
+                        Plugin 系統在這批版本中快速迭代。v2.1.49 開始讓 plugin 附帶 <code class="inline-code">settings.json</code> 作為預設配置。v2.1.51 支援自訂 npm registry 和版本固定。v2.1.63 加入了關鍵的 <span class="highlight-concept">HTTP Hooks</span> — 可以 POST JSON 到外部 URL 並接收 JSON 回應，而非僅能執行本機 shell 指令。
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== TAB 2: ECOSYSTEM ==================== -->
-    <div id="tab-eco" class="tab-content">
-
-        <!-- Part III: Plugin & Hooks -->
-        <div class="part-label">Part III</div>
-        <div class="section-title">Plugin &amp; Hooks 生態：可程式化的 CLI 擴展</div>
-
-        <div class="content-grid">
-            <div class="content-left">
-                <h3>概念解析 + 原文對照</h3>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
-                        Plugin 系統在這批版本中快速迭代。v2.1.49 開始讓 plugin 附帶 <code class="inline-code">settings.json</code> 作為預設配置。v2.1.51 支援自訂 npm registry 和版本固定。v2.1.63 加入了關鍵的 <span class="highlight-concept">HTTP Hooks</span> &#8212; 可以 POST JSON 到外部 URL 並接收 JSON 回應，而非僅能執行本機 shell 指令。
-                    </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Plugins can ship settings.json for default configuration" / "Added HTTP hooks, which can POST JSON to a URL and receive JSON instead of running a shell command"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                         Hooks 事件持續擴充：<code class="inline-code">ConfigChange</code>（v2.1.49）、<code class="inline-code">WorktreeCreate/Remove</code>（v2.1.50）、<code class="inline-code">InstructionsLoaded</code>（v2.1.69）、<code class="inline-code">PostCompact</code>（v2.1.76）、<code class="inline-code">Elicitation/ElicitationResult</code>（v2.1.76）。這代表幾乎每個 Claude Code 生命週期節點都可以被外部系統監聽和介入。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Added ConfigChange hook event that fires when configuration files change during a session" / "Added PostCompact hook that fires after compaction completes" / "Added new Elicitation and ElicitationResult hooks"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
-                        v2.1.69 引入了 <code class="inline-code">${CLAUDE_SKILL_DIR}</code> 變數，讓 Skills 可以引用自身目錄。這個看似小的功能其實很重要 &#8212; 它讓 Skill 可以附帶資源檔案（模板、參考資料），實現真正的「可攜式 Skill 套件」。
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
+                        v2.1.69 引入了 <code class="inline-code">${CLAUDE_SKILL_DIR}</code> 變數，讓 Skills 可以引用自身目錄。這個看似小的功能其實很重要 — 它讓 Skill 可以附帶資源檔案（模板、參考資料），實現真正的「可攜式 Skill 套件」。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Added ${CLAUDE_SKILL_DIR} variable for skills to reference their own directory"
                     </div>
-                </div>
-
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; CDMO 應用：HTTP Hooks 整合</div>
-                    <div class="info-box-content">
-                        HTTP Hooks 的意義在於：Claude Code 的每個動作都可以觸發外部 webhook。想像一個偏差分類 Skill &#8212; 當 Claude 完成分類後，Hook 自動 POST 到 Make.com webhook，觸發 QMS 系統建立 CAPA 記錄、通知相關人員、並更新追蹤看板。無需額外開發 middleware。
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 應用：HTTP Hooks 整合</div>
+<div class="info-box-content">
+                        HTTP Hooks 的意義在於：Claude Code 的每個動作都可以觸發外部 webhook。想像一個偏差分類 Skill — 當 Claude 完成分類後，Hook 自動 POST 到 Make.com webhook，觸發 QMS 系統建立 CAPA 記錄、通知相關人員、並更新追蹤看板。無需額外開發 middleware。
                     </div>
-                </div>
-            </div>
-
-            <div class="content-right">
-                <h3>Technical Details &amp; Code</h3>
-
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; Hook Events 完整清單</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="content-right">
+<h3>Technical Details &amp; Code</h3>
+<div class="info-box box-code">
+<div class="info-box-header">💻 Hook Events 完整清單</div>
+<div class="info-box-content">
 <pre># 生命週期 Hooks（截至 v2.1.76）
 SessionStart      # 工作階段啟動
 SessionEnd        # 工作階段結束（可設 timeout）
@@ -571,60 +358,52 @@ HTTP Hook:  POST JSON 到 URL (v2.1.63+)
 
 # Hook 事件欄位 (v2.1.69+)
 agent_id, agent_type, worktree</pre>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Plugin 安全修復</div>
+<div class="info-box-content">
+<strong>v2.1.51</strong>: statusLine/fileSuggestion hook 可在未接受工作區信任前執行（已修復）<br/>
+<strong>v2.1.69</strong>: 巢狀 skill 探索可從 gitignored 目錄載入 skills（已修復）<br/>
+<strong>v2.1.69</strong>: Trust dialog 首次執行時默默啟用所有 .mcp.json servers（已修復）
                     </div>
-                </div>
-
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; Plugin 安全修復</div>
-                    <div class="info-box-content">
-                        <strong>v2.1.51</strong>: statusLine/fileSuggestion hook 可在未接受工作區信任前執行（已修復）<br>
-                        <strong>v2.1.69</strong>: 巢狀 skill 探索可從 gitignored 目錄載入 skills（已修復）<br>
-                        <strong>v2.1.69</strong>: Trust dialog 首次執行時默默啟用所有 .mcp.json servers（已修復）
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Part IV: MCP Evolution -->
-        <div class="part-label">Part IV</div>
-        <div class="section-title">MCP Evolution：從工具呼叫到結構化對話</div>
-
-        <div class="content-grid">
-            <div class="content-left">
-                <h3>概念解析 + 原文對照</h3>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+</div>
+</div>
+<!-- Part IV: MCP Evolution -->
+<div class="part-label">Part IV</div>
+<div class="section-title">MCP Evolution：從工具呼叫到結構化對話</div>
+<div class="content-grid">
+<div class="content-left">
+<h3>概念解析 + 原文對照</h3>
+<div class="bilingual-block">
+<div class="zh-text">
                         MCP（Model Context Protocol）在這批版本中經歷了從「能用」到「可靠」的轉變。v2.1.49 開始快取 MCP auth 失敗；v2.1.59 修復了多實例同時運行時的 OAuth token refresh 競爭條件；v2.1.63 修復了大量 MCP 相關的記憶體洩漏。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Fixed MCP OAuth token refresh race condition when running multiple Claude Code instances simultaneously" / "Fixed MCP tool/resource cache leak on server reconnect"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
-                        v2.1.76 帶來了架構級突破：<span class="highlight-concept">MCP Elicitation</span>。MCP server 現在可以在任務執行中途，透過互動式對話框向使用者請求結構化輸入。這不再是單純的「工具呼叫 &rarr; 結果回傳」，而是 MCP server 主動發起的雙向對話。
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
+                        v2.1.76 帶來了架構級突破：<span class="highlight-concept">MCP Elicitation</span>。MCP server 現在可以在任務執行中途，透過互動式對話框向使用者請求結構化輸入。這不再是單純的「工具呼叫 → 結果回傳」，而是 MCP server 主動發起的雙向對話。
                     </div>
-                    <div class="en-text">
-                        "Added MCP elicitation support &mdash; MCP servers can now request structured input mid-task via an interactive dialog"
+<div class="en-text">
+                        "Added MCP elicitation support — MCP servers can now request structured input mid-task via an interactive dialog"
                     </div>
-                </div>
-
-                <div class="info-box box-concept">
-                    <div class="info-box-header">&#x1F4DA; 核心概念：Elicitation 的意義</div>
-                    <div class="info-box-content">
-                        Elicitation 打破了 MCP 的「Request-Response」模式。以前 MCP server 只能被動回應 Claude 的工具呼叫；現在 server 可以在執行過程中暫停，主動向使用者提問。這讓 MCP server 能處理需要人類判斷的中間步驟 &#8212; 正好契合 GMP 環境中「AI Copilot 必須在關鍵決策點等待人類確認」的需求。
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：Elicitation 的意義</div>
+<div class="info-box-content">
+                        Elicitation 打破了 MCP 的「Request-Response」模式。以前 MCP server 只能被動回應 Claude 的工具呼叫；現在 server 可以在執行過程中暫停，主動向使用者提問。這讓 MCP server 能處理需要人類判斷的中間步驟 — 正好契合 GMP 環境中「AI Copilot 必須在關鍵決策點等待人類確認」的需求。
                     </div>
-                </div>
-            </div>
-
-            <div class="content-right">
-                <h3>Technical Details</h3>
-
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; MCP 改善時間線</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="content-right">
+<h3>Technical Details</h3>
+<div class="info-box box-code">
+<div class="info-box-header">💻 MCP 改善時間線</div>
+<div class="info-box-content">
 <pre># OAuth 與連線穩定性
 v2.1.49: Auth failure caching
 v2.1.59: Multi-instance OAuth 競爭修復
@@ -644,62 +423,53 @@ v2.1.63: HTTP hooks (POST JSON)
 v2.1.69: Binary content (PDF, Office, Audio)
 v2.1.76: Elicitation (結構化互動對話)
 v2.1.76: Elicitation + ElicitationResult hooks</pre>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Elicitation + CDMO 情境</div>
+<div class="info-box-content">
+                        想像一個「批次記錄審查 MCP Server」。Claude 執行審查時，Server 發現某個溫度偏移紀錄，透過 Elicitation 跳出對話框：「偵測到 Vial #2847 充填溫度 26.3°C（規格 20-25°C）。請選擇：(A) 標記為逸差 (B) 備註為環境因素 (C) 需要更多資訊」。人類做出判斷後，Server 繼續執行。
                     </div>
-                </div>
-
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; Elicitation + CDMO 情境</div>
-                    <div class="info-box-content">
-                        想像一個「批次記錄審查 MCP Server」。Claude 執行審查時，Server 發現某個溫度偏移紀錄，透過 Elicitation 跳出對話框：「偵測到 Vial #2847 充填溫度 26.3&deg;C（規格 20-25&deg;C）。請選擇：(A) 標記為逸差 (B) 備註為環境因素 (C) 需要更多資訊」。人類做出判斷後，Server 繼續執行。
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== TAB 3: INTERFACE & DX ==================== -->
-    <div id="tab-ux" class="tab-content">
-
-        <!-- Part V: Remote Control & Voice -->
-        <div class="part-label">Part V</div>
-        <div class="section-title">Remote Control &amp; Voice：突破終端邊界</div>
-
-        <div class="content-grid">
-            <div class="content-left">
-                <h3>概念解析 + 原文對照</h3>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== TAB 3: INTERFACE & DX ==================== -->
+<div class="tab-content" id="tab-ux">
+<!-- Part V: Remote Control & Voice -->
+<div class="part-label">Part V</div>
+<div class="section-title">Remote Control &amp; Voice：突破終端邊界</div>
+<div class="content-grid">
+<div class="content-left">
+<h3>概念解析 + 原文對照</h3>
+<div class="bilingual-block">
+<div class="zh-text">
                         Remote Control 功能從 v2.1.51 開始以獨立子指令出現，v2.1.58 擴展至更多使用者。到 v2.1.69 加入了可選的 name 參數，v2.1.73 改善了 spawn mode 選擇提示。這條演進線代表的是：<span class="highlight-key">Claude Code 不再綁定於桌面終端</span>。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Added claude remote-control subcommand for external builds" / "Expand Remote Control to more users" / "Added optional name argument to /remote-control"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                         Voice Mode 從 v2.1.69 開始大幅擴展，新增 10 種語言的語音轉文字支援（總計 20 種），包含俄語、波蘭語、土耳其語等。Push-to-talk 按鍵可自訂綁定（v2.1.71），且 v2.1.72 改善了 repo 名稱和常見開發用語的轉錄準確度。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Added Voice STT support for 10 new languages (20 total)" / "Added voice:pushToTalk keybinding to make the voice activation key rebindable" / "Improved voice input transcription accuracy for repo names and common dev terms"
                     </div>
-                </div>
-
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-                    <div class="info-box-content">
-                        Remote Control 就像無塵室的「外部對講系統」。操作員不需要穿無塵衣進入潔淨區，就能從外部指揮室內設備。Voice Mode 則是升級為「語音指令系統」&#8212; 當你雙手正在操作設備時，用語音下達指令給 Claude Code。
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+                        Remote Control 就像無塵室的「外部對講系統」。操作員不需要穿無塵衣進入潔淨區，就能從外部指揮室內設備。Voice Mode 則是升級為「語音指令系統」— 當你雙手正在操作設備時，用語音下達指令給 Claude Code。
                     </div>
-                </div>
-            </div>
-
-            <div class="content-right">
-                <h3>Technical Details</h3>
-
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; Remote Control 演進</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="content-right">
+<h3>Technical Details</h3>
+<div class="info-box box-code">
+<div class="info-box-header">💻 Remote Control 演進</div>
+<div class="info-box-content">
 <pre># Remote Control 使用
 claude remote-control          # 基本啟動
 claude remote-control --name "batch-review"
@@ -720,60 +490,52 @@ claude remote-control --name "batch-review"
 {
   "voice:pushToTalk": "ctrl+shift+v"
 }</pre>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 應用情境</div>
+<div class="info-box-content">
+<strong>移動辦公場景</strong>：在工廠巡檢時，用手機 Claude App 透過 Remote Control 連接家中 MacBook Air 上的 Claude Code。語音口述「查看上週 Line 3 的偏差報告」，Claude Code 在本機執行搜尋和分析，結果透過 bridge 回傳到手機。整個流程不需要攜帶筆電進入生產區域。
                     </div>
-                </div>
-
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; CDMO 應用情境</div>
-                    <div class="info-box-content">
-                        <strong>移動辦公場景</strong>：在工廠巡檢時，用手機 Claude App 透過 Remote Control 連接家中 MacBook Air 上的 Claude Code。語音口述「查看上週 Line 3 的偏差報告」，Claude Code 在本機執行搜尋和分析，結果透過 bridge 回傳到手機。整個流程不需要攜帶筆電進入生產區域。
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Part VI: Developer Experience -->
-        <div class="part-label">Part VI</div>
-        <div class="section-title">Developer Experience：指令體系的成熟化</div>
-
-        <div class="content-grid">
-            <div class="content-left">
-                <h3>概念解析 + 原文對照</h3>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+</div>
+</div>
+<!-- Part VI: Developer Experience -->
+<div class="part-label">Part VI</div>
+<div class="section-title">Developer Experience：指令體系的成熟化</div>
+<div class="content-grid">
+<div class="content-left">
+<h3>概念解析 + 原文對照</h3>
+<div class="bilingual-block">
+<div class="zh-text">
                         v2.1.59 引入 <span class="highlight-concept">Auto-Memory</span>：Claude 自動將有用的上下文存入記憶體，可透過 <code class="inline-code">/memory</code> 管理。v2.1.74 進一步加入 <code class="inline-code">autoMemoryDirectory</code> 設定，可自訂記憶體儲存目錄。搭配 v2.1.75 的 last-modified timestamps，記憶體系統終於有了完整的生命週期管理。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Claude automatically saves useful context to auto-memory. Manage with /memory" / "Added autoMemoryDirectory setting to configure a custom directory for auto-memory storage"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                         v2.1.71 的 <span class="highlight-concept"><code class="inline-code">/loop</code></span> 指令是另一個重要里程碑：可以按照固定間隔重複執行 prompt 或 slash command。搭配 cron scheduling tools，Claude Code 具備了「定時排程任務」的能力。這從根本上改變了 Claude Code 從「互動工具」到「自動化平台」的定位。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Added /loop command to run a prompt or slash command on a recurring interval" / "Added cron scheduling tools for recurring prompts within a session"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
-                        Effort 控制也經歷了簡化：v2.1.68 讓 Opus 4.6 在 Max/Team 預設為 medium effort，v2.1.72 簡化為 low/medium/high 三級（移除 max），並使用新符號 &#9675; &#9680; &#9679;。v2.1.76 加入 <code class="inline-code">/effort</code> slash command 方便切換。
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
+                        Effort 控制也經歷了簡化：v2.1.68 讓 Opus 4.6 在 Max/Team 預設為 medium effort，v2.1.72 簡化為 low/medium/high 三級（移除 max），並使用新符號 ○ ◐ ●。v2.1.76 加入 <code class="inline-code">/effort</code> slash command 方便切換。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Opus 4.6 now defaults to medium effort for Max and Team subscribers" / "Simplified effort levels to low/medium/high (removed max) with new symbols"
                     </div>
-                </div>
-            </div>
-
-            <div class="content-right">
-                <h3>Technical Details</h3>
-
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; 新指令速查表</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="content-right">
+<h3>Technical Details</h3>
+<div class="info-box box-code">
+<div class="info-box-header">💻 新指令速查表</div>
+<div class="info-box-content">
 <pre># 記憶體管理
 /memory            # 管理 auto-memory
 /context           # 檢視 context 使用狀況
@@ -801,224 +563,202 @@ CLAUDE_CODE_DISABLE_CRON=true  # 停用 cron
 /batch             # 批次模式 (v2.1.63)
 /reload-plugins    # 重新載入 plugins (v2.1.69)
 /debug             # 中途切換 debug log (v2.1.71)</pre>
+</div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ Effort Level 演進</div>
+<div class="info-box-content">
+<strong>v2.1.68</strong>: Opus 4.6 預設 medium effort<br/>
+<strong>v2.1.68</strong>: "ultrathink" 關鍵字觸發 high effort<br/>
+<strong>v2.1.72</strong>: 簡化為 ○ low / ◐ medium / ● high<br/>
+<strong>v2.1.72</strong>: 移除 max level<br/>
+<strong>v2.1.73</strong>: /effort 可在 Claude 回應中切換<br/>
+<strong>v2.1.76</strong>: /effort 成為正式 slash command
                     </div>
-                </div>
-
-                <div class="info-box box-compare">
-                    <div class="info-box-header">&#x2696;&#xFE0F; Effort Level 演進</div>
-                    <div class="info-box-content">
-                        <strong>v2.1.68</strong>: Opus 4.6 預設 medium effort<br>
-                        <strong>v2.1.68</strong>: "ultrathink" 關鍵字觸發 high effort<br>
-                        <strong>v2.1.72</strong>: 簡化為 &#9675; low / &#9680; medium / &#9679; high<br>
-                        <strong>v2.1.72</strong>: 移除 max level<br>
-                        <strong>v2.1.73</strong>: /effort 可在 Claude 回應中切換<br>
-                        <strong>v2.1.76</strong>: /effort 成為正式 slash command
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== TAB 4: ENTERPRISE ==================== -->
+<div class="tab-content" id="tab-ent">
+<!-- Part VII: Enterprise & Platform -->
+<div class="part-label">Part VII</div>
+<div class="section-title">Enterprise &amp; Platform：合規治理與跨平台穩定性</div>
+<div class="content-grid">
+<div class="content-left">
+<h3>概念解析 + 原文對照</h3>
+<div class="bilingual-block">
+<div class="zh-text">
+<span class="highlight-key">Managed Settings</span> 是企業治理的核心機制。v2.1.51 開始支援 macOS plist 和 Windows Registry 管理設定，v2.1.69 加入 <code class="inline-code">pluginTrustMessage</code> 和 <code class="inline-code">strictKnownMarketplaces</code>。v2.1.74 修復了 managed policy 的 <code class="inline-code">ask</code> 規則被使用者 <code class="inline-code">allow</code> 規則繞過的問題 — 這是嚴重的合規漏洞。
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== TAB 4: ENTERPRISE ==================== -->
-    <div id="tab-ent" class="tab-content">
-
-        <!-- Part VII: Enterprise & Platform -->
-        <div class="part-label">Part VII</div>
-        <div class="section-title">Enterprise &amp; Platform：合規治理與跨平台穩定性</div>
-
-        <div class="content-grid">
-            <div class="content-left">
-                <h3>概念解析 + 原文對照</h3>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
-                        <span class="highlight-key">Managed Settings</span> 是企業治理的核心機制。v2.1.51 開始支援 macOS plist 和 Windows Registry 管理設定，v2.1.69 加入 <code class="inline-code">pluginTrustMessage</code> 和 <code class="inline-code">strictKnownMarketplaces</code>。v2.1.74 修復了 managed policy 的 <code class="inline-code">ask</code> 規則被使用者 <code class="inline-code">allow</code> 規則繞過的問題 &#8212; 這是嚴重的合規漏洞。
-                    </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Managed settings can now be set via macOS plist or Windows Registry" / "Fixed managed policy ask rules being bypassed by user allow rules or skill allowed-tools"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                         模型遷移也是企業關注點。v2.1.49 移除 Sonnet 4.5（1M context），改為 Sonnet 4.6。v2.1.68 移除 Opus 4 和 4.1，使用者自動遷移至 Opus 4.6。v2.1.69 修復了 <code class="inline-code">--model claude-opus-4-0</code> 仍解析到已棄用版本的問題。v2.1.75 為 Opus 4.6 開啟 1M context window（Max/Team/Enterprise）。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Sonnet 4.5 with 1M context is being removed from the Max plan in favor of our frontier Sonnet 4.6 model" / "Removed Opus 4 and 4.1 from Claude Code on the first-party API" / "Added 1M context window for Opus 4.6 by default for Max, Team, and Enterprise plans"
                     </div>
-                </div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text">
+</div>
+<div class="bilingual-block">
+<div class="zh-text">
                         Bedrock、Vertex、Microsoft Foundry 等企業雲平台的支援也持續改善。v2.1.73 修復了 subagent 在這些平台上被靜默降級的問題，並將預設 Opus 模型更新為 4.6。v2.1.72 修復了 prompt cache invalidation，在 SDK 呼叫中最高可降低 12 倍 input token 成本。
                     </div>
-                    <div class="en-text">
+<div class="en-text">
                         "Fixed subagents with model: opus/sonnet/haiku being silently downgraded on Bedrock, Vertex, Foundry" / "Fixed prompt cache invalidation in SDK query() calls, reducing input token costs up to 12x"
                     </div>
-                </div>
-
-                <div class="info-box box-concept">
-                    <div class="info-box-header">&#x1F4DA; 核心概念：三層權限模型</div>
-                    <div class="info-box-content">
-                        Claude Code 現在有三層權限控制：<br>
-                        <strong>Layer 1 - Managed Settings</strong>（IT/Admin 設定，最高優先）：macOS plist / Windows Registry / managed-settings.json<br>
-                        <strong>Layer 2 - User Settings</strong>（個人偏好）：~/.claude/settings.json<br>
-                        <strong>Layer 3 - Project Settings</strong>（專案級別）：.claude/settings.local.json<br>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：三層權限模型</div>
+<div class="info-box-content">
+                        Claude Code 現在有三層權限控制：<br/>
+<strong>Layer 1 - Managed Settings</strong>（IT/Admin 設定，最高優先）：macOS plist / Windows Registry / managed-settings.json<br/>
+<strong>Layer 2 - User Settings</strong>（個人偏好）：~/.claude/settings.json<br/>
+<strong>Layer 3 - Project Settings</strong>（專案級別）：.claude/settings.local.json<br/>
                         v2.1.74 的修復確保了 Layer 1 的 ask 規則不會被 Layer 2/3 覆蓋。這對 GMP 合規至關重要。
                     </div>
-                </div>
-            </div>
-
-            <div class="content-right">
-                <h3>Technical Details</h3>
-
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; 模型遷移時間線</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="content-right">
+<h3>Technical Details</h3>
+<div class="info-box box-code">
+<div class="info-box-header">💻 模型遷移時間線</div>
+<div class="info-box-content">
 <pre># Sonnet 系列
 v2.1.49: Sonnet 4.5 (1M) removed
-         -> Sonnet 4.6 (1M) replaced
+         -&gt; Sonnet 4.6 (1M) replaced
 v2.1.69: Sonnet 4.5 Pro/Max/Team
-         -> auto-migrated to 4.6
+         -&gt; auto-migrated to 4.6
 
 # Opus 系列
 v2.1.49: Opus 4.6 available
 v2.1.50: Opus 4.6 fast mode (1M)
 v2.1.68: Opus 4/4.1 removed
-         -> auto-migrated to 4.6
+         -&gt; auto-migrated to 4.6
 v2.1.68: Default effort = medium
 v2.1.73: Bedrock/Vertex/Foundry
-         default Opus -> 4.6
+         default Opus -&gt; 4.6
 v2.1.75: Opus 4.6 1M context
          (Max/Team/Enterprise)</pre>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 跨平台修復亮點</div>
+<div class="info-box-content">
+<strong>Windows</strong>: panic 修復、大量 spawn crash、RTL 文字渲染、CMD 2&gt;nul 處理、WSL clipboard<br/>
+<strong>Linux</strong>: glibc 2.26+ 相容（Amazon Linux 2）、sandbox ripgrep、native modules<br/>
+<strong>macOS</strong>: keychain 損壞、voice entitlement、MDM startup 效能<br/>
+<strong>VSCode</strong>: extension crash、proxy HTTP 400、scroll 效能、RTL 渲染、compaction 顯示
                     </div>
-                </div>
-
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; 跨平台修復亮點</div>
-                    <div class="info-box-content">
-                        <strong>Windows</strong>: panic 修復、大量 spawn crash、RTL 文字渲染、CMD 2>nul 處理、WSL clipboard<br>
-                        <strong>Linux</strong>: glibc 2.26+ 相容（Amazon Linux 2）、sandbox ripgrep、native modules<br>
-                        <strong>macOS</strong>: keychain 損壞、voice entitlement、MDM startup 效能<br>
-                        <strong>VSCode</strong>: extension crash、proxy HTTP 400、scroll 效能、RTL 渲染、compaction 顯示
-                    </div>
-                </div>
-
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 企業部署建議</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 企業部署建議</div>
+<div class="info-box-content">
                         如果你的 CDMO 考慮導入 Claude Code：(1) 使用 Managed Settings via macOS plist 鎖定允許的工具和網域 (2) 啟用 <code class="inline-code">feedbackSurveyRate</code> 收集使用品質資料 (3) 使用 <code class="inline-code">allowManagedDomainsOnly</code> 限制網路存取 (4) 監控 Hook events 建立審計軌跡。v2.1.74 的 managed policy 修復是升級的最低版本門檻。
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+</div>
+</div>
+</div>
+</div>
 </div><!-- end tab-container -->
-
 <!-- Key Takeaways -->
 <div class="section-title">Key Takeaways</div>
 <div class="takeaways-grid">
-    <div class="summary-card">
-        <div class="summary-card-title">&#x1F333; Worktree + Agent = 安全的並行工作</div>
-        <div class="summary-card-text">Git worktree 隔離 + background agents + sparse checkout，讓多個 AI 代理在同一 repo 安全並行工作。這是 Claude Code 從「單線程工具」進化為「多代理平台」的基礎設施。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #10b981;">
-        <div class="summary-card-title">&#x1F527; 20+ Memory Leak 修復 = 長時運行可靠</div>
-        <div class="summary-card-text">從 WASM、Tree-sitter、CircularBuffer 到 React memoCache，系統性地修復了幾乎所有子系統的記憶體洩漏。長時間無人值守任務（如 /loop + cron）現在才真正可行。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #8b5cf6;">
-        <div class="summary-card-title">&#x1F50C; HTTP Hooks + MCP Elicitation = 企業整合</div>
-        <div class="summary-card-text">HTTP Hooks 讓 Claude Code 的每個動作都能觸發外部 webhook。MCP Elicitation 讓 server 可以在執行中途請求人類判斷。兩者結合實現了 GMP 環境需要的「AI 執行 + 人類確認」工作流。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #f59e0b;">
-        <div class="summary-card-title">&#x1F3E2; Managed Settings 三層模型 = 合規就緒</div>
-        <div class="summary-card-text">macOS plist / Windows Registry / managed-settings.json 的企業級設定管理，加上 v2.1.74 修復的權限覆蓋漏洞，讓 IT 管理員能確保使用者無法繞過安全政策。</div>
-    </div>
+<div class="summary-card">
+<div class="summary-card-title">🌳 Worktree + Agent = 安全的並行工作</div>
+<div class="summary-card-text">Git worktree 隔離 + background agents + sparse checkout，讓多個 AI 代理在同一 repo 安全並行工作。這是 Claude Code 從「單線程工具」進化為「多代理平台」的基礎設施。</div>
 </div>
-
+<div class="summary-card" style="border-left-color: #10b981;">
+<div class="summary-card-title">🔧 20+ Memory Leak 修復 = 長時運行可靠</div>
+<div class="summary-card-text">從 WASM、Tree-sitter、CircularBuffer 到 React memoCache，系統性地修復了幾乎所有子系統的記憶體洩漏。長時間無人值守任務（如 /loop + cron）現在才真正可行。</div>
+</div>
+<div class="summary-card" style="border-left-color: #8b5cf6;">
+<div class="summary-card-title">🔌 HTTP Hooks + MCP Elicitation = 企業整合</div>
+<div class="summary-card-text">HTTP Hooks 讓 Claude Code 的每個動作都能觸發外部 webhook。MCP Elicitation 讓 server 可以在執行中途請求人類判斷。兩者結合實現了 GMP 環境需要的「AI 執行 + 人類確認」工作流。</div>
+</div>
+<div class="summary-card" style="border-left-color: #f59e0b;">
+<div class="summary-card-title">🏢 Managed Settings 三層模型 = 合規就緒</div>
+<div class="summary-card-text">macOS plist / Windows Registry / managed-settings.json 的企業級設定管理，加上 v2.1.74 修復的權限覆蓋漏洞，讓 IT 管理員能確保使用者無法繞過安全政策。</div>
+</div>
+</div>
 <!-- Practice Questions -->
 <div class="section-title">Practice Questions</div>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q1</span>
-        <span class="question-type">概念理解</span>
-        <span class="question-text">為什麼 Claude Code 需要 Worktree 隔離而不是簡單的目錄複製？這與 Subagent 的 isolation: worktree 有什麼關係？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>Git worktree 是 git 原生的功能，它創建一個共享 .git 物件庫但有獨立工作目錄和 index 的環境。相比目錄複製，worktree 不需要複製整個 .git 歷史（可能幾十 GB），且變更可以在 worktree 之間以 git 原生方式合併。</p>
-        <p>Subagent 的 <code class="inline-code">isolation: worktree</code> 意味著每個子代理在自己的 worktree 中工作，可以自由修改檔案而不影響主線或其他子代理。這就像 GMP 中的「獨立批次記錄」&#8212; 每批操作有獨立的紀錄空間，最終才匯總到主記錄。v2.1.76 的 sparsePaths 進一步解決了大型 monorepo 的效能問題。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">為什麼 Claude Code 需要 Worktree 隔離而不是簡單的目錄複製？這與 Subagent 的 isolation: worktree 有什麼關係？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>Git worktree 是 git 原生的功能，它創建一個共享 .git 物件庫但有獨立工作目錄和 index 的環境。相比目錄複製，worktree 不需要複製整個 .git 歷史（可能幾十 GB），且變更可以在 worktree 之間以 git 原生方式合併。</p>
+<p>Subagent 的 <code class="inline-code">isolation: worktree</code> 意味著每個子代理在自己的 worktree 中工作，可以自由修改檔案而不影響主線或其他子代理。這就像 GMP 中的「獨立批次記錄」— 每批操作有獨立的紀錄空間，最終才匯總到主記錄。v2.1.76 的 sparsePaths 進一步解決了大型 monorepo 的效能問題。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q2</span>
-        <span class="question-type">產業應用</span>
-        <span class="question-text">在你的 CDMO 環境中，如何利用 HTTP Hooks + MCP Elicitation 設計一個符合 GMP 合規要求的偏差處理工作流？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>一個可能的設計：</p>
-        <p><strong>Step 1</strong>: Claude Code Skill 接收偏差描述，執行初步分類（Critical/Major/Minor）</p>
-        <p><strong>Step 2</strong>: MCP Elicitation 在分類結果出來後暫停，向品保人員展示分類結果和依據，請求確認或修正（人類判斷節點 &#8212; O-Ring）</p>
-        <p><strong>Step 3</strong>: 確認後，HTTP Hook 自動 POST 到 Make.com webhook，觸發三個並行動作：(a) QMS 系統建立 CAPA 記錄 (b) 通知相關部門主管 (c) 更新偏差追蹤看板</p>
-        <p><strong>Step 4</strong>: SessionEnd Hook 記錄完整審計軌跡，包含 AI 分類依據、人類確認時間戳、後續動作清單</p>
-        <p>關鍵合規點：Elicitation 確保每個關鍵決策都有人類確認（21 CFR Part 11 的電子簽章精神），HTTP Hooks 確保動作可追溯（ALCOA+ 的 Attributable 原則）。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在你的 CDMO 環境中，如何利用 HTTP Hooks + MCP Elicitation 設計一個符合 GMP 合規要求的偏差處理工作流？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>一個可能的設計：</p>
+<p><strong>Step 1</strong>: Claude Code Skill 接收偏差描述，執行初步分類（Critical/Major/Minor）</p>
+<p><strong>Step 2</strong>: MCP Elicitation 在分類結果出來後暫停，向品保人員展示分類結果和依據，請求確認或修正（人類判斷節點 — O-Ring）</p>
+<p><strong>Step 3</strong>: 確認後，HTTP Hook 自動 POST 到 Make.com webhook，觸發三個並行動作：(a) QMS 系統建立 CAPA 記錄 (b) 通知相關部門主管 (c) 更新偏差追蹤看板</p>
+<p><strong>Step 4</strong>: SessionEnd Hook 記錄完整審計軌跡，包含 AI 分類依據、人類確認時間戳、後續動作清單</p>
+<p>關鍵合規點：Elicitation 確保每個關鍵決策都有人類確認（21 CFR Part 11 的電子簽章精神），HTTP Hooks 確保動作可追溯（ALCOA+ 的 Attributable 原則）。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q3</span>
-        <span class="question-type">批判思考</span>
-        <span class="question-text">28 個版本中有 20+ 項記憶體洩漏修復。這告訴我們什麼關於 Claude Code 的成熟度？對無人值守任務有什麼影響？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p><strong>正面解讀</strong>：Anthropic 展現了工程紀律 &#8212; 系統性地追蹤和修復每個子系統的記憶體問題，而非只修最嚴重的。v2.1.76 的 auto-compaction 斷路器（3 次失敗後停止）也顯示了防禦性程式設計的思維。</p>
-        <p><strong>批判解讀</strong>：20+ 項記憶體洩漏意味著早期版本在長時運行場景下非常不可靠。如果你在 v2.1.49 之前使用 /loop 或 cron，session 很可能在幾小時後因記憶體耗盡而崩潰。這些修復更多是「還債」而非「創新」。</p>
-        <p><strong>實務結論</strong>：套用 2-3x 折扣原則 &#8212; 即使最新版本宣稱修復了所有已知洩漏，在 CDMO 環境部署前仍應進行 24-48 小時的壓力測試。無人值守任務建議搭配外部監控（如透過 Hook 定期回報記憶體使用量）。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">28 個版本中有 20+ 項記憶體洩漏修復。這告訴我們什麼關於 Claude Code 的成熟度？對無人值守任務有什麼影響？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>正面解讀</strong>：Anthropic 展現了工程紀律 — 系統性地追蹤和修復每個子系統的記憶體問題，而非只修最嚴重的。v2.1.76 的 auto-compaction 斷路器（3 次失敗後停止）也顯示了防禦性程式設計的思維。</p>
+<p><strong>批判解讀</strong>：20+ 項記憶體洩漏意味著早期版本在長時運行場景下非常不可靠。如果你在 v2.1.49 之前使用 /loop 或 cron，session 很可能在幾小時後因記憶體耗盡而崩潰。這些修復更多是「還債」而非「創新」。</p>
+<p><strong>實務結論</strong>：套用 2-3x 折扣原則 — 即使最新版本宣稱修復了所有已知洩漏，在 CDMO 環境部署前仍應進行 24-48 小時的壓力測試。無人值守任務建議搭配外部監控（如透過 Hook 定期回報記憶體使用量）。</p>
+</div>
 </details>
-
 <!-- Bottom Line -->
 <div class="bottom-line">
-    <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x2714; 核心洞察</div>
-        <div class="bottom-line-text">
-            Claude Code 正從「CLI AI 聊天工具」演進為「可程式化的 AI Agent 運行平台」。三個關鍵轉折點：Worktree 隔離實現了安全並行（v2.1.49）、HTTP Hooks 打通了外部整合（v2.1.63）、MCP Elicitation 實現了人機決策介面（v2.1.76）。對我的 COO Track 而言，這代表 Claude Code 已具備 CDMO 工作流自動化的基礎架構能力 &#8212; 前提是升級到至少 v2.1.74（managed policy 修復）。
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">
+            Claude Code 正從「CLI AI 聊天工具」演進為「可程式化的 AI Agent 運行平台」。三個關鍵轉折點：Worktree 隔離實現了安全並行（v2.1.49）、HTTP Hooks 打通了外部整合（v2.1.63）、MCP Elicitation 實現了人機決策介面（v2.1.76）。對我的 COO Track 而言，這代表 Claude Code 已具備 CDMO 工作流自動化的基礎架構能力 — 前提是升級到至少 v2.1.74（managed policy 修復）。
         </div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
-        <div class="bottom-line-text">
-            (1) 更新家中 MacBook Air 的 Claude Code 到最新版本，驗證 /loop 和 auto-memory 功能<br>
-            (2) 在 CLAUDE.md 中加入 autoMemoryDirectory 設定，將 auto-memory 指向 GitHub repo 的 .claude/ 目錄以便版本控制<br>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">
+            (1) 更新家中 MacBook Air 的 Claude Code 到最新版本，驗證 /loop 和 auto-memory 功能<br/>
+            (2) 在 CLAUDE.md 中加入 autoMemoryDirectory 設定，將 auto-memory 指向 GitHub repo 的 .claude/ 目錄以便版本控制<br/>
             (3) 實驗 HTTP Hook：設定一個簡單的 Make.com webhook，在 SessionEnd 時自動記錄工作摘要到 Google Sheets
         </div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x26A0; 需要補充</div>
-        <div class="bottom-line-text">
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">
             Release notes 揭示了 what changed 但未解釋 why these architectural decisions were made。缺少的是：(1) Agent Teams 的推薦拓撲結構（一主多僕 vs. 對等協作？）(2) MCP Elicitation 的 schema 格式和限制 (3) /loop + cron 的實際記憶體消耗基準測試。下週需要查閱 Anthropic engineering blog 看是否有配套的架構說明文章。
         </div>
-    </div>
 </div>
-
+</div>
 <!-- Footer -->
-<div class="footer">
-    <p>製作日期：2026-03-16 | AI Expert Learning System v1.5.0</p>
-    <p>Source: <a href="https://docs.anthropic.com/en/docs/claude-code/changelog" target="_blank">Anthropic Claude Code Release Notes</a></p>
-    <p>建議 Chat Title：2026-03-16 [Anthropic-Docs] [Tool] Claude Code v2.1.49-76 Release Evolution</p>
-    <p>建議檔名：2026-03-16_claude-code-release-evolution.html</p>
-</div>
-
+<footer class="footer">
+<p>製作日期：2026-03-16 | AI Expert Learning System v1.5.0</p>
+<p>Source: <a href="https://docs.anthropic.com/en/docs/claude-code/changelog" target="_blank">Anthropic Claude Code Release Notes</a></p>
+<p>建議 Chat Title：2026-03-16 [Anthropic-Docs] [Tool] Claude Code v2.1.49-76 Release Evolution</p>
+<p>建議檔名：2026-03-16_claude-code-release-evolution.html</p>
+</footer>
 </div><!-- end container -->
-
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

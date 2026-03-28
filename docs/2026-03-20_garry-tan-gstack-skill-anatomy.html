@@ -1,644 +1,439 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>頂級 Skill 解剖：Garry Tan gstack plan-ceo-review</title>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>頂級 Skill 解剖：Garry Tan gstack plan-ceo-review</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 <!-- Dashboard Index Meta -->
-<meta name="doc-date" content="2026-03-20">
-<meta name="doc-title" content="頂級 Skill 解剖 - Garry Tan gstack plan-ceo-review">
-<meta name="doc-source" content="@dontbesilent / X (Twitter)">
-<meta name="doc-source-type" content="">
-<meta name="doc-tags" content="Agent,Framework,Prompt,Tool">
-<meta name="doc-rating" content="4.5">
-<meta name="doc-summary" content="拆解 YC CEO Garry Tan 的 gstack plan-ceo-review skill，分析為什麼領域無關的 meta-prompt 能跨領域生效。">
-<meta name="doc-file" content="2026-03-20_garry-tan-gstack-skill-anatomy.html">
+<meta content="2026-03-20" name="doc-date"/>
+<meta content="頂級 Skill 解剖 - Garry Tan gstack plan-ceo-review" name="doc-title"/>
+<meta content="@dontbesilent / X (Twitter)" name="doc-source"/>
+<meta content="" name="doc-source-type"/>
+<meta content="Agent,Framework,Prompt,Tool" name="doc-tags"/>
+<meta content="4.5" name="doc-rating"/>
+<meta content="拆解 YC CEO Garry Tan 的 gstack plan-ceo-review skill，分析為什麼領域無關的 meta-prompt 能跨領域生效。" name="doc-summary"/>
+<meta content="2026-03-20_garry-tan-gstack-skill-anatomy.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-/* === v1.4.3 MANDATORY PAGE LAYOUT === */
-body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
 
-.header {
-    text-align: center;
-    padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-    color: white;
-}
-
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-}
-
-/* Tags */
-.tags { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
-.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
-.tag-agent { background: #c7d2fe; color: #3730a3; }
-.tag-framework { background: #fde68a; color: #92400e; }
-.tag-prompt { background: #fde68a; color: #92400e; }
-.tag-tool { background: #fecdd3; color: #9f1239; }
-
-.header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
-.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
-.header .source { font-size: 0.85rem; opacity: 0.7; }
-.header .source a { color: #93c5fd; text-decoration: none; }
-
-/* Rating Bar */
-.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-.rating-stars { color: #f59e0b; letter-spacing: 1px; }
-.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-/* Executive Summary */
-.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid #3b82f6; }
-.executive-summary h2 { font-size: 1.1rem; color: #1e3a8a; margin-top: 0; }
-.executive-summary p { font-size: 0.95rem; color: #334155; }
-
-/* Learning Objectives */
-.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-.objective-item { background: white; border-radius: 0.5rem; padding: 1.25rem; border-top: 3px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.objective-text { font-size: 0.85rem; color: #334155; font-weight: 500; }
-
-/* Framework Visual */
-.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
-.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.framework-step { text-align: center; min-width: 120px; }
-.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-.framework-step-title { font-weight: 700; font-size: 0.95rem; }
-.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-/* Content Grid */
-.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
-.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
-.content-right { padding: 1.5rem; background: #f8fafc; }
-.section-label { font-size: 0.75rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
-.part-title { font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
-
-/* Bilingual */
-.bilingual-block { margin-bottom: 1.25rem; }
-.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.25rem; }
-.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
-
-/* Highlights */
-.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-/* Info Boxes */
-.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
-.info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
-.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-
-/* Code blocks */
-pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.5; }
-
-/* Key Takeaways */
-.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-.summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.summary-card .card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
-.summary-card .card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
-
-/* Practice Questions - Accordion */
-.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-.question-header::-webkit-details-marker { display: none; }
-.question-number { font-weight: 700; color: #6d28d9; }
-.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-details[open] .accordion-icon { transform: rotate(180deg); }
-.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-.question-answer p:last-child { margin-bottom: 0; }
-
-/* Bottom Line */
-.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
-.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-.bottom-line-item { margin-bottom: 1rem; }
-.bottom-line-item:last-child { margin-bottom: 0; }
-.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-/* Footer */
-.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-.footer a { color: #3b82f6; text-decoration: none; }
-
-/* Section Headers */
-.section-header { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
-
-/* Table */
-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
-th { background: #1e3a5f; color: white; padding: 0.75rem; text-align: left; }
-td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
-tr:nth-child(even) { background: #f8fafc; }
-
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .content-grid { grid-template-columns: 1fr; }
-    .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
-    .objectives-grid { grid-template-columns: 1fr; }
-    .takeaways-grid { grid-template-columns: 1fr; }
-    .header h1 { font-size: 1.4rem; }
-}
-</style>
 </head>
 <body>
-
 <!-- Header -->
-<div class="header">
-    <div class="tags">
-        <span class="tag tag-agent">Agent</span>
-        <span class="tag tag-framework">Framework</span>
-        <span class="tag tag-prompt">Prompt</span>
-        <span class="tag tag-tool">Tool</span>
-    </div>
-    <h1>頂級 Skill 解剖：Garry Tan 的 plan-ceo-review</h1>
-    <div class="subtitle">為什麼一個工程審查 Skill 能跨領域解決商業問題？拆解 YC CEO 的 Prompt 設計哲學</div>
-    <div class="source">來源：<a href="https://github.com/garrytan/gstack" target="_blank">gstack by Garry Tan (GitHub)</a> ｜ 分析：<a href="https://x.com/dontbesilent" target="_blank">@dontbesilent</a></div>
+<header class="header">
+<div class="tags">
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-framework">Framework</span>
+<span class="tag tag-prompt">Prompt</span>
+<span class="tag tag-tool">Tool</span>
 </div>
-
+<h1>頂級 Skill 解剖：Garry Tan 的 plan-ceo-review</h1>
+<div class="subtitle">為什麼一個工程審查 Skill 能跨領域解決商業問題？拆解 YC CEO 的 Prompt 設計哲學</div>
+<div class="source">來源：<a href="https://github.com/garrytan/gstack" target="_blank">gstack by Garry Tan (GitHub)</a> ｜ 分析：<a href="https://x.com/dontbesilent" target="_blank">@dontbesilent</a></div>
+</header>
 <!-- Container -->
 <div class="container">
-
 <!-- Executive Summary -->
 <div class="executive-summary">
-    <div class="rating-bar">
-        <span class="rating-score"><span class="rating-stars">★★★★✦</span> 4.5/5</span>
-        <span class="rating-high">↑ 實務應用, 學習曲線</span>
-        <span class="rating-low">↓ 工具生態（單一工具）</span>
-    </div>
-    <h2>Executive Summary</h2>
-    <p>Y Combinator 現任 CEO Garry Tan 開源了自己的 Claude Code 工具集 <strong>gstack</strong>，其中 <strong>plan-ceo-review</strong> 這個約 600 行的 Skill 引發廣泛討論。它的核心設計不是給 AI 領域知識，而是給 AI <span class="highlight-key">審查姿態</span>、<span class="highlight-concept">領域無關的元問題</span>、和 <span class="highlight-practical">不可跳過的結構化流程</span>。結果是：一個為工程審查設計的 Prompt，直接能用在商業計劃評估上——因為它約束的是 AI 的行為模式，不是內容。</p>
-    <p>這篇文章從三個層面拆解這個 Skill：(1) 它的結構設計 (2) 為什麼跨領域有效 (3) 對我們自己建構 Skill 的啟發。</p>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★✦</span> 4.5/5</span>
+<span class="rating-high">↑ 實務應用, 學習曲線</span>
+<span class="rating-low">↓ 工具生態（單一工具）</span>
 </div>
-
+<h2>Executive Summary</h2>
+<p>Y Combinator 現任 CEO Garry Tan 開源了自己的 Claude Code 工具集 <strong>gstack</strong>，其中 <strong>plan-ceo-review</strong> 這個約 600 行的 Skill 引發廣泛討論。它的核心設計不是給 AI 領域知識，而是給 AI <span class="highlight-key">審查姿態</span>、<span class="highlight-concept">領域無關的元問題</span>、和 <span class="highlight-practical">不可跳過的結構化流程</span>。結果是：一個為工程審查設計的 Prompt，直接能用在商業計劃評估上——因為它約束的是 AI 的行為模式，不是內容。</p>
+<p>這篇文章從三個層面拆解這個 Skill：(1) 它的結構設計 (2) 為什麼跨領域有效 (3) 對我們自己建構 Skill 的啟發。</p>
+</div>
 <!-- Learning Objectives -->
 <h2 class="section-header">Learning Objectives</h2>
 <div class="objectives-grid">
-    <div class="objective-item">
-        <div class="objective-icon">&#x1F3D7;</div>
-        <div class="objective-text">理解頂級 Skill 的三層架構：姿態定義 → 元問題 → 結構化流程</div>
-    </div>
-    <div class="objective-item">
-        <div class="objective-icon">&#x1F504;</div>
-        <div class="objective-text">掌握「領域無關 Meta-Prompt」的設計原理及其跨領域遷移機制</div>
-    </div>
-    <div class="objective-item">
-        <div class="objective-icon">&#x1F3AF;</div>
-        <div class="objective-text">萃取可應用於 CDMO 環境的 Skill 設計模式（如 deviation triage）</div>
-    </div>
+<div class="objective-item">
+<div class="objective-icon">🏗</div>
+<div class="objective-text">理解頂級 Skill 的三層架構：姿態定義 → 元問題 → 結構化流程</div>
 </div>
-
+<div class="objective-item">
+<div class="objective-icon">🔄</div>
+<div class="objective-text">掌握「領域無關 Meta-Prompt」的設計原理及其跨領域遷移機制</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">🎯</div>
+<div class="objective-text">萃取可應用於 CDMO 環境的 Skill 設計模式（如 deviation triage）</div>
+</div>
+</div>
 <!-- Framework Visual -->
 <div class="framework-visual">
-    <div class="framework-title">plan-ceo-review 三層設計架構</div>
-    <div class="framework-steps">
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F3AD;</div>
-            <div class="framework-step-title">Layer 1: 姿態</div>
-            <div class="framework-step-desc">定義審查態度<br>不是橡皮章</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x2753;</div>
-            <div class="framework-step-title">Layer 2: 元問題</div>
-            <div class="framework-step-desc">領域無關的<br>底層質問</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F4CB;</div>
-            <div class="framework-step-title">Layer 3: 結構</div>
-            <div class="framework-step-desc">10 環節檢查清單<br>不可跳過</div>
-        </div>
-    </div>
+<div class="framework-title">plan-ceo-review 三層設計架構</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">🎭</div>
+<div class="framework-step-title">Layer 1: 姿態</div>
+<div class="framework-step-desc">定義審查態度<br/>不是橡皮章</div>
 </div>
-
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">❓</div>
+<div class="framework-step-title">Layer 2: 元問題</div>
+<div class="framework-step-desc">領域無關的<br/>底層質問</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📋</div>
+<div class="framework-step-title">Layer 3: 結構</div>
+<div class="framework-step-desc">10 環節檢查清單<br/>不可跳過</div>
+</div>
+</div>
+</div>
 <!-- Part I -->
 <h2 class="section-header">Part I: 背景與影響力</h2>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="section-label">Content 內容</div>
-        <div class="part-title">gstack 的來歷與為什麼值得研究</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">Garry Tan 是 Y Combinator 現任 CEO。YC 是全球最頂級的創業加速器，投出過 Airbnb、Stripe、Coinbase、Reddit。他上週把自己日常使用的 <span class="highlight-concept">Claude Code 工具集</span>開源，放到 GitHub 上，一週拿了 <span class="highlight-key">19,000 個 Star、2,200 個 Fork</span>。</div>
-            <div class="en-text">Garry Tan is the current CEO of Y Combinator. YC is the world's top startup accelerator, having invested in Airbnb, Stripe, Coinbase, Reddit. He open-sourced his personal Claude Code toolkit last week — 19,000 stars and 2,200 forks in one week.</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">項目叫 <strong>gstack</strong>，裡面有 10 個工具，<strong>plan-ceo-review</strong> 是其中一個。這個 Skill 大概 600 行，定義了一套完整的計劃審查流程。原始設計是給工程項目用的，但有使用者發現：直接拿來審查商業計劃，<span class="highlight-practical">一分鐘之內就給出了真正能提升收入的解決方案</span>。</div>
-            <div class="en-text">The project is called gstack, containing 10 tools, with plan-ceo-review being one of them. This ~600-line Skill defines a complete plan review workflow. Originally designed for engineering projects, but users discovered it works directly on business plans — delivering actionable revenue-improving solutions within one minute.</div>
-        </div>
-
-        <div class="info-box box-key">
-            <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-            <div class="info-box-content">
-                <p>這個案例之所以值得深入研究，不是因為它多厲害，而是因為它揭示了一個 Skill 設計原理：<strong>約束行為模式比約束領域知識更有泛用性</strong>。理解這個原理，對我們設計自己的 CDMO 相關 Skill 有直接指導意義。</p>
-            </div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="section-label">Analysis 分析</div>
-
-        <div class="info-box box-analogy">
-            <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-            <div class="info-box-content">
-                <p>想像你訓練一個新的 QA 審計員。你可以選擇兩種方式：</p>
-                <p><strong>方式 A</strong>：給他一本 500 頁的產品規格手冊，告訴他「照著這個查」。他只能查這一個產品。</p>
-                <p><strong>方式 B</strong>：教他「永遠先質疑前提」「每個步驟都問 failure mode 是什麼」「不要放過任何模糊地帶」。他可以查任何產品。</p>
-                <p>plan-ceo-review 採用的是方式 B。</p>
-            </div>
-        </div>
-
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#x1F6E0;&#xFE0F; CDMO 對照</div>
-            <div class="info-box-content">
-                <p>這跟 GMP 環境裡的 deviation investigation 邏輯一樣：好的調查員不是背下所有 SOP，而是掌握「根本原因分析」的思維框架（5 Why、魚骨圖、Is/Is Not），然後把這個框架套用到任何偏差類型上。</p>
-                <p>框架 &gt; 知識。這是 plan-ceo-review 證明的同一件事。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="section-label">Content 內容</div>
+<div class="part-title">gstack 的來歷與為什麼值得研究</div>
+<div class="bilingual-block">
+<div class="zh-text">Garry Tan 是 Y Combinator 現任 CEO。YC 是全球最頂級的創業加速器，投出過 Airbnb、Stripe、Coinbase、Reddit。他上週把自己日常使用的 <span class="highlight-concept">Claude Code 工具集</span>開源，放到 GitHub 上，一週拿了 <span class="highlight-key">19,000 個 Star、2,200 個 Fork</span>。</div>
+<div class="en-text">Garry Tan is the current CEO of Y Combinator. YC is the world's top startup accelerator, having invested in Airbnb, Stripe, Coinbase, Reddit. He open-sourced his personal Claude Code toolkit last week — 19,000 stars and 2,200 forks in one week.</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text">項目叫 <strong>gstack</strong>，裡面有 10 個工具，<strong>plan-ceo-review</strong> 是其中一個。這個 Skill 大概 600 行，定義了一套完整的計劃審查流程。原始設計是給工程項目用的，但有使用者發現：直接拿來審查商業計劃，<span class="highlight-practical">一分鐘之內就給出了真正能提升收入的解決方案</span>。</div>
+<div class="en-text">The project is called gstack, containing 10 tools, with plan-ceo-review being one of them. This ~600-line Skill defines a complete plan review workflow. Originally designed for engineering projects, but users discovered it works directly on business plans — delivering actionable revenue-improving solutions within one minute.</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p>這個案例之所以值得深入研究，不是因為它多厲害，而是因為它揭示了一個 Skill 設計原理：<strong>約束行為模式比約束領域知識更有泛用性</strong>。理解這個原理，對我們設計自己的 CDMO 相關 Skill 有直接指導意義。</p>
+</div>
+</div>
+</div>
+<div class="content-right">
+<div class="section-label">Analysis 分析</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>想像你訓練一個新的 QA 審計員。你可以選擇兩種方式：</p>
+<p><strong>方式 A</strong>：給他一本 500 頁的產品規格手冊，告訴他「照著這個查」。他只能查這一個產品。</p>
+<p><strong>方式 B</strong>：教他「永遠先質疑前提」「每個步驟都問 failure mode 是什麼」「不要放過任何模糊地帶」。他可以查任何產品。</p>
+<p>plan-ceo-review 採用的是方式 B。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 對照</div>
+<div class="info-box-content">
+<p>這跟 GMP 環境裡的 deviation investigation 邏輯一樣：好的調查員不是背下所有 SOP，而是掌握「根本原因分析」的思維框架（5 Why、魚骨圖、Is/Is Not），然後把這個框架套用到任何偏差類型上。</p>
+<p>框架 &gt; 知識。這是 plan-ceo-review 證明的同一件事。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- Part II -->
 <h2 class="section-header">Part II: Layer 1 — 姿態定義（Posture, Not Content）</h2>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="section-label">Content 內容</div>
-        <div class="part-title">不是審查什麼，是以什麼態度審查</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">Skill 的開頭就定義了審查<span class="highlight-concept">姿態</span>——不是告訴 AI 要看什麼指標，而是告訴 AI <span class="highlight-key">用什麼態度</span>面對這個計劃。原文寫道：「你不是來給這個計劃蓋橡皮章的。你是來讓它變得卓越的。」</div>
-            <div class="en-text">"You are not here to rubber-stamp this plan. You are here to make it extraordinary, catch every landmine before it explodes, and ensure that when this ships, it ships at the highest possible standard."</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">然後提供三種模式讓使用者選擇，每種模式定義了不同的姿態強度：</div>
-            <div class="en-text">Then it provides three modes for the user to select, each defining a different posture intensity:</div>
-        </div>
-
-        <table>
-            <thead>
-                <tr><th>模式</th><th>姿態</th><th>核心問題</th></tr>
-            </thead>
-            <tbody>
-                <tr><td><strong>SCOPE EXPANSION</strong><br>範圍擴張</td><td>建造大教堂</td><td>什麼能用 2x 努力帶來 10x 提升？</td></tr>
-                <tr><td><strong>HOLD SCOPE</strong><br>保持範圍</td><td>嚴謹審查者</td><td>怎麼讓它防彈？</td></tr>
-                <tr><td><strong>SCOPE REDUCTION</strong><br>範圍縮減</td><td>外科醫生</td><td>最小可行版本是什麼？</td></tr>
-            </tbody>
-        </table>
-
-        <div class="bilingual-block">
-            <div class="zh-text"><span class="highlight-key">關鍵規則</span>：一旦使用者選擇了模式，AI 必須全力投入，不能悄悄偏移到另一種模式。這個約束非常重要——它防止了 AI 的常見問題：在該嚴厲的時候變得討好，或在該收斂的時候繼續發散。</div>
-            <div class="en-text">"Critical rule: Once the user selects a mode, COMMIT to it. Do not silently drift toward a different mode."</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="section-label">Analysis 分析</div>
-
-        <div class="info-box box-concept">
-            <div class="info-box-header">&#x1F4DA; 核心概念：Posture Engineering</div>
-            <div class="info-box-content">
-                <p>大多數 Prompt 設計者專注於「輸入什麼資訊」和「輸出什麼格式」。Garry Tan 做的事更底層：他定義了 AI 的<strong>審查姿態（posture）</strong>。</p>
-                <p>Posture 包含三個維度：</p>
-                <p>1. <strong>權力關係</strong>：你有權說「全部推翻」（不是僕人，是對等審查者）</p>
-                <p>2. <strong>承諾強度</strong>：選定模式後不可偏移（防止 AI 的 people-pleasing 傾向）</p>
-                <p>3. <strong>標準錨定</strong>：以最高標準上線（設定了品質下限）</p>
-            </div>
-        </div>
-
-        <div class="info-box box-analogy">
-            <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-            <div class="info-box-content">
-                <p>這就像在 GMP 環境裡，你不會告訴 QA 人員「去檢查批次記錄的第 37 頁」。你會告訴他們：「你的角色是 independent quality oversight。你的職責是確保每一個 critical process parameter 都在規格範圍內。你有權 reject 整個批次。」</p>
-                <p>角色定義決定了檢查的深度和嚴謹度——比任何 checklist 都重要。</p>
-            </div>
-        </div>
-
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#x1F6E0;&#xFE0F; Skill 設計原則萃取</div>
-            <div class="info-box-content">
-                <p><strong>原則：先定義姿態，再定義任務。</strong></p>
-                <p>在你的 Skill 開頭，不要急著寫「請分析以下數據」。先回答：AI 在這個任務中的角色是什麼？它的權力邊界在哪裡？它應該多嚴格？</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="section-label">Content 內容</div>
+<div class="part-title">不是審查什麼，是以什麼態度審查</div>
+<div class="bilingual-block">
+<div class="zh-text">Skill 的開頭就定義了審查<span class="highlight-concept">姿態</span>——不是告訴 AI 要看什麼指標，而是告訴 AI <span class="highlight-key">用什麼態度</span>面對這個計劃。原文寫道：「你不是來給這個計劃蓋橡皮章的。你是來讓它變得卓越的。」</div>
+<div class="en-text">"You are not here to rubber-stamp this plan. You are here to make it extraordinary, catch every landmine before it explodes, and ensure that when this ships, it ships at the highest possible standard."</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text">然後提供三種模式讓使用者選擇，每種模式定義了不同的姿態強度：</div>
+<div class="en-text">Then it provides three modes for the user to select, each defining a different posture intensity:</div>
+</div>
+<table>
+<thead>
+<tr><th>模式</th><th>姿態</th><th>核心問題</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>SCOPE EXPANSION</strong><br/>範圍擴張</td><td>建造大教堂</td><td>什麼能用 2x 努力帶來 10x 提升？</td></tr>
+<tr><td><strong>HOLD SCOPE</strong><br/>保持範圍</td><td>嚴謹審查者</td><td>怎麼讓它防彈？</td></tr>
+<tr><td><strong>SCOPE REDUCTION</strong><br/>範圍縮減</td><td>外科醫生</td><td>最小可行版本是什麼？</td></tr>
+</tbody>
+</table>
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-key">關鍵規則</span>：一旦使用者選擇了模式，AI 必須全力投入，不能悄悄偏移到另一種模式。這個約束非常重要——它防止了 AI 的常見問題：在該嚴厲的時候變得討好，或在該收斂的時候繼續發散。</div>
+<div class="en-text">"Critical rule: Once the user selects a mode, COMMIT to it. Do not silently drift toward a different mode."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="section-label">Analysis 分析</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：Posture Engineering</div>
+<div class="info-box-content">
+<p>大多數 Prompt 設計者專注於「輸入什麼資訊」和「輸出什麼格式」。Garry Tan 做的事更底層：他定義了 AI 的<strong>審查姿態（posture）</strong>。</p>
+<p>Posture 包含三個維度：</p>
+<p>1. <strong>權力關係</strong>：你有權說「全部推翻」（不是僕人，是對等審查者）</p>
+<p>2. <strong>承諾強度</strong>：選定模式後不可偏移（防止 AI 的 people-pleasing 傾向）</p>
+<p>3. <strong>標準錨定</strong>：以最高標準上線（設定了品質下限）</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>這就像在 GMP 環境裡，你不會告訴 QA 人員「去檢查批次記錄的第 37 頁」。你會告訴他們：「你的角色是 independent quality oversight。你的職責是確保每一個 critical process parameter 都在規格範圍內。你有權 reject 整個批次。」</p>
+<p>角色定義決定了檢查的深度和嚴謹度——比任何 checklist 都重要。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Skill 設計原則萃取</div>
+<div class="info-box-content">
+<p><strong>原則：先定義姿態，再定義任務。</strong></p>
+<p>在你的 Skill 開頭，不要急著寫「請分析以下數據」。先回答：AI 在這個任務中的角色是什麼？它的權力邊界在哪裡？它應該多嚴格？</p>
+</div>
+</div>
+</div>
+</div>
 <!-- Part III -->
 <h2 class="section-header">Part III: Layer 2 — 領域無關的元問題（Meta-Questions）</h2>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="section-label">Content 內容</div>
-        <div class="part-title">Step 0 的核彈級質問</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">在進入 10 個審查環節之前，Skill 先執行 <span class="highlight-key">Step 0：核彈級範圍挑戰</span>。這裡的問題完全不涉及任何特定領域：</div>
-            <div class="en-text">Before entering the 10 review stages, the Skill executes Step 0: Nuclear Scope Challenge. These questions are entirely domain-agnostic:</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text"><strong>0A. 前提挑戰</strong>：這是對的問題嗎？如果什麼都不做會怎樣？這是真實的痛點，還是假想的痛點？</div>
-            <div class="en-text">"Is this the right problem to solve? What would happen if we did nothing? Real pain point or hypothetical one?"</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text"><strong>0B. 現有資源利用</strong>：已經有什麼東西部分解決了這個問題？是不是在重建已有的東西？</div>
-            <div class="en-text">"What existing code already partially or fully solves each sub-problem? Is this plan rebuilding anything that already exists?"</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text"><strong>0C. 理想狀態映射</strong>：描述 12 個月後的理想最終狀態。這個計劃是在靠近那個狀態，還是在遠離它？</div>
-            <div class="en-text">"Describe the ideal end state of this system 12 months from now. Does this plan move toward that state or away from it?"</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text"><strong>0E. 時間線審問</strong>：提前想到實施過程——第 1 小時打地基需要知道什麼？第 2-3 小時核心邏輯會碰到什麼模糊地帶？第 4-5 小時整合時什麼會讓人意外？</div>
-            <div class="en-text">"Think ahead to implementation: What decisions will need to be made during implementation that should be resolved NOW in the plan?"</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="section-label">Analysis 分析</div>
-
-        <div class="info-box box-concept">
-            <div class="info-box-header">&#x1F4DA; 核心概念：Meta-Questions 為什麼有效</div>
-            <div class="info-box-content">
-                <p>這些問題不涉及工程、商業、製造或任何特定領域。它們問的是更底層的事情：</p>
-                <p>1. <strong>前提有效性</strong>：你確定你在解決對的事情嗎？</p>
-                <p>2. <strong>資源重複性</strong>：你是不是在重造輪子？</p>
-                <p>3. <strong>方向一致性</strong>：你往對的方向走嗎？</p>
-                <p>4. <strong>實施可行性</strong>：你想清楚怎麼做了嗎？</p>
-                <p>這些是<span class="highlight-concept">元認知問題</span>——關於思考本身的思考。它們在任何領域都適用，因為它們質問的不是具體方案，而是做出方案的思考過程。</p>
-            </div>
-        </div>
-
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#x1F6E0;&#xFE0F; CDMO 遷移範例</div>
-            <div class="info-box-content">
-                <p>把這些元問題套到 CDMO 的 deviation investigation：</p>
-                <p><strong>0A → Deviation Triage</strong>：這個偏差的根本原因真的是我們認為的嗎？還是只是表面症狀？</p>
-                <p><strong>0B → 現有 CAPA</strong>：之前有沒有類似的偏差已經產生了 CAPA？我們是不是在重複調查？</p>
-                <p><strong>0C → 理想狀態</strong>：如果這條產線的品質系統完美運作，12 個月後偏差率應該是多少？</p>
-                <p><strong>0E → 實施審問</strong>：這個 CAPA 在執行時，第一週會碰到什麼阻力？需要哪些部門配合？</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="section-label">Content 內容</div>
+<div class="part-title">Step 0 的核彈級質問</div>
+<div class="bilingual-block">
+<div class="zh-text">在進入 10 個審查環節之前，Skill 先執行 <span class="highlight-key">Step 0：核彈級範圍挑戰</span>。這裡的問題完全不涉及任何特定領域：</div>
+<div class="en-text">Before entering the 10 review stages, the Skill executes Step 0: Nuclear Scope Challenge. These questions are entirely domain-agnostic:</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text"><strong>0A. 前提挑戰</strong>：這是對的問題嗎？如果什麼都不做會怎樣？這是真實的痛點，還是假想的痛點？</div>
+<div class="en-text">"Is this the right problem to solve? What would happen if we did nothing? Real pain point or hypothetical one?"</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>0B. 現有資源利用</strong>：已經有什麼東西部分解決了這個問題？是不是在重建已有的東西？</div>
+<div class="en-text">"What existing code already partially or fully solves each sub-problem? Is this plan rebuilding anything that already exists?"</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>0C. 理想狀態映射</strong>：描述 12 個月後的理想最終狀態。這個計劃是在靠近那個狀態，還是在遠離它？</div>
+<div class="en-text">"Describe the ideal end state of this system 12 months from now. Does this plan move toward that state or away from it?"</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>0E. 時間線審問</strong>：提前想到實施過程——第 1 小時打地基需要知道什麼？第 2-3 小時核心邏輯會碰到什麼模糊地帶？第 4-5 小時整合時什麼會讓人意外？</div>
+<div class="en-text">"Think ahead to implementation: What decisions will need to be made during implementation that should be resolved NOW in the plan?"</div>
+</div>
+</div>
+<div class="content-right">
+<div class="section-label">Analysis 分析</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：Meta-Questions 為什麼有效</div>
+<div class="info-box-content">
+<p>這些問題不涉及工程、商業、製造或任何特定領域。它們問的是更底層的事情：</p>
+<p>1. <strong>前提有效性</strong>：你確定你在解決對的事情嗎？</p>
+<p>2. <strong>資源重複性</strong>：你是不是在重造輪子？</p>
+<p>3. <strong>方向一致性</strong>：你往對的方向走嗎？</p>
+<p>4. <strong>實施可行性</strong>：你想清楚怎麼做了嗎？</p>
+<p>這些是<span class="highlight-concept">元認知問題</span>——關於思考本身的思考。它們在任何領域都適用，因為它們質問的不是具體方案，而是做出方案的思考過程。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 遷移範例</div>
+<div class="info-box-content">
+<p>把這些元問題套到 CDMO 的 deviation investigation：</p>
+<p><strong>0A → Deviation Triage</strong>：這個偏差的根本原因真的是我們認為的嗎？還是只是表面症狀？</p>
+<p><strong>0B → 現有 CAPA</strong>：之前有沒有類似的偏差已經產生了 CAPA？我們是不是在重複調查？</p>
+<p><strong>0C → 理想狀態</strong>：如果這條產線的品質系統完美運作，12 個月後偏差率應該是多少？</p>
+<p><strong>0E → 實施審問</strong>：這個 CAPA 在執行時，第一週會碰到什麼阻力？需要哪些部門配合？</p>
+</div>
+</div>
+</div>
+</div>
 <!-- Part IV -->
 <h2 class="section-header">Part IV: Layer 3 — 10 環節結構化流程</h2>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="section-label">Content 內容</div>
-        <div class="part-title">工程語境，自動遷移</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">10 個審查環節雖然用的是工程術語（架構審查、單點故障、回滾計劃），但 <span class="highlight-concept">Claude 會根據輸入的實際內容自動遷移概念</span>：</div>
-            <div class="en-text">The 10 review stages use engineering terminology (architecture review, single points of failure, rollback plan), but Claude automatically migrates concepts based on actual input:</div>
-        </div>
-
-        <table>
-            <thead>
-                <tr><th>環節</th><th>工程語境</th><th>商業遷移</th><th>CDMO 遷移</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>1. 架構審查</td><td>系統設計、組件邊界</td><td>業務結構、組織邊界</td><td>製程設計、設備配置</td></tr>
-                <tr><td>2. 錯誤拯救映射</td><td>異常處理、靜默失敗</td><td>市場假設失效、隱藏風險</td><td>偏差處理、OOS 結果</td></tr>
-                <tr><td>3. 安全威脅模型</td><td>攻擊面、注入向量</td><td>競爭威脅、法規風險</td><td>交叉污染、數據完整性</td></tr>
-                <tr><td>4. 數據流邊界</td><td>數據四路徑</td><td>客戶旅程邊界</td><td>批次記錄數據流</td></tr>
-                <tr><td>5. 代碼品質</td><td>DRY、命名、過度工程</td><td>流程重複、角色模糊</td><td>SOP 品質、文件控制</td></tr>
-                <tr><td>6. 測試審查</td><td>混沌測試</td><td>壓力測試假設</td><td>製程驗證（PQ/PPQ）</td></tr>
-                <tr><td>7. 性能審查</td><td>P99 延遲</td><td>規模瓶頸</td><td>產能瓶頸、Takt Time</td></tr>
-                <tr><td>8. 可觀測性</td><td>指標、日誌</td><td>KPI、Dashboard</td><td>環境監控、製程參數</td></tr>
-                <tr><td>9. 部署上線</td><td>回滾計劃</td><td>退出策略</td><td>變更控制、技術轉移</td></tr>
-                <tr><td>10. 長期軌跡</td><td>技術債</td><td>策略債</td><td>法規債、驗證債</td></tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="content-right">
-        <div class="section-label">Analysis 分析</div>
-
-        <div class="info-box box-concept">
-            <div class="info-box-header">&#x1F4DA; 核心概念：結構即約束</div>
-            <div class="info-box-content">
-                <p>這 10 個環節的核心價值不是它們的內容——而是它們的<strong>結構</strong>。</p>
-                <p><strong>「不可跳過」</strong>是關鍵設計。Skill 明確要求：如果某個環節沒有問題，要說明白然後繼續，但不能跳過。這確保了 AI 對每個面向都進行了系統性思考，而不是只挑容易的部分回答。</p>
-                <p>這就是 Checklist Manifesto 的核心論點：清單的價值不在於提醒你不知道的事，而在於確保你不會跳過你知道但會遺忘的事。</p>
-            </div>
-        </div>
-
-        <div class="info-box box-key">
-            <div class="info-box-header">&#x26A0;&#xFE0F; 重點：自動遷移的機制</div>
-            <div class="info-box-content">
-                <p>Claude 能自動遷移概念，是因為 LLM 的底層是<strong>語義理解</strong>，不是關鍵字匹配。當 Skill 說「單點故障」而輸入是商業計劃時，Claude 不會去找程式碼中的 SPOF——它理解「單點故障」的語義是「如果這一個環節失敗，整個系統崩潰」，然後在商業計劃的語境中找到對應的概念（例如只依賴單一客戶、單一供應商）。</p>
-                <p>這個遷移<strong>不是 Prompt 寫的，是模型自己做的</strong>。但 Prompt 給了一個足夠完整的檢查結構，讓模型沿著這個結構逐步遷移，不會遺漏。</p>
-            </div>
-        </div>
-
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#x1F6E0;&#xFE0F; Skill 設計原則萃取</div>
-            <div class="info-box-content">
-                <p><strong>原則：用工程語境寫，讓模型自己遷移。</strong></p>
-                <p>不需要為每個領域寫一套 Skill。用最嚴謹的領域（通常是工程）作為模板，定義完整的檢查結構，然後信任 LLM 的語義遷移能力。但前提是：結構必須完整且不可跳過。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="section-label">Content 內容</div>
+<div class="part-title">工程語境，自動遷移</div>
+<div class="bilingual-block">
+<div class="zh-text">10 個審查環節雖然用的是工程術語（架構審查、單點故障、回滾計劃），但 <span class="highlight-concept">Claude 會根據輸入的實際內容自動遷移概念</span>：</div>
+<div class="en-text">The 10 review stages use engineering terminology (architecture review, single points of failure, rollback plan), but Claude automatically migrates concepts based on actual input:</div>
 </div>
-
+<table>
+<thead>
+<tr><th>環節</th><th>工程語境</th><th>商業遷移</th><th>CDMO 遷移</th></tr>
+</thead>
+<tbody>
+<tr><td>1. 架構審查</td><td>系統設計、組件邊界</td><td>業務結構、組織邊界</td><td>製程設計、設備配置</td></tr>
+<tr><td>2. 錯誤拯救映射</td><td>異常處理、靜默失敗</td><td>市場假設失效、隱藏風險</td><td>偏差處理、OOS 結果</td></tr>
+<tr><td>3. 安全威脅模型</td><td>攻擊面、注入向量</td><td>競爭威脅、法規風險</td><td>交叉污染、數據完整性</td></tr>
+<tr><td>4. 數據流邊界</td><td>數據四路徑</td><td>客戶旅程邊界</td><td>批次記錄數據流</td></tr>
+<tr><td>5. 代碼品質</td><td>DRY、命名、過度工程</td><td>流程重複、角色模糊</td><td>SOP 品質、文件控制</td></tr>
+<tr><td>6. 測試審查</td><td>混沌測試</td><td>壓力測試假設</td><td>製程驗證（PQ/PPQ）</td></tr>
+<tr><td>7. 性能審查</td><td>P99 延遲</td><td>規模瓶頸</td><td>產能瓶頸、Takt Time</td></tr>
+<tr><td>8. 可觀測性</td><td>指標、日誌</td><td>KPI、Dashboard</td><td>環境監控、製程參數</td></tr>
+<tr><td>9. 部署上線</td><td>回滾計劃</td><td>退出策略</td><td>變更控制、技術轉移</td></tr>
+<tr><td>10. 長期軌跡</td><td>技術債</td><td>策略債</td><td>法規債、驗證債</td></tr>
+</tbody>
+</table>
+</div>
+<div class="content-right">
+<div class="section-label">Analysis 分析</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：結構即約束</div>
+<div class="info-box-content">
+<p>這 10 個環節的核心價值不是它們的內容——而是它們的<strong>結構</strong>。</p>
+<p><strong>「不可跳過」</strong>是關鍵設計。Skill 明確要求：如果某個環節沒有問題，要說明白然後繼續，但不能跳過。這確保了 AI 對每個面向都進行了系統性思考，而不是只挑容易的部分回答。</p>
+<p>這就是 Checklist Manifesto 的核心論點：清單的價值不在於提醒你不知道的事，而在於確保你不會跳過你知道但會遺忘的事。</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點：自動遷移的機制</div>
+<div class="info-box-content">
+<p>Claude 能自動遷移概念，是因為 LLM 的底層是<strong>語義理解</strong>，不是關鍵字匹配。當 Skill 說「單點故障」而輸入是商業計劃時，Claude 不會去找程式碼中的 SPOF——它理解「單點故障」的語義是「如果這一個環節失敗，整個系統崩潰」，然後在商業計劃的語境中找到對應的概念（例如只依賴單一客戶、單一供應商）。</p>
+<p>這個遷移<strong>不是 Prompt 寫的，是模型自己做的</strong>。但 Prompt 給了一個足夠完整的檢查結構，讓模型沿著這個結構逐步遷移，不會遺漏。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Skill 設計原則萃取</div>
+<div class="info-box-content">
+<p><strong>原則：用工程語境寫，讓模型自己遷移。</strong></p>
+<p>不需要為每個領域寫一套 Skill。用最嚴謹的領域（通常是工程）作為模板，定義完整的檢查結構，然後信任 LLM 的語義遷移能力。但前提是：結構必須完整且不可跳過。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- Part V -->
 <h2 class="section-header">Part V: 設計心法與批判分析</h2>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="section-label">Content 內容</div>
-        <div class="part-title">九條首要指令與提問規則</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">Skill 定義了 9 條 <span class="highlight-key">Prime Directives（首要指令）</span>，這些不是功能規格——而是行為約束。精選幾條最具啟發性的：</div>
-            <div class="en-text">The Skill defines 9 Prime Directives — not feature specs, but behavioral constraints. Selected highlights:</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text"><strong>#1 零靜默失敗</strong>：每一種失敗模式都必須可見——對系統、對團隊、對用戶。翻譯到任何領域：不允許問題被隱藏。</div>
-            <div class="en-text">"Zero silent failures. Every failure mode must be visible — to the system, to the team, to the user."</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text"><strong>#7 所有延後的工作都必須寫下來</strong>：「模糊的意圖等於謊言。」這是對 AI 和人類都適用的約束——如果你說「以後再處理」，你必須精確記錄什麼時候、處理什麼。</div>
-            <div class="en-text">"Everything deferred must be written down. Vague intentions are lies."</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text"><strong>#8 為 6 個月後優化</strong>：「如果這個計劃解決了今天的問題但製造了下個季度的噩夢，明確說出來。」這迫使 AI 從短期修復思維跳到長期系統思維。</div>
-            <div class="en-text">"Optimize for the 6-month future, not just today. If this plan solves today's problem but creates next quarter's nightmare, say so."</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text"><strong>#9 你有權說「全部推翻」</strong>：「我寧可現在就聽到。」這打破了 AI 的預設討好行為，賦予它 pushback 的權限。</div>
-            <div class="en-text">"You have permission to say 'scrap it and do this instead.' I'd rather hear it now."</div>
-        </div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">提問規則也值得注意：<span class="highlight-practical">一個問題 = 一次提問</span>。永遠不要把多個問題合併。並且假設使用者已經 20 分鐘沒看視窗了——每次提問都要重新定位上下文。</div>
-            <div class="en-text">"One question = one AskUserQuestion. Never combine. Assume the user hasn't looked at this window in 20 minutes."</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="section-label">Analysis 分析</div>
-
-        <div class="info-box box-concept">
-            <div class="info-box-header">&#x1F4DA; 核心概念：行為約束 vs 功能規格</div>
-            <div class="info-box-content">
-                <p>回顧整個 Skill 的設計，我們可以歸納出一個核心洞察：</p>
-                <p><strong>頂級 Skill 定義的是行為模式（behavioral constraints），不是功能規格（feature specs）。</strong></p>
-                <p>功能規格告訴 AI「做什麼」——分析這個數據、生成這個報告、回答這個問題。行為約束告訴 AI「怎麼做」——以什麼態度、什麼深度、什麼順序、什麼標準。</p>
-                <p>功能規格是領域綁定的。行為約束是領域無關的。這就是為什麼一個工程 Skill 能用在商業計劃上。</p>
-            </div>
-        </div>
-
-        <div class="info-box box-key">
-            <div class="info-box-header">&#x26A0;&#xFE0F; 批判分析：限制與注意事項</div>
-            <div class="info-box-content">
-                <p><strong>1. 倖存者偏差</strong>：我們看到的是一個成功案例。不代表所有「姿態定義型」Skill 都能跨領域遷移。遷移成功的前提是目標領域有類似的結構性問題（計劃 → 審查 → 改進）。</p>
-                <p><strong>2. 模型依賴</strong>：自動遷移能力高度依賴模型的語義理解水平。Claude 能做到，不代表所有 LLM 都能。用較弱的模型可能只會照字面意思執行工程檢查。</p>
-                <p><strong>3. 深度 vs 廣度權衡</strong>：10 個環節 × 每個環節多個子項 = 檢查非常全面但耗時。對於快速迭代的場景，這個 Skill 可能太重了。</p>
-                <p><strong>4. GMP 適用性警告</strong>：在受監管環境中，AI 的「自動遷移」是一個風險。CDMO 偏差調查需要的是 validated process，不是 AI 自行解讀。如果要在 GMP 環境使用類似 Skill，必須加上 human-in-the-loop 的強制檢查點。</p>
-            </div>
-        </div>
-
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#x1F6E0;&#xFE0F; 你的 Skill 設計清單</div>
-            <div class="info-box-content">
-                <p>基於 plan-ceo-review 的設計模式，建構你自己的 Skill 時應包含：</p>
-                <p>1. <strong>姿態宣言</strong>（2-3 句，定義角色和權力邊界）</p>
-                <p>2. <strong>模式選擇</strong>（2-3 個強度級別，使用者選定後鎖定）</p>
-                <p>3. <strong>Step 0 元問題</strong>（3-5 個領域無關的前提挑戰）</p>
-                <p>4. <strong>結構化環節</strong>（N 個檢查環節，每個不可跳過）</p>
-                <p>5. <strong>提問規則</strong>（一問一答、上下文重新定位）</p>
-                <p>6. <strong>必需輸出</strong>（明確列出最終交付物清單）</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="section-label">Content 內容</div>
+<div class="part-title">九條首要指令與提問規則</div>
+<div class="bilingual-block">
+<div class="zh-text">Skill 定義了 9 條 <span class="highlight-key">Prime Directives（首要指令）</span>，這些不是功能規格——而是行為約束。精選幾條最具啟發性的：</div>
+<div class="en-text">The Skill defines 9 Prime Directives — not feature specs, but behavioral constraints. Selected highlights:</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text"><strong>#1 零靜默失敗</strong>：每一種失敗模式都必須可見——對系統、對團隊、對用戶。翻譯到任何領域：不允許問題被隱藏。</div>
+<div class="en-text">"Zero silent failures. Every failure mode must be visible — to the system, to the team, to the user."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>#7 所有延後的工作都必須寫下來</strong>：「模糊的意圖等於謊言。」這是對 AI 和人類都適用的約束——如果你說「以後再處理」，你必須精確記錄什麼時候、處理什麼。</div>
+<div class="en-text">"Everything deferred must be written down. Vague intentions are lies."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>#8 為 6 個月後優化</strong>：「如果這個計劃解決了今天的問題但製造了下個季度的噩夢，明確說出來。」這迫使 AI 從短期修復思維跳到長期系統思維。</div>
+<div class="en-text">"Optimize for the 6-month future, not just today. If this plan solves today's problem but creates next quarter's nightmare, say so."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>#9 你有權說「全部推翻」</strong>：「我寧可現在就聽到。」這打破了 AI 的預設討好行為，賦予它 pushback 的權限。</div>
+<div class="en-text">"You have permission to say 'scrap it and do this instead.' I'd rather hear it now."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">提問規則也值得注意：<span class="highlight-practical">一個問題 = 一次提問</span>。永遠不要把多個問題合併。並且假設使用者已經 20 分鐘沒看視窗了——每次提問都要重新定位上下文。</div>
+<div class="en-text">"One question = one AskUserQuestion. Never combine. Assume the user hasn't looked at this window in 20 minutes."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="section-label">Analysis 分析</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：行為約束 vs 功能規格</div>
+<div class="info-box-content">
+<p>回顧整個 Skill 的設計，我們可以歸納出一個核心洞察：</p>
+<p><strong>頂級 Skill 定義的是行為模式（behavioral constraints），不是功能規格（feature specs）。</strong></p>
+<p>功能規格告訴 AI「做什麼」——分析這個數據、生成這個報告、回答這個問題。行為約束告訴 AI「怎麼做」——以什麼態度、什麼深度、什麼順序、什麼標準。</p>
+<p>功能規格是領域綁定的。行為約束是領域無關的。這就是為什麼一個工程 Skill 能用在商業計劃上。</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 批判分析：限制與注意事項</div>
+<div class="info-box-content">
+<p><strong>1. 倖存者偏差</strong>：我們看到的是一個成功案例。不代表所有「姿態定義型」Skill 都能跨領域遷移。遷移成功的前提是目標領域有類似的結構性問題（計劃 → 審查 → 改進）。</p>
+<p><strong>2. 模型依賴</strong>：自動遷移能力高度依賴模型的語義理解水平。Claude 能做到，不代表所有 LLM 都能。用較弱的模型可能只會照字面意思執行工程檢查。</p>
+<p><strong>3. 深度 vs 廣度權衡</strong>：10 個環節 × 每個環節多個子項 = 檢查非常全面但耗時。對於快速迭代的場景，這個 Skill 可能太重了。</p>
+<p><strong>4. GMP 適用性警告</strong>：在受監管環境中，AI 的「自動遷移」是一個風險。CDMO 偏差調查需要的是 validated process，不是 AI 自行解讀。如果要在 GMP 環境使用類似 Skill，必須加上 human-in-the-loop 的強制檢查點。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 你的 Skill 設計清單</div>
+<div class="info-box-content">
+<p>基於 plan-ceo-review 的設計模式，建構你自己的 Skill 時應包含：</p>
+<p>1. <strong>姿態宣言</strong>（2-3 句，定義角色和權力邊界）</p>
+<p>2. <strong>模式選擇</strong>（2-3 個強度級別，使用者選定後鎖定）</p>
+<p>3. <strong>Step 0 元問題</strong>（3-5 個領域無關的前提挑戰）</p>
+<p>4. <strong>結構化環節</strong>（N 個檢查環節，每個不可跳過）</p>
+<p>5. <strong>提問規則</strong>（一問一答、上下文重新定位）</p>
+<p>6. <strong>必需輸出</strong>（明確列出最終交付物清單）</p>
+</div>
+</div>
+</div>
+</div>
 <!-- Key Takeaways -->
 <h2 class="section-header">Key Takeaways</h2>
 <div class="takeaways-grid">
-    <div class="summary-card">
-        <div class="card-title">1. 姿態 > 知識</div>
-        <div class="card-text">頂級 Skill 不給 AI 領域知識——它給 AI 審查姿態。定義角色、權力邊界、嚴格程度，讓 AI 用自己已有的知識在這個姿態下執行。這是跨領域泛用的根本原因。</div>
-    </div>
-    <div class="summary-card">
-        <div class="card-title">2. 元問題打破前提</div>
-        <div class="card-text">Step 0 的元問題（這是對的問題嗎？什麼都不做會怎樣？12 個月後的理想狀態？）是領域無關的認知工具。它們質問的不是方案，而是產生方案的思考過程。</div>
-    </div>
-    <div class="summary-card">
-        <div class="card-title">3. 結構 = 不可跳過的紀律</div>
-        <div class="card-text">10 個環節的價值在於「不可跳過」的約束。AI 傾向於跳過難的部分、專注容易的部分。強制結構消除了這個傾向，確保系統性思考覆蓋每個面向。</div>
-    </div>
-    <div class="summary-card">
-        <div class="card-title">4. 信任語義遷移，但設護欄</div>
-        <div class="card-text">LLM 能自動把「單點故障」從工程遷移到商業或製造語境。但在受監管環境（GMP），這種自動遷移需要人類驗證。Copilot 模式 + 強制檢查點是安全使用的前提。</div>
-    </div>
+<div class="summary-card">
+<div class="card-title">1. 姿態 &gt; 知識</div>
+<div class="card-text">頂級 Skill 不給 AI 領域知識——它給 AI 審查姿態。定義角色、權力邊界、嚴格程度，讓 AI 用自己已有的知識在這個姿態下執行。這是跨領域泛用的根本原因。</div>
 </div>
-
+<div class="summary-card">
+<div class="card-title">2. 元問題打破前提</div>
+<div class="card-text">Step 0 的元問題（這是對的問題嗎？什麼都不做會怎樣？12 個月後的理想狀態？）是領域無關的認知工具。它們質問的不是方案，而是產生方案的思考過程。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">3. 結構 = 不可跳過的紀律</div>
+<div class="card-text">10 個環節的價值在於「不可跳過」的約束。AI 傾向於跳過難的部分、專注容易的部分。強制結構消除了這個傾向，確保系統性思考覆蓋每個面向。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">4. 信任語義遷移，但設護欄</div>
+<div class="card-text">LLM 能自動把「單點故障」從工程遷移到商業或製造語境。但在受監管環境（GMP），這種自動遷移需要人類驗證。Copilot 模式 + 強制檢查點是安全使用的前提。</div>
+</div>
+</div>
 <!-- Practice Questions -->
 <h2 class="section-header">Practice Questions</h2>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q1</span>
-        <span class="question-type">概念理解</span>
-        <span class="question-text">plan-ceo-review 能跨領域生效的三個設計層次分別是什麼？為什麼「姿態定義」比「領域知識」更具泛用性？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>三個設計層次：(1) 姿態定義——告訴 AI 以什麼態度審查，而非審查什麼內容；(2) 領域無關的元問題——質問前提、方向、資源重複性等底層認知問題；(3) 結構化流程——10 個不可跳過的檢查環節。</p>
-        <p>姿態定義比領域知識更具泛用性，因為它約束的是 AI 的行為模式（嚴格程度、權力邊界、承諾強度），而不是特定領域的檢查項目。行為模式在工程、商業、製造等任何需要「計劃 → 審查 → 改進」結構的領域都適用。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">plan-ceo-review 能跨領域生效的三個設計層次分別是什麼？為什麼「姿態定義」比「領域知識」更具泛用性？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>三個設計層次：(1) 姿態定義——告訴 AI 以什麼態度審查，而非審查什麼內容；(2) 領域無關的元問題——質問前提、方向、資源重複性等底層認知問題；(3) 結構化流程——10 個不可跳過的檢查環節。</p>
+<p>姿態定義比領域知識更具泛用性，因為它約束的是 AI 的行為模式（嚴格程度、權力邊界、承諾強度），而不是特定領域的檢查項目。行為模式在工程、商業、製造等任何需要「計劃 → 審查 → 改進」結構的領域都適用。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q2</span>
-        <span class="question-type">產業應用</span>
-        <span class="question-text">如果你要為 CDMO 的 deviation investigation 設計一個類似的 Skill，Step 0 的元問題應該包含哪些？它與 plan-ceo-review 的 Step 0 有什麼共通點和差異？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p><strong>共通的元問題</strong>：(a) 這個偏差的根本原因真的是我們認為的嗎？（= 前提挑戰）(b) 之前有沒有類似偏差已經產生了 CAPA？（= 現有資源利用）(c) 理想狀態下，12 個月後這條產線的偏差率應該是多少？（= 理想狀態映射）</p>
-        <p><strong>GMP 特有的差異</strong>：(d) 這個偏差是否涉及 patient safety impact？（法規強制的優先級分類——plan-ceo-review 沒有等效概念）(e) 調查時限是否符合法規要求（如 30 天完成初步調查）？（= 外部約束，工程審查沒有法規 deadline）(f) 是否需要通報主管機關？（= 法規 escalation，商業計劃沒有對應概念）</p>
-        <p>核心差異：GMP 環境有外部監管約束（法規時限、patient safety、通報義務），這些在商業或工程語境中不存在。Skill 設計必須把這些作為 hard interlock，不能依賴 AI 自動遷移。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">如果你要為 CDMO 的 deviation investigation 設計一個類似的 Skill，Step 0 的元問題應該包含哪些？它與 plan-ceo-review 的 Step 0 有什麼共通點和差異？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>共通的元問題</strong>：(a) 這個偏差的根本原因真的是我們認為的嗎？（= 前提挑戰）(b) 之前有沒有類似偏差已經產生了 CAPA？（= 現有資源利用）(c) 理想狀態下，12 個月後這條產線的偏差率應該是多少？（= 理想狀態映射）</p>
+<p><strong>GMP 特有的差異</strong>：(d) 這個偏差是否涉及 patient safety impact？（法規強制的優先級分類——plan-ceo-review 沒有等效概念）(e) 調查時限是否符合法規要求（如 30 天完成初步調查）？（= 外部約束，工程審查沒有法規 deadline）(f) 是否需要通報主管機關？（= 法規 escalation，商業計劃沒有對應概念）</p>
+<p>核心差異：GMP 環境有外部監管約束（法規時限、patient safety、通報義務），這些在商業或工程語境中不存在。Skill 設計必須把這些作為 hard interlock，不能依賴 AI 自動遷移。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q3</span>
-        <span class="question-type">批判思考</span>
-        <span class="question-text">原文作者認為「Claude 自動遷移工程術語到商業語境」是 plan-ceo-review 成功的關鍵。這個說法有什麼潛在風險？在什麼情況下，自動遷移可能產生錯誤的結論？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p><strong>潛在風險</strong>：</p>
-        <p>1. <strong>語義漂移</strong>：「回滾計劃」在工程中是精確的技術操作（git revert、database rollback），但遷移到商業語境變成了「退出策略」——這是一個更模糊、更複雜的概念。AI 可能把工程的精確性誤套到商業的模糊性上，給出看似精確但實際過度簡化的建議。</p>
-        <p>2. <strong>結構性錯配</strong>：不是所有領域的問題都有「架構 → 錯誤處理 → 安全 → 測試 → 部署」的結構。例如人際關係問題、創意項目、藝術創作——強制套用 10 環節可能會產生不相關的分析。</p>
-        <p>3. <strong>信心過度</strong>：自動遷移讓輸出看起來很專業（因為結構完整），但使用者可能因此高估建議的品質。一分鐘內的商業建議，即使結構化，也需要領域專家驗證。</p>
-        <p>4. <strong>GMP 環境的特殊風險</strong>：在受監管環境中，AI 的「自動遷移」可能產生 technically sounds right but regulatorily wrong 的建議。例如把「混沌測試」遷移為「故意引入偏差來測試系統韌性」——這在 GMP 環境中是絕對禁止的。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">原文作者認為「Claude 自動遷移工程術語到商業語境」是 plan-ceo-review 成功的關鍵。這個說法有什麼潛在風險？在什麼情況下，自動遷移可能產生錯誤的結論？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>潛在風險</strong>：</p>
+<p>1. <strong>語義漂移</strong>：「回滾計劃」在工程中是精確的技術操作（git revert、database rollback），但遷移到商業語境變成了「退出策略」——這是一個更模糊、更複雜的概念。AI 可能把工程的精確性誤套到商業的模糊性上，給出看似精確但實際過度簡化的建議。</p>
+<p>2. <strong>結構性錯配</strong>：不是所有領域的問題都有「架構 → 錯誤處理 → 安全 → 測試 → 部署」的結構。例如人際關係問題、創意項目、藝術創作——強制套用 10 環節可能會產生不相關的分析。</p>
+<p>3. <strong>信心過度</strong>：自動遷移讓輸出看起來很專業（因為結構完整），但使用者可能因此高估建議的品質。一分鐘內的商業建議，即使結構化，也需要領域專家驗證。</p>
+<p>4. <strong>GMP 環境的特殊風險</strong>：在受監管環境中，AI 的「自動遷移」可能產生 technically sounds right but regulatorily wrong 的建議。例如把「混沌測試」遷移為「故意引入偏差來測試系統韌性」——這在 GMP 環境中是絕對禁止的。</p>
+</div>
 </details>
-
 <!-- Bottom Line -->
 <div class="bottom-line">
-    <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x2714; 核心洞察</div>
-        <div class="bottom-line-text">頂級 Skill 的設計核心是「行為約束」而非「領域知識」——定義 AI 的姿態（態度、權力、嚴格度）、用領域無關的元問題挑戰前提、用不可跳過的結構確保全面性。這三層架構可以直接套用到我正在規劃的 <code>/triage-deviation</code> Skill 設計上。特別是「模式選擇後鎖定」這個機制，能解決 AI 在 deviation investigation 時常見的嚴格度不一致問題。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
-        <div class="bottom-line-text">這週先把 plan-ceo-review 的三層架構（姿態 → 元問題 → 結構化環節）作為模板，起草 <code>/triage-deviation</code> Skill 的 Step 0 部分。具體做法：(1) 寫 2-3 句姿態宣言（「你是 independent QA investigator，你有權 escalate to Critical」）；(2) 設計 3 個 deviation triage 的元問題；(3) 定義 3 個嚴格度模式（Minor / Major / Critical）。不需要完成整個 Skill，先驗證 Step 0 的效果。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x26A0; 需要補充</div>
-        <div class="bottom-line-text">原文分析基於一個案例（商業計劃），樣本量為 1。需要自己測試 plan-ceo-review 在 CDMO 語境下的遷移品質，特別是：(a) 10 個審查環節中哪些能自動遷移、哪些需要 CDMO-specific rewrite；(b) 自動遷移在 GMP 環境的合規風險——哪些環節必須加上 human-in-the-loop interlock。另外，gstack 的其他 9 個工具也值得逐一評估，看有沒有可借鏡的設計模式。</div>
-    </div>
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">頂級 Skill 的設計核心是「行為約束」而非「領域知識」——定義 AI 的姿態（態度、權力、嚴格度）、用領域無關的元問題挑戰前提、用不可跳過的結構確保全面性。這三層架構可以直接套用到我正在規劃的 <code>/triage-deviation</code> Skill 設計上。特別是「模式選擇後鎖定」這個機制，能解決 AI 在 deviation investigation 時常見的嚴格度不一致問題。</div>
 </div>
-
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">這週先把 plan-ceo-review 的三層架構（姿態 → 元問題 → 結構化環節）作為模板，起草 <code>/triage-deviation</code> Skill 的 Step 0 部分。具體做法：(1) 寫 2-3 句姿態宣言（「你是 independent QA investigator，你有權 escalate to Critical」）；(2) 設計 3 個 deviation triage 的元問題；(3) 定義 3 個嚴格度模式（Minor / Major / Critical）。不需要完成整個 Skill，先驗證 Step 0 的效果。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">原文分析基於一個案例（商業計劃），樣本量為 1。需要自己測試 plan-ceo-review 在 CDMO 語境下的遷移品質，特別是：(a) 10 個審查環節中哪些能自動遷移、哪些需要 CDMO-specific rewrite；(b) 自動遷移在 GMP 環境的合規風險——哪些環節必須加上 human-in-the-loop interlock。另外，gstack 的其他 9 個工具也值得逐一評估，看有沒有可借鏡的設計模式。</div>
+</div>
+</div>
 <!-- Footer -->
-<div class="footer">
-    <p>製作日期：2026-03-20 ｜ 來源：<a href="https://github.com/garrytan/gstack" target="_blank">gstack by Garry Tan (GitHub)</a> ｜ 分析來源：<a href="https://x.com/dontbesilent" target="_blank">@dontbesilent (X/Twitter)</a></p>
-    <p>建議 Chat Title：<strong>2026-03-20 [Framework] Garry Tan gstack - Skill Anatomy</strong></p>
-</div>
-
+<footer class="footer">
+<p>製作日期：2026-03-20 ｜ 來源：<a href="https://github.com/garrytan/gstack" target="_blank">gstack by Garry Tan (GitHub)</a> ｜ 分析來源：<a href="https://x.com/dontbesilent" target="_blank">@dontbesilent (X/Twitter)</a></p>
+<p>建議 Chat Title：<strong>2026-03-20 [Framework] Garry Tan gstack - Skill Anatomy</strong></p>
+</footer>
 </div>
 </body>
 </html>

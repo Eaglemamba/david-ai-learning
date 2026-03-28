@@ -1,587 +1,406 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 勞動市場影響 - Anthropic 新衡量指標與初步證據</title>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI 勞動市場影響 - Anthropic 新衡量指標與初步證據</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 <!-- Dashboard Index Meta -->
-<meta name="doc-date" content="2026-03-06">
-<meta name="doc-title" content="AI 勞動市場影響 - Observed Exposure 新指標">
-<meta name="doc-source" content="Massenkoff & McCrory / Anthropic Research">
-<meta name="doc-source-type" content="Anthropic-Eng">
-<meta name="doc-tags" content="Anthropic-Eng,Research,Analysis,LLM,Framework">
-<meta name="doc-rating" content="4.4">
-<meta name="doc-summary" content="Anthropic 提出 Observed Exposure 新指標，結合理論能力與實際使用數據衡量 AI 對就業市場影響。">
-<meta name="doc-file" content="2026-03-06_labor-market-ai-impact.html">
+<meta content="2026-03-06" name="doc-date"/>
+<meta content="AI 勞動市場影響 - Observed Exposure 新指標" name="doc-title"/>
+<meta content="Massenkoff &amp; McCrory / Anthropic Research" name="doc-source"/>
+<meta content="Anthropic-Eng" name="doc-source-type"/>
+<meta content="Anthropic-Eng,Research,Analysis,LLM,Framework" name="doc-tags"/>
+<meta content="4.4" name="doc-rating"/>
+<meta content="Anthropic 提出 Observed Exposure 新指標，結合理論能力與實際使用數據衡量 AI 對就業市場影響。" name="doc-summary"/>
+<meta content="2026-03-06_labor-market-ai-impact.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-/* === v1.4.3 MANDATORY PAGE LAYOUT === */
-body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
-.header {
-    text-align: center;
-    padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-    color: white;
-}
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-}
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    margin-bottom: 2rem;
-}
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .content-grid { grid-template-columns: 1fr; }
-}
 
-/* Tags */
-.tag-row { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.tag { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
-.tag-research { background: #fee2e2; color: #dc2626; }
-.tag-analysis { background: #dbeafe; color: #1e40af; }
-.tag-llm { background: #bfdbfe; color: #1e3a8a; }
-.tag-framework { background: #e0e7ff; color: #3730a3; }
-.tag-anthropic-eng { background: #fee2e2; color: #dc2626; }
-
-/* Header content */
-.header h1 { font-size: 1.8rem; margin: 0 0 0.5rem; line-height: 1.3; }
-.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
-.header .source { font-size: 0.85rem; opacity: 0.75; }
-
-/* Section titles */
-.section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
-.section-subtitle { font-size: 1.1rem; font-weight: 600; color: #334155; margin: 1.5rem 0 0.75rem; }
-
-/* Rating bar */
-.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-.rating-stars { color: #f59e0b; letter-spacing: 1px; }
-.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-/* Executive summary */
-.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; border: 1px solid #e2e8f0; }
-.exec-summary p { font-size: 0.95rem; line-height: 1.8; margin-bottom: 0.75rem; }
-.exec-summary p:last-child { margin-bottom: 0; }
-
-/* Learning objectives */
-.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
-.objective-item { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.objective-text { font-size: 0.9rem; color: #334155; font-weight: 500; }
-
-/* Framework visual */
-.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
-.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.framework-step { text-align: center; min-width: 120px; }
-.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-.framework-step-title { font-weight: 700; font-size: 0.95rem; }
-.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-/* Content grid internals */
-.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
-.content-right { padding: 1.5rem; background: #f8fafc; }
-.part-label { font-size: 0.75rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-.part-title { font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; }
-
-/* Bilingual content */
-.bilingual-block { margin-bottom: 1.25rem; }
-.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.3rem; }
-.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
-
-/* Highlight spans */
-.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-/* Info boxes */
-.info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
-.info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-.info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
-.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
-
-/* Key takeaways */
-.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
-.summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.summary-card .card-title { font-weight: 700; color: #1e3a5f; margin-bottom: 0.5rem; font-size: 0.95rem; }
-.summary-card .card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
-
-/* Accordion - practice questions */
-.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-.question-header::-webkit-details-marker { display: none; }
-.question-number { font-weight: 700; color: #6d28d9; }
-.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-details[open] .accordion-icon { transform: rotate(180deg); }
-.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-.question-answer p:last-child { margin-bottom: 0; }
-
-/* Bottom line */
-.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
-.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-.bottom-line-item { margin-bottom: 1rem; }
-.bottom-line-item:last-child { margin-bottom: 0; }
-.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-/* Footer */
-.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-.footer a { color: #3b82f6; text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
-
-/* Table */
-.data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
-.data-table th { background: #f1f5f9; padding: 0.6rem; text-align: left; font-weight: 600; color: #334155; border-bottom: 2px solid #cbd5e1; }
-.data-table td { padding: 0.6rem; border-bottom: 1px solid #e2e8f0; color: #475569; }
-.data-table tr:hover { background: #f8fafc; }
-</style>
 </head>
 <body>
-
 <!-- HEADER -->
-<div class="header">
-    <div class="tag-row">
-        <span class="tag tag-anthropic-eng">Anthropic-Eng</span>
-        <span class="tag tag-research">Research</span>
-        <span class="tag tag-analysis">Analysis</span>
-        <span class="tag tag-llm">LLM</span>
-        <span class="tag tag-framework">Framework</span>
-    </div>
-    <h1>AI 勞動市場影響：新衡量指標與初步證據</h1>
-    <div class="subtitle">Labor Market Impacts of AI: A New Measure and Early Evidence</div>
-    <div class="source">Massenkoff & McCrory / Anthropic Research | 2026-03-05</div>
+<header class="header">
+<div class="tag-row">
+<span class="tag tag-anthropic-eng">Anthropic-Eng</span>
+<span class="tag tag-research">Research</span>
+<span class="tag tag-analysis">Analysis</span>
+<span class="tag tag-llm">LLM</span>
+<span class="tag tag-framework">Framework</span>
 </div>
-
+<h1>AI 勞動市場影響：新衡量指標與初步證據</h1>
+<div class="subtitle">Labor Market Impacts of AI: A New Measure and Early Evidence</div>
+<div class="source">Massenkoff &amp; McCrory / Anthropic Research | 2026-03-05</div>
+</header>
 <!-- CONTAINER -->
 <div class="container">
-
 <!-- EXECUTIVE SUMMARY -->
 <div class="section-title">Executive Summary</div>
 <div class="rating-bar">
-    <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.4/5</span>
-    <span class="rating-high">&#8593; Research Methodology, Framework Rigor</span>
-    <span class="rating-low">&#8595; Practical Tools, Single-Platform Bias</span>
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.4/5</span>
+<span class="rating-high">↑ Research Methodology, Framework Rigor</span>
+<span class="rating-low">↓ Practical Tools, Single-Platform Bias</span>
 </div>
 <div class="exec-summary">
-    <p>Anthropic 研究團隊提出一個全新的 AI 就業影響衡量框架：<span class="highlight-concept">Observed Exposure（觀測曝險度）</span>。不同於過去純粹基於理論可行性的預測，這個指標結合了 LLM 理論能力（來自 Eloundou et al. 的 beta 指標）與 Claude 平台的真實使用數據，並加權「自動化用途」高於「增強用途」。</p>
-    <p>核心發現：<span class="highlight-key">AI 遠未達到理論能力天花板</span> -- 實際覆蓋率只是理論可行範圍的一小部分。電腦程式設計師以 75% 覆蓋率居首，客服代表和資料輸入員緊隨其後。目前沒有發現高曝險職業的系統性失業增加，但有初步跡象顯示 22-25 歲年輕人進入高曝險職業的<span class="highlight-key">招聘速度正在放緩</span>。</p>
+<p>Anthropic 研究團隊提出一個全新的 AI 就業影響衡量框架：<span class="highlight-concept">Observed Exposure（觀測曝險度）</span>。不同於過去純粹基於理論可行性的預測，這個指標結合了 LLM 理論能力（來自 Eloundou et al. 的 beta 指標）與 Claude 平台的真實使用數據，並加權「自動化用途」高於「增強用途」。</p>
+<p>核心發現：<span class="highlight-key">AI 遠未達到理論能力天花板</span> -- 實際覆蓋率只是理論可行範圍的一小部分。電腦程式設計師以 75% 覆蓋率居首，客服代表和資料輸入員緊隨其後。目前沒有發現高曝險職業的系統性失業增加，但有初步跡象顯示 22-25 歲年輕人進入高曝險職業的<span class="highlight-key">招聘速度正在放緩</span>。</p>
 </div>
-
 <!-- LEARNING OBJECTIVES -->
 <div class="section-title">Learning Objectives</div>
 <div class="objectives-grid">
-    <div class="objective-item">
-        <div class="objective-icon">&#128202;</div>
-        <div class="objective-text">理解 Observed Exposure 指標的構建邏輯：理論能力 x 實際使用 x 自動化權重</div>
-    </div>
-    <div class="objective-item">
-        <div class="objective-icon">&#128269;</div>
-        <div class="objective-text">掌握「理論可行 vs 實際採用」之間的差距，及其對 AI 衝擊預測的啟示</div>
-    </div>
-    <div class="objective-item">
-        <div class="objective-icon">&#9878;</div>
-        <div class="objective-text">評估研究方法論的優勢與局限，特別是單一平台數據的代表性問題</div>
-    </div>
+<div class="objective-item">
+<div class="objective-icon">📊</div>
+<div class="objective-text">理解 Observed Exposure 指標的構建邏輯：理論能力 x 實際使用 x 自動化權重</div>
 </div>
-
+<div class="objective-item">
+<div class="objective-icon">🔍</div>
+<div class="objective-text">掌握「理論可行 vs 實際採用」之間的差距，及其對 AI 衝擊預測的啟示</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">⚖</div>
+<div class="objective-text">評估研究方法論的優勢與局限，特別是單一平台數據的代表性問題</div>
+</div>
+</div>
 <!-- FRAMEWORK VISUAL -->
 <div class="framework-visual">
-    <div class="framework-title">Observed Exposure Framework</div>
-    <div class="framework-steps">
-        <div class="framework-step">
-            <div class="framework-icon">&#128218;</div>
-            <div class="framework-step-title">O*NET Tasks</div>
-            <div class="framework-step-desc">800 職業的任務清單</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#128300;</div>
-            <div class="framework-step-title">Theoretical Beta</div>
-            <div class="framework-step-desc">Eloundou et al. LLM 可行性</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#128200;</div>
-            <div class="framework-step-title">Claude Usage</div>
-            <div class="framework-step-desc">Economic Index 實際使用</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#127919;</div>
-            <div class="framework-step-title">Observed Exposure</div>
-            <div class="framework-step-desc">加權自動化 > 增強</div>
-        </div>
-    </div>
+<div class="framework-title">Observed Exposure Framework</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">📚</div>
+<div class="framework-step-title">O*NET Tasks</div>
+<div class="framework-step-desc">800 職業的任務清單</div>
 </div>
-
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🔬</div>
+<div class="framework-step-title">Theoretical Beta</div>
+<div class="framework-step-desc">Eloundou et al. LLM 可行性</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📈</div>
+<div class="framework-step-title">Claude Usage</div>
+<div class="framework-step-desc">Economic Index 實際使用</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🎯</div>
+<div class="framework-step-title">Observed Exposure</div>
+<div class="framework-step-desc">加權自動化 &gt; 增強</div>
+</div>
+</div>
+</div>
 <!-- PART I -->
 <div class="section-title">Content</div>
-
 <div class="content-grid">
-    <div class="content-left">
-        <div class="part-label">Part I</div>
-        <div class="part-title">研究動機：為什麼過去的預測方法不夠好</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">AI 的快速擴散正引發大量研究試圖衡量和預測其對勞動市場的影響。但<span class="highlight-key">過去的方法記錄讓人需要保持謙遜</span>。</div>
-            <div class="en-text">The rapid diffusion of AI is generating a wave of research measuring and forecasting its impacts on labor markets. But the track record of past approaches gives reason for humility.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">例如，一個知名的「工作可離岸外包性」研究認定約四分之一的美國工作面臨風險，但十年後，這些工作大多仍維持健康的就業成長。政府自己的職業成長預測雖然方向正確，但預測價值<span class="highlight-concept">幾乎沒有超過簡單的線性外推</span>。</div>
-            <div class="en-text">A prominent attempt to measure job offshorability identified roughly a quarter of US jobs as vulnerable, but a decade on, most of those jobs maintained healthy employment growth. The government's own occupational growth forecasts have added little predictive value beyond linear extrapolation of past trends.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">即使事後回顧，重大經濟衝擊對勞動市場的影響往往也不清楚。關於工業機器人的就業效應，研究得出了<span class="highlight-key">相反的結論</span>；中國貿易衝擊造成的失業規模至今仍有爭議。</div>
-            <div class="en-text">Even in hindsight, the impact of major economic disruptions on the labor market is often unclear. Studies on the employment effects of industrial robots reach opposing conclusions, and the scale of job losses attributed to the China trade shock continues to be debated.</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-analogy">
-            <div class="info-box-header">&#128161; 比喻說明</div>
-            <div class="info-box-content">
-                <p>想像你是一個氣象預報員，但歷史上每次大型風暴的預測都有嚴重偏差 -- 有時預測到了強度但時間錯了，有時連方向都搞反。AI 勞動市場研究就處在這個處境：過去的「離岸外包恐慌」和「機器人取代論」的預測紀錄，就像那些不準確的風暴預報。</p>
-                <p>Anthropic 這篇論文的策略是：與其事後辯論風暴多大，不如<strong>在風暴來之前就架好量測站</strong>，用真實數據即時追蹤。</p>
-            </div>
-        </div>
-        <div class="info-box box-key">
-            <div class="info-box-header">&#9888;&#65039; 重點提示</div>
-            <div class="info-box-content">
-                <p><strong>反因果推斷的關鍵挑戰：</strong>COVID 的經濟衝擊因為劇烈且突然，因果關係顯而易見。但 AI 的衝擊更可能像網際網路或中國貿易 -- 效果模糊、漸進，且被貿易政策和景氣循環所掩蓋。</p>
-            </div>
-        </div>
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#128736;&#65039; CDMO 啟示</div>
-            <div class="info-box-content">
-                <p>這個「預測紀錄不佳」的歷史教訓直接適用於 CDMO 的 AI 導入決策：不要基於供應商的理論預測來規劃人力配置，而是追蹤<strong>實際使用數據</strong>來判斷哪些任務真正被 AI 取代。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="part-label">Part I</div>
+<div class="part-title">研究動機：為什麼過去的預測方法不夠好</div>
+<div class="bilingual-block">
+<div class="zh-text">AI 的快速擴散正引發大量研究試圖衡量和預測其對勞動市場的影響。但<span class="highlight-key">過去的方法記錄讓人需要保持謙遜</span>。</div>
+<div class="en-text">The rapid diffusion of AI is generating a wave of research measuring and forecasting its impacts on labor markets. But the track record of past approaches gives reason for humility.</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text">例如，一個知名的「工作可離岸外包性」研究認定約四分之一的美國工作面臨風險，但十年後，這些工作大多仍維持健康的就業成長。政府自己的職業成長預測雖然方向正確，但預測價值<span class="highlight-concept">幾乎沒有超過簡單的線性外推</span>。</div>
+<div class="en-text">A prominent attempt to measure job offshorability identified roughly a quarter of US jobs as vulnerable, but a decade on, most of those jobs maintained healthy employment growth. The government's own occupational growth forecasts have added little predictive value beyond linear extrapolation of past trends.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">即使事後回顧，重大經濟衝擊對勞動市場的影響往往也不清楚。關於工業機器人的就業效應，研究得出了<span class="highlight-key">相反的結論</span>；中國貿易衝擊造成的失業規模至今仍有爭議。</div>
+<div class="en-text">Even in hindsight, the impact of major economic disruptions on the labor market is often unclear. Studies on the employment effects of industrial robots reach opposing conclusions, and the scale of job losses attributed to the China trade shock continues to be debated.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>想像你是一個氣象預報員，但歷史上每次大型風暴的預測都有嚴重偏差 -- 有時預測到了強度但時間錯了，有時連方向都搞反。AI 勞動市場研究就處在這個處境：過去的「離岸外包恐慌」和「機器人取代論」的預測紀錄，就像那些不準確的風暴預報。</p>
+<p>Anthropic 這篇論文的策略是：與其事後辯論風暴多大，不如<strong>在風暴來之前就架好量測站</strong>，用真實數據即時追蹤。</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p><strong>反因果推斷的關鍵挑戰：</strong>COVID 的經濟衝擊因為劇烈且突然，因果關係顯而易見。但 AI 的衝擊更可能像網際網路或中國貿易 -- 效果模糊、漸進，且被貿易政策和景氣循環所掩蓋。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 啟示</div>
+<div class="info-box-content">
+<p>這個「預測紀錄不佳」的歷史教訓直接適用於 CDMO 的 AI 導入決策：不要基於供應商的理論預測來規劃人力配置，而是追蹤<strong>實際使用數據</strong>來判斷哪些任務真正被 AI 取代。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- PART II -->
 <div class="content-grid">
-    <div class="content-left">
-        <div class="part-label">Part II</div>
-        <div class="part-title">Observed Exposure 指標的構建方法</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">研究方法結合三個數據來源：(1) O*NET 資料庫，列出約 800 個美國獨特職業的相關任務；(2) Claude 平台使用數據（來自 Anthropic Economic Index）；(3) Eloundou et al. (2023) 的任務層級曝險估計，衡量 LLM 是否理論上可以讓某任務<span class="highlight-concept">加速至少兩倍</span>。</div>
-            <div class="en-text">Our approach combines data from three sources: The O*NET database, which enumerates tasks associated with around 800 unique occupations in the US; Our own usage data (as measured in the Anthropic Economic Index); Task-level exposure estimates from Eloundou et al. (2023).</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">Eloundou et al. 的 beta 指標使用簡單量表：<span class="highlight-concept">1 表示 LLM 單獨可以加倍速度，0.5 需要額外工具或軟體，0 表示不可行</span>。97% 的在 Economic Index 中觀察到的任務，都落在理論可行的類別中（beta = 0.5 或 1.0）。</div>
-            <div class="en-text">Eloundou et al.'s metric, beta, scores tasks on a simple scale: 1 if a task can be doubled in speed by an LLM alone, 0.5 if it requires additional tools or software built on top of the LLM, and 0 otherwise. 97% of the tasks observed across the previous four Economic Index reports fall into categories rated as theoretically feasible.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">為什麼實際使用會落後於理論能力？有些任務理論上可行但因<span class="highlight-key">模型限制、法規約束、特定軟體需求、人工驗證步驟</span>等障礙而未被採用。例如，「授權藥物補充並提供處方資訊給藥局」被標記為完全曝險（beta=1），但實際上沒有觀察到 Claude 執行這項任務。</div>
-            <div class="en-text">Why might actual usage fall short of theoretical capability? Some tasks that are theoretically possible may not show up in usage because of model limitations. Others may be slow to diffuse due to legal constraints, specific software requirements, human verification steps, or other hurdles.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">最終的 Observed Exposure 指標定義：一個職業的曝險度更高，如果：(1) 任務理論上可由 AI 完成；(2) 在 Economic Index 中有顯著使用；(3) 在工作相關情境中使用；(4) 自動化模式或 API 實作的比例較高；(5) 受 AI 影響的任務佔整體角色的比重較大。</div>
-            <div class="en-text">A job's exposure is higher if: Its tasks are theoretically possible with AI; Its tasks see significant usage in the Anthropic Economic Index; Its tasks are performed in work-related contexts; It has a relatively higher share of automated use patterns or API implementation; Its AI-impacted tasks make up a larger share of the overall role.</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-concept">
-            <div class="info-box-header">&#128218; 核心概念</div>
-            <div class="info-box-content">
-                <p><strong>Observed Exposure vs. Theoretical Exposure</strong></p>
-                <p>傳統方法（如 Eloundou et al.）只問「AI 能不能做這件事？」。Observed Exposure 進一步問「<strong>AI 真的在做這件事嗎？而且是以自動化方式？</strong>」</p>
-                <p>這是從 <em>can do</em> 到 <em>is doing</em> 的範式轉移，類似從「這台機器能跑多快」到「這台機器實際在路上跑多快」。</p>
-            </div>
-        </div>
-        <div class="info-box box-key">
-            <div class="info-box-header">&#9888;&#65039; 關鍵加權設計</div>
-            <div class="info-box-content">
-                <p><strong>自動化 vs. 增強：</strong>完全自動化的實作給予全權重，增強型使用只給一半權重。這反映了一個重要直覺 -- 當人類仍然在迴路中時，就業影響較小。</p>
-                <p>這與你的 <strong>Copilot vs. Agent Mode</strong> 框架完全一致：GMP 環境中 AI 以 copilot 模式運作（人類審查 100%），所以在 Observed Exposure 框架下，製藥業的曝險度會因「增強型使用為主」而被自然降低。</p>
-            </div>
-        </div>
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#128736;&#65039; 藥物處方的例子</div>
-            <div class="info-box-content">
-                <p>論文舉的「授權藥物補充」例子完美說明了 GMP 環境的特性：理論上 LLM 可以處理處方資訊，但法規要求、驗證流程、責任歸屬等因素讓實際採用遠遠落後。</p>
-                <p>這正是你常說的 <strong>O-Ring Bottleneck</strong> -- 法規判斷是不可替代的人類環節。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="part-label">Part II</div>
+<div class="part-title">Observed Exposure 指標的構建方法</div>
+<div class="bilingual-block">
+<div class="zh-text">研究方法結合三個數據來源：(1) O*NET 資料庫，列出約 800 個美國獨特職業的相關任務；(2) Claude 平台使用數據（來自 Anthropic Economic Index）；(3) Eloundou et al. (2023) 的任務層級曝險估計，衡量 LLM 是否理論上可以讓某任務<span class="highlight-concept">加速至少兩倍</span>。</div>
+<div class="en-text">Our approach combines data from three sources: The O*NET database, which enumerates tasks associated with around 800 unique occupations in the US; Our own usage data (as measured in the Anthropic Economic Index); Task-level exposure estimates from Eloundou et al. (2023).</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text">Eloundou et al. 的 beta 指標使用簡單量表：<span class="highlight-concept">1 表示 LLM 單獨可以加倍速度，0.5 需要額外工具或軟體，0 表示不可行</span>。97% 的在 Economic Index 中觀察到的任務，都落在理論可行的類別中（beta = 0.5 或 1.0）。</div>
+<div class="en-text">Eloundou et al.'s metric, beta, scores tasks on a simple scale: 1 if a task can be doubled in speed by an LLM alone, 0.5 if it requires additional tools or software built on top of the LLM, and 0 otherwise. 97% of the tasks observed across the previous four Economic Index reports fall into categories rated as theoretically feasible.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">為什麼實際使用會落後於理論能力？有些任務理論上可行但因<span class="highlight-key">模型限制、法規約束、特定軟體需求、人工驗證步驟</span>等障礙而未被採用。例如，「授權藥物補充並提供處方資訊給藥局」被標記為完全曝險（beta=1），但實際上沒有觀察到 Claude 執行這項任務。</div>
+<div class="en-text">Why might actual usage fall short of theoretical capability? Some tasks that are theoretically possible may not show up in usage because of model limitations. Others may be slow to diffuse due to legal constraints, specific software requirements, human verification steps, or other hurdles.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">最終的 Observed Exposure 指標定義：一個職業的曝險度更高，如果：(1) 任務理論上可由 AI 完成；(2) 在 Economic Index 中有顯著使用；(3) 在工作相關情境中使用；(4) 自動化模式或 API 實作的比例較高；(5) 受 AI 影響的任務佔整體角色的比重較大。</div>
+<div class="en-text">A job's exposure is higher if: Its tasks are theoretically possible with AI; Its tasks see significant usage in the Anthropic Economic Index; Its tasks are performed in work-related contexts; It has a relatively higher share of automated use patterns or API implementation; Its AI-impacted tasks make up a larger share of the overall role.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<p><strong>Observed Exposure vs. Theoretical Exposure</strong></p>
+<p>傳統方法（如 Eloundou et al.）只問「AI 能不能做這件事？」。Observed Exposure 進一步問「<strong>AI 真的在做這件事嗎？而且是以自動化方式？</strong>」</p>
+<p>這是從 <em>can do</em> 到 <em>is doing</em> 的範式轉移，類似從「這台機器能跑多快」到「這台機器實際在路上跑多快」。</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 關鍵加權設計</div>
+<div class="info-box-content">
+<p><strong>自動化 vs. 增強：</strong>完全自動化的實作給予全權重，增強型使用只給一半權重。這反映了一個重要直覺 -- 當人類仍然在迴路中時，就業影響較小。</p>
+<p>這與你的 <strong>Copilot vs. Agent Mode</strong> 框架完全一致：GMP 環境中 AI 以 copilot 模式運作（人類審查 100%），所以在 Observed Exposure 框架下，製藥業的曝險度會因「增強型使用為主」而被自然降低。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 藥物處方的例子</div>
+<div class="info-box-content">
+<p>論文舉的「授權藥物補充」例子完美說明了 GMP 環境的特性：理論上 LLM 可以處理處方資訊，但法規要求、驗證流程、責任歸屬等因素讓實際採用遠遠落後。</p>
+<p>這正是你常說的 <strong>O-Ring Bottleneck</strong> -- 法規判斷是不可替代的人類環節。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- PART III -->
 <div class="content-grid">
-    <div class="content-left">
-        <div class="part-label">Part III</div>
-        <div class="part-title">理論覆蓋 vs. 實際覆蓋：差距有多大</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">Figure 2 展示了各職業類別的理論能力（藍色區域）與觀測曝險（紅色區域）之間的鮮明對比。例如，「電腦與數學」類別的理論覆蓋率高達 <span class="highlight-key">94%</span>，但 Claude 實際只覆蓋了 <span class="highlight-key">33%</span> 的任務。「辦公室與行政」類別理論覆蓋率 90%，實際覆蓋更低。</div>
-            <div class="en-text">The beta measure shows scope for LLM penetration in the majority of tasks in Computer & Math (94%) and Office & Admin (90%) occupations. The coverage shows AI is far from reaching its theoretical capabilities. Claude currently covers just 33% of all tasks in the Computer & Math category.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">最高曝險的十個職業中，<span class="highlight-concept">電腦程式設計師以 75% 覆蓋率居首</span>，其次是客戶服務代表（主要任務越來越多出現在第一方 API 流量中），以及資料輸入員（67% 覆蓋率，主要任務是閱讀來源文件並輸入資料）。</div>
-            <div class="en-text">Computer Programmers are at the top, with 75% coverage, followed by Customer Service Representatives, whose main tasks we increasingly see in first-party API traffic. Finally, Data Entry Keyers, whose primary task of reading source documents and entering data sees significant automation, are 67% covered.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">在底端，<span class="highlight-practical">30% 的工人覆蓋率為零</span>，因為他們的任務在數據中出現頻率太低。這個群體包括廚師、摩托車技師、救生員、調酒師、洗碗工和更衣室服務員。</div>
-            <div class="en-text">30% of workers have zero coverage, as their tasks appeared too infrequently in our data to meet the minimum threshold. This group includes Cooks, Motorcycle Mechanics, Lifeguards, Bartenders, Dishwashers, and Dressing Room Attendants.</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-compare">
-            <div class="info-box-header">&#9878;&#65039; 高曝險職業 Top 5</div>
-            <div class="info-box-content">
-                <table class="data-table">
-                    <thead><tr><th>職業</th><th>覆蓋率</th></tr></thead>
-                    <tbody>
-                        <tr><td>Computer Programmers</td><td>75%</td></tr>
-                        <tr><td>Customer Service Reps</td><td>~70%</td></tr>
-                        <tr><td>Data Entry Keyers</td><td>67%</td></tr>
-                        <tr><td>Financial Analysts</td><td>Top 10</td></tr>
-                        <tr><td>Technical Writers</td><td>Top 10</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="info-box box-analogy">
-            <div class="info-box-header">&#128161; 比喻說明</div>
-            <div class="info-box-content">
-                <p>想像 AI 能力是一座水庫的<strong>蓄水量</strong>（理論覆蓋），而實際使用是<strong>流出的水量</strong>（觀測覆蓋）。水庫可能有 94% 滿（電腦領域），但閘門只開了三分之一。隨著技術進步、採用擴散、部署深化，紅色區域會逐漸覆蓋藍色區域 -- 但速度取決於法規、成本、信任等「閘門」。</p>
-            </div>
-        </div>
-        <div class="info-box box-key">
-            <div class="info-box-header">&#9888;&#65039; 批判觀察</div>
-            <div class="info-box-content">
-                <p><strong>數據偏差警告：</strong>這些數字只反映 Claude 平台的使用。ChatGPT、Gemini、Copilot 等平台的使用模式可能不同。特別是 GitHub Copilot 在程式設計師中的滲透率極高，如果加入這些數據，程式設計師的實際覆蓋率可能更高。</p>
-                <p>需要套用你的 <strong>2-3x 折扣原則</strong>：單一平台數據可能低估或高估特定職業的真實 AI 滲透率。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="part-label">Part III</div>
+<div class="part-title">理論覆蓋 vs. 實際覆蓋：差距有多大</div>
+<div class="bilingual-block">
+<div class="zh-text">Figure 2 展示了各職業類別的理論能力（藍色區域）與觀測曝險（紅色區域）之間的鮮明對比。例如，「電腦與數學」類別的理論覆蓋率高達 <span class="highlight-key">94%</span>，但 Claude 實際只覆蓋了 <span class="highlight-key">33%</span> 的任務。「辦公室與行政」類別理論覆蓋率 90%，實際覆蓋更低。</div>
+<div class="en-text">The beta measure shows scope for LLM penetration in the majority of tasks in Computer &amp; Math (94%) and Office &amp; Admin (90%) occupations. The coverage shows AI is far from reaching its theoretical capabilities. Claude currently covers just 33% of all tasks in the Computer &amp; Math category.</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text">最高曝險的十個職業中，<span class="highlight-concept">電腦程式設計師以 75% 覆蓋率居首</span>，其次是客戶服務代表（主要任務越來越多出現在第一方 API 流量中），以及資料輸入員（67% 覆蓋率，主要任務是閱讀來源文件並輸入資料）。</div>
+<div class="en-text">Computer Programmers are at the top, with 75% coverage, followed by Customer Service Representatives, whose main tasks we increasingly see in first-party API traffic. Finally, Data Entry Keyers, whose primary task of reading source documents and entering data sees significant automation, are 67% covered.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">在底端，<span class="highlight-practical">30% 的工人覆蓋率為零</span>，因為他們的任務在數據中出現頻率太低。這個群體包括廚師、摩托車技師、救生員、調酒師、洗碗工和更衣室服務員。</div>
+<div class="en-text">30% of workers have zero coverage, as their tasks appeared too infrequently in our data to meet the minimum threshold. This group includes Cooks, Motorcycle Mechanics, Lifeguards, Bartenders, Dishwashers, and Dressing Room Attendants.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 高曝險職業 Top 5</div>
+<div class="info-box-content">
+<table class="data-table">
+<thead><tr><th>職業</th><th>覆蓋率</th></tr></thead>
+<tbody>
+<tr><td>Computer Programmers</td><td>75%</td></tr>
+<tr><td>Customer Service Reps</td><td>~70%</td></tr>
+<tr><td>Data Entry Keyers</td><td>67%</td></tr>
+<tr><td>Financial Analysts</td><td>Top 10</td></tr>
+<tr><td>Technical Writers</td><td>Top 10</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>想像 AI 能力是一座水庫的<strong>蓄水量</strong>（理論覆蓋），而實際使用是<strong>流出的水量</strong>（觀測覆蓋）。水庫可能有 94% 滿（電腦領域），但閘門只開了三分之一。隨著技術進步、採用擴散、部署深化，紅色區域會逐漸覆蓋藍色區域 -- 但速度取決於法規、成本、信任等「閘門」。</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 批判觀察</div>
+<div class="info-box-content">
+<p><strong>數據偏差警告：</strong>這些數字只反映 Claude 平台的使用。ChatGPT、Gemini、Copilot 等平台的使用模式可能不同。特別是 GitHub Copilot 在程式設計師中的滲透率極高，如果加入這些數據，程式設計師的實際覆蓋率可能更高。</p>
+<p>需要套用你的 <strong>2-3x 折扣原則</strong>：單一平台數據可能低估或高估特定職業的真實 AI 滲透率。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- PART IV -->
 <div class="content-grid">
-    <div class="content-left">
-        <div class="part-label">Part IV</div>
-        <div class="part-title">就業影響的初步證據：失業率與年輕人招聘</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">使用 Current Population Survey 數據，研究比較了高曝險職業（前四分之一）與零曝險職業的失業率趨勢。結果：<span class="highlight-concept">自 ChatGPT 發布以來，兩組之間的失業率差距變化很小且不顯著</span>，表示高曝險群體的失業率略有上升，但效果無法與零區分。</div>
-            <div class="en-text">The average change in the gap since the release of ChatGPT is small and insignificant, suggesting that the unemployment rate of the more exposed group has increased slightly but the effect is indistinguishable from zero.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">然而，<span class="highlight-key">年輕工人（22-25 歲）出現了值得注意的信號</span>。進入高曝險職業的新工作起始率在 2024 年出現視覺上的分歧：低曝險職業的工作找到率穩定在每月 2%，而高曝險職業的進入率下降了約 0.5 個百分點。ChatGPT 發布後的平均估計是工作找到率下降了 14%，雖然這僅勉強達到統計顯著性。</div>
-            <div class="en-text">Job finding rates at the less exposed occupations remain stable at 2% per month, while entry into the most exposed jobs decreases by about half a percentage point. The averaged estimate in the post-ChatGPT era is a 14% drop in the job finding rate in the exposed occupations, although this is just barely statistically significant.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">25 歲以上的工人沒有出現類似的下降。這可能提供了 AI 對就業早期影響的某些信號，但<span class="highlight-practical">有多種替代解釋</span>：未被雇用的年輕人可能留在現有工作、轉向其他工作、或返回學校。</div>
-            <div class="en-text">There is no such decrease for workers older than 25. The young workers who are not hired may be remaining at their existing jobs, taking different jobs, or returning to school.</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-key">
-            <div class="info-box-header">&#9888;&#65039; 核心發現</div>
-            <div class="info-box-content">
-                <p><strong>整體失業率：</strong>無系統性影響。高曝險 vs. 低曝險職業的失業率差距在 ChatGPT 後沒有顯著變化。</p>
-                <p><strong>年輕人招聘：</strong>初步信號。22-25 歲進入高曝險職業的速率下降 14%，但僅勉強顯著。</p>
-                <p><strong>可偵測閾值：</strong>此框架可以偵測約 1 個百分點的失業率差異變化。如果高曝險職業出現類似「白領大衰退」（失業率從 3% 翻倍到 6%），這個分析可以識別出來。</p>
-            </div>
-        </div>
-        <div class="info-box box-analogy">
-            <div class="info-box-header">&#128161; 比喻說明</div>
-            <div class="info-box-content">
-                <p>年輕人的招聘放緩就像<strong>礦坑裡的金絲雀</strong>（研究者引用 Brynjolfsson et al. 的比喻）-- 不是大規模裁員的信號，而是入口變窄了。想像一家公司沒有裁員，但停止招聘畢業生，因為現有員工用 AI 工具提高了生產力。表面看不到失業增加，但年輕人的機會悄悄減少了。</p>
-            </div>
-        </div>
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#128736;&#65039; CDMO 情境應用</div>
-            <div class="info-box-content">
-                <p>對於 CDMO 的人力規劃，這個發現很有啟示：AI 的就業影響可能首先表現在<strong>招聘凍結而非裁員</strong>。如果批次記錄審查部分由 AI 輔助，你可能不會解僱現有 QA 人員，但下次有人離職時，你可能不會補人。這種「自然減員」效應很難在失業數據中捕捉到。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="part-label">Part IV</div>
+<div class="part-title">就業影響的初步證據：失業率與年輕人招聘</div>
+<div class="bilingual-block">
+<div class="zh-text">使用 Current Population Survey 數據，研究比較了高曝險職業（前四分之一）與零曝險職業的失業率趨勢。結果：<span class="highlight-concept">自 ChatGPT 發布以來，兩組之間的失業率差距變化很小且不顯著</span>，表示高曝險群體的失業率略有上升，但效果無法與零區分。</div>
+<div class="en-text">The average change in the gap since the release of ChatGPT is small and insignificant, suggesting that the unemployment rate of the more exposed group has increased slightly but the effect is indistinguishable from zero.</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text">然而，<span class="highlight-key">年輕工人（22-25 歲）出現了值得注意的信號</span>。進入高曝險職業的新工作起始率在 2024 年出現視覺上的分歧：低曝險職業的工作找到率穩定在每月 2%，而高曝險職業的進入率下降了約 0.5 個百分點。ChatGPT 發布後的平均估計是工作找到率下降了 14%，雖然這僅勉強達到統計顯著性。</div>
+<div class="en-text">Job finding rates at the less exposed occupations remain stable at 2% per month, while entry into the most exposed jobs decreases by about half a percentage point. The averaged estimate in the post-ChatGPT era is a 14% drop in the job finding rate in the exposed occupations, although this is just barely statistically significant.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">25 歲以上的工人沒有出現類似的下降。這可能提供了 AI 對就業早期影響的某些信號，但<span class="highlight-practical">有多種替代解釋</span>：未被雇用的年輕人可能留在現有工作、轉向其他工作、或返回學校。</div>
+<div class="en-text">There is no such decrease for workers older than 25. The young workers who are not hired may be remaining at their existing jobs, taking different jobs, or returning to school.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 核心發現</div>
+<div class="info-box-content">
+<p><strong>整體失業率：</strong>無系統性影響。高曝險 vs. 低曝險職業的失業率差距在 ChatGPT 後沒有顯著變化。</p>
+<p><strong>年輕人招聘：</strong>初步信號。22-25 歲進入高曝險職業的速率下降 14%，但僅勉強顯著。</p>
+<p><strong>可偵測閾值：</strong>此框架可以偵測約 1 個百分點的失業率差異變化。如果高曝險職業出現類似「白領大衰退」（失業率從 3% 翻倍到 6%），這個分析可以識別出來。</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>年輕人的招聘放緩就像<strong>礦坑裡的金絲雀</strong>（研究者引用 Brynjolfsson et al. 的比喻）-- 不是大規模裁員的信號，而是入口變窄了。想像一家公司沒有裁員，但停止招聘畢業生，因為現有員工用 AI 工具提高了生產力。表面看不到失業增加，但年輕人的機會悄悄減少了。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 情境應用</div>
+<div class="info-box-content">
+<p>對於 CDMO 的人力規劃，這個發現很有啟示：AI 的就業影響可能首先表現在<strong>招聘凍結而非裁員</strong>。如果批次記錄審查部分由 AI 輔助，你可能不會解僱現有 QA 人員，但下次有人離職時，你可能不會補人。這種「自然減員」效應很難在失業數據中捕捉到。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- PART V -->
 <div class="content-grid">
-    <div class="content-left">
-        <div class="part-label">Part V</div>
-        <div class="part-title">高曝險工人的人口特徵與方法論局限</div>
-
-        <div class="bilingual-block">
-            <div class="zh-text">高曝險群體（前四分之一）與零曝險群體在人口特徵上差異顯著。高曝險群體<span class="highlight-key">女性多 16 個百分點、白人多 11 個百分點、亞裔比例幾乎翻倍</span>。他們的平均收入高出 47%，教育程度更高 -- 研究生學位在高曝險群體佔 17.4%，零曝險群體僅 4.5%。</div>
-            <div class="en-text">The more exposed group is 16 percentage points more likely to be female, 11 percentage points more likely to be white, and almost twice as likely to be Asian. They earn 47% more, on average, and have higher levels of education.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">這顛覆了「AI 取代低技能工作」的常見敘事。<span class="highlight-concept">AI 最先衝擊的是高薪、高教育、白領族群</span> -- 這與過去的自動化浪潮（主要衝擊製造業藍領）形成鮮明對比。</div>
-            <div class="en-text">Workers in the most exposed professions are more likely to be older, female, more educated, and higher-paid.</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">研究團隊坦承數個方法論局限：數據僅來自 Claude 平台、Eloundou et al. 的 beta 指標基於 2023 年初的 LLM 能力、O-Ring 模型指出只有當所有任務都有 AI 滲透時才會看到就業效應。他們強調這是<span class="highlight-practical">「建立方法論的第一步」</span>，旨在建立可持續更新的分析框架。</div>
-            <div class="en-text">Our work is a first step toward cataloging the impact of AI on the labor market. We hope that the analytical steps taken in this report will be easy to update as new data on employment and AI usage emerge.</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-compare">
-            <div class="info-box-header">&#9878;&#65039; 高 vs. 低曝險工人特徵</div>
-            <div class="info-box-content">
-                <table class="data-table">
-                    <thead><tr><th>特徵</th><th>高曝險(Q1)</th><th>零曝險</th></tr></thead>
-                    <tbody>
-                        <tr><td>女性比例</td><td>較高 (+16pp)</td><td>較低</td></tr>
-                        <tr><td>平均收入</td><td>+47%</td><td>基準</td></tr>
-                        <tr><td>研究生學位</td><td>17.4%</td><td>4.5%</td></tr>
-                        <tr><td>亞裔比例</td><td>~2x</td><td>基準</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="info-box box-concept">
-            <div class="info-box-header">&#128218; O-Ring 理論連結</div>
-            <div class="info-box-content">
-                <p>論文引用了 Gans & Goldfarb (2025) 的 O-Ring 自動化模型：如果工作是 O-Ring 結構（每個環節都不可或缺），那麼<strong>只有當所有任務都有 AI 滲透時，才會看到就業效應</strong>。</p>
-                <p>這完美呼應了你的 O-Ring Bottleneck Theory：在 CDMO 中，只要法規判斷、客戶關係、偏差調查等任務仍由人類執行，整體就業衝擊就會被緩衝。</p>
-            </div>
-        </div>
-        <div class="info-box box-key">
-            <div class="info-box-header">&#9888;&#65039; 方法論批判</div>
-            <div class="info-box-content">
-                <p><strong>單一平台偏差：</strong>最大的局限。Claude 的用戶基礎不等於 AI 使用全貌。GitHub Copilot 主導程式碼、ChatGPT 主導一般對話、Gemini 整合在 Google Workspace -- 每個平台的任務分佈不同。</p>
-                <p><strong>時間滯後：</strong>Eloundou 的 beta 基於 2023 年初的能力評估，但 LLM 能力在 3 年間已經大幅躍進。beta 指標可能<strong>低估</strong>當前的理論覆蓋範圍。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="part-label">Part V</div>
+<div class="part-title">高曝險工人的人口特徵與方法論局限</div>
+<div class="bilingual-block">
+<div class="zh-text">高曝險群體（前四分之一）與零曝險群體在人口特徵上差異顯著。高曝險群體<span class="highlight-key">女性多 16 個百分點、白人多 11 個百分點、亞裔比例幾乎翻倍</span>。他們的平均收入高出 47%，教育程度更高 -- 研究生學位在高曝險群體佔 17.4%，零曝險群體僅 4.5%。</div>
+<div class="en-text">The more exposed group is 16 percentage points more likely to be female, 11 percentage points more likely to be white, and almost twice as likely to be Asian. They earn 47% more, on average, and have higher levels of education.</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text">這顛覆了「AI 取代低技能工作」的常見敘事。<span class="highlight-concept">AI 最先衝擊的是高薪、高教育、白領族群</span> -- 這與過去的自動化浪潮（主要衝擊製造業藍領）形成鮮明對比。</div>
+<div class="en-text">Workers in the most exposed professions are more likely to be older, female, more educated, and higher-paid.</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">研究團隊坦承數個方法論局限：數據僅來自 Claude 平台、Eloundou et al. 的 beta 指標基於 2023 年初的 LLM 能力、O-Ring 模型指出只有當所有任務都有 AI 滲透時才會看到就業效應。他們強調這是<span class="highlight-practical">「建立方法論的第一步」</span>，旨在建立可持續更新的分析框架。</div>
+<div class="en-text">Our work is a first step toward cataloging the impact of AI on the labor market. We hope that the analytical steps taken in this report will be easy to update as new data on employment and AI usage emerge.</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 高 vs. 低曝險工人特徵</div>
+<div class="info-box-content">
+<table class="data-table">
+<thead><tr><th>特徵</th><th>高曝險(Q1)</th><th>零曝險</th></tr></thead>
+<tbody>
+<tr><td>女性比例</td><td>較高 (+16pp)</td><td>較低</td></tr>
+<tr><td>平均收入</td><td>+47%</td><td>基準</td></tr>
+<tr><td>研究生學位</td><td>17.4%</td><td>4.5%</td></tr>
+<tr><td>亞裔比例</td><td>~2x</td><td>基準</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 O-Ring 理論連結</div>
+<div class="info-box-content">
+<p>論文引用了 Gans &amp; Goldfarb (2025) 的 O-Ring 自動化模型：如果工作是 O-Ring 結構（每個環節都不可或缺），那麼<strong>只有當所有任務都有 AI 滲透時，才會看到就業效應</strong>。</p>
+<p>這完美呼應了你的 O-Ring Bottleneck Theory：在 CDMO 中，只要法規判斷、客戶關係、偏差調查等任務仍由人類執行，整體就業衝擊就會被緩衝。</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 方法論批判</div>
+<div class="info-box-content">
+<p><strong>單一平台偏差：</strong>最大的局限。Claude 的用戶基礎不等於 AI 使用全貌。GitHub Copilot 主導程式碼、ChatGPT 主導一般對話、Gemini 整合在 Google Workspace -- 每個平台的任務分佈不同。</p>
+<p><strong>時間滯後：</strong>Eloundou 的 beta 基於 2023 年初的能力評估，但 LLM 能力在 3 年間已經大幅躍進。beta 指標可能<strong>低估</strong>當前的理論覆蓋範圍。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- KEY TAKEAWAYS -->
 <div class="section-title">Key Takeaways</div>
 <div class="takeaways-grid">
-    <div class="summary-card">
-        <div class="card-title">Observed Exposure 是更好的指標</div>
-        <div class="card-text">結合理論可行性 + 實際使用 + 自動化加權，比純理論預測更能反映真實的就業風險分佈。從「AI 能做什麼」升級到「AI 正在做什麼」。</div>
-    </div>
-    <div class="summary-card">
-        <div class="card-title">理論 vs. 實際的巨大差距</div>
-        <div class="card-text">即使在最高曝險的電腦領域，理論覆蓋 94% 但實際只有 33%。AI 就業衝擊的「水庫」仍有大量未釋放的潛能，速度取決於法規、信任、工具成熟度等閘門。</div>
-    </div>
-    <div class="summary-card">
-        <div class="card-title">年輕人是金絲雀</div>
-        <div class="card-text">22-25 歲進入高曝險職業的速率下降 14%。不是裁員，是入口變窄。這種「招聘凍結」效應是 AI 就業衝擊最可能的早期表現形式。</div>
-    </div>
-    <div class="summary-card">
-        <div class="card-title">高薪白領首當其衝</div>
-        <div class="card-text">AI 不同於過去的自動化浪潮 -- 最高曝險群體收入高 47%、教育程度更高、女性和亞裔比例更高。這改寫了「AI 取代低技能工作」的傳統敘事。</div>
-    </div>
+<div class="summary-card">
+<div class="card-title">Observed Exposure 是更好的指標</div>
+<div class="card-text">結合理論可行性 + 實際使用 + 自動化加權，比純理論預測更能反映真實的就業風險分佈。從「AI 能做什麼」升級到「AI 正在做什麼」。</div>
 </div>
-
+<div class="summary-card">
+<div class="card-title">理論 vs. 實際的巨大差距</div>
+<div class="card-text">即使在最高曝險的電腦領域，理論覆蓋 94% 但實際只有 33%。AI 就業衝擊的「水庫」仍有大量未釋放的潛能，速度取決於法規、信任、工具成熟度等閘門。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">年輕人是金絲雀</div>
+<div class="card-text">22-25 歲進入高曝險職業的速率下降 14%。不是裁員，是入口變窄。這種「招聘凍結」效應是 AI 就業衝擊最可能的早期表現形式。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">高薪白領首當其衝</div>
+<div class="card-text">AI 不同於過去的自動化浪潮 -- 最高曝險群體收入高 47%、教育程度更高、女性和亞裔比例更高。這改寫了「AI 取代低技能工作」的傳統敘事。</div>
+</div>
+</div>
 <!-- PRACTICE QUESTIONS -->
 <div class="section-title">Practice Questions</div>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q1</span>
-        <span class="question-type">概念理解</span>
-        <span class="question-text">Observed Exposure 與 Eloundou et al. 的 beta 指標之間的核心差異是什麼？為什麼這個差異在實務上很重要？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p><strong>核心差異：</strong>Beta 只衡量理論可行性（LLM 能否讓任務加速 2 倍），是靜態的二元判斷。Observed Exposure 則加入了三個實務維度：(1) 是否真的有人在使用；(2) 使用場景是否為工作相關；(3) 是自動化還是增強型使用。</p>
-        <p><strong>實務重要性：</strong>Beta 指標會高估就業風險（例如「藥物處方授權」beta=1，但實際零使用）。Observed Exposure 的加權設計讓增強型使用（人類仍在迴路中）的權重只有自動化的一半，更準確反映真實的取代風險。對於決策者（如 CDMO 的 COO）來說，基於 Observed Exposure 而非 beta 來規劃人力更為務實。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">Observed Exposure 與 Eloundou et al. 的 beta 指標之間的核心差異是什麼？為什麼這個差異在實務上很重要？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>核心差異：</strong>Beta 只衡量理論可行性（LLM 能否讓任務加速 2 倍），是靜態的二元判斷。Observed Exposure 則加入了三個實務維度：(1) 是否真的有人在使用；(2) 使用場景是否為工作相關；(3) 是自動化還是增強型使用。</p>
+<p><strong>實務重要性：</strong>Beta 指標會高估就業風險（例如「藥物處方授權」beta=1，但實際零使用）。Observed Exposure 的加權設計讓增強型使用（人類仍在迴路中）的權重只有自動化的一半，更準確反映真實的取代風險。對於決策者（如 CDMO 的 COO）來說，基於 Observed Exposure 而非 beta 來規劃人力更為務實。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q2</span>
-        <span class="question-type">產業應用</span>
-        <span class="question-text">如果你要為 CDMO（藥品委託開發製造組織）建立類似的 Observed Exposure 指標，你會如何調整這個框架？哪些任務會是高曝險 vs. 低曝險？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p><strong>框架調整：</strong>CDMO 版本需要：(1) 用 CDMO 特有的任務清單取代 O*NET（如批次記錄審查、偏差調查、IQ/OQ/PQ 驗證、無菌製程監控）；(2) 追蹤 Gemini/Claude/ChatGPT 在這些任務上的實際使用率；(3) 加入 GMP 法規權重 -- 任何需要法規簽核的任務，自動化權重應進一步降低。</p>
-        <p><strong>高曝險任務：</strong>批次記錄的初步審查（比對數據一致性）、SOP 初稿撰寫、技術轉移文件翻譯、供應商資格問卷回覆。</p>
-        <p><strong>低曝險任務：</strong>無菌區域的即時偏差判斷、客戶 pre-approval inspection 的現場應對、放行決策、設備故障的根因分析（需要觸摸和觀察）。</p>
-        <p>關鍵洞察：CDMO 的 O-Ring 結構很強 -- 即使 AI 覆蓋了 70% 的文書任務，只要法規簽核和製程判斷仍需人類，整體就業衝擊就會被緩衝。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">如果你要為 CDMO（藥品委託開發製造組織）建立類似的 Observed Exposure 指標，你會如何調整這個框架？哪些任務會是高曝險 vs. 低曝險？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>框架調整：</strong>CDMO 版本需要：(1) 用 CDMO 特有的任務清單取代 O*NET（如批次記錄審查、偏差調查、IQ/OQ/PQ 驗證、無菌製程監控）；(2) 追蹤 Gemini/Claude/ChatGPT 在這些任務上的實際使用率；(3) 加入 GMP 法規權重 -- 任何需要法規簽核的任務，自動化權重應進一步降低。</p>
+<p><strong>高曝險任務：</strong>批次記錄的初步審查（比對數據一致性）、SOP 初稿撰寫、技術轉移文件翻譯、供應商資格問卷回覆。</p>
+<p><strong>低曝險任務：</strong>無菌區域的即時偏差判斷、客戶 pre-approval inspection 的現場應對、放行決策、設備故障的根因分析（需要觸摸和觀察）。</p>
+<p>關鍵洞察：CDMO 的 O-Ring 結構很強 -- 即使 AI 覆蓋了 70% 的文書任務，只要法規簽核和製程判斷仍需人類，整體就業衝擊就會被緩衝。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q3</span>
-        <span class="question-type">批判思考</span>
-        <span class="question-text">這篇論文來自 Anthropic（Claude 的開發商），使用 Claude 自己的使用數據。這會產生哪些潛在偏差？你會如何補充或驗證這些發現？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p><strong>潛在偏差：</strong></p>
-        <p>(1) <strong>選擇偏差：</strong>Claude 用戶群不等於 AI 使用者全貌。偏向技術導向、企業用戶、英語使用者。ChatGPT 在消費者端的普及度更高，可能捕捉到不同的使用模式。</p>
-        <p>(2) <strong>利益衝突：</strong>Anthropic 有動機展示 AI 尚未造成大規模失業（「AI 遠未達到理論能力天花板」的結論有利於 AI 公司繼續發展）。雖然研究方法透明，但結論的框架選擇可能受到影響。</p>
-        <p>(3) <strong>平台特性偏差：</strong>Claude 以長文本處理和 API 整合見長，可能高估文書類任務的覆蓋率，低估程式碼生成（GitHub Copilot 主導）或圖像生成（Midjourney/DALL-E 主導）的覆蓋率。</p>
-        <p><strong>驗證方法：</strong>套用 2-3x 折扣原則、交叉比對 ADP 薪資數據和 BLS 勞工統計、觀察其他平台（如 OpenAI 或 Google）是否發布類似分析、追蹤 Brynjolfsson et al. 的後續更新。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">這篇論文來自 Anthropic（Claude 的開發商），使用 Claude 自己的使用數據。這會產生哪些潛在偏差？你會如何補充或驗證這些發現？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>潛在偏差：</strong></p>
+<p>(1) <strong>選擇偏差：</strong>Claude 用戶群不等於 AI 使用者全貌。偏向技術導向、企業用戶、英語使用者。ChatGPT 在消費者端的普及度更高，可能捕捉到不同的使用模式。</p>
+<p>(2) <strong>利益衝突：</strong>Anthropic 有動機展示 AI 尚未造成大規模失業（「AI 遠未達到理論能力天花板」的結論有利於 AI 公司繼續發展）。雖然研究方法透明，但結論的框架選擇可能受到影響。</p>
+<p>(3) <strong>平台特性偏差：</strong>Claude 以長文本處理和 API 整合見長，可能高估文書類任務的覆蓋率，低估程式碼生成（GitHub Copilot 主導）或圖像生成（Midjourney/DALL-E 主導）的覆蓋率。</p>
+<p><strong>驗證方法：</strong>套用 2-3x 折扣原則、交叉比對 ADP 薪資數據和 BLS 勞工統計、觀察其他平台（如 OpenAI 或 Google）是否發布類似分析、追蹤 Brynjolfsson et al. 的後續更新。</p>
+</div>
 </details>
-
 <!-- BOTTOM LINE -->
 <div class="bottom-line">
-    <div class="bottom-line-header">&#127919; 我的行動結論</div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#10004; 核心洞察</div>
-        <div class="bottom-line-text">「理論可行 vs. 實際採用」的差距是我在 CDMO 導入 AI 時最該關注的指標。不要被 beta=1 的理論預測嚇到（供應商會拿這些數字推銷），而是追蹤團隊實際在哪些任務上使用 AI、以什麼模式使用（copilot vs. agent）。Observed Exposure 框架可以直接移植到我的 AI 導入評估中。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#128200; 立即應用</div>
-        <div class="bottom-line-text">這週開始建立一個簡單的「CDMO AI 任務覆蓋率追蹤表」-- 列出部門的 top 20 任務，標記哪些已經在用 AI 輔助、使用模式（增強/自動化）、頻率。這就是 Observed Exposure 的 CDMO 版本。同時，在下次 AI 學習文件中加入「年輕人金絲雀效應」的觀察維度，追蹤台灣藥廠是否出現類似的畢業生招聘放緩。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#9888; 需要補充</div>
-        <div class="bottom-line-text">論文的最大盲點是單一平台數據。台灣 CDMO 的 AI 使用分散在 Gemini（Google Workspace 整合）、ChatGPT（一般任務）、Claude（長文本處理）之間。未來需要綜合多平台使用數據才能準確評估。另外，O-Ring 模型在 GMP 環境中的適用性值得深入研究 -- 建議 3 個月後重讀，配合 Gans & Goldfarb (2025) 原文。</div>
-    </div>
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">「理論可行 vs. 實際採用」的差距是我在 CDMO 導入 AI 時最該關注的指標。不要被 beta=1 的理論預測嚇到（供應商會拿這些數字推銷），而是追蹤團隊實際在哪些任務上使用 AI、以什麼模式使用（copilot vs. agent）。Observed Exposure 框架可以直接移植到我的 AI 導入評估中。</div>
 </div>
-
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">這週開始建立一個簡單的「CDMO AI 任務覆蓋率追蹤表」-- 列出部門的 top 20 任務，標記哪些已經在用 AI 輔助、使用模式（增強/自動化）、頻率。這就是 Observed Exposure 的 CDMO 版本。同時，在下次 AI 學習文件中加入「年輕人金絲雀效應」的觀察維度，追蹤台灣藥廠是否出現類似的畢業生招聘放緩。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">論文的最大盲點是單一平台數據。台灣 CDMO 的 AI 使用分散在 Gemini（Google Workspace 整合）、ChatGPT（一般任務）、Claude（長文本處理）之間。未來需要綜合多平台使用數據才能準確評估。另外，O-Ring 模型在 GMP 環境中的適用性值得深入研究 -- 建議 3 個月後重讀，配合 Gans &amp; Goldfarb (2025) 原文。</div>
+</div>
+</div>
 <!-- FOOTER -->
-<div class="footer">
-    <p>&#128198; 製作日期：2026-03-06 | &#128279; <a href="https://www.anthropic.com/research/labor-market-impacts" target="_blank">原文連結</a></p>
-    <p>&#128196; 建議 Chat Title：2026-03-06 [Anthropic-Eng] [Research] Labor Market AI Impact - Observed Exposure</p>
-    <p>&#128218; 建議檔名：2026-03-06_labor-market-ai-impact.html</p>
-</div>
-
+<footer class="footer">
+<p>📆 製作日期：2026-03-06 | 🔗 <a href="https://www.anthropic.com/research/labor-market-impacts" target="_blank">原文連結</a></p>
+<p>📄 建議 Chat Title：2026-03-06 [Anthropic-Eng] [Research] Labor Market AI Impact - Observed Exposure</p>
+<p>📚 建議檔名：2026-03-06_labor-market-ai-impact.html</p>
+</footer>
 </div><!-- end container -->
 </body>
 </html>

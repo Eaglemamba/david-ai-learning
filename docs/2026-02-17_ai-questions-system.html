@@ -1,346 +1,215 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2026-02-17">
-    <meta name="doc-title" content="AI Question-Generation System - 用提問取代答案的 5 步驟系統">
-    <meta name="doc-source" content="Wyndo / AI Maker Labs">
-    <meta name="doc-tags" content="Prompt,LLM,Tool">
-    <meta name="doc-rating" content="3.8">
-    <meta name="doc-summary" content="用提問取代答案的5步驟系統：從基礎提問到問題轉化實驗，重塑AI使用心智模型">
-    <meta name="doc-file" content="2026-02-17_ai-questions-system.html">
-    <title>AI Question-Generation System - 用提問取代答案的 5 步驟系統</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2026-02-17" name="doc-date"/>
+<meta content="AI Question-Generation System - 用提問取代答案的 5 步驟系統" name="doc-title"/>
+<meta content="Wyndo / AI Maker Labs" name="doc-source"/>
+<meta content="Prompt,LLM,Tool" name="doc-tags"/>
+<meta content="3.8" name="doc-rating"/>
+<meta content="用提問取代答案的5步驟系統：從基礎提問到問題轉化實驗，重塑AI使用心智模型" name="doc-summary"/>
+<meta content="2026-02-17_ai-questions-system.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>AI Question-Generation System - 用提問取代答案的 5 步驟系統</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 
-        /* Header */
-        .header { text-align: center; padding: 2.5rem 2rem; background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%); color: white; border-radius: 1rem; margin: 1rem; }
-        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.4; }
-        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1rem; }
-        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-        .tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; }
-        .tag-prompt { background: #fde68a; color: #92400e; }
-        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .source-info { font-size: 0.8rem; opacity: 0.8; }
-        .source-info a { color: #93c5fd; text-decoration: none; }
 
-        /* Rating Bar */
-        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-        /* Executive Summary */
-        .exec-summary { background: white; margin: 1.5rem 1rem; padding: 1.5rem; border-radius: 0.75rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .exec-summary h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 0.75rem; }
-        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
-
-        /* Learning Objectives */
-        .objectives { margin: 1.5rem 1rem; }
-        .objectives h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; text-align: center; }
-        .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; text-align: center; border-top: 3px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .objective-item h3 { font-size: 0.85rem; color: #1e3a8a; margin-bottom: 0.25rem; }
-        .objective-item p { font-size: 0.8rem; color: #64748b; }
-
-        /* Framework Visual */
-        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 1rem; }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 100px; flex: 1; max-width: 160px; }
-        .framework-icon { font-size: 1.3rem; margin-bottom: 0.5rem; width: 3rem; height: 3rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-        .framework-step-title { font-weight: 700; font-size: 0.8rem; }
-        .framework-step-desc { font-size: 0.7rem; opacity: 0.9; margin-top: 0.25rem; }
-        .framework-arrow { font-size: 1.2rem; color: #93c5fd; }
-        @media (max-width: 700px) { .framework-arrow { display: none; } .framework-steps { gap: 1rem; } .objectives-grid { grid-template-columns: 1fr; } }
-
-        /* Content Grid */
-        .content-section { margin: 1.5rem 1rem; }
-        .section-header { background: linear-gradient(135deg, #1e3a5f, #2d4a7a); color: white; padding: 1rem 1.5rem; border-radius: 0.75rem 0.75rem 0 0; }
-        .section-header h2 { font-size: 1.05rem; }
-        .section-header .section-sub { font-size: 0.8rem; opacity: 0.85; margin-top: 0.25rem; }
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; background: white; border-radius: 0 0 0.75rem 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
-        .content-left { padding: 1.25rem; border-right: 1px solid #e2e8f0; }
-        .content-right { padding: 1.25rem; background: #fafbfc; }
-        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
-
-        /* Bilingual blocks */
-        .bilingual-block { margin-bottom: 1.25rem; }
-        .zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.35rem; }
-        .en-text { font-size: 0.85rem; line-height: 1.6; color: #64748b; font-style: italic; }
-        .highlight-concept { background: #a5d6a7; padding: 0 0.2rem; border-radius: 2px; }
-        .highlight-key { background: #ffcc80; padding: 0 0.2rem; border-radius: 2px; }
-        .highlight-practical { background: #6ee7b7; padding: 0 0.2rem; border-radius: 2px; }
-
-        /* Info Boxes */
-        .info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
-        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-        .info-box-content { padding: 0.75rem; font-size: 0.88rem; line-height: 1.7; }
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
-
-        /* Key Takeaways */
-        .takeaways { margin: 1.5rem 1rem; }
-        .takeaways h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; text-align: center; }
-        .takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .summary-card:nth-child(2) { border-left-color: #10b981; }
-        .summary-card:nth-child(3) { border-left-color: #f59e0b; }
-        .summary-card:nth-child(4) { border-left-color: #8b5cf6; }
-        .summary-card h3 { font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
-        .summary-card p { font-size: 0.85rem; color: #475569; line-height: 1.7; }
-        @media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
-
-        /* Practice Questions - Accordion */
-        .practice-section { margin: 1.5rem 1rem; }
-        .practice-section h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; }
-        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-        .question-answer p:last-child { margin-bottom: 0; }
-
-        /* Bottom Line */
-        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 1.5rem 1rem; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
-        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; font-size: 1.1rem; }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-        /* Footer */
-        .footer { text-align: center; margin: 1.5rem 1rem; padding: 1.5rem; background: white; border-radius: 0.75rem; font-size: 0.8rem; color: #64748b; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .footer a { color: #3b82f6; text-decoration: none; }
-
-        /* Prompt block */
-        .prompt-block { background: #1e293b; color: #e2e8f0; padding: 0.75rem 1rem; border-radius: 0.5rem; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; line-height: 1.6; margin: 0.5rem 0; white-space: pre-wrap; }
-    </style>
 </head>
 <body>
 <div class="container">
-
-    <!-- HEADER -->
-    <div class="header">
-        <div class="tags">
-            <span class="tag tag-prompt">Prompt</span>
-            <span class="tag tag-llm">LLM</span>
-            <span class="tag tag-tool">Tool</span>
-        </div>
-        <h1>Stop Asking AI for Answers<br>用提問取代答案的 5 步驟系統</h1>
-        <p class="subtitle">AI Question-Generation System</p>
-        <p class="source-info">Source: Wyndo / AI Maker Labs | Feb 17, 2026</p>
-    </div>
-
-    <!-- EXECUTIVE SUMMARY -->
-    <div class="exec-summary">
-        <div class="rating-bar">
-            <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
-            <span class="rating-high">↑ Practical Value, Learning Curve</span>
-            <span class="rating-low">↓ Technical Depth, Tool Ecosystem</span>
-        </div>
-        <h2>Executive Summary</h2>
-        <p>
+<!-- HEADER -->
+<header class="header">
+<div class="tags">
+<span class="tag tag-prompt">Prompt</span>
+<span class="tag tag-llm">LLM</span>
+<span class="tag tag-tool">Tool</span>
+</div>
+<h1>Stop Asking AI for Answers<br/>用提問取代答案的 5 步驟系統</h1>
+<p class="subtitle">AI Question-Generation System</p>
+<p class="source-info">Source: Wyndo / AI Maker Labs | Feb 17, 2026</p>
+</header>
+<!-- EXECUTIVE SUMMARY -->
+<div class="exec-summary">
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
+<span class="rating-high">↑ Practical Value, Learning Curve</span>
+<span class="rating-low">↓ Technical Depth, Tool Ecosystem</span>
+</div>
+<h2>Executive Summary</h2>
+<p>
             這篇文章的核心論點是：<span class="highlight-key">當你卡住時，不要向 AI 要答案，而是要 AI 幫你生成問題</span>。作者透過自身 newsletter 轉換率優化的經歷，示範了「問對問題」如何比「蒐集框架」更能突破決策瓶頸。文章提出 5 個系統化的提問技巧：基礎提問、分層提問、借用他人視角、從成功回推、以及將問題轉化為實驗。這不是技術深文，而是一篇「AI 使用心智模型」的重塑指南 -- 特別適合已經累積大量 AI 技巧但仍感覺「知道很多卻做不好決策」的使用者。
         </p>
-    </div>
-
-    <!-- LEARNING OBJECTIVES -->
-    <div class="objectives">
-        <h2>Learning Objectives</h2>
-        <div class="objectives-grid">
-            <div class="objective-item">
-                <div class="objective-icon">&#x1F50D;</div>
-                <h3>診斷「答案過載」</h3>
-                <p>辨識何時蒐集更多答案反而阻礙決策</p>
-            </div>
-            <div class="objective-item">
-                <div class="objective-icon">&#x2753;</div>
-                <h3>掌握 5 種提問技巧</h3>
-                <p>系統化生成高品質策略性問題</p>
-            </div>
-            <div class="objective-item">
-                <div class="objective-icon">&#x1F9EA;</div>
-                <h3>問題轉化實驗</h3>
-                <p>將抽象問題變成可測試的行動</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- FRAMEWORK VISUAL -->
-    <div class="framework-visual">
-        <div class="framework-title">AI Question-Generation System - 5 步驟框架</div>
-        <div class="framework-steps">
-            <div class="framework-step">
-                <div class="framework-icon">&#x2753;</div>
-                <div class="framework-step-title">基礎提問</div>
-                <div class="framework-step-desc">問「我需要回答什麼問題」</div>
-            </div>
-            <div class="framework-arrow">&rarr;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#x1F4DA;</div>
-                <div class="framework-step-title">分層深入</div>
-                <div class="framework-step-desc">逐層挖掘隱藏假設</div>
-            </div>
-            <div class="framework-arrow">&rarr;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#x1F9E0;</div>
-                <div class="framework-step-title">借腦思考</div>
-                <div class="framework-step-desc">用專家視角看問題</div>
-            </div>
-            <div class="framework-arrow">&rarr;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#x1F3AF;</div>
-                <div class="framework-step-title">反向回推</div>
-                <div class="framework-step-desc">從成功終態倒推</div>
-            </div>
-            <div class="framework-arrow">&rarr;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#x1F9EA;</div>
-                <div class="framework-step-title">實驗驗證</div>
-                <div class="framework-step-desc">最快方式找到答案</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== PART 0: THE PROBLEM ==================== -->
-    <div class="content-section">
-        <div class="section-header">
-            <h2>Part 0: The Problem - 答案陷阱</h2>
-            <div class="section-sub">Why collecting answers makes decisions harder</div>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">作者遇到一個常見的困境：想提高 newsletter 免費訂閱者轉為付費訂閱者的比率。他像多數人一樣，直接向 Claude 要解決方案。AI 給了 5 個具體的行動方案 -- <span class="highlight-key">但他完全不知道該先執行哪一個</span>。</p>
-                    <p class="en-text">"It was thorough. It was actionable. And I had absolutely no idea which one would actually work."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">結果？這些方案被存進筆記資料夾，加入其他 50+ 個從未執行的框架中。每個答案在當下都覺得有用，但每個答案都讓決策變得更難。問題不在於方案不對，而在於<span class="highlight-concept">他沒有判斷標準來選擇</span>。</p>
-                    <p class="en-text">"So I saved it to my notes folder with the other 50+ frameworks I'd never implemented. ...Every answer felt useful in the moment. Yet, every answer just made the decision harder."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">他以為問題出在自己不夠自律，無法「選一個就執行」。但真相是：<span class="highlight-key">他在還不知道自己要解決什麼問題的時候就在要求解決方案</span>。</p>
-                    <p class="en-text">"I thought the problem was me. Maybe that I wasn't disciplined enough to just pick one and execute. Turns out the problem was that I was asking for solutions when I didn't know what problem I was solving."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">轉折點是他改問：「<span class="highlight-key">我需要回答哪些問題，才能提高轉換率？</span>」AI 回傳的問題包括：你知道人們「為什麼」不轉換嗎？你有問過他們嗎？你的受眾中有多少人不管怎樣都不會付費？人們不轉換是因為看不到價值，還是看到了但還不需要？他一個都答不出來。</p>
-                    <p class="en-text">"Do you know WHY people aren't converting? Have you actually asked them? What percentage of your audience will never pay, regardless of what you offer? Are people not converting because they don't see the value, or because they see it but don't need it yet? ...I stared at that list. I couldn't answer a single one."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">那一刻他意識到：<span class="highlight-concept">轉換率從來不是問題，他的清晰度才是</span>。他在還不知道什麼東西真正阻擋轉換之前，就試圖優化轉換。</p>
-                    <p class="en-text">"Conversion was never the problem. My clarity was. I was trying to optimize conversion before I knew what was actually blocking it."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-concept">
-                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
-                    <div class="info-box-content">
-                        <strong>Answers vs Criteria（答案 vs 判斷標準）</strong><br>
+</div>
+<!-- LEARNING OBJECTIVES -->
+<div class="objectives">
+<h2>Learning Objectives</h2>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-icon">🔍</div>
+<h3>診斷「答案過載」</h3>
+<p>辨識何時蒐集更多答案反而阻礙決策</p>
+</div>
+<div class="objective-item">
+<div class="objective-icon">❓</div>
+<h3>掌握 5 種提問技巧</h3>
+<p>系統化生成高品質策略性問題</p>
+</div>
+<div class="objective-item">
+<div class="objective-icon">🧪</div>
+<h3>問題轉化實驗</h3>
+<p>將抽象問題變成可測試的行動</p>
+</div>
+</div>
+</div>
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+<div class="framework-title">AI Question-Generation System - 5 步驟框架</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">❓</div>
+<div class="framework-step-title">基礎提問</div>
+<div class="framework-step-desc">問「我需要回答什麼問題」</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📚</div>
+<div class="framework-step-title">分層深入</div>
+<div class="framework-step-desc">逐層挖掘隱藏假設</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🧠</div>
+<div class="framework-step-title">借腦思考</div>
+<div class="framework-step-desc">用專家視角看問題</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🎯</div>
+<div class="framework-step-title">反向回推</div>
+<div class="framework-step-desc">從成功終態倒推</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🧪</div>
+<div class="framework-step-title">實驗驗證</div>
+<div class="framework-step-desc">最快方式找到答案</div>
+</div>
+</div>
+</div>
+<!-- ==================== PART 0: THE PROBLEM ==================== -->
+<div class="content-section">
+<div class="section-header">
+<h2>Part 0: The Problem - 答案陷阱</h2>
+<div class="section-sub">Why collecting answers makes decisions harder</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">作者遇到一個常見的困境：想提高 newsletter 免費訂閱者轉為付費訂閱者的比率。他像多數人一樣，直接向 Claude 要解決方案。AI 給了 5 個具體的行動方案 -- <span class="highlight-key">但他完全不知道該先執行哪一個</span>。</p>
+<p class="en-text">"It was thorough. It was actionable. And I had absolutely no idea which one would actually work."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">結果？這些方案被存進筆記資料夾，加入其他 50+ 個從未執行的框架中。每個答案在當下都覺得有用，但每個答案都讓決策變得更難。問題不在於方案不對，而在於<span class="highlight-concept">他沒有判斷標準來選擇</span>。</p>
+<p class="en-text">"So I saved it to my notes folder with the other 50+ frameworks I'd never implemented. ...Every answer felt useful in the moment. Yet, every answer just made the decision harder."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">他以為問題出在自己不夠自律，無法「選一個就執行」。但真相是：<span class="highlight-key">他在還不知道自己要解決什麼問題的時候就在要求解決方案</span>。</p>
+<p class="en-text">"I thought the problem was me. Maybe that I wasn't disciplined enough to just pick one and execute. Turns out the problem was that I was asking for solutions when I didn't know what problem I was solving."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">轉折點是他改問：「<span class="highlight-key">我需要回答哪些問題，才能提高轉換率？</span>」AI 回傳的問題包括：你知道人們「為什麼」不轉換嗎？你有問過他們嗎？你的受眾中有多少人不管怎樣都不會付費？人們不轉換是因為看不到價值，還是看到了但還不需要？他一個都答不出來。</p>
+<p class="en-text">"Do you know WHY people aren't converting? Have you actually asked them? What percentage of your audience will never pay, regardless of what you offer? Are people not converting because they don't see the value, or because they see it but don't need it yet? ...I stared at that list. I couldn't answer a single one."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">那一刻他意識到：<span class="highlight-concept">轉換率從來不是問題，他的清晰度才是</span>。他在還不知道什麼東西真正阻擋轉換之前，就試圖優化轉換。</p>
+<p class="en-text">"Conversion was never the problem. My clarity was. I was trying to optimize conversion before I knew what was actually blocking it."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<strong>Answers vs Criteria（答案 vs 判斷標準）</strong><br/>
                         答案給你選項（options），問題給你選擇的標準（criteria）。當你卡住時，缺的通常不是更多選項，而是判斷哪個選項最適合的標準。
                     </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
                         想像你在餐廳看一份 20 頁的菜單。服務生不斷推薦更多菜色（= AI 給你更多答案）。但你真正需要的是先知道：你是不是對海鮮過敏？你今天想吃清淡還是重口味？你的預算是多少？這些「問題」才能幫你從 200 道菜裡選出 1 道。
                     </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-                    <div class="info-box-content">
-                        <strong>為什麼我們偏好要答案？</strong><br>
-                        答案讓人感覺有進展（productive），問題讓人感覺在拖延（procrastination）。但作者指出：針對錯誤的問題採取行動，代價遠高於花時間理解正確的問題。問對問題不是給自己更多工作，而是避免浪費力氣。<br><br>
-                        <em style="color: #64748b; font-size: 0.85rem;">"Answers feel productive. Questions feel like procrastination. ...Acting on the wrong problem is way more expensive than taking time to understand the right problem. Instead of giving yourself more work, working on the right questions can save you from wasted effort."</em>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== PART I: Foundation Question ==================== -->
-    <div class="content-section">
-        <div class="section-header">
-            <h2>Part I: 基礎提問 - "What Questions Do I Need to Answer?"</h2>
-            <div class="section-sub">Technique 1: The foundation prompt that changes everything</div>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">這是整個系統的基礎。當你卡住時，不要問 AI 解決方案，改問：<span class="highlight-key">「我需要回答哪些問題，才能 [你的卡住點]？」</span></p>
-                    <p class="en-text">"When you're stuck, don't ask AI for the solution. Ask: 'What questions do I need to answer to [your stuck point]?'"</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">這個提問的力量在於：它揭示了<span class="highlight-concept">你知道的和你需要知道的之間的落差</span>。而且有個關鍵訣竅：選擇讓你最不舒服的那個問題，那通常就是你一直在迴避、也正是阻擋你前進的問題。</p>
-                    <p class="en-text">"This reveals the gap between what you know and what you need to know. And here's the key: pick the question that makes you most uncomfortable. That's usually the one you've been avoiding. That's usually the one that's blocking you."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; Prompt Template</div>
-                    <div class="info-box-content">
-                        <div class="prompt-block">"What questions do I need to answer to [your stuck point]?"
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<strong>為什麼我們偏好要答案？</strong><br/>
+                        答案讓人感覺有進展（productive），問題讓人感覺在拖延（procrastination）。但作者指出：針對錯誤的問題採取行動，代價遠高於花時間理解正確的問題。問對問題不是給自己更多工作，而是避免浪費力氣。<br/><br/>
+<em style="color: #64748b; font-size: 0.85rem;">"Answers feel productive. Questions feel like procrastination. ...Acting on the wrong problem is way more expensive than taking time to understand the right problem. Instead of giving yourself more work, working on the right questions can save you from wasted effort."</em>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== PART I: Foundation Question ==================== -->
+<div class="content-section">
+<div class="section-header">
+<h2>Part I: 基礎提問 - "What Questions Do I Need to Answer?"</h2>
+<div class="section-sub">Technique 1: The foundation prompt that changes everything</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">這是整個系統的基礎。當你卡住時，不要問 AI 解決方案，改問：<span class="highlight-key">「我需要回答哪些問題，才能 [你的卡住點]？」</span></p>
+<p class="en-text">"When you're stuck, don't ask AI for the solution. Ask: 'What questions do I need to answer to [your stuck point]?'"</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">這個提問的力量在於：它揭示了<span class="highlight-concept">你知道的和你需要知道的之間的落差</span>。而且有個關鍵訣竅：選擇讓你最不舒服的那個問題，那通常就是你一直在迴避、也正是阻擋你前進的問題。</p>
+<p class="en-text">"This reveals the gap between what you know and what you need to know. And here's the key: pick the question that makes you most uncomfortable. That's usually the one you've been avoiding. That's usually the one that's blocking you."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-code">
+<div class="info-box-header">💻 Prompt Template</div>
+<div class="info-box-content">
+<div class="prompt-block">"What questions do I need to answer to [your stuck point]?"
 
 Examples:
 - "...to grow my newsletter?"
 - "...to choose between these two tools?"
 - "...to decide my content strategy?"</div>
-                    </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用 - CDMO 情境</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用 - CDMO 情境</div>
+<div class="info-box-content">
                         在製藥 CDMO 環境中，這個技巧特別適用於偏差調查（deviation investigation）的根本原因分析。與其直接問 AI「這個偏差的根因是什麼」，不如問「我需要回答哪些問題才能確定這個偏差的根因」-- 這會揭示你可能遺漏的調查方向。
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== PART II: Layered Questions ==================== -->
-    <div class="content-section">
-        <div class="section-header">
-            <h2>Part II: 分層提問 - Layer Your Questions</h2>
-            <div class="section-sub">Technique 2: Don't stop at the surface</div>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">大多數人問一個問題就停了，作者比喻這就像<span class="highlight-key">做一下就說自己練過了</span>。真正的力量在三層式提問：</p>
-                    <p class="en-text">"Most people ask one question and stop. That's like doing one rep and calling it a workout."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text"><strong>第一層</strong>：直接問你的問題 → 得到表面的知識缺口。<br><strong>第二層</strong>：「針對每個問題，它又引出什麼問題？」→ 揭露<span class="highlight-concept">隱藏的假設和依賴關係</span>。<br><strong>第三層</strong>：「已經解決過這個問題的人，會怎麼看這些二階問題？」→ 獲得<span class="highlight-concept">專家級的模式識別</span>。</p>
-                    <p class="en-text">"First layer: Your immediate knowledge gaps. Second layer: Hidden assumptions and dependencies. Third layer: Expert-level pattern recognition you can't see from where you're standing."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; 三層 Prompt 結構</div>
-                    <div class="info-box-content">
-                        <div class="prompt-block">Layer 1:
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== PART II: Layered Questions ==================== -->
+<div class="content-section">
+<div class="section-header">
+<h2>Part II: 分層提問 - Layer Your Questions</h2>
+<div class="section-sub">Technique 2: Don't stop at the surface</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">大多數人問一個問題就停了，作者比喻這就像<span class="highlight-key">做一下就說自己練過了</span>。真正的力量在三層式提問：</p>
+<p class="en-text">"Most people ask one question and stop. That's like doing one rep and calling it a workout."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>第一層</strong>：直接問你的問題 → 得到表面的知識缺口。<br/><strong>第二層</strong>：「針對每個問題，它又引出什麼問題？」→ 揭露<span class="highlight-concept">隱藏的假設和依賴關係</span>。<br/><strong>第三層</strong>：「已經解決過這個問題的人，會怎麼看這些二階問題？」→ 獲得<span class="highlight-concept">專家級的模式識別</span>。</p>
+<p class="en-text">"First layer: Your immediate knowledge gaps. Second layer: Hidden assumptions and dependencies. Third layer: Expert-level pattern recognition you can't see from where you're standing."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-code">
+<div class="info-box-header">💻 三層 Prompt 結構</div>
+<div class="info-box-content">
+<div class="prompt-block">Layer 1:
 "What questions do I need to answer about [topic]?"
 
 Layer 2:
@@ -348,248 +217,237 @@ Layer 2:
 
 Layer 3:
 "What would someone who's already solved this ask about these second-order questions?"</div>
-                    </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
                         把分層提問想像成地質鑽探。第一層是表土（你已知的問題），第二層是岩層（你沒意識到的假設），第三層是礦脈（真正有價值的洞察）。大多數人只在表土層挖了一鏟就走了。
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== PART III: Borrow Brains ==================== -->
-    <div class="content-section">
-        <div class="section-header">
-            <h2>Part III: 借腦思考 - Borrow Other People's Brains</h2>
-            <div class="section-sub">Technique 3: Escape your own perspective</div>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">當你卡住時，你是卡在自己的視角裡。AI 的一個強大用法是：<span class="highlight-key">讓它模擬不同專家的思維模式來提問</span>。</p>
-                    <p class="en-text">"When you're stuck, you're stuck in YOUR perspective. Your mental model. Your assumptions. But AI can inhabit someone else's brain for you."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">作者舉了一個關鍵案例：他請 AI 用「媒體公司高層」的視角來審視 newsletter 成長策略。其中一個問題改變了他的整個方向：「<span class="highlight-concept">你的受眾中，有多少人不管你的內容多好都永遠不會付費？</span>」這讓他意識到自己在優化總訂閱數，而不是最適合的訂閱者。</p>
-                    <p class="en-text">"'What percentage of your audience will never pay, no matter how good your content is?' That question changed everything. I realized I was optimizing for total subscriber growth when I should've been optimizing for best-fit subscribers."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">作者的關鍵洞察：<span class="highlight-key">有時候你需要的不是更多資訊，而是一個不同的觀點</span>。每個專家視角會揭露你自己永遠不會產生的問題。</p>
-                    <p class="en-text">"Sometimes having more information is not what you want. Sometimes what you need is simply a different viewpoint. ...Each perspective reveals questions you'd never generate on your own."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; Prompt Template</div>
-                    <div class="info-box-content">
-                        <div class="prompt-block">"What questions would a [specific expert] ask about [your problem]?"
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== PART III: Borrow Brains ==================== -->
+<div class="content-section">
+<div class="section-header">
+<h2>Part III: 借腦思考 - Borrow Other People's Brains</h2>
+<div class="section-sub">Technique 3: Escape your own perspective</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">當你卡住時，你是卡在自己的視角裡。AI 的一個強大用法是：<span class="highlight-key">讓它模擬不同專家的思維模式來提問</span>。</p>
+<p class="en-text">"When you're stuck, you're stuck in YOUR perspective. Your mental model. Your assumptions. But AI can inhabit someone else's brain for you."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">作者舉了一個關鍵案例：他請 AI 用「媒體公司高層」的視角來審視 newsletter 成長策略。其中一個問題改變了他的整個方向：「<span class="highlight-concept">你的受眾中，有多少人不管你的內容多好都永遠不會付費？</span>」這讓他意識到自己在優化總訂閱數，而不是最適合的訂閱者。</p>
+<p class="en-text">"'What percentage of your audience will never pay, no matter how good your content is?' That question changed everything. I realized I was optimizing for total subscriber growth when I should've been optimizing for best-fit subscribers."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">作者的關鍵洞察：<span class="highlight-key">有時候你需要的不是更多資訊，而是一個不同的觀點</span>。每個專家視角會揭露你自己永遠不會產生的問題。</p>
+<p class="en-text">"Sometimes having more information is not what you want. Sometimes what you need is simply a different viewpoint. ...Each perspective reveals questions you'd never generate on your own."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-code">
+<div class="info-box-header">💻 Prompt Template</div>
+<div class="info-box-content">
+<div class="prompt-block">"What questions would a [specific expert] ask about [your problem]?"
 
 Examples:
 - "...cognitive psychologist ask about AI adoption?"
 - "...media company executive ask about newsletter growth?"
 - "...business strategist ask about my product decision?"
 - "...skeptic ask about this approach?"</div>
-                    </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用 - CDMO 情境</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用 - CDMO 情境</div>
+<div class="info-box-content">
                         在 tech transfer 可行性評估中，你可以請 AI 分別用 FDA 審查員、客戶品質長（QA Head）、設備工程師的視角來提問。每個角色會揭露完全不同的風險點 -- 這比你一個人從營運角度看問題，要全面得多。
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== PART IV: Work Backwards ==================== -->
-    <div class="content-section">
-        <div class="section-header">
-            <h2>Part IV: 反向回推 - Work Backwards From Success</h2>
-            <div class="section-sub">Technique 4: Define the destination before planning the route</div>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">多數人的問題是「接下來該做什麼？」但真正的問題是：<span class="highlight-key">我們根本沒定義「成功」長什麼樣子</span>。這個技巧是從終態倒推：如果問題已經完美解決了，你一路上需要回答哪些問題？</p>
-                    <p class="en-text">"Start from the end state and reverse-engineer what you'd need to know to get there."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">作者原本不斷問「下一篇該寫什麼」，AI 不斷給主題建議，他不斷不採用。改用反向回推後，AI 回傳了完全不同層次的問題：「完美運作」到底是什麼意思？我想要更多哪種讀者？那些理想讀者需要看到什麼才會轉換？<span class="highlight-concept">問題從「寫什麼」變成了「我到底在建什麼」</span>。</p>
-                    <p class="en-text">"What does 'working perfectly' mean? Revenue target? Subscriber count? Reader impact? Which readers do I want more of? Which readers am I okay losing? What would those ideal readers need to see to convert? ...Most stuck-ness isn't 'I don't know what to do next.' It's 'I don't know what I'm trying to build.'"</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">作者總結的關鍵學習：<span class="highlight-key">這些問題幫他釐清成功的定義、他願意為此犧牲什麼、以及在開始優化戰術之前先面對成功的真實樣貌</span>。</p>
-                    <p class="en-text">"All these questions help me clarify what success means, what I'm willing to sacrifice for it, and force me to confront what success actually looks like before I start optimizing tactics."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; Prompt Template</div>
-                    <div class="info-box-content">
-                        <div class="prompt-block">"If I'd already solved [your problem] perfectly, what questions would I have needed to answer along the way?"
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== PART IV: Work Backwards ==================== -->
+<div class="content-section">
+<div class="section-header">
+<h2>Part IV: 反向回推 - Work Backwards From Success</h2>
+<div class="section-sub">Technique 4: Define the destination before planning the route</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">多數人的問題是「接下來該做什麼？」但真正的問題是：<span class="highlight-key">我們根本沒定義「成功」長什麼樣子</span>。這個技巧是從終態倒推：如果問題已經完美解決了，你一路上需要回答哪些問題？</p>
+<p class="en-text">"Start from the end state and reverse-engineer what you'd need to know to get there."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">作者原本不斷問「下一篇該寫什麼」，AI 不斷給主題建議，他不斷不採用。改用反向回推後，AI 回傳了完全不同層次的問題：「完美運作」到底是什麼意思？我想要更多哪種讀者？那些理想讀者需要看到什麼才會轉換？<span class="highlight-concept">問題從「寫什麼」變成了「我到底在建什麼」</span>。</p>
+<p class="en-text">"What does 'working perfectly' mean? Revenue target? Subscriber count? Reader impact? Which readers do I want more of? Which readers am I okay losing? What would those ideal readers need to see to convert? ...Most stuck-ness isn't 'I don't know what to do next.' It's 'I don't know what I'm trying to build.'"</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">作者總結的關鍵學習：<span class="highlight-key">這些問題幫他釐清成功的定義、他願意為此犧牲什麼、以及在開始優化戰術之前先面對成功的真實樣貌</span>。</p>
+<p class="en-text">"All these questions help me clarify what success means, what I'm willing to sacrifice for it, and force me to confront what success actually looks like before I start optimizing tactics."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-code">
+<div class="info-box-header">💻 Prompt Template</div>
+<div class="info-box-content">
+<div class="prompt-block">"If I'd already solved [your problem] perfectly, what questions would I have needed to answer along the way?"
 
 Example:
 "If my newsletter was working perfectly in 6 months — growing steadily, converting well, and readers loved it — what questions would I have needed to answer to get there?"</div>
-                    </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-                    <div class="info-box-content">
-                        這個技巧有雙重功能：(1) <strong>強迫你定義「解決了」到底是什麼意思</strong>（營收目標？讀者數？影響力？），(2) 揭露從現在到目標之間的知識缺口。很多人跳過了定義成功這一步，直接開始優化戰術。<br><br>
-                        <em style="color: #64748b; font-size: 0.85rem;">"This does two things: Forces you to define what 'solved' actually means (you'd be surprised how often we skip this); Reveals the knowledge gaps between where you are and where you want to be."</em>
-                    </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務結果 - 作者的轉換率案例</div>
-                    <div class="info-box-content">
-                        作者最終的結果：透過問題驅動的方法，他發現真正的阻擋點是「決策癱瘓」而非缺乏價值或信任。於是他優先執行了社會證明和限時折扣（兩者都降低決策摩擦），而非一次推動全部 5 個戰術。問題給了他判斷標準，知道該先做什麼、成功長什麼樣子、以及哪些指標真正重要。<br><br>
-                        <em style="color: #64748b; font-size: 0.85rem;">"The problem was decision paralysis. ...I didn't need all 5 tactics. I needed to understand which ones addressed the real constraint. ...The questions unlocked my clarity. They gave me the criteria to know WHICH tactics to implement first, WHAT success looks like, and WHICH metrics actually matter."</em>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== PART V: Turn Into Experiments ==================== -->
-    <div class="content-section">
-        <div class="section-header">
-            <h2>Part V: 實驗驗證 - Turn Questions Into Experiments</h2>
-            <div class="section-sub">Technique 5: Don't just think — test</div>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">沒有實驗的問題只是有趣的想法。生成問題後，接著問：<span class="highlight-key">「如果我不知道這個問題的答案，最快的方法是什麼？」</span></p>
-                    <p class="en-text">"Questions without experiments are just interesting thoughts. ...Ask: 'If I don't know the answer to [question], what's the fastest way to find out?'"</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">作者的實際案例：他不確定人們不付費是因為「看不到價值」還是「看到價值但還不需要」。於是做了問卷調查，收到 160 個回覆。結果發現 <span class="highlight-concept">39% 的人是因為 AI 選項太多而決策癱瘓</span>，不是因為不認同價值。一個實驗、一個數據點，完全改變了內容策略 -- 從「更多 AI 工具推薦」轉向「如何用進階工作流簡化你的 AI 堆疊」。</p>
-                    <p class="en-text">"I did that survey. 160 responses. Turned out: 39% said they were overwhelmed by too many AI options. They weren't converting because they were decision-paralyzed, not because they didn't see value. ...Instead of 'here are more AI tools you need to use,' I shifted to 'here's how to simplify your AI stack with more advanced workflow.' One experiment. One answer. Complete strategy shift."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-code">
-                    <div class="info-box-header">&#x1F4BB; Prompt Template</div>
-                    <div class="info-box-content">
-                        <div class="prompt-block">"If I don't know the answer to [question], what's the fastest way to find out?"
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+                        這個技巧有雙重功能：(1) <strong>強迫你定義「解決了」到底是什麼意思</strong>（營收目標？讀者數？影響力？），(2) 揭露從現在到目標之間的知識缺口。很多人跳過了定義成功這一步，直接開始優化戰術。<br/><br/>
+<em style="color: #64748b; font-size: 0.85rem;">"This does two things: Forces you to define what 'solved' actually means (you'd be surprised how often we skip this); Reveals the knowledge gaps between where you are and where you want to be."</em>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務結果 - 作者的轉換率案例</div>
+<div class="info-box-content">
+                        作者最終的結果：透過問題驅動的方法，他發現真正的阻擋點是「決策癱瘓」而非缺乏價值或信任。於是他優先執行了社會證明和限時折扣（兩者都降低決策摩擦），而非一次推動全部 5 個戰術。問題給了他判斷標準，知道該先做什麼、成功長什麼樣子、以及哪些指標真正重要。<br/><br/>
+<em style="color: #64748b; font-size: 0.85rem;">"The problem was decision paralysis. ...I didn't need all 5 tactics. I needed to understand which ones addressed the real constraint. ...The questions unlocked my clarity. They gave me the criteria to know WHICH tactics to implement first, WHAT success looks like, and WHICH metrics actually matter."</em>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== PART V: Turn Into Experiments ==================== -->
+<div class="content-section">
+<div class="section-header">
+<h2>Part V: 實驗驗證 - Turn Questions Into Experiments</h2>
+<div class="section-sub">Technique 5: Don't just think — test</div>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">沒有實驗的問題只是有趣的想法。生成問題後，接著問：<span class="highlight-key">「如果我不知道這個問題的答案，最快的方法是什麼？」</span></p>
+<p class="en-text">"Questions without experiments are just interesting thoughts. ...Ask: 'If I don't know the answer to [question], what's the fastest way to find out?'"</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">作者的實際案例：他不確定人們不付費是因為「看不到價值」還是「看到價值但還不需要」。於是做了問卷調查，收到 160 個回覆。結果發現 <span class="highlight-concept">39% 的人是因為 AI 選項太多而決策癱瘓</span>，不是因為不認同價值。一個實驗、一個數據點，完全改變了內容策略 -- 從「更多 AI 工具推薦」轉向「如何用進階工作流簡化你的 AI 堆疊」。</p>
+<p class="en-text">"I did that survey. 160 responses. Turned out: 39% said they were overwhelmed by too many AI options. They weren't converting because they were decision-paralyzed, not because they didn't see value. ...Instead of 'here are more AI tools you need to use,' I shifted to 'here's how to simplify your AI stack with more advanced workflow.' One experiment. One answer. Complete strategy shift."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-code">
+<div class="info-box-header">💻 Prompt Template</div>
+<div class="info-box-content">
+<div class="prompt-block">"If I don't know the answer to [question], what's the fastest way to find out?"
 
 Example:
 Question: "Are people not converting because they don't see the value, or because they see it but don't need it yet?"
 
 → Experiment: Survey recent free and paid subscribers directly.</div>
-                    </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用 - CDMO 情境</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用 - CDMO 情境</div>
+<div class="info-box-content">
                         在導入新的 AI 工具時，不要花三個月做完整評估。先設計一個「最小可行實驗」：例如讓一位同事用 AI 輔助完成一份偏差調查報告，比較耗時和品質。一個小實驗的數據，勝過十份理論分析。
                     </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示 - Questions vs Answers 決策框架</div>
-                    <div class="info-box-content">
-                        <strong>何時用問題模式：</strong>你在同一個問題上嘗試多個方案後仍然卡住；即將做一個會影響好幾個月的決策；蒐集了很多建議卻沒執行；不知道之前的戰術為什麼失敗。<br><br>
-                        <strong>何時用答案模式：</strong>你已經做完研究只需要執行戰術；問題很直接（如 Python 語法）；犯錯成本低；可以快速迭代修正。<br><br>
-                        <em style="color: #64748b; font-size: 0.85rem;">"Use questions when: You're stuck on the same problem after trying multiple solutions; You're about to make a decision you'll live with for months. ...Use answers when: You've already done the research and just need execution tactics; It's a straightforward how-to question. ...The skill isn't using questions OR answers. It's knowing which mode you need. Most people default to answer-seeking because it feels faster. But when you're solving the wrong problem, fast execution is just fast failure."</em>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KEY TAKEAWAYS -->
-    <div class="takeaways">
-        <h2>Key Takeaways</h2>
-        <div class="takeaways-grid">
-            <div class="summary-card">
-                <h3>1. 答案給選項，問題給標準</h3>
-                <p>當你卡住時，缺的不是更多方案，而是選擇方案的判斷標準。改問「我需要回答哪些問題」是突破決策瓶頸的第一步。</p>
-            </div>
-            <div class="summary-card">
-                <h3>2. 分層提問挖出隱藏假設</h3>
-                <p>三層式提問（表面缺口 → 隱藏假設 → 專家模式識別）能讓你從不同深度看到同一個問題，避免在表面層打轉。</p>
-            </div>
-            <div class="summary-card">
-                <h3>3. 定義成功比優化戰術重要</h3>
-                <p>多數卡住不是「不知道下一步做什麼」，而是「不知道自己在建什麼」。從終態回推問題，強迫你先定義成功。</p>
-            </div>
-            <div class="summary-card">
-                <h3>4. 問題必須轉化為實驗</h3>
-                <p>沒有實驗的問題只是有趣的想法。一個問卷調查的 160 個回覆，比 50 個未執行的框架更有價值。</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- PRACTICE QUESTIONS -->
-    <div class="practice-section">
-        <h2>Practice Questions</h2>
-
-        <details class="question-accordion">
-            <summary class="question-header">
-                <span class="question-number">Q1</span>
-                <span class="question-type">概念理解</span>
-                <span class="question-text">作者說「Answers give you options, questions give you criteria」。請用你自己的一個決策經驗解釋這句話的意思。</span>
-                <span class="accordion-icon"></span>
-            </summary>
-            <div class="question-answer">
-                <p>核心區別在於：<strong>答案（options）增加你的選擇數量，問題（criteria）增加你的判斷能力</strong>。舉例：如果你在評估兩個 automation 平台（Make.com vs n8n），直接問 AI「哪個比較好」會得到各自的優缺點（options）。但問「我需要回答哪些問題才能選擇正確的平台」會得到判斷標準：你的團隊技術能力如何？需要處理多少 GMP 合規流程？預算限制是什麼？這些 criteria 幫你做出適合你情境的選擇，而不是依賴通用建議。</p>
-            </div>
-        </details>
-
-        <details class="question-accordion">
-            <summary class="question-header">
-                <span class="question-number">Q2</span>
-                <span class="question-type">產業應用</span>
-                <span class="question-text">你正在評估是否在 CDMO 的偏差調查流程中導入 AI 輔助。請使用「三層提問法」生成至少 3 層的問題。</span>
-                <span class="accordion-icon"></span>
-            </summary>
-            <div class="question-answer">
-                <p><strong>第一層</strong>（表面缺口）：目前偏差調查的平均耗時是多少？AI 能減少哪些重複性步驟？哪些調查類型最適合 AI 輔助？</p>
-                <p><strong>第二層</strong>（隱藏假設）：我們假設「更快」就是「更好」嗎？品質團隊會信任 AI 生成的初步分析嗎？21 CFR Part 11 對 AI 輔助文件有什麼限制？</p>
-                <p><strong>第三層</strong>（專家視角）：FDA 審查員看到 AI 輔助的偏差報告時會關注什麼？哪些 CDMO 已經成功導入 AI 調查工具？他們踩過哪些合規地雷？「copilot mode」在偏差調查中的人機分工界線在哪裡？</p>
-            </div>
-        </details>
-
-        <details class="question-accordion">
-            <summary class="question-header">
-                <span class="question-number">Q3</span>
-                <span class="question-type">批判思考</span>
-                <span class="question-text">這篇文章的框架有什麼限制？在什麼情況下「問問題」反而會成為拖延的藉口？</span>
-                <span class="accordion-icon"></span>
-            </summary>
-            <div class="question-answer">
-                <p>主要限制有三個：(1) <strong>無限遞迴風險</strong> -- 你可以無止境地「分層提問」而永遠不行動，作者自己也承認「這不是要你質疑一切，那只是偽裝成好看的分析癱瘓」；(2) <strong>適用範圍</strong> -- 這個框架適合策略性決策，但對於需要快速迭代的情境（如 A/B testing、MVP 開發），直接嘗試可能比深度提問更有效率；(3) <strong>問題品質依賴 AI</strong> -- AI 生成的問題仍受限於訓練資料，對你的特定產業情境（如 GMP 合規、PIC/S 稽核）可能缺乏精準度，你仍需用自己的專業判斷過濾問題品質。</p>
-            </div>
-        </details>
-    </div>
-
-    <!-- BOTTOM LINE -->
-    <div class="bottom-line">
-        <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">&#x2714; 核心洞察</div>
-            <div class="bottom-line-text">這篇文章的核心和我一直在實踐的「context over prompting」理念完全一致 -- 問題品質決定 AI 輸出品質。但它進一步系統化了「如何從要答案轉變為要問題」的方法論。對我而言，最大的啟發是「分層提問」和「借腦思考」的結合：在 CDMO 環境中，我可以讓 AI 同時從 FDA 審查員、客戶 QA、和設備工程師三個角度提問，快速建立多維度的風險評估框架。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
-            <div class="bottom-line-text">本週的具體行動：(1) 把我目前 COO 發展計畫中最卡的一個決策，用「反向回推法」重新框架 -- 先定義「5 年後理想的 COO 角色」長什麼樣子，再倒推需要回答的問題；(2) 在下一次 feasibility assessment 中，增加「借腦提問」步驟，用 3 個不同專家角色的 prompt 來擴展風險評估的視角。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">&#x26A0; 需要補充</div>
-            <div class="bottom-line-text">文章缺少的是「何時停止提問、開始行動」的明確判斷標準。作者提到了「Questions vs Answers」的使用時機，但沒有提供足夠的 guardrail 來防止分析癱瘓。另外，在高度監管環境中（如 GMP），有些決策框架已經被法規預先定義（如偏差分類標準），「提問法」需要和既有的 SOP 決策樹整合，而非取代。6 個月後重讀時提醒自己：檢查是否已將這些提問技巧整合進 Claude Project 的 System Prompt 中。</div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        <p>Document generated: 2026-02-19 | AI Expert Learning System v1.4</p>
-        <p>Source: <a href="https://aimakerlab.substack.com" target="_blank">AI Maker Labs</a> - Wyndo, Feb 17, 2026</p>
-        <p style="margin-top: 0.5rem; color: #94a3b8;">Suggested Chat Title: [Prompt] AI Question Generation - 用提問取代答案的系統</p>
-    </div>
-
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示 - Questions vs Answers 決策框架</div>
+<div class="info-box-content">
+<strong>何時用問題模式：</strong>你在同一個問題上嘗試多個方案後仍然卡住；即將做一個會影響好幾個月的決策；蒐集了很多建議卻沒執行；不知道之前的戰術為什麼失敗。<br/><br/>
+<strong>何時用答案模式：</strong>你已經做完研究只需要執行戰術；問題很直接（如 Python 語法）；犯錯成本低；可以快速迭代修正。<br/><br/>
+<em style="color: #64748b; font-size: 0.85rem;">"Use questions when: You're stuck on the same problem after trying multiple solutions; You're about to make a decision you'll live with for months. ...Use answers when: You've already done the research and just need execution tactics; It's a straightforward how-to question. ...The skill isn't using questions OR answers. It's knowing which mode you need. Most people default to answer-seeking because it feels faster. But when you're solving the wrong problem, fast execution is just fast failure."</em>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- KEY TAKEAWAYS -->
+<div class="takeaways">
+<h2>Key Takeaways</h2>
+<div class="takeaways-grid">
+<div class="summary-card">
+<h3>1. 答案給選項，問題給標準</h3>
+<p>當你卡住時，缺的不是更多方案，而是選擇方案的判斷標準。改問「我需要回答哪些問題」是突破決策瓶頸的第一步。</p>
+</div>
+<div class="summary-card">
+<h3>2. 分層提問挖出隱藏假設</h3>
+<p>三層式提問（表面缺口 → 隱藏假設 → 專家模式識別）能讓你從不同深度看到同一個問題，避免在表面層打轉。</p>
+</div>
+<div class="summary-card">
+<h3>3. 定義成功比優化戰術重要</h3>
+<p>多數卡住不是「不知道下一步做什麼」，而是「不知道自己在建什麼」。從終態回推問題，強迫你先定義成功。</p>
+</div>
+<div class="summary-card">
+<h3>4. 問題必須轉化為實驗</h3>
+<p>沒有實驗的問題只是有趣的想法。一個問卷調查的 160 個回覆，比 50 個未執行的框架更有價值。</p>
+</div>
+</div>
+</div>
+<!-- PRACTICE QUESTIONS -->
+<div class="practice-section">
+<h2>Practice Questions</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">作者說「Answers give you options, questions give you criteria」。請用你自己的一個決策經驗解釋這句話的意思。</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>核心區別在於：<strong>答案（options）增加你的選擇數量，問題（criteria）增加你的判斷能力</strong>。舉例：如果你在評估兩個 automation 平台（Make.com vs n8n），直接問 AI「哪個比較好」會得到各自的優缺點（options）。但問「我需要回答哪些問題才能選擇正確的平台」會得到判斷標準：你的團隊技術能力如何？需要處理多少 GMP 合規流程？預算限制是什麼？這些 criteria 幫你做出適合你情境的選擇，而不是依賴通用建議。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">你正在評估是否在 CDMO 的偏差調查流程中導入 AI 輔助。請使用「三層提問法」生成至少 3 層的問題。</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>第一層</strong>（表面缺口）：目前偏差調查的平均耗時是多少？AI 能減少哪些重複性步驟？哪些調查類型最適合 AI 輔助？</p>
+<p><strong>第二層</strong>（隱藏假設）：我們假設「更快」就是「更好」嗎？品質團隊會信任 AI 生成的初步分析嗎？21 CFR Part 11 對 AI 輔助文件有什麼限制？</p>
+<p><strong>第三層</strong>（專家視角）：FDA 審查員看到 AI 輔助的偏差報告時會關注什麼？哪些 CDMO 已經成功導入 AI 調查工具？他們踩過哪些合規地雷？「copilot mode」在偏差調查中的人機分工界線在哪裡？</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">這篇文章的框架有什麼限制？在什麼情況下「問問題」反而會成為拖延的藉口？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>主要限制有三個：(1) <strong>無限遞迴風險</strong> -- 你可以無止境地「分層提問」而永遠不行動，作者自己也承認「這不是要你質疑一切，那只是偽裝成好看的分析癱瘓」；(2) <strong>適用範圍</strong> -- 這個框架適合策略性決策，但對於需要快速迭代的情境（如 A/B testing、MVP 開發），直接嘗試可能比深度提問更有效率；(3) <strong>問題品質依賴 AI</strong> -- AI 生成的問題仍受限於訓練資料，對你的特定產業情境（如 GMP 合規、PIC/S 稽核）可能缺乏精準度，你仍需用自己的專業判斷過濾問題品質。</p>
+</div>
+</details>
+</div>
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">這篇文章的核心和我一直在實踐的「context over prompting」理念完全一致 -- 問題品質決定 AI 輸出品質。但它進一步系統化了「如何從要答案轉變為要問題」的方法論。對我而言，最大的啟發是「分層提問」和「借腦思考」的結合：在 CDMO 環境中，我可以讓 AI 同時從 FDA 審查員、客戶 QA、和設備工程師三個角度提問，快速建立多維度的風險評估框架。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">本週的具體行動：(1) 把我目前 COO 發展計畫中最卡的一個決策，用「反向回推法」重新框架 -- 先定義「5 年後理想的 COO 角色」長什麼樣子，再倒推需要回答的問題；(2) 在下一次 feasibility assessment 中，增加「借腦提問」步驟，用 3 個不同專家角色的 prompt 來擴展風險評估的視角。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">文章缺少的是「何時停止提問、開始行動」的明確判斷標準。作者提到了「Questions vs Answers」的使用時機，但沒有提供足夠的 guardrail 來防止分析癱瘓。另外，在高度監管環境中（如 GMP），有些決策框架已經被法規預先定義（如偏差分類標準），「提問法」需要和既有的 SOP 決策樹整合，而非取代。6 個月後重讀時提醒自己：檢查是否已將這些提問技巧整合進 Claude Project 的 System Prompt 中。</div>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="footer">
+<p>Document generated: 2026-02-19 | AI Expert Learning System v1.4</p>
+<p>Source: <a href="https://aimakerlab.substack.com" target="_blank">AI Maker Labs</a> - Wyndo, Feb 17, 2026</p>
+<p style="margin-top: 0.5rem; color: #94a3b8;">Suggested Chat Title: [Prompt] AI Question Generation - 用提問取代答案的系統</p>
+</footer>
 </div>
 </body>
 </html>

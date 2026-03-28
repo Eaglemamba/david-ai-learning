@@ -1,742 +1,518 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Harness Engineering - AI Agent 的韁繩工程學</title>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Harness Engineering - AI Agent 的韁繩工程學</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 <!-- Dashboard Index Meta -->
-<meta name="doc-date" content="2026-03-28">
-<meta name="doc-title" content="Harness Engineering - AI Agent 韁繩工程學">
-<meta name="doc-source" content="花叔 @AlchainHust / 綜合 OpenAI, Anthropic, LangChain, Mitchell Hashimoto">
-<meta name="doc-source-type" content="">
-<meta name="doc-tags" content="Agent,Framework,Tool,Automation">
-<meta name="doc-rating" content="4.3">
-<meta name="doc-summary" content="Harness Engineering 系統解析：從馬具比喻到三層架構，LangChain/OpenAI/Anthropic 實證，含 CDMO 合規類比。">
-<meta name="doc-file" content="2026-03-28_harness-engineering.html">
+<meta content="2026-03-28" name="doc-date"/>
+<meta content="Harness Engineering - AI Agent 韁繩工程學" name="doc-title"/>
+<meta content="花叔 @AlchainHust / 綜合 OpenAI, Anthropic, LangChain, Mitchell Hashimoto" name="doc-source"/>
+<meta content="" name="doc-source-type"/>
+<meta content="Agent,Framework,Tool,Automation" name="doc-tags"/>
+<meta content="4.3" name="doc-rating"/>
+<meta content="Harness Engineering 系統解析：從馬具比喻到三層架構，LangChain/OpenAI/Anthropic 實證，含 CDMO 合規類比。" name="doc-summary"/>
+<meta content="2026-03-28_harness-engineering.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
-/* === v1.4.3 MANDATORY PAGE LAYOUT === */
-body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
-
-.header {
-    text-align: center;
-    padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-    color: white;
-}
-
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-}
-
-/* Header Elements */
-.tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 500; }
-.tag-agent { background: #c7d2fe; color: #3730a3; }
-.tag-framework { background: #fde68a; color: #92400e; }
-.tag-tool { background: #fecdd3; color: #9f1239; }
-.tag-automation { background: #a7f3d0; color: #065f46; }
-.header h1 { font-size: 1.8rem; margin: 0 0 0.5rem 0; font-weight: 700; }
-.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
-.header .source { font-size: 0.85rem; opacity: 0.8; }
-
-/* Rating Bar */
-.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-.rating-stars { color: #f59e0b; letter-spacing: 1px; }
-.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-/* Executive Summary */
-.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
-.exec-summary h2 { color: #1e3a5f; font-size: 1.2rem; margin-top: 0; }
-.exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
-
-/* Learning Objectives */
-.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.objective-item .obj-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.objective-item .obj-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.25rem; }
-.objective-item .obj-desc { font-size: 0.85rem; color: #64748b; }
-
-/* Framework Visual */
-.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
-.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.framework-step { text-align: center; min-width: 120px; }
-.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-.framework-step-title { font-weight: 700; font-size: 0.95rem; }
-.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-/* Content Grid */
-.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
-.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
-.content-right { padding: 1.5rem; background: #f8fafc; }
-.section-label { font-size: 0.75rem; font-weight: 600; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-.part-title { font-size: 1.15rem; font-weight: 700; color: #1e3a5f; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
-
-/* Bilingual */
-.bilingual-block { margin-bottom: 1.25rem; }
-.zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
-.en-text { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
-
-/* Highlight */
-.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-/* Info Boxes */
-.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
-.info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-.info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
-.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-.box-opfin .info-box-header { background: #99f6e4; color: #134e4a; }
-.box-opfin .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
-
-/* Key Takeaways */
-.takeaways-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.summary-card .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.summary-card .card-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.5rem; }
-.summary-card .card-text { font-size: 0.9rem; color: #475569; line-height: 1.6; }
-
-/* Accordion */
-.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-.question-header::-webkit-details-marker { display: none; }
-.question-number { font-weight: 700; color: #6d28d9; }
-.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-details[open] .accordion-icon { transform: rotate(180deg); }
-.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-.question-answer p:last-child { margin-bottom: 0; }
-
-/* Bottom Line */
-.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
-.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-.bottom-line-item { margin-bottom: 1rem; }
-.bottom-line-item:last-child { margin-bottom: 0; }
-.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-/* Footer */
-.footer { text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-.footer a { color: #3b82f6; text-decoration: none; }
-
-/* Tabbed Content */
-.tab-container { margin: 1.5rem 0; }
-.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
-.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.9rem; }
-.tab-btn:hover { color: #334155; }
-.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* Data Table */
-.data-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
-.data-table th { background: #1e3a5f; color: white; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; }
-.data-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
-.data-table tr:nth-child(even) { background: #f8fafc; }
-
-/* Responsive */
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .content-grid { grid-template-columns: 1fr; }
-    .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
-    .objectives-grid { grid-template-columns: 1fr; }
-    .takeaways-grid { grid-template-columns: 1fr; }
-    .header h1 { font-size: 1.4rem; }
-}
-</style>
 </head>
 <body>
-
 <!-- Header -->
-<div class="header">
-    <div class="tag-container">
-        <span class="tag tag-agent">Agent</span>
-        <span class="tag tag-framework">Framework</span>
-        <span class="tag tag-tool">Tool</span>
-        <span class="tag tag-automation">Automation</span>
-    </div>
-    <h1>Harness Engineering</h1>
-    <div class="subtitle">AI Agent 的韁繩工程學 — 從 Prompt 到系統的範式轉移</div>
-    <div class="source">原文：花叔 @AlchainHust | 綜合：OpenAI, Anthropic, LangChain, Mitchell Hashimoto, Martin Fowler</div>
+<header class="header">
+<div class="tag-container">
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-framework">Framework</span>
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-automation">Automation</span>
 </div>
-
+<h1>Harness Engineering</h1>
+<div class="subtitle">AI Agent 的韁繩工程學 — 從 Prompt 到系統的範式轉移</div>
+<div class="source">原文：花叔 @AlchainHust | 綜合：OpenAI, Anthropic, LangChain, Mitchell Hashimoto, Martin Fowler</div>
+</header>
 <!-- Container -->
 <div class="container">
-
 <!-- Executive Summary -->
 <div class="exec-summary">
-    <div class="rating-bar">
-        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.3/5</span>
-        <span class="rating-high">↑ 實務應用, 工具生態</span>
-        <span class="rating-low">↓ 技術深度（廣度優先）</span>
-    </div>
-    <h2>Executive Summary</h2>
-    <p>2026 年 AI 工程領域的最新關鍵詞：<span class="highlight-concept">Harness Engineering（韁繩工程）</span>。這不是另一個行銷新詞 — 它描述的是一個真實且正在發生的範式轉移：<span class="highlight-key">工程師的核心工作從「寫程式碼」轉向「設計 AI Agent 運行的環境」</span>。本文以花叔的微博長文為核心，交叉驗證 OpenAI Codex 團隊的百萬行程式碼實驗、Anthropic 三 Agent 架構、LangChain 的 Terminal Bench 突破（同模型僅換 harness，排名從 Top 30 跳到 Top 5），以及 Mitchell Hashimoto 的實踐哲學。核心洞察：模型可能不再是瓶頸，<span class="highlight-practical">你給它搭的環境才是</span>。</p>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.3/5</span>
+<span class="rating-high">↑ 實務應用, 工具生態</span>
+<span class="rating-low">↓ 技術深度（廣度優先）</span>
 </div>
-
+<h2>Executive Summary</h2>
+<p>2026 年 AI 工程領域的最新關鍵詞：<span class="highlight-concept">Harness Engineering（韁繩工程）</span>。這不是另一個行銷新詞 — 它描述的是一個真實且正在發生的範式轉移：<span class="highlight-key">工程師的核心工作從「寫程式碼」轉向「設計 AI Agent 運行的環境」</span>。本文以花叔的微博長文為核心，交叉驗證 OpenAI Codex 團隊的百萬行程式碼實驗、Anthropic 三 Agent 架構、LangChain 的 Terminal Bench 突破（同模型僅換 harness，排名從 Top 30 跳到 Top 5），以及 Mitchell Hashimoto 的實踐哲學。核心洞察：模型可能不再是瓶頸，<span class="highlight-practical">你給它搭的環境才是</span>。</p>
+</div>
 <!-- Learning Objectives -->
 <div class="objectives-grid">
-    <div class="objective-item">
-        <div class="obj-icon">&#x1f4cd;</div>
-        <div class="obj-title">理解三層定位</div>
-        <div class="obj-desc">Prompt / Context / Harness 的層級關係與各自邊界</div>
-    </div>
-    <div class="objective-item" style="border-left-color: #10b981;">
-        <div class="obj-icon">&#x1f4ca;</div>
-        <div class="obj-title">掌握實證數據</div>
-        <div class="obj-desc">LangChain、OpenAI、Anthropic 三方案例的具體成效與方法論</div>
-    </div>
-    <div class="objective-item" style="border-left-color: #8b5cf6;">
-        <div class="obj-icon">&#x1f527;</div>
-        <div class="obj-title">建構個人 Harness</div>
-        <div class="obj-desc">將 CLAUDE.md、Hooks、Skills 映射為 Harness 架構的組件</div>
-    </div>
+<div class="objective-item">
+<div class="obj-icon">📍</div>
+<div class="obj-title">理解三層定位</div>
+<div class="obj-desc">Prompt / Context / Harness 的層級關係與各自邊界</div>
 </div>
-
+<div class="objective-item" style="border-left-color: #10b981;">
+<div class="obj-icon">📊</div>
+<div class="obj-title">掌握實證數據</div>
+<div class="obj-desc">LangChain、OpenAI、Anthropic 三方案例的具體成效與方法論</div>
+</div>
+<div class="objective-item" style="border-left-color: #8b5cf6;">
+<div class="obj-icon">🔧</div>
+<div class="obj-title">建構個人 Harness</div>
+<div class="obj-desc">將 CLAUDE.md、Hooks、Skills 映射為 Harness 架構的組件</div>
+</div>
+</div>
 <!-- Framework Visual -->
 <div class="framework-visual">
-    <div class="framework-title">Prompt → Context → Harness：三層演進模型</div>
-    <div class="framework-steps">
-        <div class="framework-step">
-            <div class="framework-icon">&#x1f4ac;</div>
-            <div class="framework-step-title">Prompt Engineering</div>
-            <div class="framework-step-desc">你對馬說的話<br>「向左轉、跑快點」</div>
-        </div>
-        <div class="framework-arrow">&#x2192;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1f5fa;</div>
-            <div class="framework-step-title">Context Engineering</div>
-            <div class="framework-step-desc">幫馬看路的一切<br>地圖、路標、地形</div>
-        </div>
-        <div class="framework-arrow">&#x2192;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1f3c7;</div>
-            <div class="framework-step-title">Harness Engineering</div>
-            <div class="framework-step-desc">韁繩、馬鞍、圍欄、道路<br>讓十匹馬同時安全跑起來</div>
-        </div>
-    </div>
+<div class="framework-title">Prompt → Context → Harness：三層演進模型</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">💬</div>
+<div class="framework-step-title">Prompt Engineering</div>
+<div class="framework-step-desc">你對馬說的話<br/>「向左轉、跑快點」</div>
 </div>
-
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🗺</div>
+<div class="framework-step-title">Context Engineering</div>
+<div class="framework-step-desc">幫馬看路的一切<br/>地圖、路標、地形</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🏇</div>
+<div class="framework-step-title">Harness Engineering</div>
+<div class="framework-step-desc">韁繩、馬鞍、圍欄、道路<br/>讓十匹馬同時安全跑起來</div>
+</div>
+</div>
+</div>
 <!-- TABBED CONTENT: 7 Parts grouped into 3 tabs -->
 <div class="tab-container">
-    <div class="tab-nav">
-        <button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">概念基礎 (I-II)</button>
-        <button class="tab-btn" onclick="switchTab(event, 'tab-evidence')">實證案例 (III-V)</button>
-        <button class="tab-btn" onclick="switchTab(event, 'tab-practice')">實踐與反思 (VI-VII)</button>
-    </div>
-
-    <!-- TAB 1: Foundation -->
-    <div id="tab-foundation" class="tab-content active">
-
+<div class="tab-nav">
+<button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">概念基礎 (I-II)</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-evidence')">實證案例 (III-V)</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-practice')">實踐與反思 (VI-VII)</button>
+</div>
+<!-- TAB 1: Foundation -->
+<div class="tab-content active" id="tab-foundation">
 <!-- Part I -->
 <div class="content-grid">
 <div class="content-left">
-    <div class="section-label">Part I</div>
-    <div class="part-title">又一個新詞？Harness Engineering 的定義與定位</div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">Harness 這個詞的英文原意是<span class="highlight-concept">馬具、韁繩</span>。不是馬本身，是套在馬身上讓它能拉車、能被引導的那整套東西。沒有它，馬就是一匹亂跑的野馬，力氣再大也白搭。</p>
-        <p class="en-text">"Harness" — not the horse itself, but everything you put on the horse so it can pull a cart and be guided.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">三層關係很好懂：<span class="highlight-key">Prompt 管你問什麼，Context 管你給模型看什麼，Harness 管整個東西怎麼運轉</span>。Context 是 Harness 的一部分，Harness 還多管了約束、反饋和品質檢查。</p>
-        <p class="en-text">Prompt governs what you ask; Context governs what you show the model; Harness governs how the whole thing runs.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">這個詞的結晶時刻來自 2026 年 2 月，Mitchell Hashimoto — HashiCorp 共同創辦人、Terraform 創造者 — 發了一篇部落格文章，首次給這個實踐命名。</p>
-        <p class="en-text">"It is the idea that anytime you find an agent makes a mistake, you take the time to engineer a solution such that the agent never makes that mistake again."</p>
-    </div>
+<div class="section-label">Part I</div>
+<div class="part-title">又一個新詞？Harness Engineering 的定義與定位</div>
+<div class="bilingual-block">
+<p class="zh-text">Harness 這個詞的英文原意是<span class="highlight-concept">馬具、韁繩</span>。不是馬本身，是套在馬身上讓它能拉車、能被引導的那整套東西。沒有它，馬就是一匹亂跑的野馬，力氣再大也白搭。</p>
+<p class="en-text">"Harness" — not the horse itself, but everything you put on the horse so it can pull a cart and be guided.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">三層關係很好懂：<span class="highlight-key">Prompt 管你問什麼，Context 管你給模型看什麼，Harness 管整個東西怎麼運轉</span>。Context 是 Harness 的一部分，Harness 還多管了約束、反饋和品質檢查。</p>
+<p class="en-text">Prompt governs what you ask; Context governs what you show the model; Harness governs how the whole thing runs.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">這個詞的結晶時刻來自 2026 年 2 月，Mitchell Hashimoto — HashiCorp 共同創辦人、Terraform 創造者 — 發了一篇部落格文章，首次給這個實踐命名。</p>
+<p class="en-text">"It is the idea that anytime you find an agent makes a mistake, you take the time to engineer a solution such that the agent never makes that mistake again."</p>
+</div>
 </div>
 <div class="content-right">
-    <div class="info-box box-analogy">
-        <div class="info-box-header">&#x1f4a1; 比喻說明</div>
-        <div class="info-box-content">
-            <p><strong>馬具比喻的精準之處：</strong></p>
-            <p>Prompt = 對馬的口令<br>Context = 馬看到的路<br>Harness = 韁繩 + 馬鞍 + 圍欄 + 道路本身</p>
-            <p>沒有 Harness，你可以對馬大喊（好 prompt）、給它地圖（好 context），但十匹馬同時跑起來時，沒有韁繩和圍欄，就是混亂。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-compare">
-        <div class="info-box-header">&#x2696;&#xFE0F; 工具比較</div>
-        <div class="info-box-content">
-            <table class="data-table">
-                <tr><th>層級</th><th>管什麼</th><th>範例</th></tr>
-                <tr><td>Prompt</td><td>單次指令</td><td>「修復這個 bug」</td></tr>
-                <tr><td>Context</td><td>模型看到的資訊</td><td>CLAUDE.md、RAG、知識庫</td></tr>
-                <tr><td>Harness</td><td>整套運行系統</td><td>Hooks、Skills、CI/CD 檢查、權限模型</td></tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="info-box box-key">
-        <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-        <div class="info-box-content">
-            <p><strong>HumanLayer 的定位：</strong>Harness Engineering 是 Context Engineering 的子集 — 專注於利用 harness 配置點（系統提示詞、工具/MCP、context、sub-agents）來管理 coding agent 的 context window。</p>
-        </div>
-    </div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p><strong>馬具比喻的精準之處：</strong></p>
+<p>Prompt = 對馬的口令<br/>Context = 馬看到的路<br/>Harness = 韁繩 + 馬鞍 + 圍欄 + 道路本身</p>
+<p>沒有 Harness，你可以對馬大喊（好 prompt）、給它地圖（好 context），但十匹馬同時跑起來時，沒有韁繩和圍欄，就是混亂。</p>
 </div>
 </div>
-
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 工具比較</div>
+<div class="info-box-content">
+<table class="data-table">
+<tr><th>層級</th><th>管什麼</th><th>範例</th></tr>
+<tr><td>Prompt</td><td>單次指令</td><td>「修復這個 bug」</td></tr>
+<tr><td>Context</td><td>模型看到的資訊</td><td>CLAUDE.md、RAG、知識庫</td></tr>
+<tr><td>Harness</td><td>整套運行系統</td><td>Hooks、Skills、CI/CD 檢查、權限模型</td></tr>
+</table>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p><strong>HumanLayer 的定位：</strong>Harness Engineering 是 Context Engineering 的子集 — 專注於利用 harness 配置點（系統提示詞、工具/MCP、context、sub-agents）來管理 coding agent 的 context window。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- Part II -->
 <div class="content-grid">
 <div class="content-left">
-    <div class="section-label">Part II</div>
-    <div class="part-title">命名的價值 — 不是發明，是意識覺醒</div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">AI 圈不是發明了 Harness Engineering，是<span class="highlight-key">終於意識到自己需要學幾十年前就有的工程紀律</span>。航天工程師 60 年前就在做類似的事。NASA 讓飛船自動執行任務，圍繞自動化系統設計的約束、反饋循環、冗餘檢查、異常處理，和今天說的 harness 沒有本質區別。</p>
-        <p class="en-text">AI didn't invent harness engineering — it finally realized it needs engineering discipline that's existed for decades.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">但命名還是有價值的。當一群人各自在做類似的事，沒有共同的詞來說，<span class="highlight-concept">經驗就傳不開</span>。就像 Vibe Coding，你可以笑它，但它確實讓一種做法變成了可以討論的東西。</p>
-        <p class="en-text">When a group of people are all doing similar things without a shared word, experience can't spread.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">Harness Engineering 也一樣。價值不在於發明了什麼，在於讓一群人意識到：<span class="highlight-key">自己工作的重心變了</span>。</p>
-        <p class="en-text">The value isn't what it invented, but making people realize: the center of gravity of their work has shifted.</p>
-    </div>
+<div class="section-label">Part II</div>
+<div class="part-title">命名的價值 — 不是發明，是意識覺醒</div>
+<div class="bilingual-block">
+<p class="zh-text">AI 圈不是發明了 Harness Engineering，是<span class="highlight-key">終於意識到自己需要學幾十年前就有的工程紀律</span>。航天工程師 60 年前就在做類似的事。NASA 讓飛船自動執行任務，圍繞自動化系統設計的約束、反饋循環、冗餘檢查、異常處理，和今天說的 harness 沒有本質區別。</p>
+<p class="en-text">AI didn't invent harness engineering — it finally realized it needs engineering discipline that's existed for decades.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">但命名還是有價值的。當一群人各自在做類似的事，沒有共同的詞來說，<span class="highlight-concept">經驗就傳不開</span>。就像 Vibe Coding，你可以笑它，但它確實讓一種做法變成了可以討論的東西。</p>
+<p class="en-text">When a group of people are all doing similar things without a shared word, experience can't spread.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">Harness Engineering 也一樣。價值不在於發明了什麼，在於讓一群人意識到：<span class="highlight-key">自己工作的重心變了</span>。</p>
+<p class="en-text">The value isn't what it invented, but making people realize: the center of gravity of their work has shifted.</p>
+</div>
 </div>
 <div class="content-right">
-    <div class="info-box box-concept">
-        <div class="info-box-header">&#x1f4da; 核心概念</div>
-        <div class="info-box-content">
-            <p><strong>命名時間線：</strong></p>
-            <p>2020：EleutherAI 的 Language Model Evaluation Harness（測試框架意義）</p>
-            <p>2025/11：Anthropic 稱 Claude Agent SDK 為「general-purpose agent harness」</p>
-            <p>2026/01：Aakash Gupta 宣告「2025 是 Agents，2026 是 Agent Harnesses」</p>
-            <p>2026/02：Mitchell Hashimoto 正式命名 Harness Engineering</p>
-            <p>2026/02：OpenAI 發表 Codex harness 實戰報告</p>
-            <p>2026/02：Martin Fowler 發表分析長文</p>
-        </div>
-    </div>
-
-    <div class="info-box box-opfin">
-        <div class="info-box-header">&#x1f3ed; CDMO 類比</div>
-        <div class="info-box-content">
-            <p><strong>命名 = SOP 編號系統</strong></p>
-            <p>GMP 環境中，每個作業流程都有 SOP 編號。不是因為流程本身很新 — 操作員早就在做了。是因為一旦命名、編號、標準化，就能：跨站點傳承、用於偏差調查引用、建立訓練課程。Harness Engineering 現在走的是同一條路。</p>
-        </div>
-    </div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<p><strong>命名時間線：</strong></p>
+<p>2020：EleutherAI 的 Language Model Evaluation Harness（測試框架意義）</p>
+<p>2025/11：Anthropic 稱 Claude Agent SDK 為「general-purpose agent harness」</p>
+<p>2026/01：Aakash Gupta 宣告「2025 是 Agents，2026 是 Agent Harnesses」</p>
+<p>2026/02：Mitchell Hashimoto 正式命名 Harness Engineering</p>
+<p>2026/02：OpenAI 發表 Codex harness 實戰報告</p>
+<p>2026/02：Martin Fowler 發表分析長文</p>
 </div>
 </div>
-
-    </div><!-- end tab-foundation -->
-
-    <!-- TAB 2: Evidence -->
-    <div id="tab-evidence" class="tab-content">
+<div class="info-box box-opfin">
+<div class="info-box-header">🏭 CDMO 類比</div>
+<div class="info-box-content">
+<p><strong>命名 = SOP 編號系統</strong></p>
+<p>GMP 環境中，每個作業流程都有 SOP 編號。不是因為流程本身很新 — 操作員早就在做了。是因為一旦命名、編號、標準化，就能：跨站點傳承、用於偏差調查引用、建立訓練課程。Harness Engineering 現在走的是同一條路。</p>
+</div>
+</div>
+</div>
+</div>
+</div><!-- end tab-foundation -->
+<!-- TAB 2: Evidence -->
+<div class="tab-content" id="tab-evidence">
 <!-- Part III: LangChain -->
 <div class="content-grid">
 <div class="content-left">
-    <div class="section-label">Part III</div>
-    <div class="part-title">LangChain 實證 — 同模型、換韁繩、排名飆升</div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">最硬的一個數據：LangChain 的 coding agent 在 Terminal Bench 2.0 上，成績從 <span class="highlight-key">52.8% 漲到了 66.5%</span>，排名從 Top 30 跳到 Top 5。重點是：<span class="highlight-concept">模型完全沒換</span>。他們只改了三樣東西：系統提示詞、工具配置、中間件鉤子。</p>
-        <p class="en-text">"We used a simple recipe to iteratively improve deepagents-cli 13.7 points from 52.8 to 66.5 on Terminal Bench 2.0."</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">同一個模型（GPT-5.2-Codex），換了套韁繩，成績天差地別。<span class="highlight-key">模型可能已經不是瓶頸了。瓶頸是你給它搭了個什麼樣的環境。</span></p>
-        <p class="en-text">Same model. Different harness. Dramatically better results.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">最常見的失敗模式幾乎是搞笑的：Agent 寫完程式碼，重新讀一遍自己的程式碼，覺得看起來不錯，就停了。<span class="highlight-practical">自我驗證迴圈（build-verify-fix loop）</span>是最關鍵的改善。</p>
-        <p class="en-text">Agents would write a solution, re-read their own code, decide it looked fine, and stop.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">他們還發現了「推理三明治」策略 — 規劃和驗證用高推理預算，執行用中等推理預算。全程開最高反而因為超時而表現更差（53.9% vs 63.6%）。</p>
-        <p class="en-text">"A reasoning sandwich — high reasoning for planning and verification, with medium for execution — yielded the best results."</p>
-    </div>
+<div class="section-label">Part III</div>
+<div class="part-title">LangChain 實證 — 同模型、換韁繩、排名飆升</div>
+<div class="bilingual-block">
+<p class="zh-text">最硬的一個數據：LangChain 的 coding agent 在 Terminal Bench 2.0 上，成績從 <span class="highlight-key">52.8% 漲到了 66.5%</span>，排名從 Top 30 跳到 Top 5。重點是：<span class="highlight-concept">模型完全沒換</span>。他們只改了三樣東西：系統提示詞、工具配置、中間件鉤子。</p>
+<p class="en-text">"We used a simple recipe to iteratively improve deepagents-cli 13.7 points from 52.8 to 66.5 on Terminal Bench 2.0."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">同一個模型（GPT-5.2-Codex），換了套韁繩，成績天差地別。<span class="highlight-key">模型可能已經不是瓶頸了。瓶頸是你給它搭了個什麼樣的環境。</span></p>
+<p class="en-text">Same model. Different harness. Dramatically better results.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">最常見的失敗模式幾乎是搞笑的：Agent 寫完程式碼，重新讀一遍自己的程式碼，覺得看起來不錯，就停了。<span class="highlight-practical">自我驗證迴圈（build-verify-fix loop）</span>是最關鍵的改善。</p>
+<p class="en-text">Agents would write a solution, re-read their own code, decide it looked fine, and stop.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">他們還發現了「推理三明治」策略 — 規劃和驗證用高推理預算，執行用中等推理預算。全程開最高反而因為超時而表現更差（53.9% vs 63.6%）。</p>
+<p class="en-text">"A reasoning sandwich — high reasoning for planning and verification, with medium for execution — yielded the best results."</p>
+</div>
 </div>
 <div class="content-right">
-    <div class="info-box box-key">
-        <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-        <div class="info-box-content">
-            <p><strong>LangChain 的三層 Harness 改善：</strong></p>
-            <p>1. <strong>系統提示詞</strong>：強調 build-verify-fix loop</p>
-            <p>2. <strong>Context 注入</strong>：LocalContextMiddleware 預載環境資訊（目錄結構、工具可用性）</p>
-            <p>3. <strong>中間件</strong>：LoopDetectionMiddleware（防無限重試）+ PreCompletionChecklistMiddleware（強制驗證）</p>
-        </div>
-    </div>
-
-    <div class="info-box box-concept">
-        <div class="info-box-header">&#x1f4da; 核心概念</div>
-        <div class="info-box-content">
-            <p><strong>Agent 也需要「新人 Onboarding」</strong></p>
-            <p>Agent 花大量時間摸索工作環境 — 目錄結構、可用工具、Python 版本。LangChain 的解法：開機時直接注入環境 context，減少探索錯誤。這和你給新進 QA 人員一份標準化的環境設定文件是同一個道理。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-opfin">
-        <div class="info-box-header">&#x1f3ed; CDMO 類比</div>
-        <div class="info-box-content">
-            <p><strong>Build-Verify-Fix = IPC + Hold/Review Point</strong></p>
-            <p>GMP 批次記錄中的 In-Process Check (IPC) + Hold Point 就是 harness 的驗證迴圈。操作員不能「覺得看起來不錯就放行」— 必須有獨立的 QA 驗證。Agent 自我審查和人自我審查一樣不可靠。</p>
-        </div>
-    </div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p><strong>LangChain 的三層 Harness 改善：</strong></p>
+<p>1. <strong>系統提示詞</strong>：強調 build-verify-fix loop</p>
+<p>2. <strong>Context 注入</strong>：LocalContextMiddleware 預載環境資訊（目錄結構、工具可用性）</p>
+<p>3. <strong>中間件</strong>：LoopDetectionMiddleware（防無限重試）+ PreCompletionChecklistMiddleware（強制驗證）</p>
 </div>
 </div>
-
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<p><strong>Agent 也需要「新人 Onboarding」</strong></p>
+<p>Agent 花大量時間摸索工作環境 — 目錄結構、可用工具、Python 版本。LangChain 的解法：開機時直接注入環境 context，減少探索錯誤。這和你給新進 QA 人員一份標準化的環境設定文件是同一個道理。</p>
+</div>
+</div>
+<div class="info-box box-opfin">
+<div class="info-box-header">🏭 CDMO 類比</div>
+<div class="info-box-content">
+<p><strong>Build-Verify-Fix = IPC + Hold/Review Point</strong></p>
+<p>GMP 批次記錄中的 In-Process Check (IPC) + Hold Point 就是 harness 的驗證迴圈。操作員不能「覺得看起來不錯就放行」— 必須有獨立的 QA 驗證。Agent 自我審查和人自我審查一樣不可靠。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- Part IV: OpenAI -->
 <div class="content-grid">
 <div class="content-left">
-    <div class="section-label">Part IV</div>
-    <div class="part-title">OpenAI Codex — 百萬行程式碼的實驗與質疑</div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">OpenAI 自己的實驗：Codex 團隊 3 個工程師，後來擴到 7 個，5 個月，用 Codex 搞出了一個<span class="highlight-key">100 萬行程式碼的 beta 產品</span>。零行人工手寫。約 1500 個 PR 合併，每個工程師每天 3.5 個 PR，估算速度是傳統方式的 10 倍。</p>
-        <p class="en-text">"We intentionally chose this constraint so we would build what was necessary to increase engineering velocity by orders of magnitude."</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">但花叔提出了一個沒人聊的問題：<span class="highlight-key">速度快了 10 倍，不代表產出好了 10 倍</span>。每人每天 3.5 個 PR，誰在做代碼審查？六個月後需要改需求的時候，這 100 萬行好改嗎？</p>
-        <p class="en-text">Speed 10x doesn't mean output quality 10x. Who's doing code review at 3.5 PRs per person per day?</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">AI 寫的程式碼和人寫的有個關鍵區別：<span class="highlight-concept">人寫程式碼時會無意識地留下結構線索</span>，方便將來的自己理解。AI 不會。它只解決眼前的任務，不考慮六個月後維護這段程式碼的人會不會罵娘。</p>
-        <p class="en-text">Humans leave structural clues unconsciously. AI only solves the immediate task.</p>
-    </div>
+<div class="section-label">Part IV</div>
+<div class="part-title">OpenAI Codex — 百萬行程式碼的實驗與質疑</div>
+<div class="bilingual-block">
+<p class="zh-text">OpenAI 自己的實驗：Codex 團隊 3 個工程師，後來擴到 7 個，5 個月，用 Codex 搞出了一個<span class="highlight-key">100 萬行程式碼的 beta 產品</span>。零行人工手寫。約 1500 個 PR 合併，每個工程師每天 3.5 個 PR，估算速度是傳統方式的 10 倍。</p>
+<p class="en-text">"We intentionally chose this constraint so we would build what was necessary to increase engineering velocity by orders of magnitude."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">但花叔提出了一個沒人聊的問題：<span class="highlight-key">速度快了 10 倍，不代表產出好了 10 倍</span>。每人每天 3.5 個 PR，誰在做代碼審查？六個月後需要改需求的時候，這 100 萬行好改嗎？</p>
+<p class="en-text">Speed 10x doesn't mean output quality 10x. Who's doing code review at 3.5 PRs per person per day?</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">AI 寫的程式碼和人寫的有個關鍵區別：<span class="highlight-concept">人寫程式碼時會無意識地留下結構線索</span>，方便將來的自己理解。AI 不會。它只解決眼前的任務，不考慮六個月後維護這段程式碼的人會不會罵娘。</p>
+<p class="en-text">Humans leave structural clues unconsciously. AI only solves the immediate task.</p>
+</div>
 </div>
 <div class="content-right">
-    <div class="info-box box-key">
-        <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示 — 花叔的質疑（需打折）</div>
-        <div class="info-box-content">
-            <p><strong>OpenAI 團隊的 Harness 三層設計（Martin Fowler 整理）：</strong></p>
-            <p>1. <strong>上下文工程</strong>：持續更新的程式碼庫知識庫 + 即時系統狀態。給模型地圖，不是 1000 頁說明書。</p>
-            <p>2. <strong>架構約束</strong>：Linter、結構測試、編譯檢查 — 硬規則，不遵守就不讓過。</p>
-            <p>3. <strong>垃圾回收</strong>：專職 Agent 週期性清理文檔矛盾和架構違規。一個專職找碴的 AI。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-practical">
-        <div class="info-box-header">&#x1f6e0;&#xFE0F; 實務應用</div>
-        <div class="info-box-content">
-            <p><strong>「AI Slop」清理機制：</strong></p>
-            <p>OpenAI 團隊最初每週五花 20% 時間手動清理「AI slop」。後來將清理規則編碼為「golden principles」直接寫入 repo，並建立自動化清理流程。這是 Harness 的核心精神：<span class="highlight-practical">把人工查核變成系統約束</span>。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-analogy">
-        <div class="info-box-header">&#x1f4a1; 2-3x 折扣提醒</div>
-        <div class="info-box-content">
-            <p>OpenAI 對自己產品的成功案例有明顯利益衝突。「100 萬行零手寫」的說法需要打折：(1) 程式碼品質未經第三方審計 (2) 長期維護成本未知 (3)「每天 3.5 PR」的可持續性存疑。Martin Fowler 本人也坦言：「with respect to the author and the team, OpenAI do have a vested interest in us believing in AI-maintainable code.」</p>
-        </div>
-    </div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示 — 花叔的質疑（需打折）</div>
+<div class="info-box-content">
+<p><strong>OpenAI 團隊的 Harness 三層設計（Martin Fowler 整理）：</strong></p>
+<p>1. <strong>上下文工程</strong>：持續更新的程式碼庫知識庫 + 即時系統狀態。給模型地圖，不是 1000 頁說明書。</p>
+<p>2. <strong>架構約束</strong>：Linter、結構測試、編譯檢查 — 硬規則，不遵守就不讓過。</p>
+<p>3. <strong>垃圾回收</strong>：專職 Agent 週期性清理文檔矛盾和架構違規。一個專職找碴的 AI。</p>
 </div>
 </div>
-
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用</div>
+<div class="info-box-content">
+<p><strong>「AI Slop」清理機制：</strong></p>
+<p>OpenAI 團隊最初每週五花 20% 時間手動清理「AI slop」。後來將清理規則編碼為「golden principles」直接寫入 repo，並建立自動化清理流程。這是 Harness 的核心精神：<span class="highlight-practical">把人工查核變成系統約束</span>。</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 2-3x 折扣提醒</div>
+<div class="info-box-content">
+<p>OpenAI 對自己產品的成功案例有明顯利益衝突。「100 萬行零手寫」的說法需要打折：(1) 程式碼品質未經第三方審計 (2) 長期維護成本未知 (3)「每天 3.5 PR」的可持續性存疑。Martin Fowler 本人也坦言：「with respect to the author and the team, OpenAI do have a vested interest in us believing in AI-maintainable code.」</p>
+</div>
+</div>
+</div>
+</div>
 <!-- Part V: Anthropic -->
 <div class="content-grid">
 <div class="content-left">
-    <div class="section-label">Part V</div>
-    <div class="part-title">Anthropic 三 Agent 架構 — GAN 啟發的品質保證</div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">Anthropic 走了另一條路。他們搞了個<span class="highlight-concept">三 Agent 架構</span>：規劃者（Planner）負責把簡單指令擴展成詳細的產品規格，生成者（Generator）按迭代一次做一個功能，評估者（Evaluator）跑端到端測試。</p>
-        <p class="en-text">Planner → Generator → Evaluator: three agents, inspired by GANs (Generative Adversarial Networks).</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">靈感來自<span class="highlight-concept">生成對抗網路（GAN）</span>。訓練一個專門的評估者讓它一直挑刺，比讓生成者自己檢查自己管用得多。<span class="highlight-key">誰都不擅長批評自己，AI 也一樣。</span></p>
-        <p class="en-text">"When asked to evaluate work they've produced, agents tend to respond by confidently praising the work — even when, to a human observer, the quality is obviously mediocre."</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">他們還發現 Claude Sonnet 4.5 有「<span class="highlight-key">上下文焦慮</span>」。不是人焦慮，是模型焦慮。上下文太多，表現反而變差。壓縮不夠，必須定期清空重來。Harness 不是越大越好。</p>
-        <p class="en-text">"Context Anxiety" — when agents sense they're approaching context limits, they wrap up work prematurely.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">最重要的發現：<span class="highlight-practical">隨著模型進步，harness 應該變簡單而不是更複雜</span>。從 Claude Sonnet 4.5 升級到 Opus 4.6 後，他們移除了 sprint 分解機制，因為新模型可以連續兩小時保持連貫工作。</p>
-        <p class="en-text">"The space of interesting harness combinations doesn't shrink as models improve. Instead, it moves."</p>
-    </div>
+<div class="section-label">Part V</div>
+<div class="part-title">Anthropic 三 Agent 架構 — GAN 啟發的品質保證</div>
+<div class="bilingual-block">
+<p class="zh-text">Anthropic 走了另一條路。他們搞了個<span class="highlight-concept">三 Agent 架構</span>：規劃者（Planner）負責把簡單指令擴展成詳細的產品規格，生成者（Generator）按迭代一次做一個功能，評估者（Evaluator）跑端到端測試。</p>
+<p class="en-text">Planner → Generator → Evaluator: three agents, inspired by GANs (Generative Adversarial Networks).</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">靈感來自<span class="highlight-concept">生成對抗網路（GAN）</span>。訓練一個專門的評估者讓它一直挑刺，比讓生成者自己檢查自己管用得多。<span class="highlight-key">誰都不擅長批評自己，AI 也一樣。</span></p>
+<p class="en-text">"When asked to evaluate work they've produced, agents tend to respond by confidently praising the work — even when, to a human observer, the quality is obviously mediocre."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">他們還發現 Claude Sonnet 4.5 有「<span class="highlight-key">上下文焦慮</span>」。不是人焦慮，是模型焦慮。上下文太多，表現反而變差。壓縮不夠，必須定期清空重來。Harness 不是越大越好。</p>
+<p class="en-text">"Context Anxiety" — when agents sense they're approaching context limits, they wrap up work prematurely.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">最重要的發現：<span class="highlight-practical">隨著模型進步，harness 應該變簡單而不是更複雜</span>。從 Claude Sonnet 4.5 升級到 Opus 4.6 後，他們移除了 sprint 分解機制，因為新模型可以連續兩小時保持連貫工作。</p>
+<p class="en-text">"The space of interesting harness combinations doesn't shrink as models improve. Instead, it moves."</p>
+</div>
 </div>
 <div class="content-right">
-    <div class="info-box box-concept">
-        <div class="info-box-header">&#x1f4da; 核心概念</div>
-        <div class="info-box-content">
-            <p><strong>GAN 啟發的 Generator-Evaluator 分離</strong></p>
-            <p>Generator 寫程式碼前，先和 Evaluator 簽訂「sprint contract」— 約定完成標準。Evaluator 不看靜態程式碼，而是用 Playwright 瀏覽器自動化工具，像人類 QA 一樣實際操作應用。這解決了「自己查自己」的根本問題。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-opfin">
-        <div class="info-box-header">&#x1f3ed; CDMO 類比</div>
-        <div class="info-box-content">
-            <p><strong>Generator-Evaluator = 生產 + 獨立 QC</strong></p>
-            <p>GMP 的核心原則之一：<span class="highlight-key">生產人員不能同時擔任品質放行人員</span>。Anthropic 的三 Agent 架構完美映射這個原則。Generator = 生產操作員，Evaluator = QC 獨立檢驗。Sprint Contract = 批次記錄的接受標準。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-key">
-        <div class="info-box-header">&#x26A0;&#xFE0F; Tool Decay 原則</div>
-        <div class="info-box-content">
-            <p><strong>Harness 隨模型進化而簡化</strong></p>
-            <p>每個 harness 組件都編碼了一個假設：「模型自己做不好什麼」。當模型變強，這些假設必須重新測試。Anthropic 自己實踐了這一點 — Opus 4.6 推出時，他們移除了 sprint 分解，改為利用模型內建的 AI 功能。這就是 Tool Decay 原則的最佳案例。</p>
-        </div>
-    </div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<p><strong>GAN 啟發的 Generator-Evaluator 分離</strong></p>
+<p>Generator 寫程式碼前，先和 Evaluator 簽訂「sprint contract」— 約定完成標準。Evaluator 不看靜態程式碼，而是用 Playwright 瀏覽器自動化工具，像人類 QA 一樣實際操作應用。這解決了「自己查自己」的根本問題。</p>
 </div>
 </div>
-    </div>
-
-    <!-- TAB 3: Practice -->
-    <div id="tab-practice" class="tab-content">
+<div class="info-box box-opfin">
+<div class="info-box-header">🏭 CDMO 類比</div>
+<div class="info-box-content">
+<p><strong>Generator-Evaluator = 生產 + 獨立 QC</strong></p>
+<p>GMP 的核心原則之一：<span class="highlight-key">生產人員不能同時擔任品質放行人員</span>。Anthropic 的三 Agent 架構完美映射這個原則。Generator = 生產操作員，Evaluator = QC 獨立檢驗。Sprint Contract = 批次記錄的接受標準。</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Tool Decay 原則</div>
+<div class="info-box-content">
+<p><strong>Harness 隨模型進化而簡化</strong></p>
+<p>每個 harness 組件都編碼了一個假設：「模型自己做不好什麼」。當模型變強，這些假設必須重新測試。Anthropic 自己實踐了這一點 — Opus 4.6 推出時，他們移除了 sprint 分解，改為利用模型內建的 AI 功能。這就是 Tool Decay 原則的最佳案例。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 3: Practice -->
+<div class="tab-content" id="tab-practice">
 <!-- Part VI: Personal Practice -->
 <div class="content-grid">
 <div class="content-left">
-    <div class="section-label">Part VI</div>
-    <div class="part-title">個人實踐 — Harness 是長出來的，不是設計出來的</div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">花叔去年 8 月搭了 Claude Code 自動化寫作工作流。他的 CLAUDE.md 從一個簡單的規則文件，變成了一個<span class="highlight-concept">路由器</span>：判斷當前任務屬於哪個工作區，然後指向對應的規則。寫公眾號時不會被 iOS 開發的規則干擾。</p>
-        <p class="en-text">CLAUDE.md evolved from a simple rules file into a router — directing to the right workspace rules.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">Hooks 是另一層。在 agent 執行關鍵操作前後注入腳本。編輯檔案之前自動跑 linting，生成程式碼之後自動做型別檢查。<span class="highlight-key">這不是 prompt 裡寫的「請注意代碼規範」，是物理上攔住它，不合格就不讓過。建議和約束，完全兩回事。</span></p>
-        <p class="en-text">Hooks physically block the agent — unlike a prompt "suggestion", constraints are non-negotiable.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">Skills 解決了模組化的問題。每個 skill 是獨立的能力包。<span class="highlight-practical">平時不佔 context，需要時才調用</span>。路由器、hooks、skills、知識庫，加在一起就是一個 harness。沒人告訴他這叫什麼，它自己長出來的。</p>
-        <p class="en-text">Skills solve modularity — independent capability packages, loaded only when needed.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">和 Mitchell Hashimoto 的做法一樣：<span class="highlight-key">每次 agent 犯錯，就工程化一個方案，讓它再也犯不了同樣的錯</span>。他的 AGENTS.md 裡每一行都對應著 agent 過去犯過的一次錯。檔案是活的，一直在長。</p>
-        <p class="en-text">"Anytime you find an agent makes a mistake, you take the time to engineer a solution such that the agent never makes that mistake again."</p>
-    </div>
+<div class="section-label">Part VI</div>
+<div class="part-title">個人實踐 — Harness 是長出來的，不是設計出來的</div>
+<div class="bilingual-block">
+<p class="zh-text">花叔去年 8 月搭了 Claude Code 自動化寫作工作流。他的 CLAUDE.md 從一個簡單的規則文件，變成了一個<span class="highlight-concept">路由器</span>：判斷當前任務屬於哪個工作區，然後指向對應的規則。寫公眾號時不會被 iOS 開發的規則干擾。</p>
+<p class="en-text">CLAUDE.md evolved from a simple rules file into a router — directing to the right workspace rules.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">Hooks 是另一層。在 agent 執行關鍵操作前後注入腳本。編輯檔案之前自動跑 linting，生成程式碼之後自動做型別檢查。<span class="highlight-key">這不是 prompt 裡寫的「請注意代碼規範」，是物理上攔住它，不合格就不讓過。建議和約束，完全兩回事。</span></p>
+<p class="en-text">Hooks physically block the agent — unlike a prompt "suggestion", constraints are non-negotiable.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">Skills 解決了模組化的問題。每個 skill 是獨立的能力包。<span class="highlight-practical">平時不佔 context，需要時才調用</span>。路由器、hooks、skills、知識庫，加在一起就是一個 harness。沒人告訴他這叫什麼，它自己長出來的。</p>
+<p class="en-text">Skills solve modularity — independent capability packages, loaded only when needed.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">和 Mitchell Hashimoto 的做法一樣：<span class="highlight-key">每次 agent 犯錯，就工程化一個方案，讓它再也犯不了同樣的錯</span>。他的 AGENTS.md 裡每一行都對應著 agent 過去犯過的一次錯。檔案是活的，一直在長。</p>
+<p class="en-text">"Anytime you find an agent makes a mistake, you take the time to engineer a solution such that the agent never makes that mistake again."</p>
+</div>
 </div>
 <div class="content-right">
-    <div class="info-box box-practical">
-        <div class="info-box-header">&#x1f6e0;&#xFE0F; 實務應用 — 三步開始</div>
-        <div class="info-box-content">
-            <p><strong>1. 給地圖不給說明書</strong><br>CLAUDE.md 應該像地圖：專案結構、檔案關係、關鍵約束。不要把每步都寫死。AI 需要方向感，不需要僵化步驟。</p>
-            <p><strong>2. 每次犯錯加一條規則</strong><br>空檔案開始，agent 犯一個錯就加一條。三個月後那個檔案就是你的 harness。高度客製，因為全是你場景裡真實出過的問題。</p>
-            <p><strong>3. 讓 AI 查 AI</strong><br>Anthropic 的 Evaluator 思路。最簡單的做法：寫完後開一個新對話，把結果貼進去：「找出所有問題」。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-opfin">
-        <div class="info-box-header">&#x1f3ed; CDMO 類比</div>
-        <div class="info-box-content">
-            <p><strong>活的 CLAUDE.md = CAPA 驅動的 SOP 更新</strong></p>
-            <p>「每次犯錯加一條規則」就是 CAPA（矯正與預防措施）的精神。GMP 環境中，每個偏差調查的產出就是 SOP 更新或新增控制點。Hashimoto 的 AGENTS.md 和你的 CLAUDE.md 本質上就是一份持續被 CAPA 驅動的 SOP。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-compare">
-        <div class="info-box-header">&#x2696;&#xFE0F; 花叔 vs Hashimoto vs 你的 Harness</div>
-        <div class="info-box-content">
-            <table class="data-table">
-                <tr><th>組件</th><th>花叔</th><th>Hashimoto</th><th>David (CDMO)</th></tr>
-                <tr><td>路由器</td><td>CLAUDE.md</td><td>AGENTS.md</td><td>repo-registry.conf</td></tr>
-                <tr><td>約束</td><td>Hooks (lint)</td><td>CI/linter</td><td>Master Prompt 規則</td></tr>
-                <tr><td>模組化</td><td>Skills</td><td>多 checkout</td><td>Claude.ai Projects</td></tr>
-                <tr><td>品質</td><td>新對話查錯</td><td>競爭跑法</td><td>Dashboard + meta tags</td></tr>
-            </table>
-        </div>
-    </div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用 — 三步開始</div>
+<div class="info-box-content">
+<p><strong>1. 給地圖不給說明書</strong><br/>CLAUDE.md 應該像地圖：專案結構、檔案關係、關鍵約束。不要把每步都寫死。AI 需要方向感，不需要僵化步驟。</p>
+<p><strong>2. 每次犯錯加一條規則</strong><br/>空檔案開始，agent 犯一個錯就加一條。三個月後那個檔案就是你的 harness。高度客製，因為全是你場景裡真實出過的問題。</p>
+<p><strong>3. 讓 AI 查 AI</strong><br/>Anthropic 的 Evaluator 思路。最簡單的做法：寫完後開一個新對話，把結果貼進去：「找出所有問題」。</p>
 </div>
 </div>
-
+<div class="info-box box-opfin">
+<div class="info-box-header">🏭 CDMO 類比</div>
+<div class="info-box-content">
+<p><strong>活的 CLAUDE.md = CAPA 驅動的 SOP 更新</strong></p>
+<p>「每次犯錯加一條規則」就是 CAPA（矯正與預防措施）的精神。GMP 環境中，每個偏差調查的產出就是 SOP 更新或新增控制點。Hashimoto 的 AGENTS.md 和你的 CLAUDE.md 本質上就是一份持續被 CAPA 驅動的 SOP。</p>
+</div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 花叔 vs Hashimoto vs 你的 Harness</div>
+<div class="info-box-content">
+<table class="data-table">
+<tr><th>組件</th><th>花叔</th><th>Hashimoto</th><th>David (CDMO)</th></tr>
+<tr><td>路由器</td><td>CLAUDE.md</td><td>AGENTS.md</td><td>repo-registry.conf</td></tr>
+<tr><td>約束</td><td>Hooks (lint)</td><td>CI/linter</td><td>Master Prompt 規則</td></tr>
+<tr><td>模組化</td><td>Skills</td><td>多 checkout</td><td>Claude.ai Projects</td></tr>
+<tr><td>品質</td><td>新對話查錯</td><td>競爭跑法</td><td>Dashboard + meta tags</td></tr>
+</table>
+</div>
+</div>
+</div>
+</div>
 <!-- Part VII: Reflection -->
 <div class="content-grid">
 <div class="content-left">
-    <div class="section-label">Part VII</div>
-    <div class="part-title">經驗工程 — 下一代能設計好 Harness 嗎？</div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">Martin Fowler 在文章裡說：如果太早把人類從「<span class="highlight-concept">in the loop</span>」移到「<span class="highlight-concept">on the loop</span>」，將來可能沒人真正懂得怎麼回事，也就沒人能設計好的 harness。這句話值得多讀兩遍。</p>
-        <p class="en-text">"If we move humans too early from 'in the loop' to 'on the loop', no one may truly understand what's happening."</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">現在設計 harness 的人，都是寫過很多年程式碼的老手。Mitchell Hashimoto 能給 Ghostty 寫好 harness，因為他<span class="highlight-key">理解終端模擬器的每個細節</span>。但下一代呢？新手工程師從第一天起就不寫程式碼，只寫 CLAUDE.md，他能設計出好的 harness 嗎？</p>
-        <p class="en-text">Current harness designers are veteran coders. Can newcomers who never write code design good harnesses?</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">花叔自己是個有意思的樣本。他從來沒手寫過程式碼，所有產品都是 AI 寫的。小貓補光燈上了 AppStore 付費榜 Top 1，累計用戶超百萬。但他的判斷力不來自寫程式碼的經驗，<span class="highlight-key">來自和 AI 反覆較勁的上千小時經驗</span>。</p>
-        <p class="en-text">His judgment comes not from coding experience, but from thousands of hours wrestling with AI.</p>
-    </div>
-
-    <div class="bilingual-block">
-        <p class="zh-text">問題可能不是「寫程式碼的經驗」能不能被替代。而是：<span class="highlight-concept">不管你積累的是什麼經驗，足夠多的經驗本身就是設計 harness 的前提</span>。沒有捷徑，換了個賽道而已。也許 Martin Fowler 擔心的不是「沒人寫程式碼了」，而是「沒人願意花夠多時間踩夠多坑了」。</p>
-        <p class="en-text">Maybe the concern isn't "no one codes anymore" but "no one is willing to spend enough time making enough mistakes."</p>
-    </div>
+<div class="section-label">Part VII</div>
+<div class="part-title">經驗工程 — 下一代能設計好 Harness 嗎？</div>
+<div class="bilingual-block">
+<p class="zh-text">Martin Fowler 在文章裡說：如果太早把人類從「<span class="highlight-concept">in the loop</span>」移到「<span class="highlight-concept">on the loop</span>」，將來可能沒人真正懂得怎麼回事，也就沒人能設計好的 harness。這句話值得多讀兩遍。</p>
+<p class="en-text">"If we move humans too early from 'in the loop' to 'on the loop', no one may truly understand what's happening."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">現在設計 harness 的人，都是寫過很多年程式碼的老手。Mitchell Hashimoto 能給 Ghostty 寫好 harness，因為他<span class="highlight-key">理解終端模擬器的每個細節</span>。但下一代呢？新手工程師從第一天起就不寫程式碼，只寫 CLAUDE.md，他能設計出好的 harness 嗎？</p>
+<p class="en-text">Current harness designers are veteran coders. Can newcomers who never write code design good harnesses?</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">花叔自己是個有意思的樣本。他從來沒手寫過程式碼，所有產品都是 AI 寫的。小貓補光燈上了 AppStore 付費榜 Top 1，累計用戶超百萬。但他的判斷力不來自寫程式碼的經驗，<span class="highlight-key">來自和 AI 反覆較勁的上千小時經驗</span>。</p>
+<p class="en-text">His judgment comes not from coding experience, but from thousands of hours wrestling with AI.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">問題可能不是「寫程式碼的經驗」能不能被替代。而是：<span class="highlight-concept">不管你積累的是什麼經驗，足夠多的經驗本身就是設計 harness 的前提</span>。沒有捷徑，換了個賽道而已。也許 Martin Fowler 擔心的不是「沒人寫程式碼了」，而是「沒人願意花夠多時間踩夠多坑了」。</p>
+<p class="en-text">Maybe the concern isn't "no one codes anymore" but "no one is willing to spend enough time making enough mistakes."</p>
+</div>
 </div>
 <div class="content-right">
-    <div class="info-box box-key">
-        <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-        <div class="info-box-content">
-            <p><strong>In the Loop vs On the Loop</strong></p>
-            <p><strong>In the Loop</strong>：人在迴圈中，每步都參與決策</p>
-            <p><strong>On the Loop</strong>：人在迴圈旁，監督但不直接介入</p>
-            <p>GMP 的「Copilot Mode」本質上就是「in the loop」— 人類做最終放行決策。Harness Engineering 的「on the loop」模式在法規環境中目前不適用。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-opfin">
-        <div class="info-box-header">&#x1f3ed; CDMO 類比 — O-Ring 理論連結</div>
-        <div class="info-box-content">
-            <p><strong>經驗工程 = 你的 O-Ring 價值</strong></p>
-            <p>Harness Engineering 加速了所有可自動化的環節，但設計 harness 本身需要深度領域經驗。這正是 O-Ring Bottleneck Theory：AI 越強，<span class="highlight-key">設計「韁繩」的人的判斷力越不可替代</span>。花叔用上千小時和 AI 較勁積累的直覺，和你用十年 GMP 經驗積累的偏差調查直覺，本質相同。</p>
-        </div>
-    </div>
-
-    <div class="info-box box-analogy">
-        <div class="info-box-header">&#x1f4a1; 比喻說明</div>
-        <div class="info-box-content">
-            <p><strong>花叔的自我樣本分析</strong></p>
-            <p>他知道 CLAUDE.md 該怎麼寫，但讓他教別人「為什麼這麼寫」，他會卡住。很多決定是直覺做的，直覺來自踩坑，踩坑來自大量重複，大量重複來自時間。這和老程式設計師說的「你寫幾萬行程式碼自然就懂了」其實是一回事 — 只是賽道不同。</p>
-        </div>
-    </div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p><strong>In the Loop vs On the Loop</strong></p>
+<p><strong>In the Loop</strong>：人在迴圈中，每步都參與決策</p>
+<p><strong>On the Loop</strong>：人在迴圈旁，監督但不直接介入</p>
+<p>GMP 的「Copilot Mode」本質上就是「in the loop」— 人類做最終放行決策。Harness Engineering 的「on the loop」模式在法規環境中目前不適用。</p>
 </div>
 </div>
-    </div>
-
+<div class="info-box box-opfin">
+<div class="info-box-header">🏭 CDMO 類比 — O-Ring 理論連結</div>
+<div class="info-box-content">
+<p><strong>經驗工程 = 你的 O-Ring 價值</strong></p>
+<p>Harness Engineering 加速了所有可自動化的環節，但設計 harness 本身需要深度領域經驗。這正是 O-Ring Bottleneck Theory：AI 越強，<span class="highlight-key">設計「韁繩」的人的判斷力越不可替代</span>。花叔用上千小時和 AI 較勁積累的直覺，和你用十年 GMP 經驗積累的偏差調查直覺，本質相同。</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p><strong>花叔的自我樣本分析</strong></p>
+<p>他知道 CLAUDE.md 該怎麼寫，但讓他教別人「為什麼這麼寫」，他會卡住。很多決定是直覺做的，直覺來自踩坑，踩坑來自大量重複，大量重複來自時間。這和老程式設計師說的「你寫幾萬行程式碼自然就懂了」其實是一回事 — 只是賽道不同。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div><!-- end tab-container -->
-
 <!-- Key Takeaways -->
 <h2 style="color: #1e3a5f; font-size: 1.2rem; margin-bottom: 1rem;">Key Takeaways</h2>
 <div class="takeaways-grid">
-    <div class="summary-card">
-        <div class="card-icon">&#x1f3af;</div>
-        <div class="card-title">模型是商品，Harness 是護城河</div>
-        <div class="card-text">LangChain 同模型從 Top 30 跳到 Top 5。效能差異不在模型，在環境設計。投資 harness 的回報率遠高於等待下一代模型。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #10b981;">
-        <div class="card-icon">&#x1f504;</div>
-        <div class="card-title">Harness 隨模型進化而簡化</div>
-        <div class="card-text">Anthropic 從 Sonnet 4.5 升級到 Opus 4.6 時移除了 sprint 分解。每個 harness 組件都編碼一個假設 — 模型變強時要重新測試。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #8b5cf6;">
-        <div class="card-icon">&#x1f6e1;&#xFE0F;</div>
-        <div class="card-title">約束 > 建議</div>
-        <div class="card-text">Prompt 裡寫「請注意品質」是建議。Hooks 裡設定 linter 檢查是約束。一個是口頭叮嚀，一個是物理攔截。效果天差地別。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #f59e0b;">
-        <div class="card-icon">&#x1f9e0;</div>
-        <div class="card-title">設計 Harness 需要足夠的踩坑經驗</div>
-        <div class="card-text">不管你積累的是程式碼經驗還是 AI 協作經驗，足夠多的經驗本身就是設計 harness 的前提。沒有捷徑，賽道不同而已。</div>
-    </div>
+<div class="summary-card">
+<div class="card-icon">🎯</div>
+<div class="card-title">模型是商品，Harness 是護城河</div>
+<div class="card-text">LangChain 同模型從 Top 30 跳到 Top 5。效能差異不在模型，在環境設計。投資 harness 的回報率遠高於等待下一代模型。</div>
 </div>
-
+<div class="summary-card" style="border-left-color: #10b981;">
+<div class="card-icon">🔄</div>
+<div class="card-title">Harness 隨模型進化而簡化</div>
+<div class="card-text">Anthropic 從 Sonnet 4.5 升級到 Opus 4.6 時移除了 sprint 分解。每個 harness 組件都編碼一個假設 — 模型變強時要重新測試。</div>
+</div>
+<div class="summary-card" style="border-left-color: #8b5cf6;">
+<div class="card-icon">🛡️</div>
+<div class="card-title">約束 &gt; 建議</div>
+<div class="card-text">Prompt 裡寫「請注意品質」是建議。Hooks 裡設定 linter 檢查是約束。一個是口頭叮嚀，一個是物理攔截。效果天差地別。</div>
+</div>
+<div class="summary-card" style="border-left-color: #f59e0b;">
+<div class="card-icon">🧠</div>
+<div class="card-title">設計 Harness 需要足夠的踩坑經驗</div>
+<div class="card-text">不管你積累的是程式碼經驗還是 AI 協作經驗，足夠多的經驗本身就是設計 harness 的前提。沒有捷徑，賽道不同而已。</div>
+</div>
+</div>
 <!-- Practice Questions -->
 <h2 style="color: #1e3a5f; font-size: 1.2rem; margin-bottom: 1rem;">Practice Questions</h2>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q1</span>
-        <span class="question-type">概念理解</span>
-        <span class="question-text">Context Engineering 和 Harness Engineering 的邊界在哪裡？你的 Master Prompt 屬於哪一層？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>Context Engineering 管「給模型看什麼資訊」，Harness Engineering 則包含 context + 約束 + 反饋迴圈 + 品質檢查。</p>
-        <p>Master Prompt 本身是 context（告訴模型文件該怎麼生成），但它搭配的 present_files 流程、meta tag 驗證、Dashboard 索引重建等機制，整體構成了一個 harness。單獨的 prompt 是 context，prompt + 檢查機制 + 自動化流程 = harness。</p>
-        <p>HumanLayer 的定義更精確：Harness Engineering 是 Context Engineering 的子集，專注於 harness 配置點管理。但在實踐中，兩者的邊界是模糊的 — 重要的是整套系統一起運作。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">Context Engineering 和 Harness Engineering 的邊界在哪裡？你的 Master Prompt 屬於哪一層？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>Context Engineering 管「給模型看什麼資訊」，Harness Engineering 則包含 context + 約束 + 反饋迴圈 + 品質檢查。</p>
+<p>Master Prompt 本身是 context（告訴模型文件該怎麼生成），但它搭配的 present_files 流程、meta tag 驗證、Dashboard 索引重建等機制，整體構成了一個 harness。單獨的 prompt 是 context，prompt + 檢查機制 + 自動化流程 = harness。</p>
+<p>HumanLayer 的定義更精確：Harness Engineering 是 Context Engineering 的子集，專注於 harness 配置點管理。但在實踐中，兩者的邊界是模糊的 — 重要的是整套系統一起運作。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q2</span>
-        <span class="question-type">產業應用</span>
-        <span class="question-text">如果你要為 CDMO 的偏差調查流程設計一個 AI Harness，Generator-Evaluator 分離原則會怎麼應用？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p><strong>Generator Agent：</strong>根據偏差描述、批次記錄數據、歷史 CAPA 資料庫，生成初步根因分析報告和 CAPA 建議。</p>
-        <p><strong>Evaluator Agent：</strong>獨立檢查 Generator 的產出 — 確認根因分析是否覆蓋了 Ishikawa 圖的六大類別（人機料法環測）、CAPA 是否具體可執行、是否引用了正確的 SOP 條款、是否遺漏了相關的歷史偏差。</p>
-        <p><strong>Harness 約束層：</strong>硬規則 — 必須在輸出中包含法規引用（21 CFR 211 條款）、必須有效力等級分類、生成的報告必須通過 ALCOA+ 數據完整性檢查（可歸因、可追溯）。</p>
-        <p>關鍵：最終放行仍然是人類 QA/RA — 這就是 Copilot Mode 下的「in the loop」。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">如果你要為 CDMO 的偏差調查流程設計一個 AI Harness，Generator-Evaluator 分離原則會怎麼應用？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>Generator Agent：</strong>根據偏差描述、批次記錄數據、歷史 CAPA 資料庫，生成初步根因分析報告和 CAPA 建議。</p>
+<p><strong>Evaluator Agent：</strong>獨立檢查 Generator 的產出 — 確認根因分析是否覆蓋了 Ishikawa 圖的六大類別（人機料法環測）、CAPA 是否具體可執行、是否引用了正確的 SOP 條款、是否遺漏了相關的歷史偏差。</p>
+<p><strong>Harness 約束層：</strong>硬規則 — 必須在輸出中包含法規引用（21 CFR 211 條款）、必須有效力等級分類、生成的報告必須通過 ALCOA+ 數據完整性檢查（可歸因、可追溯）。</p>
+<p>關鍵：最終放行仍然是人類 QA/RA — 這就是 Copilot Mode 下的「in the loop」。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q3</span>
-        <span class="question-type">批判思考</span>
-        <span class="question-text">花叔說「沒人願意花夠多時間踩夠多坑了」是真正的風險。但 Harness 的可攜性和標準化不正是在解決這個問題嗎？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>這是本文最值得深思的張力。兩面都有道理：</p>
-        <p><strong>支持標準化：</strong>Martin Fowler 想像了一個未來 — 團隊從標準化的 harness 模板開始（類似今天的 service template / golden path），然後根據自己的場景微調。如果 harness 可以像 SOP 一樣被繼承，新人確實不需要從零踩坑。</p>
-        <p><strong>支持踩坑：</strong>但 Hashimoto 的 AGENTS.md 裡「每一行對應一次過去的錯誤」恰恰說明 — harness 的精華在於高度場景化的失敗經驗。通用模板能提供起點，但真正的護城河來自你的場景裡踩過的坑。</p>
-        <p><strong>CDMO 視角：</strong>GMP 的 SOP 就是標準化 harness。新進人員不需要重新發明偏差調查流程。但資深 QA 的判斷力 — 知道哪些偏差需要提升等級、哪些根因分析走錯方向 — 這種直覺無法被 SOP 編碼。標準化解決 80% 的問題，最後 20% 仍然需要經驗。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">花叔說「沒人願意花夠多時間踩夠多坑了」是真正的風險。但 Harness 的可攜性和標準化不正是在解決這個問題嗎？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>這是本文最值得深思的張力。兩面都有道理：</p>
+<p><strong>支持標準化：</strong>Martin Fowler 想像了一個未來 — 團隊從標準化的 harness 模板開始（類似今天的 service template / golden path），然後根據自己的場景微調。如果 harness 可以像 SOP 一樣被繼承，新人確實不需要從零踩坑。</p>
+<p><strong>支持踩坑：</strong>但 Hashimoto 的 AGENTS.md 裡「每一行對應一次過去的錯誤」恰恰說明 — harness 的精華在於高度場景化的失敗經驗。通用模板能提供起點，但真正的護城河來自你的場景裡踩過的坑。</p>
+<p><strong>CDMO 視角：</strong>GMP 的 SOP 就是標準化 harness。新進人員不需要重新發明偏差調查流程。但資深 QA 的判斷力 — 知道哪些偏差需要提升等級、哪些根因分析走錯方向 — 這種直覺無法被 SOP 編碼。標準化解決 80% 的問題，最後 20% 仍然需要經驗。</p>
+</div>
 </details>
-
 <!-- Bottom Line -->
 <div class="bottom-line">
-    <div class="bottom-line-header">&#x1f3af; 我的行動結論</div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x2714; 核心洞察</div>
-        <div class="bottom-line-text">我過去半年圍繞 Claude Code 搭建的自動化管線 — repo-registry.conf（路由）、Master Prompt（品質約束）、cron scheduling（執行管理）、Dashboard meta tags（品質回饋）— 本質上就是一個 Harness。不是我在追趕新詞，是新詞終於追上了我在做的事。Hashimoto 的「每次犯錯加一條規則」和我的 Master Prompt 版本迭代（v1.0 → v1.5.0）是完全相同的演化邏輯。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x1f4c8; 立即應用</div>
-        <div class="bottom-line-text">本週行動：(1) 用 Harness Engineering 的三層框架（Context + Constraints + Feedback）重新審視現有 /triage-deviation Skill 的設計 — 確認是否有硬約束層（不只是 prompt 建議），以及是否有 Evaluator 機制。(2) 在下一份教育文件的 Bottom Line 中加入「Harness 映射」— 明確標注這篇文章的概念如何對應到我的系統組件。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x26A0; 需要補充</div>
-        <div class="bottom-line-text">本文的原始來源是中文社群觀點綜述，不是第一手研究報告。需要直接閱讀 Martin Fowler 的原文和 OpenAI 的 Codex 完整報告以驗證細節。另外，花叔的「零程式碼經驗但能設計 harness」論述缺少對照組 — 他的成功是否因為他在其他領域（產品設計、用戶理解）有足夠深的經驗，而非純粹的 AI 協作時數？下次重讀時機：當 /triage-deviation Skill 完成初版後，對照此文驗證 harness 設計原則。</div>
-    </div>
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">我過去半年圍繞 Claude Code 搭建的自動化管線 — repo-registry.conf（路由）、Master Prompt（品質約束）、cron scheduling（執行管理）、Dashboard meta tags（品質回饋）— 本質上就是一個 Harness。不是我在追趕新詞，是新詞終於追上了我在做的事。Hashimoto 的「每次犯錯加一條規則」和我的 Master Prompt 版本迭代（v1.0 → v1.5.0）是完全相同的演化邏輯。</div>
 </div>
-
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">本週行動：(1) 用 Harness Engineering 的三層框架（Context + Constraints + Feedback）重新審視現有 /triage-deviation Skill 的設計 — 確認是否有硬約束層（不只是 prompt 建議），以及是否有 Evaluator 機制。(2) 在下一份教育文件的 Bottom Line 中加入「Harness 映射」— 明確標注這篇文章的概念如何對應到我的系統組件。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">本文的原始來源是中文社群觀點綜述，不是第一手研究報告。需要直接閱讀 Martin Fowler 的原文和 OpenAI 的 Codex 完整報告以驗證細節。另外，花叔的「零程式碼經驗但能設計 harness」論述缺少對照組 — 他的成功是否因為他在其他領域（產品設計、用戶理解）有足夠深的經驗，而非純粹的 AI 協作時數？下次重讀時機：當 /triage-deviation Skill 完成初版後，對照此文驗證 harness 設計原則。</div>
+</div>
+</div>
 <!-- Footer -->
-<div class="footer">
-    <p>製作日期：2026-03-28 | 原文來源：<a href="https://x.com/AlchainHust" target="_blank">花叔 @AlchainHust</a></p>
-    <p>綜合參考：<a href="https://openai.com/index/harness-engineering/" target="_blank">OpenAI Harness Engineering</a> | <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank">Anthropic Effective Harnesses</a> | <a href="https://blog.langchain.com/improving-deep-agents-with-harness-engineering/" target="_blank">LangChain Deep Agents</a> | <a href="https://mitchellh.com/writing/my-ai-adoption-journey" target="_blank">Mitchell Hashimoto</a> | <a href="https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html" target="_blank">Martin Fowler</a></p>
-    <p>建議 Chat Title：2026-03-28 [Agent] Harness Engineering - Agent Harness Framework</p>
-</div>
-
+<footer class="footer">
+<p>製作日期：2026-03-28 | 原文來源：<a href="https://x.com/AlchainHust" target="_blank">花叔 @AlchainHust</a></p>
+<p>綜合參考：<a href="https://openai.com/index/harness-engineering/" target="_blank">OpenAI Harness Engineering</a> | <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank">Anthropic Effective Harnesses</a> | <a href="https://blog.langchain.com/improving-deep-agents-with-harness-engineering/" target="_blank">LangChain Deep Agents</a> | <a href="https://mitchellh.com/writing/my-ai-adoption-journey" target="_blank">Mitchell Hashimoto</a> | <a href="https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html" target="_blank">Martin Fowler</a></p>
+<p>建議 Chat Title：2026-03-28 [Agent] Harness Engineering - Agent Harness Framework</p>
+</footer>
 </div><!-- end container -->
-
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');
@@ -746,6 +522,5 @@ function switchTab(evt, tabId) {
     evt.currentTarget.classList.add('active');
 }
 </script>
-
 </body>
 </html>

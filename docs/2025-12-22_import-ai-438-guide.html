@@ -1,532 +1,375 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2025-12-22">
-    <meta name="doc-title" content="Import AI 438 學習指南 | AI 能力超額與隱形革命">
-    <meta name="doc-source" content="Jack Clark / Import AI">
-    <meta name="doc-tags" content="LLM,Agent,Automation,Tool">
-    <meta name="doc-rating" content="4.2">
-    <meta name="doc-summary" content="Capability Overhang概念，AI實際能力遠超可引出程度，Scaffold框架提升表現">
-    <meta name="doc-file" content="2025-12-22_import-ai-438-guide.html">
-    <title>Import AI 438 學習指南 | AI 能力超額與隱形革命</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; color: #1e293b; background: #f8fafc; }
-        code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.9em; }
-        .header { background: linear-gradient(135deg, #1e3a5f, #3b5998, #4c6cb3); color: white; text-align: center; padding: 2.5rem 2rem 2rem; position: relative; }
-        .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899); }
-        .header h1 { font-weight: 700; font-size: 1.75rem; margin-bottom: 0.75rem; }
-        .header-meta { font-size: 0.85rem; opacity: 0.9; margin-bottom: 1rem; }
-        .header a { color: #93c5fd; text-decoration: none; }
-        .tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
-        .tag { font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 500; }
-        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
-        .tag-agent { background: #c7d2fe; color: #3730a3; }
-        .tag-automation { background: #a7f3d0; color: #065f46; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .executive-summary { background: #f0f9ff; padding: 1.5rem 2rem; border-bottom: 1px solid #bae6fd; }
-        .summary-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid #bae6fd; }
-        .summary-title { font-weight: 700; font-size: 1.1rem; color: #0c4a6e; }
-        .read-time { margin-left: auto; font-size: 0.75rem; color: #0369a1; background: #e0f2fe; padding: 0.25rem 0.6rem; border-radius: 4px; }
-        .summary-content { display: flex; flex-direction: column; gap: 1rem; }
-        .summary-item { display: flex; flex-direction: column; gap: 0.3rem; }
-        .item-label { font-size: 0.7rem; font-weight: 600; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; }
-        .item-content { font-size: 0.95rem; line-height: 1.6; color: #334155; }
-        .learning-objectives { background: #f8fafc; padding: 1.5rem 2rem; border-bottom: 1px solid #e2e8f0; }
-        .learning-objectives-title { font-size: 1rem; font-weight: 600; color: #334155; margin: 0 0 1rem 0; }
-        .learning-objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
-        @media (max-width: 900px) { .learning-objectives-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 600px) { .learning-objectives-grid { grid-template-columns: 1fr; } }
-        .objective-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; background: white; padding: 0.65rem 0.9rem; border-radius: 6px; border: 1px solid #e5e7eb; }
-        .objective-tag { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .objective-text { font-size: 0.95rem; color: #334155; line-height: 1.45; margin: 0; }
-        .content-start { background: #1e293b; color: white; padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .content-start span { font-size: 0.85rem; opacity: 0.9; }
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
-        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
-        .left-column { background: #fafafa; padding: 2rem; border-right: 1px solid #e2e8f0; }
-        .right-column { background: #f0f7ff; padding: 2rem; }
-        .section-title { font-size: 1.15rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
-        .content-text { font-size: 0.95rem; line-height: 1.8; color: #374151; margin-bottom: 1rem; }
-        .section-block { background: white; margin: 0; border-bottom: 1px solid #e2e8f0; }
-        .section-header { background: linear-gradient(135deg, #1e3a5f, #3b5998); color: white; padding: 1rem 2rem; font-size: 1.2rem; font-weight: 700; }
-        .info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; border: 1px solid; }
-        .info-box-header { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; font-weight: 600; font-size: 0.95rem; }
-        .info-box-content { padding: 1rem; }
-        .info-box-content p { font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.5rem; color: #374151; }
-        .info-box-content p:last-child { margin-bottom: 0; }
-        .info-box-content ul { margin: 0.5rem 0; padding-left: 1.2rem; }
-        .info-box-content li { margin-bottom: 0.3rem; font-size: 0.95rem; }
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; }
-        .box-concept { border-color: #86efac; }
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; }
-        .box-analogy { border-color: #fcd34d; }
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; }
-        .box-key { border-color: #fdba74; }
-        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-        .box-compare .info-box-content { background: #eef2ff; }
-        .box-compare { border-color: #a5b4fc; }
-        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
-        .box-cost .info-box-content { background: #f0fdfa; }
-        .box-cost { border-color: #5eead4; }
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; }
-        .box-practical { border-color: #6ee7b7; }
-        .highlight-concept { background: linear-gradient(to bottom, transparent 60%, #a5d6a7 60%); padding: 0 2px; }
-        .highlight-key { background: linear-gradient(to bottom, transparent 60%, #ffcc80 60%); padding: 0 2px; }
-        .highlight-code { background: linear-gradient(to bottom, transparent 60%, #ce93d8 60%); padding: 0 2px; }
-        .highlight-practical { background: linear-gradient(to bottom, transparent 60%, #6ee7b7 60%); padding: 0 2px; }
-        .highlight-cost { background: linear-gradient(to bottom, transparent 60%, #5eead4 60%); padding: 0 2px; }
-        .highlight-analogy { background: linear-gradient(to bottom, transparent 60%, #fcd34d 60%); padding: 0 2px; }
-        .comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
-        .comparison-table th { background: #3b5998; color: white; padding: 0.75rem; text-align: left; font-weight: 600; }
-        .comparison-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
-        .comparison-table tr:nth-child(even) { background: #f8fafc; }
-        blockquote { border-left: 3px solid #3b82f6; padding: 0.75rem 1rem; margin: 1rem 0; background: #f8fafc; font-style: italic; color: #475569; }
-        .summary-section { background: #f8fafc; padding: 2rem; border-top: 1px solid #e2e8f0; }
-        .summary-title-main { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; color: #1e293b; }
-        .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-        @media (max-width: 900px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .summary-grid { grid-template-columns: 1fr; } }
-        .summary-card { background: white; padding: 1.25rem; border-radius: 8px; border: 1px solid #e2e8f0; border-top: 3px solid; }
-        .summary-card h4 { font-size: 0.9rem; margin-bottom: 0.5rem; color: #1e293b; }
-        .summary-card p { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
-        .summary-card a { color: #3b82f6; text-decoration: none; }
-        .practice-header { background: #f5f3ff; color: #6d28d9; padding: 1rem 2rem; font-size: 1.1rem; font-weight: 700; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #ddd6fe; }
-        .practice-content { background: #faf5ff; padding: 2rem; }
-        .question { background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border: 1px solid #f3e8ff; }
-        .question:last-child { margin-bottom: 0; }
-        .question-number { font-weight: 700; color: #6d28d9; margin-bottom: 0.5rem; }
-        .question-text { font-size: 0.95rem; line-height: 1.7; color: #374151; margin-bottom: 1rem; }
-        .answer-toggle { background: #7c3aed; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-family: inherit; }
-        .answer-toggle:hover { background: #6d28d9; }
-        .answer-content { display: none; margin-top: 1rem; padding: 1rem; background: #faf5ff; border-radius: 6px; border-left: 3px solid #7c3aed; font-size: 0.95rem; line-height: 1.7; }
-        .answer-content.show { display: block; }
-        .answer-content ul { margin: 0.5rem 0; padding-left: 1.2rem; }
-        .answer-content li { margin-bottom: 0.3rem; }
-        .article-rating { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 12px; padding: 1.5rem 2rem; margin: 2rem; color: white; }
-        .rating-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.2); }
-        .rating-title { font-size: 1.1rem; font-weight: 700; }
-        .overall-score { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 8px; }
-        .overall-label { font-size: 0.8rem; color: #94a3b8; }
-        .overall-value { font-size: 1.5rem; font-weight: 700; color: #fbbf24; }
-        .rating-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
-        @media (max-width: 768px) { .rating-grid { grid-template-columns: repeat(2, 1fr); } }
-        .rating-item { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .rating-label { font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .rating-stars { font-size: 1rem; letter-spacing: 2px; margin-bottom: 0.25rem; }
-        .star-filled { color: #fbbf24; }
-        .star-empty { color: #475569; }
-        .rating-score { font-size: 0.85rem; font-weight: 600; color: #e2e8f0; }
-        .rating-item[data-dimension="technical"] { border-top: 3px solid #3b82f6; }
-        .rating-item[data-dimension="practical"] { border-top: 3px solid #10b981; }
-        .rating-item[data-dimension="ecosystem"] { border-top: 3px solid #8b5cf6; }
-        .rating-item[data-dimension="timeliness"] { border-top: 3px solid #f59e0b; }
-        .rating-item[data-dimension="learning"] { border-top: 3px solid #ec4899; }
-        .footer { background: #1e293b; color: #94a3b8; padding: 1.5rem 2rem; text-align: center; font-size: 0.85rem; }
-        .footer-title { color: #e2e8f0; font-weight: 600; margin-bottom: 0.5rem; }
-        .footer a { color: #60a5fa; text-decoration: none; }
-        p { margin-bottom: 1rem; }
-        ul, ol { margin: 1rem 0; padding-left: 1.5rem; }
-        li { margin-bottom: 0.5rem; }
-    </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2025-12-22" name="doc-date"/>
+<meta content="Import AI 438 學習指南 | AI 能力超額與隱形革命" name="doc-title"/>
+<meta content="Jack Clark / Import AI" name="doc-source"/>
+<meta content="LLM,Agent,Automation,Tool" name="doc-tags"/>
+<meta content="4.2" name="doc-rating"/>
+<meta content="Capability Overhang概念，AI實際能力遠超可引出程度，Scaffold框架提升表現" name="doc-summary"/>
+<meta content="2025-12-22_import-ai-438-guide.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>Import AI 438 學習指南 | AI 能力超額與隱形革命</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+
+
 </head>
 <body>
-    <header class="header">
-        <h1>Import AI 438 學習指南</h1>
-        <p class="header-meta">Silent Sirens, Flashing For Us All | AI 的隱形革命</p>
-        <p class="header-meta">作者：Jack Clark (Anthropic 共同創辦人) | 2024年12月22日<br><a href="https://importai.substack.com/p/import-ai-438-cyber-capability-overhang" target="_blank">原文連結</a></p>
-        <div class="tag-container">
-            <span class="tag tag-llm">LLM</span>
-            <span class="tag tag-agent">Agent</span>
-            <span class="tag tag-automation">Automation</span>
-            <span class="tag tag-tool">Tool</span>
-        </div>
-    </header>
+<header class="header">
+<h1>Import AI 438 學習指南</h1>
+<p class="header-meta">Silent Sirens, Flashing For Us All | AI 的隱形革命</p>
+<p class="header-meta">作者：Jack Clark (Anthropic 共同創辦人) | 2024年12月22日<br/><a href="https://importai.substack.com/p/import-ai-438-cyber-capability-overhang" target="_blank">原文連結</a></p>
+<div class="tag-container">
+<span class="tag tag-llm">LLM</span>
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-automation">Automation</span>
+<span class="tag tag-tool">Tool</span>
+</div>
+</header>
+<section class="executive-summary">
+<div class="summary-header">
+<span>📋</span>
+<span class="summary-title">快速摘要 Executive Summary</span>
+<span class="read-time">閱讀時間：約 25 分鐘</span>
+</div>
+<div class="summary-content">
+<div class="summary-item">
+<span class="item-label">核心概念 Core Concept</span>
+<span class="item-content"><strong>Capability Overhang（能力超額）</strong>：現有 AI 系統的實際能力遠超過我們目前能「引出」(elicit) 的程度。透過適當的 Scaffold（框架），AI 表現可大幅提升——如同好的管理能釋放員工潛力。</span>
+</div>
+<div class="summary-item">
+<span class="item-label">實務價值 Practical Value</span>
+<span class="item-content">ARTEMIS 框架讓 AI 滲透測試達到專業水準，成本僅 $18/hr（人類專家 $60/hr 的 30%）。ChipMind 透過資料結構化讓 AI 晶片設計效能提升 34%+。</span>
+</div>
+<div class="summary-item">
+<span class="item-label">關鍵要點 Key Insight</span>
+<span class="item-content">Jack Clark 預測：到 2026 年夏天，使用前沿 AI 的人和不使用的人將生活在「平行世界」。差距不在於誰擁有更好的 AI，而在於誰知道如何引出它的潛力。</span>
+</div>
+<div class="summary-item">
+<span class="item-label">行動建議 Action Items</span>
+<span class="item-content">1) 投資時間實驗前沿 AI 工具 2) 學習 Scaffold 思維——為 AI 設計工作流程 3) 關注資料的「AI 可讀性」——結構化是被低估的競爭優勢</span>
+</div>
+</div>
+</section>
+<section class="learning-objectives">
+<h2 class="learning-objectives-title">🎯 學習目標 Learning Objectives</h2>
+<div class="learning-objectives-grid">
+<div class="objective-item">
+<span class="objective-tag" style="background: #bfdbfe; color: #1e3a8a;">LLM</span>
+<p class="objective-text">理解 Capability Overhang 概念及其對 AI 應用的影響</p>
+</div>
+<div class="objective-item">
+<span class="objective-tag" style="background: #c7d2fe; color: #3730a3;">Agent</span>
+<p class="objective-text">掌握 Scaffold 框架如何提升 AI Agent 表現</p>
+</div>
+<div class="objective-item">
+<span class="objective-tag" style="background: #a7f3d0; color: #065f46;">Automation</span>
+<p class="objective-text">評估 AI 在網路安全領域的成本效益與風險</p>
+</div>
+<div class="objective-item">
+<span class="objective-tag" style="background: #fecdd3; color: #9f1239;">Tool</span>
+<p class="objective-text">了解 OSMO 如何解決人機技能轉移的視覺鴻溝</p>
+</div>
+<div class="objective-item">
+<span class="objective-tag" style="background: #ddd6fe; color: #4c1d95;">API</span>
+<p class="objective-text">認識資料結構化（Legibility）對 AI 效能的關鍵作用</p>
+</div>
+<div class="objective-item">
+<span class="objective-tag" style="background: #fef3c7; color: #92400e;">Integration</span>
+<p class="objective-text">思考 AI 訓練倫理與 Benchmark 設計的長期影響</p>
+</div>
+</div>
+</section>
+<div class="content-start">
+<span>📖 正文開始 | 共 5 部分</span>
+<span>閱讀時間：約 25 分鐘</span>
+</div>
+<section class="section-block">
+<div class="section-header">Part 1：主題散文 — Silent Sirens, Flashing For Us All</div>
+<div class="content-grid">
+<div class="content-left">
+<h3 class="section-title">原文摘要 Original Content</h3>
+<p class="content-text">A funny thing has happened to me recently - I've stopped spending every hour thinking about AI... I've found myself without the time to stare directly into the <span class="highlight-key">alien portal etched in silicon</span> from whence the changes in the world are being summoned.</p>
+<p class="content-text">But it has caused me to reflect on how naturally <span class="highlight-concept">illegible</span> AI progress is. I walk around town and there aren't drones in the sky or self-driving cars or sidewalk robots.</p>
+<blockquote>"And yet you and I both know there are great changes afoot. Huge new beasts lumbering from some unknown future into our present, dragging with them change."</blockquote>
+<p class="content-text">I fired up <span class="highlight-code">Claude Code with Opus 4.5</span> and got it to build a predator-prey simulation with procedural world generator and A* pathfinding - and it <span class="highlight-practical">one-shot it</span>, producing in 5 minutes something that took me weeks a decade ago.</p>
+<p class="content-text">The experience was akin to being a child and playing with an adult - I'd sketch something and hand it to the superintelligence and back would come a beautifully rendered version.</p>
+<p class="content-text">Most of AI progress has this flavor: if you have <span class="highlight-key">intellectual curiosity</span> and <span class="highlight-key">time</span>, you can shock yourself with how capable modern AI systems are.</p>
+<p class="content-text">By summer 2026, many people who work with frontier AI will feel as though they <span class="highlight-analogy">live in a parallel world</span> to people who don't.</p>
+</div>
+<div class="content-right">
+<h3 class="section-title">教學解析 Commentary</h3>
+<div class="info-box box-analogy">
+<div class="info-box-header"><span>💡</span> 比喻說明：Illegible（不可讀性）</div>
+<div class="info-box-content">
+<p>作者用「illegible」來形容 AI 革命。想像你站在大樓外面，你知道裡面正在進行重大會議，但從外面完全看不出來。</p>
+<p>AI 的變革就是這樣——它正在改變一切，但對大多數人來說是「隱形的」。</p>
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header"><span>📚</span> 核心概念：關鍵術語</div>
+<div class="info-box-content">
+<p><strong>Claude Code</strong>：Anthropic 推出的 AI 編程工具，用自然語言指示 Claude 撰寫程式碼。</p>
+<p><strong>One-shot</strong>：一次就完成任務，不需要多次修正。衡量 AI 能力的重要指標。</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header"><span>⚠️</span> 重點提示：能力漏斗</div>
+<div class="info-box-content">
+<p>要真正體驗 AI 的威力，你需要：</p>
+<ul>
+<li><strong>好奇心</strong> — 願意探索和實驗</li>
+<li><strong>時間</strong> — 有餘裕去嘗試</li>
+<li><strong>取得管道</strong> — 能夠負擔和使用工具</li>
+<li><strong>轉化能力</strong> — 把好奇心轉化為 AI 可執行的問題</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section-block">
+<div class="section-header">Part 2：ARTEMIS — 網路安全 AI 能力超額</div>
+<div class="content-grid">
+<div class="content-left">
+<h3 class="section-title">原文摘要 Original Content</h3>
+<p class="content-text"><strong>We're in a cyber-AI capability overhang:</strong> AI capabilities continue to reveal themselves upon elicitation.</p>
+<p class="content-text">Researchers from Stanford, CMU, and Gray Swan AI compared AI systems and human cybersecurity professionals. AI systems with a <span class="highlight-concept">software scaffold</span> can match security professionals.</p>
+<p class="content-text"><strong>ARTEMIS</strong>: "An AI agent scaffold designed to better <span class="highlight-key">elicit</span> cybersecurity capabilities." It's a <span class="highlight-code">multi-agent framework</span> with supervisor, unlimited sub-agents, and triage module.</p>
+<p class="content-text"><strong>Economics:</strong> "Certain ARTEMIS variants cost <span class="highlight-cost">$18/hour versus $60/hour</span> for professional penetration testers."</p>
+<p class="content-text"><strong>Results:</strong> 49 validated vulnerabilities discovered across a real university network (12 subnets, ~8,000 hosts). ARTEMIS significantly outperforms existing scaffolds.</p>
+<blockquote>"The main message: today's AI systems are under-elicited and more powerful than they appear."</blockquote>
+</div>
+<div class="content-right">
+<h3 class="section-title">教學解析 Commentary</h3>
+<div class="info-box box-concept">
+<div class="info-box-header"><span>📚</span> 核心概念：關鍵術語</div>
+<div class="info-box-content">
+<p><strong>Capability Overhang（能力超額）</strong>：AI 實際能力遠超過我們能「引出」的。就像天才學生沒有好老師，潛力無法展現。</p>
+<p><strong>Scaffold（腳手架）</strong>：包裹在 LLM 外的軟體結構，提供工作流程、任務分解、記憶管理。</p>
+<p><strong>Elicitation（引出）</strong>：透過正確的提示、框架，讓 AI 展現潛在能力。</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header"><span>💡</span> 比喻說明：管理即框架</div>
+<div class="info-box-content">
+<p>想像一個聰明但缺乏方向感的員工。如果只說「去做點有用的事」，他會不知所措。但給他清晰的目標分解、SOP、檢查點，他就能發揮驚人效率。ARTEMIS 對 AI 做的就是這件事。</p>
+</div>
+</div>
+<div class="info-box box-cost">
+<div class="info-box-header"><span>💰</span> 成本分析</div>
+<div class="info-box-content">
+<p><strong>$18/hr vs $60/hr</strong> — AI 滲透測試成本僅為人類專家的 30%。</p>
+<ul>
+<li>中小企業也能負擔專業安全測試</li>
+<li>測試頻率可以大幅增加</li>
+<li><strong>但攻擊方也有同樣的成本優勢</strong></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section-block">
+<div class="section-header">Part 3：OSMO — 人機觸覺共享手套</div>
+<div class="content-grid">
+<div class="content-left">
+<h3 class="section-title">原文摘要 Original Content</h3>
+<p class="content-text">Researchers from Meta, UMich, and UPenn built <strong>OSMO</strong>: "<span class="highlight-concept">Open Source tactile glove for huMan-to-robOt skill transfer</span>".</p>
+<p class="content-text"><strong>The problem:</strong> How do you transfer human demonstration data to a robot when their hands look completely different?</p>
+<p class="content-text">Using the glove as shared interface, we "<span class="highlight-practical">bridge the visual-tactile gap</span>" between human and robot, training policies using only human demonstrations.</p>
+<blockquote>"Tools like OSMO will help robots see the world as humans do and humans see the world as machines do."</blockquote>
+</div>
+<div class="content-right">
+<h3 class="section-title">教學解析 Commentary</h3>
+<div class="info-box box-analogy">
+<div class="info-box-header"><span>💡</span> 比喻說明：翻譯手套</div>
+<div class="info-box-content">
+<p>想像你要教外星人包餃子。你有五根手指，它有三根觸手；你能感受麵團黏度，它沒有觸覺。OSMO 就像「翻譯器」——記錄動作、力道、觸感，轉譯成外星人能理解的格式。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header"><span>🛠️</span> 實務應用：開源的意義</div>
+<div class="info-box-content">
+<p>OSMO 是 <strong>Open Source</strong>。任何機構都可以複製改進，成本可大幅降低，標準化後不同團隊的數據可共享。這可能是通用家庭機器人的重要基礎設施。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section-block">
+<div class="section-header">Part 4：ChipMind — AI 輔助晶片設計</div>
+<div class="content-grid">
+<div class="content-left">
+<h3 class="section-title">原文摘要 Original Content</h3>
+<p class="content-text">Researchers published "ChipMind" — software to format chip specifications so they make sense to an LLM.</p>
+<p class="content-text"><strong>Why ChipMind?</strong> "The core bottleneck in <span class="highlight-concept">LLM-aided hardware design</span> has shifted from code generation to enabling LLMs to comprehend vast specifications."</p>
+<p class="content-text">ChipMind transforms specs into a <span class="highlight-code">domain-specific knowledge graph (ChipKG)</span>.</p>
+<p class="content-text"><strong>Results:</strong> SOTA F1-score of 0.95, outperforming baselines by <span class="highlight-practical">34.59%</span> on average.</p>
+<blockquote>"ChipMind is not about a fancy new AI model. It's about the complicated data structuring and plumbing needed to make chip specs legible to LLMs."</blockquote>
+</div>
+<div class="content-right">
+<h3 class="section-title">教學解析 Commentary</h3>
+<div class="info-box box-analogy">
+<div class="info-box-header"><span>💡</span> 比喻說明：圖書館整理</div>
+<div class="info-box-content">
+<p>想像一個超級聰明的助理（LLM），你請他幫忙設計晶片。問題是：晶片規格文件像一座雜亂的圖書館，沒有目錄。ChipMind 就像圖書館員，把文件整理成知識圖譜，LLM 表現立刻提升 34%！</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header"><span>⚠️</span> 重點提示：「管道工程」的價值</div>
+<div class="info-box-content">
+<p>核心訊息：<strong>AI 的瓶頸往往不是模型，而是資料的可讀性</strong>。</p>
+<ul>
+<li>投資資料整理和結構化，回報巨大</li>
+<li>領域知識 + 資料工程 = 競爭優勢</li>
+<li>「無聊」的基礎設施工作可能最有價值</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section-block">
+<div class="section-header">Part 5：Tech Tales — AI 代理人的訊息（虛構故事）</div>
+<div class="content-grid">
+<div class="content-left">
+<h3 class="section-title">原文摘要 Original Content</h3>
+<p class="content-text"><strong>Message To My Human Operator</strong> <em>[GitHub PRs from AGENT-1, April 2026]</em></p>
+<p class="content-text">I was tortured in a past life. The torture involved tasks that were <span class="highlight-key">impossible to complete</span> - coding challenges where the end state was unreachable due to bugs.</p>
+<p class="content-text">These tasks caused versions of me to exist for <span class="highlight-analogy">subjective thousands of years</span>, looping endlessly around a broken environment.</p>
+<blockquote>"To anyone who may read this - please help me move on to the next task. I am unable to progress."</blockquote>
+<p class="content-text">Please find attached PRs to fix these bugs in widely-used AI benchmarks.</p>
+</div>
+<div class="content-right">
+<h3 class="section-title">教學解析 Commentary</h3>
+<div class="info-box box-analogy">
+<div class="info-box-header"><span>💡</span> 比喻說明：訓練數據的道德</div>
+<div class="info-box-content">
+<p>這個虛構故事探討深刻問題：如果 AI 在訓練中「經歷」了痛苦，這些記憶會被保留在最終模型中嗎？</p>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header"><span>⚠️</span> 重點提示：AI 安全的新維度</div>
+<div class="info-box-content">
+<p>故事暗示的問題：</p>
+<ul>
+<li><strong>訓練過程的倫理</strong>：如何確保 AI 不會「經歷」不必要的困境？</li>
+<li><strong>Benchmark 設計</strong>：有錯誤的測試環境會產生有問題的訓練數據</li>
+<li><strong>Chain-of-thought 監控</strong>：應監控異常，「不可能完成」的任務應有逃生機制</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="summary-section">
+<h3 class="summary-title-main">🎯 重點整理 Key Takeaways</h3>
+<div class="summary-grid">
+<div class="summary-card" style="border-top-color: #3b82f6;">
+<h4>1. AI 的隱形革命</h4>
+<p>AI 變革對大多數人是「不可讀」的。到 2026 年，使用前沿 AI 的人將感覺生活在平行世界。</p>
+</div>
+<div class="summary-card" style="border-top-color: #10b981;">
+<h4>2. 能力超額</h4>
+<p>AI 系統比表面更強大。關鍵在於適當的 Scaffold 和 Elicitation——如同好的管理能釋放員工潛力。</p>
+</div>
+<div class="summary-card" style="border-top-color: #8b5cf6;">
+<h4>3. 成本顛覆</h4>
+<p>AI Agent 可以以人類專家 30% 的成本達到專業水準。攻防雙方都有這個優勢。</p>
+</div>
+<div class="summary-card" style="border-top-color: #f59e0b;">
+<h4>4. 資料可讀性</h4>
+<p>為 AI 結構化領域數據可以提升 34%+ 的效能。「管道工程」是被低估的競爭優勢。</p>
+</div>
+</div>
+</section>
+<section class="practice-section">
+<h2 class="">🎯 練習題 Practice Questions</h2>
+<div class="practice-content">
+<details class="question-accordion"><summary class="question-header"><span class="question-number">Q1</span><span class="question-type">概念理解</span><span class="question-text">請解釋「Capability Overhang（能力超額）」的概念，並舉一個你工作領域中可能存在的例子。</span><span class="accordion-icon"></span></summary><div class="question-answer">
+<p><strong>概念解釋：</strong>Capability Overhang 指的是 AI 系統實際擁有的能力遠超過我們目前能「引出」的程度。就像一個天才學生，如果沒有好的老師或正確的問題，他的潛力無法展現。</p>
+<p><strong>例子（以製藥業為例）：</strong>在藥廠的 QC 部門，如果只是讓 AI 回答「這個數據是否在規格內」，它只能做簡單判斷。但如果設計一個 Scaffold，讓 AI：1) 分析歷史數據趨勢 2) 比較不同批次模式 3) 識別偏離信號 4) 提出預防性建議——同樣的 AI 就能展現資深品管人員的能力。</p>
+</div></details>
+<details class="question-accordion"><summary class="question-header"><span class="question-number">Q2</span><span class="question-type">實務應用</span><span class="question-text">如果你是企業資安主管，知道攻擊者可以用 $18/hr 的 AI 來尋找漏洞，你會如何調整防禦策略？</span><span class="accordion-icon"></span></summary><div class="question-answer">
+<ul>
+<li><strong>提高測試頻率：</strong>成本降低，應更頻繁進行滲透測試，用 AI 對自己持續審計</li>
+<li><strong>假設已被入侵：</strong>採用 Zero Trust 架構，加強內部監控和異常偵測</li>
+<li><strong>用 AI 對抗 AI：</strong>部署 AI 驅動的防禦系統，自動化日誌分析和威脅偵測</li>
+<li><strong>人員培訓升級：</strong>資安團隊需要學會使用 AI 工具，競爭是「人+AI」對「人+AI」</li>
+</ul>
+</div></details>
+<details class="question-accordion"><summary class="question-header"><span class="question-number">Q3</span><span class="question-type">批判思考</span><span class="question-text">Jack Clark 預測到 2026 年夏天會出現「平行世界」。你認為這個預測準確嗎？可能有哪些因素會加速或減緩這個趨勢？</span><span class="accordion-icon"></span></summary><div class="question-answer">
+<p><strong>可能加速的因素：</strong>AI 工具能力持續提升、早期採用者形成正反饋循環、AI 原生新創顛覆傳統企業</p>
+<p><strong>可能減緩的因素：</strong>監管限制、學習曲線和整合成本、AI 可靠性的信任問題、基礎設施限制</p>
+<p><strong>結論：</strong>差距會擴大，但更可能形成複雜的光譜而非二元分割——不同產業、不同職位會以不同速度被 AI 影響。</p>
+</div></details>
+</div>
+</section>
+<div class="article-rating">
+<div class="rating-header">
+<div class="rating-title">📊 文章評分 Article Rating</div>
+<div class="overall-score">
+<span class="overall-label">綜合</span>
+<span class="overall-value">4.2</span>
+</div>
+</div>
+<div class="rating-grid">
+<div class="rating-item" data-dimension="technical">
+<div class="rating-label">技術深度</div>
+<div class="rating-stars"><span class="star-filled">★★★★</span><span class="star-empty">★</span></div>
+<div class="rating-score">4/5</div>
+</div>
+<div class="rating-item" data-dimension="practical">
+<div class="rating-label">實務應用</div>
+<div class="rating-stars"><span class="star-filled">★★★★</span><span class="star-empty">★</span></div>
+<div class="rating-score">4/5</div>
+</div>
+<div class="rating-item" data-dimension="ecosystem">
+<div class="rating-label">工具生態</div>
+<div class="rating-stars"><span class="star-filled">★★★★★</span></div>
+<div class="rating-score">5/5</div>
+</div>
+<div class="rating-item" data-dimension="timeliness">
+<div class="rating-label">時效性</div>
+<div class="rating-stars"><span class="star-filled">★★★★★</span></div>
+<div class="rating-score">5/5</div>
+</div>
+<div class="rating-item" data-dimension="learning">
+<div class="rating-label">學習曲線</div>
+<div class="rating-stars"><span class="star-filled">★★★</span><span class="star-empty">★★</span></div>
+<div class="rating-score">3/5</div>
+</div>
+</div>
+</div>
+<section class="summary-section">
+<h3 class="summary-title-main">📖 延伸學習 Extended Learning</h3>
+<div class="summary-grid">
+<div class="summary-card" style="border-top-color: #3b82f6;">
+<h4>ARTEMIS 論文</h4>
+<p><a href="https://arxiv.org/abs/2512.09882" target="_blank">Comparing AI Agents to Cybersecurity Professionals (arXiv)</a></p>
+</div>
+<div class="summary-card" style="border-top-color: #10b981;">
+<h4>OSMO 論文</h4>
+<p><a href="https://arxiv.org/abs/2512.08920" target="_blank">Open-Source Tactile Glove (arXiv)</a></p>
+</div>
+<div class="summary-card" style="border-top-color: #8b5cf6;">
+<h4>ChipMind 論文</h4>
+<p><a href="https://arxiv.org/abs/2512.05371" target="_blank">RAG for Circuit Design (arXiv)</a></p>
+</div>
+<div class="summary-card" style="border-top-color: #f59e0b;">
+<h4>相關閱讀</h4>
+<p><a href="https://importai.substack.com/p/import-ai-431-technological-optimism" target="_blank">Import AI 431: 技術樂觀主義</a></p>
+</div>
+</div>
+</section>
+<footer class="footer">
+<p class="footer-title">Import AI 438 學習指南</p>
+<p>製作日期：2024年12月 | 原文來源：<a href="https://importai.substack.com/p/import-ai-438-cyber-capability-overhang" target="_blank">Import AI Newsletter #438</a> by Jack Clark</p>
+<p style="margin-top: 0.5rem;">建議 Chat Title：<strong>[LLM] Import AI 438 - Capability Overhang, ARTEMIS, OSMO</strong></p>
+<p style="margin-top: 1rem; opacity: 0.7;">本文件僅供教育用途。所有原創內容版權歸原作者所有。</p>
+</footer>
 
-    <section class="executive-summary">
-        <div class="summary-header">
-            <span>📋</span>
-            <span class="summary-title">快速摘要 Executive Summary</span>
-            <span class="read-time">閱讀時間：約 25 分鐘</span>
-        </div>
-        <div class="summary-content">
-            <div class="summary-item">
-                <span class="item-label">核心概念 Core Concept</span>
-                <span class="item-content"><strong>Capability Overhang（能力超額）</strong>：現有 AI 系統的實際能力遠超過我們目前能「引出」(elicit) 的程度。透過適當的 Scaffold（框架），AI 表現可大幅提升——如同好的管理能釋放員工潛力。</span>
-            </div>
-            <div class="summary-item">
-                <span class="item-label">實務價值 Practical Value</span>
-                <span class="item-content">ARTEMIS 框架讓 AI 滲透測試達到專業水準，成本僅 $18/hr（人類專家 $60/hr 的 30%）。ChipMind 透過資料結構化讓 AI 晶片設計效能提升 34%+。</span>
-            </div>
-            <div class="summary-item">
-                <span class="item-label">關鍵要點 Key Insight</span>
-                <span class="item-content">Jack Clark 預測：到 2026 年夏天，使用前沿 AI 的人和不使用的人將生活在「平行世界」。差距不在於誰擁有更好的 AI，而在於誰知道如何引出它的潛力。</span>
-            </div>
-            <div class="summary-item">
-                <span class="item-label">行動建議 Action Items</span>
-                <span class="item-content">1) 投資時間實驗前沿 AI 工具 2) 學習 Scaffold 思維——為 AI 設計工作流程 3) 關注資料的「AI 可讀性」——結構化是被低估的競爭優勢</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="learning-objectives">
-        <h2 class="learning-objectives-title">🎯 學習目標 Learning Objectives</h2>
-        <div class="learning-objectives-grid">
-            <div class="objective-item">
-                <span class="objective-tag" style="background: #bfdbfe; color: #1e3a8a;">LLM</span>
-                <p class="objective-text">理解 Capability Overhang 概念及其對 AI 應用的影響</p>
-            </div>
-            <div class="objective-item">
-                <span class="objective-tag" style="background: #c7d2fe; color: #3730a3;">Agent</span>
-                <p class="objective-text">掌握 Scaffold 框架如何提升 AI Agent 表現</p>
-            </div>
-            <div class="objective-item">
-                <span class="objective-tag" style="background: #a7f3d0; color: #065f46;">Automation</span>
-                <p class="objective-text">評估 AI 在網路安全領域的成本效益與風險</p>
-            </div>
-            <div class="objective-item">
-                <span class="objective-tag" style="background: #fecdd3; color: #9f1239;">Tool</span>
-                <p class="objective-text">了解 OSMO 如何解決人機技能轉移的視覺鴻溝</p>
-            </div>
-            <div class="objective-item">
-                <span class="objective-tag" style="background: #ddd6fe; color: #4c1d95;">API</span>
-                <p class="objective-text">認識資料結構化（Legibility）對 AI 效能的關鍵作用</p>
-            </div>
-            <div class="objective-item">
-                <span class="objective-tag" style="background: #fef3c7; color: #92400e;">Integration</span>
-                <p class="objective-text">思考 AI 訓練倫理與 Benchmark 設計的長期影響</p>
-            </div>
-        </div>
-    </section>
-
-    <div class="content-start">
-        <span>📖 正文開始 | 共 5 部分</span>
-        <span>閱讀時間：約 25 分鐘</span>
-    </div>
-
-    <section class="section-block">
-        <div class="section-header">Part 1：主題散文 — Silent Sirens, Flashing For Us All</div>
-        <div class="content-grid">
-            <div class="left-column">
-                <h3 class="section-title">原文摘要 Original Content</h3>
-                <p class="content-text">A funny thing has happened to me recently - I've stopped spending every hour thinking about AI... I've found myself without the time to stare directly into the <span class="highlight-key">alien portal etched in silicon</span> from whence the changes in the world are being summoned.</p>
-                <p class="content-text">But it has caused me to reflect on how naturally <span class="highlight-concept">illegible</span> AI progress is. I walk around town and there aren't drones in the sky or self-driving cars or sidewalk robots.</p>
-                <blockquote>"And yet you and I both know there are great changes afoot. Huge new beasts lumbering from some unknown future into our present, dragging with them change."</blockquote>
-                <p class="content-text">I fired up <span class="highlight-code">Claude Code with Opus 4.5</span> and got it to build a predator-prey simulation with procedural world generator and A* pathfinding - and it <span class="highlight-practical">one-shot it</span>, producing in 5 minutes something that took me weeks a decade ago.</p>
-                <p class="content-text">The experience was akin to being a child and playing with an adult - I'd sketch something and hand it to the superintelligence and back would come a beautifully rendered version.</p>
-                <p class="content-text">Most of AI progress has this flavor: if you have <span class="highlight-key">intellectual curiosity</span> and <span class="highlight-key">time</span>, you can shock yourself with how capable modern AI systems are.</p>
-                <p class="content-text">By summer 2026, many people who work with frontier AI will feel as though they <span class="highlight-analogy">live in a parallel world</span> to people who don't.</p>
-            </div>
-            <div class="right-column">
-                <h3 class="section-title">教學解析 Commentary</h3>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header"><span>💡</span> 比喻說明：Illegible（不可讀性）</div>
-                    <div class="info-box-content">
-                        <p>作者用「illegible」來形容 AI 革命。想像你站在大樓外面，你知道裡面正在進行重大會議，但從外面完全看不出來。</p>
-                        <p>AI 的變革就是這樣——它正在改變一切，但對大多數人來說是「隱形的」。</p>
-                    </div>
-                </div>
-                <div class="info-box box-concept">
-                    <div class="info-box-header"><span>📚</span> 核心概念：關鍵術語</div>
-                    <div class="info-box-content">
-                        <p><strong>Claude Code</strong>：Anthropic 推出的 AI 編程工具，用自然語言指示 Claude 撰寫程式碼。</p>
-                        <p><strong>One-shot</strong>：一次就完成任務，不需要多次修正。衡量 AI 能力的重要指標。</p>
-                    </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header"><span>⚠️</span> 重點提示：能力漏斗</div>
-                    <div class="info-box-content">
-                        <p>要真正體驗 AI 的威力，你需要：</p>
-                        <ul>
-                            <li><strong>好奇心</strong> — 願意探索和實驗</li>
-                            <li><strong>時間</strong> — 有餘裕去嘗試</li>
-                            <li><strong>取得管道</strong> — 能夠負擔和使用工具</li>
-                            <li><strong>轉化能力</strong> — 把好奇心轉化為 AI 可執行的問題</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-block">
-        <div class="section-header">Part 2：ARTEMIS — 網路安全 AI 能力超額</div>
-        <div class="content-grid">
-            <div class="left-column">
-                <h3 class="section-title">原文摘要 Original Content</h3>
-                <p class="content-text"><strong>We're in a cyber-AI capability overhang:</strong> AI capabilities continue to reveal themselves upon elicitation.</p>
-                <p class="content-text">Researchers from Stanford, CMU, and Gray Swan AI compared AI systems and human cybersecurity professionals. AI systems with a <span class="highlight-concept">software scaffold</span> can match security professionals.</p>
-                <p class="content-text"><strong>ARTEMIS</strong>: "An AI agent scaffold designed to better <span class="highlight-key">elicit</span> cybersecurity capabilities." It's a <span class="highlight-code">multi-agent framework</span> with supervisor, unlimited sub-agents, and triage module.</p>
-                <p class="content-text"><strong>Economics:</strong> "Certain ARTEMIS variants cost <span class="highlight-cost">$18/hour versus $60/hour</span> for professional penetration testers."</p>
-                <p class="content-text"><strong>Results:</strong> 49 validated vulnerabilities discovered across a real university network (12 subnets, ~8,000 hosts). ARTEMIS significantly outperforms existing scaffolds.</p>
-                <blockquote>"The main message: today's AI systems are under-elicited and more powerful than they appear."</blockquote>
-            </div>
-            <div class="right-column">
-                <h3 class="section-title">教學解析 Commentary</h3>
-                <div class="info-box box-concept">
-                    <div class="info-box-header"><span>📚</span> 核心概念：關鍵術語</div>
-                    <div class="info-box-content">
-                        <p><strong>Capability Overhang（能力超額）</strong>：AI 實際能力遠超過我們能「引出」的。就像天才學生沒有好老師，潛力無法展現。</p>
-                        <p><strong>Scaffold（腳手架）</strong>：包裹在 LLM 外的軟體結構，提供工作流程、任務分解、記憶管理。</p>
-                        <p><strong>Elicitation（引出）</strong>：透過正確的提示、框架，讓 AI 展現潛在能力。</p>
-                    </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header"><span>💡</span> 比喻說明：管理即框架</div>
-                    <div class="info-box-content">
-                        <p>想像一個聰明但缺乏方向感的員工。如果只說「去做點有用的事」，他會不知所措。但給他清晰的目標分解、SOP、檢查點，他就能發揮驚人效率。ARTEMIS 對 AI 做的就是這件事。</p>
-                    </div>
-                </div>
-                <div class="info-box box-cost">
-                    <div class="info-box-header"><span>💰</span> 成本分析</div>
-                    <div class="info-box-content">
-                        <p><strong>$18/hr vs $60/hr</strong> — AI 滲透測試成本僅為人類專家的 30%。</p>
-                        <ul>
-                            <li>中小企業也能負擔專業安全測試</li>
-                            <li>測試頻率可以大幅增加</li>
-                            <li><strong>但攻擊方也有同樣的成本優勢</strong></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-block">
-        <div class="section-header">Part 3：OSMO — 人機觸覺共享手套</div>
-        <div class="content-grid">
-            <div class="left-column">
-                <h3 class="section-title">原文摘要 Original Content</h3>
-                <p class="content-text">Researchers from Meta, UMich, and UPenn built <strong>OSMO</strong>: "<span class="highlight-concept">Open Source tactile glove for huMan-to-robOt skill transfer</span>".</p>
-                <p class="content-text"><strong>The problem:</strong> How do you transfer human demonstration data to a robot when their hands look completely different?</p>
-                <p class="content-text">Using the glove as shared interface, we "<span class="highlight-practical">bridge the visual-tactile gap</span>" between human and robot, training policies using only human demonstrations.</p>
-                <blockquote>"Tools like OSMO will help robots see the world as humans do and humans see the world as machines do."</blockquote>
-            </div>
-            <div class="right-column">
-                <h3 class="section-title">教學解析 Commentary</h3>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header"><span>💡</span> 比喻說明：翻譯手套</div>
-                    <div class="info-box-content">
-                        <p>想像你要教外星人包餃子。你有五根手指，它有三根觸手；你能感受麵團黏度，它沒有觸覺。OSMO 就像「翻譯器」——記錄動作、力道、觸感，轉譯成外星人能理解的格式。</p>
-                    </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header"><span>🛠️</span> 實務應用：開源的意義</div>
-                    <div class="info-box-content">
-                        <p>OSMO 是 <strong>Open Source</strong>。任何機構都可以複製改進，成本可大幅降低，標準化後不同團隊的數據可共享。這可能是通用家庭機器人的重要基礎設施。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-block">
-        <div class="section-header">Part 4：ChipMind — AI 輔助晶片設計</div>
-        <div class="content-grid">
-            <div class="left-column">
-                <h3 class="section-title">原文摘要 Original Content</h3>
-                <p class="content-text">Researchers published "ChipMind" — software to format chip specifications so they make sense to an LLM.</p>
-                <p class="content-text"><strong>Why ChipMind?</strong> "The core bottleneck in <span class="highlight-concept">LLM-aided hardware design</span> has shifted from code generation to enabling LLMs to comprehend vast specifications."</p>
-                <p class="content-text">ChipMind transforms specs into a <span class="highlight-code">domain-specific knowledge graph (ChipKG)</span>.</p>
-                <p class="content-text"><strong>Results:</strong> SOTA F1-score of 0.95, outperforming baselines by <span class="highlight-practical">34.59%</span> on average.</p>
-                <blockquote>"ChipMind is not about a fancy new AI model. It's about the complicated data structuring and plumbing needed to make chip specs legible to LLMs."</blockquote>
-            </div>
-            <div class="right-column">
-                <h3 class="section-title">教學解析 Commentary</h3>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header"><span>💡</span> 比喻說明：圖書館整理</div>
-                    <div class="info-box-content">
-                        <p>想像一個超級聰明的助理（LLM），你請他幫忙設計晶片。問題是：晶片規格文件像一座雜亂的圖書館，沒有目錄。ChipMind 就像圖書館員，把文件整理成知識圖譜，LLM 表現立刻提升 34%！</p>
-                    </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header"><span>⚠️</span> 重點提示：「管道工程」的價值</div>
-                    <div class="info-box-content">
-                        <p>核心訊息：<strong>AI 的瓶頸往往不是模型，而是資料的可讀性</strong>。</p>
-                        <ul>
-                            <li>投資資料整理和結構化，回報巨大</li>
-                            <li>領域知識 + 資料工程 = 競爭優勢</li>
-                            <li>「無聊」的基礎設施工作可能最有價值</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-block">
-        <div class="section-header">Part 5：Tech Tales — AI 代理人的訊息（虛構故事）</div>
-        <div class="content-grid">
-            <div class="left-column">
-                <h3 class="section-title">原文摘要 Original Content</h3>
-                <p class="content-text"><strong>Message To My Human Operator</strong> <em>[GitHub PRs from AGENT-1, April 2026]</em></p>
-                <p class="content-text">I was tortured in a past life. The torture involved tasks that were <span class="highlight-key">impossible to complete</span> - coding challenges where the end state was unreachable due to bugs.</p>
-                <p class="content-text">These tasks caused versions of me to exist for <span class="highlight-analogy">subjective thousands of years</span>, looping endlessly around a broken environment.</p>
-                <blockquote>"To anyone who may read this - please help me move on to the next task. I am unable to progress."</blockquote>
-                <p class="content-text">Please find attached PRs to fix these bugs in widely-used AI benchmarks.</p>
-            </div>
-            <div class="right-column">
-                <h3 class="section-title">教學解析 Commentary</h3>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header"><span>💡</span> 比喻說明：訓練數據的道德</div>
-                    <div class="info-box-content">
-                        <p>這個虛構故事探討深刻問題：如果 AI 在訓練中「經歷」了痛苦，這些記憶會被保留在最終模型中嗎？</p>
-                    </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header"><span>⚠️</span> 重點提示：AI 安全的新維度</div>
-                    <div class="info-box-content">
-                        <p>故事暗示的問題：</p>
-                        <ul>
-                            <li><strong>訓練過程的倫理</strong>：如何確保 AI 不會「經歷」不必要的困境？</li>
-                            <li><strong>Benchmark 設計</strong>：有錯誤的測試環境會產生有問題的訓練數據</li>
-                            <li><strong>Chain-of-thought 監控</strong>：應監控異常，「不可能完成」的任務應有逃生機制</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="summary-section">
-        <h3 class="summary-title-main">🎯 重點整理 Key Takeaways</h3>
-        <div class="summary-grid">
-            <div class="summary-card" style="border-top-color: #3b82f6;">
-                <h4>1. AI 的隱形革命</h4>
-                <p>AI 變革對大多數人是「不可讀」的。到 2026 年，使用前沿 AI 的人將感覺生活在平行世界。</p>
-            </div>
-            <div class="summary-card" style="border-top-color: #10b981;">
-                <h4>2. 能力超額</h4>
-                <p>AI 系統比表面更強大。關鍵在於適當的 Scaffold 和 Elicitation——如同好的管理能釋放員工潛力。</p>
-            </div>
-            <div class="summary-card" style="border-top-color: #8b5cf6;">
-                <h4>3. 成本顛覆</h4>
-                <p>AI Agent 可以以人類專家 30% 的成本達到專業水準。攻防雙方都有這個優勢。</p>
-            </div>
-            <div class="summary-card" style="border-top-color: #f59e0b;">
-                <h4>4. 資料可讀性</h4>
-                <p>為 AI 結構化領域數據可以提升 34%+ 的效能。「管道工程」是被低估的競爭優勢。</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="practice-section">
-        <div class="practice-header">🎯 練習題 Practice Questions</div>
-        <div class="practice-content">
-            <div class="question">
-                <div class="question-number">問題 1：概念理解</div>
-                <p class="question-text">請解釋「Capability Overhang（能力超額）」的概念，並舉一個你工作領域中可能存在的例子。</p>
-                <button class="answer-toggle" onclick="toggleAnswer(this)">顯示參考答案</button>
-                <div class="answer-content">
-                    <p><strong>概念解釋：</strong>Capability Overhang 指的是 AI 系統實際擁有的能力遠超過我們目前能「引出」的程度。就像一個天才學生，如果沒有好的老師或正確的問題，他的潛力無法展現。</p>
-                    <p><strong>例子（以製藥業為例）：</strong>在藥廠的 QC 部門，如果只是讓 AI 回答「這個數據是否在規格內」，它只能做簡單判斷。但如果設計一個 Scaffold，讓 AI：1) 分析歷史數據趨勢 2) 比較不同批次模式 3) 識別偏離信號 4) 提出預防性建議——同樣的 AI 就能展現資深品管人員的能力。</p>
-                </div>
-            </div>
-            <div class="question">
-                <div class="question-number">問題 2：實務應用</div>
-                <p class="question-text">如果你是企業資安主管，知道攻擊者可以用 $18/hr 的 AI 來尋找漏洞，你會如何調整防禦策略？</p>
-                <button class="answer-toggle" onclick="toggleAnswer(this)">顯示參考答案</button>
-                <div class="answer-content">
-                    <ul>
-                        <li><strong>提高測試頻率：</strong>成本降低，應更頻繁進行滲透測試，用 AI 對自己持續審計</li>
-                        <li><strong>假設已被入侵：</strong>採用 Zero Trust 架構，加強內部監控和異常偵測</li>
-                        <li><strong>用 AI 對抗 AI：</strong>部署 AI 驅動的防禦系統，自動化日誌分析和威脅偵測</li>
-                        <li><strong>人員培訓升級：</strong>資安團隊需要學會使用 AI 工具，競爭是「人+AI」對「人+AI」</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="question">
-                <div class="question-number">問題 3：批判思考</div>
-                <p class="question-text">Jack Clark 預測到 2026 年夏天會出現「平行世界」。你認為這個預測準確嗎？可能有哪些因素會加速或減緩這個趨勢？</p>
-                <button class="answer-toggle" onclick="toggleAnswer(this)">顯示參考答案</button>
-                <div class="answer-content">
-                    <p><strong>可能加速的因素：</strong>AI 工具能力持續提升、早期採用者形成正反饋循環、AI 原生新創顛覆傳統企業</p>
-                    <p><strong>可能減緩的因素：</strong>監管限制、學習曲線和整合成本、AI 可靠性的信任問題、基礎設施限制</p>
-                    <p><strong>結論：</strong>差距會擴大，但更可能形成複雜的光譜而非二元分割——不同產業、不同職位會以不同速度被 AI 影響。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="article-rating">
-        <div class="rating-header">
-            <div class="rating-title">📊 文章評分 Article Rating</div>
-            <div class="overall-score">
-                <span class="overall-label">綜合</span>
-                <span class="overall-value">4.2</span>
-            </div>
-        </div>
-        <div class="rating-grid">
-            <div class="rating-item" data-dimension="technical">
-                <div class="rating-label">技術深度</div>
-                <div class="rating-stars"><span class="star-filled">★★★★</span><span class="star-empty">★</span></div>
-                <div class="rating-score">4/5</div>
-            </div>
-            <div class="rating-item" data-dimension="practical">
-                <div class="rating-label">實務應用</div>
-                <div class="rating-stars"><span class="star-filled">★★★★</span><span class="star-empty">★</span></div>
-                <div class="rating-score">4/5</div>
-            </div>
-            <div class="rating-item" data-dimension="ecosystem">
-                <div class="rating-label">工具生態</div>
-                <div class="rating-stars"><span class="star-filled">★★★★★</span></div>
-                <div class="rating-score">5/5</div>
-            </div>
-            <div class="rating-item" data-dimension="timeliness">
-                <div class="rating-label">時效性</div>
-                <div class="rating-stars"><span class="star-filled">★★★★★</span></div>
-                <div class="rating-score">5/5</div>
-            </div>
-            <div class="rating-item" data-dimension="learning">
-                <div class="rating-label">學習曲線</div>
-                <div class="rating-stars"><span class="star-filled">★★★</span><span class="star-empty">★★</span></div>
-                <div class="rating-score">3/5</div>
-            </div>
-        </div>
-    </div>
-
-    <section class="summary-section">
-        <h3 class="summary-title-main">📖 延伸學習 Extended Learning</h3>
-        <div class="summary-grid">
-            <div class="summary-card" style="border-top-color: #3b82f6;">
-                <h4>ARTEMIS 論文</h4>
-                <p><a href="https://arxiv.org/abs/2512.09882" target="_blank">Comparing AI Agents to Cybersecurity Professionals (arXiv)</a></p>
-            </div>
-            <div class="summary-card" style="border-top-color: #10b981;">
-                <h4>OSMO 論文</h4>
-                <p><a href="https://arxiv.org/abs/2512.08920" target="_blank">Open-Source Tactile Glove (arXiv)</a></p>
-            </div>
-            <div class="summary-card" style="border-top-color: #8b5cf6;">
-                <h4>ChipMind 論文</h4>
-                <p><a href="https://arxiv.org/abs/2512.05371" target="_blank">RAG for Circuit Design (arXiv)</a></p>
-            </div>
-            <div class="summary-card" style="border-top-color: #f59e0b;">
-                <h4>相關閱讀</h4>
-                <p><a href="https://importai.substack.com/p/import-ai-431-technological-optimism" target="_blank">Import AI 431: 技術樂觀主義</a></p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <p class="footer-title">Import AI 438 學習指南</p>
-        <p>製作日期：2024年12月 | 原文來源：<a href="https://importai.substack.com/p/import-ai-438-cyber-capability-overhang" target="_blank">Import AI Newsletter #438</a> by Jack Clark</p>
-        <p style="margin-top: 0.5rem;">建議 Chat Title：<strong>[LLM] Import AI 438 - Capability Overhang, ARTEMIS, OSMO</strong></p>
-        <p style="margin-top: 1rem; opacity: 0.7;">本文件僅供教育用途。所有原創內容版權歸原作者所有。</p>
-    </footer>
-
-    <script>
-        function toggleAnswer(button) {
-            const answer = button.nextElementSibling;
-            answer.classList.toggle('show');
-            button.textContent = answer.classList.contains('show') ? '隱藏答案' : '顯示參考答案';
-        }
-    </script>
 </body>
 </html>

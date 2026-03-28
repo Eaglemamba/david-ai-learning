@@ -1,959 +1,382 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2026-01-22">
-    <meta name="doc-title" content="LinkedIn Carousel 自動化生成系統：從失敗到成功的三次迭代">
-    <meta name="doc-source" content="Wyndo / Substack Newsletter">
-    <meta name="doc-tags" content="Automation,Tool,Prompt">
-    <meta name="doc-rating" content="3.8">
-    <meta name="doc-summary" content="用Claude Skill系統在5分鐘內生成LinkedIn Carousel，記錄三次迭代失敗經驗，展示摩擦點驅動的自動化思維">
-    <meta name="doc-file" content="2026-01-22_linkedin-carousel-skills.html">
-    <title>LinkedIn Carousel 自動化生成系統：從失敗到成功的三次迭代</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1e3a8a;
-            --secondary: #3b82f6;
-            --accent: #f59e0b;
-            --bg-light: #f8fafc;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --concept-bg: #f0fdf4;
-            --concept-border: #86efac;
-            --concept-header: #bbf7d0;
-            --analogy-bg: #fffbeb;
-            --analogy-border: #fcd34d;
-            --analogy-header: #fef3c7;
-            --key-bg: #fff7ed;
-            --key-border: #fdba74;
-            --key-header: #fed7aa;
-            --practical-bg: #ecfdf5;
-            --practical-border: #6ee7b7;
-            --practical-header: #a7f3d0;
-            --code-bg: #f5f3ff;
-            --code-border: #c4b5fd;
-            --code-header: #ddd6fe;
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body {
-            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.8;
-            font-size: 16px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 100%);
-            color: white;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .header h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.4;
-        }
-        
-        .tags {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-        
-        .tag {
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        .tag-automation { background: #a7f3d0; color: #065f46; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .tag-prompt { background: #fde68a; color: #92400e; }
-        
-        .source-info {
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-        
-        .source-info a { color: #93c5fd; }
-        
-        /* Rating Bar */
-        .rating-bar {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding: 0.6rem 1rem;
-            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
-            border-radius: 8px;
-            flex-wrap: wrap;
-            border: 1px solid #bae6fd;
-        }
-        
-        .rating-score {
-            font-weight: 700;
-            color: #0c4a6e;
-            font-size: 1rem;
-        }
-        
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        
-        .rating-high {
-            font-size: 0.8rem;
-            color: #047857;
-            background: #d1fae5;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-        }
-        
-        .rating-low {
-            font-size: 0.8rem;
-            color: #64748b;
-            background: #f1f5f9;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-        }
-        
-        /* Executive Summary */
-        .executive-summary {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .summary-text {
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: var(--text-dark);
-        }
-        
-        /* Learning Objectives Grid */
-        .objectives-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .objective-item {
-            background: white;
-            padding: 1.25rem;
-            border-radius: 0.75rem;
-            border-left: 4px solid var(--secondary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .objective-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        
-        .objective-number {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .objective-text {
-            font-size: 0.9rem;
-            color: var(--text-dark);
-        }
-        
-        /* Framework Visual */
-        .framework-visual {
-            background: linear-gradient(135deg, #1e3a5f, #3b5998);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            color: white;
-            margin: 1.5rem 0;
-        }
-        
-        .framework-title {
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-        
-        .framework-steps {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .framework-step {
-            text-align: center;
-            min-width: 120px;
-        }
-        
-        .framework-icon {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            width: 3.5rem;
-            height: 3.5rem;
-            background: rgba(255,255,255,0.2);
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.5rem;
-        }
-        
-        .framework-step-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-        
-        .framework-step-desc {
-            font-size: 0.8rem;
-            opacity: 0.9;
-            margin-top: 0.25rem;
-        }
-        
-        .framework-arrow {
-            font-size: 1.5rem;
-            color: #93c5fd;
-        }
-        
-        @media (max-width: 600px) {
-            .framework-arrow { display: none; }
-            .framework-steps { gap: 1.5rem; }
-        }
-        
-        /* Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        @media (max-width: 900px) {
-            .content-grid { grid-template-columns: 1fr; }
-        }
-        
-        .content-left {
-            background: #f1f5f9;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            font-size: 0.9rem;
-        }
-        
-        .bilingual-block {
-            margin-bottom: 1rem;
-        }
-        
-        .bilingual-block:last-child { margin-bottom: 0; }
-        
-        .chinese-text {
-            color: var(--text-dark);
-            line-height: 1.8;
-            margin-bottom: 0.5rem;
-        }
-        
-        .english-text {
-            color: var(--text-muted);
-            font-style: italic;
-            font-size: 0.85rem;
-            line-height: 1.7;
-        }
-        
-        .highlight-concept { background: #a5d6a7; padding: 0 0.25rem; border-radius: 2px; }
-        .highlight-key { background: #ffcc80; padding: 0 0.25rem; border-radius: 2px; }
-        .highlight-practical { background: #6ee7b7; padding: 0 0.25rem; border-radius: 2px; }
-        
-        .content-right {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        /* Info Boxes */
-        .info-box {
-            border-radius: 0.75rem;
-            overflow: hidden;
-        }
-        
-        .info-box-header {
-            padding: 0.75rem 1rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .info-box-content {
-            padding: 1rem;
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-        
-        .box-concept .info-box-header { background: var(--concept-header); color: #14532d; }
-        .box-concept .info-box-content { background: var(--concept-bg); border: 1px solid var(--concept-border); border-top: none; }
-        
-        .box-analogy .info-box-header { background: var(--analogy-header); color: #92400e; }
-        .box-analogy .info-box-content { background: var(--analogy-bg); border: 1px solid var(--analogy-border); border-top: none; }
-        
-        .box-key .info-box-header { background: var(--key-header); color: #9a3412; }
-        .box-key .info-box-content { background: var(--key-bg); border: 1px solid var(--key-border); border-top: none; }
-        
-        .box-practical .info-box-header { background: var(--practical-header); color: #065f46; }
-        .box-practical .info-box-content { background: var(--practical-bg); border: 1px solid var(--practical-border); border-top: none; }
-        
-        .box-code .info-box-header { background: var(--code-header); color: #4c1d95; }
-        .box-code .info-box-content { background: var(--code-bg); border: 1px solid var(--code-border); border-top: none; }
-        
-        /* Part Headers */
-        .part-header {
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 0.75rem;
-            margin: 2rem 0 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .part-number {
-            font-size: 0.8rem;
-            font-weight: 700;
-            background: rgba(255,255,255,0.2);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-        }
-        
-        .part-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-        
-        /* Key Takeaways */
-        .takeaways-section {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        
-        .takeaways-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        
-        .summary-card {
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            border-left: 4px solid var(--secondary);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        .summary-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        
-        .summary-card-number {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-        }
-        
-        .summary-card-title {
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
-        }
-        
-        .summary-card-text {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-        
-        /* Practice Questions Accordion */
-        .practice-section {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        
-        .question-accordion {
-            background: white;
-            border-radius: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid #e9d5ff;
-            overflow: hidden;
-        }
-        
-        .question-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.25rem;
-            cursor: pointer;
-            list-style: none;
-        }
-        
-        .question-header::-webkit-details-marker { display: none; }
-        
-        .question-number {
-            font-weight: 700;
-            color: #6d28d9;
-        }
-        
-        .question-type {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #6d28d9;
-            background: #e9d5ff;
-            padding: 0.2rem 0.5rem;
-            border-radius: 0.25rem;
-        }
-        
-        .question-text {
-            flex: 1;
-            font-size: 0.95rem;
-            color: #374151;
-            min-width: 200px;
-        }
-        
-        .accordion-icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            transition: transform 0.2s;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
-        }
-        
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        
-        .question-answer {
-            padding: 1rem 1.25rem;
-            background: #faf5ff;
-            border-top: 1px solid #e9d5ff;
-        }
-        
-        .question-answer p {
-            font-size: 0.9rem;
-            line-height: 1.7;
-            color: #374151;
-            margin-bottom: 0.75rem;
-        }
-        
-        .question-answer p:last-child { margin-bottom: 0; }
-        
-        .question-answer ul {
-            margin: 0.5rem 0;
-            padding-left: 1.5rem;
-        }
-        
-        .question-answer li {
-            font-size: 0.9rem;
-            line-height: 1.7;
-            color: #374151;
-            margin-bottom: 0.3rem;
-        }
-        
-        /* Bottom Line */
-        .bottom-line {
-            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
-            margin: 2rem 0;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid #7c3aed;
-        }
-        
-        .bottom-line-header {
-            font-weight: 700;
-            color: #5b21b6;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        
-        .bottom-line-label {
-            font-weight: 600;
-            color: #6d28d9;
-            font-size: 0.85rem;
-            margin-bottom: 0.25rem;
-        }
-        
-        .bottom-line-text {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: #334155;
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            background: #f1f5f9;
-            border-radius: 0.75rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-        
-        .footer a { color: var(--secondary); }
-        
-        .chat-title {
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-top: 1rem;
-        }
-        
-        /* Code blocks */
-        code {
-            font-family: 'Source Code Pro', monospace;
-            background: #e2e8f0;
-            padding: 0.15rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.85em;
-        }
-        
-        pre {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            overflow-x: auto;
-            font-family: 'Source Code Pro', monospace;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-    </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2026-01-22" name="doc-date"/>
+<meta content="LinkedIn Carousel 自動化生成系統：從失敗到成功的三次迭代" name="doc-title"/>
+<meta content="Wyndo / Substack Newsletter" name="doc-source"/>
+<meta content="Automation,Tool,Prompt" name="doc-tags"/>
+<meta content="3.8" name="doc-rating"/>
+<meta content="用Claude Skill系統在5分鐘內生成LinkedIn Carousel，記錄三次迭代失敗經驗，展示摩擦點驅動的自動化思維" name="doc-summary"/>
+<meta content="2026-01-22_linkedin-carousel-skills.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>LinkedIn Carousel 自動化生成系統：從失敗到成功的三次迭代</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+
+
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="tags">
-                <span class="tag tag-automation">Automation</span>
-                <span class="tag tag-tool">Tool</span>
-                <span class="tag tag-prompt">Prompt</span>
-            </div>
-            <h1>LinkedIn Carousel 自動化生成系統：從失敗到成功的三次迭代</h1>
-            <p class="source-info">
+<div class="container">
+<!-- Header -->
+<header class="header">
+<div class="tags">
+<span class="tag tag-automation">Automation</span>
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-prompt">Prompt</span>
+</div>
+<h1>LinkedIn Carousel 自動化生成系統：從失敗到成功的三次迭代</h1>
+<p class="source-info">
                 來源：Wyndo | 2026年1月22日 | 
                 <a href="https://wyndo.substack.com/" target="_blank">Substack Newsletter</a>
-            </p>
-        </header>
-        
-        <!-- Executive Summary -->
-        <section class="executive-summary">
-            <div class="section-title">快速摘要</div>
-            <div class="rating-bar">
-                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
-                <span class="rating-high">↑ 實務應用, 學習曲線</span>
-                <span class="rating-low">↓ 技術深度, 工具生態</span>
-            </div>
-            <div class="summary-text">
-                <p>這篇文章記錄了作者 Wyndo 如何建構一個能在 5 分鐘內生成 LinkedIn Carousel 的 Claude Skill 系統。透過三次失敗的迭代（PPTX → Nano Banana Pro → HTML/CSS），作者發現<strong>程式碼比 AI 生圖更可靠</strong>，最終選擇用 HTML/CSS 作為輸出格式。文章的核心價值在於展示「摩擦點驅動的自動化思維」——不是追求完美技術方案，而是找到「夠好且可重複」的解決路徑。</p>
-            </div>
-        </section>
-        
-        <!-- Learning Objectives -->
-        <section>
-            <div class="section-title">學習目標</div>
-            <div class="objectives-grid">
-                <div class="objective-item">
-                    <div class="objective-number">目標 1</div>
-                    <div class="objective-text">理解「快速迭代 vs 完美主義」在 AI 工具開發中的取捨邏輯</div>
-                </div>
-                <div class="objective-item">
-                    <div class="objective-number">目標 2</div>
-                    <div class="objective-text">掌握 Claude Skill 的品牌配置設計模式：一次設定、重複使用</div>
-                </div>
-                <div class="objective-item">
-                    <div class="objective-number">目標 3</div>
-                    <div class="objective-text">評估不同技術路徑（PPTX/圖像生成/HTML）的優劣與適用場景</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Framework Visual -->
-        <div class="framework-visual">
-            <div class="framework-title">三次迭代的技術演進</div>
-            <div class="framework-steps">
-                <div class="framework-step">
-                    <div class="framework-icon">1</div>
-                    <div class="framework-step-title">PPTX Skill</div>
-                    <div class="framework-step-desc">速度快但設計陽春</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">2</div>
-                    <div class="framework-step-title">Nano Banana Pro</div>
-                    <div class="framework-step-desc">設計美但一致性差</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">3</div>
-                    <div class="framework-step-title">HTML/CSS Skill</div>
-                    <div class="framework-step-desc">可控且可重複</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Part I -->
-        <div class="part-header">
-            <span class="part-number">PART I</span>
-            <span class="part-title">問題定義：為什麼 Carousel 是痛點</span>
-        </div>
-        
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="chinese-text">作者每週固定發佈 5 篇 LinkedIn 貼文，但 Carousel 一直是「<span class="highlight-key">腦中的開放迴路</span>」——每次看到別人精美的 Carousel 就存書籤，想說「下週來研究」，但下週永遠不會來。</p>
-                    <p class="english-text">"Every time I'd see a well-designed carousel—clean styling, brand guidelines, proper overlay images—I'd bookmark it and think: 'Next week, I'll figure this out.' Next week never came."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="chinese-text">傳統製作 Carousel 的流程大約需要 <span class="highlight-concept">2.5 小時</span>：寫內容 1 小時、Canva 設計 1 小時、修正對齊間距 30 分鐘，加上心理負擔「這真的夠專業嗎？」</p>
-                    <p class="english-text">"1 hour writing the content, 1 hour wrestling with Canva, another 30 minutes fixing alignment and spacing, plus the mental overhead of 'does this even look professional?'"</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">比喻說明</div>
-                    <div class="info-box-content">
+</p>
+</header>
+<!-- Executive Summary -->
+<section class="executive-summary">
+<div class="section-title">快速摘要</div>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
+<span class="rating-high">↑ 實務應用, 學習曲線</span>
+<span class="rating-low">↓ 技術深度, 工具生態</span>
+</div>
+<div class="summary-text">
+<p>這篇文章記錄了作者 Wyndo 如何建構一個能在 5 分鐘內生成 LinkedIn Carousel 的 Claude Skill 系統。透過三次失敗的迭代（PPTX → Nano Banana Pro → HTML/CSS），作者發現<strong>程式碼比 AI 生圖更可靠</strong>，最終選擇用 HTML/CSS 作為輸出格式。文章的核心價值在於展示「摩擦點驅動的自動化思維」——不是追求完美技術方案，而是找到「夠好且可重複」的解決路徑。</p>
+</div>
+</section>
+<!-- Learning Objectives -->
+<section>
+<div class="section-title">學習目標</div>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-number">目標 1</div>
+<div class="objective-text">理解「快速迭代 vs 完美主義」在 AI 工具開發中的取捨邏輯</div>
+</div>
+<div class="objective-item">
+<div class="objective-number">目標 2</div>
+<div class="objective-text">掌握 Claude Skill 的品牌配置設計模式：一次設定、重複使用</div>
+</div>
+<div class="objective-item">
+<div class="objective-number">目標 3</div>
+<div class="objective-text">評估不同技術路徑（PPTX/圖像生成/HTML）的優劣與適用場景</div>
+</div>
+</div>
+</section>
+<!-- Framework Visual -->
+<div class="framework-visual">
+<div class="framework-title">三次迭代的技術演進</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">1</div>
+<div class="framework-step-title">PPTX Skill</div>
+<div class="framework-step-desc">速度快但設計陽春</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">2</div>
+<div class="framework-step-title">Nano Banana Pro</div>
+<div class="framework-step-desc">設計美但一致性差</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">3</div>
+<div class="framework-step-title">HTML/CSS Skill</div>
+<div class="framework-step-desc">可控且可重複</div>
+</div>
+</div>
+</div>
+<!-- Part I -->
+<div class="part-header">
+<span class="part-number">PART I</span>
+<span class="part-title">問題定義：為什麼 Carousel 是痛點</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">作者每週固定發佈 5 篇 LinkedIn 貼文，但 Carousel 一直是「<span class="highlight-key">腦中的開放迴路</span>」——每次看到別人精美的 Carousel 就存書籤，想說「下週來研究」，但下週永遠不會來。</p>
+<p class="en-text">"Every time I'd see a well-designed carousel—clean styling, brand guidelines, proper overlay images—I'd bookmark it and think: 'Next week, I'll figure this out.' Next week never came."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">傳統製作 Carousel 的流程大約需要 <span class="highlight-concept">2.5 小時</span>：寫內容 1 小時、Canva 設計 1 小時、修正對齊間距 30 分鐘，加上心理負擔「這真的夠專業嗎？」</p>
+<p class="en-text">"1 hour writing the content, 1 hour wrestling with Canva, another 30 minutes fixing alignment and spacing, plus the mental overhead of 'does this even look professional?'"</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明</div>
+<div class="info-box-content">
                         這就像 CDMO 的「Open Loop」問題——知道該做卻一直拖延的任務會消耗認知資源。作者用「rent-free in my head」來形容這種狀態，完全符合 GTD 的「捕捉所有未完成事項」原則。
                     </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">重點提示</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示</div>
+<div class="info-box-content">
                         作者的突破點不是「找到完美工具」，而是重新定義問題：<strong>Carousel 的瓶頸不在設計技術，而在「努力與產出的比例失衡」</strong>。這是自動化思維的核心——先找摩擦點，再設計解法。
                     </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Part II -->
-        <div class="part-header">
-            <span class="part-number">PART II</span>
-            <span class="part-title">第一次嘗試：Claude Skill + PPTX</span>
-        </div>
-        
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="chinese-text">第一個直覺反應是用 Claude Skill 生成 PowerPoint 投影片。Anthropic 在 GitHub 上已有現成的 <span class="highlight-concept">PPTX Builder Skill</span>，作者直接複製來用。</p>
-                    <p class="english-text">"My first instinct was obvious: use Claude Skill to generate carousels in PowerPoint Slides format... Anthropic already has PowerPoint slide-builder skills on their GitHub."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="chinese-text">結果：<span class="highlight-key">技術上成功，視覺上失敗</span>。每張投影片只需 3-5 秒生成，速度極快，但設計「太陽春」——沒有靈魂、留白過多、看起來很普通。</p>
-                    <p class="english-text">"But the output? It's too plain. There's no soul, and it leaves too much space unused. It technically works, but it looks generic."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-concept">
-                    <div class="info-box-header">核心概念</div>
-                    <div class="info-box-content">
-                        <strong>PPTX 的優勢是結構化</strong>——Claude 對 XML-based 格式（如 OOXML）有很好的掌控力，可以精確控制文字位置和佈局。但這也是限制：PPTX 的設計系統天生偏向「企業簡報」風格，不適合社群媒體的視覺語言。
+</div>
+</div>
+</div>
+<!-- Part II -->
+<div class="part-header">
+<span class="part-number">PART II</span>
+<span class="part-title">第一次嘗試：Claude Skill + PPTX</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">第一個直覺反應是用 Claude Skill 生成 PowerPoint 投影片。Anthropic 在 GitHub 上已有現成的 <span class="highlight-concept">PPTX Builder Skill</span>，作者直接複製來用。</p>
+<p class="en-text">"My first instinct was obvious: use Claude Skill to generate carousels in PowerPoint Slides format... Anthropic already has PowerPoint slide-builder skills on their GitHub."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">結果：<span class="highlight-key">技術上成功，視覺上失敗</span>。每張投影片只需 3-5 秒生成，速度極快，但設計「太陽春」——沒有靈魂、留白過多、看起來很普通。</p>
+<p class="en-text">"But the output? It's too plain. There's no soul, and it leaves too much space unused. It technically works, but it looks generic."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
+<strong>PPTX 的優勢是結構化</strong>——Claude 對 XML-based 格式（如 OOXML）有很好的掌控力，可以精確控制文字位置和佈局。但這也是限制：PPTX 的設計系統天生偏向「企業簡報」風格，不適合社群媒體的視覺語言。
                     </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">實務應用</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用</div>
+<div class="info-box-content">
                         如果你的 Carousel 需求是「快速、結構清楚、不要求設計感」，PPTX 路線其實可行。例如：內部培訓材料、技術說明文件、數據報告摘要。
                     </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Part III -->
-        <div class="part-header">
-            <span class="part-number">PART III</span>
-            <span class="part-title">第二次嘗試：Nano Banana Pro 圖像生成</span>
-        </div>
-        
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="chinese-text">從第一次失敗學到的教訓是<span class="highlight-key">需要更好的設計品質</span>，作者轉向研究成功創作者的 Carousel，拆解出視覺元件：Logo 位置、標題字型、內文層級、標籤樣式、品牌頁尾。</p>
-                    <p class="english-text">"I studied successful carousel posts from other creators—the ones that actually stopped me from scrolling. I broke them down into components: Logo placement and sizing, Header typography and positioning, Body text hierarchy..."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="chinese-text">Nano Banana Pro 的單張輸出非常驚艷——乾淨、品牌色正確、文字清晰。但 <span class="highlight-concept">Carousel 需要多張投影片的一致性</span>，這正是 AI 圖像生成的死穴。</p>
-                    <p class="english-text">"Every time I generated a new slide, I'd get random icon placements, different spacing, shifted elements. One slide would be perfect. The next slide would have the header in a completely different position."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="chinese-text">更致命的問題：作者的品牌頁尾包含<span class="highlight-key">個人照片</span>。AI 無法準確重現真人臉孔，每次生成的「我」看起來都像「AI 生成的遠房表親」。</p>
-                    <p class="english-text">"My brand footer includes my photo. Every time Nano Banana Pro tried to generate it, the face didn't look like me—because image-generation models can't reliably reproduce specific people's faces."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-concept">
-                    <div class="info-box-header">核心概念</div>
-                    <div class="info-box-content">
-                        <strong>生成式 AI 的一致性問題</strong>：擴散模型（Diffusion Model）每次生成都是「重新想像」，無法像程式碼一樣精確複製。這在單張創意圖像上是優勢，在需要「系列一致性」的任務上是硬傷。
+</div>
+</div>
+</div>
+<!-- Part III -->
+<div class="part-header">
+<span class="part-number">PART III</span>
+<span class="part-title">第二次嘗試：Nano Banana Pro 圖像生成</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">從第一次失敗學到的教訓是<span class="highlight-key">需要更好的設計品質</span>，作者轉向研究成功創作者的 Carousel，拆解出視覺元件：Logo 位置、標題字型、內文層級、標籤樣式、品牌頁尾。</p>
+<p class="en-text">"I studied successful carousel posts from other creators—the ones that actually stopped me from scrolling. I broke them down into components: Logo placement and sizing, Header typography and positioning, Body text hierarchy..."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">Nano Banana Pro 的單張輸出非常驚艷——乾淨、品牌色正確、文字清晰。但 <span class="highlight-concept">Carousel 需要多張投影片的一致性</span>，這正是 AI 圖像生成的死穴。</p>
+<p class="en-text">"Every time I generated a new slide, I'd get random icon placements, different spacing, shifted elements. One slide would be perfect. The next slide would have the header in a completely different position."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">更致命的問題：作者的品牌頁尾包含<span class="highlight-key">個人照片</span>。AI 無法準確重現真人臉孔，每次生成的「我」看起來都像「AI 生成的遠房表親」。</p>
+<p class="en-text">"My brand footer includes my photo. Every time Nano Banana Pro tried to generate it, the face didn't look like me—because image-generation models can't reliably reproduce specific people's faces."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
+<strong>生成式 AI 的一致性問題</strong>：擴散模型（Diffusion Model）每次生成都是「重新想像」，無法像程式碼一樣精確複製。這在單張創意圖像上是優勢，在需要「系列一致性」的任務上是硬傷。
                     </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">比喻說明</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明</div>
+<div class="info-box-content">
                         這就像請一位天才畫家畫 6 張海報——每張都很美，但風格、構圖、元素位置都會有微妙差異。而 Carousel 需要的是「同一張海報的 6 個版本」，適合工匠而非藝術家。
                     </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">重點提示</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示</div>
+<div class="info-box-content">
                         作者的洞察：<strong>Nano Banana Pro 對精確文字和圖像生成非常厲害</strong>。如果不是因為照片問題，這個方案其實可行。這暗示了一個組合策略：用 AI 生成「不含人臉」的元件，人工處理照片。
                     </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Part IV -->
-        <div class="part-header">
-            <span class="part-number">PART IV</span>
-            <span class="part-title">第三次嘗試：HTML/CSS 的勝利</span>
-        </div>
-        
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="chinese-text">經過兩次失敗後，作者重新審視問題：「<span class="highlight-concept">如果我過度複雜化了呢？</span>用 HTML 和 CSS 直接建構 Carousel 如何？」</p>
-                    <p class="english-text">"After two failed attempts, I stepped back and asked myself: 'What if I'm overcomplicating this? What if I just build carousels using simple HTML and CSS?'"</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="chinese-text">核心邏輯：<span class="highlight-practical">程式碼是完美可重複的</span>。HTML/CSS 不是複雜語言——它們本質上是「版面和樣式的指令」。Claude 非常擅長寫這類程式碼，不像圖像生成會有隨機性。</p>
-                    <p class="english-text">"This shift is the reason I turned to using code; it's far more effective because you get exactly what you build... Unlike image generation, code is perfectly reproducible."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="chinese-text">最終的 Claude Skill 接受：品牌色（主色/次色/強調色）、字型偏好、Logo 檔案、<span class="highlight-key">真實照片</span>、定位陳述，然後儲存在一個「品牌配置檔」中，跨對話持續使用。</p>
-                    <p class="english-text">"Your brand colors (primary, secondary, accent), Your typography preferences, Your logo file, Your profile photo, Your positioning statement... Claude stores and updates everything in a brand configuration file."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-concept">
-                    <div class="info-box-header">核心概念</div>
-                    <div class="info-box-content">
-                        <strong>確定性 vs 隨機性</strong>：程式碼輸出是確定性的（deterministic），給定相同輸入會產生相同輸出。這正是 Carousel 這類「系列內容」需要的特性。作者的洞察是「<strong>不需要 AI 圖像的創意，只需要 AI 程式碼的效率</strong>」。
+</div>
+</div>
+</div>
+<!-- Part IV -->
+<div class="part-header">
+<span class="part-number">PART IV</span>
+<span class="part-title">第三次嘗試：HTML/CSS 的勝利</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">經過兩次失敗後，作者重新審視問題：「<span class="highlight-concept">如果我過度複雜化了呢？</span>用 HTML 和 CSS 直接建構 Carousel 如何？」</p>
+<p class="en-text">"After two failed attempts, I stepped back and asked myself: 'What if I'm overcomplicating this? What if I just build carousels using simple HTML and CSS?'"</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">核心邏輯：<span class="highlight-practical">程式碼是完美可重複的</span>。HTML/CSS 不是複雜語言——它們本質上是「版面和樣式的指令」。Claude 非常擅長寫這類程式碼，不像圖像生成會有隨機性。</p>
+<p class="en-text">"This shift is the reason I turned to using code; it's far more effective because you get exactly what you build... Unlike image generation, code is perfectly reproducible."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">最終的 Claude Skill 接受：品牌色（主色/次色/強調色）、字型偏好、Logo 檔案、<span class="highlight-key">真實照片</span>、定位陳述，然後儲存在一個「品牌配置檔」中，跨對話持續使用。</p>
+<p class="en-text">"Your brand colors (primary, secondary, accent), Your typography preferences, Your logo file, Your profile photo, Your positioning statement... Claude stores and updates everything in a brand configuration file."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
+<strong>確定性 vs 隨機性</strong>：程式碼輸出是確定性的（deterministic），給定相同輸入會產生相同輸出。這正是 Carousel 這類「系列內容」需要的特性。作者的洞察是「<strong>不需要 AI 圖像的創意，只需要 AI 程式碼的效率</strong>」。
                     </div>
-                </div>
-                <div class="info-box box-code">
-                    <div class="info-box-header">程式碼/API</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-code">
+<div class="info-box-header">程式碼/API</div>
+<div class="info-box-content">
                         品牌配置檔的設計是這個方案的精髓——類似於 CSS 變數（Custom Properties）的概念，把視覺系統抽象化。這讓使用者只需設定一次，Claude Skill 就能在不同對話中維持一致品牌。
                     </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">實務應用</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用</div>
+<div class="info-box-content">
                         工作流程：
                         <ol style="margin: 0.5rem 0 0 1.5rem; font-size: 0.85rem;">
-                            <li>下載 HTML 檔案</li>
-                            <li>在瀏覽器開啟</li>
-                            <li>點擊內建下載按鈕取得所有投影片</li>
-                            <li>用 ILovePDF.com 將 JPG 轉 PDF</li>
-                            <li>上傳到 LinkedIn</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Part V -->
-        <div class="part-header">
-            <span class="part-number">PART V</span>
-            <span class="part-title">系統設計細節與手動替代方案</span>
-        </div>
-        
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="chinese-text">作者提供了兩種輸入模式：<span class="highlight-concept">文字輸入</span>（直接貼內容、語音逐字稿、Twitter 推文擴充、簡報要點）和 <span class="highlight-concept">Newsletter URL</span>（Claude 自動抓取內容、分析結構、拆成 6-10 張投影片）。</p>
-                    <p class="english-text">"Option 1: Text Input — Paste your content directly... Option 2: Newsletter URL — Share your newsletter URL and Claude handles the rest."</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="chinese-text">三種設計模板：<strong>Default</strong>（乾淨、專業、極簡）、<strong>Bold</strong>（裝飾性波浪、混合字型、大字體）、<strong>Technical</strong>（瑞士粗獷主義設計、幾何元素）。</p>
-                    <p class="english-text">"Template 1: Default (clean, professional, minimal design), Template 2: Bold (decorative waves, mixed typography, larger text), Template 3: Technical (Swiss Brutalist design and geometric accents)"</p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="chinese-text">對於不想用完整自動化的讀者，作者提供了<span class="highlight-practical">手動版提示詞</span>，讓任何人都能用標準 Claude 對話測試這個方法。</p>
-                    <p class="english-text">"Look, you don't need my exact Claude Skill to start making better carousels. If you want to test whether this HTML/CSS approach works for your content style, here's the manual version..."</p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-practical">
-                    <div class="info-box-header">實務應用：手動版提示詞</div>
-                    <div class="info-box-content">
-                        <strong>Step 1：設定品牌</strong><br>
-                        <code>"I want to create LinkedIn carousels using HTML/CSS. Here are my brand specifications: Primary color: [hex], Secondary color: [hex], Header font: [font], Body font: [font], Logo: [upload], Profile photo: [upload]. Save these as my carousel brand guidelines."</code>
-                    </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">實務應用：生成提示詞</div>
-                    <div class="info-box-content">
-                        <strong>Step 2：生成 Carousel</strong><br>
-                        <code>"Create a 6-slide LinkedIn carousel using my brand guidelines with this content: [paste text]. Structure it as: Slide 1: Hook, Slides 2-5: Main content, Slide 6: CTA. Generate HTML/CSS files I can screenshot."</code>
-                    </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">重點提示</div>
-                    <div class="info-box-content">
+<li>下載 HTML 檔案</li>
+<li>在瀏覽器開啟</li>
+<li>點擊內建下載按鈕取得所有投影片</li>
+<li>用 ILovePDF.com 將 JPG 轉 PDF</li>
+<li>上傳到 LinkedIn</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<!-- Part V -->
+<div class="part-header">
+<span class="part-number">PART V</span>
+<span class="part-title">系統設計細節與手動替代方案</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">作者提供了兩種輸入模式：<span class="highlight-concept">文字輸入</span>（直接貼內容、語音逐字稿、Twitter 推文擴充、簡報要點）和 <span class="highlight-concept">Newsletter URL</span>（Claude 自動抓取內容、分析結構、拆成 6-10 張投影片）。</p>
+<p class="en-text">"Option 1: Text Input — Paste your content directly... Option 2: Newsletter URL — Share your newsletter URL and Claude handles the rest."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">三種設計模板：<strong>Default</strong>（乾淨、專業、極簡）、<strong>Bold</strong>（裝飾性波浪、混合字型、大字體）、<strong>Technical</strong>（瑞士粗獷主義設計、幾何元素）。</p>
+<p class="en-text">"Template 1: Default (clean, professional, minimal design), Template 2: Bold (decorative waves, mixed typography, larger text), Template 3: Technical (Swiss Brutalist design and geometric accents)"</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">對於不想用完整自動化的讀者，作者提供了<span class="highlight-practical">手動版提示詞</span>，讓任何人都能用標準 Claude 對話測試這個方法。</p>
+<p class="en-text">"Look, you don't need my exact Claude Skill to start making better carousels. If you want to test whether this HTML/CSS approach works for your content style, here's the manual version..."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用：手動版提示詞</div>
+<div class="info-box-content">
+<strong>Step 1：設定品牌</strong><br/>
+<code>"I want to create LinkedIn carousels using HTML/CSS. Here are my brand specifications: Primary color: [hex], Secondary color: [hex], Header font: [font], Body font: [font], Logo: [upload], Profile photo: [upload]. Save these as my carousel brand guidelines."</code>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用：生成提示詞</div>
+<div class="info-box-content">
+<strong>Step 2：生成 Carousel</strong><br/>
+<code>"Create a 6-slide LinkedIn carousel using my brand guidelines with this content: [paste text]. Structure it as: Slide 1: Hook, Slides 2-5: Main content, Slide 6: CTA. Generate HTML/CSS files I can screenshot."</code>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示</div>
+<div class="info-box-content">
                         手動版第一次約需 15-30 分鐘，做過 2-3 次後可縮短到 10-15 分鐘。這個「先驗證概念再自動化」的流程，正是<strong>最小可行產品（MVP）思維</strong>在個人生產力上的應用。
                     </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Key Takeaways -->
-        <section class="takeaways-section">
-            <div class="section-title">重點整理</div>
-            <div class="takeaways-grid">
-                <div class="summary-card">
-                    <div class="summary-card-number">01</div>
-                    <div class="summary-card-title">摩擦點驅動自動化</div>
-                    <div class="summary-card-text">不是追求「最強技術」，而是找到「努力與產出比例失衡」的地方。Carousel 的問題不是設計能力，而是時間投入太高。</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-number">02</div>
-                    <div class="summary-card-title">程式碼勝過圖像生成</div>
-                    <div class="summary-card-text">當任務需要「系列一致性」時，確定性的 HTML/CSS 比隨機性的 AI 圖像更可靠。創意不等於有效。</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-number">03</div>
-                    <div class="summary-card-title">品牌配置是核心架構</div>
-                    <div class="summary-card-text">一次設定品牌參數，跨對話重複使用。這是 Claude Skill 設計的精髓——把變動的部分（內容）和固定的部分（品牌）分離。</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-number">04</div>
-                    <div class="summary-card-title">快速迭代 > 完美規劃</div>
-                    <div class="summary-card-text">三次失敗才找到可行方案。作者沒有花三個月規劃「完美系統」，而是快速試錯、學習、調整。</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Practice Questions -->
-        <section class="practice-section">
-            <div class="section-title">練習題</div>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q1</span>
-                    <span class="question-type">概念理解</span>
-                    <span class="question-text">為什麼作者最終選擇 HTML/CSS 而不是 AI 圖像生成？請用「確定性」的概念解釋。</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p><strong>參考答案</strong>：AI 圖像生成（如 Nano Banana Pro）使用擴散模型，每次生成都有隨機性，即使提示詞相同也會產生微妙差異。這對單張創意圖像是優勢，但對需要 6-10 張一致風格的 Carousel 是致命缺陷。</p>
-                    <p>相反，HTML/CSS 是確定性的——給定相同程式碼，瀏覽器渲染的結果完全一致。作者需要的不是「每張都獨特」，而是「每張都一樣」，這正好符合程式碼的特性。</p>
-                    <p><strong>延伸</strong>：這個選擇邏輯可以推廣到其他場景。當任務需要「精確複製」（合約、報告、品牌素材），選擇確定性工具；當任務需要「創意發散」（腦力激盪、概念探索），選擇生成式工具。</p>
-                </div>
-            </details>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q2</span>
-                    <span class="question-type">產業應用</span>
-                    <span class="question-text">假設你要在 CDMO 環境中建立一個「批次記錄摘要 Carousel」系統，根據本文的教訓，你會選擇什麼技術路徑？為什麼？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p><strong>參考答案</strong>：我會選擇 HTML/CSS 路徑，原因如下：</p>
-                    <ul>
-                        <li><strong>監管一致性</strong>：GMP 環境要求文件格式一致、可追溯。程式碼生成的輸出比 AI 圖像更符合 21 CFR Part 11 的「確保記錄完整性」原則。</li>
-                        <li><strong>品牌配置 = SOP 模板</strong>：作者的「品牌配置檔」概念可以直接對應到公司 SOP 模板——Logo、配色、字型、免責聲明一次設定，每次生成都符合標準。</li>
-                        <li><strong>驗證成本</strong>：如果用 AI 圖像，每次都要人工確認內容是否正確（因為 AI 可能產生幻覺）。程式碼生成則是「你輸入什麼就輸出什麼」，驗證負擔低很多。</li>
-                    </ul>
-                    <p><strong>變體考量</strong>：如果是對外的行銷 Carousel（如 LinkedIn 招募貼文），可能值得投資 Nano Banana Pro 的設計品質，因為視覺吸引力比一致性重要。</p>
-                </div>
-            </details>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q3</span>
-                    <span class="question-type">批判思考</span>
-                    <span class="question-text">本文強調「5 分鐘生成 Carousel」，但忽略了什麼成本？這個系統在什麼情況下可能不值得建立？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p><strong>參考答案</strong>：作者可能低估或忽略了以下成本：</p>
-                    <ul>
-                        <li><strong>前期投資</strong>：文章提到「經過多次試錯」才成功，這個探索時間沒有量化。如果每週只做 1 個 Carousel，傳統 Canva 流程可能更划算。</li>
-                        <li><strong>學習曲線</strong>：需要理解 Claude Skill 的設置、HTML/CSS 的除錯、瀏覽器截圖和 PDF 轉換流程。對非技術用戶是障礙。</li>
-                        <li><strong>設計天花板</strong>：HTML/CSS 的視覺表現力有限。如果你的品牌需要複雜的圖形設計（漸變、3D 效果、插畫），程式碼很難達到。</li>
-                        <li><strong>維護成本</strong>：品牌更新時，需要同步修改配置檔。如果設計系統常變動，維護負擔會累積。</li>
-                    </ul>
-                    <p><strong>不值得的情況</strong>：(1) 發文頻率低（< 2 次/月）；(2) 團隊已有設計師支援；(3) 品牌視覺需要高度客製化；(4) 對 HTML/CSS 完全陌生且不想學習。</p>
-                </div>
-            </details>
-        </section>
-        
-        <!-- Bottom Line -->
-        <div class="bottom-line">
-            <div class="bottom-line-header">我的行動結論</div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">核心洞察</div>
-                <div class="bottom-line-text">這篇文章的核心不是「如何做 Carousel」，而是「如何用摩擦點驅動自動化決策」。作者選擇 HTML/CSS 不是因為它最酷，而是因為它「夠好且可重複」——這正是我在 CDMO 推動 AI 導入時需要的思維：不追求完美方案，而是找到「能解決 80% 問題的 20% 努力」。</div>
-            </div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">立即應用</div>
-                <div class="bottom-line-text">這週嘗試用作者提供的手動版提示詞，在 Claude 中生成一個簡單的 Carousel（可以用 Substack 文章的某個段落）。目標不是完美輸出，而是驗證「HTML/CSS 輸出 → 截圖 → 上傳」這個流程是否對我有效。如果可行，再考慮投資時間建立完整 Skill。</div>
-            </div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">需要補充</div>
-                <div class="bottom-line-text">文章缺少「品牌配置檔」的具體格式範例，以及如何在 Claude Project 中設置跨對話持久化。下次研究 Claude Skill 開發文件時，特別留意這個架構設計。另外，作者的 Maker Labs 會員方案可能有更詳細的技術細節，值得追蹤。</div>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <footer class="footer">
-            <p>製作日期：2026年1月23日</p>
-            <p>原文連結：<a href="https://wyndo.substack.com/" target="_blank">Wyndo Substack</a></p>
-            <p class="chat-title">建議 Chat Title：[Automation] LinkedIn Carousel - Claude Skill HTML/CSS</p>
-        </footer>
-    </div>
+</div>
+</div>
+</div>
+<!-- Key Takeaways -->
+<section class="takeaways-section">
+<div class="section-title">重點整理</div>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="summary-card-number">01</div>
+<div class="summary-card-title">摩擦點驅動自動化</div>
+<div class="summary-card-text">不是追求「最強技術」，而是找到「努力與產出比例失衡」的地方。Carousel 的問題不是設計能力，而是時間投入太高。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-number">02</div>
+<div class="summary-card-title">程式碼勝過圖像生成</div>
+<div class="summary-card-text">當任務需要「系列一致性」時，確定性的 HTML/CSS 比隨機性的 AI 圖像更可靠。創意不等於有效。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-number">03</div>
+<div class="summary-card-title">品牌配置是核心架構</div>
+<div class="summary-card-text">一次設定品牌參數，跨對話重複使用。這是 Claude Skill 設計的精髓——把變動的部分（內容）和固定的部分（品牌）分離。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-number">04</div>
+<div class="summary-card-title">快速迭代 &gt; 完美規劃</div>
+<div class="summary-card-text">三次失敗才找到可行方案。作者沒有花三個月規劃「完美系統」，而是快速試錯、學習、調整。</div>
+</div>
+</div>
+</section>
+<!-- Practice Questions -->
+<section class="practice-section">
+<div class="section-title">練習題</div>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">為什麼作者最終選擇 HTML/CSS 而不是 AI 圖像生成？請用「確定性」的概念解釋。</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>參考答案</strong>：AI 圖像生成（如 Nano Banana Pro）使用擴散模型，每次生成都有隨機性，即使提示詞相同也會產生微妙差異。這對單張創意圖像是優勢，但對需要 6-10 張一致風格的 Carousel 是致命缺陷。</p>
+<p>相反，HTML/CSS 是確定性的——給定相同程式碼，瀏覽器渲染的結果完全一致。作者需要的不是「每張都獨特」，而是「每張都一樣」，這正好符合程式碼的特性。</p>
+<p><strong>延伸</strong>：這個選擇邏輯可以推廣到其他場景。當任務需要「精確複製」（合約、報告、品牌素材），選擇確定性工具；當任務需要「創意發散」（腦力激盪、概念探索），選擇生成式工具。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">假設你要在 CDMO 環境中建立一個「批次記錄摘要 Carousel」系統，根據本文的教訓，你會選擇什麼技術路徑？為什麼？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>參考答案</strong>：我會選擇 HTML/CSS 路徑，原因如下：</p>
+<ul>
+<li><strong>監管一致性</strong>：GMP 環境要求文件格式一致、可追溯。程式碼生成的輸出比 AI 圖像更符合 21 CFR Part 11 的「確保記錄完整性」原則。</li>
+<li><strong>品牌配置 = SOP 模板</strong>：作者的「品牌配置檔」概念可以直接對應到公司 SOP 模板——Logo、配色、字型、免責聲明一次設定，每次生成都符合標準。</li>
+<li><strong>驗證成本</strong>：如果用 AI 圖像，每次都要人工確認內容是否正確（因為 AI 可能產生幻覺）。程式碼生成則是「你輸入什麼就輸出什麼」，驗證負擔低很多。</li>
+</ul>
+<p><strong>變體考量</strong>：如果是對外的行銷 Carousel（如 LinkedIn 招募貼文），可能值得投資 Nano Banana Pro 的設計品質，因為視覺吸引力比一致性重要。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">本文強調「5 分鐘生成 Carousel」，但忽略了什麼成本？這個系統在什麼情況下可能不值得建立？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>參考答案</strong>：作者可能低估或忽略了以下成本：</p>
+<ul>
+<li><strong>前期投資</strong>：文章提到「經過多次試錯」才成功，這個探索時間沒有量化。如果每週只做 1 個 Carousel，傳統 Canva 流程可能更划算。</li>
+<li><strong>學習曲線</strong>：需要理解 Claude Skill 的設置、HTML/CSS 的除錯、瀏覽器截圖和 PDF 轉換流程。對非技術用戶是障礙。</li>
+<li><strong>設計天花板</strong>：HTML/CSS 的視覺表現力有限。如果你的品牌需要複雜的圖形設計（漸變、3D 效果、插畫），程式碼很難達到。</li>
+<li><strong>維護成本</strong>：品牌更新時，需要同步修改配置檔。如果設計系統常變動，維護負擔會累積。</li>
+</ul>
+<p><strong>不值得的情況</strong>：(1) 發文頻率低（&lt; 2 次/月）；(2) 團隊已有設計師支援；(3) 品牌視覺需要高度客製化；(4) 對 HTML/CSS 完全陌生且不想學習。</p>
+</div>
+</details>
+</section>
+<!-- Bottom Line -->
+<div class="bottom-line">
+<div class="bottom-line-header">我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">核心洞察</div>
+<div class="bottom-line-text">這篇文章的核心不是「如何做 Carousel」，而是「如何用摩擦點驅動自動化決策」。作者選擇 HTML/CSS 不是因為它最酷，而是因為它「夠好且可重複」——這正是我在 CDMO 推動 AI 導入時需要的思維：不追求完美方案，而是找到「能解決 80% 問題的 20% 努力」。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">立即應用</div>
+<div class="bottom-line-text">這週嘗試用作者提供的手動版提示詞，在 Claude 中生成一個簡單的 Carousel（可以用 Substack 文章的某個段落）。目標不是完美輸出，而是驗證「HTML/CSS 輸出 → 截圖 → 上傳」這個流程是否對我有效。如果可行，再考慮投資時間建立完整 Skill。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">需要補充</div>
+<div class="bottom-line-text">文章缺少「品牌配置檔」的具體格式範例，以及如何在 Claude Project 中設置跨對話持久化。下次研究 Claude Skill 開發文件時，特別留意這個架構設計。另外，作者的 Maker Labs 會員方案可能有更詳細的技術細節，值得追蹤。</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+<p>製作日期：2026年1月23日</p>
+<p>原文連結：<a href="https://wyndo.substack.com/" target="_blank">Wyndo Substack</a></p>
+<p class="chat-title">建議 Chat Title：[Automation] LinkedIn Carousel - Claude Skill HTML/CSS</p>
+</footer>
+</div>
 </body>
 </html>

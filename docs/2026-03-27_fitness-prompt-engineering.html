@@ -1,269 +1,114 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>健身 Prompt 工程 - 7 個 Claude Prompt 的結構分析</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>健身 Prompt 工程 - 7 個 Claude Prompt 的結構分析</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<!-- Dashboard Index Meta -->
+<meta content="2026-03-27" name="doc-date"/>
+<meta content="健身 Prompt 工程 - 模板化 Prompt 結構分析" name="doc-title"/>
+<meta content="Hawks (@Hawks0x) / X (Twitter)" name="doc-source"/>
+<meta content="" name="doc-source-type"/>
+<meta content="Prompt,Framework,Analysis" name="doc-tags"/>
+<meta content="3.4" name="doc-rating"/>
+<meta content="7 個健身 Claude Prompt 的結構解析。模板化 placeholder、角色設定、輸出規格三層架構的跨領域應用。" name="doc-summary"/>
+<meta content="2026-03-27_fitness-prompt-engineering.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-    <!-- Dashboard Index Meta -->
-    <meta name="doc-date" content="2026-03-27">
-    <meta name="doc-title" content="健身 Prompt 工程 - 模板化 Prompt 結構分析">
-    <meta name="doc-source" content="Hawks (@Hawks0x) / X (Twitter)">
-    <meta name="doc-source-type" content="">
-    <meta name="doc-tags" content="Prompt,Framework,Analysis">
-    <meta name="doc-rating" content="3.4">
-    <meta name="doc-summary" content="7 個健身 Claude Prompt 的結構解析。模板化 placeholder、角色設定、輸出規格三層架構的跨領域應用。">
-    <meta name="doc-file" content="2026-03-27_fitness-prompt-engineering.html">
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        /* === v1.4.3 MANDATORY PAGE LAYOUT === */
-        body {
-            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            text-align: center;
-            padding: 2.5rem 2rem;
-            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-            color: white;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
-        .header-tags { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-        .tag { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
-        .tag-prompt { background: #fde68a; color: #92400e; }
-        .tag-framework { background: #c7d2fe; color: #3730a3; }
-        .tag-analysis { background: #ddd6fe; color: #4c1d95; }
-        .header h1 { font-size: 1.8rem; margin: 0 0 0.5rem; font-weight: 700; }
-        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
-        .header .source { font-size: 0.85rem; opacity: 0.7; }
-
-        /* Rating Bar */
-        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-        /* Executive Summary */
-        .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
-        .exec-summary h2 { color: #1e3a5f; font-size: 1.2rem; margin-top: 0; }
-
-        /* Learning Objectives */
-        .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-        .objective-item { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .objective-text { font-size: 0.9rem; color: #334155; }
-        .section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
-
-        /* Framework Visual */
-        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 120px; }
-        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
-        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-
-        /* Content Grid */
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
-        .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
-        .content-right { padding: 1.5rem; background: #f8fafc; }
-        .content-left h3, .content-right h3 { color: #1e3a5f; font-size: 1rem; margin-top: 0; }
-        .bilingual-block { margin-bottom: 1rem; }
-        .zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
-        .en-text { font-size: 0.9rem; line-height: 1.6; color: #64748b; font-style: italic; }
-        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-        /* Info Boxes */
-        .info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
-        .info-box-header { padding: 0.5rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
-        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
-
-        /* Code blocks */
-        pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; line-height: 1.6; margin: 0.5rem 0; }
-        code { font-family: 'Source Code Pro', monospace; }
-        .inline-code { background: #f1f5f9; color: #7c3aed; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
-
-        /* Key Takeaways */
-        .takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-        .summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .summary-card-title { font-weight: 700; color: #1e3a5f; margin-bottom: 0.5rem; font-size: 0.95rem; }
-        .summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
-
-        /* Accordion */
-        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-        .question-answer p:last-child { margin-bottom: 0; }
-
-        /* Bottom Line */
-        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
-        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-        /* Footer */
-        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-        .footer a { color: #3b82f6; text-decoration: none; }
-
-        /* Prompt Template Box */
-        .prompt-pattern { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; line-height: 1.6; margin: 0.5rem 0; }
-        .prompt-role { color: #67e8f9; }
-        .prompt-context { color: #fcd34d; }
-        .prompt-output { color: #86efac; }
-        .prompt-placeholder { color: #f472b6; }
-
-        /* Comparison Table */
-        .comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
-        .comparison-table th { background: #1e3a5f; color: white; padding: 0.75rem; text-align: left; }
-        .comparison-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
-        .comparison-table tr:nth-child(even) { background: #f8fafc; }
-        .comparison-table tr:hover { background: #e0f2fe; }
-
-        @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            .content-grid { grid-template-columns: 1fr; }
-            .objectives-grid { grid-template-columns: 1fr; }
-            .takeaways-grid { grid-template-columns: 1fr; }
-            .framework-arrow { display: none; }
-            .framework-steps { gap: 1.5rem; }
-            .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
-        }
-    </style>
 </head>
 <body>
-
 <!-- Header -->
-<div class="header">
-    <div class="header-tags">
-        <span class="tag tag-prompt">Prompt</span>
-        <span class="tag tag-framework">Framework</span>
-        <span class="tag tag-analysis">Analysis</span>
-    </div>
-    <h1>健身 Prompt 工程：模板化結構的跨領域分析</h1>
-    <div class="subtitle">7 Claude Prompts to Level Up Your Fitness — 結構拆解與 Prompt 設計原則</div>
-    <div class="source">Hawks (@Hawks0x) / X (Twitter) | 2026-03-27</div>
+<header class="header">
+<div class="header-tags">
+<span class="tag tag-prompt">Prompt</span>
+<span class="tag tag-framework">Framework</span>
+<span class="tag tag-analysis">Analysis</span>
 </div>
-
+<h1>健身 Prompt 工程：模板化結構的跨領域分析</h1>
+<div class="subtitle">7 Claude Prompts to Level Up Your Fitness — 結構拆解與 Prompt 設計原則</div>
+<div class="source">Hawks (@Hawks0x) / X (Twitter) | 2026-03-27</div>
+</header>
 <!-- Container -->
 <div class="container">
-
-    <!-- Executive Summary -->
-    <div class="exec-summary">
-        <div class="rating-bar">
-            <span class="rating-score"><span class="rating-stars">★★★☆☆</span> 3.4/5</span>
-            <span class="rating-high">↑ 實務應用, 學習曲線</span>
-            <span class="rating-low">↓ 技術深度, 工具生態</span>
-        </div>
-        <h2>Executive Summary</h2>
-        <p class="zh-text">這篇 Twitter/X 貼文分享 7 個針對健身訓練的 Claude Prompt，涵蓋 12 週訓練計畫、高原期突破、弱點診斷、恢復方案、傷害預防、進度追蹤與身體重組。表面上是健身內容，但其<span class="highlight-concept">核心價值在於展示模板化 Prompt 的結構設計模式</span>——角色設定、使用者上下文注入、結構化輸出規格三層架構，可直接遷移到任何專業領域。</p>
-        <p class="en-text">A Twitter thread sharing 7 Claude prompts for fitness programming. Beyond the fitness domain, the real value lies in demonstrating a reusable template-based prompt architecture: role assignment, user context injection via bracketed placeholders, and structured output specifications.</p>
-    </div>
-
-    <!-- Learning Objectives -->
-    <h2 class="section-title">Learning Objectives</h2>
-    <div class="objectives-grid">
-        <div class="objective-item">
-            <div class="objective-icon">🧩</div>
-            <div class="objective-text">辨識模板化 Prompt 的三層結構（角色/上下文/輸出）並理解各層的功能</div>
-        </div>
-        <div class="objective-item" style="border-left-color: #10b981;">
-            <div class="objective-icon">🔄</div>
-            <div class="objective-text">將 placeholder 模式遷移到 CDMO 領域（偏差調查、技術轉移）</div>
-        </div>
-        <div class="objective-item" style="border-left-color: #8b5cf6;">
-            <div class="objective-icon">⚖️</div>
-            <div class="objective-text">批判性評估「AI 取代專家」的宣稱，理解 Copilot 模式的邊界</div>
-        </div>
-    </div>
-
-    <!-- Framework Visual -->
-    <div class="framework-visual">
-        <div class="framework-title">模板化 Prompt 三層架構 (Template Prompt Architecture)</div>
-        <div class="framework-steps">
-            <div class="framework-step">
-                <div class="framework-icon">🎭</div>
-                <div class="framework-step-title">Layer 1: 角色設定</div>
-                <div class="framework-step-desc">Role + Expertise + Years</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">📋</div>
-                <div class="framework-step-title">Layer 2: 上下文注入</div>
-                <div class="framework-step-desc">[Placeholder] 使用者資料</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">📐</div>
-                <div class="framework-step-title">Layer 3: 輸出規格</div>
-                <div class="framework-step-desc">結構 + 格式 + 品質要求</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part I -->
-    <h2 class="section-title">Part I: 三層架構解析 — Prompt 的骨架</h2>
-    <div class="content-grid">
-        <div class="content-left">
-            <h3>概念解析</h3>
-            <div class="bilingual-block">
-                <p class="zh-text">這 7 個 Prompt 表面上是健身內容，但每一個都遵循相同的<span class="highlight-concept">三層結構模式</span>。這不是巧合——這是有效 Prompt 設計的基本骨架。</p>
-                <p class="en-text">All 7 prompts follow an identical three-layer structural pattern. This is not coincidental — it is the fundamental skeleton of effective prompt design.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>Layer 1: 角色設定 (Role Assignment)</strong> — 每個 Prompt 都以「You are an elite...with X years of experience」開頭。這不只是裝飾，而是<span class="highlight-key">啟動模型特定領域的知識分佈</span>。指定「elite personal trainer and strength coach with 15 years experience」比單純說「help me with fitness」能觸發更精確的知識回應。</p>
-                <p class="en-text">Each prompt starts with "You are an elite...with X years of experience." This activates domain-specific knowledge distributions rather than generic responses.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>Layer 2: 上下文注入 (Context Injection)</strong> — 使用 <span class="inline-code">[bracketed placeholders]</span> 讓使用者填入個人資料。例如 <span class="inline-code">[weight], [height], [age], [sex]</span>。這是模板化設計的精髓：<span class="highlight-concept">一次設計，無限複用</span>。</p>
-                <p class="en-text">Bracketed placeholders like [weight], [height], [age] enable template reuse — design once, personalize infinitely.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>Layer 3: 輸出規格 (Output Specification)</strong> — 最長也最關鍵的部分。作者不只說「給我一個訓練計畫」，而是逐項列出需要的內容：週期化模型、每次訓練的完整細節（動作名稱、組數、次數、節奏、休息時間）、漸進式超負荷策略、減載週指南。<span class="highlight-key">輸出規格的具體程度決定了回應品質</span>。</p>
-                <p class="en-text">The output spec is the longest and most critical layer. The author itemizes every required component — periodisation model, exercise name, sets, reps, tempo, rest periods, progressive overload strategy, deload instructions.</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>結構示範</h3>
-            <div class="info-box box-code">
-                <div class="info-box-header">💻 Prompt 結構色彩對應</div>
-                <div class="info-box-content">
-                    <div class="prompt-pattern"><span class="prompt-role">You are an elite personal trainer and strength coach with 15 years of experience</span> working with intermediate natural athletes.
+<!-- Executive Summary -->
+<div class="exec-summary">
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★☆☆</span> 3.4/5</span>
+<span class="rating-high">↑ 實務應用, 學習曲線</span>
+<span class="rating-low">↓ 技術深度, 工具生態</span>
+</div>
+<h2>Executive Summary</h2>
+<p class="zh-text">這篇 Twitter/X 貼文分享 7 個針對健身訓練的 Claude Prompt，涵蓋 12 週訓練計畫、高原期突破、弱點診斷、恢復方案、傷害預防、進度追蹤與身體重組。表面上是健身內容，但其<span class="highlight-concept">核心價值在於展示模板化 Prompt 的結構設計模式</span>——角色設定、使用者上下文注入、結構化輸出規格三層架構，可直接遷移到任何專業領域。</p>
+<p class="en-text">A Twitter thread sharing 7 Claude prompts for fitness programming. Beyond the fitness domain, the real value lies in demonstrating a reusable template-based prompt architecture: role assignment, user context injection via bracketed placeholders, and structured output specifications.</p>
+</div>
+<!-- Learning Objectives -->
+<h2 class="section-title">Learning Objectives</h2>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-icon">🧩</div>
+<div class="objective-text">辨識模板化 Prompt 的三層結構（角色/上下文/輸出）並理解各層的功能</div>
+</div>
+<div class="objective-item" style="border-left-color: #10b981;">
+<div class="objective-icon">🔄</div>
+<div class="objective-text">將 placeholder 模式遷移到 CDMO 領域（偏差調查、技術轉移）</div>
+</div>
+<div class="objective-item" style="border-left-color: #8b5cf6;">
+<div class="objective-icon">⚖️</div>
+<div class="objective-text">批判性評估「AI 取代專家」的宣稱，理解 Copilot 模式的邊界</div>
+</div>
+</div>
+<!-- Framework Visual -->
+<div class="framework-visual">
+<div class="framework-title">模板化 Prompt 三層架構 (Template Prompt Architecture)</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">🎭</div>
+<div class="framework-step-title">Layer 1: 角色設定</div>
+<div class="framework-step-desc">Role + Expertise + Years</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📋</div>
+<div class="framework-step-title">Layer 2: 上下文注入</div>
+<div class="framework-step-desc">[Placeholder] 使用者資料</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📐</div>
+<div class="framework-step-title">Layer 3: 輸出規格</div>
+<div class="framework-step-desc">結構 + 格式 + 品質要求</div>
+</div>
+</div>
+</div>
+<!-- Part I -->
+<h2 class="section-title">Part I: 三層架構解析 — Prompt 的骨架</h2>
+<div class="content-grid">
+<div class="content-left">
+<h3>概念解析</h3>
+<div class="bilingual-block">
+<p class="zh-text">這 7 個 Prompt 表面上是健身內容，但每一個都遵循相同的<span class="highlight-concept">三層結構模式</span>。這不是巧合——這是有效 Prompt 設計的基本骨架。</p>
+<p class="en-text">All 7 prompts follow an identical three-layer structural pattern. This is not coincidental — it is the fundamental skeleton of effective prompt design.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>Layer 1: 角色設定 (Role Assignment)</strong> — 每個 Prompt 都以「You are an elite...with X years of experience」開頭。這不只是裝飾，而是<span class="highlight-key">啟動模型特定領域的知識分佈</span>。指定「elite personal trainer and strength coach with 15 years experience」比單純說「help me with fitness」能觸發更精確的知識回應。</p>
+<p class="en-text">Each prompt starts with "You are an elite...with X years of experience." This activates domain-specific knowledge distributions rather than generic responses.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>Layer 2: 上下文注入 (Context Injection)</strong> — 使用 <span class="inline-code">[bracketed placeholders]</span> 讓使用者填入個人資料。例如 <span class="inline-code">[weight], [height], [age], [sex]</span>。這是模板化設計的精髓：<span class="highlight-concept">一次設計，無限複用</span>。</p>
+<p class="en-text">Bracketed placeholders like [weight], [height], [age] enable template reuse — design once, personalize infinitely.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>Layer 3: 輸出規格 (Output Specification)</strong> — 最長也最關鍵的部分。作者不只說「給我一個訓練計畫」，而是逐項列出需要的內容：週期化模型、每次訓練的完整細節（動作名稱、組數、次數、節奏、休息時間）、漸進式超負荷策略、減載週指南。<span class="highlight-key">輸出規格的具體程度決定了回應品質</span>。</p>
+<p class="en-text">The output spec is the longest and most critical layer. The author itemizes every required component — periodisation model, exercise name, sets, reps, tempo, rest periods, progressive overload strategy, deload instructions.</p>
+</div>
+</div>
+<div class="content-right">
+<h3>結構示範</h3>
+<div class="info-box box-code">
+<div class="info-box-header">💻 Prompt 結構色彩對應</div>
+<div class="info-box-content">
+<div class="prompt-pattern"><span class="prompt-role">You are an elite personal trainer and strength coach with 15 years of experience</span> working with intermediate natural athletes.
 
 I am an intermediate lifter with 2 years of consistent training experience.
 My stats are: <span class="prompt-placeholder">[weight], [height], [age], [sex]</span>.
@@ -271,344 +116,332 @@ My current 1RMs are: squat <span class="prompt-placeholder">[X]</span>kg, bench 
 
 <span class="prompt-output">Design me a complete 12-week periodised training programme.
 Include: the overall periodisation model you are using and why, the full weekly training split with reasoning, every session written out in full with exercise name, sets, reps, tempo, and rest periods...</span></div>
-                    <p style="font-size: 0.82rem; margin-top: 0.5rem; color: #94a3b8;">
-                        <span style="color: #67e8f9;">■</span> 角色設定 &nbsp;
-                        <span style="color: #f472b6;">■</span> Placeholder &nbsp;
+<p style="font-size: 0.82rem; margin-top: 0.5rem; color: #94a3b8;">
+<span style="color: #67e8f9;">■</span> 角色設定  
+                        <span style="color: #f472b6;">■</span> Placeholder  
                         <span style="color: #86efac;">■</span> 輸出規格
                     </p>
-                </div>
-            </div>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">💡 比喻說明</div>
-                <div class="info-box-content">
-                    <p>想像你在餐廳點餐：角色設定 = 選擇哪位主廚（法式 vs 日式）；Placeholder = 你的飲食限制和偏好；輸出規格 = 「我要三道菜，前菜要冷的，主菜要海鮮，甜點要巧克力」。你不會只說「給我一份好吃的」——Prompt 也是一樣。</p>
-                </div>
-            </div>
-            <div class="info-box box-practical">
-                <div class="info-box-header">🛠️ CDMO 遷移範例</div>
-                <div class="info-box-content">
-                    <p>同樣的三層架構可以直接用在偏差調查 Prompt：</p>
-                    <div class="prompt-pattern"><span class="prompt-role">You are a senior QA investigator with 10+ years of experience in aseptic fill/finish CDMO operations.</span>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>想像你在餐廳點餐：角色設定 = 選擇哪位主廚（法式 vs 日式）；Placeholder = 你的飲食限制和偏好；輸出規格 = 「我要三道菜，前菜要冷的，主菜要海鮮，甜點要巧克力」。你不會只說「給我一份好吃的」——Prompt 也是一樣。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 遷移範例</div>
+<div class="info-box-content">
+<p>同樣的三層架構可以直接用在偏差調查 Prompt：</p>
+<div class="prompt-pattern"><span class="prompt-role">You are a senior QA investigator with 10+ years of experience in aseptic fill/finish CDMO operations.</span>
 
 A deviation occurred: <span class="prompt-placeholder">[deviation description]</span>.
 Product: <span class="prompt-placeholder">[product name]</span>, Batch: <span class="prompt-placeholder">[batch #]</span>.
 Area: <span class="prompt-placeholder">[cleanroom class]</span>.
 
 <span class="prompt-output">Conduct a root cause analysis. Include: initial risk assessment, Ishikawa categorization, 5-Why analysis, CAPA recommendations with timelines, and regulatory impact assessment per 21 CFR 211.</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part II -->
-    <h2 class="section-title">Part II: 7 個 Prompt 的模式比較 — 共性與差異</h2>
-    <div class="content-grid">
-        <div class="content-left">
-            <h3>模式分析</h3>
-            <div class="bilingual-block">
-                <p class="zh-text">將 7 個 Prompt 攤開比較，可以發現<span class="highlight-concept">一致的結構骨架中有策略性的變化</span>。角色設定幾乎相同（都是「elite + 專業頭銜 + 經驗年數」），但上下文注入的深度和輸出規格的複雜度隨問題性質而變。</p>
-                <p class="en-text">Comparing all 7 prompts reveals strategic variations within a consistent structural skeleton. Role assignment is nearly identical, but context depth and output complexity scale with problem nature.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>上下文遞增模式：</strong>Prompt 1（訓練計畫）需要基本數據；Prompt 2（高原期）需要完整的現有訓練計畫 + 生活方式資訊（睡眠、壓力、營養）；Prompt 5（傷害預防）不需要個人數據，因為它是<span class="highlight-key">通用型知識請求</span>。這告訴我們：上下文注入的量應該與問題的個人化程度成正比。</p>
-                <p class="en-text">Context scales with personalisation needs: Prompt 1 needs basic stats, Prompt 2 requires full programme + lifestyle data, Prompt 5 needs no personal data as it is a generic knowledge request.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>輸出規格的遞進：</strong>作者在每個 Prompt 結尾都加了一句<span class="highlight-practical">「格式指引」</span>——「Format this as a complete training plan I can print out」、「Write this as a complete lifestyle system, not a list of disconnected tips」、「Write this as a thorough, practical physiotherapy consultation」。這些收尾句不只規定格式，更重要的是設定了<span class="highlight-key">回應的語調和深度</span>。</p>
-                <p class="en-text">Each prompt ends with a format directive that sets both structure and tone depth — "a complete training plan I can print out", "a complete lifestyle system, not a list of disconnected tips".</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>7 Prompt 比較表</h3>
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Prompt</th>
-                        <th>角色</th>
-                        <th>上下文深度</th>
-                        <th>輸出複雜度</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>1. 訓練計畫</td><td>PT + 教練</td><td>中（基本數據）</td><td>高（12週完整計畫）</td></tr>
-                    <tr><td>2. 高原期</td><td>高原期專家</td><td>高（計畫+生活）</td><td>高（8週+多維診斷）</td></tr>
-                    <tr><td>3. 弱點診斷</td><td>體態教練</td><td>中（弱點+現有計畫）</td><td>高（多維根因分析）</td></tr>
-                    <tr><td>4. 恢復方案</td><td>運動科學家</td><td>低（訓練頻率）</td><td>高（系統性方案）</td></tr>
-                    <tr><td>5. 傷害預防</td><td>物理治療師</td><td>低（無個人數據）</td><td>中（通用知識）</td></tr>
-                    <tr><td>6. 進度追蹤</td><td>高效表現教練</td><td>低（無個人數據）</td><td>中（系統框架）</td></tr>
-                    <tr><td>7. 身體重組</td><td>教練+營養師</td><td>高（完整數據）</td><td>最高（16週多面向）</td></tr>
-                </tbody>
-            </table>
-            <div class="info-box box-key">
-                <div class="info-box-header">⚠️ 重點提示</div>
-                <div class="info-box-content">
-                    <p><strong>上下文深度 ≠ 品質：</strong>Prompt 5（傷害預防）上下文最少，但產出品質不低。因為它請求的是<strong>通用專業知識</strong>，不需要個人化數據。設計 Prompt 時，先問自己：「這個問題需要多少個人化？」</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part III -->
-    <h2 class="section-title">Part III: Placeholder 設計模式 — 模板的核心技術</h2>
-    <div class="content-grid">
-        <div class="content-left">
-            <h3>深入分析</h3>
-            <div class="bilingual-block">
-                <p class="zh-text">Placeholder（佔位符）是這組 Prompt 最有價值的設計元素。方括號 <span class="inline-code">[X]</span> 格式讓非技術使用者能直覺地填入自己的資料，不需要理解 Prompt Engineering 的任何概念。</p>
-                <p class="en-text">Bracketed placeholders [X] are the most valuable design element — they let non-technical users intuitively fill in personal data without understanding prompt engineering concepts.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text">作者使用了<span class="highlight-concept">三種 Placeholder 類型</span>：</p>
-                <p class="en-text">The author uses three placeholder types:</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>1. 數值型</strong>：<span class="inline-code">[X]kg</span>、<span class="inline-code">[X] days per week</span>、<span class="inline-code">[X] hours per night</span>。有明確的計量單位，使用者知道要填什麼。</p>
-                <p class="en-text">Numeric: [X]kg, [X] days per week — clear units guide the user.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>2. 選擇型</strong>：<span class="inline-code">[low / moderate / high]</span>、<span class="inline-code">[full commercial gym / home gym with barbells]</span>。提供有限選項，<span class="highlight-key">降低使用者的認知負荷</span>，同時限制輸入範圍，提高模型理解的準確度。</p>
-                <p class="en-text">Choice: [low / moderate / high] — limited options reduce cognitive load and constrain model input parsing.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>3. 描述型</strong>：<span class="inline-code">[paste programme]</span>、<span class="inline-code">[describe]</span>、<span class="inline-code">[brief overview of calories, protein, meal timing]</span>。開放式但帶有結構提示，引導使用者提供正確粒度的資訊。</p>
-                <p class="en-text">Descriptive: [paste programme], [brief overview of calories, protein, meal timing] — open-ended but with structural hints guiding appropriate granularity.</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>跨領域應用</h3>
-            <div class="info-box box-concept">
-                <div class="info-box-header">📚 核心概念：Placeholder 分類學</div>
-                <div class="info-box-content">
-                    <table class="comparison-table">
-                        <thead><tr><th>類型</th><th>格式</th><th>使用情境</th></tr></thead>
-                        <tbody>
-                            <tr><td>數值型</td><td>[X] + 單位</td><td>可量化的數據</td></tr>
-                            <tr><td>選擇型</td><td>[A / B / C]</td><td>有限選項</td></tr>
-                            <tr><td>描述型</td><td>[describe/paste]</td><td>開放式脈絡</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="info-box box-practical">
-                <div class="info-box-header">🛠️ CDMO Placeholder 模板</div>
-                <div class="info-box-content">
-                    <p>同樣的三類 Placeholder 可以直接遷移到 GMP 環境：</p>
-                    <p><strong>數值型：</strong><span class="inline-code">[X] CFU/plate</span>、<span class="inline-code">[X] hours hold time</span></p>
-                    <p><strong>選擇型：</strong><span class="inline-code">[Grade A / Grade B / Grade C / Grade D]</span>、<span class="inline-code">[vial / syringe / cartridge]</span></p>
-                    <p><strong>描述型：</strong><span class="inline-code">[paste batch record deviation section]</span>、<span class="inline-code">[describe environmental monitoring trend]</span></p>
-                </div>
-            </div>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">💡 比喻說明</div>
-                <div class="info-box-content">
-                    <p>Placeholder 就像病歷上的表格欄位。數值型 = 血壓數值欄（必須填數字）；選擇型 = 性別勾選框（只能選一個）；描述型 = 「主訴」欄位（自由描述）。表格設計越好，醫師就越不需要追問，AI 也是一樣。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part IV -->
-    <h2 class="section-title">Part IV: 批判性分析 — 「AI 取代教練」的真相</h2>
-    <div class="content-grid">
-        <div class="content-left">
-            <h3>宣稱 vs 現實</h3>
-            <div class="bilingual-block">
-                <p class="zh-text">作者聲稱這些 Prompt 能在 10 分鐘內產出「原本要花數百英鎊請私人教練才能得到的訓練計畫」。這個宣稱需要套用<span class="highlight-key"> 2-3 倍折扣原則</span>來評估。</p>
-                <p class="en-text">The author claims these prompts deliver in 10 minutes what a personal trainer would charge hundreds of pounds for. This claim requires the 2-3x discount principle.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>AI 能做到的（Copilot 模式）：</strong>產出結構完整、知識正確的訓練計畫框架。AI 的健身知識來自大量訓練文獻、教科書和認證課程材料，<span class="highlight-concept">在知識層面確實能媲美一般教練</span>。計畫的週期化設計、動作選擇邏輯、漸進式超負荷原則都是有據可循的。</p>
-                <p class="en-text">AI can produce structurally complete, knowledge-correct training plan frameworks. Its fitness knowledge genuinely rivals an average trainer at the information level.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>AI 做不到的（需要人類的 O-Ring 節點）：</strong>觀察你的動作品質、即時調整負荷、判斷你今天的身體狀態是否適合按計畫訓練、在你受傷邊緣時喊停。這些是<span class="highlight-key">不可替代的人類判斷節點</span>——就像在 GMP 環境中，AI 可以建議偏差的根因分析方向，但不能替代 QA 在現場的實際觀察和判斷。</p>
-                <p class="en-text">AI cannot watch your form, adjust loads in real-time, assess your daily readiness, or stop you at the edge of injury. These are irreplaceable human judgment nodes — O-Ring bottlenecks.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>缺失的回饋迴路：</strong>作者提到「The real value comes when you interact with them」——這是正確的，但他低估了<span class="highlight-key">缺乏視覺/觸覺回饋</span>的限制。文字對話無法替代教練觀察你的深蹲膝蓋軌跡或硬舉脊椎位置。這是文字介面的根本限制。</p>
-                <p class="en-text">The author notes "the real value comes when you interact" — true, but underestimates the limitation of missing visual/tactile feedback loops inherent to text-based interfaces.</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>風險與邊界</h3>
-            <div class="info-box box-key">
-                <div class="info-box-header">⚠️ 重點提示：Copilot vs Agent 模式</div>
-                <div class="info-box-content">
-                    <p>這些 Prompt 在以下情境是安全的 <strong>Copilot 模式</strong>：</p>
-                    <p>✓ 有訓練經驗的人用來獲取計畫框架和新想法</p>
-                    <p>✓ 作為與真人教練討論的起點</p>
-                    <p>✓ 補充知識（營養策略、恢復科學）</p>
-                    <p style="margin-top: 0.75rem;">在以下情境是危險的 <strong>Agent 模式</strong>：</p>
-                    <p>✗ 完全沒有訓練經驗的新手獨自使用</p>
-                    <p>✗ 有既存傷病或醫療狀況的人</p>
-                    <p>✗ 把 AI 產出當作最終方案直接執行，不做任何人類審查</p>
-                </div>
-            </div>
-            <div class="info-box box-compare">
-                <div class="info-box-header">⚖️ AI 教練 vs 真人教練</div>
-                <div class="info-box-content">
-                    <table class="comparison-table">
-                        <thead><tr><th>維度</th><th>AI Prompt</th><th>真人教練</th></tr></thead>
-                        <tbody>
-                            <tr><td>知識廣度</td><td>★★★★★</td><td>★★★☆☆</td></tr>
-                            <tr><td>個人化深度</td><td>★★★☆☆</td><td>★★★★★</td></tr>
-                            <tr><td>即時回饋</td><td>★☆☆☆☆</td><td>★★★★★</td></tr>
-                            <tr><td>成本效益</td><td>★★★★★</td><td>★★☆☆☆</td></tr>
-                            <tr><td>安全保障</td><td>★★☆☆☆</td><td>★★★★☆</td></tr>
-                            <tr><td>問責性</td><td>★☆☆☆☆</td><td>★★★★☆</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">💡 CDMO 類比</div>
-                <div class="info-box-content">
-                    <p>這跟 CDMO 用 AI 做偏差調查的邊界完全一樣：AI 可以建議 Ishikawa 分類和 5-Why 路徑（知識層面），但不能替代 QA 人員在現場觀察操作員手法、環境條件、設備狀態（感知層面）。<strong>Wetware before software</strong>——人類判斷是不可跳過的節點。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part V -->
-    <h2 class="section-title">Part V: 可遷移的設計技巧 — 收尾句與防禦性設計</h2>
-    <div class="content-grid">
-        <div class="content-left">
-            <h3>隱藏的設計巧思</h3>
-            <div class="bilingual-block">
-                <p class="zh-text">除了三層架構，這組 Prompt 還有幾個值得注意的<span class="highlight-concept">次級設計模式</span>。</p>
-                <p class="en-text">Beyond the three-layer architecture, these prompts contain notable secondary design patterns.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>1. 收尾句效應 (Closing Directive)：</strong>每個 Prompt 最後一句都不是內容請求，而是<span class="highlight-key">格式+品質指令</span>。「Write this as a complete lifestyle system, not a list of disconnected tips」直接告訴模型：不要給我清單，給我一個系統。這一句話能把回應品質提升 30-50%。</p>
-                <p class="en-text">"Write this as a complete lifestyle system, not a list of disconnected tips" — the closing directive tells the model what NOT to do, which can improve response quality significantly.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>2. 負面約束 (Negative Constraints)：</strong>「not a list of disconnected tips」是一個<span class="highlight-practical">負面約束</span>——告訴模型什麼格式是不可接受的。這比只說「give me a system」更有效，因為它同時縮小了可接受輸出的範圍。</p>
-                <p class="en-text">"Not a list of disconnected tips" is a negative constraint — it tells the model what format is unacceptable, narrowing the acceptable output space more effectively.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>3. 多角色融合：</strong>Prompt 7 指定「elite strength coach and sports nutritionist」——<span class="highlight-concept">雙角色設定</span>要求模型在回應中同時整合兩個知識領域。這比分別問兩個 Prompt 更有效，因為它強制產出整合性的建議（訓練 + 營養的交互影響）。</p>
-                <p class="en-text">Prompt 7 specifies "elite strength coach AND sports nutritionist" — dual-role assignment forces integrated advice spanning both domains simultaneously.</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><strong>4. 隱含的「不要做」：</strong>Prompt 2（高原期）要求「Prioritise the most likely causes based on the information I have given you」——這防止模型<span class="highlight-key">均勻列舉所有可能原因</span>，而是要求基於證據的優先排序。這是一個微妙但有效的品質控制機制。</p>
-                <p class="en-text">"Prioritise the most likely causes based on the information I have given you" prevents the model from uniformly listing all possible causes — it demands evidence-based prioritization.</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>設計原則總結</h3>
-            <div class="info-box box-concept">
-                <div class="info-box-header">📚 可遷移設計技巧清單</div>
-                <div class="info-box-content">
-                    <p><strong>收尾句效應：</strong>永遠用最後一句設定格式和品質期望。不要假設模型知道你要什麼格式。</p>
-                    <p><strong>負面約束：</strong>告訴模型「不要做什麼」跟「要做什麼」同樣重要。「Write a report, not bullet points」比「Write a detailed report」更精確。</p>
-                    <p><strong>多角色融合：</strong>當問題跨越兩個領域時，在角色設定中同時指定兩個角色，強制整合性回應。</p>
-                    <p><strong>證據排序：</strong>加入「prioritise based on...」防止模型做均勻但無用的列舉。</p>
-                </div>
-            </div>
-            <div class="info-box box-practical">
-                <div class="info-box-header">🛠️ 立即可用的收尾句模板</div>
-                <div class="info-box-content">
-                    <p><strong>系統型：</strong>「Write this as a complete system, not a list of disconnected recommendations.」</p>
-                    <p><strong>諮詢型：</strong>「Format this as a professional consultation report with prioritised findings.」</p>
-                    <p><strong>教學型：</strong>「Structure this as a step-by-step guide a colleague could follow independently.」</p>
-                    <p><strong>決策型：</strong>「Present this as a decision framework with clear criteria and trade-offs.」</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Key Takeaways -->
-    <h2 class="section-title">Key Takeaways</h2>
-    <div class="takeaways-grid">
-        <div class="summary-card">
-            <div class="summary-card-title">1. 三層架構是 Prompt 設計的通用骨架</div>
-            <div class="summary-card-text">角色設定 → 上下文注入（Placeholder）→ 輸出規格。這個結構不限於健身——任何需要個人化專業回應的領域都適用。把它當成 Prompt 的 SOP 模板。</div>
-        </div>
-        <div class="summary-card" style="border-left-color: #10b981;">
-            <div class="summary-card-title">2. Placeholder 三分法降低使用門檻</div>
-            <div class="summary-card-text">數值型、選擇型、描述型三種 Placeholder 設計讓非技術使用者也能填入正確資訊。設計 Prompt 模板時，選擇型 Placeholder（提供選項）是降低認知負荷的最佳工具。</div>
-        </div>
-        <div class="summary-card" style="border-left-color: #8b5cf6;">
-            <div class="summary-card-title">3. AI 教練 = Copilot，不是 Agent</div>
-            <div class="summary-card-text">AI 在知識層面可以媲美教練，但缺乏即時回饋迴路（視覺、觸覺、現場判斷）。在健身和 CDMO 一樣：AI 產出是起點，不是終點。Wetware before software。</div>
-        </div>
-        <div class="summary-card" style="border-left-color: #f59e0b;">
-            <div class="summary-card-title">4. 收尾句是被低估的品質控制機制</div>
-            <div class="summary-card-text">Prompt 最後一句設定格式、語調和品質預期。加入負面約束（「not a list of disconnected tips」）比正面描述更有效地縮小可接受輸出的範圍。</div>
-        </div>
-    </div>
-
-    <!-- Practice Questions -->
-    <h2 class="section-title">Practice Questions</h2>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q1</span>
-            <span class="question-type">概念理解</span>
-            <span class="question-text">為什麼 Prompt 5（傷害預防）不需要 Placeholder，但 Prompt 2（高原期）需要大量 Placeholder？這反映了 Prompt 設計的什麼原則？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>Prompt 5 請求的是<strong>通用專業知識</strong>（常見傷害、預防運動、暖身方案），不需要個人化數據就能產生高品質回應。Prompt 2 請求的是<strong>個人化診斷</strong>（為什麼「我」停滯），必須有個人的訓練計畫、生活方式、營養數據才能分析。</p>
-            <p>這反映的原則是：<strong>上下文注入的量應與問題的個人化程度成正比</strong>。設計 Prompt 模板時，先判斷問題是「通用知識請求」還是「個人化診斷」，再決定 Placeholder 的數量和類型。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q2</span>
-            <span class="question-type">產業應用</span>
-            <span class="question-text">如果你要為 CDMO 的技術轉移流程設計一個模板化 Prompt，你會使用哪些類型的 Placeholder？請至少各舉一例。</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>數值型：</strong><span class="inline-code">[X] mL fill volume</span>、<span class="inline-code">[X]°C storage temperature</span>、<span class="inline-code">[X] vials/hour line speed</span></p>
-            <p><strong>選擇型：</strong><span class="inline-code">[liquid / lyophilized / suspension]</span>、<span class="inline-code">[RABS / cRABS / Isolator]</span>、<span class="inline-code">[Phase I / Phase II / Phase III / Commercial]</span></p>
-            <p><strong>描述型：</strong><span class="inline-code">[paste current formulation parameters]</span>、<span class="inline-code">[describe donor site equipment configuration]</span>、<span class="inline-code">[list known product-specific challenges]</span></p>
-            <p>關鍵在於：選擇型 Placeholder 在 GMP 環境特別重要，因為它限制了輸入範圍到法規認可的標準術語，減少因自由描述導致的歧義。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q3</span>
-            <span class="question-type">批判思考</span>
-            <span class="question-text">作者說這些 Prompt「stress-tested for a week」。你認為他的測試方法有什麼盲點？如何設計更嚴格的 Prompt 品質測試？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>盲點 1：樣本偏誤</strong>——作者一個人測試，代表單一體型、經驗水準、目標。一個 180cm/80kg 的男性測出來「好用」，不代表對 155cm/55kg 的女性初學者同樣有效。</p>
-            <p><strong>盲點 2：缺乏專業驗證</strong>——他沒有請運動科學家或認證教練審查 AI 產出的計畫。「看起來合理」不等於「運動科學上正確」。</p>
-            <p><strong>盲點 3：無長期追蹤</strong>——一週的「stress-testing」可能只是多次生成，沒有任何人真的按照這些計畫訓練 12 週來驗證效果。</p>
-            <p><strong>更嚴格的測試方法：</strong>讓 5+ 個不同背景的使用者填入自己的數據、請 2+ 位認證教練盲審 AI 產出、至少有 1 位使用者按計畫執行 4 週並記錄結果和問題。這才是真正的 stress test。</p>
-        </div>
-    </details>
-
-    <!-- Bottom Line -->
-    <div class="bottom-line">
-        <div class="bottom-line-header">🎯 我的行動結論</div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">✔ 核心洞察</div>
-            <div class="bottom-line-text">模板化 Prompt 的三層架構（角色/上下文/輸出）+ Placeholder 三分法（數值/選擇/描述），是一個可以直接遷移到 CDMO Prompt 模板庫的設計框架。文章本身的健身內容不是重點——結構設計模式才是可複用的資產。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">📈 立即應用</div>
-            <div class="bottom-line-text">本週可以用這個三層框架重新設計一個 CDMO 偏差調查 Prompt 模板，特別是把上下文注入區改為「選擇型 Placeholder 為主」的格式（例如偏差分類、潔淨室等級、產品類型都用選項而非自由描述），測試是否能提升一致性和輸出品質。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">⚠ 需要補充</div>
-            <div class="bottom-line-text">這篇文章是 Twitter 貼文，沒有任何量化的品質評估數據（例如 AI 計畫 vs 教練計畫的 A/B 測試結果）。收尾句效應的品質提升幅度是經驗估計，非實測數據。未來可以在自己的 Prompt 模板中實測有無收尾句的輸出差異。</div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>製作日期：2026-03-27 | 來源：<a href="https://x.com/Hawks0x" target="_blank">Hawks (@Hawks0x) / X</a></p>
-        <p>建議 Chat Title：<strong>2026-03-27 [Prompt] Hawks - Fitness Prompt Engineering</strong></p>
-        <p>建議檔名：<strong>2026-03-27_fitness-prompt-engineering.html</strong></p>
-    </div>
-
+</div>
+</div>
+</div>
+</div>
+<!-- Part II -->
+<h2 class="section-title">Part II: 7 個 Prompt 的模式比較 — 共性與差異</h2>
+<div class="content-grid">
+<div class="content-left">
+<h3>模式分析</h3>
+<div class="bilingual-block">
+<p class="zh-text">將 7 個 Prompt 攤開比較，可以發現<span class="highlight-concept">一致的結構骨架中有策略性的變化</span>。角色設定幾乎相同（都是「elite + 專業頭銜 + 經驗年數」），但上下文注入的深度和輸出規格的複雜度隨問題性質而變。</p>
+<p class="en-text">Comparing all 7 prompts reveals strategic variations within a consistent structural skeleton. Role assignment is nearly identical, but context depth and output complexity scale with problem nature.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>上下文遞增模式：</strong>Prompt 1（訓練計畫）需要基本數據；Prompt 2（高原期）需要完整的現有訓練計畫 + 生活方式資訊（睡眠、壓力、營養）；Prompt 5（傷害預防）不需要個人數據，因為它是<span class="highlight-key">通用型知識請求</span>。這告訴我們：上下文注入的量應該與問題的個人化程度成正比。</p>
+<p class="en-text">Context scales with personalisation needs: Prompt 1 needs basic stats, Prompt 2 requires full programme + lifestyle data, Prompt 5 needs no personal data as it is a generic knowledge request.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>輸出規格的遞進：</strong>作者在每個 Prompt 結尾都加了一句<span class="highlight-practical">「格式指引」</span>——「Format this as a complete training plan I can print out」、「Write this as a complete lifestyle system, not a list of disconnected tips」、「Write this as a thorough, practical physiotherapy consultation」。這些收尾句不只規定格式，更重要的是設定了<span class="highlight-key">回應的語調和深度</span>。</p>
+<p class="en-text">Each prompt ends with a format directive that sets both structure and tone depth — "a complete training plan I can print out", "a complete lifestyle system, not a list of disconnected tips".</p>
+</div>
+</div>
+<div class="content-right">
+<h3>7 Prompt 比較表</h3>
+<table class="comparison-table">
+<thead>
+<tr>
+<th>Prompt</th>
+<th>角色</th>
+<th>上下文深度</th>
+<th>輸出複雜度</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1. 訓練計畫</td><td>PT + 教練</td><td>中（基本數據）</td><td>高（12週完整計畫）</td></tr>
+<tr><td>2. 高原期</td><td>高原期專家</td><td>高（計畫+生活）</td><td>高（8週+多維診斷）</td></tr>
+<tr><td>3. 弱點診斷</td><td>體態教練</td><td>中（弱點+現有計畫）</td><td>高（多維根因分析）</td></tr>
+<tr><td>4. 恢復方案</td><td>運動科學家</td><td>低（訓練頻率）</td><td>高（系統性方案）</td></tr>
+<tr><td>5. 傷害預防</td><td>物理治療師</td><td>低（無個人數據）</td><td>中（通用知識）</td></tr>
+<tr><td>6. 進度追蹤</td><td>高效表現教練</td><td>低（無個人數據）</td><td>中（系統框架）</td></tr>
+<tr><td>7. 身體重組</td><td>教練+營養師</td><td>高（完整數據）</td><td>最高（16週多面向）</td></tr>
+</tbody>
+</table>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p><strong>上下文深度 ≠ 品質：</strong>Prompt 5（傷害預防）上下文最少，但產出品質不低。因為它請求的是<strong>通用專業知識</strong>，不需要個人化數據。設計 Prompt 時，先問自己：「這個問題需要多少個人化？」</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Part III -->
+<h2 class="section-title">Part III: Placeholder 設計模式 — 模板的核心技術</h2>
+<div class="content-grid">
+<div class="content-left">
+<h3>深入分析</h3>
+<div class="bilingual-block">
+<p class="zh-text">Placeholder（佔位符）是這組 Prompt 最有價值的設計元素。方括號 <span class="inline-code">[X]</span> 格式讓非技術使用者能直覺地填入自己的資料，不需要理解 Prompt Engineering 的任何概念。</p>
+<p class="en-text">Bracketed placeholders [X] are the most valuable design element — they let non-technical users intuitively fill in personal data without understanding prompt engineering concepts.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">作者使用了<span class="highlight-concept">三種 Placeholder 類型</span>：</p>
+<p class="en-text">The author uses three placeholder types:</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>1. 數值型</strong>：<span class="inline-code">[X]kg</span>、<span class="inline-code">[X] days per week</span>、<span class="inline-code">[X] hours per night</span>。有明確的計量單位，使用者知道要填什麼。</p>
+<p class="en-text">Numeric: [X]kg, [X] days per week — clear units guide the user.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>2. 選擇型</strong>：<span class="inline-code">[low / moderate / high]</span>、<span class="inline-code">[full commercial gym / home gym with barbells]</span>。提供有限選項，<span class="highlight-key">降低使用者的認知負荷</span>，同時限制輸入範圍，提高模型理解的準確度。</p>
+<p class="en-text">Choice: [low / moderate / high] — limited options reduce cognitive load and constrain model input parsing.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>3. 描述型</strong>：<span class="inline-code">[paste programme]</span>、<span class="inline-code">[describe]</span>、<span class="inline-code">[brief overview of calories, protein, meal timing]</span>。開放式但帶有結構提示，引導使用者提供正確粒度的資訊。</p>
+<p class="en-text">Descriptive: [paste programme], [brief overview of calories, protein, meal timing] — open-ended but with structural hints guiding appropriate granularity.</p>
+</div>
+</div>
+<div class="content-right">
+<h3>跨領域應用</h3>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：Placeholder 分類學</div>
+<div class="info-box-content">
+<table class="comparison-table">
+<thead><tr><th>類型</th><th>格式</th><th>使用情境</th></tr></thead>
+<tbody>
+<tr><td>數值型</td><td>[X] + 單位</td><td>可量化的數據</td></tr>
+<tr><td>選擇型</td><td>[A / B / C]</td><td>有限選項</td></tr>
+<tr><td>描述型</td><td>[describe/paste]</td><td>開放式脈絡</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO Placeholder 模板</div>
+<div class="info-box-content">
+<p>同樣的三類 Placeholder 可以直接遷移到 GMP 環境：</p>
+<p><strong>數值型：</strong><span class="inline-code">[X] CFU/plate</span>、<span class="inline-code">[X] hours hold time</span></p>
+<p><strong>選擇型：</strong><span class="inline-code">[Grade A / Grade B / Grade C / Grade D]</span>、<span class="inline-code">[vial / syringe / cartridge]</span></p>
+<p><strong>描述型：</strong><span class="inline-code">[paste batch record deviation section]</span>、<span class="inline-code">[describe environmental monitoring trend]</span></p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>Placeholder 就像病歷上的表格欄位。數值型 = 血壓數值欄（必須填數字）；選擇型 = 性別勾選框（只能選一個）；描述型 = 「主訴」欄位（自由描述）。表格設計越好，醫師就越不需要追問，AI 也是一樣。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Part IV -->
+<h2 class="section-title">Part IV: 批判性分析 — 「AI 取代教練」的真相</h2>
+<div class="content-grid">
+<div class="content-left">
+<h3>宣稱 vs 現實</h3>
+<div class="bilingual-block">
+<p class="zh-text">作者聲稱這些 Prompt 能在 10 分鐘內產出「原本要花數百英鎊請私人教練才能得到的訓練計畫」。這個宣稱需要套用<span class="highlight-key"> 2-3 倍折扣原則</span>來評估。</p>
+<p class="en-text">The author claims these prompts deliver in 10 minutes what a personal trainer would charge hundreds of pounds for. This claim requires the 2-3x discount principle.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>AI 能做到的（Copilot 模式）：</strong>產出結構完整、知識正確的訓練計畫框架。AI 的健身知識來自大量訓練文獻、教科書和認證課程材料，<span class="highlight-concept">在知識層面確實能媲美一般教練</span>。計畫的週期化設計、動作選擇邏輯、漸進式超負荷原則都是有據可循的。</p>
+<p class="en-text">AI can produce structurally complete, knowledge-correct training plan frameworks. Its fitness knowledge genuinely rivals an average trainer at the information level.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>AI 做不到的（需要人類的 O-Ring 節點）：</strong>觀察你的動作品質、即時調整負荷、判斷你今天的身體狀態是否適合按計畫訓練、在你受傷邊緣時喊停。這些是<span class="highlight-key">不可替代的人類判斷節點</span>——就像在 GMP 環境中，AI 可以建議偏差的根因分析方向，但不能替代 QA 在現場的實際觀察和判斷。</p>
+<p class="en-text">AI cannot watch your form, adjust loads in real-time, assess your daily readiness, or stop you at the edge of injury. These are irreplaceable human judgment nodes — O-Ring bottlenecks.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>缺失的回饋迴路：</strong>作者提到「The real value comes when you interact with them」——這是正確的，但他低估了<span class="highlight-key">缺乏視覺/觸覺回饋</span>的限制。文字對話無法替代教練觀察你的深蹲膝蓋軌跡或硬舉脊椎位置。這是文字介面的根本限制。</p>
+<p class="en-text">The author notes "the real value comes when you interact" — true, but underestimates the limitation of missing visual/tactile feedback loops inherent to text-based interfaces.</p>
+</div>
+</div>
+<div class="content-right">
+<h3>風險與邊界</h3>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示：Copilot vs Agent 模式</div>
+<div class="info-box-content">
+<p>這些 Prompt 在以下情境是安全的 <strong>Copilot 模式</strong>：</p>
+<p>✓ 有訓練經驗的人用來獲取計畫框架和新想法</p>
+<p>✓ 作為與真人教練討論的起點</p>
+<p>✓ 補充知識（營養策略、恢復科學）</p>
+<p style="margin-top: 0.75rem;">在以下情境是危險的 <strong>Agent 模式</strong>：</p>
+<p>✗ 完全沒有訓練經驗的新手獨自使用</p>
+<p>✗ 有既存傷病或醫療狀況的人</p>
+<p>✗ 把 AI 產出當作最終方案直接執行，不做任何人類審查</p>
+</div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ AI 教練 vs 真人教練</div>
+<div class="info-box-content">
+<table class="comparison-table">
+<thead><tr><th>維度</th><th>AI Prompt</th><th>真人教練</th></tr></thead>
+<tbody>
+<tr><td>知識廣度</td><td>★★★★★</td><td>★★★☆☆</td></tr>
+<tr><td>個人化深度</td><td>★★★☆☆</td><td>★★★★★</td></tr>
+<tr><td>即時回饋</td><td>★☆☆☆☆</td><td>★★★★★</td></tr>
+<tr><td>成本效益</td><td>★★★★★</td><td>★★☆☆☆</td></tr>
+<tr><td>安全保障</td><td>★★☆☆☆</td><td>★★★★☆</td></tr>
+<tr><td>問責性</td><td>★☆☆☆☆</td><td>★★★★☆</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 CDMO 類比</div>
+<div class="info-box-content">
+<p>這跟 CDMO 用 AI 做偏差調查的邊界完全一樣：AI 可以建議 Ishikawa 分類和 5-Why 路徑（知識層面），但不能替代 QA 人員在現場觀察操作員手法、環境條件、設備狀態（感知層面）。<strong>Wetware before software</strong>——人類判斷是不可跳過的節點。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Part V -->
+<h2 class="section-title">Part V: 可遷移的設計技巧 — 收尾句與防禦性設計</h2>
+<div class="content-grid">
+<div class="content-left">
+<h3>隱藏的設計巧思</h3>
+<div class="bilingual-block">
+<p class="zh-text">除了三層架構，這組 Prompt 還有幾個值得注意的<span class="highlight-concept">次級設計模式</span>。</p>
+<p class="en-text">Beyond the three-layer architecture, these prompts contain notable secondary design patterns.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>1. 收尾句效應 (Closing Directive)：</strong>每個 Prompt 最後一句都不是內容請求，而是<span class="highlight-key">格式+品質指令</span>。「Write this as a complete lifestyle system, not a list of disconnected tips」直接告訴模型：不要給我清單，給我一個系統。這一句話能把回應品質提升 30-50%。</p>
+<p class="en-text">"Write this as a complete lifestyle system, not a list of disconnected tips" — the closing directive tells the model what NOT to do, which can improve response quality significantly.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>2. 負面約束 (Negative Constraints)：</strong>「not a list of disconnected tips」是一個<span class="highlight-practical">負面約束</span>——告訴模型什麼格式是不可接受的。這比只說「give me a system」更有效，因為它同時縮小了可接受輸出的範圍。</p>
+<p class="en-text">"Not a list of disconnected tips" is a negative constraint — it tells the model what format is unacceptable, narrowing the acceptable output space more effectively.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>3. 多角色融合：</strong>Prompt 7 指定「elite strength coach and sports nutritionist」——<span class="highlight-concept">雙角色設定</span>要求模型在回應中同時整合兩個知識領域。這比分別問兩個 Prompt 更有效，因為它強制產出整合性的建議（訓練 + 營養的交互影響）。</p>
+<p class="en-text">Prompt 7 specifies "elite strength coach AND sports nutritionist" — dual-role assignment forces integrated advice spanning both domains simultaneously.</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>4. 隱含的「不要做」：</strong>Prompt 2（高原期）要求「Prioritise the most likely causes based on the information I have given you」——這防止模型<span class="highlight-key">均勻列舉所有可能原因</span>，而是要求基於證據的優先排序。這是一個微妙但有效的品質控制機制。</p>
+<p class="en-text">"Prioritise the most likely causes based on the information I have given you" prevents the model from uniformly listing all possible causes — it demands evidence-based prioritization.</p>
+</div>
+</div>
+<div class="content-right">
+<h3>設計原則總結</h3>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 可遷移設計技巧清單</div>
+<div class="info-box-content">
+<p><strong>收尾句效應：</strong>永遠用最後一句設定格式和品質期望。不要假設模型知道你要什麼格式。</p>
+<p><strong>負面約束：</strong>告訴模型「不要做什麼」跟「要做什麼」同樣重要。「Write a report, not bullet points」比「Write a detailed report」更精確。</p>
+<p><strong>多角色融合：</strong>當問題跨越兩個領域時，在角色設定中同時指定兩個角色，強制整合性回應。</p>
+<p><strong>證據排序：</strong>加入「prioritise based on...」防止模型做均勻但無用的列舉。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 立即可用的收尾句模板</div>
+<div class="info-box-content">
+<p><strong>系統型：</strong>「Write this as a complete system, not a list of disconnected recommendations.」</p>
+<p><strong>諮詢型：</strong>「Format this as a professional consultation report with prioritised findings.」</p>
+<p><strong>教學型：</strong>「Structure this as a step-by-step guide a colleague could follow independently.」</p>
+<p><strong>決策型：</strong>「Present this as a decision framework with clear criteria and trade-offs.」</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Takeaways -->
+<h2 class="section-title">Key Takeaways</h2>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="summary-card-title">1. 三層架構是 Prompt 設計的通用骨架</div>
+<div class="summary-card-text">角色設定 → 上下文注入（Placeholder）→ 輸出規格。這個結構不限於健身——任何需要個人化專業回應的領域都適用。把它當成 Prompt 的 SOP 模板。</div>
+</div>
+<div class="summary-card" style="border-left-color: #10b981;">
+<div class="summary-card-title">2. Placeholder 三分法降低使用門檻</div>
+<div class="summary-card-text">數值型、選擇型、描述型三種 Placeholder 設計讓非技術使用者也能填入正確資訊。設計 Prompt 模板時，選擇型 Placeholder（提供選項）是降低認知負荷的最佳工具。</div>
+</div>
+<div class="summary-card" style="border-left-color: #8b5cf6;">
+<div class="summary-card-title">3. AI 教練 = Copilot，不是 Agent</div>
+<div class="summary-card-text">AI 在知識層面可以媲美教練，但缺乏即時回饋迴路（視覺、觸覺、現場判斷）。在健身和 CDMO 一樣：AI 產出是起點，不是終點。Wetware before software。</div>
+</div>
+<div class="summary-card" style="border-left-color: #f59e0b;">
+<div class="summary-card-title">4. 收尾句是被低估的品質控制機制</div>
+<div class="summary-card-text">Prompt 最後一句設定格式、語調和品質預期。加入負面約束（「not a list of disconnected tips」）比正面描述更有效地縮小可接受輸出的範圍。</div>
+</div>
+</div>
+<!-- Practice Questions -->
+<h2 class="section-title">Practice Questions</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">為什麼 Prompt 5（傷害預防）不需要 Placeholder，但 Prompt 2（高原期）需要大量 Placeholder？這反映了 Prompt 設計的什麼原則？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>Prompt 5 請求的是<strong>通用專業知識</strong>（常見傷害、預防運動、暖身方案），不需要個人化數據就能產生高品質回應。Prompt 2 請求的是<strong>個人化診斷</strong>（為什麼「我」停滯），必須有個人的訓練計畫、生活方式、營養數據才能分析。</p>
+<p>這反映的原則是：<strong>上下文注入的量應與問題的個人化程度成正比</strong>。設計 Prompt 模板時，先判斷問題是「通用知識請求」還是「個人化診斷」，再決定 Placeholder 的數量和類型。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">如果你要為 CDMO 的技術轉移流程設計一個模板化 Prompt，你會使用哪些類型的 Placeholder？請至少各舉一例。</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>數值型：</strong><span class="inline-code">[X] mL fill volume</span>、<span class="inline-code">[X]°C storage temperature</span>、<span class="inline-code">[X] vials/hour line speed</span></p>
+<p><strong>選擇型：</strong><span class="inline-code">[liquid / lyophilized / suspension]</span>、<span class="inline-code">[RABS / cRABS / Isolator]</span>、<span class="inline-code">[Phase I / Phase II / Phase III / Commercial]</span></p>
+<p><strong>描述型：</strong><span class="inline-code">[paste current formulation parameters]</span>、<span class="inline-code">[describe donor site equipment configuration]</span>、<span class="inline-code">[list known product-specific challenges]</span></p>
+<p>關鍵在於：選擇型 Placeholder 在 GMP 環境特別重要，因為它限制了輸入範圍到法規認可的標準術語，減少因自由描述導致的歧義。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">作者說這些 Prompt「stress-tested for a week」。你認為他的測試方法有什麼盲點？如何設計更嚴格的 Prompt 品質測試？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>盲點 1：樣本偏誤</strong>——作者一個人測試，代表單一體型、經驗水準、目標。一個 180cm/80kg 的男性測出來「好用」，不代表對 155cm/55kg 的女性初學者同樣有效。</p>
+<p><strong>盲點 2：缺乏專業驗證</strong>——他沒有請運動科學家或認證教練審查 AI 產出的計畫。「看起來合理」不等於「運動科學上正確」。</p>
+<p><strong>盲點 3：無長期追蹤</strong>——一週的「stress-testing」可能只是多次生成，沒有任何人真的按照這些計畫訓練 12 週來驗證效果。</p>
+<p><strong>更嚴格的測試方法：</strong>讓 5+ 個不同背景的使用者填入自己的數據、請 2+ 位認證教練盲審 AI 產出、至少有 1 位使用者按計畫執行 4 週並記錄結果和問題。這才是真正的 stress test。</p>
+</div>
+</details>
+<!-- Bottom Line -->
+<div class="bottom-line">
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">模板化 Prompt 的三層架構（角色/上下文/輸出）+ Placeholder 三分法（數值/選擇/描述），是一個可以直接遷移到 CDMO Prompt 模板庫的設計框架。文章本身的健身內容不是重點——結構設計模式才是可複用的資產。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">本週可以用這個三層框架重新設計一個 CDMO 偏差調查 Prompt 模板，特別是把上下文注入區改為「選擇型 Placeholder 為主」的格式（例如偏差分類、潔淨室等級、產品類型都用選項而非自由描述），測試是否能提升一致性和輸出品質。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">這篇文章是 Twitter 貼文，沒有任何量化的品質評估數據（例如 AI 計畫 vs 教練計畫的 A/B 測試結果）。收尾句效應的品質提升幅度是經驗估計，非實測數據。未來可以在自己的 Prompt 模板中實測有無收尾句的輸出差異。</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+<p>製作日期：2026-03-27 | 來源：<a href="https://x.com/Hawks0x" target="_blank">Hawks (@Hawks0x) / X</a></p>
+<p>建議 Chat Title：<strong>2026-03-27 [Prompt] Hawks - Fitness Prompt Engineering</strong></p>
+<p>建議檔名：<strong>2026-03-27_fitness-prompt-engineering.html</strong></p>
+</footer>
 </div>
 </body>
 </html>

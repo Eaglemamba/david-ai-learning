@@ -1,908 +1,590 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2026-01-22">
-    <meta name="doc-title" content="The Future of Work When Work Is Meaningless - Dan Koe 深度解讀">
-    <meta name="doc-source" content="Dan Koe (@thedankoe)">
-    <meta name="doc-tags" content="Content,Analysis">
-    <meta name="doc-rating" content="4.2">
-    <meta name="doc-summary" content="AI自動化時代人類創作者的最後防線是觀點，從意義危機到內在生成">
-    <meta name="doc-file" content="2026-01-22_future-of-work.html">
-    <title>The Future of Work When Work Is Meaningless - Dan Koe 深度解讀</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1e3a8a;
-            --secondary: #3b82f6;
-            --accent: #7c3aed;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --text: #334155;
-            --text-light: #64748b;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body {
-            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.8;
-            font-size: 16px;
-        }
-        
-        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-        
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, #1e3a5f, #3b5998);
-            color: white;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-        }
-        .header h1 { font-size: 1.8rem; margin-bottom: 1rem; line-height: 1.4; }
-        .header-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem; }
-        
-        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; }
-        .tag { padding: 0.3rem 0.8rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
-        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
-        .tag-agent { background: #c7d2fe; color: #3730a3; }
-        .tag-automation { background: #a7f3d0; color: #065f46; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        
-        .source-info { font-size: 0.85rem; opacity: 0.8; }
-        .source-info a { color: #93c5fd; }
-        
-        /* Rating Bar */
-        .rating-bar {
-            display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;
-            padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
-            border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd;
-        }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        
-        /* Executive Summary */
-        .executive-summary {
-            background: white; border-radius: 1rem; padding: 2rem;
-            margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .section-title {
-            font-size: 1.2rem; font-weight: 700; color: var(--primary);
-            margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
-        }
-        .summary-text { font-size: 0.95rem; line-height: 1.9; color: var(--text); }
-        .summary-text p { margin-bottom: 1rem; }
-        
-        /* Learning Objectives */
-        .objectives-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem; margin-bottom: 2rem;
-        }
-        .objective-item {
-            background: white; border-radius: 0.75rem; padding: 1.25rem;
-            border-left: 4px solid var(--secondary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .objective-title { font-weight: 600; color: var(--primary); margin-bottom: 0.25rem; font-size: 0.95rem; }
-        .objective-desc { font-size: 0.85rem; color: var(--text-light); }
-        
-        /* Framework Visual */
-        .framework-visual {
-            background: linear-gradient(135deg, #1e3a5f, #3b5998);
-            border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0;
-        }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 120px; }
-        .framework-icon {
-            font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem;
-            background: rgba(255,255,255,0.2); border-radius: 0.75rem;
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;
-        }
-        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
-        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-        
-        /* Tab Navigation */
-        .tab-container { margin: 1.5rem 0; }
-        .tab-nav {
-            display: flex; gap: 0.25rem; background: #f1f5f9;
-            padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem;
-        }
-        .tab-btn {
-            flex: 1; padding: 0.75rem 1rem; border: none; background: transparent;
-            border-radius: 0.5rem; font-weight: 500; color: #64748b;
-            cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.9rem;
-        }
-        .tab-btn:hover { color: #334155; }
-        .tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        
-        /* Content Grid */
-        .content-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 1.5rem; margin-bottom: 2rem;
-        }
-        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } }
-        
-        .content-original, .content-explanation {
-            background: white; border-radius: 0.75rem; padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .content-original { border-top: 4px solid #94a3b8; }
-        .content-explanation { border-top: 4px solid var(--secondary); }
-        
-        .column-header {
-            font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.05em; margin-bottom: 1rem; color: var(--text-light);
-        }
-        
-        .bilingual-text { margin-bottom: 1rem; }
-        .chinese-text { color: var(--text); line-height: 1.8; margin-bottom: 0.5rem; }
-        .english-quote { color: var(--text-light); font-style: italic; font-size: 0.9rem; line-height: 1.7; }
-        
-        /* Highlights */
-        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        
-        /* Info Boxes */
-        .info-box { border-radius: 0.5rem; margin: 1rem 0; overflow: hidden; }
-        .info-box-header {
-            padding: 0.6rem 1rem; font-weight: 600; font-size: 0.85rem;
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
-        
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-        
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-        
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-        
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-        
-        /* Key Takeaways */
-        .takeaways-section { margin: 2rem 0; }
-        .takeaways-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;
-        }
-        .summary-card {
-            background: white; border-radius: 0.75rem; padding: 1.25rem;
-            border-left: 4px solid var(--accent);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .summary-card-title { font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; font-size: 0.95rem; }
-        .summary-card-text { font-size: 0.85rem; color: var(--text); line-height: 1.7; }
-        
-        /* Practice Questions - Accordion */
-        .practice-section { margin: 2rem 0; }
-        .question-accordion {
-            background: white; border-radius: 0.75rem; margin-bottom: 1rem;
-            border: 1px solid #e9d5ff; overflow: hidden;
-        }
-        .question-header {
-            display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
-            padding: 1rem 1.25rem; cursor: pointer; list-style: none;
-        }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type {
-            font-size: 0.75rem; font-weight: 600; color: #6d28d9;
-            background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem;
-        }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon {
-            width: 1.25rem; height: 1.25rem; transition: transform 0.2s;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
-        }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-        .question-answer p:last-child { margin-bottom: 0; }
-        
-        /* Bottom Line */
-        .bottom-line {
-            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
-            margin: 2rem 0; padding: 1.5rem; border-radius: 12px;
-            border-left: 4px solid #7c3aed;
-        }
-        .bottom-line-header {
-            font-weight: 700; color: #5b21b6; margin-bottom: 1rem;
-            display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem;
-        }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-        
-        /* Footer */
-        .footer {
-            text-align: center; padding: 2rem; margin-top: 2rem;
-            border-top: 1px solid #e2e8f0; color: var(--text-light); font-size: 0.85rem;
-        }
-        .footer a { color: var(--secondary); }
-        .chat-title { background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 0.5rem; margin-top: 1rem; display: inline-block; }
-        
-        /* Part Header */
-        .part-header {
-            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-            padding: 1rem 1.5rem; border-radius: 0.75rem; margin-bottom: 1.5rem;
-            border-left: 4px solid var(--secondary);
-        }
-        .part-number { font-size: 0.8rem; color: var(--secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-        .part-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: 0.25rem; }
-    </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2026-01-22" name="doc-date"/>
+<meta content="The Future of Work When Work Is Meaningless - Dan Koe 深度解讀" name="doc-title"/>
+<meta content="Dan Koe (@thedankoe)" name="doc-source"/>
+<meta content="Content,Analysis" name="doc-tags"/>
+<meta content="4.2" name="doc-rating"/>
+<meta content="AI自動化時代人類創作者的最後防線是觀點，從意義危機到內在生成" name="doc-summary"/>
+<meta content="2026-01-22_future-of-work.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>The Future of Work When Work Is Meaningless - Dan Koe 深度解讀</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+
+
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="tags">
-                <span class="tag tag-llm">LLM</span>
-                <span class="tag tag-agent">Agent</span>
-                <span class="tag tag-automation">Automation</span>
-                <span class="tag tag-tool">Future of Work</span>
-            </div>
-            <h1>The Future of Work When Work Is Meaningless</h1>
-            <p class="header-subtitle">當工作失去意義，人類創作者的生存之道</p>
-            <p class="source-info">來源：Dan Koe (@thedankoe) | 2026.01.22 教學文件</p>
-        </header>
-
-        <!-- Executive Summary -->
-        <section class="executive-summary">
-            <h2 class="section-title">快速摘要 Executive Summary</h2>
-            
-            <div class="rating-bar">
-                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
-                <span class="rating-high">↑ Technical Depth, Practical Value</span>
-                <span class="rating-low">↓ Tool Ecosystem, Timeliness</span>
-            </div>
-            
-            <div class="summary-text">
-                <p>Dan Koe 在這篇長文中提出一個核心論點：<span class="highlight-key">當 AI 自動化威脅取代所有工作時，人類創作者的最後防線不是技能，而是「觀點」(Perspective)</span>。他從人類歷史的世界觀演進（前現代→現代→後現代）切入，解釋為何「意義危機」(Meaning Crisis) 正在加劇，並預測下一個階段將是「意義從內在生成」的時代。</p>
-                <p>文章核心框架包含：(1) 意義的三個生成器：掙扎 (Struggle)、地位 (Status)、好奇心 (Curiosity)；(2) AI 無法複製的人類特質：即時演化的觀點、能量簽名、品味；(3) 後勞動時代的技能堆疊：Agency → Taste → Perspective → Persuasion → Technical Know-How。</p>
-                <p>這篇文章對 CDMO 營運專業人士的價值在於：<span class="highlight-practical">當製藥業也面臨 AI 自動化浪潮時，如何定位自己成為「意義架構師」而非「可替代的執行者」</span>。</p>
-            </div>
-        </section>
-
-        <!-- Learning Objectives -->
-        <section class="objectives-grid">
-            <div class="objective-item">
-                <div class="objective-icon">🎯</div>
-                <div class="objective-title">理解意義演化史</div>
-                <div class="objective-desc">從前現代到後現代，掌握人類如何尋找生命意義的歷史脈絡</div>
-            </div>
-            <div class="objective-item">
-                <div class="objective-icon">🤖</div>
-                <div class="objective-title">辨識 AI 的真正威脅</div>
-                <div class="objective-desc">區分哪些工作會被取代，哪些反而因 AI 變得更有價值</div>
-            </div>
-            <div class="objective-item">
-                <div class="objective-icon">💡</div>
-                <div class="objective-title">建構個人防禦護城河</div>
-                <div class="objective-desc">掌握「觀點即競爭力」的核心概念與 5 層技能堆疊</div>
-            </div>
-        </section>
-
-        <!-- Framework Visual -->
-        <div class="framework-visual">
-            <div class="framework-title">意義生成的三大引擎 The 3 Generators of Meaning</div>
-            <div class="framework-steps">
-                <div class="framework-step">
-                    <div class="framework-icon">⚔️</div>
-                    <div class="framework-step-title">Struggle 掙扎</div>
-                    <div class="framework-step-desc">選擇為何而戰</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">🔍</div>
-                    <div class="framework-step-title">Curiosity 好奇心</div>
-                    <div class="framework-step-desc">非線性注意力</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">🏆</div>
-                    <div class="framework-step-title">Status 地位</div>
-                    <div class="framework-step-desc">貢獻的證明</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tabbed Content for 6 Parts -->
-        <div class="tab-container">
-            <div class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">基礎篇 (I-II)</button>
-                <button class="tab-btn" onclick="switchTab(event, 'tab-meaning')">意義篇 (III-IV)</button>
-                <button class="tab-btn" onclick="switchTab(event, 'tab-strategy')">策略篇 (V-VI)</button>
-            </div>
-
-            <!-- Tab 1: Foundation (Parts I-II) -->
-            <div id="tab-foundation" class="tab-content active">
-                
-                <!-- Part I -->
-                <div class="part-header">
-                    <div class="part-number">Part I</div>
-                    <div class="part-title">意義危機讓意義變得值錢 The Meaning Crisis Makes Meaning Worth Paying For</div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="content-original">
-                        <div class="column-header">原文雙語對照</div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text"><span class="highlight-concept">意義已成為稀缺商品</span>。這一點並不難看出。</p>
-                            <p class="english-quote">"Meaning has become a scarce good. It's not hard to see that."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">現實隨著時間發展朝向更高的複雜度。當事物變得過於複雜或混亂時，<span class="highlight-key">必須出現新的有序結構</span>（或新的整體來包裹各部分）。</p>
-                            <p class="english-quote">"Reality develops toward greater complexity over time. When things become too complex or chaotic, a new ordered structure must emerge."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">在工業社會中，<span class="highlight-key">現代世界觀</span>得以生根，它重視理性。意義透過理性、科學和證據被「發現」，而非從傳統中「繼承」。</p>
-                            <p class="english-quote">"An industrial society allowed for the modern worldview to take hold that valued rationality. Meaning was discovered through reason, science, and evidence rather than inherited by tradition."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">後現代主義的關鍵洞見是<span class="highlight-concept">「無視角主義」(Aperspectivalism)</span>，即沒有任何觀點是特權的。所有觀點都是情境化的、片面的、脈絡性的。</p>
-                            <p class="english-quote">"The key insight of postmodernism is aperspectivalism, or that no perspective is privileged. All views are situated, partial, and contextual."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">後現代主義正確地看到沒有觀點是絕對的，但隨後<span class="highlight-key">錯誤地結論說沒有觀點是更好的</span>。事實上，某些觀點確實更好。</p>
-                            <p class="english-quote">"Postmodernism correctly saw that no perspective is absolute, but then incorrectly concluded that no perspective is better. Some perspectives are, in fact, better."</p>
-                        </div>
-                    </div>
-                    
-                    <div class="content-explanation">
-                        <div class="column-header">深度解讀</div>
-                        
-                        <div class="info-box box-concept">
-                            <div class="info-box-header">核心概念：世界觀演進</div>
-                            <div class="info-box-content">
+<div class="container">
+<!-- Header -->
+<header class="header">
+<div class="tags">
+<span class="tag tag-llm">LLM</span>
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-automation">Automation</span>
+<span class="tag tag-tool">Future of Work</span>
+</div>
+<h1>The Future of Work When Work Is Meaningless</h1>
+<p class="header-subtitle">當工作失去意義，人類創作者的生存之道</p>
+<p class="source-info">來源：Dan Koe (@thedankoe) | 2026.01.22 教學文件</p>
+</header>
+<!-- Executive Summary -->
+<section class="executive-summary">
+<h2 class="section-title">快速摘要 Executive Summary</h2>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
+<span class="rating-high">↑ Technical Depth, Practical Value</span>
+<span class="rating-low">↓ Tool Ecosystem, Timeliness</span>
+</div>
+<div class="summary-text">
+<p>Dan Koe 在這篇長文中提出一個核心論點：<span class="highlight-key">當 AI 自動化威脅取代所有工作時，人類創作者的最後防線不是技能，而是「觀點」(Perspective)</span>。他從人類歷史的世界觀演進（前現代→現代→後現代）切入，解釋為何「意義危機」(Meaning Crisis) 正在加劇，並預測下一個階段將是「意義從內在生成」的時代。</p>
+<p>文章核心框架包含：(1) 意義的三個生成器：掙扎 (Struggle)、地位 (Status)、好奇心 (Curiosity)；(2) AI 無法複製的人類特質：即時演化的觀點、能量簽名、品味；(3) 後勞動時代的技能堆疊：Agency → Taste → Perspective → Persuasion → Technical Know-How。</p>
+<p>這篇文章對 CDMO 營運專業人士的價值在於：<span class="highlight-practical">當製藥業也面臨 AI 自動化浪潮時，如何定位自己成為「意義架構師」而非「可替代的執行者」</span>。</p>
+</div>
+</section>
+<!-- Learning Objectives -->
+<section class="objectives-grid">
+<div class="objective-item">
+<div class="objective-icon">🎯</div>
+<div class="objective-title">理解意義演化史</div>
+<div class="objective-desc">從前現代到後現代，掌握人類如何尋找生命意義的歷史脈絡</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">🤖</div>
+<div class="objective-title">辨識 AI 的真正威脅</div>
+<div class="objective-desc">區分哪些工作會被取代，哪些反而因 AI 變得更有價值</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">💡</div>
+<div class="objective-title">建構個人防禦護城河</div>
+<div class="objective-desc">掌握「觀點即競爭力」的核心概念與 5 層技能堆疊</div>
+</div>
+</section>
+<!-- Framework Visual -->
+<div class="framework-visual">
+<div class="framework-title">意義生成的三大引擎 The 3 Generators of Meaning</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">⚔️</div>
+<div class="framework-step-title">Struggle 掙扎</div>
+<div class="framework-step-desc">選擇為何而戰</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🔍</div>
+<div class="framework-step-title">Curiosity 好奇心</div>
+<div class="framework-step-desc">非線性注意力</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🏆</div>
+<div class="framework-step-title">Status 地位</div>
+<div class="framework-step-desc">貢獻的證明</div>
+</div>
+</div>
+</div>
+<!-- Tabbed Content for 6 Parts -->
+<div class="tab-container">
+<div class="tab-nav">
+<button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">基礎篇 (I-II)</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-meaning')">意義篇 (III-IV)</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-strategy')">策略篇 (V-VI)</button>
+</div>
+<!-- Tab 1: Foundation (Parts I-II) -->
+<div class="tab-content active" id="tab-foundation">
+<!-- Part I -->
+<div class="part-header">
+<div class="part-number">Part I</div>
+<div class="part-title">意義危機讓意義變得值錢 The Meaning Crisis Makes Meaning Worth Paying For</div>
+</div>
+<div class="content-grid">
+<div class="content-original">
+<div class="column-header">原文雙語對照</div>
+<div class="bilingual-text">
+<p class="zh-text"><span class="highlight-concept">意義已成為稀缺商品</span>。這一點並不難看出。</p>
+<p class="english-quote">"Meaning has become a scarce good. It's not hard to see that."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">現實隨著時間發展朝向更高的複雜度。當事物變得過於複雜或混亂時，<span class="highlight-key">必須出現新的有序結構</span>（或新的整體來包裹各部分）。</p>
+<p class="english-quote">"Reality develops toward greater complexity over time. When things become too complex or chaotic, a new ordered structure must emerge."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">在工業社會中，<span class="highlight-key">現代世界觀</span>得以生根，它重視理性。意義透過理性、科學和證據被「發現」，而非從傳統中「繼承」。</p>
+<p class="english-quote">"An industrial society allowed for the modern worldview to take hold that valued rationality. Meaning was discovered through reason, science, and evidence rather than inherited by tradition."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">後現代主義的關鍵洞見是<span class="highlight-concept">「無視角主義」(Aperspectivalism)</span>，即沒有任何觀點是特權的。所有觀點都是情境化的、片面的、脈絡性的。</p>
+<p class="english-quote">"The key insight of postmodernism is aperspectivalism, or that no perspective is privileged. All views are situated, partial, and contextual."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">後現代主義正確地看到沒有觀點是絕對的，但隨後<span class="highlight-key">錯誤地結論說沒有觀點是更好的</span>。事實上，某些觀點確實更好。</p>
+<p class="english-quote">"Postmodernism correctly saw that no perspective is absolute, but then incorrectly concluded that no perspective is better. Some perspectives are, in fact, better."</p>
+</div>
+</div>
+<div class="content-explanation">
+<div class="column-header">深度解讀</div>
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念：世界觀演進</div>
+<div class="info-box-content">
                                 Dan Koe 在這裡使用「發展心理學」的視角來解釋人類社會如何尋找意義：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>前現代 (Premodern)</strong>：意義「從上面給予」（神、長老、經典）</li>
-                                    <li><strong>現代 (Modern)</strong>：意義「從外部發現」（科學、進步、生產力）</li>
-                                    <li><strong>後現代 (Postmodern)</strong>：意義「不存在」（解構、相對主義）</li>
-                                    <li><strong>元現代 (Metamodern)?</strong>：意義「從內部生成」</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="info-box box-analogy">
-                            <div class="info-box-header">比喻說明：GPS 的演化</div>
-                            <div class="info-box-content">
+<li><strong>前現代 (Premodern)</strong>：意義「從上面給予」（神、長老、經典）</li>
+<li><strong>現代 (Modern)</strong>：意義「從外部發現」（科學、進步、生產力）</li>
+<li><strong>後現代 (Postmodern)</strong>：意義「不存在」（解構、相對主義）</li>
+<li><strong>元現代 (Metamodern)?</strong>：意義「從內部生成」</li>
+</ul>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明：GPS 的演化</div>
+<div class="info-box-content">
                                 想像「找方向」的演進：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>前現代</strong>：問長老「我該往哪走？」他指一個方向，你照做</li>
-                                    <li><strong>現代</strong>：拿出地圖和指南針，用科學方法計算最佳路線</li>
-                                    <li><strong>後現代</strong>：「所有方向都一樣好，沒有最佳路線」</li>
-                                    <li><strong>元現代</strong>：你自己決定目的地，然後用 GPS（工具）幫你導航</li>
-                                </ul>
+<li><strong>前現代</strong>：問長老「我該往哪走？」他指一個方向，你照做</li>
+<li><strong>現代</strong>：拿出地圖和指南針，用科學方法計算最佳路線</li>
+<li><strong>後現代</strong>：「所有方向都一樣好，沒有最佳路線」</li>
+<li><strong>元現代</strong>：你自己決定目的地，然後用 GPS（工具）幫你導航</li>
+</ul>
                                 AI 就是那個超強的 GPS，但它無法決定「你要去哪裡」。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-practical">
-                            <div class="info-box-header">CDMO 產業應用</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">CDMO 產業應用</div>
+<div class="info-box-content">
                                 製藥業正在經歷類似的「意義危機」：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>前現代</strong>：FDA 說什麼就做什麼（監管即真理）</li>
-                                    <li><strong>現代</strong>：用 QbD、PAT 等科學方法優化製程</li>
-                                    <li><strong>後現代</strong>：「每個案例都是特殊的，沒有通用答案」</li>
-                                    <li><strong>下一階段</strong>：你需要自己決定「什麼是值得做的專案」，而非只是執行被分配的任務</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Part II -->
-                <div class="part-header">
-                    <div class="part-number">Part II</div>
-                    <div class="part-title">AI 的加速（以及無意義的加速）The Acceleration of AI</div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="content-original">
-                        <div class="column-header">原文雙語對照</div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">AI 承諾將我們從所有勞動中解放。至少這是所有炒作的焦點。它承諾提供必需品，讓我們不再活在稀缺中。但從各方面來看，<span class="highlight-key">它這樣做的方式只會增加意義的稀缺</span>。</p>
-                            <p class="english-quote">"AI promises to remove us of all labor... It promises to provide the necessities so that we no longer live in scarcity. But by all measures, the way in which it does so only increases the scarcity of meaning."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">作為一家公司，讓機器完成所有工作的想法很誘人。<span class="highlight-concept">人類是昂貴的、複雜的、情緒化的，而且有法律風險</span>。直到現在，唯一的選擇是雇用人類。</p>
-                            <p class="english-quote">"As a company, the thought of having a machine do all your work is enticing. Humans are expensive, complicated, emotional, and legally risky. Up until now, the only option was to hire humans."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">如果每個人都被解雇，沒人有錢。沒人有錢，沒人買東西。沒人買東西，經濟崩潰。但這句話<span class="highlight-key">適用於有工作的人，而非擁有公司的人</span>。</p>
-                            <p class="english-quote">"If everyone gets fired, no one has money. If no one has money, no one buys anything. If no one buys anything, the economy collapses... the above sentence applies to people with jobs, not people with companies."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">幸運的是，即使自動化更優越，某些工作可能會持續存在。這些工作基於<span class="highlight-practical">人類特別要求其他人類</span>：高責任角色、法定職位、體驗經濟、意義製造者、關係/信任工作。</p>
-                            <p class="english-quote">"Fortunately, there are jobs that may persist even when automation is superior... High-liability roles, Statutory positions, Experience economy, Meaning makers, Relationship/trust jobs."</p>
-                        </div>
-                    </div>
-                    
-                    <div class="content-explanation">
-                        <div class="column-header">深度解讀</div>
-                        
-                        <div class="info-box box-key">
-                            <div class="info-box-header">重點提示：David Shapiro 的後勞動經濟學</div>
-                            <div class="info-box-content">
+<li><strong>前現代</strong>：FDA 說什麼就做什麼（監管即真理）</li>
+<li><strong>現代</strong>：用 QbD、PAT 等科學方法優化製程</li>
+<li><strong>後現代</strong>：「每個案例都是特殊的，沒有通用答案」</li>
+<li><strong>下一階段</strong>：你需要自己決定「什麼是值得做的專案」，而非只是執行被分配的任務</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Part II -->
+<div class="part-header">
+<div class="part-number">Part II</div>
+<div class="part-title">AI 的加速（以及無意義的加速）The Acceleration of AI</div>
+</div>
+<div class="content-grid">
+<div class="content-original">
+<div class="column-header">原文雙語對照</div>
+<div class="bilingual-text">
+<p class="zh-text">AI 承諾將我們從所有勞動中解放。至少這是所有炒作的焦點。它承諾提供必需品，讓我們不再活在稀缺中。但從各方面來看，<span class="highlight-key">它這樣做的方式只會增加意義的稀缺</span>。</p>
+<p class="english-quote">"AI promises to remove us of all labor... It promises to provide the necessities so that we no longer live in scarcity. But by all measures, the way in which it does so only increases the scarcity of meaning."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">作為一家公司，讓機器完成所有工作的想法很誘人。<span class="highlight-concept">人類是昂貴的、複雜的、情緒化的，而且有法律風險</span>。直到現在，唯一的選擇是雇用人類。</p>
+<p class="english-quote">"As a company, the thought of having a machine do all your work is enticing. Humans are expensive, complicated, emotional, and legally risky. Up until now, the only option was to hire humans."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">如果每個人都被解雇，沒人有錢。沒人有錢，沒人買東西。沒人買東西，經濟崩潰。但這句話<span class="highlight-key">適用於有工作的人，而非擁有公司的人</span>。</p>
+<p class="english-quote">"If everyone gets fired, no one has money. If no one has money, no one buys anything. If no one buys anything, the economy collapses... the above sentence applies to people with jobs, not people with companies."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">幸運的是，即使自動化更優越，某些工作可能會持續存在。這些工作基於<span class="highlight-practical">人類特別要求其他人類</span>：高責任角色、法定職位、體驗經濟、意義製造者、關係/信任工作。</p>
+<p class="english-quote">"Fortunately, there are jobs that may persist even when automation is superior... High-liability roles, Statutory positions, Experience economy, Meaning makers, Relationship/trust jobs."</p>
+</div>
+</div>
+<div class="content-explanation">
+<div class="column-header">深度解讀</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示：David Shapiro 的後勞動經濟學</div>
+<div class="info-box-content">
                                 Dan Koe 引用 David Shapiro 的理論指出，當工資收入（Wages）崩潰時，剩下兩個選項：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>轉移支付 (Transfers)</strong>：UBI、社會福利（但會造成政治不穩定）</li>
-                                    <li><strong>資本收入 (Capital Income)</strong>：擁有會產生收入的資產</li>
-                                </ul>
+<li><strong>轉移支付 (Transfers)</strong>：UBI、社會福利（但會造成政治不穩定）</li>
+<li><strong>資本收入 (Capital Income)</strong>：擁有會產生收入的資產</li>
+</ul>
                                 關鍵洞察：<span class="highlight-key">金錢將從「生產力指標」轉變為「表達能動性的工具」</span>。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-analogy">
-                            <div class="info-box-header">比喻說明：餐廳的未來</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明：餐廳的未來</div>
+<div class="info-box-content">
                                 想像兩種用餐體驗：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>麥當勞</strong>：速度、準確、便宜 → 完全自動化</li>
-                                    <li><strong>米其林餐廳</strong>：故事、戲劇、體驗 → 人類溢價</li>
-                                </ul>
+<li><strong>麥當勞</strong>：速度、準確、便宜 → 完全自動化</li>
+<li><strong>米其林餐廳</strong>：故事、戲劇、體驗 → 人類溢價</li>
+</ul>
                                 當速度和效率是重點時，交給機器。但當我們進入「休閒」狀態，我們渴望的是<span class="highlight-key">失敗的可能性、流血的人的教訓、故事和意義</span>。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-practical">
-                            <div class="info-box-header">CDMO 應用：你在哪個象限？</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">CDMO 應用：你在哪個象限？</div>
+<div class="info-box-content">
                                 用這個框架檢視你的工作內容：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>可自動化</strong>：批次記錄審核、偏差分類、SOP 更新</li>
-                                    <li><strong>需要人類</strong>：客戶關係管理、監管策略決策、跨部門協調</li>
-                                    <li><strong>高價值人類工作</strong>：為客戶的新藥專案設計製程策略（意義製造者）</li>
-                                </ul>
+<li><strong>可自動化</strong>：批次記錄審核、偏差分類、SOP 更新</li>
+<li><strong>需要人類</strong>：客戶關係管理、監管策略決策、跨部門協調</li>
+<li><strong>高價值人類工作</strong>：為客戶的新藥專案設計製程策略（意義製造者）</li>
+</ul>
                                 你的目標：從「可自動化」移動到「高價值人類工作」。
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tab 2: Meaning (Parts III-IV) -->
-            <div id="tab-meaning" class="tab-content">
-                
-                <!-- Part III -->
-                <div class="part-header">
-                    <div class="part-number">Part III</div>
-                    <div class="part-title">意義的演化與解剖 The Evolution and Anatomy of Meaning</div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="content-original">
-                        <div class="column-header">原文雙語對照</div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">「碳可以攀登意義的階梯，而矽則磨平必需品的粗糙邊緣。我們會廢除咖啡師，封聖主廚；消音客服代理，讓演員再次登台。」</p>
-                            <p class="english-quote">"The elegance of the future is not in man versus machine but in their division of labor: silicon sanding the rough edges of necessity so carbon can ascend to meaning." – Chris Paik</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">我們可以說，<span class="highlight-concept">意義的兩大支柱是前進的感覺和與更大事物的連結</span>。進步與貢獻。</p>
-                            <p class="english-quote">"We could then say that the two pillars of meaning are the feeling of forward movement and a connection to something greater than yourself. Progress and contribution."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">除了意義的兩大支柱，還有<span class="highlight-key">三個生成器</span>：掙扎 (Struggle) — 進步的引擎；好奇心 (Curiosity) — 進步的方向；地位 (Status) — 貢獻的證明。</p>
-                            <p class="english-quote">"Beyond the two pillars of meaning, there are three generators: Struggle – The engine of progress. Curiosity – The direction of progress. Status – The proof of contribution."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">當你把所有這些放在一起，你得到的是<span class="highlight-practical">故事</span>。真實的故事將是需要高價標籤的東西。因為人類大腦是一個故事引擎。</p>
-                            <p class="english-quote">"When you put all those together, you get a story. Stories, authentic stories, are what will demand a premium price tag. Because the human brain is a story engine."</p>
-                        </div>
-                    </div>
-                    
-                    <div class="content-explanation">
-                        <div class="column-header">深度解讀</div>
-                        
-                        <div class="info-box box-concept">
-                            <div class="info-box-header">核心概念：意義的解剖學</div>
-                            <div class="info-box-content">
+</div>
+</div>
+</div>
+</div>
+<!-- Tab 2: Meaning (Parts III-IV) -->
+<div class="tab-content" id="tab-meaning">
+<!-- Part III -->
+<div class="part-header">
+<div class="part-number">Part III</div>
+<div class="part-title">意義的演化與解剖 The Evolution and Anatomy of Meaning</div>
+</div>
+<div class="content-grid">
+<div class="content-original">
+<div class="column-header">原文雙語對照</div>
+<div class="bilingual-text">
+<p class="zh-text">「碳可以攀登意義的階梯，而矽則磨平必需品的粗糙邊緣。我們會廢除咖啡師，封聖主廚；消音客服代理，讓演員再次登台。」</p>
+<p class="english-quote">"The elegance of the future is not in man versus machine but in their division of labor: silicon sanding the rough edges of necessity so carbon can ascend to meaning." – Chris Paik</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">我們可以說，<span class="highlight-concept">意義的兩大支柱是前進的感覺和與更大事物的連結</span>。進步與貢獻。</p>
+<p class="english-quote">"We could then say that the two pillars of meaning are the feeling of forward movement and a connection to something greater than yourself. Progress and contribution."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">除了意義的兩大支柱，還有<span class="highlight-key">三個生成器</span>：掙扎 (Struggle) — 進步的引擎；好奇心 (Curiosity) — 進步的方向；地位 (Status) — 貢獻的證明。</p>
+<p class="english-quote">"Beyond the two pillars of meaning, there are three generators: Struggle – The engine of progress. Curiosity – The direction of progress. Status – The proof of contribution."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">當你把所有這些放在一起，你得到的是<span class="highlight-practical">故事</span>。真實的故事將是需要高價標籤的東西。因為人類大腦是一個故事引擎。</p>
+<p class="english-quote">"When you put all those together, you get a story. Stories, authentic stories, are what will demand a premium price tag. Because the human brain is a story engine."</p>
+</div>
+</div>
+<div class="content-explanation">
+<div class="column-header">深度解讀</div>
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念：意義的解剖學</div>
+<div class="info-box-content">
                                 Dan Koe 提出一個清晰的意義架構：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>兩大支柱</strong>：Progress（前進感）+ Contribution（貢獻感）</li>
-                                    <li><strong>三大生成器</strong>：Struggle → Curiosity → Status</li>
-                                    <li><strong>產出</strong>：Story（故事）= 可銷售的意義載體</li>
-                                </ul>
+<li><strong>兩大支柱</strong>：Progress（前進感）+ Contribution（貢獻感）</li>
+<li><strong>三大生成器</strong>：Struggle → Curiosity → Status</li>
+<li><strong>產出</strong>：Story（故事）= 可銷售的意義載體</li>
+</ul>
                                 無意義感來自兩個來源：停滯（Stagnation）和孤立（Isolation）。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-analogy">
-                            <div class="info-box-header">比喻說明：為什麼我們付高價看現場表演？</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明：為什麼我們付高價看現場表演？</div>
+<div class="info-box-content">
                                 想想這個悖論：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li>我們討厭 DMV 排長隊（效率低、沒有故事）</li>
-                                    <li>我們願意飛越半個地球去米其林餐廳（效率低、但有故事）</li>
-                                    <li>我們願意花大錢看音樂會（可能聽到歌手破音、但有失敗的可能性）</li>
-                                </ul>
+<li>我們討厭 DMV 排長隊（效率低、沒有故事）</li>
+<li>我們願意飛越半個地球去米其林餐廳（效率低、但有故事）</li>
+<li>我們願意花大錢看音樂會（可能聽到歌手破音、但有失敗的可能性）</li>
+</ul>
                                 關鍵差異：<span class="highlight-key">當任務是關於「完成」時，交給機器；當任務是關於「體驗」時，人類溢價</span>。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-practical">
-                            <div class="info-box-header">CDMO 應用：你的工作有故事嗎？</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">CDMO 應用：你的工作有故事嗎？</div>
+<div class="info-box-content">
                                 檢視你的工作內容是否具備「故事性」：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>無故事</strong>：每天審核批次記錄、處理偏差報告</li>
-                                    <li><strong>有故事</strong>：「我幫助一家 biotech 從概念到 FDA 批准的 5 年旅程」</li>
-                                    <li><strong>意義製造</strong>：將技術挑戰轉化為可分享的學習經驗</li>
-                                </ul>
+<li><strong>無故事</strong>：每天審核批次記錄、處理偏差報告</li>
+<li><strong>有故事</strong>：「我幫助一家 biotech 從概念到 FDA 批准的 5 年旅程」</li>
+<li><strong>意義製造</strong>：將技術挑戰轉化為可分享的學習經驗</li>
+</ul>
                                 你的 COO 目標需要一個故事：「我如何帶領 CDMO 轉型進入 AI 時代」。
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Part IV -->
-                <div class="part-header">
-                    <div class="part-number">Part IV</div>
-                    <div class="part-title">創作者經濟 = 意義經濟 The Creator Economy = The Meaning Economy</div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="content-original">
-                        <div class="column-header">原文雙語對照</div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">如果你不從工作獲得報酬，而且你不覺得收集剛好夠的被動收入來支付必需品有意義，那還剩什麼？<span class="highlight-practical">從相信你在做的事並希望世界上有更多這種東西的人那裡獲得報酬</span>。</p>
-                            <p class="english-quote">"If you are not paid from a job... what's left? To get paid from people who believe in what you are doing and want to see more of it in the world."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">創作者經濟最大的誤解是它是一個贏家通吃的戰場。<span class="highlight-key">這與事實完全相反</span>。</p>
-                            <p class="english-quote">"The biggest misconception of the creator economy is that it's a winner takes all battleground. That couldn't be any further from the truth."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">「但 Dan，死互聯網呢？AI 不是會用垃圾內容淹沒整個空間嗎？」是的，實際上會。<span class="highlight-concept">這怎麼不是好事？</span>你告訴我每個人都在用平庸的內容淹沒空間，所以脫穎而出從未如此容易？</p>
-                            <p class="english-quote">"'But Dan, what about the dead internet? Isn't AI just going to flood the space with brain rot and slop?' Yes, actually. How is that not a good thing?"</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">真相是<span class="highlight-key">技能正在被抽象到更高的層次</span>。手動在頁面上打字或在畫布上添加筆觸仍然重要，但它們不如從事這件事的藝術家的心智重要。</p>
-                            <p class="english-quote">"The truth is that skills are being abstracted up a layer. The manual task of typing words on a page or adding brush strokes to a painting still matter... but they don't matter as much as the mind of the artist doing that thing."</p>
-                        </div>
-                    </div>
-                    
-                    <div class="content-explanation">
-                        <div class="column-header">深度解讀</div>
-                        
-                        <div class="info-box box-key">
-                            <div class="info-box-header">重點提示：反直覺的 AI Slop 論點</div>
-                            <div class="info-box-content">
+</div>
+</div>
+</div>
+<!-- Part IV -->
+<div class="part-header">
+<div class="part-number">Part IV</div>
+<div class="part-title">創作者經濟 = 意義經濟 The Creator Economy = The Meaning Economy</div>
+</div>
+<div class="content-grid">
+<div class="content-original">
+<div class="column-header">原文雙語對照</div>
+<div class="bilingual-text">
+<p class="zh-text">如果你不從工作獲得報酬，而且你不覺得收集剛好夠的被動收入來支付必需品有意義，那還剩什麼？<span class="highlight-practical">從相信你在做的事並希望世界上有更多這種東西的人那裡獲得報酬</span>。</p>
+<p class="english-quote">"If you are not paid from a job... what's left? To get paid from people who believe in what you are doing and want to see more of it in the world."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">創作者經濟最大的誤解是它是一個贏家通吃的戰場。<span class="highlight-key">這與事實完全相反</span>。</p>
+<p class="english-quote">"The biggest misconception of the creator economy is that it's a winner takes all battleground. That couldn't be any further from the truth."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">「但 Dan，死互聯網呢？AI 不是會用垃圾內容淹沒整個空間嗎？」是的，實際上會。<span class="highlight-concept">這怎麼不是好事？</span>你告訴我每個人都在用平庸的內容淹沒空間，所以脫穎而出從未如此容易？</p>
+<p class="english-quote">"'But Dan, what about the dead internet? Isn't AI just going to flood the space with brain rot and slop?' Yes, actually. How is that not a good thing?"</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">真相是<span class="highlight-key">技能正在被抽象到更高的層次</span>。手動在頁面上打字或在畫布上添加筆觸仍然重要，但它們不如從事這件事的藝術家的心智重要。</p>
+<p class="english-quote">"The truth is that skills are being abstracted up a layer. The manual task of typing words on a page or adding brush strokes to a painting still matter... but they don't matter as much as the mind of the artist doing that thing."</p>
+</div>
+</div>
+<div class="content-explanation">
+<div class="column-header">深度解讀</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示：反直覺的 AI Slop 論點</div>
+<div class="info-box-content">
                                 Dan Koe 提出一個反直覺的觀點：AI 生成的垃圾內容氾濫<span class="highlight-key">反而有利於真正的創作者</span>。原因：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li>當每個人都能即時做到時，它立即變得毫無價值</li>
-                                    <li>「Slop」很少真正爆紅，如果爆紅了，那它還算 slop 嗎？</li>
-                                    <li>供應無限 = 價格趨近於零 = 稀缺性轉移到其他地方</li>
-                                </ul>
+<li>當每個人都能即時做到時，它立即變得毫無價值</li>
+<li>「Slop」很少真正爆紅，如果爆紅了，那它還算 slop 嗎？</li>
+<li>供應無限 = 價格趨近於零 = 稀缺性轉移到其他地方</li>
+</ul>
                                 新的稀缺資源是：<span class="highlight-concept">人類觀點 (Human Perspective)</span>。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-analogy">
-                            <div class="info-box-header">比喻說明：你有 ChatGPT，為什麼還在讀這篇？</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明：你有 ChatGPT，為什麼還在讀這篇？</div>
+<div class="info-box-content">
                                 Dan Koe 直接問讀者這個問題。答案揭示了 AI 的限制：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li>你不知道該問什麼問題</li>
-                                    <li>生活不只是回答你已知的問題</li>
-                                    <li>ChatGPT 不會主動「遞給你」這篇文章</li>
-                                </ul>
-                                <span class="highlight-key">發現 (Discovery)</span> 本身就是價值所在。
+<li>你不知道該問什麼問題</li>
+<li>生活不只是回答你已知的問題</li>
+<li>ChatGPT 不會主動「遞給你」這篇文章</li>
+</ul>
+<span class="highlight-key">發現 (Discovery)</span> 本身就是價值所在。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-practical">
-                            <div class="info-box-header">CDMO 應用：你的「創作者經濟」是什麼？</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">CDMO 應用：你的「創作者經濟」是什麼？</div>
+<div class="info-box-content">
                                 即使不做社群媒體，你也可以應用這個框架：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>內部創作者</strong>：成為公司內「AI + 製藥」交叉領域的意見領袖</li>
-                                    <li><strong>知識產品</strong>：將 SA25 Vanrx 專業知識打包成可傳承的培訓系統</li>
-                                    <li><strong>個人品牌</strong>：在產業研討會分享你的獨特觀點</li>
-                                </ul>
+<li><strong>內部創作者</strong>：成為公司內「AI + 製藥」交叉領域的意見領袖</li>
+<li><strong>知識產品</strong>：將 SA25 Vanrx 專業知識打包成可傳承的培訓系統</li>
+<li><strong>個人品牌</strong>：在產業研討會分享你的獨特觀點</li>
+</ul>
                                 你不需要百萬追蹤者，你需要一群相信你觀點的人。
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tab 3: Strategy (Parts V-VI) -->
-            <div id="tab-strategy" class="tab-content">
-                
-                <!-- Part V -->
-                <div class="part-header">
-                    <div class="part-number">Part V</div>
-                    <div class="part-title">最後的護城河是你自己 The Last Defensible Moat Is You</div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="content-original">
-                        <div class="column-header">原文雙語對照</div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">AI 能否完全取代創作者和藝術家？無論怎麼解讀，這都有點黯淡。AI 能寫我寫的東西嗎？答案是…<span class="highlight-key">可以，但也不可以</span>。</p>
-                            <p class="english-quote">"Will AI ever be able to fully replace creatives and artists? The answer I came to was... yes, but no."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">讓我們稱之為<span class="highlight-concept">「替換測試」(The Swap Test)</span>：如果你可以替換創作者而作品同樣有價值，那麼 AI 可以取代它。如果作品只因為是你創造的才有效，那就是你的優勢。</p>
-                            <p class="english-quote">"Let's call this The Swap Test: If you could swap the creator and the creation would be just as valuable, then AI can replace it. If the creation only works because you made it, then that's your edge."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text"><span class="highlight-practical">AI 無法從你的觀點思考</span>。它只能思考「關於」你的觀點或「以」你的觀點風格思考。AI 無法複製你的能量簽名。它無法選擇要關注什麼以及為什麼現在對你重要。</p>
-                            <p class="english-quote">"AI cannot think from your perspective. It can only think about your perspective or in the style of your perspective. AI cannot replicate your energy signature."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">換句話說，<span class="highlight-key">AI 可以複製任何東西，但它無法複製接下來會發生什麼，直到它已經發生</span>。你，作為一個創作者，有一個永遠在演化的觀點。AI 總是在追逐你曾經在的地方，而不是你現在在的地方。</p>
-                            <p class="english-quote">"In other words, AI can copy anything, but it cannot copy what happens next until it has already happened. You, as a creative, have a perspective that is always evolving. AI is always chasing where you were but not where you are now."</p>
-                        </div>
-                    </div>
-                    
-                    <div class="content-explanation">
-                        <div class="column-header">深度解讀</div>
-                        
-                        <div class="info-box box-concept">
-                            <div class="info-box-header">核心概念：The Swap Test</div>
-                            <div class="info-box-content">
+</div>
+</div>
+</div>
+</div>
+<!-- Tab 3: Strategy (Parts V-VI) -->
+<div class="tab-content" id="tab-strategy">
+<!-- Part V -->
+<div class="part-header">
+<div class="part-number">Part V</div>
+<div class="part-title">最後的護城河是你自己 The Last Defensible Moat Is You</div>
+</div>
+<div class="content-grid">
+<div class="content-original">
+<div class="column-header">原文雙語對照</div>
+<div class="bilingual-text">
+<p class="zh-text">AI 能否完全取代創作者和藝術家？無論怎麼解讀，這都有點黯淡。AI 能寫我寫的東西嗎？答案是…<span class="highlight-key">可以，但也不可以</span>。</p>
+<p class="english-quote">"Will AI ever be able to fully replace creatives and artists? The answer I came to was... yes, but no."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">讓我們稱之為<span class="highlight-concept">「替換測試」(The Swap Test)</span>：如果你可以替換創作者而作品同樣有價值，那麼 AI 可以取代它。如果作品只因為是你創造的才有效，那就是你的優勢。</p>
+<p class="english-quote">"Let's call this The Swap Test: If you could swap the creator and the creation would be just as valuable, then AI can replace it. If the creation only works because you made it, then that's your edge."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text"><span class="highlight-practical">AI 無法從你的觀點思考</span>。它只能思考「關於」你的觀點或「以」你的觀點風格思考。AI 無法複製你的能量簽名。它無法選擇要關注什麼以及為什麼現在對你重要。</p>
+<p class="english-quote">"AI cannot think from your perspective. It can only think about your perspective or in the style of your perspective. AI cannot replicate your energy signature."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text">換句話說，<span class="highlight-key">AI 可以複製任何東西，但它無法複製接下來會發生什麼，直到它已經發生</span>。你，作為一個創作者，有一個永遠在演化的觀點。AI 總是在追逐你曾經在的地方，而不是你現在在的地方。</p>
+<p class="english-quote">"In other words, AI can copy anything, but it cannot copy what happens next until it has already happened. You, as a creative, have a perspective that is always evolving. AI is always chasing where you were but not where you are now."</p>
+</div>
+</div>
+<div class="content-explanation">
+<div class="column-header">深度解讀</div>
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念：The Swap Test</div>
+<div class="info-box-content">
                                 這是文章最核心的框架。問自己：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>可替換</strong>：技術文件、SOP、數據報告 → AI 可以做</li>
-                                    <li><strong>不可替換</strong>：你對「為什麼這個專案值得做」的判斷 → AI 無法取代</li>
-                                </ul>
+<li><strong>可替換</strong>：技術文件、SOP、數據報告 → AI 可以做</li>
+<li><strong>不可替換</strong>：你對「為什麼這個專案值得做」的判斷 → AI 無法取代</li>
+</ul>
                                 關鍵區分：<span class="highlight-key">AI 可以「以你的風格」寫，但無法「從你的觀點」思考</span>。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-key">
-                            <div class="info-box-header">重點提示：AI 無法存取的 5 件事</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示：AI 無法存取的 5 件事</div>
+<div class="info-box-content">
                                 Dan Koe 列出 AI 的根本限制：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>觀點 (Perspective)</strong>：無法從你的角度思考</li>
-                                    <li><strong>能量簽名 (Energy Signature)</strong>：無法選擇「現在」對你重要的是什麼</li>
-                                    <li><strong>真正的意義建構 (Sensemaking)</strong>：無法決定資訊「意味著什麼」</li>
-                                    <li><strong>軌跡 (Trajectory)</strong>：沒有死亡的賭注，沒有時間壓力</li>
-                                    <li><strong>演化的品味 (Evolving Taste)</strong>：不會回顧一年前的作品並不同意它</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="info-box box-practical">
-                            <div class="info-box-header">CDMO 應用：你的「能量簽名」是什麼？</div>
-                            <div class="info-box-content">
+<li><strong>觀點 (Perspective)</strong>：無法從你的角度思考</li>
+<li><strong>能量簽名 (Energy Signature)</strong>：無法選擇「現在」對你重要的是什麼</li>
+<li><strong>真正的意義建構 (Sensemaking)</strong>：無法決定資訊「意味著什麼」</li>
+<li><strong>軌跡 (Trajectory)</strong>：沒有死亡的賭注，沒有時間壓力</li>
+<li><strong>演化的品味 (Evolving Taste)</strong>：不會回顧一年前的作品並不同意它</li>
+</ul>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">CDMO 應用：你的「能量簽名」是什麼？</div>
+<div class="info-box-content">
                                 將這個概念應用到你的專業領域：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>你的觀點</strong>：10 年 CDMO 經驗形成的「第六感」</li>
-                                    <li><strong>你的能量簽名</strong>：你選擇優先關注哪些風險、哪些機會</li>
-                                    <li><strong>你的軌跡</strong>：從現場操作到 COO 的 5 年計畫</li>
-                                </ul>
+<li><strong>你的觀點</strong>：10 年 CDMO 經驗形成的「第六感」</li>
+<li><strong>你的能量簽名</strong>：你選擇優先關注哪些風險、哪些機會</li>
+<li><strong>你的軌跡</strong>：從現場操作到 COO 的 5 年計畫</li>
+</ul>
                                 這些是 AI 無法複製的，因為它們是「你接下來會做什麼」的函數。
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Part VI -->
-                <div class="part-header">
-                    <div class="part-number">Part VI</div>
-                    <div class="part-title">後勞動時代的技能堆疊 The Post-Labor Skill Stack</div>
-                </div>
-                
-                <div class="content-grid">
-                    <div class="content-original">
-                        <div class="column-header">原文雙語對照</div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text">未來的技能堆疊不能被釘死在職業特定的技能上。我們都知道 AI 可以寫內容、寫程式碼、創作音樂。<span class="highlight-key">更重要的是發展讓這些東西「人性化」的技能</span>。</p>
-                            <p class="english-quote">"The skill stack of the future cannot be pinned down to career specific skills. We all know that AI can write content, code, and music. What's much more important is developing the skills that make those things human."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text"><span class="highlight-concept">能動性 (Agency)</span> 是創造值得講述的故事的元技能。它是你在沒有許可或外部提示的情況下採取行動的能力。</p>
-                            <p class="english-quote">"Agency is the meta skill that creates a story worth telling. Agency is the ability to act without permission or outside prompting."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text"><span class="highlight-concept">品味 (Taste)</span> 是辨別的技能。AI 現在正在創造無限圖書館問題。如果一個圖書館包含每一本可能的書…<span class="highlight-key">這個圖書館實際上是無用的</span>，因為找到有意義的文本在統計上是不可能的。</p>
-                            <p class="english-quote">"Taste is the skill of discernment. AI right now is creating the infinite library problem. If a library contained every possible book... The library is effectively useless because finding meaningful text is statistically impossible."</p>
-                        </div>
-                        
-                        <div class="bilingual-text">
-                            <p class="chinese-text"><span class="highlight-concept">觀點 (Perspective)</span> 是增加人類容量。發展心理學說明人類價值觀和世界觀會隨時間通過可預測的階段演化。通常，這些階段遵循一個簡單的模式：<span class="highlight-practical">你的心智變得更少從眾、更少意識形態、更少教條</span>。</p>
-                            <p class="english-quote">"Perspective is increasing your human capacity. Developmental psychology illustrates that human values and worldviews evolve through predictable stages over time... your mind becomes less conformist, ideological, and dogmatic."</p>
-                        </div>
-                    </div>
-                    
-                    <div class="content-explanation">
-                        <div class="column-header">深度解讀</div>
-                        
-                        <div class="info-box box-concept">
-                            <div class="info-box-header">核心概念：5 層技能堆疊（由高到低）</div>
-                            <div class="info-box-content">
-                                <ol style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>Agency 能動性</strong>：創造故事的元技能（不需許可就行動）</li>
-                                    <li><strong>Taste 品味</strong>：從無限選項中辨別什麼值得保留</li>
-                                    <li><strong>Perspective 觀點</strong>：增加認知容量，容納更高複雜度</li>
-                                    <li><strong>Persuasion 說服力</strong>：讓別人關心你關心的事</li>
-                                    <li><strong>Technical Know-How 技術知識</strong>：利用 AI 和工具</li>
-                                </ol>
-                                <span class="highlight-key">越高層的技能越難被 AI 取代</span>。
+</div>
+</div>
+</div>
+<!-- Part VI -->
+<div class="part-header">
+<div class="part-number">Part VI</div>
+<div class="part-title">後勞動時代的技能堆疊 The Post-Labor Skill Stack</div>
+</div>
+<div class="content-grid">
+<div class="content-original">
+<div class="column-header">原文雙語對照</div>
+<div class="bilingual-text">
+<p class="zh-text">未來的技能堆疊不能被釘死在職業特定的技能上。我們都知道 AI 可以寫內容、寫程式碼、創作音樂。<span class="highlight-key">更重要的是發展讓這些東西「人性化」的技能</span>。</p>
+<p class="english-quote">"The skill stack of the future cannot be pinned down to career specific skills. We all know that AI can write content, code, and music. What's much more important is developing the skills that make those things human."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text"><span class="highlight-concept">能動性 (Agency)</span> 是創造值得講述的故事的元技能。它是你在沒有許可或外部提示的情況下採取行動的能力。</p>
+<p class="english-quote">"Agency is the meta skill that creates a story worth telling. Agency is the ability to act without permission or outside prompting."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text"><span class="highlight-concept">品味 (Taste)</span> 是辨別的技能。AI 現在正在創造無限圖書館問題。如果一個圖書館包含每一本可能的書…<span class="highlight-key">這個圖書館實際上是無用的</span>，因為找到有意義的文本在統計上是不可能的。</p>
+<p class="english-quote">"Taste is the skill of discernment. AI right now is creating the infinite library problem. If a library contained every possible book... The library is effectively useless because finding meaningful text is statistically impossible."</p>
+</div>
+<div class="bilingual-text">
+<p class="zh-text"><span class="highlight-concept">觀點 (Perspective)</span> 是增加人類容量。發展心理學說明人類價值觀和世界觀會隨時間通過可預測的階段演化。通常，這些階段遵循一個簡單的模式：<span class="highlight-practical">你的心智變得更少從眾、更少意識形態、更少教條</span>。</p>
+<p class="english-quote">"Perspective is increasing your human capacity. Developmental psychology illustrates that human values and worldviews evolve through predictable stages over time... your mind becomes less conformist, ideological, and dogmatic."</p>
+</div>
+</div>
+<div class="content-explanation">
+<div class="column-header">深度解讀</div>
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念：5 層技能堆疊（由高到低）</div>
+<div class="info-box-content">
+<ol style="margin-top:0.5rem; padding-left:1.2rem;">
+<li><strong>Agency 能動性</strong>：創造故事的元技能（不需許可就行動）</li>
+<li><strong>Taste 品味</strong>：從無限選項中辨別什麼值得保留</li>
+<li><strong>Perspective 觀點</strong>：增加認知容量，容納更高複雜度</li>
+<li><strong>Persuasion 說服力</strong>：讓別人關心你關心的事</li>
+<li><strong>Technical Know-How 技術知識</strong>：利用 AI 和工具</li>
+</ol>
+<span class="highlight-key">越高層的技能越難被 AI 取代</span>。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-analogy">
-                            <div class="info-box-header">比喻說明：無限圖書館問題</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明：無限圖書館問題</div>
+<div class="info-box-content">
                                 想像一個包含所有可能書籍的圖書館：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li>它包含所有真理、所有謊言、所有胡言亂語</li>
-                                    <li>找到有意義的文本在統計上是不可能的</li>
-                                    <li><span class="highlight-key">沒有篩選或結構的資訊就是噪音</span></li>
-                                </ul>
+<li>它包含所有真理、所有謊言、所有胡言亂語</li>
+<li>找到有意義的文本在統計上是不可能的</li>
+<li><span class="highlight-key">沒有篩選或結構的資訊就是噪音</span></li>
+</ul>
                                 AI 正在創造這個問題。你的品味就是篩選和結構。
                             </div>
-                        </div>
-                        
-                        <div class="info-box box-practical">
-                            <div class="info-box-header">CDMO 應用：建構你的技能堆疊</div>
-                            <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">CDMO 應用：建構你的技能堆疊</div>
+<div class="info-box-content">
                                 將 5 層技能應用到你的 COO 目標：
                                 <ul style="margin-top:0.5rem; padding-left:1.2rem;">
-                                    <li><strong>Agency</strong>：主動發起 AI 轉型專案，不等老闆指派</li>
-                                    <li><strong>Taste</strong>：從 100 個 AI 工具中選擇對 CDMO 真正有價值的 3 個</li>
-                                    <li><strong>Perspective</strong>：同時理解監管、技術、商業三個視角</li>
-                                    <li><strong>Persuasion</strong>：讓團隊相信 AI 轉型的必要性</li>
-                                    <li><strong>Technical</strong>：熟練使用 Claude、Make.com 等工具</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Key Takeaways -->
-        <section class="takeaways-section">
-            <h2 class="section-title">重點整理 Key Takeaways</h2>
-            <div class="takeaways-grid">
-                <div class="summary-card">
-                    <div class="summary-card-title">意義的稀缺性</div>
-                    <div class="summary-card-text">當 AI 承諾消除所有勞動時，它同時也在加劇「意義危機」。下一階段的意義將從「內部生成」，而非外部給予或發現。</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-title">The Swap Test</div>
-                    <div class="summary-card-text">如果替換創作者而作品同樣有價值，AI 可以取代它。如果作品只因為「是你做的」才有效，那就是你的護城河。</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-title">AI 的根本限制</div>
-                    <div class="summary-card-text">AI 可以「以你的風格」思考，但無法「從你的觀點」思考。它永遠在追逐你「曾經在的地方」，而非你「現在在的地方」。</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-title">後勞動技能堆疊</div>
-                    <div class="summary-card-text">Agency → Taste → Perspective → Persuasion → Technical。越高層的技能越難被取代，越低層的技能越容易被 AI 放大。</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Practice Questions -->
-        <section class="practice-section">
-            <h2 class="section-title">練習題 Practice Questions</h2>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q1</span>
-                    <span class="question-type">概念理解</span>
-                    <span class="question-text">Dan Koe 說「後現代主義正確地看到沒有觀點是絕對的，但錯誤地結論說沒有觀點是更好的」。這個矛盾對 AI 時代的「品味」技能有什麼啟示？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p><strong>核心洞察</strong>：後現代主義的相對主義否定了任何價值判斷，但這本身就是一個價值判斷。這揭示了一個關鍵矛盾：你無法在不做判斷的情況下宣稱「所有判斷都無效」。</p>
-                    <p><strong>對品味的啟示</strong>：品味 (Taste) 本質上是一種「排斥」的能力——你必須說「這個比那個好」。在 AI 創造的「無限圖書館」中，如果你不願意做出判斷，你就無法從噪音中提取信號。</p>
-                    <p><strong>實務意義</strong>：當你評估一個 AI 工具是否值得學習時，你必須說「這個對我的情境更有價值」，而非「所有工具都一樣好」。這種判斷能力正是 AI 無法取代的。</p>
-                </div>
-            </details>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q2</span>
-                    <span class="question-type">產業應用</span>
-                    <span class="question-text">在 CDMO 產業中，如何應用「The Swap Test」來辨識你的工作中哪些部分是可替換的，哪些是你的護城河？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p><strong>可替換（AI 可以做）</strong>：批次記錄審核、偏差分類、SOP 初稿撰寫、數據整理與報告生成、供應商資格審核的初步篩選。這些任務的特徵是：有明確規則、可標準化、產出與「誰做的」無關。</p>
-                    <p><strong>護城河（只有你能做）</strong>：為客戶的新藥專案判斷「這個製程風險值得承擔嗎？」、在監管灰色地帶做出策略決策、根據 10 年經驗預判哪些問題會在 tech transfer 階段出現、建立與 FDA 審查員的信任關係。</p>
-                    <p><strong>關鍵區分</strong>：問自己「如果用另一個有相同資歷的人替換我，這個決策/產出會完全一樣嗎？」如果答案是「不會」，那就是你的護城河。</p>
-                </div>
-            </details>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q3</span>
-                    <span class="question-type">批判思考</span>
-                    <span class="question-text">Dan Koe 認為「AI slop 氾濫反而有利於真正的創作者」。這個論點有什麼潛在的盲點或限制條件？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p><strong>論點的假設</strong>：這個論點假設「受眾有能力區分 slop 和真正有價值的內容」。但在現實中，注意力稀缺 + 演算法推薦可能讓 slop 獲得更多曝光。</p>
-                    <p><strong>潛在盲點</strong>：(1) 發現成本 (Discovery Cost)：即使你創造了高品質內容，受眾在噪音海洋中找到你的成本大幅增加；(2) 品味需要培養：如果大眾長期被 slop 餵養，他們辨識品質的能力可能退化；(3) 平台激勵：社群媒體平台的商業模式可能優先推送「engagement」而非「quality」。</p>
-                    <p><strong>調適建議</strong>：Dan Koe 的論點對「已經建立受眾基礎」的創作者更適用。對於新進者，你可能需要更多策略來「被發現」，而非只靠「品質會說話」。</p>
-                </div>
-            </details>
-        </section>
-
-        <!-- Bottom Line -->
-        <div class="bottom-line">
-            <div class="bottom-line-header">我的行動結論</div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">核心洞察</div>
-                <div class="bottom-line-text">我的 COO 目標不應該定義為「管理更大的團隊」或「處理更多專案」——這些是 AI 會壓縮的維度。真正的定位應該是「意義架構師」：為團隊和客戶回答「為什麼這個專案值得做」以及「我們如何在 AI 時代創造不可替代的價值」。我的 10 年 CDMO 經驗形成的「第六感」正是 Dan Koe 說的「能量簽名」——這是 AI 無法複製的。</div>
-            </div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">立即應用</div>
-                <div class="bottom-line-text">這週開始記錄「我做了什麼決策是 AI 無法做的」。每天結束時花 5 分鐘寫下：(1) 今天哪個決策需要我的「觀點」而非只是「資訊處理」？(2) 這個決策的賭注是什麼（AI 沒有的軌跡和死亡風險）？這個練習會幫助我辨識並刻意強化我的護城河。</div>
-            </div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">需要補充</div>
-                <div class="bottom-line-text">文章沒有處理「監管產業的特殊性」——在 GMP 環境中，很多決策不是「個人觀點」而是「合規要求」。需要進一步思考：在高度監管的環境中，「Agency」和「Taste」如何表現？可能的答案：不是在「做什麼」上展現 Agency，而是在「如何做」和「為什麼這樣做」上展現。6 個月後重讀時，檢視我的「決策日記」是否真的幫助我辨識了護城河。</div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>製作日期：2026.01.22 | 基於 Dan Koe 原文改編</p>
-            <p>原文來源：<a href="https://twitter.com/thedankoe" target="_blank">@thedankoe</a></p>
-            <div class="chat-title">建議 Chat Title：[Future of Work] Dan Koe - Meaning Crisis, AI, Post-Labor Skills</div>
-        </footer>
-
-    </div>
-
-    <script>
+<li><strong>Agency</strong>：主動發起 AI 轉型專案，不等老闆指派</li>
+<li><strong>Taste</strong>：從 100 個 AI 工具中選擇對 CDMO 真正有價值的 3 個</li>
+<li><strong>Perspective</strong>：同時理解監管、技術、商業三個視角</li>
+<li><strong>Persuasion</strong>：讓團隊相信 AI 轉型的必要性</li>
+<li><strong>Technical</strong>：熟練使用 Claude、Make.com 等工具</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Takeaways -->
+<section class="takeaways-section">
+<h2 class="section-title">重點整理 Key Takeaways</h2>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="summary-card-title">意義的稀缺性</div>
+<div class="summary-card-text">當 AI 承諾消除所有勞動時，它同時也在加劇「意義危機」。下一階段的意義將從「內部生成」，而非外部給予或發現。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-title">The Swap Test</div>
+<div class="summary-card-text">如果替換創作者而作品同樣有價值，AI 可以取代它。如果作品只因為「是你做的」才有效，那就是你的護城河。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-title">AI 的根本限制</div>
+<div class="summary-card-text">AI 可以「以你的風格」思考，但無法「從你的觀點」思考。它永遠在追逐你「曾經在的地方」，而非你「現在在的地方」。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-title">後勞動技能堆疊</div>
+<div class="summary-card-text">Agency → Taste → Perspective → Persuasion → Technical。越高層的技能越難被取代，越低層的技能越容易被 AI 放大。</div>
+</div>
+</div>
+</section>
+<!-- Practice Questions -->
+<section class="practice-section">
+<h2 class="section-title">練習題 Practice Questions</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">Dan Koe 說「後現代主義正確地看到沒有觀點是絕對的，但錯誤地結論說沒有觀點是更好的」。這個矛盾對 AI 時代的「品味」技能有什麼啟示？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>核心洞察</strong>：後現代主義的相對主義否定了任何價值判斷，但這本身就是一個價值判斷。這揭示了一個關鍵矛盾：你無法在不做判斷的情況下宣稱「所有判斷都無效」。</p>
+<p><strong>對品味的啟示</strong>：品味 (Taste) 本質上是一種「排斥」的能力——你必須說「這個比那個好」。在 AI 創造的「無限圖書館」中，如果你不願意做出判斷，你就無法從噪音中提取信號。</p>
+<p><strong>實務意義</strong>：當你評估一個 AI 工具是否值得學習時，你必須說「這個對我的情境更有價值」，而非「所有工具都一樣好」。這種判斷能力正是 AI 無法取代的。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在 CDMO 產業中，如何應用「The Swap Test」來辨識你的工作中哪些部分是可替換的，哪些是你的護城河？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>可替換（AI 可以做）</strong>：批次記錄審核、偏差分類、SOP 初稿撰寫、數據整理與報告生成、供應商資格審核的初步篩選。這些任務的特徵是：有明確規則、可標準化、產出與「誰做的」無關。</p>
+<p><strong>護城河（只有你能做）</strong>：為客戶的新藥專案判斷「這個製程風險值得承擔嗎？」、在監管灰色地帶做出策略決策、根據 10 年經驗預判哪些問題會在 tech transfer 階段出現、建立與 FDA 審查員的信任關係。</p>
+<p><strong>關鍵區分</strong>：問自己「如果用另一個有相同資歷的人替換我，這個決策/產出會完全一樣嗎？」如果答案是「不會」，那就是你的護城河。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">Dan Koe 認為「AI slop 氾濫反而有利於真正的創作者」。這個論點有什麼潛在的盲點或限制條件？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>論點的假設</strong>：這個論點假設「受眾有能力區分 slop 和真正有價值的內容」。但在現實中，注意力稀缺 + 演算法推薦可能讓 slop 獲得更多曝光。</p>
+<p><strong>潛在盲點</strong>：(1) 發現成本 (Discovery Cost)：即使你創造了高品質內容，受眾在噪音海洋中找到你的成本大幅增加；(2) 品味需要培養：如果大眾長期被 slop 餵養，他們辨識品質的能力可能退化；(3) 平台激勵：社群媒體平台的商業模式可能優先推送「engagement」而非「quality」。</p>
+<p><strong>調適建議</strong>：Dan Koe 的論點對「已經建立受眾基礎」的創作者更適用。對於新進者，你可能需要更多策略來「被發現」，而非只靠「品質會說話」。</p>
+</div>
+</details>
+</section>
+<!-- Bottom Line -->
+<div class="bottom-line">
+<div class="bottom-line-header">我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">核心洞察</div>
+<div class="bottom-line-text">我的 COO 目標不應該定義為「管理更大的團隊」或「處理更多專案」——這些是 AI 會壓縮的維度。真正的定位應該是「意義架構師」：為團隊和客戶回答「為什麼這個專案值得做」以及「我們如何在 AI 時代創造不可替代的價值」。我的 10 年 CDMO 經驗形成的「第六感」正是 Dan Koe 說的「能量簽名」——這是 AI 無法複製的。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">立即應用</div>
+<div class="bottom-line-text">這週開始記錄「我做了什麼決策是 AI 無法做的」。每天結束時花 5 分鐘寫下：(1) 今天哪個決策需要我的「觀點」而非只是「資訊處理」？(2) 這個決策的賭注是什麼（AI 沒有的軌跡和死亡風險）？這個練習會幫助我辨識並刻意強化我的護城河。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">需要補充</div>
+<div class="bottom-line-text">文章沒有處理「監管產業的特殊性」——在 GMP 環境中，很多決策不是「個人觀點」而是「合規要求」。需要進一步思考：在高度監管的環境中，「Agency」和「Taste」如何表現？可能的答案：不是在「做什麼」上展現 Agency，而是在「如何做」和「為什麼這樣做」上展現。6 個月後重讀時，檢視我的「決策日記」是否真的幫助我辨識了護城河。</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+<p>製作日期：2026.01.22 | 基於 Dan Koe 原文改編</p>
+<p>原文來源：<a href="https://twitter.com/thedankoe" target="_blank">@thedankoe</a></p>
+<div class="chat-title">建議 Chat Title：[Future of Work] Dan Koe - Meaning Crisis, AI, Post-Labor Skills</div>
+</footer>
+</div>
+<script>
         function switchTab(evt, tabId) {
             const container = evt.currentTarget.closest('.tab-container');
             container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));

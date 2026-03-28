@@ -192,6 +192,14 @@ const topicClusters = [
           { title: 'Claude Skill 建構完整指南 ★4.2', file: '2026-03-09_building-skills-guide.html' },
           { title: 'Skill-creator 史詩級更新 ★4.0', file: '2026-03-11_skill-creator-epic-update.html' },
           { title: 'Lessons from Building Claude Code Skills ★4.4', file: '2026-03-18_claude-code-skills-lessons.html' },
+          { title: 'Claude Dispatch 生態系統 ★3.6', file: '2026-03-19_claude-dispatch-ecosystem.html' },
+          { title: '頂級 Skill 解剖 Garry Tan gstack ★4.5', file: '2026-03-20_garry-tan-gstack-skill-anatomy.html' },
+          { title: 'Claude Code Channels vs OpenClaw ★3.6', file: '2026-03-21_claude-code-channels-vs-openclaw.html' },
+          { title: 'Claude Code 配置文件四層架構 ★3.8', file: '2026-03-21_claude-code-config-files.html' },
+          { title: '.claude/ 資料夾完整解析 ★4.0', file: '2026-03-24_claude-code-dot-claude-folder.html' },
+          { title: 'Claude Code Power User Van Horn ★4.5', file: '2026-03-24_claude-code-power-user.html' },
+          { title: 'Claude Code Auto Mode ★4.5', file: '2026-03-26_claude-code-auto-mode.html' },
+          { title: '10 Claude Workflows 省 10+ 小時 ★3.6', file: '2026-03-28_claude-10-workflows.html' },
         ]
       },
       {
@@ -203,6 +211,9 @@ const topicClusters = [
           { title: 'Shared AI Context Files 團隊共享 ★3.8', file: '2026-02-25_shared-ai-context-files.html' },
           { title: 'Claude 終極入門指南 Yanhua ★3.6', file: '2026-03-07_yanhua-claude-ultimate-guide.html' },
           { title: 'Claude Architect 認證自學 ★4.3', file: '2026-03-16_claude-architect-certification.html' },
+          { title: 'Claude Code 最佳實踐完整指南 ★4.2', file: '2025-03-25_claude-code-best-practices.html' },
+          { title: 'Markdown AI 時代通用語言 ★3.5', file: '2025-03-25_markdown-ai-era.html' },
+          { title: 'Obsidian + Claude Code 知識引擎 ★3.2', file: '2026-03-23_obsidian-claude-code-stack.html' },
         ]
       }
     ]
@@ -222,6 +233,7 @@ const topicClusters = [
           { title: '四個 Prompts 洞見創造者 ★3.5', file: '2025-11-04_ai-prompts-insight-creator.html' },
           { title: 'Markdown 終極指南 ★3.8', file: '2025-02-13_markdown_ai_guide.html' },
           { title: 'YC 創辦人戰略提問框架 ★3.6', file: '2026-03-16_yc-founder-strategic-prompting.html' },
+          { title: '健身 Prompt 模板化結構分析 ★3.4', file: '2026-03-27_fitness-prompt-engineering.html' },
         ]
       },
       {
@@ -265,6 +277,9 @@ const topicClusters = [
         docs: [
           { title: 'SkillsBench Agent Skills 基準測試 ★4.5', file: '2026-03-01_skillsbench-agent-skills.html' },
           { title: 'Karpathy autoresearch Agent 自主研究 ★4.5', file: '2026-03-16_karpathy-autoresearch.html' },
+          { title: 'Tw93 Agent 工程實踐 ★4.6', file: '2026-03-23_tw93-agent-engineering.html' },
+          { title: 'Harness Design GAN 式多代理人架構 ★4.5', file: '2026-03-25_harness-design-long-running-apps.html' },
+          { title: 'Harness Engineering 韁繩工程學 ★4.3', file: '2026-03-28_harness-engineering.html' },
         ]
       },
       {
@@ -290,6 +305,7 @@ const topicClusters = [
           { title: 'LinkedIn Carousel 自動化 ★3.8', file: '2026-01-22_linkedin-carousel-skills.html' },
           { title: 'Vibe Coding：Stripe 原型設計 ★3.8', file: '2026-02-10_vibe-coding-protodash.html' },
           { title: 'AI 圖表生成教學 ★2.2', file: '2026-02-17_ai-diagram-creation.html' },
+          { title: 'Browser Use CLI 瀏覽器自動化 ★4.0', file: '2026-03-21_browser-use-cli.html' },
         ]
       }
     ]
@@ -349,6 +365,9 @@ const topicClusters = [
           { title: 'AI 勞動市場影響 Observed Exposure ★4.4', file: '2026-03-06_labor-market-ai-impact.html' },
           { title: '混亂未來推理框架 SystematicallyLS ★3.6', file: '2026-03-10_reasoning-messy-future.html' },
           { title: '蘋果 AI 平價戰略 ★3.4', file: '2026-03-14_apple-ai-affordable-strategy.html' },
+          { title: 'Roche × Nvidia AI 工廠製藥業 ★4.0', file: '2026-03-23_roche-nvidia-ai-factory-pharma.html' },
+          { title: '2030 大預言 AI 新貴族與數位農奴 ★3.6', file: '2026-03-28_ai-2030-prediction.html' },
+          { title: '財富大重洗 AI 隱形冠軍 ★3.6', file: '2025-03-28_ai-wealth-redistribution.html' },
         ]
       }
     ]
@@ -420,6 +439,8 @@ const topicClusters = [
           { title: '加密貨幣生存心法 ★4.2', file: '2026-01-28_crypto-survival-mindset.html' },
           { title: '發現天賦方法論 Morris ★3.6', file: '2026-03-06_morris-discovering-talent.html' },
           { title: '偏鄉程式教育 蘇文鈺 ★3.6', file: '2026-03-12_su-program-the-world.html' },
+          { title: '創造力回歸指南 Dan Koe ★3.6', file: '2026-03-26_koe-creativity-protocol.html' },
+          { title: '交易員補劑指南 臨床證據分析 ★N/A', file: '2026-03-26_trader-supplement-guide.html' },
         ]
       }
     ]

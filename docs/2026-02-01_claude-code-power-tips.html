@@ -1,591 +1,219 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2026-02-01">
-    <meta name="doc-title" content="Claude Code 進階生產力技巧 - Boris Cherny">
-    <meta name="doc-source" content="@bcherny on X">
-    <meta name="doc-tags" content="Agent,Tool,Automation,Prompt">
-    <meta name="doc-rating" content="4.6">
-    <meta name="doc-summary" content="Boris Cherny 分享 Claude Code 進階生產力技巧，提升 AI 輔助開發工作流效率">
-    <meta name="doc-file" content="2026-02-01_claude-code-power-tips.html">
-    <title>Claude Code 進階生產力技巧 - Boris Cherny</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1e3a5f;
-            --primary-light: #3b5998;
-            --accent: #7c3aed;
-            --accent-light: #a78bfa;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-            --text: #1f2937;
-            --text-light: #64748b;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body {
-            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.8;
-            font-size: 16px;
-        }
-        
-        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-        
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            border-radius: 1rem;
-            margin-bottom: 2rem;
-        }
-        .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
-        .header .subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem; }
-        .tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-        .tag { padding: 0.3rem 0.75rem; border-radius: 2rem; font-size: 0.8rem; font-weight: 500; }
-        .tag-agent { background: #c7d2fe; color: #3730a3; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .tag-automation { background: #a7f3d0; color: #065f46; }
-        .tag-prompt { background: #fde68a; color: #92400e; }
-        .source-info { font-size: 0.85rem; opacity: 0.8; }
-        .source-info a { color: #93c5fd; }
-        
-        /* Rating Bar */
-        .rating-bar {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding: 0.6rem 1rem;
-            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
-            border-radius: 8px;
-            flex-wrap: wrap;
-            border: 1px solid #bae6fd;
-        }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        
-        /* Executive Summary */
-        .executive-summary {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        .section-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .summary-text { font-size: 0.95rem; line-height: 1.9; color: var(--text); }
-        .summary-text p { margin-bottom: 0.75rem; }
-        
-        /* Learning Objectives Grid */
-        .objectives-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .objective-item {
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            border-left: 4px solid var(--info);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .objective-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .objective-item:nth-child(2) { border-left-color: var(--success); }
-        .objective-item:nth-child(3) { border-left-color: var(--accent); }
-        .objective-number {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--info);
-            margin-bottom: 0.25rem;
-        }
-        .objective-item:nth-child(2) .objective-number { color: var(--success); }
-        .objective-item:nth-child(3) .objective-number { color: var(--accent); }
-        .objective-text { font-size: 0.9rem; color: var(--text); }
-        
-        /* Framework Visual */
-        .framework-visual {
-            background: linear-gradient(135deg, #1e3a5f, #3b5998);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            color: white;
-            margin: 2rem 0;
-        }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 100px; }
-        .framework-icon {
-            font-size: 1.25rem;
-            margin-bottom: 0.4rem;
-            width: 3rem;
-            height: 3rem;
-            background: rgba(255,255,255,0.2);
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.4rem;
-        }
-        .framework-step-title { font-weight: 700; font-size: 0.85rem; }
-        .framework-step-desc { font-size: 0.75rem; opacity: 0.9; margin-top: 0.2rem; }
-        .framework-arrow { font-size: 1.25rem; color: #93c5fd; }
-        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1rem; } }
-        
-        /* Content Grid */
-        .content-section { margin-bottom: 2rem; }
-        .part-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 0.75rem 0.75rem 0 0;
-            font-weight: 700;
-        }
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            background: white;
-            border-radius: 0 0 0.75rem 0.75rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-        .content-left {
-            padding: 1.5rem;
-            border-right: 1px solid #e5e7eb;
-        }
-        .content-right { padding: 1.5rem; background: #fafbfc; }
-        
-        @media (max-width: 768px) {
-            .content-grid { grid-template-columns: 1fr; }
-            .content-left { border-right: none; border-bottom: 1px solid #e5e7eb; }
-        }
-        
-        /* Bilingual Block */
-        .bilingual-block { margin-bottom: 1.25rem; }
-        .zh-text { font-size: 0.95rem; line-height: 1.8; color: var(--text); margin-bottom: 0.3rem; }
-        .en-text { font-size: 0.85rem; color: var(--text-light); font-style: italic; line-height: 1.6; }
-        
-        /* Highlights */
-        .highlight-concept { background: #a5d6a7; padding: 0 0.2rem; border-radius: 2px; }
-        .highlight-key { background: #ffcc80; padding: 0 0.2rem; border-radius: 2px; }
-        .highlight-practical { background: #6ee7b7; padding: 0 0.2rem; border-radius: 2px; }
-        
-        /* Info Boxes */
-        .info-box { border-radius: 0.5rem; margin-bottom: 1rem; overflow: hidden; }
-        .info-box-header {
-            padding: 0.6rem 1rem;
-            font-weight: 600;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
-        
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept { background: #f0fdf4; border: 1px solid #86efac; }
-        
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key { background: #fff7ed; border: 1px solid #fdba74; }
-        
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical { background: #ecfdf5; border: 1px solid #6ee7b7; }
-        
-        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-        .box-code { background: #f5f3ff; border: 1px solid #c4b5fd; }
-        
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy { background: #fffbeb; border: 1px solid #fcd34d; }
-        
-        /* Code Block */
-        pre {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            overflow-x: auto;
-            font-family: 'Source Code Pro', monospace;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        code {
-            font-family: 'Source Code Pro', monospace;
-            background: #e2e8f0;
-            padding: 0.15rem 0.4rem;
-            border-radius: 0.25rem;
-            font-size: 0.85rem;
-            color: #4c1d95;
-        }
-        pre code { background: none; padding: 0; color: inherit; }
-        
-        /* Key Takeaways */
-        .takeaways-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-        .summary-card {
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .summary-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        .summary-card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .summary-card-title { font-weight: 700; font-size: 0.95rem; color: var(--primary); margin-bottom: 0.5rem; }
-        .summary-card-text { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
-        
-        /* Practice Questions - Accordion */
-        .practice-section { margin: 2rem 0; }
-        .question-accordion {
-            background: white;
-            border-radius: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid #e9d5ff;
-            overflow: hidden;
-        }
-        .question-header {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.25rem;
-            cursor: pointer;
-            list-style: none;
-        }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #6d28d9;
-            background: #e9d5ff;
-            padding: 0.2rem 0.5rem;
-            border-radius: 0.25rem;
-        }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon {
-            width: 1.25rem;
-            height: 1.25rem;
-            transition: transform 0.2s;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
-        }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer {
-            padding: 1rem 1.25rem;
-            background: #faf5ff;
-            border-top: 1px solid #e9d5ff;
-        }
-        .question-answer p {
-            font-size: 0.9rem;
-            line-height: 1.7;
-            color: #374151;
-            margin-bottom: 0.75rem;
-        }
-        .question-answer p:last-child { margin-bottom: 0; }
-        
-        /* Bottom Line */
-        .bottom-line {
-            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
-            margin: 2rem 0;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid #7c3aed;
-        }
-        .bottom-line-header {
-            font-weight: 700;
-            color: #5b21b6;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.1rem;
-        }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
-            font-size: 0.85rem;
-            border-top: 1px solid #e5e7eb;
-            margin-top: 2rem;
-        }
-        .footer a { color: var(--accent); }
-        .chat-title {
-            background: #f1f5f9;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            display: inline-block;
-            margin-top: 1rem;
-            font-family: 'Source Code Pro', monospace;
-        }
-        
-        /* Linear layout override for code-heavy sections */
-        .content-grid.linear {
-            grid-template-columns: 1fr;
-        }
-        .content-grid.linear .content-left {
-            border-right: none;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        
-        /* Code Bottom Section - v1.5 */
-        .code-bottom-section {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-top: 1px solid #e5e7eb;
-            border-radius: 0 0 0.75rem 0.75rem;
-        }
-        .code-bottom-section .info-box {
-            margin-bottom: 1rem;
-        }
-        .code-bottom-section .info-box:last-child {
-            margin-bottom: 0;
-        }
-        .code-bottom-section pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-    </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2026-02-01" name="doc-date"/>
+<meta content="Claude Code 進階生產力技巧 - Boris Cherny" name="doc-title"/>
+<meta content="@bcherny on X" name="doc-source"/>
+<meta content="Agent,Tool,Automation,Prompt" name="doc-tags"/>
+<meta content="4.6" name="doc-rating"/>
+<meta content="Boris Cherny 分享 Claude Code 進階生產力技巧，提升 AI 輔助開發工作流效率" name="doc-summary"/>
+<meta content="2026-02-01_claude-code-power-tips.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>Claude Code 進階生產力技巧 - Boris Cherny</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+
+
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1>Claude Code 進階生產力技巧</h1>
-            <p class="subtitle">Boris Cherny 與 Claude Code 團隊的實戰心法</p>
-            <div class="tag-container">
-                <span class="tag tag-agent">Agent</span>
-                <span class="tag tag-tool">Tool</span>
-                <span class="tag tag-automation">Automation</span>
-                <span class="tag tag-prompt">Prompt</span>
-            </div>
-            <p class="source-info">Source: <a href="https://x.com/bcherny" target="_blank">@bcherny on X</a> | 2026-02-01</p>
-        </header>
-        
-        <!-- Executive Summary -->
-        <section class="executive-summary">
-            <h2 class="section-title">Executive Summary</h2>
-            <div class="rating-bar">
-                <span class="rating-score"><span class="rating-stars">★★★★★</span> 4.6/5</span>
-                <span class="rating-high">Practical Value, Tool Ecosystem</span>
-                <span class="rating-low">Technical Depth</span>
-            </div>
-            <div class="summary-text">
-                <p>這篇推文串來自 <span class="highlight-key">Claude Code 的創作者 Boris Cherny</span>，彙整了 Claude Code 團隊的實際工作方式。核心洞察是：<span class="highlight-concept">生產力提升來自於並行工作流，而非單純的工具優化</span>。</p>
-                <p>最重要的三個技巧：(1) 使用 Git Worktrees 同時運行 3-5 個 Claude 工作階段、(2) 複雜任務先進入 Plan Mode 規劃再執行、(3) 持續迭代 CLAUDE.md 讓 AI 從錯誤中學習。</p>
-                <p>這些技巧直接適用於任何需要大量程式碼開發或自動化工作的情境，特別是需要同時處理多個任務的專案管理者。</p>
-            </div>
-        </section>
-        
-        <!-- Learning Objectives -->
-        <section>
-            <h2 class="section-title">Learning Objectives</h2>
-            <div class="objectives-grid">
-                <div class="objective-item">
-                    <div class="objective-number">OBJECTIVE 1</div>
-                    <div class="objective-text">理解 Git Worktrees 並行工作模式，設計多任務同步處理的開發流程</div>
-                </div>
-                <div class="objective-item">
-                    <div class="objective-number">OBJECTIVE 2</div>
-                    <div class="objective-text">掌握 Plan Mode 與 CLAUDE.md 的迭代優化策略，減少 AI 重複犯錯</div>
-                </div>
-                <div class="objective-item">
-                    <div class="objective-number">OBJECTIVE 3</div>
-                    <div class="objective-text">建立 Skills 與 Slash Commands 系統，將重複性工作轉化為可複用模組</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Framework Visual -->
-        <div class="framework-visual">
-            <div class="framework-title">Claude Code 生產力框架</div>
-            <div class="framework-steps">
-                <div class="framework-step">
-                    <div class="framework-icon">1</div>
-                    <div class="framework-step-title">Parallel</div>
-                    <div class="framework-step-desc">多工作樹並行</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">2</div>
-                    <div class="framework-step-title">Plan</div>
-                    <div class="framework-step-desc">規劃優先於執行</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">3</div>
-                    <div class="framework-step-title">Iterate</div>
-                    <div class="framework-step-desc">CLAUDE.md 持續迭代</div>
-                </div>
-                <div class="framework-arrow">→</div>
-                <div class="framework-step">
-                    <div class="framework-icon">4</div>
-                    <div class="framework-step-title">Automate</div>
-                    <div class="framework-step-desc">Skills 模組化</div>
-                </div>
-            </div>
-        </div>
-
+<div class="container">
+<!-- Header -->
+<header class="header">
+<h1>Claude Code 進階生產力技巧</h1>
+<p class="subtitle">Boris Cherny 與 Claude Code 團隊的實戰心法</p>
+<div class="tag-container">
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-automation">Automation</span>
+<span class="tag tag-prompt">Prompt</span>
+</div>
+<p class="source-info">Source: <a href="https://x.com/bcherny" target="_blank">@bcherny on X</a> | 2026-02-01</p>
+</header>
+<!-- Executive Summary -->
+<section class="executive-summary">
+<h2 class="section-title">Executive Summary</h2>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★★</span> 4.6/5</span>
+<span class="rating-high">Practical Value, Tool Ecosystem</span>
+<span class="rating-low">Technical Depth</span>
+</div>
+<div class="summary-text">
+<p>這篇推文串來自 <span class="highlight-key">Claude Code 的創作者 Boris Cherny</span>，彙整了 Claude Code 團隊的實際工作方式。核心洞察是：<span class="highlight-concept">生產力提升來自於並行工作流，而非單純的工具優化</span>。</p>
+<p>最重要的三個技巧：(1) 使用 Git Worktrees 同時運行 3-5 個 Claude 工作階段、(2) 複雜任務先進入 Plan Mode 規劃再執行、(3) 持續迭代 CLAUDE.md 讓 AI 從錯誤中學習。</p>
+<p>這些技巧直接適用於任何需要大量程式碼開發或自動化工作的情境，特別是需要同時處理多個任務的專案管理者。</p>
+</div>
+</section>
+<!-- Learning Objectives -->
+<section>
+<h2 class="section-title">Learning Objectives</h2>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-number">OBJECTIVE 1</div>
+<div class="objective-text">理解 Git Worktrees 並行工作模式，設計多任務同步處理的開發流程</div>
+</div>
+<div class="objective-item">
+<div class="objective-number">OBJECTIVE 2</div>
+<div class="objective-text">掌握 Plan Mode 與 CLAUDE.md 的迭代優化策略，減少 AI 重複犯錯</div>
+</div>
+<div class="objective-item">
+<div class="objective-number">OBJECTIVE 3</div>
+<div class="objective-text">建立 Skills 與 Slash Commands 系統，將重複性工作轉化為可複用模組</div>
+</div>
+</div>
+</section>
+<!-- Framework Visual -->
+<div class="framework-visual">
+<div class="framework-title">Claude Code 生產力框架</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">1</div>
+<div class="framework-step-title">Parallel</div>
+<div class="framework-step-desc">多工作樹並行</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">2</div>
+<div class="framework-step-title">Plan</div>
+<div class="framework-step-desc">規劃優先於執行</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">3</div>
+<div class="framework-step-title">Iterate</div>
+<div class="framework-step-desc">CLAUDE.md 持續迭代</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">4</div>
+<div class="framework-step-title">Automate</div>
+<div class="framework-step-desc">Skills 模組化</div>
+</div>
+</div>
+</div>
 <!-- Part 1: Parallel Work -->
-        <section class="content-section">
-            <div class="part-header">Part I: 並行工作 (Parallel Work) — 最大的生產力提升</div>
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <p class="zh-text">同時開啟 3-5 個 <span class="highlight-key">Git Worktrees</span>，每個運行獨立的 Claude 工作階段。這是團隊公認的<span class="highlight-concept">最大生產力提升技巧</span>。</p>
-                        <p class="en-text">"Spin up 3–5 git worktrees at once, each running its own Claude session in parallel. It's the single biggest productivity unlock."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text">有些人會為工作樹命名並設定 Shell Aliases（za, zb, zc），一鍵切換。也有人專門保留一個「分析」工作樹，只用來讀 logs 和跑 BigQuery。</p>
-                        <p class="en-text">"Some people also name their worktrees and set up shell aliases (za, zb, zc) so they can hop between them in one keystroke. Others have a dedicated 'analysis' worktree that's only for reading logs and running BigQuery."</p>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">比喻說明</div>
-                        <div class="info-box-content">
+<section class="content-section">
+<div class="part-header">Part I: 並行工作 (Parallel Work) — 最大的生產力提升</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">同時開啟 3-5 個 <span class="highlight-key">Git Worktrees</span>，每個運行獨立的 Claude 工作階段。這是團隊公認的<span class="highlight-concept">最大生產力提升技巧</span>。</p>
+<p class="en-text">"Spin up 3–5 git worktrees at once, each running its own Claude session in parallel. It's the single biggest productivity unlock."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">有些人會為工作樹命名並設定 Shell Aliases（za, zb, zc），一鍵切換。也有人專門保留一個「分析」工作樹，只用來讀 logs 和跑 BigQuery。</p>
+<p class="en-text">"Some people also name their worktrees and set up shell aliases (za, zb, zc) so they can hop between them in one keystroke. Others have a dedicated 'analysis' worktree that's only for reading logs and running BigQuery."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明</div>
+<div class="info-box-content">
                             想像你有 5 個助理同時工作，而不是讓一個助理依序處理 5 件事。這不是「多工」，而是真正的「並行」。
                         </div>
-                    </div>
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">實務應用</div>
-                        <div class="info-box-content">
-                            <strong>CDMO 情境：</strong>可以同時讓一個 Claude 處理 SOP 文件更新、另一個分析偏差調查數據、第三個起草訓練材料。不需要等待任何一個完成再開始下一個。
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用</div>
+<div class="info-box-content">
+<strong>CDMO 情境：</strong>可以同時讓一個 Claude 處理 SOP 文件更新、另一個分析偏差調查數據、第三個起草訓練材料。不需要等待任何一個完成再開始下一個。
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="code-bottom-section">
-                <div class="info-box box-code">
-                    <div class="info-box-header">Shell Alias 範例</div>
-                    <div class="info-box-content">
+</div>
+</div>
+</div>
+<div class="code-bottom-section">
+<div class="info-box box-code">
+<div class="info-box-header">Shell Alias 範例</div>
+<div class="info-box-content">
 <pre><code># ~/.zshrc 或 ~/.bashrc
-alias za='cd ~/projects/main-worktree-a && claude'
-alias zb='cd ~/projects/main-worktree-b && claude'
-alias zc='cd ~/projects/main-worktree-c && claude'</code></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Part 2: Plan Mode -->
-        <section class="content-section">
-            <div class="part-header">Part II: Plan Mode — 規劃優先，一次到位</div>
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <p class="zh-text">每個複雜任務都<span class="highlight-key">先進入 Plan Mode</span>。把精力投入在計畫上，讓 Claude 可以一次完成實作（1-shot）。</p>
-                        <p class="en-text">"Start every complex task in plan mode. Pour your energy into the plan so Claude can 1-shot the implementation."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text">有人讓一個 Claude 寫計畫，再開第二個 Claude 以 Staff Engineer 角度審查。另一個技巧：當事情出錯時，<span class="highlight-concept">立刻切回 Plan Mode 重新規劃</span>，不要硬推。</p>
-                        <p class="en-text">"One person has one Claude write the plan, then they spin up a second Claude to review it as a staff engineer... the moment something goes sideways, they switch back to plan mode and re-plan. Don't keep pushing."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text">驗證步驟也明確告訴 Claude 進入 Plan Mode，不只是 build 時使用。</p>
-                        <p class="en-text">"They also explicitly tell Claude to enter plan mode for verification steps, not just for the build."</p>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">核心概念</div>
-                        <div class="info-box-content">
-                            <strong>Plan Mode 的本質：</strong>將「思考」與「執行」分離。人類負責高層決策和品質把關，AI 負責執行細節。這符合 GMP 環境的 copilot model。
+alias za='cd ~/projects/main-worktree-a &amp;&amp; claude'
+alias zb='cd ~/projects/main-worktree-b &amp;&amp; claude'
+alias zc='cd ~/projects/main-worktree-c &amp;&amp; claude'</code></pre>
+</div>
+</div>
+</div>
+</section>
+<!-- Part 2: Plan Mode -->
+<section class="content-section">
+<div class="part-header">Part II: Plan Mode — 規劃優先，一次到位</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">每個複雜任務都<span class="highlight-key">先進入 Plan Mode</span>。把精力投入在計畫上，讓 Claude 可以一次完成實作（1-shot）。</p>
+<p class="en-text">"Start every complex task in plan mode. Pour your energy into the plan so Claude can 1-shot the implementation."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">有人讓一個 Claude 寫計畫，再開第二個 Claude 以 Staff Engineer 角度審查。另一個技巧：當事情出錯時，<span class="highlight-concept">立刻切回 Plan Mode 重新規劃</span>，不要硬推。</p>
+<p class="en-text">"One person has one Claude write the plan, then they spin up a second Claude to review it as a staff engineer... the moment something goes sideways, they switch back to plan mode and re-plan. Don't keep pushing."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">驗證步驟也明確告訴 Claude 進入 Plan Mode，不只是 build 時使用。</p>
+<p class="en-text">"They also explicitly tell Claude to enter plan mode for verification steps, not just for the build."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
+<strong>Plan Mode 的本質：</strong>將「思考」與「執行」分離。人類負責高層決策和品質把關，AI 負責執行細節。這符合 GMP 環境的 copilot model。
                         </div>
-                    </div>
-                    <div class="info-box box-key">
-                        <div class="info-box-header">重點提示</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示</div>
+<div class="info-box-content">
                             當 Claude 開始「打轉」或產出品質下降時，這是切換回 Plan Mode 的信號。不要試圖用更多指令修正，而是重新規劃。
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="code-bottom-section">
-                <div class="info-box box-code">
-                    <div class="info-box-header">Prompt 範例</div>
-                    <div class="info-box-content">
+</div>
+</div>
+</div>
+<div class="code-bottom-section">
+<div class="info-box box-code">
+<div class="info-box-header">Prompt 範例</div>
+<div class="info-box-content">
 <pre><code>Enter plan mode. Before implementing:
 1. Outline your approach
 2. List potential risks
 3. Define success criteria
 4. Wait for my approval</code></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Part 3: CLAUDE.md -->
-        <section class="content-section">
-            <div class="part-header">Part III: CLAUDE.md — 讓 AI 自己寫規則</div>
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <p class="zh-text">投資在你的 CLAUDE.md。每次修正錯誤後，結尾加上：「<span class="highlight-key">更新你的 CLAUDE.md，這樣你就不會再犯同樣的錯</span>。」Claude 非常擅長為自己撰寫規則。</p>
-                        <p class="en-text">"Invest in your CLAUDE.md. After every correction, end with: 'Update your CLAUDE.md so you don't make that mistake again.' Claude is eerily good at writing rules for itself."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text">無情地編輯你的 CLAUDE.md。持續迭代直到 Claude 的錯誤率<span class="highlight-concept">可測量地下降</span>。</p>
-                        <p class="en-text">"Ruthlessly edit your CLAUDE.md over time. Keep iterating until Claude's mistake rate measurably drops."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text">有工程師讓 Claude 為每個任務/專案維護一個 notes 目錄，每次 PR 後更新，然後讓 CLAUDE.md 指向它。</p>
-                        <p class="en-text">"One engineer tells Claude to maintain a notes directory for every task/project, updated after every PR. They then point CLAUDE.md at it."</p>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">比喻說明</div>
-                        <div class="info-box-content">
+</div>
+</div>
+</div>
+</section>
+<!-- Part 3: CLAUDE.md -->
+<section class="content-section">
+<div class="part-header">Part III: CLAUDE.md — 讓 AI 自己寫規則</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">投資在你的 CLAUDE.md。每次修正錯誤後，結尾加上：「<span class="highlight-key">更新你的 CLAUDE.md，這樣你就不會再犯同樣的錯</span>。」Claude 非常擅長為自己撰寫規則。</p>
+<p class="en-text">"Invest in your CLAUDE.md. After every correction, end with: 'Update your CLAUDE.md so you don't make that mistake again.' Claude is eerily good at writing rules for itself."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">無情地編輯你的 CLAUDE.md。持續迭代直到 Claude 的錯誤率<span class="highlight-concept">可測量地下降</span>。</p>
+<p class="en-text">"Ruthlessly edit your CLAUDE.md over time. Keep iterating until Claude's mistake rate measurably drops."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">有工程師讓 Claude 為每個任務/專案維護一個 notes 目錄，每次 PR 後更新，然後讓 CLAUDE.md 指向它。</p>
+<p class="en-text">"One engineer tells Claude to maintain a notes directory for every task/project, updated after every PR. They then point CLAUDE.md at it."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明</div>
+<div class="info-box-content">
                             CLAUDE.md 就像 GMP 環境中的 SOP。不是一次寫完就不動，而是從每次偏差中學習、持續改版。差別在於：這個 SOP 是 AI 自己根據經驗撰寫的。
                         </div>
-                    </div>
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">核心概念</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
                             這是「Context Engineering」的實踐。你不是在訓練模型，而是在<strong>塑造 Claude 讀取的情境</strong>。好的 CLAUDE.md 等於高品質的持久記憶。
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="code-bottom-section">
-                <div class="info-box box-code">
-                    <div class="info-box-header">Prompt 範例</div>
-                    <div class="info-box-content">
+</div>
+</div>
+</div>
+<div class="code-bottom-section">
+<div class="info-box box-code">
+<div class="info-box-header">Prompt 範例</div>
+<div class="info-box-content">
 <pre><code>Good work fixing that. Now update 
 your CLAUDE.md with a rule to 
 prevent this mistake in the future.
@@ -594,242 +222,230 @@ Be specific about:
 - What went wrong
 - How to detect it
 - How to avoid it</code></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Part 4: Skills -->
-        <section class="content-section">
-            <div class="part-header">Part IV: Skills 與 Slash Commands — 模組化你的工作流</div>
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <p class="zh-text">建立自己的 Skills 並提交到 Git，在所有專案中重複使用。團隊建議：<span class="highlight-key">如果你一天做超過一次，就把它變成 Skill 或 Command</span>。</p>
-                        <p class="en-text">"Create your own skills and commit them to git. Reuse across every project... If you do something more than once a day, turn it into a skill or command."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text">具體範例：建立 <code>/techdebt</code> 指令，在每次工作結束時執行，找出並消除重複程式碼。建立整合 7 天 Slack、GDrive、Asana、GitHub 的 context dump 指令。</p>
-                        <p class="en-text">"Build a /techdebt slash command and run it at the end of every session to find and kill duplicated code. Set up a slash command that syncs 7 days of Slack, GDrive, Asana, and GitHub into one context dump."</p>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">實務應用</div>
-                        <div class="info-box-content">
-                            <strong>CDMO 情境：</strong>建立 <code>/deviation-report</code> 指令，自動從 QMS 抓取偏差資料、分析根因模式、產生初步報告。或 <code>/batch-review</code> 整合批次記錄資料。
+</div>
+</div>
+</div>
+</section>
+<!-- Part 4: Skills -->
+<section class="content-section">
+<div class="part-header">Part IV: Skills 與 Slash Commands — 模組化你的工作流</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">建立自己的 Skills 並提交到 Git，在所有專案中重複使用。團隊建議：<span class="highlight-key">如果你一天做超過一次，就把它變成 Skill 或 Command</span>。</p>
+<p class="en-text">"Create your own skills and commit them to git. Reuse across every project... If you do something more than once a day, turn it into a skill or command."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">具體範例：建立 <code>/techdebt</code> 指令，在每次工作結束時執行，找出並消除重複程式碼。建立整合 7 天 Slack、GDrive、Asana、GitHub 的 context dump 指令。</p>
+<p class="en-text">"Build a /techdebt slash command and run it at the end of every session to find and kill duplicated code. Set up a slash command that syncs 7 days of Slack, GDrive, Asana, and GitHub into one context dump."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用</div>
+<div class="info-box-content">
+<strong>CDMO 情境：</strong>建立 <code>/deviation-report</code> 指令，自動從 QMS 抓取偏差資料、分析根因模式、產生初步報告。或 <code>/batch-review</code> 整合批次記錄資料。
                         </div>
-                    </div>
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">核心概念</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
                             Skills 是「可重用的 AI 能力模組」。與其每次從頭描述任務，不如封裝成可複用的指令。這與你現有的 Master Prompt 系統思路一致。
                         </div>
-                    </div>
-                    <div class="info-box box-key">
-                        <div class="info-box-header">重點提示</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示</div>
+<div class="info-box-content">
                             Skills 提交到 Git 的好處：版本控制、團隊共享、跨專案使用。這是將個人效率轉化為組織能力的關鍵。
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Part 5: Bug Fixing -->
-        <section class="content-section">
-            <div class="part-header">Part V: Bug Fixing — 自動化除錯流程</div>
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <p class="zh-text">Claude 自己能修大部分 bugs。啟用 Slack MCP，貼上 bug thread 然後說「<span class="highlight-key">fix</span>」。零上下文切換。</p>
-                        <p class="en-text">"Claude fixes most bugs by itself. Enable the Slack MCP, then paste a Slack bug thread into Claude and just say 'fix.' Zero context switching required."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text">或者直接說：「去修復失敗的 CI 測試。」<span class="highlight-concept">不要微觀管理怎麼做</span>。讓 Claude 看 Docker logs 來 troubleshoot 分散式系統，它的能力出人意料。</p>
-                        <p class="en-text">"Or, just say 'Go fix the failing CI tests.' Don't micromanage how. Point Claude at docker logs to troubleshoot distributed systems -- it's surprisingly capable at this."</p>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">比喻說明</div>
-                        <div class="info-box-content">
+</div>
+</div>
+</div>
+</section>
+<!-- Part 5: Bug Fixing -->
+<section class="content-section">
+<div class="part-header">Part V: Bug Fixing — 自動化除錯流程</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">Claude 自己能修大部分 bugs。啟用 Slack MCP，貼上 bug thread 然後說「<span class="highlight-key">fix</span>」。零上下文切換。</p>
+<p class="en-text">"Claude fixes most bugs by itself. Enable the Slack MCP, then paste a Slack bug thread into Claude and just say 'fix.' Zero context switching required."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">或者直接說：「去修復失敗的 CI 測試。」<span class="highlight-concept">不要微觀管理怎麼做</span>。讓 Claude 看 Docker logs 來 troubleshoot 分散式系統，它的能力出人意料。</p>
+<p class="en-text">"Or, just say 'Go fix the failing CI tests.' Don't micromanage how. Point Claude at docker logs to troubleshoot distributed systems -- it's surprisingly capable at this."</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明</div>
+<div class="info-box-content">
                             不是「告訴醫生你要開什麼藥」，而是「描述症狀，讓醫生診斷」。給 Claude 問題的情境，讓它找出解決方案。
                         </div>
-                    </div>
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">實務應用</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用</div>
+<div class="info-box-content">
                             整合 MCP 可以讓 Claude 直接存取 Slack、Gmail、Asana 等工具。這意味著可以建立端到端的問題解決流程：從發現問題到解決，最小化人工介入。
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Part 6: Prompting Tips -->
-        <section class="content-section">
-            <div class="part-header">Part VI: 進階 Prompting 技巧</div>
-            <div class="content-grid">
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <p class="zh-text">挑戰 Claude。說「<span class="highlight-key">嚴格審查這些變更，在我通過你的測試之前不要發 PR</span>」。讓 Claude 成為你的 reviewer。</p>
-                        <p class="en-text">"Challenge Claude. Say 'Grill me on these changes and don't make a PR until I pass your test.' Make Claude be your reviewer."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text">或說「<span class="highlight-concept">證明給我看這能用</span>」，讓 Claude 比較 main 和 feature branch 之間的行為差異。</p>
-                        <p class="en-text">"Or, say 'Prove to me this works' and have Claude diff behavior between main and your feature branch."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text">一個平庸的修復後，說：「<span class="highlight-key">知道你現在知道的一切，重來一次，實作優雅的解決方案</span>。」</p>
-                        <p class="en-text">"After a mediocre fix, say: 'Knowing everything you know now, scrap this and implement the elegant solution.'"</p>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">核心概念</div>
-                        <div class="info-box-content">
+</div>
+</div>
+</div>
+</section>
+<!-- Part 6: Prompting Tips -->
+<section class="content-section">
+<div class="part-header">Part VI: 進階 Prompting 技巧</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">挑戰 Claude。說「<span class="highlight-key">嚴格審查這些變更，在我通過你的測試之前不要發 PR</span>」。讓 Claude 成為你的 reviewer。</p>
+<p class="en-text">"Challenge Claude. Say 'Grill me on these changes and don't make a PR until I pass your test.' Make Claude be your reviewer."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">或說「<span class="highlight-concept">證明給我看這能用</span>」，讓 Claude 比較 main 和 feature branch 之間的行為差異。</p>
+<p class="en-text">"Or, say 'Prove to me this works' and have Claude diff behavior between main and your feature branch."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">一個平庸的修復後，說：「<span class="highlight-key">知道你現在知道的一切，重來一次，實作優雅的解決方案</span>。」</p>
+<p class="en-text">"After a mediocre fix, say: 'Knowing everything you know now, scrap this and implement the elegant solution.'"</p>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
                             這些 prompts 的共同點：<strong>提高 Claude 的標準</strong>。不是接受第一個輸出，而是推動它產出更好的版本。這需要你自己有足夠判斷力。
                         </div>
-                    </div>
-                    <div class="info-box box-key">
-                        <div class="info-box-header">重點提示</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示</div>
+<div class="info-box-content">
                             「寫詳細的 specs，減少模糊性」—— 你越具體，輸出越好。這呼應了「Context is King」的原則。
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Part 7-10: Additional Tips -->
-        <section class="content-section">
-            <div class="part-header">Part VII: 環境設定、Subagents、資料分析與學習</div>
-            <div class="content-grid linear">
-                <div class="content-left" style="border-right: none;">
-                    <div class="bilingual-block">
-                        <p class="zh-text"><strong>環境設定：</strong>團隊愛用 Ghostty 終端機。用 <code>/statusline</code> 自訂狀態列顯示 context 使用量和 git branch。用<span class="highlight-key">語音輸入</span>——說話速度是打字的 3 倍，prompts 會更詳細。</p>
-                        <p class="en-text">"Use voice dictation. You speak 3x faster than you type, and your prompts get way more detailed as a result. (hit fn x2 on macOS)"</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text"><strong>Subagents：</strong>在任何請求後加上「<span class="highlight-concept">use subagents</span>」讓 Claude 投入更多運算。將個別任務分派給 subagents 以保持主 agent 的 context window 乾淨。</p>
-                        <p class="en-text">"Append 'use subagents' to any request where you want Claude to throw more compute at the problem. Offload individual tasks to subagents to keep your main agent's context window clean and focused."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text"><strong>資料分析：</strong>請 Claude Code 使用 <code>bq</code> CLI 即時拉取和分析指標。團隊有 BigQuery skill 在 codebase 中，每個人都用它直接在 Claude Code 跑分析查詢。Boris 本人已經超過 6 個月沒有寫過一行 SQL。</p>
-                        <p class="en-text">"Ask Claude Code to use the 'bq' CLI to pull and analyze metrics on the fly... Personally, I haven't written a line of SQL in 6+ months."</p>
-                    </div>
-                    <div class="bilingual-block">
-                        <p class="zh-text"><strong>學習：</strong>在 <code>/config</code> 啟用「Explanatory」或「Learning」輸出風格，讓 Claude 解釋變更背後的「為什麼」。讓 Claude 生成視覺化 HTML 簡報來解釋不熟悉的程式碼。建立<span class="highlight-key">間隔重複學習 skill</span>：你說明理解，Claude 問 follow-up 填補空白，儲存結果。</p>
-                        <p class="en-text">"Enable the 'Explanatory' or 'Learning' output style in /config to have Claude explain the *why* behind its changes. Build a spaced-repetition learning skill."</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Key Takeaways -->
-        <section>
-            <h2 class="section-title">Key Takeaways</h2>
-            <div class="takeaways-grid">
-                <div class="summary-card">
-                    <div class="summary-card-icon">1</div>
-                    <div class="summary-card-title">並行優先</div>
-                    <div class="summary-card-text">Git Worktrees 是生產力的最大槓桿。同時運行多個 Claude 工作階段，而非依序處理。</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-icon">2</div>
-                    <div class="summary-card-title">規劃再執行</div>
-                    <div class="summary-card-text">Plan Mode 讓 Claude 一次到位。出問題時重新規劃，不要硬推。</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-icon">3</div>
-                    <div class="summary-card-title">CLAUDE.md 迭代</div>
-                    <div class="summary-card-text">讓 Claude 自己寫規則。每次錯誤都是改善 CLAUDE.md 的機會。</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-icon">4</div>
-                    <div class="summary-card-title">Skills 模組化</div>
-                    <div class="summary-card-text">一天做超過一次的事，就變成 Skill。提交到 Git，跨專案複用。</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Practice Questions -->
-        <section class="practice-section">
-            <h2 class="section-title">Practice Questions</h2>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q1</span>
-                    <span class="question-type">概念理解</span>
-                    <span class="question-text">Boris 說「Pour your energy into the plan」，這背後的原理是什麼？為什麼規劃階段的投入能讓 Claude「1-shot」完成實作？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p>這涉及 LLM 的工作原理：Claude 一次生成一個 token，基於之前的 context。當你提供詳細、結構化的計畫時，你實際上是在「預設」Claude 的生成路徑。</p>
-                    <p>好的計畫減少了 Claude 需要「推測」的空間，降低了歧義和錯誤方向的可能性。這就像給 GPS 精確的目的地地址，而非模糊的「去那個附近的地方」。</p>
-                    <p>此外，Plan Mode 強迫你自己先想清楚，這本身就減少了後續修正的需求。</p>
-                </div>
-            </details>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q2</span>
-                    <span class="question-type">產業應用</span>
-                    <span class="question-text">在你的 CDMO 工作環境中，如何應用「讓 Claude 自己寫規則」的 CLAUDE.md 策略？考慮 GMP 合規性和文件控制的需求。</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p>CDMO 環境的關鍵是：任何 AI 輔助產出都需要人工審核（copilot model）。CLAUDE.md 可以包含：</p>
-                    <p>1. <strong>產業術語規範</strong>：確保 Claude 使用正確的 GMP 術語（如「偏差」而非「錯誤」，「CAPA」而非「改進措施」）</p>
-                    <p>2. <strong>輸出格式規範</strong>：符合 21 CFR Part 11 的文件結構要求</p>
-                    <p>3. <strong>禁止事項</strong>：如「不要建議未經驗證的流程變更」、「不要假設設備規格」</p>
-                    <p>但要注意：這不是讓 Claude 自動更新生產 SOP，而是在輔助工作（草稿、分析、學習）中建立一致性。最終文件仍需走正式變更控制流程。</p>
-                </div>
-            </details>
-            
-            <details class="question-accordion">
-                <summary class="question-header">
-                    <span class="question-number">Q3</span>
-                    <span class="question-type">批判思考</span>
-                    <span class="question-text">Boris 提到「Don't micromanage how」讓 Claude 自己解決問題。這個建議有什麼潛在風險？在什麼情況下你應該選擇更明確的指導？</span>
-                    <span class="accordion-icon"></span>
-                </summary>
-                <div class="question-answer">
-                    <p>「不要微觀管理」的前提是：(1) 你有能力審核輸出、(2) 錯誤成本可接受、(3) Claude 有足夠 context 做出好決策。</p>
-                    <p><strong>應該更明確指導的情況：</strong></p>
-                    <p>1. <strong>合規敏感任務</strong>：涉及法規要求時，你需要確保 Claude 遵循特定路徑</p>
-                    <p>2. <strong>高成本錯誤</strong>：如果「try and fail」的成本很高（生產環境、外部客戶），先規劃再執行</p>
-                    <p>3. <strong>你無法審核的領域</strong>：如果輸出超出你的專業判斷能力，更明確的約束反而安全</p>
-                    <p>這篇文章的情境是軟體開發，錯誤可以快速發現並回滾。不同領域需要調整策略。</p>
-                </div>
-            </details>
-        </section>
-        
-        <!-- Bottom Line -->
-        <div class="bottom-line">
-            <div class="bottom-line-header">My Action Conclusions</div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">Core Insight</div>
-                <div class="bottom-line-text">生產力提升不是來自更好的 prompts，而是來自<strong>並行工作流</strong>和<strong>系統性的 context 管理</strong>（CLAUDE.md + Skills）。這與我的 Master Prompt 系統思路一致——投資在可複用的結構上。</div>
-            </div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">Immediate Action</div>
-                <div class="bottom-line-text">這週在 Claude Projects 中建立專屬的 CLAUDE.md 等效物（Project Instructions），並在每次修正後加入「更新 Instructions」的步驟。測試讓 Claude 自己撰寫規則的效果。</div>
-            </div>
-            <div class="bottom-line-item">
-                <div class="bottom-line-label">Gaps to Fill</div>
-                <div class="bottom-line-text">這些技巧針對軟體開發情境，並行 Git Worktrees 的概念需要調適到我的非程式碼工作流。另外，MCP 整合的具體設定需要另外研究。6 個月後重讀時，檢驗 CLAUDE.md 迭代是否真的降低了錯誤率。</div>
-            </div>
-        </div>
-        
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Generated: 2026-02-01 | Source: <a href="https://x.com/bcherny" target="_blank">Boris Cherny (@bcherny) on X</a></p>
-            <p>Reference: <a href="https://code.claude.com/docs/en/common-workflows" target="_blank">Claude Code Docs - Common Workflows</a></p>
-            <div class="chat-title">[Tool] Claude Code Power Tips - Boris Cherny</div>
-        </footer>
-
-    </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Part 7-10: Additional Tips -->
+<section class="content-section">
+<div class="part-header">Part VII: 環境設定、Subagents、資料分析與學習</div>
+<div class="content-grid linear">
+<div class="content-left" style="border-right: none;">
+<div class="bilingual-block">
+<p class="zh-text"><strong>環境設定：</strong>團隊愛用 Ghostty 終端機。用 <code>/statusline</code> 自訂狀態列顯示 context 使用量和 git branch。用<span class="highlight-key">語音輸入</span>——說話速度是打字的 3 倍，prompts 會更詳細。</p>
+<p class="en-text">"Use voice dictation. You speak 3x faster than you type, and your prompts get way more detailed as a result. (hit fn x2 on macOS)"</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>Subagents：</strong>在任何請求後加上「<span class="highlight-concept">use subagents</span>」讓 Claude 投入更多運算。將個別任務分派給 subagents 以保持主 agent 的 context window 乾淨。</p>
+<p class="en-text">"Append 'use subagents' to any request where you want Claude to throw more compute at the problem. Offload individual tasks to subagents to keep your main agent's context window clean and focused."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>資料分析：</strong>請 Claude Code 使用 <code>bq</code> CLI 即時拉取和分析指標。團隊有 BigQuery skill 在 codebase 中，每個人都用它直接在 Claude Code 跑分析查詢。Boris 本人已經超過 6 個月沒有寫過一行 SQL。</p>
+<p class="en-text">"Ask Claude Code to use the 'bq' CLI to pull and analyze metrics on the fly... Personally, I haven't written a line of SQL in 6+ months."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><strong>學習：</strong>在 <code>/config</code> 啟用「Explanatory」或「Learning」輸出風格，讓 Claude 解釋變更背後的「為什麼」。讓 Claude 生成視覺化 HTML 簡報來解釋不熟悉的程式碼。建立<span class="highlight-key">間隔重複學習 skill</span>：你說明理解，Claude 問 follow-up 填補空白，儲存結果。</p>
+<p class="en-text">"Enable the 'Explanatory' or 'Learning' output style in /config to have Claude explain the *why* behind its changes. Build a spaced-repetition learning skill."</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Takeaways -->
+<section>
+<h2 class="section-title">Key Takeaways</h2>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="summary-card-icon">1</div>
+<div class="summary-card-title">並行優先</div>
+<div class="summary-card-text">Git Worktrees 是生產力的最大槓桿。同時運行多個 Claude 工作階段，而非依序處理。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-icon">2</div>
+<div class="summary-card-title">規劃再執行</div>
+<div class="summary-card-text">Plan Mode 讓 Claude 一次到位。出問題時重新規劃，不要硬推。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-icon">3</div>
+<div class="summary-card-title">CLAUDE.md 迭代</div>
+<div class="summary-card-text">讓 Claude 自己寫規則。每次錯誤都是改善 CLAUDE.md 的機會。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-icon">4</div>
+<div class="summary-card-title">Skills 模組化</div>
+<div class="summary-card-text">一天做超過一次的事，就變成 Skill。提交到 Git，跨專案複用。</div>
+</div>
+</div>
+</section>
+<!-- Practice Questions -->
+<section class="practice-section">
+<h2 class="section-title">Practice Questions</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">Boris 說「Pour your energy into the plan」，這背後的原理是什麼？為什麼規劃階段的投入能讓 Claude「1-shot」完成實作？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>這涉及 LLM 的工作原理：Claude 一次生成一個 token，基於之前的 context。當你提供詳細、結構化的計畫時，你實際上是在「預設」Claude 的生成路徑。</p>
+<p>好的計畫減少了 Claude 需要「推測」的空間，降低了歧義和錯誤方向的可能性。這就像給 GPS 精確的目的地地址，而非模糊的「去那個附近的地方」。</p>
+<p>此外，Plan Mode 強迫你自己先想清楚，這本身就減少了後續修正的需求。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在你的 CDMO 工作環境中，如何應用「讓 Claude 自己寫規則」的 CLAUDE.md 策略？考慮 GMP 合規性和文件控制的需求。</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>CDMO 環境的關鍵是：任何 AI 輔助產出都需要人工審核（copilot model）。CLAUDE.md 可以包含：</p>
+<p>1. <strong>產業術語規範</strong>：確保 Claude 使用正確的 GMP 術語（如「偏差」而非「錯誤」，「CAPA」而非「改進措施」）</p>
+<p>2. <strong>輸出格式規範</strong>：符合 21 CFR Part 11 的文件結構要求</p>
+<p>3. <strong>禁止事項</strong>：如「不要建議未經驗證的流程變更」、「不要假設設備規格」</p>
+<p>但要注意：這不是讓 Claude 自動更新生產 SOP，而是在輔助工作（草稿、分析、學習）中建立一致性。最終文件仍需走正式變更控制流程。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">Boris 提到「Don't micromanage how」讓 Claude 自己解決問題。這個建議有什麼潛在風險？在什麼情況下你應該選擇更明確的指導？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>「不要微觀管理」的前提是：(1) 你有能力審核輸出、(2) 錯誤成本可接受、(3) Claude 有足夠 context 做出好決策。</p>
+<p><strong>應該更明確指導的情況：</strong></p>
+<p>1. <strong>合規敏感任務</strong>：涉及法規要求時，你需要確保 Claude 遵循特定路徑</p>
+<p>2. <strong>高成本錯誤</strong>：如果「try and fail」的成本很高（生產環境、外部客戶），先規劃再執行</p>
+<p>3. <strong>你無法審核的領域</strong>：如果輸出超出你的專業判斷能力，更明確的約束反而安全</p>
+<p>這篇文章的情境是軟體開發，錯誤可以快速發現並回滾。不同領域需要調整策略。</p>
+</div>
+</details>
+</section>
+<!-- Bottom Line -->
+<div class="bottom-line">
+<div class="bottom-line-header">My Action Conclusions</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">Core Insight</div>
+<div class="bottom-line-text">生產力提升不是來自更好的 prompts，而是來自<strong>並行工作流</strong>和<strong>系統性的 context 管理</strong>（CLAUDE.md + Skills）。這與我的 Master Prompt 系統思路一致——投資在可複用的結構上。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">Immediate Action</div>
+<div class="bottom-line-text">這週在 Claude Projects 中建立專屬的 CLAUDE.md 等效物（Project Instructions），並在每次修正後加入「更新 Instructions」的步驟。測試讓 Claude 自己撰寫規則的效果。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">Gaps to Fill</div>
+<div class="bottom-line-text">這些技巧針對軟體開發情境，並行 Git Worktrees 的概念需要調適到我的非程式碼工作流。另外，MCP 整合的具體設定需要另外研究。6 個月後重讀時，檢驗 CLAUDE.md 迭代是否真的降低了錯誤率。</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+<p>Generated: 2026-02-01 | Source: <a href="https://x.com/bcherny" target="_blank">Boris Cherny (@bcherny) on X</a></p>
+<p>Reference: <a href="https://code.claude.com/docs/en/common-workflows" target="_blank">Claude Code Docs - Common Workflows</a></p>
+<div class="chat-title">[Tool] Claude Code Power Tips - Boris Cherny</div>
+</footer>
+</div>
 </body>
 </html>

@@ -1,583 +1,395 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lessons from Building Claude Code Skills - Anthropic Engineering</title>
-    <!-- Dashboard Index Meta -->
-    <meta name="doc-date" content="2026-03-18">
-    <meta name="doc-title" content="Lessons from Building Claude Code Skills">
-    <meta name="doc-source" content="Thariq / Anthropic Engineering Blog">
-    <meta name="doc-source-type" content="Anthropic-Eng">
-    <meta name="doc-tags" content="Anthropic-Eng,Agent,Tool,Framework">
-    <meta name="doc-rating" content="4.4">
-    <meta name="doc-summary" content="Anthropic 內部 Skills 實戰經驗：9 大類型、撰寫技巧、分發策略。">
-    <meta name="doc-file" content="2026-03-18_claude-code-skills-lessons.html">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-/* === v1.4.3 MANDATORY PAGE LAYOUT === */
-body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
-.header {
-    text-align: center;
-    padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-    color: white;
-}
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-}
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    margin-bottom: 2rem;
-}
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .content-grid { grid-template-columns: 1fr; }
-}
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lessons from Building Claude Code Skills - Anthropic Engineering</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<!-- Dashboard Index Meta -->
+<meta content="2026-03-18" name="doc-date"/>
+<meta content="Lessons from Building Claude Code Skills" name="doc-title"/>
+<meta content="Thariq / Anthropic Engineering Blog" name="doc-source"/>
+<meta content="Anthropic-Eng" name="doc-source-type"/>
+<meta content="Anthropic-Eng,Agent,Tool,Framework" name="doc-tags"/>
+<meta content="4.4" name="doc-rating"/>
+<meta content="Anthropic 內部 Skills 實戰經驗：9 大類型、撰寫技巧、分發策略。" name="doc-summary"/>
+<meta content="2026-03-18_claude-code-skills-lessons.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-/* Tags */
-.header-tags { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
-.tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; }
-.tag-anthropic-eng { background: #fee2e2; color: #dc2626; }
-.tag-agent { background: #c7d2fe; color: #3730a3; }
-.tag-tool { background: #fecdd3; color: #9f1239; }
-.tag-framework { background: #ddd6fe; color: #4c1d95; }
-.header h1 { font-size: 1.8rem; margin: 0 0 0.5rem; font-weight: 700; }
-.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
-.header .source { font-size: 0.85rem; opacity: 0.8; }
-.header .source a { color: #93c5fd; text-decoration: none; }
-.header .source a:hover { text-decoration: underline; }
 
-/* Rating Bar */
-.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-.rating-stars { color: #f59e0b; letter-spacing: 1px; }
-.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-/* Executive Summary */
-.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
-.executive-summary h2 { font-size: 1.2rem; color: #1e3a5f; margin-top: 0; }
-.executive-summary p { font-size: 0.95rem; color: #475569; }
-
-/* Learning Objectives */
-.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
-.objective-item { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.objective-title { font-weight: 700; font-size: 0.9rem; color: #1e3a5f; margin-bottom: 0.25rem; }
-.objective-desc { font-size: 0.85rem; color: #64748b; }
-
-/* Framework Visual */
-.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
-.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.framework-step { text-align: center; min-width: 120px; }
-.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-.framework-step-title { font-weight: 700; font-size: 0.95rem; }
-.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-/* Section headers */
-.section-header { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
-
-/* Content Grid internals */
-.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
-.content-right { padding: 1.5rem; background: #f8fafc; }
-.part-label { font-size: 0.75rem; font-weight: 700; color: #6d28d9; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-.part-title { font-size: 1.1rem; font-weight: 700; color: #1e3a5f; margin-bottom: 1rem; }
-.bilingual-block { margin-bottom: 1.25rem; }
-.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; }
-.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; margin-top: 0.25rem; }
-.highlight-concept { background: #a5d6a7; padding: 0 3px; border-radius: 2px; }
-.highlight-key { background: #ffcc80; padding: 0 3px; border-radius: 2px; }
-.highlight-practical { background: #6ee7b7; padding: 0 3px; border-radius: 2px; }
-
-/* Info Boxes */
-.info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
-.info-box-header { padding: 0.5rem 0.75rem; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem; }
-.info-box-content { padding: 0.75rem; font-size: 0.85rem; line-height: 1.7; }
-.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
-.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
-.box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
-.box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
-
-/* Code blocks */
-pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.5; }
-code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
-.inline-code { background: #f1f5f9; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.85rem; color: #7c3aed; }
-
-/* Tabs */
-.tab-container { margin: 1.5rem 0; }
-.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
-.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.9rem; }
-.tab-btn:hover { color: #334155; }
-.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* Key Takeaways */
-.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
-.summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.summary-card-title { font-weight: 700; font-size: 0.95rem; color: #1e3a5f; margin-bottom: 0.5rem; }
-.summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.6; }
-
-/* Practice Accordion */
-.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-.question-header::-webkit-details-marker { display: none; }
-.question-number { font-weight: 700; color: #6d28d9; }
-.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-details[open] .accordion-icon { transform: rotate(180deg); }
-.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-.question-answer p:last-child { margin-bottom: 0; }
-
-/* Bottom Line */
-.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
-.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-.bottom-line-item { margin-bottom: 1rem; }
-.bottom-line-item:last-child { margin-bottom: 0; }
-.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-/* Footer */
-.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-.footer a { color: #3b82f6; text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
-
-/* Skill category table */
-.skill-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
-.skill-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; }
-.skill-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
-.skill-table tr:nth-child(even) { background: #f8fafc; }
-.skill-table tr:hover { background: #f0f9ff; }
-    </style>
 </head>
 <body>
-
 <!-- Header -->
-<div class="header">
-    <div class="header-tags">
-        <span class="tag tag-anthropic-eng">Anthropic-Eng</span>
-        <span class="tag tag-agent">Agent</span>
-        <span class="tag tag-tool">Tool</span>
-        <span class="tag tag-framework">Framework</span>
-    </div>
-    <h1>Lessons from Building Claude Code Skills</h1>
-    <div class="subtitle">Anthropic 內部數百個 Skills 的實戰心得：分類、撰寫、分發</div>
-    <div class="source">Source: <a href="https://x.com/trq212" target="_blank">Thariq (@trq212)</a> / Anthropic Engineering Blog</div>
+<header class="header">
+<div class="header-tags">
+<span class="tag tag-anthropic-eng">Anthropic-Eng</span>
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-framework">Framework</span>
 </div>
-
+<h1>Lessons from Building Claude Code Skills</h1>
+<div class="subtitle">Anthropic 內部數百個 Skills 的實戰心得：分類、撰寫、分發</div>
+<div class="source">Source: <a href="https://x.com/trq212" target="_blank">Thariq (@trq212)</a> / Anthropic Engineering Blog</div>
+</header>
 <div class="container">
-
 <!-- Executive Summary -->
 <div class="executive-summary">
-    <div class="rating-bar">
-        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.4/5</span>
-        <span class="rating-high">&uarr; Practical Value, Tool Ecosystem</span>
-        <span class="rating-low">&darr; Technical Depth (lacks code internals)</span>
-    </div>
-    <h2>Executive Summary</h2>
-    <p>Anthropic 內部已有數百個 Skills 在使用中。本文由工程師 Thariq 整理出 <strong>9 大 Skill 類型分類法</strong>、<strong>10+ 項撰寫最佳實踐</strong>、以及 <strong>Marketplace 分發策略</strong>。對於已經在使用 Claude Code Skills 的人而言，這是第一份來自 Anthropic 內部的系統性經驗分享，從「Skill 是資料夾不是檔案」的核心觀念出發，涵蓋 Progressive Disclosure、Gotchas Section、On-Demand Hooks 等進階技巧。</p>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.4/5</span>
+<span class="rating-high">↑ Practical Value, Tool Ecosystem</span>
+<span class="rating-low">↓ Technical Depth (lacks code internals)</span>
 </div>
-
+<h2>Executive Summary</h2>
+<p>Anthropic 內部已有數百個 Skills 在使用中。本文由工程師 Thariq 整理出 <strong>9 大 Skill 類型分類法</strong>、<strong>10+ 項撰寫最佳實踐</strong>、以及 <strong>Marketplace 分發策略</strong>。對於已經在使用 Claude Code Skills 的人而言，這是第一份來自 Anthropic 內部的系統性經驗分享，從「Skill 是資料夾不是檔案」的核心觀念出發，涵蓋 Progressive Disclosure、Gotchas Section、On-Demand Hooks 等進階技巧。</p>
+</div>
 <!-- Learning Objectives -->
 <h2 class="section-header">Learning Objectives</h2>
 <div class="objectives-grid">
-    <div class="objective-item">
-        <div class="objective-icon">&#x1F4C2;</div>
-        <div class="objective-title">9 大 Skill 類型</div>
-        <div class="objective-desc">掌握 Library Reference 到 Runbook 的完整分類框架，識別自己組織缺少哪些類型</div>
-    </div>
-    <div class="objective-item" style="border-left-color: #10b981;">
-        <div class="objective-icon">&#x1F527;</div>
-        <div class="objective-title">撰寫最佳實踐</div>
-        <div class="objective-desc">學會 Gotchas Section、Progressive Disclosure、On-Demand Hooks 等進階技巧</div>
-    </div>
-    <div class="objective-item" style="border-left-color: #8b5cf6;">
-        <div class="objective-icon">&#x1F680;</div>
-        <div class="objective-title">分發與管理</div>
-        <div class="objective-desc">理解 Repo check-in vs Plugin Marketplace 的取捨，以及有機品質管控流程</div>
-    </div>
+<div class="objective-item">
+<div class="objective-icon">📂</div>
+<div class="objective-title">9 大 Skill 類型</div>
+<div class="objective-desc">掌握 Library Reference 到 Runbook 的完整分類框架，識別自己組織缺少哪些類型</div>
 </div>
-
+<div class="objective-item" style="border-left-color: #10b981;">
+<div class="objective-icon">🔧</div>
+<div class="objective-title">撰寫最佳實踐</div>
+<div class="objective-desc">學會 Gotchas Section、Progressive Disclosure、On-Demand Hooks 等進階技巧</div>
+</div>
+<div class="objective-item" style="border-left-color: #8b5cf6;">
+<div class="objective-icon">🚀</div>
+<div class="objective-title">分發與管理</div>
+<div class="objective-desc">理解 Repo check-in vs Plugin Marketplace 的取捨，以及有機品質管控流程</div>
+</div>
+</div>
 <!-- Framework Visual -->
 <div class="framework-visual">
-    <div class="framework-title">Skill Lifecycle: Identify &#8594; Write &#8594; Distribute &#8594; Measure</div>
-    <div class="framework-steps">
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F50D;</div>
-            <div class="framework-step-title">Identify Type</div>
-            <div class="framework-step-desc">9 categories taxonomy</div>
-        </div>
-        <div class="framework-arrow">&#8594;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x270D;&#xFE0F;</div>
-            <div class="framework-step-title">Write Well</div>
-            <div class="framework-step-desc">Gotchas, progressive disclosure</div>
-        </div>
-        <div class="framework-arrow">&#8594;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F4E6;</div>
-            <div class="framework-step-title">Distribute</div>
-            <div class="framework-step-desc">Repo vs Marketplace</div>
-        </div>
-        <div class="framework-arrow">&#8594;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#x1F4CA;</div>
-            <div class="framework-step-title">Measure</div>
-            <div class="framework-step-desc">PreToolUse hook logging</div>
-        </div>
-    </div>
+<div class="framework-title">Skill Lifecycle: Identify → Write → Distribute → Measure</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">🔍</div>
+<div class="framework-step-title">Identify Type</div>
+<div class="framework-step-desc">9 categories taxonomy</div>
 </div>
-
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">✍️</div>
+<div class="framework-step-title">Write Well</div>
+<div class="framework-step-desc">Gotchas, progressive disclosure</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📦</div>
+<div class="framework-step-title">Distribute</div>
+<div class="framework-step-desc">Repo vs Marketplace</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📊</div>
+<div class="framework-step-title">Measure</div>
+<div class="framework-step-desc">PreToolUse hook logging</div>
+</div>
+</div>
+</div>
 <!-- TABBED CONTENT: 3 tabs for 9 categories + tips + distribution -->
 <h2 class="section-header">Content</h2>
-
 <div class="tab-container">
-    <div class="tab-nav">
-        <button class="tab-btn active" onclick="switchTab(event, 'tab-types')">Skill Types (1-9)</button>
-        <button class="tab-btn" onclick="switchTab(event, 'tab-tips')">Writing Tips</button>
-        <button class="tab-btn" onclick="switchTab(event, 'tab-dist')">Distribution</button>
-    </div>
-
-    <!-- TAB 1: Skill Types -->
-    <div id="tab-types" class="tab-content active">
-
-        <!-- Part I: Skills = Folder, Not File -->
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="part-label">Part I</div>
-                <div class="part-title">Skills = Folder, Not File</div>
-                <div class="bilingual-block">
-                    <div class="zh-text">關於 Skills 最常見的誤解是它們「只是 Markdown 檔案」。但 Skills 最有趣的地方在於<span class="highlight-concept">它們不只是文字檔，而是可以包含腳本、資源、資料等的資料夾</span>，讓 Agent 可以探索和操作。</div>
-                    <div class="en-text">"A common misconception we hear about skills is that they are 'just markdown files', but the most interesting part of skills is that they're not just text files. They're folders that can include scripts, assets, data, etc."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text">在 Claude Code 中，Skills 還有各種設定選項，包括<span class="highlight-key">註冊動態 Hooks</span>。Anthropic 發現最有趣的 Skills 正是那些創造性地使用這些設定選項和資料夾結構的 Skills。</div>
-                    <div class="en-text">"In Claude Code, skills also have a wide variety of configuration options including registering dynamic hooks. We've found that some of the most interesting skills in Claude Code use these configuration options and folder structure creatively."</div>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-concept">
-                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
-                    <div class="info-box-content">
-                        <strong>Skill = Folder</strong>：SKILL.md 是入口，但整個資料夾才是完整的 Skill。可以包含 references/、assets/、scripts/ 等子目錄，Agent 會在適當時機讀取。
+<div class="tab-nav">
+<button class="tab-btn active" onclick="switchTab(event, 'tab-types')">Skill Types (1-9)</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-tips')">Writing Tips</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-dist')">Distribution</button>
+</div>
+<!-- TAB 1: Skill Types -->
+<div class="tab-content active" id="tab-types">
+<!-- Part I: Skills = Folder, Not File -->
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Part I</div>
+<div class="part-title">Skills = Folder, Not File</div>
+<div class="bilingual-block">
+<div class="zh-text">關於 Skills 最常見的誤解是它們「只是 Markdown 檔案」。但 Skills 最有趣的地方在於<span class="highlight-concept">它們不只是文字檔，而是可以包含腳本、資源、資料等的資料夾</span>，讓 Agent 可以探索和操作。</div>
+<div class="en-text">"A common misconception we hear about skills is that they are 'just markdown files', but the most interesting part of skills is that they're not just text files. They're folders that can include scripts, assets, data, etc."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">在 Claude Code 中，Skills 還有各種設定選項，包括<span class="highlight-key">註冊動態 Hooks</span>。Anthropic 發現最有趣的 Skills 正是那些創造性地使用這些設定選項和資料夾結構的 Skills。</div>
+<div class="en-text">"In Claude Code, skills also have a wide variety of configuration options including registering dynamic hooks. We've found that some of the most interesting skills in Claude Code use these configuration options and folder structure creatively."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<strong>Skill = Folder</strong>：SKILL.md 是入口，但整個資料夾才是完整的 Skill。可以包含 references/、assets/、scripts/ 等子目錄，Agent 會在適當時機讀取。
                     </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
                         把 Skill 想像成一本<strong>操作手冊</strong>：SKILL.md 是目錄頁，告訴你手冊裡有什麼。但真正的價值在手冊裡的流程圖（scripts）、範例表格（assets）、和參考資料（references）。只讀目錄頁，你只知道手冊存在；打開裡面的內容，你才能真正執行。
                     </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; CDMO 應用</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 應用</div>
+<div class="info-box-content">
                         你的 <span class="inline-code">cdmo-feasibility-assessment</span> Skill 目前主要是 SKILL.md。可以考慮加入 <span class="inline-code">references/annex1-checklist.md</span> 和 <span class="inline-code">templates/assessment-report.md</span>，讓 Agent 在需要時按需載入。
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Part II: 9 Skill Categories Overview -->
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="part-label">Part II</div>
-                <div class="part-title">9 Skill Categories Taxonomy</div>
-                <div class="bilingual-block">
-                    <div class="zh-text">Anthropic 在盤點所有 Skills 後，發現它們歸納為幾個反覆出現的類別。<span class="highlight-key">最好的 Skills 清楚地屬於某一類；最令人困惑的 Skills 則橫跨好幾類</span>。</div>
-                    <div class="en-text">"After cataloging all of our skills, we noticed they cluster into a few recurring categories. The best skills fit cleanly into one; the more confusing ones straddle several."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text">以下是完整的 9 大分類。這不是最終定義，但它是思考<span class="highlight-practical">你的組織是否缺少某些類型 Skills</span> 的好方法。</div>
-                    <div class="en-text">"This isn't a definitive list, but it is a good way to think about if you're missing any inside of your org."</div>
-                </div>
-
-                <table class="skill-table">
-                    <thead>
-                        <tr><th>#</th><th>Category</th><th>Purpose</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>1</td><td>Library &amp; API Reference</td><td>Explain correct usage of libraries/SDKs</td></tr>
-                        <tr><td>2</td><td>Product Verification</td><td>Test &amp; verify code output</td></tr>
-                        <tr><td>3</td><td>Data Fetching &amp; Analysis</td><td>Connect to data/monitoring stacks</td></tr>
-                        <tr><td>4</td><td>Business Process</td><td>Automate repetitive workflows</td></tr>
-                        <tr><td>5</td><td>Code Scaffolding</td><td>Generate framework boilerplate</td></tr>
-                        <tr><td>6</td><td>Code Quality &amp; Review</td><td>Enforce code quality standards</td></tr>
-                        <tr><td>7</td><td>CI/CD &amp; Deployment</td><td>Fetch, push, deploy code</td></tr>
-                        <tr><td>8</td><td>Runbooks</td><td>Symptom &#8594; investigation &#8594; report</td></tr>
-                        <tr><td>9</td><td>Infrastructure Ops</td><td>Routine maintenance with guardrails</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-                    <div class="info-box-content">
-                        <strong>Single Responsibility Principle</strong>：最好的 Skill 清楚屬於一個類別。如果你的 Skill 同時做 verification + deployment + scaffolding，它可能需要拆分。
+</div>
+</div>
+</div>
+<!-- Part II: 9 Skill Categories Overview -->
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Part II</div>
+<div class="part-title">9 Skill Categories Taxonomy</div>
+<div class="bilingual-block">
+<div class="zh-text">Anthropic 在盤點所有 Skills 後，發現它們歸納為幾個反覆出現的類別。<span class="highlight-key">最好的 Skills 清楚地屬於某一類；最令人困惑的 Skills 則橫跨好幾類</span>。</div>
+<div class="en-text">"After cataloging all of our skills, we noticed they cluster into a few recurring categories. The best skills fit cleanly into one; the more confusing ones straddle several."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">以下是完整的 9 大分類。這不是最終定義，但它是思考<span class="highlight-practical">你的組織是否缺少某些類型 Skills</span> 的好方法。</div>
+<div class="en-text">"This isn't a definitive list, but it is a good way to think about if you're missing any inside of your org."</div>
+</div>
+<table class="skill-table">
+<thead>
+<tr><th>#</th><th>Category</th><th>Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Library &amp; API Reference</td><td>Explain correct usage of libraries/SDKs</td></tr>
+<tr><td>2</td><td>Product Verification</td><td>Test &amp; verify code output</td></tr>
+<tr><td>3</td><td>Data Fetching &amp; Analysis</td><td>Connect to data/monitoring stacks</td></tr>
+<tr><td>4</td><td>Business Process</td><td>Automate repetitive workflows</td></tr>
+<tr><td>5</td><td>Code Scaffolding</td><td>Generate framework boilerplate</td></tr>
+<tr><td>6</td><td>Code Quality &amp; Review</td><td>Enforce code quality standards</td></tr>
+<tr><td>7</td><td>CI/CD &amp; Deployment</td><td>Fetch, push, deploy code</td></tr>
+<tr><td>8</td><td>Runbooks</td><td>Symptom → investigation → report</td></tr>
+<tr><td>9</td><td>Infrastructure Ops</td><td>Routine maintenance with guardrails</td></tr>
+</tbody>
+</table>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<strong>Single Responsibility Principle</strong>：最好的 Skill 清楚屬於一個類別。如果你的 Skill 同時做 verification + deployment + scaffolding，它可能需要拆分。
                     </div>
-                </div>
-                <div class="info-box box-compare">
-                    <div class="info-box-header">&#x2696;&#xFE0F; 你的 Skills 盤點</div>
-                    <div class="info-box-content">
-                        以你目前的 Skills 對照：<br>
-                        &#x2705; <strong>artifact-skill</strong> = Code Scaffolding (#5)<br>
-                        &#x2705; <strong>cdmo-feasibility</strong> = Business Process (#4)<br>
-                        &#x2705; <strong>amaran-presentation</strong> = Code Scaffolding (#5)<br>
-                        &#x2753; Missing: Verification, Runbook, Code Quality<br><br>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 你的 Skills 盤點</div>
+<div class="info-box-content">
+                        以你目前的 Skills 對照：<br/>
+                        ✅ <strong>artifact-skill</strong> = Code Scaffolding (#5)<br/>
+                        ✅ <strong>cdmo-feasibility</strong> = Business Process (#4)<br/>
+                        ✅ <strong>amaran-presentation</strong> = Code Scaffolding (#5)<br/>
+                        ❓ Missing: Verification, Runbook, Code Quality<br/><br/>
                         特別注意 <strong>#2 Product Verification</strong>：Thariq 說值得花一週讓工程師專門建立驗證 Skills。
                     </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; CDMO 類比</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 CDMO 類比</div>
+<div class="info-box-content">
                         這 9 類像 GMP 文件系統的分類：SOP、Batch Record、Deviation Report、CAPA、Validation Protocol... 每類有明確用途。把 Deviation 寫成 SOP 格式會讓人困惑，同理，把 Runbook 寫成 Scaffolding Skill 也會讓 Agent 困惑。
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Part III: Categories Deep Dive 1-3 -->
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="part-label">Part III</div>
-                <div class="part-title">Deep Dive: Categories 1-3</div>
-                
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>1. Library &amp; API Reference</strong> &mdash; 解釋如何正確使用函式庫、CLI 或 SDK。這類 Skills 通常包含<span class="highlight-practical">參考程式碼片段資料夾</span>和一份讓 Claude 避免犯錯的 gotchas 清單。</div>
-                    <div class="en-text">"Skills that explain how to correctly use a library, CLI, or SDKs... often included a folder of reference code snippets and a list of gotchas."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>2. Product Verification</strong> &mdash; 描述如何測試或驗證程式碼是否正常運作，通常搭配 Playwright、tmux 等外部工具。<span class="highlight-key">驗證 Skills 對於確保 Claude 輸出正確極為有用</span>。值得讓工程師花一整週專門打造驗證 Skills。</div>
-                    <div class="en-text">"Verification skills are extremely useful for ensuring Claude's output is correct. It can be worth having an engineer spend a week just making your verification skills excellent."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text">進階技巧包括：讓 Claude <span class="highlight-concept">錄製其輸出的影片</span>讓你能看到它到底測試了什麼，或在每一步強制執行程式化的狀態斷言。</div>
-                    <div class="en-text">"Consider techniques like having Claude record a video of its output so you can see exactly what it tested, or enforcing programmatic assertions on state at each step."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>3. Data Fetching &amp; Analysis</strong> &mdash; 連接你的資料和監控系統。這類 Skills 可能包含帶有認證資訊的函式庫、特定的 Dashboard ID、以及常見工作流程的說明。</div>
-                    <div class="en-text">"Skills that connect to your data and monitoring stacks. These skills might include libraries to fetch your data with credentials, specific dashboard ids."</div>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
-                    <div class="info-box-content">
-                        <strong>Category 1 在 CDMO 的對應：</strong><br>
+</div>
+</div>
+</div>
+<!-- Part III: Categories Deep Dive 1-3 -->
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Part III</div>
+<div class="part-title">Deep Dive: Categories 1-3</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>1. Library &amp; API Reference</strong> — 解釋如何正確使用函式庫、CLI 或 SDK。這類 Skills 通常包含<span class="highlight-practical">參考程式碼片段資料夾</span>和一份讓 Claude 避免犯錯的 gotchas 清單。</div>
+<div class="en-text">"Skills that explain how to correctly use a library, CLI, or SDKs... often included a folder of reference code snippets and a list of gotchas."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>2. Product Verification</strong> — 描述如何測試或驗證程式碼是否正常運作，通常搭配 Playwright、tmux 等外部工具。<span class="highlight-key">驗證 Skills 對於確保 Claude 輸出正確極為有用</span>。值得讓工程師花一整週專門打造驗證 Skills。</div>
+<div class="en-text">"Verification skills are extremely useful for ensuring Claude's output is correct. It can be worth having an engineer spend a week just making your verification skills excellent."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">進階技巧包括：讓 Claude <span class="highlight-concept">錄製其輸出的影片</span>讓你能看到它到底測試了什麼，或在每一步強制執行程式化的狀態斷言。</div>
+<div class="en-text">"Consider techniques like having Claude record a video of its output so you can see exactly what it tested, or enforcing programmatic assertions on state at each step."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>3. Data Fetching &amp; Analysis</strong> — 連接你的資料和監控系統。這類 Skills 可能包含帶有認證資訊的函式庫、特定的 Dashboard ID、以及常見工作流程的說明。</div>
+<div class="en-text">"Skills that connect to your data and monitoring stacks. These skills might include libraries to fetch your data with credentials, specific dashboard ids."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用</div>
+<div class="info-box-content">
+<strong>Category 1 在 CDMO 的對應：</strong><br/>
                         想像一個 <span class="inline-code">trackwise-api</span> Skill，說明如何正確使用 TrackWise API 建立 deviation record，包含 gotchas 如「investigation field 不能超過 4000 chars」。
                     </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-                    <div class="info-box-content">
-                        <strong>Verification = Agent 的 QC</strong><br>
-                        在 GMP 語境中，Product Verification Skill 就像 Agent 的品質管制步驟。沒有它，Agent 就是「做完不檢查」&mdash; 跟沒做 in-process check 一樣危險。<br><br>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<strong>Verification = Agent 的 QC</strong><br/>
+                        在 GMP 語境中，Product Verification Skill 就像 Agent 的品質管制步驟。沒有它，Agent 就是「做完不檢查」— 跟沒做 in-process check 一樣危險。<br/><br/>
                         「錄製影片」技巧特別適合 UI 相關的驗證，讓你能回放 Agent 實際看到和測試的畫面。
                     </div>
-                </div>
-                <div class="info-box box-concept">
-                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
-                    <div class="info-box-content">
-                        <strong>Data Skill 的關鍵：</strong>不只是告訴 Agent 怎麼查資料，而是告訴它<strong>哪些資料在哪裡</strong>（Dashboard IDs、Table names、canonical user_id 欄位）。Domain knowledge 比 API syntax 更有價值。
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<strong>Data Skill 的關鍵：</strong>不只是告訴 Agent 怎麼查資料，而是告訴它<strong>哪些資料在哪裡</strong>（Dashboard IDs、Table names、canonical user_id 欄位）。Domain knowledge 比 API syntax 更有價值。
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Part IV: Categories Deep Dive 4-6 -->
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="part-label">Part IV</div>
-                <div class="part-title">Deep Dive: Categories 4-6</div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>4. Business Process &amp; Team Automation</strong> &mdash; 將重複性工作流程自動化為單一指令。這類 Skills 通常是相當簡單的指令，但可能有更複雜的對其他 Skills 或 MCP 的依賴。<span class="highlight-practical">將之前的執行結果存成 log 檔可以幫助模型保持一致性</span>並反思先前的執行結果。</div>
-                    <div class="en-text">"Skills that automate repetitive workflows into one command... saving previous results in log files can help the model stay consistent and reflect on previous executions."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>5. Code Scaffolding &amp; Templates</strong> &mdash; 為你的 codebase 中特定功能生成框架模板程式碼。你可以將這些 Skills 與可組合的腳本結合。<span class="highlight-concept">當你的 scaffolding 有無法純粹用程式碼覆蓋的自然語言需求時</span>，它們特別有用。</div>
-                    <div class="en-text">"Skills that generate framework boilerplate for a specific function in codebase... especially useful when your scaffolding has natural language requirements that can't be purely covered by code."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>6. Code Quality &amp; Review</strong> &mdash; 在你的組織中強制執行程式碼品質並協助 code review。這些可以包含確定性腳本或工具以獲得最大穩健性。你可能想要<span class="highlight-key">在 Hooks 中自動執行這些 Skills</span>，或在 GitHub Action 中運行。</div>
-                    <div class="en-text">"Skills that enforce code quality inside of your org and help review code. These can include deterministic scripts or tools for maximum robustness."</div>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-                    <div class="info-box-content">
-                        <strong>Category 4 = 你的 SOP 自動化</strong><br>
-                        每天的 standup、每週的 recap、建立 ticket... 這些在 CDMO 就像例行性文件：日報、週報、deviation ticket。Skill 把「人類記住流程 &#8594; 手動執行」變成「Agent 讀流程 &#8594; 自動執行」。
+</div>
+</div>
+</div>
+<!-- Part IV: Categories Deep Dive 4-6 -->
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Part IV</div>
+<div class="part-title">Deep Dive: Categories 4-6</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>4. Business Process &amp; Team Automation</strong> — 將重複性工作流程自動化為單一指令。這類 Skills 通常是相當簡單的指令，但可能有更複雜的對其他 Skills 或 MCP 的依賴。<span class="highlight-practical">將之前的執行結果存成 log 檔可以幫助模型保持一致性</span>並反思先前的執行結果。</div>
+<div class="en-text">"Skills that automate repetitive workflows into one command... saving previous results in log files can help the model stay consistent and reflect on previous executions."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>5. Code Scaffolding &amp; Templates</strong> — 為你的 codebase 中特定功能生成框架模板程式碼。你可以將這些 Skills 與可組合的腳本結合。<span class="highlight-concept">當你的 scaffolding 有無法純粹用程式碼覆蓋的自然語言需求時</span>，它們特別有用。</div>
+<div class="en-text">"Skills that generate framework boilerplate for a specific function in codebase... especially useful when your scaffolding has natural language requirements that can't be purely covered by code."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>6. Code Quality &amp; Review</strong> — 在你的組織中強制執行程式碼品質並協助 code review。這些可以包含確定性腳本或工具以獲得最大穩健性。你可能想要<span class="highlight-key">在 Hooks 中自動執行這些 Skills</span>，或在 GitHub Action 中運行。</div>
+<div class="en-text">"Skills that enforce code quality inside of your org and help review code. These can include deterministic scripts or tools for maximum robustness."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<strong>Category 4 = 你的 SOP 自動化</strong><br/>
+                        每天的 standup、每週的 recap、建立 ticket... 這些在 CDMO 就像例行性文件：日報、週報、deviation ticket。Skill 把「人類記住流程 → 手動執行」變成「Agent 讀流程 → 自動執行」。
                     </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
-                    <div class="info-box-content">
-                        <strong>adversarial-review</strong> 是一個特別值得注意的例子：它啟動一個全新的 sub-agent 來批判性地審查程式碼，實施修正，反覆迭代直到發現降級為吹毛求疵。<br><br>
-                        這跟 GMP 的 Peer Review 概念幾乎一致 &mdash; 找一個「全新視角」來審查你的工作。
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用</div>
+<div class="info-box-content">
+<strong>adversarial-review</strong> 是一個特別值得注意的例子：它啟動一個全新的 sub-agent 來批判性地審查程式碼，實施修正，反覆迭代直到發現降級為吹毛求疵。<br/><br/>
+                        這跟 GMP 的 Peer Review 概念幾乎一致 — 找一個「全新視角」來審查你的工作。
                     </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; Log as Memory</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Log as Memory</div>
+<div class="info-box-content">
                         Business Process Skills 存 log 的建議很關鍵。Agent 沒有跨 session 記憶，但 log 檔提供了一種<strong>窮人版 memory</strong>。下次執行時，Agent 讀取 log 就知道上次做了什麼。
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Part V: Categories Deep Dive 7-9 -->
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="part-label">Part V</div>
-                <div class="part-title">Deep Dive: Categories 7-9</div>
-
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>7. CI/CD &amp; Deployment</strong> &mdash; 幫助你 fetch、push 和 deploy 程式碼。範例包括 <span class="inline-code">babysit-pr</span>（監控 PR &#8594; 重試 flaky CI &#8594; 解決 merge conflict &#8594; 啟用 auto-merge）。</div>
-                    <div class="en-text">"Skills that help you fetch, push, and deploy code inside of your codebase."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>8. Runbooks</strong> &mdash; 接收一個症狀（如 Slack 訊息、警報或錯誤簽名），<span class="highlight-concept">走過多工具調查流程，產出結構化報告</span>。</div>
-                    <div class="en-text">"Skills that take a symptom (such as a Slack thread, alert, or error signature), walk through a multi-tool investigation, and produce a structured report."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>9. Infrastructure Operations</strong> &mdash; 執行例行維護和操作程序，<span class="highlight-key">其中一些涉及需要護欄的破壞性操作</span>。這讓工程師更容易在關鍵操作中遵循最佳實踐。</div>
-                    <div class="en-text">"Skills that perform routine maintenance and operational procedures — some of which involve destructive actions that benefit from guardrails."</div>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-concept">
-                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
-                    <div class="info-box-content">
-                        <strong>Runbook = Deviation Investigation Skill</strong><br>
-                        Category 8 最接近你想建立的 <span class="inline-code">/triage-deviation</span>。流程完全對應：症狀（OOS result）&#8594; 多系統調查（batch record、環控、training record）&#8594; 結構化報告。
+</div>
+</div>
+</div>
+<!-- Part V: Categories Deep Dive 7-9 -->
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Part V</div>
+<div class="part-title">Deep Dive: Categories 7-9</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>7. CI/CD &amp; Deployment</strong> — 幫助你 fetch、push 和 deploy 程式碼。範例包括 <span class="inline-code">babysit-pr</span>（監控 PR → 重試 flaky CI → 解決 merge conflict → 啟用 auto-merge）。</div>
+<div class="en-text">"Skills that help you fetch, push, and deploy code inside of your codebase."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>8. Runbooks</strong> — 接收一個症狀（如 Slack 訊息、警報或錯誤簽名），<span class="highlight-concept">走過多工具調查流程，產出結構化報告</span>。</div>
+<div class="en-text">"Skills that take a symptom (such as a Slack thread, alert, or error signature), walk through a multi-tool investigation, and produce a structured report."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>9. Infrastructure Operations</strong> — 執行例行維護和操作程序，<span class="highlight-key">其中一些涉及需要護欄的破壞性操作</span>。這讓工程師更容易在關鍵操作中遵循最佳實踐。</div>
+<div class="en-text">"Skills that perform routine maintenance and operational procedures — some of which involve destructive actions that benefit from guardrails."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<strong>Runbook = Deviation Investigation Skill</strong><br/>
+                        Category 8 最接近你想建立的 <span class="inline-code">/triage-deviation</span>。流程完全對應：症狀（OOS result）→ 多系統調查（batch record、環控、training record）→ 結構化報告。
                     </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-                    <div class="info-box-content">
-                        <strong>Guardrails for Destructive Ops</strong><br>
-                        Category 9 提到的護欄概念在 GMP 中至關重要。<span class="inline-code">orphan-cleanup</span> Skill 的「找到 &#8594; 通知 &#8594; 等待期 &#8594; 確認 &#8594; 清除」流程，就像 CAPA 的「識別 &#8594; 調查 &#8594; 核准 &#8594; 執行 &#8594; 驗證」。
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<strong>Guardrails for Destructive Ops</strong><br/>
+                        Category 9 提到的護欄概念在 GMP 中至關重要。<span class="inline-code">orphan-cleanup</span> Skill 的「找到 → 通知 → 等待期 → 確認 → 清除」流程，就像 CAPA 的「識別 → 調查 → 核准 → 執行 → 驗證」。
                     </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; babysit-pr 啟示</div>
-                    <div class="info-box-content">
-                        <span class="inline-code">babysit-pr</span> 是典型的 Agent Mode Skill：監控 &#8594; 判斷 &#8594; 自動修正 &#8594; 完成。但在 GMP 環境中，這種「自動修正」需要 human-in-the-loop。你可以建立一個「babysit」但在修正前暫停等待確認的版本。
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ babysit-pr 啟示</div>
+<div class="info-box-content">
+<span class="inline-code">babysit-pr</span> 是典型的 Agent Mode Skill：監控 → 判斷 → 自動修正 → 完成。但在 GMP 環境中，這種「自動修正」需要 human-in-the-loop。你可以建立一個「babysit」但在修正前暫停等待確認的版本。
                     </div>
-                </div>
-            </div>
-        </div>
-
-    </div><!-- end tab-types -->
-
-    <!-- TAB 2: Writing Tips -->
-    <div id="tab-tips" class="tab-content">
-        <!-- Part VI: Don't State the Obvious + Gotchas -->
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="part-label">Part VI</div>
-                <div class="part-title">Don't State the Obvious + Build Gotchas</div>
-                <div class="bilingual-block">
-                    <div class="zh-text">Claude Code 已經對你的 codebase 了解很多，Claude 對 coding 也有很多預設觀點。如果你要發布一個主要關於知識的 Skill，<span class="highlight-key">試著聚焦在那些能把 Claude 推離常規思考方式的資訊上</span>。</div>
-                    <div class="en-text">"If you're publishing a skill that is primarily about knowledge, try to focus on information that pushes Claude out of its normal way of thinking."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><span class="inline-code">frontend-design</span> Skill 是一個好例子 &mdash; 它由 Anthropic 工程師透過與客戶反覆迭代來改善 Claude 的設計品味而建立，<span class="highlight-practical">避免典型的模式如 Inter 字體和紫色漸層</span>。</div>
-                    <div class="en-text">"The frontend design skill was built by one of the engineers at Anthropic by iterating with customers on improving Claude's design taste, avoiding classic patterns like the Inter font and purple gradients."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><span class="highlight-concept">任何 Skill 中信號最高的內容就是 Gotchas Section</span>。這些區段應該從 Claude 使用你的 Skill 時碰到的常見失敗點逐步累積。理想情況下，你會隨著時間更新 Skill 來捕捉這些 gotchas。</div>
-                    <div class="en-text">"The highest-signal content in any skill is the Gotchas section. These sections should be built up from common failure points that Claude runs into when using your skill."</div>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
-                    <div class="info-box-content">
-                        <strong>Gotchas = Skill 的 CAPA Log</strong><br>
-                        每次 Agent 犯錯，就在 Gotchas 加一條。這跟 CAPA 的邏輯一樣：記錄失敗 &#8594; 分析根因 &#8594; 預防再發。Gotchas Section 就是 Skill 的持續改善機制。
+</div>
+</div>
+</div>
+</div><!-- end tab-types -->
+<!-- TAB 2: Writing Tips -->
+<div class="tab-content" id="tab-tips">
+<!-- Part VI: Don't State the Obvious + Gotchas -->
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Part VI</div>
+<div class="part-title">Don't State the Obvious + Build Gotchas</div>
+<div class="bilingual-block">
+<div class="zh-text">Claude Code 已經對你的 codebase 了解很多，Claude 對 coding 也有很多預設觀點。如果你要發布一個主要關於知識的 Skill，<span class="highlight-key">試著聚焦在那些能把 Claude 推離常規思考方式的資訊上</span>。</div>
+<div class="en-text">"If you're publishing a skill that is primarily about knowledge, try to focus on information that pushes Claude out of its normal way of thinking."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><span class="inline-code">frontend-design</span> Skill 是一個好例子 — 它由 Anthropic 工程師透過與客戶反覆迭代來改善 Claude 的設計品味而建立，<span class="highlight-practical">避免典型的模式如 Inter 字體和紫色漸層</span>。</div>
+<div class="en-text">"The frontend design skill was built by one of the engineers at Anthropic by iterating with customers on improving Claude's design taste, avoiding classic patterns like the Inter font and purple gradients."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-concept">任何 Skill 中信號最高的內容就是 Gotchas Section</span>。這些區段應該從 Claude 使用你的 Skill 時碰到的常見失敗點逐步累積。理想情況下，你會隨著時間更新 Skill 來捕捉這些 gotchas。</div>
+<div class="en-text">"The highest-signal content in any skill is the Gotchas section. These sections should be built up from common failure points that Claude runs into when using your skill."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<strong>Gotchas = Skill 的 CAPA Log</strong><br/>
+                        每次 Agent 犯錯，就在 Gotchas 加一條。這跟 CAPA 的邏輯一樣：記錄失敗 → 分析根因 → 預防再發。Gotchas Section 就是 Skill 的持續改善機制。
                     </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
-                    <div class="info-box-content">
-                        「不要陳述顯而易見的事」就像寫 SOP 時不需要解釋「打開電腦」。Claude 已經知道基本的 coding。你的 Skill 應該專注在<strong>你的組織特有的知識</strong> &mdash; 那些 Claude 不可能從公開資料學到的東西。
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+                        「不要陳述顯而易見的事」就像寫 SOP 時不需要解釋「打開電腦」。Claude 已經知道基本的 coding。你的 Skill 應該專注在<strong>你的組織特有的知識</strong> — 那些 Claude 不可能從公開資料學到的東西。
                     </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 對你的啟示</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 對你的啟示</div>
+<div class="info-box-content">
                         你的 Master Prompt v1.5.0 其實已經有 Gotchas 的雛形（例如 layout_balance_check、bilingual completeness 規則）。可以考慮在 artifact-skill 中加一個專門的 <span class="inline-code">## Gotchas</span> 區段，收集所有已知的失敗模式。
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Part VII: Progressive Disclosure + File System -->
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="part-label">Part VII</div>
-                <div class="part-title">Progressive Disclosure &amp; File System</div>
-                <div class="bilingual-block">
-                    <div class="zh-text">你應該<span class="highlight-concept">把整個檔案系統視為一種 Context Engineering 和 Progressive Disclosure 的形式</span>。在 SKILL.md 中告訴 Claude 你的 Skill 裡有哪些檔案，它會在適當的時機讀取。</div>
-                    <div class="en-text">"You should think of the entire file system as a form of context engineering and progressive disclosure. Tell Claude what files are in your skill, and it will read them at appropriate times."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text">最簡單的 Progressive Disclosure 形式是指向其他 Markdown 檔案讓 Claude 使用。例如，你可以把詳細的函數簽名和使用範例拆分到 <span class="inline-code">references/api.md</span>。</div>
-                    <div class="en-text">"The simplest form of progressive disclosure is to point to other markdown files for Claude to use."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text">另一個例子：如果你的最終產出是一個 Markdown 檔案，你可以在 <span class="inline-code">assets/</span> 中放一個範本檔供複製使用。你可以有 references、scripts、examples 等資料夾來幫助 Claude 更有效地工作。</div>
-                    <div class="en-text">"You can have folders of references, scripts, examples, etc., which help Claude work more effectively."</div>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-concept">
-                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
-                    <div class="info-box-content">
-                        <strong>File System = Context Architecture</strong><br>
-                        這完美呼應你的 three-layer architecture 原則（routing &#8594; module &#8594; data）。SKILL.md 是 routing layer，references/ 和 scripts/ 是 module layer，實際資料和範本是 data layer。
+</div>
+</div>
+</div>
+<!-- Part VII: Progressive Disclosure + File System -->
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Part VII</div>
+<div class="part-title">Progressive Disclosure &amp; File System</div>
+<div class="bilingual-block">
+<div class="zh-text">你應該<span class="highlight-concept">把整個檔案系統視為一種 Context Engineering 和 Progressive Disclosure 的形式</span>。在 SKILL.md 中告訴 Claude 你的 Skill 裡有哪些檔案，它會在適當的時機讀取。</div>
+<div class="en-text">"You should think of the entire file system as a form of context engineering and progressive disclosure. Tell Claude what files are in your skill, and it will read them at appropriate times."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">最簡單的 Progressive Disclosure 形式是指向其他 Markdown 檔案讓 Claude 使用。例如，你可以把詳細的函數簽名和使用範例拆分到 <span class="inline-code">references/api.md</span>。</div>
+<div class="en-text">"The simplest form of progressive disclosure is to point to other markdown files for Claude to use."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">另一個例子：如果你的最終產出是一個 Markdown 檔案，你可以在 <span class="inline-code">assets/</span> 中放一個範本檔供複製使用。你可以有 references、scripts、examples 等資料夾來幫助 Claude 更有效地工作。</div>
+<div class="en-text">"You can have folders of references, scripts, examples, etc., which help Claude work more effectively."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<strong>File System = Context Architecture</strong><br/>
+                        這完美呼應你的 three-layer architecture 原則（routing → module → data）。SKILL.md 是 routing layer，references/ 和 scripts/ 是 module layer，實際資料和範本是 data layer。
                     </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 理想 Skill 資料夾結構</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 理想 Skill 資料夾結構</div>
+<div class="info-box-content">
 <pre style="margin:0; font-size:0.8rem;">my-skill/
   SKILL.md          # Entry + routing
   references/
@@ -588,233 +400,221 @@ details[open] .accordion-icon { transform: rotate(180deg); }
   scripts/
     validate.sh     # Verification script
   config.json       # User-specific setup</pre>
-                    </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; Context 成本</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Context 成本</div>
+<div class="info-box-content">
                         Progressive Disclosure 的關鍵好處：SKILL.md 載入時只消耗少量 token，詳細內容只在需要時載入。這正是你在 Claude Code vs Claude.ai Projects 架構差異中觀察到的：Claude Code 可以選擇性載入，Projects 是全量注入。
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Part VIII: Avoid Railroading + Setup + Description + Memory + Hooks -->
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="part-label">Part VIII</div>
-                <div class="part-title">Flexibility, Setup, Memory &amp; Hooks</div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>Avoid Railroading：</strong>Claude 通常會試著遵守你的指令，而且因為 Skills 非常可重用，你會想<span class="highlight-key">避免在指令中過於具體</span>。給 Claude 它需要的資訊，但給它適應情境的彈性。</div>
-                    <div class="en-text">"Give Claude the information it needs, but give it the flexibility to adapt to the situation."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>Setup Pattern：</strong>有些 Skills 需要使用者提供的初始設定。好的模式是<span class="highlight-practical">把設定資訊存在 Skill 目錄中的 config.json</span>。如果 config 未設定，Agent 就會詢問使用者。</div>
-                    <div class="en-text">"A good pattern to do this is to store this setup information in a config.json file in the skill directory."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>Memory via Files：</strong>有些 Skills 可以透過在內部存儲資料來包含一種記憶形式。你可以用簡單的<span class="highlight-concept">追加式文字 log 檔或 JSON 檔</span>，甚至複雜到 SQLite 資料庫。注意：存在 Skill 目錄的資料在升級時可能被刪除，應使用 <span class="inline-code">${CLAUDE_PLUGIN_DATA}</span> 作為穩定儲存路徑。</div>
-                    <div class="en-text">"Some skills can include a form of memory by storing data within them... Data stored in the skill directory may be deleted when you upgrade the skill."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>On-Demand Hooks：</strong>Skills 可以包含<span class="highlight-key">只在 Skill 被調用時啟用的 Hooks</span>，持續到 session 結束。用於那些你不想一直執行、但有時極為有用的 Hooks。例如 <span class="inline-code">/careful</span> 阻擋 rm -rf、DROP TABLE、force-push 等危險操作。</div>
-                    <div class="en-text">"Skills can include hooks that are only activated when the skill is called, and last for the duration of the session."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>Store Scripts：</strong>你能給 Claude 最強大的工具之一就是程式碼。<span class="highlight-practical">給 Claude 腳本和函式庫，讓它把精力花在組合上</span> &mdash; 決定下一步做什麼，而不是重建模板程式碼。Claude 可以即時生成腳本來組合這些功能。</div>
-                    <div class="en-text">"One of the most powerful tools you can give Claude is code. Giving Claude scripts and libraries lets Claude spend its turns on composition."</div>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; Railroading 陷阱</div>
-                    <div class="info-box-content">
+</div>
+</div>
+</div>
+<!-- Part VIII: Avoid Railroading + Setup + Description + Memory + Hooks -->
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Part VIII</div>
+<div class="part-title">Flexibility, Setup, Memory &amp; Hooks</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Avoid Railroading：</strong>Claude 通常會試著遵守你的指令，而且因為 Skills 非常可重用，你會想<span class="highlight-key">避免在指令中過於具體</span>。給 Claude 它需要的資訊，但給它適應情境的彈性。</div>
+<div class="en-text">"Give Claude the information it needs, but give it the flexibility to adapt to the situation."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Setup Pattern：</strong>有些 Skills 需要使用者提供的初始設定。好的模式是<span class="highlight-practical">把設定資訊存在 Skill 目錄中的 config.json</span>。如果 config 未設定，Agent 就會詢問使用者。</div>
+<div class="en-text">"A good pattern to do this is to store this setup information in a config.json file in the skill directory."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Memory via Files：</strong>有些 Skills 可以透過在內部存儲資料來包含一種記憶形式。你可以用簡單的<span class="highlight-concept">追加式文字 log 檔或 JSON 檔</span>，甚至複雜到 SQLite 資料庫。注意：存在 Skill 目錄的資料在升級時可能被刪除，應使用 <span class="inline-code">${CLAUDE_PLUGIN_DATA}</span> 作為穩定儲存路徑。</div>
+<div class="en-text">"Some skills can include a form of memory by storing data within them... Data stored in the skill directory may be deleted when you upgrade the skill."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>On-Demand Hooks：</strong>Skills 可以包含<span class="highlight-key">只在 Skill 被調用時啟用的 Hooks</span>，持續到 session 結束。用於那些你不想一直執行、但有時極為有用的 Hooks。例如 <span class="inline-code">/careful</span> 阻擋 rm -rf、DROP TABLE、force-push 等危險操作。</div>
+<div class="en-text">"Skills can include hooks that are only activated when the skill is called, and last for the duration of the session."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Store Scripts：</strong>你能給 Claude 最強大的工具之一就是程式碼。<span class="highlight-practical">給 Claude 腳本和函式庫，讓它把精力花在組合上</span> — 決定下一步做什麼，而不是重建模板程式碼。Claude 可以即時生成腳本來組合這些功能。</div>
+<div class="en-text">"One of the most powerful tools you can give Claude is code. Giving Claude scripts and libraries lets Claude spend its turns on composition."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 Railroading 陷阱</div>
+<div class="info-box-content">
                         寫 Skill 就像寫 SOP：太模糊沒有用，太詳細則讓執行者無法應對例外。最好的 SOP 定義<strong>目標和邊界</strong>，但留給操作員判斷的空間。Skill 也一樣。
                     </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; /careful Hook</div>
-                    <div class="info-box-content">
-                        <span class="inline-code">/careful</span> 是 On-Demand Hook 的完美案例：你不會希望它每次都跑（太煩），但當你碰 production 時絕對需要它。<br><br>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ /careful Hook</div>
+<div class="info-box-content">
+<span class="inline-code">/careful</span> 是 On-Demand Hook 的完美案例：你不會希望它每次都跑（太煩），但當你碰 production 時絕對需要它。<br/><br/>
                         CDMO 類比：就像進入無菌區才穿無菌衣，不是隨時都穿。情境決定護欄等級。
                     </div>
-                </div>
-                <div class="info-box box-concept">
-                    <div class="info-box-header">&#x1F4DA; Description = Trigger</div>
-                    <div class="info-box-content">
-                        <strong>Description 是給模型看的，不是給人看的。</strong>Claude Code 啟動時會建立所有 Skill 的描述列表，Claude 掃描這個列表來決定「這個請求有沒有對應的 Skill？」所以 description 不是摘要，而是觸發條件的描述。
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 Description = Trigger</div>
+<div class="info-box-content">
+<strong>Description 是給模型看的，不是給人看的。</strong>Claude Code 啟動時會建立所有 Skill 的描述列表，Claude 掃描這個列表來決定「這個請求有沒有對應的 Skill？」所以 description 不是摘要，而是觸發條件的描述。
                     </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; Composition Pattern</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Composition Pattern</div>
+<div class="info-box-content">
                         「給 Claude 腳本讓它組合」是一個強大的模式。想像一個 data-science Skill 裡有 helper functions 來 fetch 資料，Claude 可以即時生成腳本來組合這些函數做更複雜的分析。這把 Agent 的角色從「寫程式碼」提升到「設計解決方案」。
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TAB 3: Distribution -->
-    <div id="tab-dist" class="tab-content">
-        <!-- Part IX: Distribution & Marketplace -->
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="part-label">Part IX</div>
-                <div class="part-title">Distribution, Marketplace &amp; Measurement</div>
-                <div class="bilingual-block">
-                    <div class="zh-text">分享 Skills 有兩種方式：<span class="highlight-concept">將 Skills check in 到你的 repo</span>（在 <span class="inline-code">.claude/skills</span> 下），或<span class="highlight-concept">製作 plugin 並建立 Plugin Marketplace</span> 讓使用者上傳和安裝。</div>
-                    <div class="en-text">"There are two ways you might share skills with others: check your skills into your repo (under ./.claude/skills) or make a plugin and have a Claude Code Plugin marketplace."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text">對於在相對較少 repo 上工作的小型團隊，check in skills 效果很好。但<span class="highlight-key">每一個 check in 的 Skill 都會稍微增加模型的 context</span>。隨著規模擴大，內部 Plugin Marketplace 讓你可以分發 Skills 並讓團隊自己決定安裝哪些。</div>
-                    <div class="en-text">"For smaller teams working across relatively few repos, checking your skills into repos works well. But every skill that is checked in also adds a little bit to the context of the model."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text">Anthropic 沒有一個集中式團隊來決定哪些 Skills 進入 Marketplace。他們嘗試<span class="highlight-practical">有機地找出最有用的 Skills</span>：先在 sandbox 資料夾中上傳，在 Slack 推薦。當一個 Skill 獲得足夠的使用量後，才提 PR 移入 Marketplace。</div>
-                    <div class="en-text">"We don't have a centralized team that decides; instead we try and find the most useful skills organically."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>Composing Skills：</strong>你可能想讓 Skills 彼此依賴。這種依賴管理尚未內建到 Marketplace 中，但你可以<span class="highlight-practical">直接在 Skill 中引用其他 Skill 的名稱</span>，如果已安裝，模型就會調用它們。</div>
-                    <div class="en-text">"You can just reference other skills by name, and the model will invoke them if they are installed."</div>
-                </div>
-                <div class="bilingual-block">
-                    <div class="zh-text"><strong>Measuring Skills：</strong>Anthropic 使用 <span class="inline-code">PreToolUse</span> hook 來記錄公司內部的 Skill 使用情況。這讓他們能找到<span class="highlight-key">熱門的 Skills 或觸發率低於預期的 Skills</span>。</div>
-                    <div class="en-text">"We use a PreToolUse hook that lets us log skill usage within the company... we can find skills that are popular or are undertriggering compared to our expectations."</div>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-compare">
-                    <div class="info-box-header">&#x2696;&#xFE0F; Repo vs Marketplace</div>
-                    <div class="info-box-content">
-                        <strong>Repo Check-in：</strong>簡單、版本控制、團隊自動同步。但每個 Skill 增加 context 負擔。<br><br>
-                        <strong>Plugin Marketplace：</strong>按需安裝、不增加不需要的 context。但需要維護基礎設施。<br><br>
-                        <strong>你的情況：</strong>個人使用為主 &#8594; Repo check-in 即可。但如果團隊採用，需要考慮 Marketplace。
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 3: Distribution -->
+<div class="tab-content" id="tab-dist">
+<!-- Part IX: Distribution & Marketplace -->
+<div class="content-grid">
+<div class="content-left">
+<div class="part-label">Part IX</div>
+<div class="part-title">Distribution, Marketplace &amp; Measurement</div>
+<div class="bilingual-block">
+<div class="zh-text">分享 Skills 有兩種方式：<span class="highlight-concept">將 Skills check in 到你的 repo</span>（在 <span class="inline-code">.claude/skills</span> 下），或<span class="highlight-concept">製作 plugin 並建立 Plugin Marketplace</span> 讓使用者上傳和安裝。</div>
+<div class="en-text">"There are two ways you might share skills with others: check your skills into your repo (under ./.claude/skills) or make a plugin and have a Claude Code Plugin marketplace."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">對於在相對較少 repo 上工作的小型團隊，check in skills 效果很好。但<span class="highlight-key">每一個 check in 的 Skill 都會稍微增加模型的 context</span>。隨著規模擴大，內部 Plugin Marketplace 讓你可以分發 Skills 並讓團隊自己決定安裝哪些。</div>
+<div class="en-text">"For smaller teams working across relatively few repos, checking your skills into repos works well. But every skill that is checked in also adds a little bit to the context of the model."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Anthropic 沒有一個集中式團隊來決定哪些 Skills 進入 Marketplace。他們嘗試<span class="highlight-practical">有機地找出最有用的 Skills</span>：先在 sandbox 資料夾中上傳，在 Slack 推薦。當一個 Skill 獲得足夠的使用量後，才提 PR 移入 Marketplace。</div>
+<div class="en-text">"We don't have a centralized team that decides; instead we try and find the most useful skills organically."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Composing Skills：</strong>你可能想讓 Skills 彼此依賴。這種依賴管理尚未內建到 Marketplace 中，但你可以<span class="highlight-practical">直接在 Skill 中引用其他 Skill 的名稱</span>，如果已安裝，模型就會調用它們。</div>
+<div class="en-text">"You can just reference other skills by name, and the model will invoke them if they are installed."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Measuring Skills：</strong>Anthropic 使用 <span class="inline-code">PreToolUse</span> hook 來記錄公司內部的 Skill 使用情況。這讓他們能找到<span class="highlight-key">熱門的 Skills 或觸發率低於預期的 Skills</span>。</div>
+<div class="en-text">"We use a PreToolUse hook that lets us log skill usage within the company... we can find skills that are popular or are undertriggering compared to our expectations."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ Repo vs Marketplace</div>
+<div class="info-box-content">
+<strong>Repo Check-in：</strong>簡單、版本控制、團隊自動同步。但每個 Skill 增加 context 負擔。<br/><br/>
+<strong>Plugin Marketplace：</strong>按需安裝、不增加不需要的 context。但需要維護基礎設施。<br/><br/>
+<strong>你的情況：</strong>個人使用為主 → Repo check-in 即可。但如果團隊採用，需要考慮 Marketplace。
                     </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#x26A0;&#xFE0F; Curation Warning</div>
-                    <div class="info-box-content">
-                        <strong>很容易建立糟糕或冗餘的 Skills。</strong>Thariq 特別警告：在發布前確保有某種策展機制。這呼應了你的「Removal Test」原則 &mdash; 如果移除一個 Skill 後沒有人注意到，它可能不值得維護。
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Curation Warning</div>
+<div class="info-box-content">
+<strong>很容易建立糟糕或冗餘的 Skills。</strong>Thariq 特別警告：在發布前確保有某種策展機制。這呼應了你的「Removal Test」原則 — 如果移除一個 Skill 後沒有人注意到，它可能不值得維護。
                     </div>
-                </div>
-                <div class="info-box box-practical">
-                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 使用量追蹤</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 使用量追蹤</div>
+<div class="info-box-content">
                         PreToolUse hook 記錄 Skill 使用量是一個聰明的做法。它解決了一個常見問題：<strong>你不知道你的 Skill 是否真的被觸發了</strong>。undertrigger 可能意味著 description 寫得不好（Agent 不知道何時使用），或 Skill 解決的問題其實不常見。
                     </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">&#x1F4A1; Organic Curation</div>
-                    <div class="info-box-content">
-                        Anthropic 的「sandbox &#8594; traction &#8594; marketplace」流程像是 GMP 的驗證階段：IQ（安裝測試）&#8594; OQ（操作測試）&#8594; PQ（效能測試）。不是每個想法都能走到 PQ，只有證明有效的才正式上線。
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 Organic Curation</div>
+<div class="info-box-content">
+                        Anthropic 的「sandbox → traction → marketplace」流程像是 GMP 的驗證階段：IQ（安裝測試）→ OQ（操作測試）→ PQ（效能測試）。不是每個想法都能走到 PQ，只有證明有效的才正式上線。
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+</div>
+</div>
+</div>
+</div>
 </div><!-- end tab-container -->
-
 <!-- Key Takeaways -->
 <h2 class="section-header">Key Takeaways</h2>
 <div class="takeaways-grid">
-    <div class="summary-card">
-        <div class="summary-card-title">Skill = Folder, Not File</div>
-        <div class="summary-card-text">SKILL.md 是入口，但真正的價值在整個資料夾結構：scripts/、references/、assets/。把檔案系統當作 Context Engineering 和 Progressive Disclosure 的載體。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #10b981;">
-        <div class="summary-card-title">Gotchas = Highest Signal</div>
-        <div class="summary-card-text">任何 Skill 中最高價值的內容是 Gotchas Section。從 Agent 的實際失敗點逐步累積，就像 CAPA log 一樣持續改善。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #8b5cf6;">
-        <div class="summary-card-title">9 Types, Single Responsibility</div>
-        <div class="summary-card-text">最好的 Skill 清楚屬於一個類別（Library Reference、Verification、Runbook 等）。橫跨多類的 Skill 會讓 Agent 困惑，就像混合 SOP 和 Batch Record 一樣。</div>
-    </div>
-    <div class="summary-card" style="border-left-color: #f59e0b;">
-        <div class="summary-card-title">Description = Trigger, Not Summary</div>
-        <div class="summary-card-text">Skill description 是給模型看的觸發條件，不是給人看的摘要。寫得好，Agent 自動觸發；寫得差，Skill 形同虛設。</div>
-    </div>
+<div class="summary-card">
+<div class="summary-card-title">Skill = Folder, Not File</div>
+<div class="summary-card-text">SKILL.md 是入口，但真正的價值在整個資料夾結構：scripts/、references/、assets/。把檔案系統當作 Context Engineering 和 Progressive Disclosure 的載體。</div>
 </div>
-
+<div class="summary-card" style="border-left-color: #10b981;">
+<div class="summary-card-title">Gotchas = Highest Signal</div>
+<div class="summary-card-text">任何 Skill 中最高價值的內容是 Gotchas Section。從 Agent 的實際失敗點逐步累積，就像 CAPA log 一樣持續改善。</div>
+</div>
+<div class="summary-card" style="border-left-color: #8b5cf6;">
+<div class="summary-card-title">9 Types, Single Responsibility</div>
+<div class="summary-card-text">最好的 Skill 清楚屬於一個類別（Library Reference、Verification、Runbook 等）。橫跨多類的 Skill 會讓 Agent 困惑，就像混合 SOP 和 Batch Record 一樣。</div>
+</div>
+<div class="summary-card" style="border-left-color: #f59e0b;">
+<div class="summary-card-title">Description = Trigger, Not Summary</div>
+<div class="summary-card-text">Skill description 是給模型看的觸發條件，不是給人看的摘要。寫得好，Agent 自動觸發；寫得差，Skill 形同虛設。</div>
+</div>
+</div>
 <!-- Practice Questions -->
 <h2 class="section-header">Practice Questions</h2>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q1</span>
-        <span class="question-type">概念理解</span>
-        <span class="question-text">Thariq 說「最好的 Skills 清楚屬於一個類別」。如果你要建立一個同時做 deviation investigation + root cause analysis + CAPA tracking 的 Skill，根據本文的原則，你會怎麼拆分？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>根據 9 大分類和 Single Responsibility 原則，應該拆分為三個 Skills：</p>
-        <p><strong>1. deviation-triage (Runbook, #8)：</strong>接收症狀（OOS 結果、環控偏差），走過多系統調查流程，產出結構化報告。</p>
-        <p><strong>2. root-cause-analyzer (Data Fetching &amp; Analysis, #3)：</strong>連接 TrackWise、環控系統、training records，提供資料整合和相關性分析。</p>
-        <p><strong>3. capa-creator (Business Process, #4)：</strong>根據調查結果，自動生成 CAPA 草稿，套用組織的模板和必填欄位。</p>
-        <p>這三個 Skills 可以透過 Composing Skills 的方式互相引用，但各自保持單一職責。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">Thariq 說「最好的 Skills 清楚屬於一個類別」。如果你要建立一個同時做 deviation investigation + root cause analysis + CAPA tracking 的 Skill，根據本文的原則，你會怎麼拆分？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>根據 9 大分類和 Single Responsibility 原則，應該拆分為三個 Skills：</p>
+<p><strong>1. deviation-triage (Runbook, #8)：</strong>接收症狀（OOS 結果、環控偏差），走過多系統調查流程，產出結構化報告。</p>
+<p><strong>2. root-cause-analyzer (Data Fetching &amp; Analysis, #3)：</strong>連接 TrackWise、環控系統、training records，提供資料整合和相關性分析。</p>
+<p><strong>3. capa-creator (Business Process, #4)：</strong>根據調查結果，自動生成 CAPA 草稿，套用組織的模板和必填欄位。</p>
+<p>這三個 Skills 可以透過 Composing Skills 的方式互相引用，但各自保持單一職責。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q2</span>
-        <span class="question-type">產業應用</span>
-        <span class="question-text">文章提到 Product Verification Skills 值得花一整週工程師時間來建立。在 CDMO aseptic fill/finish 的情境中，你會建立什麼樣的 Verification Skill？它會驗證什麼？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p>在 aseptic fill/finish 情境中，一個 <span class="inline-code">batch-record-verifier</span> Skill 可以：</p>
-        <p><strong>驗證項目：</strong>批次記錄的計算正確性（如填充量、稀釋比例）、環控數據與規格的一致性（differential pressure、particle count）、操作步驟的完整性（所有 sign-off 欄位是否填寫）。</p>
-        <p><strong>技術手段：</strong>搭配 Python 腳本讀取 PDF/Excel 格式的 batch record，用 programmatic assertions 檢查每個欄位。類似 Thariq 提到的「在每一步強制執行程式化的狀態斷言」。</p>
-        <p><strong>重要限制：</strong>這是 Copilot Mode 應用 &mdash; 驗證結果必須由 QA 人員審查確認，不能直接 auto-approve。GMP 要求人類最終簽核。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">文章提到 Product Verification Skills 值得花一整週工程師時間來建立。在 CDMO aseptic fill/finish 的情境中，你會建立什麼樣的 Verification Skill？它會驗證什麼？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>在 aseptic fill/finish 情境中，一個 <span class="inline-code">batch-record-verifier</span> Skill 可以：</p>
+<p><strong>驗證項目：</strong>批次記錄的計算正確性（如填充量、稀釋比例）、環控數據與規格的一致性（differential pressure、particle count）、操作步驟的完整性（所有 sign-off 欄位是否填寫）。</p>
+<p><strong>技術手段：</strong>搭配 Python 腳本讀取 PDF/Excel 格式的 batch record，用 programmatic assertions 檢查每個欄位。類似 Thariq 提到的「在每一步強制執行程式化的狀態斷言」。</p>
+<p><strong>重要限制：</strong>這是 Copilot Mode 應用 — 驗證結果必須由 QA 人員審查確認，不能直接 auto-approve。GMP 要求人類最終簽核。</p>
+</div>
 </details>
-
 <details class="question-accordion">
-    <summary class="question-header">
-        <span class="question-number">Q3</span>
-        <span class="question-type">批判思考</span>
-        <span class="question-text">本文來自 Anthropic 工程團隊，介紹的是他們自己產品 Claude Code 的 Skills 功能。考慮到這個來源身分，這篇文章可能遺漏了什麼？有哪些 Skill 的限制或問題是作者不太會主動提到的？</span>
-        <span class="accordion-icon"></span>
-    </summary>
-    <div class="question-answer">
-        <p><strong>可能遺漏的面向：</strong></p>
-        <p><strong>1. Token/Cost 影響：</strong>文章只簡短提到 check-in 的 Skill 會增加 context，但沒有量化。100 個 Skills 各有 SKILL.md + references，載入成本是多少？這對 API 費用的實際影響？</p>
-        <p><strong>2. Skill 衝突和除錯：</strong>當多個 Skills 被同時觸發，指令互相矛盾時怎麼辦？文章沒有討論 Skill 之間的優先級解決機制。</p>
-        <p><strong>3. 維護成本：</strong>文章鼓勵建立更多 Skills，但「數百個 Skills」的維護負擔是什麼？有多少 Skills 過時了但沒人清理？</p>
-        <p><strong>4. 失敗案例：</strong>文章只分享成功經驗，沒有討論「我們試過但失敗的 Skill 類型」或「這種 Skill 看起來好但實際上沒用」。</p>
-        <p><strong>5. 競品比較：</strong>作為 Anthropic 員工，自然不會比較 Cursor Rules、Windsurf 的類似機制，也不會討論 Skills 架構的結構性限制。</p>
-        <p>這些並不削弱文章的價值 &mdash; 它仍然是目前最詳細的內部 Skills 使用心得。但應用 2-3x Discount Principle，對於「數百個 Skills 都很有用」的說法保持適度懷疑。</p>
-    </div>
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">本文來自 Anthropic 工程團隊，介紹的是他們自己產品 Claude Code 的 Skills 功能。考慮到這個來源身分，這篇文章可能遺漏了什麼？有哪些 Skill 的限制或問題是作者不太會主動提到的？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>可能遺漏的面向：</strong></p>
+<p><strong>1. Token/Cost 影響：</strong>文章只簡短提到 check-in 的 Skill 會增加 context，但沒有量化。100 個 Skills 各有 SKILL.md + references，載入成本是多少？這對 API 費用的實際影響？</p>
+<p><strong>2. Skill 衝突和除錯：</strong>當多個 Skills 被同時觸發，指令互相矛盾時怎麼辦？文章沒有討論 Skill 之間的優先級解決機制。</p>
+<p><strong>3. 維護成本：</strong>文章鼓勵建立更多 Skills，但「數百個 Skills」的維護負擔是什麼？有多少 Skills 過時了但沒人清理？</p>
+<p><strong>4. 失敗案例：</strong>文章只分享成功經驗，沒有討論「我們試過但失敗的 Skill 類型」或「這種 Skill 看起來好但實際上沒用」。</p>
+<p><strong>5. 競品比較：</strong>作為 Anthropic 員工，自然不會比較 Cursor Rules、Windsurf 的類似機制，也不會討論 Skills 架構的結構性限制。</p>
+<p>這些並不削弱文章的價值 — 它仍然是目前最詳細的內部 Skills 使用心得。但應用 2-3x Discount Principle，對於「數百個 Skills 都很有用」的說法保持適度懷疑。</p>
+</div>
 </details>
-
 <!-- Bottom Line -->
 <div class="bottom-line">
-    <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x2714; 核心洞察</div>
-        <div class="bottom-line-text">Skill 是資料夾不是檔案，Gotchas Section 是最高信號內容。這兩個觀念直接改變我對現有 Skills（artifact-skill、cdmo-feasibility）的架構思考：它們都太「平面」了，缺少 references/ 和 scripts/ 的分層結構。同時，9 大分類法讓我第一次能系統性地盤點「我缺什麼類型的 Skill」。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
-        <div class="bottom-line-text">本週在 artifact-skill 中加入 <code>## Gotchas</code> 區段，收集已知的失敗模式（bilingual 不完整、layout 失衡、code block 位置錯誤等）。同時在 SKILL.md 中加入 references/ 指向詳細的 CSS 規範和範本檔案，實踐 Progressive Disclosure。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#x26A0; 需要補充</div>
-        <div class="bottom-line-text">文章沒有量化 Skill 的 token 成本影響，也沒有討論 Skill 衝突解決機制。此外，所有範例都是軟體工程情境，CDMO/GMP 的 Skill 設計需要自行調適 &mdash; 特別是 Copilot vs Agent Mode 的邊界和 21 CFR Part 11 合規考量。下次閱讀 Anthropic 的 Agent Skills 官方文件時，可以交叉比對技術細節。</div>
-    </div>
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">Skill 是資料夾不是檔案，Gotchas Section 是最高信號內容。這兩個觀念直接改變我對現有 Skills（artifact-skill、cdmo-feasibility）的架構思考：它們都太「平面」了，缺少 references/ 和 scripts/ 的分層結構。同時，9 大分類法讓我第一次能系統性地盤點「我缺什麼類型的 Skill」。</div>
 </div>
-
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">本週在 artifact-skill 中加入 <code>## Gotchas</code> 區段，收集已知的失敗模式（bilingual 不完整、layout 失衡、code block 位置錯誤等）。同時在 SKILL.md 中加入 references/ 指向詳細的 CSS 規範和範本檔案，實踐 Progressive Disclosure。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">文章沒有量化 Skill 的 token 成本影響，也沒有討論 Skill 衝突解決機制。此外，所有範例都是軟體工程情境，CDMO/GMP 的 Skill 設計需要自行調適 — 特別是 Copilot vs Agent Mode 的邊界和 21 CFR Part 11 合規考量。下次閱讀 Anthropic 的 Agent Skills 官方文件時，可以交叉比對技術細節。</div>
+</div>
+</div>
 <!-- Footer -->
-<div class="footer">
-    <p>製作日期：2026-03-18 | Source: <a href="https://x.com/trq212" target="_blank">Thariq (@trq212) / Anthropic Engineering</a></p>
-    <p>Suggested Chat Title: <strong>2026-03-18 [Anthropic-Eng] [Agent] Claude Code Skills Lessons</strong></p>
-    <p>Suggested Filename: <strong>2026-03-18_claude-code-skills-lessons.html</strong></p>
-</div>
-
+<footer class="footer">
+<p>製作日期：2026-03-18 | Source: <a href="https://x.com/trq212" target="_blank">Thariq (@trq212) / Anthropic Engineering</a></p>
+<p>Suggested Chat Title: <strong>2026-03-18 [Anthropic-Eng] [Agent] Claude Code Skills Lessons</strong></p>
+<p>Suggested Filename: <strong>2026-03-18_claude-code-skills-lessons.html</strong></p>
+</footer>
 </div><!-- end container -->
-
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

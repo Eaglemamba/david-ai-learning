@@ -1,536 +1,387 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2026-02-10">
-    <meta name="doc-title" content="Claude Skills：每月省下 40+ 小時的文件自動化系統">
-    <meta name="doc-source" content="Joel Salinas / Substack">
-    <meta name="doc-tags" content="Tool,Automation,Prompt">
-    <meta name="doc-rating" content="3.6">
-    <meta name="doc-summary" content="Claude Skills功能實戰入門，5個自訂Skill自動化提案簡報等文件">
-    <meta name="doc-file" content="2026-02-10_claude-skills-automation.html">
-    <title>Claude Skills：每月省下 40+ 小時的文件自動化系統</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2026-02-10" name="doc-date"/>
+<meta content="Claude Skills：每月省下 40+ 小時的文件自動化系統" name="doc-title"/>
+<meta content="Joel Salinas / Substack" name="doc-source"/>
+<meta content="Tool,Automation,Prompt" name="doc-tags"/>
+<meta content="3.6" name="doc-rating"/>
+<meta content="Claude Skills功能實戰入門，5個自訂Skill自動化提案簡報等文件" name="doc-summary"/>
+<meta content="2026-02-10_claude-skills-automation.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>Claude Skills：每月省下 40+ 小時的文件自動化系統</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 
-        /* Header */
-        .article-header { text-align: center; margin-bottom: 2rem; padding: 2rem 1rem; background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; color: white; }
-        .article-header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.4; }
-        .article-header .subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 1rem; }
-        .tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
-        .tag { padding: 0.2rem 0.6rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .tag-automation { background: #a7f3d0; color: #065f46; }
-        .tag-prompt { background: #fde68a; color: #92400e; }
-        .source-info { font-size: 0.8rem; opacity: 0.7; }
 
-        /* Rating Bar */
-        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-        /* Executive Summary */
-        .exec-summary { background: white; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .exec-summary h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; }
-        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
-
-        /* Learning Objectives */
-        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .objective-item { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .objective-item .obj-number { font-size: 0.75rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.25rem; }
-        .objective-item .obj-text { font-size: 0.9rem; color: #334155; }
-
-        /* Framework Visual */
-        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 120px; }
-        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
-        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-        /* Section Headers */
-        .section-header { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
-        .part-label { font-size: 0.75rem; font-weight: 600; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
-
-        /* Content Grid (Two Column) */
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
-        .content-left { padding-right: 1rem; border-right: 1px solid #e2e8f0; }
-        .content-right { padding-left: 0.5rem; }
-        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; padding-right: 0; } .content-right { padding-left: 0; } }
-
-        /* Bilingual Block */
-        .bilingual-block { margin-bottom: 1.25rem; }
-        .bilingual-block .zh { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.3rem; }
-        .bilingual-block .en { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
-        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-        /* Info Boxes */
-        .info-box { border-radius: 0.5rem; margin-bottom: 1rem; overflow: hidden; }
-        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-        .info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
-        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
-        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
-
-        /* Key Takeaways */
-        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0 2rem; }
-        .summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .summary-card:nth-child(2) { border-left-color: #10b981; }
-        .summary-card:nth-child(3) { border-left-color: #f59e0b; }
-        .summary-card:nth-child(4) { border-left-color: #8b5cf6; }
-        .summary-card .card-title { font-weight: 700; font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
-        .summary-card .card-text { font-size: 0.85rem; color: #475569; line-height: 1.6; }
-
-        /* Accordion (Practice Questions) */
-        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-        .question-answer p:last-child { margin-bottom: 0; }
-
-        /* Bottom Line */
-        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
-        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-        /* Footer */
-        .footer { text-align: center; padding: 1.5rem; margin-top: 2rem; font-size: 0.8rem; color: #94a3b8; border-top: 1px solid #e2e8f0; }
-        .footer a { color: #3b82f6; text-decoration: none; }
-
-        /* Comparison Table */
-        .compare-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
-        .compare-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; }
-        .compare-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
-        .compare-table tr:nth-child(even) { background: #f8fafc; }
-
-        code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
-    </style>
 </head>
 <body>
 <div class="container">
-
-    <!-- HEADER -->
-    <div class="article-header">
-        <div class="tag-container">
-            <span class="tag tag-tool">Tool</span>
-            <span class="tag tag-automation">Automation</span>
-            <span class="tag tag-prompt">Prompt</span>
-        </div>
-        <h1>Claude Skills：每月省下 40+ 小時的文件自動化系統</h1>
-        <div class="subtitle">Me 40 Hrs Monthly - Automating Proposals, Contracts, and Decks Without Coding</div>
-        <div class="source-info">Joel Salinas | Feb 09, 2026 | Substack Newsletter</div>
-    </div>
-
-    <!-- EXECUTIVE SUMMARY -->
-    <div class="exec-summary">
-        <h2>Quick Summary</h2>
-        <div class="rating-bar">
-            <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
-            <span class="rating-high">&#8593; 實務應用, 時效性</span>
-            <span class="rating-low">&#8595; 技術深度, 工具生態</span>
-        </div>
-        <p>
+<!-- HEADER -->
+<div class="article-header">
+<div class="tag-container">
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-automation">Automation</span>
+<span class="tag tag-prompt">Prompt</span>
+</div>
+<h1>Claude Skills：每月省下 40+ 小時的文件自動化系統</h1>
+<div class="subtitle">Me 40 Hrs Monthly - Automating Proposals, Contracts, and Decks Without Coding</div>
+<div class="source-info">Joel Salinas | Feb 09, 2026 | Substack Newsletter</div>
+</div>
+<!-- EXECUTIVE SUMMARY -->
+<div class="exec-summary">
+<h2>Quick Summary</h2>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
+<span class="rating-high">↑ 實務應用, 時效性</span>
+<span class="rating-low">↓ 技術深度, 工具生態</span>
+</div>
+<p>
             這篇文章是 Claude Skills 功能的實戰入門指南。作者 Joel Salinas 分享了他如何利用 5 個自訂 Skill 來自動化提案、簡報、儀表板、財務模型和流程圖的建立，每月省下超過 40 小時。文章的最大價值在於提供了<span class="highlight-practical">完整的 step-by-step 建立流程</span>和可下載的 SKILL.md 範本，讓讀者可以立即動手。技術深度不高（主要是操作指南而非架構解析），但對於想要快速上手 Claude Skills 的使用者來說，這是一篇極具實務價值的入門文。
         </p>
-    </div>
-
-    <!-- LEARNING OBJECTIVES -->
-    <div class="part-label">Learning Objectives</div>
-    <div class="section-header">學習目標</div>
-    <div class="objectives-grid">
-        <div class="objective-item">
-            <div class="obj-number">OBJECTIVE 01</div>
-            <div class="obj-text">理解 Claude Skills 與 Projects 的差異，以及兩者如何互補運作</div>
-        </div>
-        <div class="objective-item" style="border-left-color: #10b981;">
-            <div class="obj-number" style="color: #10b981;">OBJECTIVE 02</div>
-            <div class="obj-text">掌握建立 Skill 的完整 4 步流程：資料夾 → SKILL.md → 壓縮 → 上傳</div>
-        </div>
-        <div class="objective-item" style="border-left-color: #f59e0b;">
-            <div class="obj-number" style="color: #f59e0b;">OBJECTIVE 03</div>
-            <div class="obj-text">評估 5 種 Skill 類型（提案/簡報/儀表板/財務模型/流程圖）在自身工作場景的適用性</div>
-        </div>
-    </div>
-
-    <!-- FRAMEWORK VISUAL -->
-    <div class="framework-visual">
-        <div class="framework-title">Skill 建立 4 步流程</div>
-        <div class="framework-steps">
-            <div class="framework-step">
-                <div class="framework-icon">&#128193;</div>
-                <div class="framework-step-title">Step 1: 建立資料夾</div>
-                <div class="framework-step-desc">小寫 + 短橫線命名</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#128196;</div>
-                <div class="framework-step-title">Step 2: 建立 SKILL.md</div>
-                <div class="framework-step-desc">定義工作流程指令</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#128230;</div>
-                <div class="framework-step-title">Step 3: 壓縮 ZIP</div>
-                <div class="framework-step-desc">打包資料夾</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#9729;</div>
-                <div class="framework-step-title">Step 4: 上傳 Claude</div>
-                <div class="framework-step-desc">Settings &gt; Skills</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== PART I ===== -->
-    <div class="part-label">Part I</div>
-    <div class="section-header">什麼是 Claude Skills？為什麼它不同？</div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <div class="zh">一般的 Claude 能寫 email、摘要文件。但 <span class="highlight-concept">Skills 教會 Claude 專門的工作流程（specialized workflows）</span>，當你提到相關需求時會自動觸發。</div>
-                <div class="en">"Regular Claude writes emails and summarizes documents. Skills teach Claude specialized workflows that trigger automatically when you mention them or ask for what they do."</div>
-            </div>
-            <div class="bilingual-block">
-                <div class="zh">Skills 能建立的東西遠超文字回覆：Word 文件、PDF、PowerPoint 簡報、<span class="highlight-practical">含有運作公式的 Excel 試算表</span>、互動式儀表板、組織圖、流程圖。</div>
-                <div class="en">"Word documents, PDFs, PowerPoint presentations, Excel spreadsheets with working formulas, interactive dashboards, org charts, workflow diagrams."</div>
-            </div>
-            <div class="bilingual-block">
-                <div class="zh">根據統計，約 <span class="highlight-key">27% 的 Claude 輔助工作是「原本不會做」的任務</span>——儀表板和分析工具如果手動做根本不划算。重度使用者回報 <span class="highlight-cost">50-100% 的生產力提升</span>。</div>
-                <div class="en">"Approximately 27% of Claude-assisted work consists of tasks that wouldn't have been done otherwise... Power users report 50-100% productivity gains."</div>
-            </div>
-        </div>
-        <div class="content-right">
-            <div class="info-box box-analogy">
-                <div class="info-box-header">&#128161; 比喻說明</div>
-                <div class="info-box-content">
+</div>
+<!-- LEARNING OBJECTIVES -->
+<div class="part-label">Learning Objectives</div>
+<div class="section-header">學習目標</div>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="obj-number">OBJECTIVE 01</div>
+<div class="obj-text">理解 Claude Skills 與 Projects 的差異，以及兩者如何互補運作</div>
+</div>
+<div class="objective-item" style="border-left-color: #10b981;">
+<div class="obj-number" style="color: #10b981;">OBJECTIVE 02</div>
+<div class="obj-text">掌握建立 Skill 的完整 4 步流程：資料夾 → SKILL.md → 壓縮 → 上傳</div>
+</div>
+<div class="objective-item" style="border-left-color: #f59e0b;">
+<div class="obj-number" style="color: #f59e0b;">OBJECTIVE 03</div>
+<div class="obj-text">評估 5 種 Skill 類型（提案/簡報/儀表板/財務模型/流程圖）在自身工作場景的適用性</div>
+</div>
+</div>
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+<div class="framework-title">Skill 建立 4 步流程</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">📁</div>
+<div class="framework-step-title">Step 1: 建立資料夾</div>
+<div class="framework-step-desc">小寫 + 短橫線命名</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📄</div>
+<div class="framework-step-title">Step 2: 建立 SKILL.md</div>
+<div class="framework-step-desc">定義工作流程指令</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📦</div>
+<div class="framework-step-title">Step 3: 壓縮 ZIP</div>
+<div class="framework-step-desc">打包資料夾</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">☁</div>
+<div class="framework-step-title">Step 4: 上傳 Claude</div>
+<div class="framework-step-desc">Settings &gt; Skills</div>
+</div>
+</div>
+</div>
+<!-- ===== PART I ===== -->
+<div class="part-label">Part I</div>
+<div class="section-header">什麼是 Claude Skills？為什麼它不同？</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">一般的 Claude 能寫 email、摘要文件。但 <span class="highlight-concept">Skills 教會 Claude 專門的工作流程（specialized workflows）</span>，當你提到相關需求時會自動觸發。</div>
+<div class="en-text">"Regular Claude writes emails and summarizes documents. Skills teach Claude specialized workflows that trigger automatically when you mention them or ask for what they do."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Skills 能建立的東西遠超文字回覆：Word 文件、PDF、PowerPoint 簡報、<span class="highlight-practical">含有運作公式的 Excel 試算表</span>、互動式儀表板、組織圖、流程圖。</div>
+<div class="en-text">"Word documents, PDFs, PowerPoint presentations, Excel spreadsheets with working formulas, interactive dashboards, org charts, workflow diagrams."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">根據統計，約 <span class="highlight-key">27% 的 Claude 輔助工作是「原本不會做」的任務</span>——儀表板和分析工具如果手動做根本不划算。重度使用者回報 <span class="highlight-cost">50-100% 的生產力提升</span>。</div>
+<div class="en-text">"Approximately 27% of Claude-assisted work consists of tasks that wouldn't have been done otherwise... Power users report 50-100% productivity gains."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
                     想像 Claude 是一位新進員工。沒有 Skill 時，他什麼都能做一點但不精通。Skill 就像是你給他的<strong>專業 SOP 手冊</strong>——一旦有了提案製作 SOP，他就能每次都產出格式一致、品質穩定的提案，不用你每次重新教。
                 </div>
-            </div>
-            <div class="info-box box-cost">
-                <div class="info-box-header">&#128176; ROI 快速計算</div>
-                <div class="info-box-content">
-                    <strong>前提：</strong>Claude Professional $17/月<br>
-                    <strong>假設：</strong>你的時間價值 $150/小時，Skills 每月省 10 小時<br>
-                    <strong>結果：</strong>$1,500 釋放產能 vs $17 月費 = <strong>88x ROI</strong><br><br>
+</div>
+<div class="info-box box-cost">
+<div class="info-box-header">💰 ROI 快速計算</div>
+<div class="info-box-content">
+<strong>前提：</strong>Claude Professional $17/月<br/>
+<strong>假設：</strong>你的時間價值 $150/小時，Skills 每月省 10 小時<br/>
+<strong>結果：</strong>$1,500 釋放產能 vs $17 月費 = <strong>88x ROI</strong><br/><br/>
                     作者的實際案例：4 份提案 x 4.5 小時節省 = 18 小時/月
                 </div>
-            </div>
-            <div class="info-box box-key">
-                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
-                <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
                     需要 <strong>Claude Professional 方案</strong>（$17/月）才能使用 Skills 功能。這是進入門檻，但只要每月省下 2 小時就能回本。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== PART II ===== -->
-    <div class="part-label">Part II</div>
-    <div class="section-header">Projects vs Skills：搞清楚差異</div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <div class="zh"><span class="highlight-concept">Projects 是上下文（context）</span>——Claude 知道什麼。你在 Project 裡上傳文件、設定指令、建立適用於該工作區的知識。例如：一個「行銷」Project 裡放品牌指南和過去的活動文件。</div>
-                <div class="en">"Claude Projects are workspaces where you upload documents for Claude to reference, add custom instructions... Example: A 'Marketing' Project with brand guidelines and past campaign docs."</div>
-            </div>
-            <div class="bilingual-block">
-                <div class="zh"><span class="highlight-concept">Skills 是能力（capabilities）</span>——Claude 能做什麼。Skills 教 Claude 如何建立特定產出，而且<span class="highlight-key">跨所有 Projects 和對話都能運作</span>。</div>
-                <div class="en">"Claude Skills are specialized workflows that teach Claude how to create specific outputs... Work across ALL your Projects and conversations."</div>
-            </div>
-            <div class="bilingual-block">
-                <div class="zh">你可以<span class="highlight-practical">在 Projects 裡面使用 Skills</span>。當作者在「客戶工作」Project 裡使用提案產生器 Skill 時，它結合了 Project 的上下文（客戶歷史、品牌指南）和 Skill 的工作流程（如何格式化提案）。</div>
-                <div class="en">"You can use Skills inside Projects. When I'm in my 'Client Work' Project and use my proposal-generator skill, it combines the context from my Project with the skill's workflow."</div>
-            </div>
-        </div>
-        <div class="content-right">
-            <div class="info-box box-compare">
-                <div class="info-box-header">&#9878;&#65039; Projects vs Skills 比較</div>
-                <div class="info-box-content">
-                    <table class="compare-table">
-                        <tr><th>面向</th><th>Projects</th><th>Skills</th></tr>
-                        <tr><td>本質</td><td>知識/上下文</td><td>能力/工作流程</td></tr>
-                        <tr><td>作用範圍</td><td>僅限該 Project</td><td>跨所有對話</td></tr>
-                        <tr><td>你上傳的是</td><td>參考文件、指令</td><td>SKILL.md 工作流程</td></tr>
-                        <tr><td>類比</td><td>員工手邊的資料</td><td>員工的專業技能</td></tr>
-                        <tr><td>能否結合</td><td colspan="2" style="text-align:center;">可以！Skill 在 Project 內使用時會結合兩者</td></tr>
-                    </table>
-                </div>
-            </div>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">&#128161; 比喻說明</div>
-                <div class="info-box-content">
+</div>
+</div>
+</div>
+<!-- ===== PART II ===== -->
+<div class="part-label">Part II</div>
+<div class="section-header">Projects vs Skills：搞清楚差異</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-concept">Projects 是上下文（context）</span>——Claude 知道什麼。你在 Project 裡上傳文件、設定指令、建立適用於該工作區的知識。例如：一個「行銷」Project 裡放品牌指南和過去的活動文件。</div>
+<div class="en-text">"Claude Projects are workspaces where you upload documents for Claude to reference, add custom instructions... Example: A 'Marketing' Project with brand guidelines and past campaign docs."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-concept">Skills 是能力（capabilities）</span>——Claude 能做什麼。Skills 教 Claude 如何建立特定產出，而且<span class="highlight-key">跨所有 Projects 和對話都能運作</span>。</div>
+<div class="en-text">"Claude Skills are specialized workflows that teach Claude how to create specific outputs... Work across ALL your Projects and conversations."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">你可以<span class="highlight-practical">在 Projects 裡面使用 Skills</span>。當作者在「客戶工作」Project 裡使用提案產生器 Skill 時，它結合了 Project 的上下文（客戶歷史、品牌指南）和 Skill 的工作流程（如何格式化提案）。</div>
+<div class="en-text">"You can use Skills inside Projects. When I'm in my 'Client Work' Project and use my proposal-generator skill, it combines the context from my Project with the skill's workflow."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ Projects vs Skills 比較</div>
+<div class="info-box-content">
+<table class="compare-table">
+<tr><th>面向</th><th>Projects</th><th>Skills</th></tr>
+<tr><td>本質</td><td>知識/上下文</td><td>能力/工作流程</td></tr>
+<tr><td>作用範圍</td><td>僅限該 Project</td><td>跨所有對話</td></tr>
+<tr><td>你上傳的是</td><td>參考文件、指令</td><td>SKILL.md 工作流程</td></tr>
+<tr><td>類比</td><td>員工手邊的資料</td><td>員工的專業技能</td></tr>
+<tr><td>能否結合</td><td colspan="2" style="text-align:center;">可以！Skill 在 Project 內使用時會結合兩者</td></tr>
+</table>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
                     把 Projects 想成<strong>員工的辦公桌</strong>（上面放著這個專案需要的所有資料），Skills 想成<strong>員工的專業證照</strong>（不管在哪個部門都能用的技能）。一個有 GMP 證照的員工，不管調到 QA 部門還是生產線，都能發揮那項能力。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== PART III ===== -->
-    <div class="part-label">Part III</div>
-    <div class="section-header">如何建立 Skill（完整步驟）</div>
-    <div class="content-grid" style="grid-template-columns: 1fr;">
-        <div>
-            <div class="bilingual-block">
-                <div class="zh">作者強調要<span class="highlight-key">嚴格按照步驟操作</span>。雖然 Claude 可以嘗試幫你建立 Skill 的可下載檔案，但「大約 50% 的時候會失敗」。以下是手動建立的可靠方法：</div>
-                <div class="en">"I'm going to walk you through this step by step. Don't skip ahead... I know Claude can attempt to create them for you in a downloadable file, but it fails to do it right around 50% of the time."</div>
-            </div>
-
-            <div class="info-box box-practical">
-                <div class="info-box-header">&#128736;&#65039; Step 1：建立資料夾</div>
-                <div class="info-box-content">
-                    在電腦的檔案瀏覽器中建立新資料夾。命名規則：<strong>小寫 + 短橫線</strong>。<br>
-                    正確：<code>proposal-generator</code><br>
+</div>
+</div>
+</div>
+<!-- ===== PART III ===== -->
+<div class="part-label">Part III</div>
+<div class="section-header">如何建立 Skill（完整步驟）</div>
+<div class="content-grid" style="grid-template-columns: 1fr;">
+<div>
+<div class="bilingual-block">
+<div class="zh-text">作者強調要<span class="highlight-key">嚴格按照步驟操作</span>。雖然 Claude 可以嘗試幫你建立 Skill 的可下載檔案，但「大約 50% 的時候會失敗」。以下是手動建立的可靠方法：</div>
+<div class="en-text">"I'm going to walk you through this step by step. Don't skip ahead... I know Claude can attempt to create them for you in a downloadable file, but it fails to do it right around 50% of the time."</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Step 1：建立資料夾</div>
+<div class="info-box-content">
+                    在電腦的檔案瀏覽器中建立新資料夾。命名規則：<strong>小寫 + 短橫線</strong>。<br/>
+                    正確：<code>proposal-generator</code><br/>
                     錯誤：<code>Proposal Generator</code> 或 <code>proposal_generator</code>
-                </div>
-            </div>
-            <div class="info-box box-practical">
-                <div class="info-box-header">&#128736;&#65039; Step 2：建立 SKILL.md 檔案</div>
-                <div class="info-box-content">
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Step 2：建立 SKILL.md 檔案</div>
+<div class="info-box-content">
                     用任何文字編輯器（Windows 的記事本、Mac 的 TextEdit、VS Code）建立空白檔案。檔名<strong>必須</strong>是 <code>SKILL.md</code>（全大寫）。將工作流程指令貼入後存檔到資料夾內。
                 </div>
-            </div>
-            <div class="info-box box-practical">
-                <div class="info-box-header">&#128736;&#65039; Step 3：壓縮成 ZIP</div>
-                <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Step 3：壓縮成 ZIP</div>
+<div class="info-box-content">
                     Mac：右鍵資料夾 → 壓縮。Windows：右鍵 → 傳送到 → 壓縮的資料夾。
                 </div>
-            </div>
-            <div class="info-box box-practical">
-                <div class="info-box-header">&#128736;&#65039; Step 4：上傳至 Claude</div>
-                <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Step 4：上傳至 Claude</div>
+<div class="info-box-content">
                     Claude.ai → 左下角個人頭像 → Settings → Capabilities → Skills → "+ Upload skill" → 選擇 ZIP 檔 → 等待成功訊息。之後在任何對話中直接使用即可。
                 </div>
-            </div>
-
-            <div class="info-box box-key">
-                <div class="info-box-header">&#9888;&#65039; 進階技巧：assets 資料夾</div>
-                <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 進階技巧：assets 資料夾</div>
+<div class="info-box-content">
                     在 Skill 資料夾內建立 <code>assets</code> 子資料夾，放入 Logo、PowerPoint 模板、品牌指南等。Skill 會自動偵測並套用這些資源，讓產出自動符合你的品牌風格。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== PART IV ===== -->
-    <div class="part-label">Part IV</div>
-    <div class="section-header">5 個改變工作效率的 Skill 實戰案例</div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <div class="zh">作者在經營 jsalinas.org 的教練與 AI 建構實務中測試了數十個 Skills，以下 5 個<span class="highlight-practical">每週固定節省最多時間</span>：</div>
-                <div class="en">"I've tested dozens of Skills running jsalinas.org. These five consistently save me the most time every single week."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh"><strong>Skill #1：語音筆記 → 客戶提案</strong><br>作者用 WisprFlow 在晨間散步時錄製專案細節，貼到 Claude 配合提案 Skill，<span class="highlight-cost">5 分鐘內產出格式化提案</span>。上月成果：4 份提案，省下 18 小時。</div>
-                <div class="en">"I record project details during my morning walk with WisprFlow, paste those notes into Claude with my proposal skill, and review a formatted proposal 5 minutes later. Last month: 4 proposals. Time saved: 18 hours."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh"><strong>Skill #2：研究資料 → 董事會級簡報</strong><br>22 分鐘內建出 12 頁非營利組織董事會簡報。之前至少要兩天，還需要額外排版修改。</div>
-                <div class="en">"Built a 12-slide nonprofit board deck in 22 minutes last Tuesday. Before Skills? Two days minimum."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh"><strong>Skill #3：CSV → 互動式儀表板</strong><br>每月匯出客戶資料、上傳 CSV、觸發儀表板 Skill，就能得到含篩選和圖表的互動式 HTML 儀表板。<span class="highlight-practical">不需要 Power BI 或 Tableau</span>。</div>
-                <div class="en">"I export client data monthly, upload the CSV, mention my dashboard skill, and get an interactive view... no Power BI or Tableau needed."</div>
-            </div>
-        </div>
-        <div class="content-right">
-            <div class="bilingual-block">
-                <div class="zh"><strong>Skill #4：自動更新的財務模型</strong><br>47 個項目、6 個分頁。更新一個假設（如教練費率），<span class="highlight-key">283 個儲存格自動重新計算</span>。以前花 3 小時建的模型第一次編輯就壞，現在 20 分鐘搞定且永不出錯。</div>
-                <div class="en">"Forty-seven line items across six tabs. When I update one assumption, like my coaching rate, 283 cells recalculate automatically... Now takes 20 minutes and never breaks."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh"><strong>Skill #5：流程視覺化</strong><br>每週使用。客戶問如何驗證 AI 輸出？描述 NotebookLM 工作流程給 Skill，<span class="highlight-practical">2 分鐘後產出視覺化圖表</span>，直接貼到 email 裡。</div>
-                <div class="en">"Instead of three paragraphs, I described my NotebookLM workflow to this skill. Two minutes later, had a visual diagram. I pasted that diagram into an email, done!"</div>
-            </div>
-
-            <div class="info-box box-compare">
-                <div class="info-box-header">&#9878;&#65039; 5 Skills 一覽比較</div>
-                <div class="info-box-content">
-                    <table class="compare-table">
-                        <tr><th>Skill</th><th>輸入</th><th>輸出</th><th>時間節省</th></tr>
-                        <tr><td>Proposal Generator</td><td>語音筆記/文字</td><td>.docx 提案</td><td>~4.5 hr/份</td></tr>
-                        <tr><td>Presentation Builder</td><td>研究筆記</td><td>.pptx 簡報</td><td>~1.5 天/份</td></tr>
-                        <tr><td>Dashboard Builder</td><td>CSV 資料</td><td>HTML 儀表板</td><td>數小時/次</td></tr>
-                        <tr><td>Financial Model</td><td>假設/變數</td><td>.xlsx 模型</td><td>~2.5 hr/份</td></tr>
-                        <tr><td>Workflow Visualizer</td><td>流程描述</td><td>SVG/PNG 圖</td><td>~30 min/張</td></tr>
-                    </table>
-                </div>
-            </div>
-
-            <div class="info-box box-concept">
-                <div class="info-box-header">&#128218; 核心概念：Skill 的運作邏輯</div>
-                <div class="info-box-content">
+</div>
+</div>
+</div>
+<!-- ===== PART IV ===== -->
+<div class="part-label">Part IV</div>
+<div class="section-header">5 個改變工作效率的 Skill 實戰案例</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">作者在經營 jsalinas.org 的教練與 AI 建構實務中測試了數十個 Skills，以下 5 個<span class="highlight-practical">每週固定節省最多時間</span>：</div>
+<div class="en-text">"I've tested dozens of Skills running jsalinas.org. These five consistently save me the most time every single week."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Skill #1：語音筆記 → 客戶提案</strong><br/>作者用 WisprFlow 在晨間散步時錄製專案細節，貼到 Claude 配合提案 Skill，<span class="highlight-cost">5 分鐘內產出格式化提案</span>。上月成果：4 份提案，省下 18 小時。</div>
+<div class="en-text">"I record project details during my morning walk with WisprFlow, paste those notes into Claude with my proposal skill, and review a formatted proposal 5 minutes later. Last month: 4 proposals. Time saved: 18 hours."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Skill #2：研究資料 → 董事會級簡報</strong><br/>22 分鐘內建出 12 頁非營利組織董事會簡報。之前至少要兩天，還需要額外排版修改。</div>
+<div class="en-text">"Built a 12-slide nonprofit board deck in 22 minutes last Tuesday. Before Skills? Two days minimum."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Skill #3：CSV → 互動式儀表板</strong><br/>每月匯出客戶資料、上傳 CSV、觸發儀表板 Skill，就能得到含篩選和圖表的互動式 HTML 儀表板。<span class="highlight-practical">不需要 Power BI 或 Tableau</span>。</div>
+<div class="en-text">"I export client data monthly, upload the CSV, mention my dashboard skill, and get an interactive view... no Power BI or Tableau needed."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="bilingual-block">
+<div class="zh-text"><strong>Skill #4：自動更新的財務模型</strong><br/>47 個項目、6 個分頁。更新一個假設（如教練費率），<span class="highlight-key">283 個儲存格自動重新計算</span>。以前花 3 小時建的模型第一次編輯就壞，現在 20 分鐘搞定且永不出錯。</div>
+<div class="en-text">"Forty-seven line items across six tabs. When I update one assumption, like my coaching rate, 283 cells recalculate automatically... Now takes 20 minutes and never breaks."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Skill #5：流程視覺化</strong><br/>每週使用。客戶問如何驗證 AI 輸出？描述 NotebookLM 工作流程給 Skill，<span class="highlight-practical">2 分鐘後產出視覺化圖表</span>，直接貼到 email 裡。</div>
+<div class="en-text">"Instead of three paragraphs, I described my NotebookLM workflow to this skill. Two minutes later, had a visual diagram. I pasted that diagram into an email, done!"</div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 5 Skills 一覽比較</div>
+<div class="info-box-content">
+<table class="compare-table">
+<tr><th>Skill</th><th>輸入</th><th>輸出</th><th>時間節省</th></tr>
+<tr><td>Proposal Generator</td><td>語音筆記/文字</td><td>.docx 提案</td><td>~4.5 hr/份</td></tr>
+<tr><td>Presentation Builder</td><td>研究筆記</td><td>.pptx 簡報</td><td>~1.5 天/份</td></tr>
+<tr><td>Dashboard Builder</td><td>CSV 資料</td><td>HTML 儀表板</td><td>數小時/次</td></tr>
+<tr><td>Financial Model</td><td>假設/變數</td><td>.xlsx 模型</td><td>~2.5 hr/份</td></tr>
+<tr><td>Workflow Visualizer</td><td>流程描述</td><td>SVG/PNG 圖</td><td>~30 min/張</td></tr>
+</table>
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：Skill 的運作邏輯</div>
+<div class="info-box-content">
                     每個 Skill 的 SKILL.md 檔案本質上就是一個<strong>結構化的 System Prompt</strong>，定義了：(1) 要問使用者哪些問題、(2) 資料如何處理、(3) 輸出格式和品質標準。它也會檢查 Claude 的 Memory 和 assets 資料夾來個人化產出。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== PART V ===== -->
-    <div class="part-label">Part V</div>
-    <div class="section-header">該先建哪個 Skill？+ 常見問題</div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <div class="zh">作者的建議很簡單：<span class="highlight-key">問自己「每週哪份文件最耗時間？」</span>然後從那個開始。只挑一個，不要一次做五個。</div>
-                <div class="en">"Ask yourself: 'What document drains the most time from my week?' Pick one. Just one. Not all five this week."</div>
-            </div>
-            <div class="bilingual-block">
-                <div class="zh">SKILL.md 檔案可以編輯修改，配合你的具體需求客製化。Skills 在 Projects 內也能運作，且可以與團隊共享（傳 ZIP 或 .md 檔即可）。</div>
-                <div class="en">"Download them, customize the instructions for your specific needs, then upload... Send them the .zip file or the SKILL.md file. They follow the same upload steps."</div>
-            </div>
-        </div>
-        <div class="content-right">
-            <div class="info-box box-practical">
-                <div class="info-box-header">&#128736;&#65039; 選擇你的第一個 Skill</div>
-                <div class="info-box-content">
-                    <strong>經常寫提案/報價？</strong> → proposal-generator（作者說效益最明顯）<br>
-                    <strong>經常向高層報告？</strong> → presentation-builder<br>
-                    <strong>需要追蹤數據？</strong> → dashboard-builder<br>
-                    <strong>做預算/財務預測？</strong> → financial-model-builder<br>
-                    <strong>解釋流程/系統？</strong> → workflow-visualizer
+</div>
+</div>
+</div>
+<!-- ===== PART V ===== -->
+<div class="part-label">Part V</div>
+<div class="section-header">該先建哪個 Skill？+ 常見問題</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">作者的建議很簡單：<span class="highlight-key">問自己「每週哪份文件最耗時間？」</span>然後從那個開始。只挑一個，不要一次做五個。</div>
+<div class="en-text">"Ask yourself: 'What document drains the most time from my week?' Pick one. Just one. Not all five this week."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">SKILL.md 檔案可以編輯修改，配合你的具體需求客製化。Skills 在 Projects 內也能運作，且可以與團隊共享（傳 ZIP 或 .md 檔即可）。</div>
+<div class="en-text">"Download them, customize the instructions for your specific needs, then upload... Send them the .zip file or the SKILL.md file. They follow the same upload steps."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 選擇你的第一個 Skill</div>
+<div class="info-box-content">
+<strong>經常寫提案/報價？</strong> → proposal-generator（作者說效益最明顯）<br/>
+<strong>經常向高層報告？</strong> → presentation-builder<br/>
+<strong>需要追蹤數據？</strong> → dashboard-builder<br/>
+<strong>做預算/財務預測？</strong> → financial-model-builder<br/>
+<strong>解釋流程/系統？</strong> → workflow-visualizer
                 </div>
-            </div>
-            <div class="info-box box-key">
-                <div class="info-box-header">&#9888;&#65039; 常見問答摘要</div>
-                <div class="info-box-content">
-                    <strong>能編輯 SKILL.md 嗎？</strong> 可以，下載後依需求修改再上傳。<br>
-                    <strong>能加 Logo/模板嗎？</strong> 在 Skill 資料夾建 assets 子資料夾，放入模板檔案即可自動套用。<br>
-                    <strong>需要 Professional 方案嗎？</strong> 是的，$17/月，省 2 小時就回本。
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 常見問答摘要</div>
+<div class="info-box-content">
+<strong>能編輯 SKILL.md 嗎？</strong> 可以，下載後依需求修改再上傳。<br/>
+<strong>能加 Logo/模板嗎？</strong> 在 Skill 資料夾建 assets 子資料夾，放入模板檔案即可自動套用。<br/>
+<strong>需要 Professional 方案嗎？</strong> 是的，$17/月，省 2 小時就回本。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KEY TAKEAWAYS -->
-    <div class="section-header">Key Takeaways</div>
-    <div class="takeaways-grid">
-        <div class="summary-card">
-            <div class="card-title">Skills ≠ Projects</div>
-            <div class="card-text">Projects 是知識上下文（Claude 知道什麼），Skills 是工作流程能力（Claude 能做什麼）。兩者可以結合使用，在 Project 內觸發 Skill 會同時套用雙方優勢。</div>
-        </div>
-        <div class="summary-card">
-            <div class="card-title">4 步建立，零程式碼</div>
-            <div class="card-text">資料夾（小寫短橫線命名）→ SKILL.md 檔案 → ZIP 壓縮 → 上傳至 Claude Settings。整個過程 3 分鐘，之後跨所有對話可用。</div>
-        </div>
-        <div class="summary-card">
-            <div class="card-title">ROI 極高的投資</div>
-            <div class="card-text">$17/月的 Professional 方案，如果時薪 $150 且每月省 10 小時 = $1,500 釋放產能。重度使用者報告 50-100% 生產力提升。</div>
-        </div>
-        <div class="summary-card">
-            <div class="card-title">從最痛的地方開始</div>
-            <div class="card-text">不要一次建五個 Skill。問自己「哪份文件最耗時間？」從那個開始，體驗效果後再擴展。assets 資料夾可放模板實現品牌一致性。</div>
-        </div>
-    </div>
-
-    <!-- PRACTICE QUESTIONS -->
-    <div class="section-header">Practice Questions</div>
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q1</span>
-            <span class="question-type">概念理解</span>
-            <span class="question-text">如果一位同事說「我已經在 Project 裡設定了所有指令，為什麼還需要 Skill？」，你會如何解釋兩者的關鍵差異？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>Project 的指令只在該 Project 內有效，而且主要定義的是「Claude 知道什麼」（上傳的文件、背景知識、行為準則）。Skill 定義的是「Claude 能做什麼」——一套可重複使用的專業工作流程，而且跨所有 Projects 和對話都能運作。</p>
-            <p>打個比方：Project 像是你桌上的參考資料，Skill 像是你的專業證照。你在 QA 部門的桌上放不同的文件，但你的 GMP 稽核能力不管坐在哪張桌子都能用。最強的組合是在 Project 內使用 Skill——同時有上下文和能力。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q2</span>
-            <span class="question-type">產業應用</span>
-            <span class="question-text">在 CDMO 環境中，你會如何應用 Claude Skills 的概念？考慮 GMP 合規和文件管控的限制，哪些 Skill 類型最適合？哪些需要額外的人工審查機制？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>在 CDMO 環境中，最適合的 Skill 類型依風險等級排列：</p>
-            <p><strong>低風險 / 可直接採用：</strong>workflow-visualizer（視覺化 SOP 流程、製程轉移步驟）、dashboard-builder（產能利用率、批次狀態追蹤——但資料需去識別化後再上傳）。</p>
-            <p><strong>中風險 / 需人工覆核：</strong>presentation-builder（管理層報告、客戶可行性評估簡報）、financial-model-builder（產能規劃、成本估算模型）。這些的「copilot mode」審查是必要的。</p>
-            <p><strong>高風險 / 僅供草稿參考：</strong>proposal-generator 用於 tech transfer 提案或客戶回覆時，產出必須經過 QA 和法規團隊審查，且不能將 GMP 敏感資料直接上傳到 Claude。21 CFR Part 11 的電子記錄要求意味著 Claude 的產出不能直接成為正式 GMP 文件，但可以大幅加速草稿階段。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q3</span>
-            <span class="question-type">批判思考</span>
-            <span class="question-text">作者聲稱「50-100% 生產力提升」和「40+ 小時/月節省」。這些數字可信嗎？有哪些隱藏成本或條件文章沒提到？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>這些數字可能對作者的特定情境成立，但需要加幾個 asterisk：</p>
-            <p><strong>隱藏成本：</strong>(1) 建立和迭代 SKILL.md 的時間——作者說 3 分鐘/個是上傳時間，但撰寫一個好的工作流程指令可能需要數小時的試錯；(2) 品質審查時間——AI 產出仍需人工檢查，特別是面對客戶的提案和財務模型；(3) 學習曲線——從「能用」到「用得好」之間有一段調校期。</p>
-            <p><strong>條件限制：</strong>(1) 作者的工作高度文件導向（教練業務），如果你的工作以實體操作或即時決策為主，節省幅度會小得多；(2) 27% 的「原本不會做的任務」可能代表 Parkinson's Law——有了工具就做更多不一定需要的分析；(3) 50-100% 的生產力提升引用的是整體 Claude 使用數據，不是只有 Skills。</p>
-            <p>結論：數字大方向可信，但實際效益因工作性質而異，且需要前期投資來建立和調校 Skills。</p>
-        </div>
-    </details>
-
-    <!-- BOTTOM LINE -->
-    <div class="bottom-line">
-        <div class="bottom-line-header">&#127919; 我的行動結論</div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">&#10004; 核心洞察</div>
-            <div class="bottom-line-text">Claude Skills 本質上就是「可重複使用的結構化 Prompt + 輸出規範」，這和我在 Master Prompt 系統中做的事情是同一個邏輯。差別在於 Skills 被整合進 Claude 的產品層，有更好的檔案輸出能力（.docx, .pptx, .xlsx）。對我來說，最大的啟發不是文中的 5 個 Skill，而是「Skill = 把我已經在做的 Prompt Engineering 標準化成可分享的資產」這個概念。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">&#128200; 立即應用</div>
-            <div class="bottom-line-text">這週可以做的事：(1) 把我目前的 CDMO Feasibility Assessment 流程試著包裝成一個 Skill，看看能否讓初步評估的草稿階段從 2 小時縮短到 30 分鐘；(2) 測試 workflow-visualizer 的概念，用來快速產出 tech transfer 流程圖給客戶展示。這兩個都屬於「copilot mode」使用，人工審查仍是最後把關。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">&#9888; 需要補充</div>
-            <div class="bottom-line-text">文章完全沒有討論：(1) SKILL.md 的撰寫最佳實踐——「如何寫出好的 Skill」才是真正的核心能力，但文章只提供了下載連結沒有解釋設計邏輯；(2) 版本管理——Skill 更新後如何迭代？(3) 安全性考量——在受管制產業中上傳資料到 Claude 的資料治理問題。需要另外研究 Anthropic 的 Skills 技術文件和資料處理政策。</div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        <p>&#128197; 製作日期：2026-02-10</p>
-        <p>&#128279; 原文來源：<a href="https://substack.com/@jsalinas" target="_blank">Joel Salinas Substack - "Me 40 Hrs Monthly"</a></p>
-        <p>&#128172; 建議 Chat Title：<strong>[Tool] Claude Skills - 5 Document Automation Skills</strong></p>
-    </div>
-
+</div>
+</div>
+</div>
+<!-- KEY TAKEAWAYS -->
+<div class="section-header">Key Takeaways</div>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="card-title">Skills ≠ Projects</div>
+<div class="card-text">Projects 是知識上下文（Claude 知道什麼），Skills 是工作流程能力（Claude 能做什麼）。兩者可以結合使用，在 Project 內觸發 Skill 會同時套用雙方優勢。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">4 步建立，零程式碼</div>
+<div class="card-text">資料夾（小寫短橫線命名）→ SKILL.md 檔案 → ZIP 壓縮 → 上傳至 Claude Settings。整個過程 3 分鐘，之後跨所有對話可用。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">ROI 極高的投資</div>
+<div class="card-text">$17/月的 Professional 方案，如果時薪 $150 且每月省 10 小時 = $1,500 釋放產能。重度使用者報告 50-100% 生產力提升。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">從最痛的地方開始</div>
+<div class="card-text">不要一次建五個 Skill。問自己「哪份文件最耗時間？」從那個開始，體驗效果後再擴展。assets 資料夾可放模板實現品牌一致性。</div>
+</div>
+</div>
+<!-- PRACTICE QUESTIONS -->
+<div class="section-header">Practice Questions</div>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">如果一位同事說「我已經在 Project 裡設定了所有指令，為什麼還需要 Skill？」，你會如何解釋兩者的關鍵差異？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>Project 的指令只在該 Project 內有效，而且主要定義的是「Claude 知道什麼」（上傳的文件、背景知識、行為準則）。Skill 定義的是「Claude 能做什麼」——一套可重複使用的專業工作流程，而且跨所有 Projects 和對話都能運作。</p>
+<p>打個比方：Project 像是你桌上的參考資料，Skill 像是你的專業證照。你在 QA 部門的桌上放不同的文件，但你的 GMP 稽核能力不管坐在哪張桌子都能用。最強的組合是在 Project 內使用 Skill——同時有上下文和能力。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在 CDMO 環境中，你會如何應用 Claude Skills 的概念？考慮 GMP 合規和文件管控的限制，哪些 Skill 類型最適合？哪些需要額外的人工審查機制？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>在 CDMO 環境中，最適合的 Skill 類型依風險等級排列：</p>
+<p><strong>低風險 / 可直接採用：</strong>workflow-visualizer（視覺化 SOP 流程、製程轉移步驟）、dashboard-builder（產能利用率、批次狀態追蹤——但資料需去識別化後再上傳）。</p>
+<p><strong>中風險 / 需人工覆核：</strong>presentation-builder（管理層報告、客戶可行性評估簡報）、financial-model-builder（產能規劃、成本估算模型）。這些的「copilot mode」審查是必要的。</p>
+<p><strong>高風險 / 僅供草稿參考：</strong>proposal-generator 用於 tech transfer 提案或客戶回覆時，產出必須經過 QA 和法規團隊審查，且不能將 GMP 敏感資料直接上傳到 Claude。21 CFR Part 11 的電子記錄要求意味著 Claude 的產出不能直接成為正式 GMP 文件，但可以大幅加速草稿階段。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">作者聲稱「50-100% 生產力提升」和「40+ 小時/月節省」。這些數字可信嗎？有哪些隱藏成本或條件文章沒提到？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>這些數字可能對作者的特定情境成立，但需要加幾個 asterisk：</p>
+<p><strong>隱藏成本：</strong>(1) 建立和迭代 SKILL.md 的時間——作者說 3 分鐘/個是上傳時間，但撰寫一個好的工作流程指令可能需要數小時的試錯；(2) 品質審查時間——AI 產出仍需人工檢查，特別是面對客戶的提案和財務模型；(3) 學習曲線——從「能用」到「用得好」之間有一段調校期。</p>
+<p><strong>條件限制：</strong>(1) 作者的工作高度文件導向（教練業務），如果你的工作以實體操作或即時決策為主，節省幅度會小得多；(2) 27% 的「原本不會做的任務」可能代表 Parkinson's Law——有了工具就做更多不一定需要的分析；(3) 50-100% 的生產力提升引用的是整體 Claude 使用數據，不是只有 Skills。</p>
+<p>結論：數字大方向可信，但實際效益因工作性質而異，且需要前期投資來建立和調校 Skills。</p>
+</div>
+</details>
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">Claude Skills 本質上就是「可重複使用的結構化 Prompt + 輸出規範」，這和我在 Master Prompt 系統中做的事情是同一個邏輯。差別在於 Skills 被整合進 Claude 的產品層，有更好的檔案輸出能力（.docx, .pptx, .xlsx）。對我來說，最大的啟發不是文中的 5 個 Skill，而是「Skill = 把我已經在做的 Prompt Engineering 標準化成可分享的資產」這個概念。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">這週可以做的事：(1) 把我目前的 CDMO Feasibility Assessment 流程試著包裝成一個 Skill，看看能否讓初步評估的草稿階段從 2 小時縮短到 30 分鐘；(2) 測試 workflow-visualizer 的概念，用來快速產出 tech transfer 流程圖給客戶展示。這兩個都屬於「copilot mode」使用，人工審查仍是最後把關。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">文章完全沒有討論：(1) SKILL.md 的撰寫最佳實踐——「如何寫出好的 Skill」才是真正的核心能力，但文章只提供了下載連結沒有解釋設計邏輯；(2) 版本管理——Skill 更新後如何迭代？(3) 安全性考量——在受管制產業中上傳資料到 Claude 的資料治理問題。需要另外研究 Anthropic 的 Skills 技術文件和資料處理政策。</div>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="footer">
+<p>📅 製作日期：2026-02-10</p>
+<p>🔗 原文來源：<a href="https://substack.com/@jsalinas" target="_blank">Joel Salinas Substack - "Me 40 Hrs Monthly"</a></p>
+<p>💬 建議 Chat Title：<strong>[Tool] Claude Skills - 5 Document Automation Skills</strong></p>
+</footer>
 </div>
 </body>
 </html>

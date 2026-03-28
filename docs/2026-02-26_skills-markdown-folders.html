@@ -1,523 +1,354 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skills 解密：為什麼 Markdown 資料夾如此有效</title>
-    <!-- Dashboard Index Meta -->
-    <meta name="doc-date" content="2026-02-26">
-    <meta name="doc-title" content="Skills 解密 - Markdown 資料夾的威力">
-    <meta name="doc-source" content="Gabriel Chua / OpenAI DevRel">
-    <meta name="doc-tags" content="Agent,Prompt,Framework,Tool">
-    <meta name="doc-rating" content="4.0">
-    <meta name="doc-summary" content="Skills 架構解析：Progressive Disclosure、模組化結構、資源整合三大優勢。">
-    <meta name="doc-file" content="2026-02-26_skills-markdown-folders.html">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-/* === v1.4.3 MANDATORY PAGE LAYOUT === */
-body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
-.header {
-    text-align: center;
-    padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-    color: white;
-}
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-}
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    margin-bottom: 2rem;
-}
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .content-grid { grid-template-columns: 1fr; }
-    .content-left { border-right: none !important; }
-    .inline-boxes { grid-template-columns: 1fr !important; }
-}
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Skills 解密：為什麼 Markdown 資料夾如此有效</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<!-- Dashboard Index Meta -->
+<meta content="2026-02-26" name="doc-date"/>
+<meta content="Skills 解密 - Markdown 資料夾的威力" name="doc-title"/>
+<meta content="Gabriel Chua / OpenAI DevRel" name="doc-source"/>
+<meta content="Agent,Prompt,Framework,Tool" name="doc-tags"/>
+<meta content="4.0" name="doc-rating"/>
+<meta content="Skills 架構解析：Progressive Disclosure、模組化結構、資源整合三大優勢。" name="doc-summary"/>
+<meta content="2026-02-26_skills-markdown-folders.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-/* Header */
-.header-tags { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
-.header-tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 600; }
-.tag-agent { background: #c7d2fe; color: #3730a3; }
-.tag-prompt { background: #fde68a; color: #92400e; }
-.tag-framework { background: #bfdbfe; color: #1e3a8a; }
-.tag-tool { background: #fecdd3; color: #9f1239; }
-.header h1 { font-size: 1.8rem; margin: 0 0 0.5rem; font-weight: 700; }
-.header-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
-.header-source { font-size: 0.85rem; opacity: 0.7; }
 
-/* Section Titles */
-.section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid #3b82f6; }
-
-/* Executive Summary */
-.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; border: 1px solid #e2e8f0; }
-.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-.rating-stars { color: #f59e0b; letter-spacing: 1px; }
-.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.summary-text { font-size: 0.95rem; line-height: 1.8; color: #334155; }
-
-/* Learning Objectives */
-.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
-.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.objective-text { font-size: 0.9rem; color: #334155; line-height: 1.6; }
-
-/* Framework Visual */
-.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
-.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.framework-step { text-align: center; min-width: 120px; }
-.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-.framework-step-title { font-weight: 700; font-size: 0.95rem; }
-.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-/* Content Grid Inner */
-.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
-.content-right { padding: 1.5rem; background: #f8fafc; }
-.part-label { display: inline-block; background: #1e3a5f; color: white; padding: 0.25rem 0.75rem; border-radius: 0.5rem; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.75rem; }
-.part-title { font-size: 1.1rem; font-weight: 700; color: #1e3a5f; margin-bottom: 1rem; }
-.bilingual-block { margin-bottom: 1.25rem; }
-.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.3rem; }
-.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
-.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-/* Info Boxes */
-.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
-.info-box-header { padding: 0.5rem 1rem; font-weight: 600; font-size: 0.85rem; }
-.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
-.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-
-/* Key Takeaways */
-.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
-.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.summary-card-title { font-weight: 700; color: #1e3a5f; margin-bottom: 0.5rem; font-size: 0.95rem; }
-.summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
-
-/* Practice Accordion */
-.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-.question-header::-webkit-details-marker { display: none; }
-.question-number { font-weight: 700; color: #6d28d9; }
-.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-details[open] .accordion-icon { transform: rotate(180deg); }
-.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-.question-answer p:last-child { margin-bottom: 0; }
-
-/* Bottom Line */
-.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
-.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-.bottom-line-item { margin-bottom: 1rem; }
-.bottom-line-item:last-child { margin-bottom: 0; }
-.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-/* Footer */
-.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-.footer a { color: #3b82f6; text-decoration: none; }
-    </style>
 </head>
 <body>
-
 <!-- Header -->
-<div class="header">
-    <div class="header-content">
-        <div class="header-tags">
-            <span class="header-tag tag-agent">Agent</span>
-            <span class="header-tag tag-prompt">Prompt</span>
-            <span class="header-tag tag-framework">Framework</span>
-            <span class="header-tag tag-tool">Tool</span>
-        </div>
-        <h1>Skills 解密：為什麼 Markdown 資料夾如此有效</h1>
-        <div class="header-subtitle">Skills, Explained: Why Folders of Markdown Files Are So Effective</div>
-        <div class="header-source">Gabriel Chua / OpenAI DevRel | 2026-02-26</div>
-    </div>
+<header class="header">
+<div class="header-content">
+<div class="header-tags">
+<span class="header-tag tag-agent">Agent</span>
+<span class="header-tag tag-prompt">Prompt</span>
+<span class="header-tag tag-framework">Framework</span>
+<span class="header-tag tag-tool">Tool</span>
 </div>
-
+<h1>Skills 解密：為什麼 Markdown 資料夾如此有效</h1>
+<div class="header-subtitle">Skills, Explained: Why Folders of Markdown Files Are So Effective</div>
+<div class="header-source">Gabriel Chua / OpenAI DevRel | 2026-02-26</div>
+</div>
+</header>
 <!-- Container -->
 <div class="container">
-
-    <!-- Executive Summary -->
-    <div class="executive-summary">
-        <div class="rating-bar">
-            <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
-            <span class="rating-high">↑ 實務應用, 學習曲線</span>
-            <span class="rating-low">↓ 技術深度, 時效性</span>
-        </div>
-        <div class="summary-text">
+<!-- Executive Summary -->
+<div class="executive-summary">
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+<span class="rating-high">↑ 實務應用, 學習曲線</span>
+<span class="rating-low">↓ 技術深度, 時效性</span>
+</div>
+<div class="summary-text">
             這篇文章由 OpenAI 開發者關係團隊的 Gabriel Chua 撰寫，解釋了 AI 領域中「Skill」的概念 — 本質上就是將反覆使用的 Prompt 和相關資源打包成可重複使用的資料夾結構。文章提出 Skill 相對於傳統 Prompt 的三大差異：Progressive Disclosure（漸進式揭露）、Structure（結構化）、和 Access to Additional Resources（資源整合）。概念清晰、比喻恰當，但技術深度偏淺，更適合作為入門概覽。對於已有 Claude Projects Skill 建置經驗的讀者，本文的最大價值在於提供一個系統化的思維框架來理解自己正在做的事。
         </div>
-    </div>
-
-    <!-- Learning Objectives -->
-    <div class="section-title">學習目標</div>
-    <div class="objectives-grid">
-        <div class="objective-item">
-            <div class="objective-icon">1</div>
-            <div class="objective-text">理解 Skill 與傳統 Prompt 的本質差異，以及為什麼「可重複使用」是關鍵設計原則</div>
-        </div>
-        <div class="objective-item" style="border-left-color: #10b981;">
-            <div class="objective-icon">2</div>
-            <div class="objective-text">掌握 Progressive Disclosure、Structure、Resource Access 三層架構的運作邏輯</div>
-        </div>
-        <div class="objective-item" style="border-left-color: #8b5cf6;">
-            <div class="objective-icon">3</div>
-            <div class="objective-text">評估如何將團隊的隱性知識（Tacit Knowledge）轉化為可執行的 Skill 模組</div>
-        </div>
-    </div>
-
-    <!-- Framework Visual -->
-    <div class="framework-visual">
-        <div class="framework-title">Skill 三層價值架構</div>
-        <div class="framework-steps">
-            <div class="framework-step">
-                <div class="framework-icon">1</div>
-                <div class="framework-step-title">Progressive Disclosure</div>
-                <div class="framework-step-desc">按需載入，減少雜訊</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">2</div>
-                <div class="framework-step-title">Structure</div>
-                <div class="framework-step-desc">資料夾即語義，模組化管理</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">3</div>
-                <div class="framework-step-title">Resource Access</div>
-                <div class="framework-step-desc">附帶腳本、範例、工具</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part I -->
-    <div class="section-title">Part I：Skill 的本質 — 讓 Prompt 可重複使用</div>
-    <div class="content-grid">
-        <div class="content-left">
-            <span class="part-label">PART I</span>
-            <div class="part-title">從「大致能用」到「穩定產出」</div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">大多數使用 AI 工具的人，都曾經有過一個「<span class="highlight-concept">大致能用</span>」的 Prompt。可能是一份檢查清單、一個工作流程、或是一組規則。你調整了幾次直到輸出看起來對了，然後存起來以便下次使用。</div>
-                <div class="en-text">"Most people who use AI tools have, at some point, ended up with a prompt that 'mostly works.'"</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">隨著時間推移，這個 Prompt 慢慢改變。你在某次出錯後加了一條規則，刪掉一行看似不再需要的指令。有人把它複製到不同專案並稍作修改。最終，<span class="highlight-key">同一個流程有三四個版本在流傳</span>，沒人確定哪個版本才能產出你真正想要的結果。</div>
-                <div class="en-text">"Eventually, there are three or four versions of the same process floating around, and no one is quite sure which one produces the output you actually want."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">Skill 本質上就是將這個習慣<span class="highlight-concept">正式化</span>的方式。核心來說，Skill 就是寫在 Markdown 檔案裡的 Prompt 集合，有時附帶額外的參考檔案或腳本。</div>
-                <div class="en-text">"A skill is essentially a way of formalizing that habit. At its core, a skill is just a collection of prompts written down in a markdown file."</div>
-            </div>
-        </div>
-        <div class="content-right">
-            <div class="info-box box-concept">
-                <div class="info-box-header">核心概念</div>
-                <div class="info-box-content">
-                    <strong>Skill = Prompt + 資源 + 結構</strong><br><br>
+</div>
+<!-- Learning Objectives -->
+<div class="section-title">學習目標</div>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-icon">1</div>
+<div class="objective-text">理解 Skill 與傳統 Prompt 的本質差異，以及為什麼「可重複使用」是關鍵設計原則</div>
+</div>
+<div class="objective-item" style="border-left-color: #10b981;">
+<div class="objective-icon">2</div>
+<div class="objective-text">掌握 Progressive Disclosure、Structure、Resource Access 三層架構的運作邏輯</div>
+</div>
+<div class="objective-item" style="border-left-color: #8b5cf6;">
+<div class="objective-icon">3</div>
+<div class="objective-text">評估如何將團隊的隱性知識（Tacit Knowledge）轉化為可執行的 Skill 模組</div>
+</div>
+</div>
+<!-- Framework Visual -->
+<div class="framework-visual">
+<div class="framework-title">Skill 三層價值架構</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">1</div>
+<div class="framework-step-title">Progressive Disclosure</div>
+<div class="framework-step-desc">按需載入，減少雜訊</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">2</div>
+<div class="framework-step-title">Structure</div>
+<div class="framework-step-desc">資料夾即語義，模組化管理</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">3</div>
+<div class="framework-step-title">Resource Access</div>
+<div class="framework-step-desc">附帶腳本、範例、工具</div>
+</div>
+</div>
+</div>
+<!-- Part I -->
+<div class="section-title">Part I：Skill 的本質 — 讓 Prompt 可重複使用</div>
+<div class="content-grid">
+<div class="content-left">
+<span class="part-label">PART I</span>
+<div class="part-title">從「大致能用」到「穩定產出」</div>
+<div class="bilingual-block">
+<div class="zh-text">大多數使用 AI 工具的人，都曾經有過一個「<span class="highlight-concept">大致能用</span>」的 Prompt。可能是一份檢查清單、一個工作流程、或是一組規則。你調整了幾次直到輸出看起來對了，然後存起來以便下次使用。</div>
+<div class="en-text">"Most people who use AI tools have, at some point, ended up with a prompt that 'mostly works.'"</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">隨著時間推移，這個 Prompt 慢慢改變。你在某次出錯後加了一條規則，刪掉一行看似不再需要的指令。有人把它複製到不同專案並稍作修改。最終，<span class="highlight-key">同一個流程有三四個版本在流傳</span>，沒人確定哪個版本才能產出你真正想要的結果。</div>
+<div class="en-text">"Eventually, there are three or four versions of the same process floating around, and no one is quite sure which one produces the output you actually want."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Skill 本質上就是將這個習慣<span class="highlight-concept">正式化</span>的方式。核心來說，Skill 就是寫在 Markdown 檔案裡的 Prompt 集合，有時附帶額外的參考檔案或腳本。</div>
+<div class="en-text">"A skill is essentially a way of formalizing that habit. At its core, a skill is just a collection of prompts written down in a markdown file."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
+<strong>Skill = Prompt + 資源 + 結構</strong><br/><br/>
                     傳統 Prompt 是「一次性指令」，Skill 是「可重複使用的工作流程包」。差異不在於技術能力，而在於組織方式：把指令放進資料夾、搭配範例和腳本，讓 Agent 可以當作可重複的流程來執行。
                 </div>
-            </div>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">比喻說明</div>
-                <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明</div>
+<div class="info-box-content">
                     想像你是一個主廚。Prompt 就像口頭告訴助手「做一道番茄義大利麵」— 每次說法可能不同，結果也不穩定。Skill 則是把食譜寫成標準作業程序（SOP），放在固定位置，任何助手都能照著做出一致的成品。
                 </div>
-            </div>
-            <div class="info-box box-key">
-                <div class="info-box-header">重點提示</div>
-                <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示</div>
+<div class="info-box-content">
                     作者特別強調：Skill「<strong>不是</strong>根本上不同於 Prompting — 它就是 Prompting，只是做成可重複使用的形式」。這個定位很重要，因為它降低了學習門檻：你不需要學新技術，只需要更好地組織你已經在做的事。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part II -->
-    <div class="section-title">Part II：三大差異 — Progressive Disclosure</div>
-    <div class="content-grid">
-        <div class="content-left">
-            <span class="part-label">PART II</span>
-            <div class="part-title">漸進式揭露：只載入需要的指令</div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">第一個概念差異是<span class="highlight-concept">漸進式揭露（Progressive Disclosure）</span>。你通常不會一開始就把整個工作流程載入模型的上下文。每個 Skill 都有一段簡短描述，說明它的用途。Agent 可以看這段描述來判斷該 Skill 是否與當前任務相關，<span class="highlight-key">只有確定相關時才會打開完整指令</span>。</div>
-                <div class="en-text">"You are usually not loading the entire workflow into the model's context from the beginning. Only when it determines that the skill applies does it inspect the full instructions."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">實際運作起來，這就像是一本可用工作流程的目錄。Agent 知道有哪些工具可用，但只在需要時才打開詳細指令。</div>
-                <div class="en-text">"In practice, this behaves like a glossary of available workflows."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">這有點像去圖書館。你先從目錄看某個主題有哪些書。找到相關的書後，你不會讀完整本 — <span class="highlight-practical">你翻到索引或詞彙表，找到你需要的確切章節或頁面</span>。詳細指令在真正需要之前都保持關閉。</div>
-                <div class="en-text">"It's a bit like going to a library. You start with the catalogue to see what books exist on a topic."</div>
-            </div>
-        </div>
-        <div class="content-right">
-            <div class="info-box box-analogy">
-                <div class="info-box-header">比喻說明</div>
-                <div class="info-box-content">
-                    <strong>圖書館比喻</strong>：目錄（Skill 描述）→ 找到對的書（判斷相關性）→ 翻到對的章節（載入完整指令）。這個設計的核心好處是<strong>節省 Context Window</strong>，讓模型不需要一次處理所有工作流程的全部指令。
+</div>
+</div>
+</div>
+<!-- Part II -->
+<div class="section-title">Part II：三大差異 — Progressive Disclosure</div>
+<div class="content-grid">
+<div class="content-left">
+<span class="part-label">PART II</span>
+<div class="part-title">漸進式揭露：只載入需要的指令</div>
+<div class="bilingual-block">
+<div class="zh-text">第一個概念差異是<span class="highlight-concept">漸進式揭露（Progressive Disclosure）</span>。你通常不會一開始就把整個工作流程載入模型的上下文。每個 Skill 都有一段簡短描述，說明它的用途。Agent 可以看這段描述來判斷該 Skill 是否與當前任務相關，<span class="highlight-key">只有確定相關時才會打開完整指令</span>。</div>
+<div class="en-text">"You are usually not loading the entire workflow into the model's context from the beginning. Only when it determines that the skill applies does it inspect the full instructions."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">實際運作起來，這就像是一本可用工作流程的目錄。Agent 知道有哪些工具可用，但只在需要時才打開詳細指令。</div>
+<div class="en-text">"In practice, this behaves like a glossary of available workflows."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">這有點像去圖書館。你先從目錄看某個主題有哪些書。找到相關的書後，你不會讀完整本 — <span class="highlight-practical">你翻到索引或詞彙表，找到你需要的確切章節或頁面</span>。詳細指令在真正需要之前都保持關閉。</div>
+<div class="en-text">"It's a bit like going to a library. You start with the catalogue to see what books exist on a topic."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明</div>
+<div class="info-box-content">
+<strong>圖書館比喻</strong>：目錄（Skill 描述）→ 找到對的書（判斷相關性）→ 翻到對的章節（載入完整指令）。這個設計的核心好處是<strong>節省 Context Window</strong>，讓模型不需要一次處理所有工作流程的全部指令。
                 </div>
-            </div>
-            <div class="info-box box-practical">
-                <div class="info-box-header">實務應用</div>
-                <div class="info-box-content">
-                    <strong>你的 Master Prompt 系統已經在實踐這個概念。</strong><br><br>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用</div>
+<div class="info-box-content">
+<strong>你的 Master Prompt 系統已經在實踐這個概念。</strong><br/><br/>
                     Claude Projects 的系統 Prompt 就是 Skill 描述層，而你的 v1.4.3 Master Prompt XML 就是完整指令層。當你開新對話時，Claude 先讀描述決定要怎麼處理，然後才根據需要展開特定區塊的指令。差異在於：你目前是「全部載入」模式，而 Skill 架構支援「按需載入」。
                 </div>
-            </div>
-            <div class="info-box box-concept">
-                <div class="info-box-header">核心概念</div>
-                <div class="info-box-content">
-                    <strong>Context Window 效率</strong>：Progressive Disclosure 的實際效益是減少每次對話消耗的 Token 數。如果你有 10 個 Skill 但只需要 1 個，傳統做法會載入全部 10 個的指令；Skill 架構只載入 1 個的完整指令 + 其他 9 個的簡短描述。
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
+<strong>Context Window 效率</strong>：Progressive Disclosure 的實際效益是減少每次對話消耗的 Token 數。如果你有 10 個 Skill 但只需要 1 個，傳統做法會載入全部 10 個的指令；Skill 架構只載入 1 個的完整指令 + 其他 9 個的簡短描述。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part III-A: Structure -->
-    <div class="section-title">Part III-A：Structure — 結構即語義</div>
-    <div class="content-grid">
-        <div class="content-left">
-            <span class="part-label">PART III-A</span>
-            <div class="part-title">資料夾結構本身就傳達用途</div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">第二個差異是<span class="highlight-concept">結構（Structure）</span>。現代模型非常擅長遍歷檔案系統。某個東西存在於特定資料夾這件事本身就傳達了它應該如何被使用的資訊。就像你組織自己桌面的方式 — 按專案或用途分類 — Skills 目錄的結構就為模型提供了上下文。</div>
-                <div class="en-text">"Modern models are quite good at traversing file systems. The fact that something lives in a particular folder already conveys information about how it should be used."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">這也引入了<span class="highlight-key">模組化（Modularity）</span>。Skill 成為一個打包好的工作流程單元，可以重複使用、共享、版本控制、或與其他 Skill 組合。你不再需要把同一個 Prompt 的微調版本複製貼上到每個專案，而是把工作流程當作模組來管理，在專案和團隊成員之間分發。</div>
-                <div class="en-text">"A skill becomes a packaged unit of workflow that can be reused, shared, versioned, or composed with other skills."</div>
-            </div>
-        </div>
-        <div class="content-right">
-            <div class="info-box box-concept">
-                <div class="info-box-header">核心概念</div>
-                <div class="info-box-content">
-                    <strong>資料夾結構 = 隱含的 Prompt</strong><br><br>
+</div>
+</div>
+</div>
+<!-- Part III-A: Structure -->
+<div class="section-title">Part III-A：Structure — 結構即語義</div>
+<div class="content-grid">
+<div class="content-left">
+<span class="part-label">PART III-A</span>
+<div class="part-title">資料夾結構本身就傳達用途</div>
+<div class="bilingual-block">
+<div class="zh-text">第二個差異是<span class="highlight-concept">結構（Structure）</span>。現代模型非常擅長遍歷檔案系統。某個東西存在於特定資料夾這件事本身就傳達了它應該如何被使用的資訊。就像你組織自己桌面的方式 — 按專案或用途分類 — Skills 目錄的結構就為模型提供了上下文。</div>
+<div class="en-text">"Modern models are quite good at traversing file systems. The fact that something lives in a particular folder already conveys information about how it should be used."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">這也引入了<span class="highlight-key">模組化（Modularity）</span>。Skill 成為一個打包好的工作流程單元，可以重複使用、共享、版本控制、或與其他 Skill 組合。你不再需要把同一個 Prompt 的微調版本複製貼上到每個專案，而是把工作流程當作模組來管理，在專案和團隊成員之間分發。</div>
+<div class="en-text">"A skill becomes a packaged unit of workflow that can be reused, shared, versioned, or composed with other skills."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">核心概念</div>
+<div class="info-box-content">
+<strong>資料夾結構 = 隱含的 Prompt</strong><br/><br/>
                     當模型看到 <code>/skills/docx/SKILL.md</code>，光是路徑就告訴它「這是用來處理 Word 文件的工作流程」。這和人類組織桌面的邏輯相同 — 你不需要額外說明，位置本身就是說明。
                 </div>
-            </div>
-            <div class="info-box box-key">
-                <div class="info-box-header">重點提示</div>
-                <div class="info-box-content">
-                    <strong>模組化的最大好處是「更新一次，全局生效」。</strong> 當流程改變時，你只需要更新一個 Skill 檔案，而不是要求每個人各自調整自己的 Prompt。這對團隊協作特別重要 — 消除了「哪個版本才是對的？」的問題。
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示</div>
+<div class="info-box-content">
+<strong>模組化的最大好處是「更新一次，全局生效」。</strong> 當流程改變時，你只需要更新一個 Skill 檔案，而不是要求每個人各自調整自己的 Prompt。這對團隊協作特別重要 — 消除了「哪個版本才是對的？」的問題。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part III-B: Resource Access (LINEAR layout - balance check triggered) -->
-    <div class="section-title">Part III-B：Resource Access — 不只有指令，還有工具</div>
-    <div class="content-grid" style="grid-template-columns: 1fr;">
-        <div class="content-left" style="border-right: none;">
-            <span class="part-label">PART III-B</span>
-            <div class="part-title">Skill 可以攜帶執行所需的一切資源</div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">第三個差異是<span class="highlight-concept">存取額外資源的能力</span>。傳統 Prompt 通常局限於你記得貼進去的內容。而 Skill 可以包含附錄、範例、腳本、評分標準，甚至是模型在執行任務時可以使用的可執行工具。包括呼叫 MCP Server（模型上下文協定伺服器）、執行 CLI 腳本、或引用內部指南。</div>
-                <div class="en-text">"A skill can include appendices, examples, scripts, evaluation rubrics, or even executable tooling. This might include calling MCP servers, running a CLI script, or referencing internal guidelines."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">從這個角度看，Skill 不只是告訴模型該做什麼，<span class="highlight-practical">還給它執行任務所需的支援材料</span>。工作流程不僅建立在指令之上，更建立在上下文和工具之上。</div>
-                <div class="en-text">"The workflow becomes grounded not only in instructions, but in context and tools."</div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-                <div class="info-box box-practical">
-                    <div class="info-box-header">實務應用</div>
-                    <div class="info-box-content">
-                        <strong>Claude Projects 的 Skill 結構映射：</strong><br><br>
+</div>
+</div>
+</div>
+<!-- Part III-B: Resource Access (LINEAR layout - balance check triggered) -->
+<div class="section-title">Part III-B：Resource Access — 不只有指令，還有工具</div>
+<div class="content-grid" style="grid-template-columns: 1fr;">
+<div class="content-left" style="border-right: none;">
+<span class="part-label">PART III-B</span>
+<div class="part-title">Skill 可以攜帶執行所需的一切資源</div>
+<div class="bilingual-block">
+<div class="zh-text">第三個差異是<span class="highlight-concept">存取額外資源的能力</span>。傳統 Prompt 通常局限於你記得貼進去的內容。而 Skill 可以包含附錄、範例、腳本、評分標準，甚至是模型在執行任務時可以使用的可執行工具。包括呼叫 MCP Server（模型上下文協定伺服器）、執行 CLI 腳本、或引用內部指南。</div>
+<div class="en-text">"A skill can include appendices, examples, scripts, evaluation rubrics, or even executable tooling. This might include calling MCP servers, running a CLI script, or referencing internal guidelines."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">從這個角度看，Skill 不只是告訴模型該做什麼，<span class="highlight-practical">還給它執行任務所需的支援材料</span>。工作流程不僅建立在指令之上，更建立在上下文和工具之上。</div>
+<div class="en-text">"The workflow becomes grounded not only in instructions, but in context and tools."</div>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用</div>
+<div class="info-box-content">
+<strong>Claude Projects 的 Skill 結構映射：</strong><br/><br/>
                         你目前使用的 Claude 環境就有完整的 Skill 實作：<code>/mnt/skills/public/docx/</code>、<code>/mnt/skills/public/pptx/</code> 等。每個資料夾是一個獨立模組，包含 SKILL.md（主指令）和輔助腳本。這正是作者描述的三層架構的完整實現。
                     </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">比喻說明</div>
-                    <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明</div>
+<div class="info-box-content">
                         傳統 Prompt 像是口頭交代任務：「幫我做個報告」。Skill 則像是交付一個<strong>任務包</strong>：裡面有指令書、參考範例、品質標準、甚至可以直接使用的工具。接到任務包的人（或 Agent）不需要再到處找資源，一切所需都在包裡。
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Part IV -->
-    <div class="section-title">Part IV：團隊應用 — 隱性知識的顯性化</div>
-    <div class="content-grid">
-        <div class="content-left">
-            <span class="part-label">PART IV</span>
-            <div class="part-title">從個人習慣到組織資產</div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">組織內部被視為「專業」的很多東西，<span class="highlight-key">不是一組事實，而是一系列習慣和檢查步驟</span>。知道部署前要驗證什麼、什麼假設需要測試、什麼樣的輸出才算合格。</div>
-                <div class="en-text">"Much of what counts as expertise inside an organization is not a set of facts but a sequence of habits and checks."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">通常這些知識是<span class="highlight-concept">非正式傳遞的</span>，或是埋在過時的文件裡。透過 Skill，這些程序性知識可以打包成 Agent 可以直接遵循的東西。每個人最終都在執行相同的步驟，新成員不必從頭逆向工程整個流程。</div>
-                <div class="en-text">"Normally this knowledge is passed around informally or buried in outdated documentation. With skills, that procedural knowledge can be packaged."</div>
-            </div>
-
-            <div class="bilingual-block">
-                <div class="zh-text">Skill 並沒有擴展模型能做的事，但它們讓你更容易<span class="highlight-practical">以可預測的方式執行可重複的任務</span>。如果你發現自己重複同一個流程超過幾次，這通常就是可以轉化為 Skill 的信號。</div>
-                <div class="en-text">"Skills do not expand what the model is capable of doing, but they make it easier to perform repeatable tasks in a predictable way."</div>
-            </div>
-        </div>
-        <div class="content-right">
-            <div class="info-box box-practical">
-                <div class="info-box-header">實務應用</div>
-                <div class="info-box-content">
-                    <strong>CDMO 情境直接對應：</strong><br><br>
+</div>
+</div>
+</div>
+</div>
+<!-- Part IV -->
+<div class="section-title">Part IV：團隊應用 — 隱性知識的顯性化</div>
+<div class="content-grid">
+<div class="content-left">
+<span class="part-label">PART IV</span>
+<div class="part-title">從個人習慣到組織資產</div>
+<div class="bilingual-block">
+<div class="zh-text">組織內部被視為「專業」的很多東西，<span class="highlight-key">不是一組事實，而是一系列習慣和檢查步驟</span>。知道部署前要驗證什麼、什麼假設需要測試、什麼樣的輸出才算合格。</div>
+<div class="en-text">"Much of what counts as expertise inside an organization is not a set of facts but a sequence of habits and checks."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">通常這些知識是<span class="highlight-concept">非正式傳遞的</span>，或是埋在過時的文件裡。透過 Skill，這些程序性知識可以打包成 Agent 可以直接遵循的東西。每個人最終都在執行相同的步驟，新成員不必從頭逆向工程整個流程。</div>
+<div class="en-text">"Normally this knowledge is passed around informally or buried in outdated documentation. With skills, that procedural knowledge can be packaged."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Skill 並沒有擴展模型能做的事，但它們讓你更容易<span class="highlight-practical">以可預測的方式執行可重複的任務</span>。如果你發現自己重複同一個流程超過幾次，這通常就是可以轉化為 Skill 的信號。</div>
+<div class="en-text">"Skills do not expand what the model is capable of doing, but they make it easier to perform repeatable tasks in a predictable way."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">實務應用</div>
+<div class="info-box-content">
+<strong>CDMO 情境直接對應：</strong><br/><br/>
                     在製藥工廠裡，「隱性知識」的例子比比皆是：偏差調查時該先查什麼、Tech Transfer 的關鍵檢查點、批次記錄審查的常見陷阱。這些目前大多靠資深人員口耳相傳。如果能打包成 Skill，新進人員或 AI 助手就能直接參照標準流程，而不是每次都要從頭摸索。
                 </div>
-            </div>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">比喻說明</div>
-                <div class="info-box-content">
-                    <strong>Tacit → Explicit 的轉化</strong>：這就像把一位資深工程師腦中的「直覺」寫成 SOP。直覺本身無法複製，但如果你能把「當你看到 X 現象時，先檢查 Y，然後確認 Z」這樣的決策路徑寫下來，它就變成可複製的組織資產。
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">比喻說明</div>
+<div class="info-box-content">
+<strong>Tacit → Explicit 的轉化</strong>：這就像把一位資深工程師腦中的「直覺」寫成 SOP。直覺本身無法複製，但如果你能把「當你看到 X 現象時，先檢查 Y，然後確認 Z」這樣的決策路徑寫下來，它就變成可複製的組織資產。
                 </div>
-            </div>
-            <div class="info-box box-key">
-                <div class="info-box-header">重點提示</div>
-                <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">重點提示</div>
+<div class="info-box-content">
                     作者的結論非常精準：Skill 引入的不是新能力，而是<strong>把隱性流程變成顯性的、可分享的、可一致執行的東西</strong>。這和 GMP 環境中「如果沒寫下來，就等於沒做」的精神完全一致。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Key Takeaways -->
-    <div class="section-title">重點整理</div>
-    <div class="takeaways-grid">
-        <div class="summary-card">
-            <div class="summary-card-title">Skill = 結構化的 Prompt 重用</div>
-            <div class="summary-card-text">Skill 不是新技術，而是把你已經在做的 Prompting 工作組織成可重複使用的模組。核心元素：skill.md 主指令 + 附帶資源 + 資料夾結構。</div>
-        </div>
-        <div class="summary-card" style="border-left-color: #10b981;">
-            <div class="summary-card-title">Progressive Disclosure 節省 Token</div>
-            <div class="summary-card-text">Agent 先讀簡短描述判斷相關性，只在確認需要時才載入完整指令。這減少了 Context Window 的浪費，類似圖書館先查目錄再翻書的邏輯。</div>
-        </div>
-        <div class="summary-card" style="border-left-color: #8b5cf6;">
-            <div class="summary-card-title">資料夾結構本身就是語義</div>
-            <div class="summary-card-text">模型擅長遍歷檔案系統。東西放在什麼資料夾、怎麼命名，本身就傳達了用途資訊。模組化設計讓 Skill 可以版本控制、共享、和組合使用。</div>
-        </div>
-        <div class="summary-card" style="border-left-color: #f59e0b;">
-            <div class="summary-card-title">隱性知識的顯性化工具</div>
-            <div class="summary-card-text">團隊的真正專業往往是「習慣和檢查步驟」而非事實。Skill 讓你把這些程序性知識打包，消除「哪個版本是對的」問題，新成員也能直接上手。</div>
-        </div>
-    </div>
-
-    <!-- Practice Questions -->
-    <div class="section-title">練習題</div>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q1</span>
-            <span class="question-type">概念理解</span>
-            <span class="question-text">Progressive Disclosure 對 Context Window 管理的具體影響是什麼？如果沒有這個機制，會產生什麼問題？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>Progressive Disclosure 讓 Agent 只在確認某個 Skill 與當前任務相關時，才載入該 Skill 的完整指令。如果沒有這個機制，所有 Skill 的完整指令都會被一次性載入 Context Window，導致：(1) Token 消耗大幅增加，推高 API 成本；(2) 不相關的指令可能干擾模型對當前任務的理解；(3) 在 Context Window 有限的情況下，真正需要的指令可能因為窗口滿了而被截斷。這就像開會時把所有部門的 SOP 都印出來擺在桌上 — 大部分是噪音，反而讓你找不到真正需要的那一份。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q2</span>
-            <span class="question-type">產業應用</span>
-            <span class="question-text">在 CDMO 的 GMP 環境中，哪些「隱性知識」最適合轉化為 AI Skill？請舉出三個具體例子並說明理由。</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>(1) 偏差調查的初步分類邏輯</strong>：資深 QA 在看到偏差描述時，會根據經驗快速判斷是 Critical/Major/Minor，以及應該先檢查哪些系統（環境監控、設備校驗、人員訓練記錄）。這個決策路徑可以寫成 Skill，讓 AI 輔助做初步分類建議。</p>
-            <p><strong>(2) 批次記錄審查的常見問題清單</strong>：每個 CDMO 都有自己的「經驗法則」— 哪些欄位最容易填錯、哪些計算最容易出誤差、哪些簽名最容易漏。這些可以打包成審查 Skill。</p>
-            <p><strong>(3) Tech Transfer 的文件對照檢查</strong>：接收新客戶的製程時，需要比對原廠文件和內部 SOP 的差異。這個對照流程有固定的檢查維度（設備規格、環境條件、關鍵製程參數），適合結構化為 Skill。</p>
-            <p>這三個例子的共通點：都是「重複性高、有固定模式、但需要經驗才能做好」的工作 — 正是 Skill 最能發揮價值的場景。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q3</span>
-            <span class="question-type">批判思考</span>
-            <span class="question-text">作者認為 Skill「不擴展模型的能力」，你同意嗎？在什麼情境下，Skill 可能實際上「擴展」了模型能做到的事？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>作者的說法在技術層面是正確的 — Skill 沒有改變模型的底層能力。但在實務層面，這個說法值得挑戰。當一個 Skill 整合了 MCP Server、CLI 腳本、和外部 API 時，它實際上讓模型「能做到」之前做不到的事（例如：直接操作資料庫、生成特定格式的文件、或呼叫外部服務）。此外，一個寫得很好的 Skill 可以透過精確的 Prompt 結構，讓模型在特定任務上的表現品質遠超過泛用 Prompt — 這是否算「擴展能力」取決於你如何定義「能力」。如果把「能力」定義為「在實際工作場景中能穩定產出合格結果」，那 Skill 確實擴展了模型的能力邊界。</p>
-        </div>
-    </details>
-
-    <!-- Bottom Line -->
-    <div class="bottom-line">
-        <div class="bottom-line-header">我的行動結論</div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">核心洞察</div>
-            <div class="bottom-line-text">我的 Master Prompt 系統本質上就是一個大型 Skill，但目前是「全量載入」模式。這篇文章讓我意識到，Progressive Disclosure 不只是效率問題，更是<strong>可擴展性</strong>問題 — 當 Skill 數量從 1 個成長到 10 個、50 個時，沒有分層機制就會撞到 Context Window 的天花板。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">立即應用</div>
-            <div class="bottom-line-text">本週可以做的事：盤點目前所有 Claude Projects 中反覆使用的 Prompt 模式，列出哪些已經是「Skill 等級」的工作流程（如 Master Prompt、文件自動化），哪些還停留在「大致能用」的階段。為後者建立 skill.md 的初步結構。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">需要補充</div>
-            <div class="bottom-line-text">文章偏重概念解釋，缺乏實作指南。特別缺少：(1) skill.md 的最佳寫作模板；(2) 如何設計 Skill 描述讓 Agent 的分類判斷更準確；(3) GMP 環境中使用 Skill + MCP 的合規考量（Audit Trail、Data Integrity）。後續需要參考 OpenAI Codex 的實際 Skill 範例來補充。</div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>製作日期：2026-02-26 | AI Expert Learning System v1.4.3</p>
-        <p>原文來源：Gabriel Chua - Skills, Explained: Why Folders of Markdown Files Are So Effective</p>
-        <p>建議 Chat Title：<strong>2026-02-26 [Agent] Skills - Markdown Folders Explained</strong></p>
-        <p>建議檔名：<strong>2026-02-26_skills-markdown-folders.html</strong></p>
-    </div>
-
 </div>
-
+</div>
+</div>
+<!-- Key Takeaways -->
+<div class="section-title">重點整理</div>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="summary-card-title">Skill = 結構化的 Prompt 重用</div>
+<div class="summary-card-text">Skill 不是新技術，而是把你已經在做的 Prompting 工作組織成可重複使用的模組。核心元素：skill.md 主指令 + 附帶資源 + 資料夾結構。</div>
+</div>
+<div class="summary-card" style="border-left-color: #10b981;">
+<div class="summary-card-title">Progressive Disclosure 節省 Token</div>
+<div class="summary-card-text">Agent 先讀簡短描述判斷相關性，只在確認需要時才載入完整指令。這減少了 Context Window 的浪費，類似圖書館先查目錄再翻書的邏輯。</div>
+</div>
+<div class="summary-card" style="border-left-color: #8b5cf6;">
+<div class="summary-card-title">資料夾結構本身就是語義</div>
+<div class="summary-card-text">模型擅長遍歷檔案系統。東西放在什麼資料夾、怎麼命名，本身就傳達了用途資訊。模組化設計讓 Skill 可以版本控制、共享、和組合使用。</div>
+</div>
+<div class="summary-card" style="border-left-color: #f59e0b;">
+<div class="summary-card-title">隱性知識的顯性化工具</div>
+<div class="summary-card-text">團隊的真正專業往往是「習慣和檢查步驟」而非事實。Skill 讓你把這些程序性知識打包，消除「哪個版本是對的」問題，新成員也能直接上手。</div>
+</div>
+</div>
+<!-- Practice Questions -->
+<div class="section-title">練習題</div>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">Progressive Disclosure 對 Context Window 管理的具體影響是什麼？如果沒有這個機制，會產生什麼問題？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>Progressive Disclosure 讓 Agent 只在確認某個 Skill 與當前任務相關時，才載入該 Skill 的完整指令。如果沒有這個機制，所有 Skill 的完整指令都會被一次性載入 Context Window，導致：(1) Token 消耗大幅增加，推高 API 成本；(2) 不相關的指令可能干擾模型對當前任務的理解；(3) 在 Context Window 有限的情況下，真正需要的指令可能因為窗口滿了而被截斷。這就像開會時把所有部門的 SOP 都印出來擺在桌上 — 大部分是噪音，反而讓你找不到真正需要的那一份。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在 CDMO 的 GMP 環境中，哪些「隱性知識」最適合轉化為 AI Skill？請舉出三個具體例子並說明理由。</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>(1) 偏差調查的初步分類邏輯</strong>：資深 QA 在看到偏差描述時，會根據經驗快速判斷是 Critical/Major/Minor，以及應該先檢查哪些系統（環境監控、設備校驗、人員訓練記錄）。這個決策路徑可以寫成 Skill，讓 AI 輔助做初步分類建議。</p>
+<p><strong>(2) 批次記錄審查的常見問題清單</strong>：每個 CDMO 都有自己的「經驗法則」— 哪些欄位最容易填錯、哪些計算最容易出誤差、哪些簽名最容易漏。這些可以打包成審查 Skill。</p>
+<p><strong>(3) Tech Transfer 的文件對照檢查</strong>：接收新客戶的製程時，需要比對原廠文件和內部 SOP 的差異。這個對照流程有固定的檢查維度（設備規格、環境條件、關鍵製程參數），適合結構化為 Skill。</p>
+<p>這三個例子的共通點：都是「重複性高、有固定模式、但需要經驗才能做好」的工作 — 正是 Skill 最能發揮價值的場景。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">作者認為 Skill「不擴展模型的能力」，你同意嗎？在什麼情境下，Skill 可能實際上「擴展」了模型能做到的事？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>作者的說法在技術層面是正確的 — Skill 沒有改變模型的底層能力。但在實務層面，這個說法值得挑戰。當一個 Skill 整合了 MCP Server、CLI 腳本、和外部 API 時，它實際上讓模型「能做到」之前做不到的事（例如：直接操作資料庫、生成特定格式的文件、或呼叫外部服務）。此外，一個寫得很好的 Skill 可以透過精確的 Prompt 結構，讓模型在特定任務上的表現品質遠超過泛用 Prompt — 這是否算「擴展能力」取決於你如何定義「能力」。如果把「能力」定義為「在實際工作場景中能穩定產出合格結果」，那 Skill 確實擴展了模型的能力邊界。</p>
+</div>
+</details>
+<!-- Bottom Line -->
+<div class="bottom-line">
+<div class="bottom-line-header">我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">核心洞察</div>
+<div class="bottom-line-text">我的 Master Prompt 系統本質上就是一個大型 Skill，但目前是「全量載入」模式。這篇文章讓我意識到，Progressive Disclosure 不只是效率問題，更是<strong>可擴展性</strong>問題 — 當 Skill 數量從 1 個成長到 10 個、50 個時，沒有分層機制就會撞到 Context Window 的天花板。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">立即應用</div>
+<div class="bottom-line-text">本週可以做的事：盤點目前所有 Claude Projects 中反覆使用的 Prompt 模式，列出哪些已經是「Skill 等級」的工作流程（如 Master Prompt、文件自動化），哪些還停留在「大致能用」的階段。為後者建立 skill.md 的初步結構。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">需要補充</div>
+<div class="bottom-line-text">文章偏重概念解釋，缺乏實作指南。特別缺少：(1) skill.md 的最佳寫作模板；(2) 如何設計 Skill 描述讓 Agent 的分類判斷更準確；(3) GMP 環境中使用 Skill + MCP 的合規考量（Audit Trail、Data Integrity）。後續需要參考 OpenAI Codex 的實際 Skill 範例來補充。</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+<p>製作日期：2026-02-26 | AI Expert Learning System v1.4.3</p>
+<p>原文來源：Gabriel Chua - Skills, Explained: Why Folders of Markdown Files Are So Effective</p>
+<p>建議 Chat Title：<strong>2026-02-26 [Agent] Skills - Markdown Folders Explained</strong></p>
+<p>建議檔名：<strong>2026-02-26_skills-markdown-folders.html</strong></p>
+</footer>
+</div>
 </body>
 </html>

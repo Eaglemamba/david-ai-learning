@@ -1,232 +1,130 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2026-02-17">
-    <meta name="doc-title" content="AI 圖表生成教學 - Nano Banana × Gemini">
-    <meta name="doc-source" content="Nano Banana Infographic">
-    <meta name="doc-tags" content="Tool,Prompt,Automation">
-    <meta name="doc-rating" content="2.2">
-    <meta name="doc-summary" content="用Gemini圖片生成功能將素材轉化為結構化圖表的6步驟流程及可複用Prompt模板">
-    <meta name="doc-file" content="2026-02-17_ai-diagram-creation.html">
-    <title>AI 圖表生成教學 - Nano Banana × Gemini</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f8; color: #1e293b; line-height: 1.8; }
-        .container { max-width: 900px; margin: 0 auto; padding: 1rem; }
-        .header { text-align: center; padding: 2.5rem 2rem 1.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 1rem 1rem 0 0; }
-        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .header .subtitle { font-size: 0.95rem; opacity: 0.9; }
-        .tags { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
-        .tag { padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .tag-prompt { background: #fde68a; color: #92400e; }
-        .tag-automation { background: #a7f3d0; color: #065f46; }
-        .source-info { font-size: 0.8rem; opacity: 0.8; margin-top: 0.75rem; }
-        .exec-summary { background: white; padding: 1.5rem 2rem; border-bottom: 1px solid #e2e8f0; }
-        .exec-summary h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 0.75rem; }
-        .exec-summary p { font-size: 0.93rem; color: #475569; line-height: 1.8; }
-        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .objectives { padding: 1.5rem 2rem; background: white; border-bottom: 1px solid #e2e8f0; }
-        .objectives h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; }
-        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
-        .objective-item { background: #f8fafc; border-radius: 0.5rem; padding: 1rem; border-left: 3px solid #3b82f6; transition: transform 0.2s, box-shadow 0.2s; }
-        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .objective-icon { font-size: 1.2rem; margin-bottom: 0.3rem; font-weight: 700; color: #3b82f6; }
-        .objective-text { font-size: 0.88rem; color: #334155; }
-        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 2rem; }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: flex-start; gap: 0.5rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 100px; max-width: 130px; }
-        .framework-icon { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; width: 3rem; height: 3rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.4rem; }
-        .framework-step-title { font-weight: 700; font-size: 0.8rem; }
-        .framework-step-desc { font-size: 0.72rem; opacity: 0.9; margin-top: 0.2rem; }
-        .framework-arrow { font-size: 1.3rem; color: #93c5fd; padding-top: 0.5rem; }
-        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.2rem; } }
-        .content-section { background: white; padding: 1.5rem 2rem; border-bottom: 1px solid #e2e8f0; }
-        .content-section h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #dbeafe; }
-        .part-label { font-size: 0.75rem; font-weight: 600; color: #6366f1; background: #eef2ff; padding: 0.15rem 0.5rem; border-radius: 4px; margin-right: 0.5rem; }
-        .content-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-        .info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
-        .info-box-header { padding: 0.5rem 0.75rem; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem; }
-        .info-box-content { padding: 0.75rem; font-size: 0.88rem; line-height: 1.7; }
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .bilingual { margin-bottom: 0.75rem; }
-        .bilingual .zh { color: #1e293b; font-size: 0.93rem; line-height: 1.8; }
-        .bilingual .en { color: #64748b; font-style: italic; font-size: 0.85rem; line-height: 1.6; margin-top: 0.2rem; }
-        .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; }
-        .takeaways { padding: 1.5rem 2rem; background: white; border-bottom: 1px solid #e2e8f0; }
-        .takeaways h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; }
-        .takeaway-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-        .summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .summary-card:nth-child(2) { border-left-color: #10b981; }
-        .summary-card:nth-child(3) { border-left-color: #f59e0b; }
-        .summary-card:nth-child(4) { border-left-color: #8b5cf6; }
-        .card-number { font-size: 1.5rem; font-weight: 700; color: #cbd5e1; }
-        .card-title { font-weight: 600; color: #1e293b; font-size: 0.9rem; margin: 0.3rem 0; }
-        .card-desc { font-size: 0.83rem; color: #64748b; line-height: 1.6; }
-        .practice { padding: 1.5rem 2rem; background: white; border-bottom: 1px solid #e2e8f0; }
-        .practice h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; }
-        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-        .question-text { flex: 1; font-size: 0.92rem; color: #374151; min-width: 200px; }
-        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-        .question-answer p { font-size: 0.88rem; line-height: 1.7; color: #374151; margin-bottom: 0.5rem; }
-        .question-answer p:last-child { margin-bottom: 0; }
-        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 1.5rem 2rem; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
-        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; font-size: 1.1rem; }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.93rem; line-height: 1.7; color: #334155; }
-        .footer { text-align: center; padding: 1.5rem 2rem; background: #f8fafc; border-radius: 0 0 1rem 1rem; font-size: 0.8rem; color: #94a3b8; }
-        .footer a { color: #6366f1; text-decoration: none; }
-    </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2026-02-17" name="doc-date"/>
+<meta content="AI 圖表生成教學 - Nano Banana × Gemini" name="doc-title"/>
+<meta content="Nano Banana Infographic" name="doc-source"/>
+<meta content="Tool,Prompt,Automation" name="doc-tags"/>
+<meta content="2.2" name="doc-rating"/>
+<meta content="用Gemini圖片生成功能將素材轉化為結構化圖表的6步驟流程及可複用Prompt模板" name="doc-summary"/>
+<meta content="2026-02-17_ai-diagram-creation.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>AI 圖表生成教學 - Nano Banana × Gemini</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+
+
 </head>
 <body>
 <div class="container">
-
-    <div class="header">
-        <h1>AI 圖表生成教學：用 Gemini 打造專業圖解</h1>
-        <div class="subtitle">How to Create Diagrams with AI (using Nano Banana)</div>
-        <div class="tags">
-            <span class="tag tag-tool">Tool</span>
-            <span class="tag tag-prompt">Prompt</span>
-            <span class="tag tag-automation">Automation</span>
-        </div>
-        <div class="source-info">Source: Nano Banana Infographic | Processed: 2026-02-17</div>
-    </div>
-
-    <div class="exec-summary">
-        <div class="rating-bar">
-            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9734;&#9734;&#9734;</span> 2.2/5</span>
-            <span class="rating-high">&#8593; 實務應用, 學習曲線</span>
-            <span class="rating-low">&#8595; 技術深度, 工具生態</span>
-        </div>
-        <h2>快速摘要</h2>
-        <p>這篇信息圖提供了一個用 <span class="highlight-concept">Gemini 圖片生成功能</span>將各類素材（論文、影片、逐字稿）轉化為<span class="highlight-practical">結構化圖表</span>的 6 步驟流程。核心價值在於 Step 6 提供的<span class="highlight-key">可複用 Prompt 模板</span>，讓你不需要從零摸索就能產出流程圖、概念圖等教學用圖表。內容偏入門級，適合作為快速參考卡片，但缺乏對 Prompt 原理的深入解析和跨平台比較。</p>
-    </div>
-
-    <div class="objectives">
-        <h2>學習目標</h2>
-        <div class="objectives-grid">
-            <div class="objective-item">
-                <div class="objective-icon">1</div>
-                <div class="objective-text">掌握 AI 圖表生成的 6 步驟工作流程</div>
-            </div>
-            <div class="objective-item">
-                <div class="objective-icon">2</div>
-                <div class="objective-text">理解 Prompt 模板中各參數的作用與調整邏輯</div>
-            </div>
-            <div class="objective-item">
-                <div class="objective-icon">3</div>
-                <div class="objective-text">評估此方法在專業簡報和教育訓練中的適用性與限制</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="framework-visual">
-        <div class="framework-title">AI Diagram Creation Workflow</div>
-        <div class="framework-steps">
-            <div class="framework-step">
-                <div class="framework-icon">1</div>
-                <div class="framework-step-title">選擇素材</div>
-                <div class="framework-step-desc">論文/影片/逐字稿</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">2</div>
-                <div class="framework-step-title">開啟 Gemini</div>
-                <div class="framework-step-desc">點選 Create Image</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">3</div>
-                <div class="framework-step-title">選圖表類型</div>
-                <div class="framework-step-desc">流程圖/概念圖/插圖</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">4</div>
-                <div class="framework-step-title">設定比例</div>
-                <div class="framework-step-desc">16:9 簡報 / 1:1 社群</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">5</div>
-                <div class="framework-step-title">生成迭代</div>
-                <div class="framework-step-desc">審查 + 修正 Prompt</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="content-section">
-        <h2><span class="part-label">Part I</span> 6 步驟工作流程拆解</h2>
-        <div class="content-grid">
-            <div class="bilingual">
-                <div class="zh">整個流程的核心邏輯是：<span class="highlight-concept">先定義輸入素材，再透過 Gemini 的圖片生成功能，用結構化 Prompt 控制輸出</span>。這不是傳統的「畫圖」，而是用語言描述你要的圖表結構，讓 AI 幫你視覺化。</div>
-                <div class="en">Choose the material you want to convert into a diagram, such as a research paper, video recording, or a written transcript.</div>
-            </div>
-
-            <div class="info-box box-concept">
-                <div class="info-box-header">Step 1-2：素材選擇 + 工具啟動</div>
-                <div class="info-box-content">
+<header class="header">
+<h1>AI 圖表生成教學：用 Gemini 打造專業圖解</h1>
+<div class="subtitle">How to Create Diagrams with AI (using Nano Banana)</div>
+<div class="tags">
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-prompt">Prompt</span>
+<span class="tag tag-automation">Automation</span>
+</div>
+<div class="source-info">Source: Nano Banana Infographic | Processed: 2026-02-17</div>
+</header>
+<div class="exec-summary">
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★☆☆☆</span> 2.2/5</span>
+<span class="rating-high">↑ 實務應用, 學習曲線</span>
+<span class="rating-low">↓ 技術深度, 工具生態</span>
+</div>
+<h2>快速摘要</h2>
+<p>這篇信息圖提供了一個用 <span class="highlight-concept">Gemini 圖片生成功能</span>將各類素材（論文、影片、逐字稿）轉化為<span class="highlight-practical">結構化圖表</span>的 6 步驟流程。核心價值在於 Step 6 提供的<span class="highlight-key">可複用 Prompt 模板</span>，讓你不需要從零摸索就能產出流程圖、概念圖等教學用圖表。內容偏入門級，適合作為快速參考卡片，但缺乏對 Prompt 原理的深入解析和跨平台比較。</p>
+</div>
+<div class="objectives">
+<h2>學習目標</h2>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-icon">1</div>
+<div class="objective-text">掌握 AI 圖表生成的 6 步驟工作流程</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">2</div>
+<div class="objective-text">理解 Prompt 模板中各參數的作用與調整邏輯</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">3</div>
+<div class="objective-text">評估此方法在專業簡報和教育訓練中的適用性與限制</div>
+</div>
+</div>
+</div>
+<div class="framework-visual">
+<div class="framework-title">AI Diagram Creation Workflow</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">1</div>
+<div class="framework-step-title">選擇素材</div>
+<div class="framework-step-desc">論文/影片/逐字稿</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">2</div>
+<div class="framework-step-title">開啟 Gemini</div>
+<div class="framework-step-desc">點選 Create Image</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">3</div>
+<div class="framework-step-title">選圖表類型</div>
+<div class="framework-step-desc">流程圖/概念圖/插圖</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">4</div>
+<div class="framework-step-title">設定比例</div>
+<div class="framework-step-desc">16:9 簡報 / 1:1 社群</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">5</div>
+<div class="framework-step-title">生成迭代</div>
+<div class="framework-step-desc">審查 + 修正 Prompt</div>
+</div>
+</div>
+</div>
+<div class="content-section">
+<h2><span class="part-label">Part I</span> 6 步驟工作流程拆解</h2>
+<div class="content-grid">
+<div class="bilingual">
+<div class="zh-text">整個流程的核心邏輯是：<span class="highlight-concept">先定義輸入素材，再透過 Gemini 的圖片生成功能，用結構化 Prompt 控制輸出</span>。這不是傳統的「畫圖」，而是用語言描述你要的圖表結構，讓 AI 幫你視覺化。</div>
+<div class="en-text">Choose the material you want to convert into a diagram, such as a research paper, video recording, or a written transcript.</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">Step 1-2：素材選擇 + 工具啟動</div>
+<div class="info-box-content">
                     先選定你要圖解的內容來源（論文、影片逐字稿、會議紀錄等），然後到 Gemini 平台點選「Create Image」功能。關鍵在於你的<span class="highlight-key">素材品質決定圖表品質</span>——如果輸入的是模糊的概念，AI 也只能產出模糊的圖。
                 </div>
-            </div>
-
-            <div class="info-box box-practical">
-                <div class="info-box-header">Step 3-4：圖表類型 + 格式設定</div>
-                <div class="info-box-content">
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">Step 3-4：圖表類型 + 格式設定</div>
+<div class="info-box-content">
                     選擇最適合你資料的圖表類型：<span class="highlight-concept">Flowchart（流程圖）</span>適合步驟說明、<span class="highlight-concept">Conceptual Map（概念圖）</span>適合關係呈現、<span class="highlight-concept">Instructional Illustration（教學插圖）</span>適合解釋原理。格式方面，簡報用 16:9，社群媒體用 1:1。
                 </div>
-            </div>
-
-            <div class="info-box box-key">
-                <div class="info-box-header">Step 5：迭代修正——最容易被忽略的步驟</div>
-                <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">Step 5：迭代修正——最容易被忽略的步驟</div>
+<div class="info-box-content">
                     AI 圖表生成很少一次到位。你需要<span class="highlight-key">審查初始結果、調整 Prompt 用詞、重新生成</span>。這個迭代過程才是產出品質的關鍵。把它想像成和設計師的來回溝通——差別只是你的「設計師」回應速度是秒級的。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="content-section">
-        <h2><span class="part-label">Part II</span> Prompt 模板解析</h2>
-        <div class="content-grid">
-            <div class="bilingual">
-                <div class="zh">Step 6 提供了一個<span class="highlight-key">可直接複製使用的 Prompt 模板</span>。這個模板的設計遵循了 Prompt Engineering 的基本原則：<span class="highlight-concept">明確指定輸出格式、主題、焦點、佈局方式和風格約束</span>。</div>
-                <div class="en">Design a [ASPECT RATIO] diagram. Topic: [TOPIC]. Central focus: [MAIN IDEA]. Layout: [FLOW CYCLE STEPS]. Style: clean and instructional. Background: white.</div>
-            </div>
-
-            <div class="info-box box-code">
-                <div class="info-box-header">Prompt Template</div>
-                <div class="info-box-content">
-                    <div class="code-block">Design a [ASPECT RATIO] diagram.
+</div>
+</div>
+</div>
+<div class="content-section">
+<h2><span class="part-label">Part II</span> Prompt 模板解析</h2>
+<div class="content-grid">
+<div class="bilingual">
+<div class="zh-text">Step 6 提供了一個<span class="highlight-key">可直接複製使用的 Prompt 模板</span>。這個模板的設計遵循了 Prompt Engineering 的基本原則：<span class="highlight-concept">明確指定輸出格式、主題、焦點、佈局方式和風格約束</span>。</div>
+<div class="en-text">Design a [ASPECT RATIO] diagram. Topic: [TOPIC]. Central focus: [MAIN IDEA]. Layout: [FLOW CYCLE STEPS]. Style: clean and instructional. Background: white.</div>
+</div>
+<div class="info-box box-code">
+<div class="info-box-header">Prompt Template</div>
+<div class="info-box-content">
+<div class="code-block">Design a [ASPECT RATIO] diagram.
 Topic: [TOPIC].
 Central focus: [MAIN IDEA].
 Layout: [FLOW CYCLE STEPS].
@@ -234,27 +132,25 @@ Style: clean and instructional.
 Background: white.
 Text must be clear, legible, and accurate.
 Accuracy is more important than aesthetics.</div>
-                </div>
-            </div>
-
-            <div class="info-box box-analogy">
-                <div class="info-box-header">模板參數拆解</div>
-                <div class="info-box-content">
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">模板參數拆解</div>
+<div class="info-box-content">
                     這個模板像是一份<span class="highlight-key">設計 Brief（設計簡報）</span>，每個欄位都在回答設計師會問的問題：
-                    <br><br>
-                    <strong>[ASPECT RATIO]</strong> — 輸出尺寸（16:9 或 1:1）<br>
-                    <strong>[TOPIC]</strong> — 圖表主題<br>
-                    <strong>[MAIN IDEA]</strong> — 圖表核心要傳達的一個重點<br>
-                    <strong>[FLOW CYCLE STEPS]</strong> — 佈局方式（流程型、循環型、步驟型）<br>
-                    <strong>"Accuracy is more important than aesthetics"</strong> — 這句話是<span class="highlight-practical">黃金約束條件</span>，防止 AI 為了美觀而犧牲資訊正確性。
+                    <br/><br/>
+<strong>[ASPECT RATIO]</strong> — 輸出尺寸（16:9 或 1:1）<br/>
+<strong>[TOPIC]</strong> — 圖表主題<br/>
+<strong>[MAIN IDEA]</strong> — 圖表核心要傳達的一個重點<br/>
+<strong>[FLOW CYCLE STEPS]</strong> — 佈局方式（流程型、循環型、步驟型）<br/>
+<strong>"Accuracy is more important than aesthetics"</strong> — 這句話是<span class="highlight-practical">黃金約束條件</span>，防止 AI 為了美觀而犧牲資訊正確性。
                 </div>
-            </div>
-
-            <div class="info-box box-practical">
-                <div class="info-box-header">CDMO 應用範例</div>
-                <div class="info-box-content">
-                    想像你要在團隊訓練中解釋 Aseptic Fill-Finish 的流程。你可以這樣使用：<br><br>
-                    <div class="code-block">Design a 16:9 diagram.
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">CDMO 應用範例</div>
+<div class="info-box-content">
+                    想像你要在團隊訓練中解釋 Aseptic Fill-Finish 的流程。你可以這樣使用：<br/><br/>
+<div class="code-block">Design a 16:9 diagram.
 Topic: Aseptic Fill-Finish Process.
 Central focus: Critical control points
   in vial filling.
@@ -264,102 +160,94 @@ Style: clean and instructional.
 Background: white.
 Text must be clear, legible, and accurate.
 Accuracy is more important than aesthetics.</div>
-                    <br>
+<br/>
                     注意：AI 生成的 GMP 流程圖<span class="highlight-key">僅適合作為初稿和討論用途</span>，最終版本必須經過 SME 審核，不可直接用於 SOP 或法規文件。這正是 Copilot Mode（人工審查 100%）的典型應用場景。
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="takeaways">
-        <h2>重點整理</h2>
-        <div class="takeaway-grid">
-            <div class="summary-card">
-                <div class="card-number">01</div>
-                <div class="card-title">素材決定品質</div>
-                <div class="card-desc">垃圾進、垃圾出。清晰的輸入素材（逐字稿、論文摘要）才能產出有用的圖表。</div>
-            </div>
-            <div class="summary-card">
-                <div class="card-number">02</div>
-                <div class="card-title">Prompt = 設計 Brief</div>
-                <div class="card-desc">把 Prompt 當作和設計師的溝通文件，每個參數都在回答一個設計決策問題。</div>
-            </div>
-            <div class="summary-card">
-                <div class="card-number">03</div>
-                <div class="card-title">準確性 > 美觀</div>
-                <div class="card-desc">"Accuracy over aesthetics" 這個約束條件適用於所有教學型圖表生成。</div>
-            </div>
-            <div class="summary-card">
-                <div class="card-number">04</div>
-                <div class="card-title">迭代是關鍵</div>
-                <div class="card-desc">第一次生成幾乎不會完美。規劃 2-3 次迭代時間，每次微調 Prompt 的具體參數。</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="practice">
-        <h2>練習題</h2>
-
-        <details class="question-accordion">
-            <summary class="question-header">
-                <span class="question-number">Q1</span>
-                <span class="question-type">概念理解</span>
-                <span class="question-text">Prompt 模板中「Accuracy is more important than aesthetics」這句話的作用是什麼？如果移除它，可能會發生什麼？</span>
-                <span class="accordion-icon"></span>
-            </summary>
-            <div class="question-answer">
-                <p>這句話是一個<strong>約束條件（Constraint）</strong>，告訴 AI 在面臨「好看 vs 正確」的取捨時，優先選擇正確性。如果移除，AI 可能會為了視覺平衡而簡化步驟、合併概念、或用不精確的詞彙替代專業術語。在教學和專業場景中，這個約束尤其重要——一張漂亮但有誤的流程圖比沒有圖更危險。</p>
-            </div>
-        </details>
-
-        <details class="question-accordion">
-            <summary class="question-header">
-                <span class="question-number">Q2</span>
-                <span class="question-type">產業應用</span>
-                <span class="question-text">在你的 CDMO 環境中，AI 生成的流程圖可以用在哪些場景？哪些場景絕對不能用？</span>
-                <span class="accordion-icon"></span>
-            </summary>
-            <div class="question-answer">
-                <p><strong>可以用的場景：</strong>團隊訓練的討論素材、技術轉移的初步流程視覺化、偏差調查時快速梳理事件時間線、跨部門溝通時的概念說明圖。</p>
-                <p><strong>絕對不能用的場景：</strong>正式 SOP 文件中的流程圖、法規提交文件（如 PIC/S 或 FDA 查廠資料）、驗證方案中的關鍵流程描述、任何需要受控文件管理的圖表。原因是 AI 生成內容無法保證 Data Integrity（數據完整性），且不符合 21 CFR Part 11 對電子記錄的要求。</p>
-            </div>
-        </details>
-
-        <details class="question-accordion">
-            <summary class="question-header">
-                <span class="question-number">Q3</span>
-                <span class="question-type">批判思考</span>
-                <span class="question-text">這個方法使用 Gemini 的圖片生成功能。與使用 Mermaid.js 或 draw.io 等傳統工具相比，AI 圖片生成的根本性差異和限制是什麼？</span>
-                <span class="accordion-icon"></span>
-            </summary>
-            <div class="question-answer">
-                <p>根本性差異在於<strong>輸出是圖片而非結構化資料</strong>。Mermaid.js 或 draw.io 產生的是可編輯的向量圖或代碼，你可以精確修改每個節點和連線。AI 圖片生成產出的是像素圖像——你無法「只改第三步的文字」，只能重新生成整張圖。</p>
-                <p>這意味著：(1) 版本控制困難——每次修改都是全新圖片；(2) 精確度有限——AI 可能拼錯字、遺漏步驟、或自行「創意」添加不存在的連結；(3) 可及性問題——圖片中的文字無法被螢幕閱讀器讀取。對於需要精確控制的專業文件，Mermaid.js 配合 Claude 生成代碼可能是更好的選擇。</p>
-            </div>
-        </details>
-    </div>
-
-    <div class="bottom-line">
-        <div class="bottom-line-header">我的行動結論</div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">核心洞察</div>
-            <div class="bottom-line-text">這個 Prompt 模板的真正價值不在模板本身，而在於它示範了一個通用原則：<strong>用結構化參數控制 AI 圖像輸出</strong>。同樣的思維可以延伸到用 Claude 生成 Mermaid 流程圖、用 DALL-E 生成概念圖等。核心能力是「把視覺需求翻譯成語言描述」的能力。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">立即應用</div>
-            <div class="bottom-line-text">本週找一個團隊訓練的場景，用這個 Prompt 模板在 Gemini 中生成一張流程圖草稿，體驗完整的「生成 → 審查 → 迭代」循環。同時測試用 Claude 生成 Mermaid.js 代碼作為對比，評估哪種方式更適合我的實際工作流。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">需要補充</div>
-            <div class="bottom-line-text">文章完全沒有討論 AI 圖表生成的局限性（文字正確性、可編輯性、版本控制）。也沒有和其他方案（Mermaid.js、Excalidraw、draw.io）做比較。在 GMP 環境中使用前，需要建立一個明確的「AI 生成圖表使用準則」，區分「討論用途」和「受控文件用途」的邊界。</div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p>Document created: 2026-02-17 | Source: Nano Banana Infographic</p>
-        <p>Suggested Chat Title: <strong>[Tool] AI Diagram Generation - Gemini Prompt Template</strong></p>
-    </div>
-
+</div>
+</div>
+</div>
+<div class="takeaways">
+<h2>重點整理</h2>
+<div class="takeaway-grid">
+<div class="summary-card">
+<div class="card-number">01</div>
+<div class="card-title">素材決定品質</div>
+<div class="card-desc">垃圾進、垃圾出。清晰的輸入素材（逐字稿、論文摘要）才能產出有用的圖表。</div>
+</div>
+<div class="summary-card">
+<div class="card-number">02</div>
+<div class="card-title">Prompt = 設計 Brief</div>
+<div class="card-desc">把 Prompt 當作和設計師的溝通文件，每個參數都在回答一個設計決策問題。</div>
+</div>
+<div class="summary-card">
+<div class="card-number">03</div>
+<div class="card-title">準確性 &gt; 美觀</div>
+<div class="card-desc">"Accuracy over aesthetics" 這個約束條件適用於所有教學型圖表生成。</div>
+</div>
+<div class="summary-card">
+<div class="card-number">04</div>
+<div class="card-title">迭代是關鍵</div>
+<div class="card-desc">第一次生成幾乎不會完美。規劃 2-3 次迭代時間，每次微調 Prompt 的具體參數。</div>
+</div>
+</div>
+</div>
+<div class="practice">
+<h2>練習題</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">Prompt 模板中「Accuracy is more important than aesthetics」這句話的作用是什麼？如果移除它，可能會發生什麼？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>這句話是一個<strong>約束條件（Constraint）</strong>，告訴 AI 在面臨「好看 vs 正確」的取捨時，優先選擇正確性。如果移除，AI 可能會為了視覺平衡而簡化步驟、合併概念、或用不精確的詞彙替代專業術語。在教學和專業場景中，這個約束尤其重要——一張漂亮但有誤的流程圖比沒有圖更危險。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在你的 CDMO 環境中，AI 生成的流程圖可以用在哪些場景？哪些場景絕對不能用？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>可以用的場景：</strong>團隊訓練的討論素材、技術轉移的初步流程視覺化、偏差調查時快速梳理事件時間線、跨部門溝通時的概念說明圖。</p>
+<p><strong>絕對不能用的場景：</strong>正式 SOP 文件中的流程圖、法規提交文件（如 PIC/S 或 FDA 查廠資料）、驗證方案中的關鍵流程描述、任何需要受控文件管理的圖表。原因是 AI 生成內容無法保證 Data Integrity（數據完整性），且不符合 21 CFR Part 11 對電子記錄的要求。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">這個方法使用 Gemini 的圖片生成功能。與使用 Mermaid.js 或 draw.io 等傳統工具相比，AI 圖片生成的根本性差異和限制是什麼？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>根本性差異在於<strong>輸出是圖片而非結構化資料</strong>。Mermaid.js 或 draw.io 產生的是可編輯的向量圖或代碼，你可以精確修改每個節點和連線。AI 圖片生成產出的是像素圖像——你無法「只改第三步的文字」，只能重新生成整張圖。</p>
+<p>這意味著：(1) 版本控制困難——每次修改都是全新圖片；(2) 精確度有限——AI 可能拼錯字、遺漏步驟、或自行「創意」添加不存在的連結；(3) 可及性問題——圖片中的文字無法被螢幕閱讀器讀取。對於需要精確控制的專業文件，Mermaid.js 配合 Claude 生成代碼可能是更好的選擇。</p>
+</div>
+</details>
+</div>
+<div class="bottom-line">
+<div class="bottom-line-header">我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">核心洞察</div>
+<div class="bottom-line-text">這個 Prompt 模板的真正價值不在模板本身，而在於它示範了一個通用原則：<strong>用結構化參數控制 AI 圖像輸出</strong>。同樣的思維可以延伸到用 Claude 生成 Mermaid 流程圖、用 DALL-E 生成概念圖等。核心能力是「把視覺需求翻譯成語言描述」的能力。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">立即應用</div>
+<div class="bottom-line-text">本週找一個團隊訓練的場景，用這個 Prompt 模板在 Gemini 中生成一張流程圖草稿，體驗完整的「生成 → 審查 → 迭代」循環。同時測試用 Claude 生成 Mermaid.js 代碼作為對比，評估哪種方式更適合我的實際工作流。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">需要補充</div>
+<div class="bottom-line-text">文章完全沒有討論 AI 圖表生成的局限性（文字正確性、可編輯性、版本控制）。也沒有和其他方案（Mermaid.js、Excalidraw、draw.io）做比較。在 GMP 環境中使用前，需要建立一個明確的「AI 生成圖表使用準則」，區分「討論用途」和「受控文件用途」的邊界。</div>
+</div>
+</div>
+<footer class="footer">
+<p>Document created: 2026-02-17 | Source: Nano Banana Infographic</p>
+<p>Suggested Chat Title: <strong>[Tool] AI Diagram Generation - Gemini Prompt Template</strong></p>
+</footer>
 </div>
 </body>
 </html>

@@ -1,343 +1,184 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claude Code 最佳實踐指南 - 從環境配置到平行擴展</title>
-    
-    <!-- Dashboard Index Meta -->
-    <meta name="doc-date" content="2026-02-22">
-    <meta name="doc-title" content="Claude Code Best Practices - 環境配置到平行擴展">
-    <meta name="doc-source" content="Anthropic / Claude Code Documentation">
-    <meta name="doc-source-type" content="Anthropic-Docs">
-    <meta name="doc-tags" content="Anthropic-Docs,Tool,Agent,Automation,Framework">
-    <meta name="doc-rating" content="4.3">
-    <meta name="doc-summary" content="Claude Code 完整最佳實踐：驗證迴路、Context 管理、CLAUDE.md、平行工作流。">
-    <meta name="doc-file" content="2026-02-22_claude-code-best-practices.html">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1e3a8a;
-            --primary-light: #3b82f6;
-            --secondary: #6d28d9;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text: #334155;
-            --text-light: #64748b;
-            --border: #e2e8f0;
-            --highlight-concept: #a5d6a7;
-            --highlight-key: #ffcc80;
-            --highlight-practical: #6ee7b7;
-            --highlight-cost: #5eead4;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
-        code, pre { font-family: 'Source Code Pro', monospace; }
-        
-        /* Header */
-        .header { background: linear-gradient(135deg, #1e3a5f, #3b5998, #6366f1); color: white; padding: 2.5rem 2rem; text-align: center; }
-        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.4; }
-        .header .subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 1rem; }
-        .tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
-        .tag { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 0.25rem; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .tag-agent { background: #c7d2fe; color: #3730a3; }
-        .tag-auto { background: #a7f3d0; color: #065f46; }
-        .tag-framework { background: #fde68a; color: #92400e; }
-        .source-info { font-size: 0.8rem; opacity: 0.8; }
-        .source-info a { color: #93c5fd; text-decoration: none; }
-        .source-info a:hover { text-decoration: underline; }
-        
-        /* Rating Bar */
-        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        
-        /* Executive Summary */
-        .executive-summary { margin: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #eff6ff, #f0f9ff); border-radius: 12px; border-left: 4px solid var(--primary-light); }
-        .executive-summary h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 0.75rem; }
-        .executive-summary p { font-size: 0.92rem; line-height: 1.8; color: var(--text); }
-        
-        /* Learning Objectives */
-        .objectives { margin: 2rem; }
-        .objectives h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 1rem; }
-        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
-        .objective-item { background: white; padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid var(--primary-light); box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
-        .objective-text { font-size: 0.88rem; line-height: 1.6; color: var(--text); }
-        
-        /* Framework Visual */
-        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 2rem; }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 120px; }
-        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
-        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-        
-        /* Content Sections */
-        .content-section { margin: 2rem; }
-        .part-header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 1rem 1.5rem; border-radius: 0.75rem 0.75rem 0 0; }
-        .part-header h2 { font-size: 1.05rem; font-weight: 700; }
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-top: none; border-radius: 0 0 0.75rem 0.75rem; overflow: hidden; }
-        .content-left { padding: 1.5rem; background: white; border-right: 1px solid var(--border); }
-        .content-right { padding: 1.5rem; background: #f8fafc; }
-        .content-right h3 { font-size: 0.95rem; color: var(--secondary); margin-bottom: 0.75rem; }
-        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; border-bottom: 1px solid var(--border); } }
-        
-        /* Linear layout override */
-        .content-grid.linear { grid-template-columns: 1fr; }
-        .content-grid.linear .content-left { border-right: none; }
-        
-        /* Bilingual blocks */
-        .bilingual-block { margin-bottom: 1.25rem; }
-        .zh-text { font-size: 0.92rem; line-height: 1.8; color: var(--text); }
-        .en-text { font-size: 0.85rem; line-height: 1.6; color: var(--text-light); font-style: italic; margin-top: 0.25rem; }
-        .highlight-concept { background: linear-gradient(180deg, transparent 60%, #a5d6a7 60%); padding: 0 2px; }
-        .highlight-key { background: linear-gradient(180deg, transparent 60%, #ffcc80 60%); padding: 0 2px; }
-        .highlight-practical { background: linear-gradient(180deg, transparent 60%, #6ee7b7 60%); padding: 0 2px; }
-        
-        /* Info boxes */
-        .info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
-        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; }
-        .info-box-content { padding: 0.75rem; font-size: 0.88rem; line-height: 1.7; }
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
-        
-        /* Code blocks */
-        pre.code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; font-size: 0.82rem; line-height: 1.6; overflow-x: auto; margin-bottom: 1rem; }
-        code.inline { background: #f1f5f9; color: #be185d; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.85rem; }
-        
-        /* Key Takeaways */
-        .takeaways { margin: 2rem; }
-        .takeaways h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 1rem; }
-        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-        .summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid var(--primary-light); box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .summary-card .card-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
-        .summary-card h3 { font-size: 0.92rem; color: var(--primary); margin-bottom: 0.5rem; }
-        .summary-card p { font-size: 0.85rem; line-height: 1.6; color: var(--text-light); }
-        
-        /* Practice Accordion */
-        .practice { margin: 2rem; }
-        .practice h2 { font-size: 1.1rem; color: var(--secondary); margin-bottom: 1rem; }
-        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-        .question-answer p:last-child { margin-bottom: 0; }
-        
-        /* Bottom Line */
-        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
-        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-        
-        /* Footer */
-        .footer { margin: 2rem; padding: 1.5rem; background: #f1f5f9; border-radius: 0.75rem; text-align: center; font-size: 0.82rem; color: var(--text-light); }
-        .footer a { color: var(--primary-light); text-decoration: none; }
-        .footer a:hover { text-decoration: underline; }
-        
-        /* Table styles */
-        .comparison-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1rem; }
-        .comparison-table th { background: #eef2ff; color: #3730a3; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; border-bottom: 2px solid #a5b4fc; }
-        .comparison-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
-        .comparison-table tr:hover { background: #f8fafc; }
-    </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claude Code 最佳實踐指南 - 從環境配置到平行擴展</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<!-- Dashboard Index Meta -->
+<meta content="2026-02-22" name="doc-date"/>
+<meta content="Claude Code Best Practices - 環境配置到平行擴展" name="doc-title"/>
+<meta content="Anthropic / Claude Code Documentation" name="doc-source"/>
+<meta content="Anthropic-Docs" name="doc-source-type"/>
+<meta content="Anthropic-Docs,Tool,Agent,Automation,Framework" name="doc-tags"/>
+<meta content="4.3" name="doc-rating"/>
+<meta content="Claude Code 完整最佳實踐：驗證迴路、Context 管理、CLAUDE.md、平行工作流。" name="doc-summary"/>
+<meta content="2026-02-22_claude-code-best-practices.html" name="doc-file"/><meta content="v1" name="normalized"/>
+
+
 </head>
 <body>
-
 <!-- HEADER -->
-<div class="header">
-    <div class="tag-container">
-        <span class="tag tag-tool">Tool</span>
-        <span class="tag tag-agent">Agent</span>
-        <span class="tag tag-auto">Automation</span>
-        <span class="tag tag-framework">Framework</span>
-    </div>
-    <h1>Claude Code Best Practices<br>從環境配置到平行擴展的完整指南</h1>
-    <p class="subtitle">掌握 Agentic 編碼環境的核心模式：Context 管理、驗證迴路、CLAUDE.md 與多工擴展</p>
-    <p class="source-info">Source: <a href="https://code.claude.com/en/best-practices" target="_blank">Anthropic - Claude Code Documentation</a> | 2026-02-22</p>
+<header class="header">
+<div class="tag-container">
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-auto">Automation</span>
+<span class="tag tag-framework">Framework</span>
 </div>
-
+<h1>Claude Code Best Practices<br/>從環境配置到平行擴展的完整指南</h1>
+<p class="subtitle">掌握 Agentic 編碼環境的核心模式：Context 管理、驗證迴路、CLAUDE.md 與多工擴展</p>
+<p class="source-info">Source: <a href="https://code.claude.com/en/best-practices" target="_blank">Anthropic - Claude Code Documentation</a> | 2026-02-22</p>
+</header>
 <!-- EXECUTIVE SUMMARY -->
 <div class="executive-summary">
-    <div class="rating-bar">
-        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.3/5</span>
-        <span class="rating-high">&uarr; 實務應用, 工具生態</span>
-        <span class="rating-low">&darr; 技術深度, 時效性</span>
-    </div>
-    <h2>Executive Summary</h2>
-    <p>Claude Code 不是聊天機器人，而是一個 <span class="highlight-concept">Agentic 編碼環境</span> — 它能讀取檔案、執行命令、自主解決問題。但這種自主性帶來一個核心限制：<span class="highlight-key">Context Window 填滿的速度比你想像的快，而且效能會隨之下降</span>。本文從 Anthropic 內部團隊的實戰經驗出發，整理出 6 大最佳實踐模式：驗證迴路、探索-規劃-執行流程、精確 Prompt、環境配置（CLAUDE.md / MCP / Hooks / Skills）、Session 管理、以及平行擴展。這不是功能介紹，而是一份「如何用對 Claude Code」的操作手冊。</p>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.3/5</span>
+<span class="rating-high">↑ 實務應用, 工具生態</span>
+<span class="rating-low">↓ 技術深度, 時效性</span>
 </div>
-
+<h2>Executive Summary</h2>
+<p>Claude Code 不是聊天機器人，而是一個 <span class="highlight-concept">Agentic 編碼環境</span> — 它能讀取檔案、執行命令、自主解決問題。但這種自主性帶來一個核心限制：<span class="highlight-key">Context Window 填滿的速度比你想像的快，而且效能會隨之下降</span>。本文從 Anthropic 內部團隊的實戰經驗出發，整理出 6 大最佳實踐模式：驗證迴路、探索-規劃-執行流程、精確 Prompt、環境配置（CLAUDE.md / MCP / Hooks / Skills）、Session 管理、以及平行擴展。這不是功能介紹，而是一份「如何用對 Claude Code」的操作手冊。</p>
+</div>
 <!-- LEARNING OBJECTIVES -->
 <div class="objectives">
-    <h2>Learning Objectives</h2>
-    <div class="objectives-grid">
-        <div class="objective-item">
-            <div class="objective-icon">&#127919;</div>
-            <div class="objective-text">理解 Context Window 為什麼是 Claude Code 最重要的資源，以及如何管理它</div>
-        </div>
-        <div class="objective-item">
-            <div class="objective-icon">&#128736;</div>
-            <div class="objective-text">掌握「探索 → 規劃 → 執行 → 提交」四階段工作流程</div>
-        </div>
-        <div class="objective-item">
-            <div class="objective-icon">&#9889;</div>
-            <div class="objective-text">學會配置 CLAUDE.md、Skills、Hooks、MCP 建立高效開發環境</div>
-        </div>
-        <div class="objective-item">
-            <div class="objective-icon">&#128640;</div>
-            <div class="objective-text">運用 Headless Mode 和 Fan-out 模式將 Claude Code 擴展到自動化工作流</div>
-        </div>
-    </div>
+<h2>Learning Objectives</h2>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-icon">🎯</div>
+<div class="objective-text">理解 Context Window 為什麼是 Claude Code 最重要的資源，以及如何管理它</div>
 </div>
-
+<div class="objective-item">
+<div class="objective-icon">🛠</div>
+<div class="objective-text">掌握「探索 → 規劃 → 執行 → 提交」四階段工作流程</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">⚡</div>
+<div class="objective-text">學會配置 CLAUDE.md、Skills、Hooks、MCP 建立高效開發環境</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">🚀</div>
+<div class="objective-text">運用 Headless Mode 和 Fan-out 模式將 Claude Code 擴展到自動化工作流</div>
+</div>
+</div>
+</div>
 <!-- FRAMEWORK VISUAL -->
 <div class="framework-visual">
-    <div class="framework-title">Claude Code 最佳實踐核心流程</div>
-    <div class="framework-steps">
-        <div class="framework-step">
-            <div class="framework-icon">&#128269;</div>
-            <div class="framework-step-title">Explore</div>
-            <div class="framework-step-desc">Plan Mode 讀取理解</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#128221;</div>
-            <div class="framework-step-title">Plan</div>
-            <div class="framework-step-desc">建立實作計畫</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#128187;</div>
-            <div class="framework-step-title">Implement</div>
-            <div class="framework-step-desc">執行 + 驗證</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#9989;</div>
-            <div class="framework-step-title">Commit</div>
-            <div class="framework-step-desc">提交 + PR</div>
-        </div>
-    </div>
+<div class="framework-title">Claude Code 最佳實踐核心流程</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">🔍</div>
+<div class="framework-step-title">Explore</div>
+<div class="framework-step-desc">Plan Mode 讀取理解</div>
 </div>
-
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📝</div>
+<div class="framework-step-title">Plan</div>
+<div class="framework-step-desc">建立實作計畫</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">💻</div>
+<div class="framework-step-title">Implement</div>
+<div class="framework-step-desc">執行 + 驗證</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">✅</div>
+<div class="framework-step-title">Commit</div>
+<div class="framework-step-desc">提交 + PR</div>
+</div>
+</div>
+</div>
 <!-- PART I -->
 <div class="content-section">
-    <div class="part-header"><h2>Part I: 核心限制 — Context Window 是最重要的資源</h2></div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <p class="zh-text">大多數最佳實踐都基於一個限制：<span class="highlight-key">Claude 的 Context Window 填滿的速度很快，效能會隨之下降</span>。Context Window 容納你整個對話的一切 — 每條訊息、每個讀取的檔案、每個指令輸出。一次除錯 session 就可能消耗數萬個 token。</p>
-                <p class="en-text">"Most best practices are based on one constraint: Claude's context window fills up fast, and performance degrades as it fills."</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text">當 Context Window 接近滿載時，Claude 可能開始「<span class="highlight-concept">遺忘</span>」先前的指令或犯更多錯誤。這不是 bug — 這是 LLM 的基本特性。因此 Context Window 是你最需要管理的資源。</p>
-                <p class="en-text">"LLM performance degrades as context fills. When the context window is getting full, Claude may start 'forgetting' earlier instructions or making more mistakes."</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>&#128161; 核心觀念</h3>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">&#128161; 比喻說明</div>
-                <div class="info-box-content">想像 Context Window 就像你的工作桌面。桌面越亂（塞滿不相關的文件），你找到需要的東西就越慢，出錯的機率也越高。<code class="inline">/clear</code> 就像清理桌面 — 不同任務之間應該重新整理。</div>
-            </div>
-            <div class="info-box box-practical">
-                <div class="info-box-header">&#128736; 實務應用</div>
-                <div class="info-box-content">用 custom status line 持續追蹤 context 使用量。在不同任務之間使用 <code class="inline">/clear</code> 重置。把 Context Window 當成你最珍貴的預算來管理。</div>
-            </div>
-        </div>
-    </div>
+<div class="part-header"><h2>Part I: 核心限制 — Context Window 是最重要的資源</h2></div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">大多數最佳實踐都基於一個限制：<span class="highlight-key">Claude 的 Context Window 填滿的速度很快，效能會隨之下降</span>。Context Window 容納你整個對話的一切 — 每條訊息、每個讀取的檔案、每個指令輸出。一次除錯 session 就可能消耗數萬個 token。</p>
+<p class="en-text">"Most best practices are based on one constraint: Claude's context window fills up fast, and performance degrades as it fills."</p>
 </div>
-
+<div class="bilingual-block">
+<p class="zh-text">當 Context Window 接近滿載時，Claude 可能開始「<span class="highlight-concept">遺忘</span>」先前的指令或犯更多錯誤。這不是 bug — 這是 LLM 的基本特性。因此 Context Window 是你最需要管理的資源。</p>
+<p class="en-text">"LLM performance degrades as context fills. When the context window is getting full, Claude may start 'forgetting' earlier instructions or making more mistakes."</p>
+</div>
+</div>
+<div class="content-right">
+<h3>💡 核心觀念</h3>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">想像 Context Window 就像你的工作桌面。桌面越亂（塞滿不相關的文件），你找到需要的東西就越慢，出錯的機率也越高。<code class="inline">/clear</code> 就像清理桌面 — 不同任務之間應該重新整理。</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠 實務應用</div>
+<div class="info-box-content">用 custom status line 持續追蹤 context 使用量。在不同任務之間使用 <code class="inline">/clear</code> 重置。把 Context Window 當成你最珍貴的預算來管理。</div>
+</div>
+</div>
+</div>
+</div>
 <!-- PART II -->
 <div class="content-section">
-    <div class="part-header"><h2>Part II: 給 Claude 驗證自己工作的方法</h2></div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <p class="zh-text">這是<span class="highlight-key">最高槓桿的一件事</span>。Claude 在能驗證自己工作時表現顯著提升 — 執行測試、比對截圖、驗證輸出。沒有明確的成功標準，它可能產出看起來正確但實際不能用的東西。</p>
-                <p class="en-text">"Claude performs dramatically better when it can verify its own work... Without clear success criteria, it might produce something that looks right but actually doesn't work."</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text">三個關鍵策略：(1) <span class="highlight-practical">提供驗證標準</span> — 給出具體測試案例和預期結果 (2) <span class="highlight-practical">視覺驗證 UI 變更</span> — 貼截圖讓 Claude 比對 (3) <span class="highlight-practical">解決根本原因而非症狀</span> — 提供錯誤訊息，要求找出根因。</p>
-                <p class="en-text">"Provide verification criteria... Verify UI changes visually... Address root causes, not symptoms."</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>&#9888; Before vs After</h3>
-            <table class="comparison-table">
-                <thead><tr><th>Before</th><th>After</th></tr></thead>
-                <tbody>
-                    <tr>
-                        <td>"implement a function that validates email"</td>
-                        <td>"write validateEmail. test: user@ex.com=true, invalid=false. run tests after."</td>
-                    </tr>
-                    <tr>
-                        <td>"make the dashboard look better"</td>
-                        <td>[paste screenshot] "implement this design, take screenshot, compare, fix differences"</td>
-                    </tr>
-                    <tr>
-                        <td>"the build is failing"</td>
-                        <td>"build fails with [error]. fix root cause, verify build succeeds."</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="info-box box-key">
-                <div class="info-box-header">&#9888; 重點提示</div>
-                <div class="info-box-content">驗證可以是測試套件、linter、或檢查輸出的 Bash 指令。<span class="highlight-key">投資在讓你的驗證堅如磐石</span>。你也可以用 Claude in Chrome 擴充功能做 UI 的視覺驗證。</div>
-            </div>
-        </div>
-    </div>
+<div class="part-header"><h2>Part II: 給 Claude 驗證自己工作的方法</h2></div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">這是<span class="highlight-key">最高槓桿的一件事</span>。Claude 在能驗證自己工作時表現顯著提升 — 執行測試、比對截圖、驗證輸出。沒有明確的成功標準，它可能產出看起來正確但實際不能用的東西。</p>
+<p class="en-text">"Claude performs dramatically better when it can verify its own work... Without clear success criteria, it might produce something that looks right but actually doesn't work."</p>
 </div>
-
+<div class="bilingual-block">
+<p class="zh-text">三個關鍵策略：(1) <span class="highlight-practical">提供驗證標準</span> — 給出具體測試案例和預期結果 (2) <span class="highlight-practical">視覺驗證 UI 變更</span> — 貼截圖讓 Claude 比對 (3) <span class="highlight-practical">解決根本原因而非症狀</span> — 提供錯誤訊息，要求找出根因。</p>
+<p class="en-text">"Provide verification criteria... Verify UI changes visually... Address root causes, not symptoms."</p>
+</div>
+</div>
+<div class="content-right">
+<h3>⚠ Before vs After</h3>
+<table class="comparison-table">
+<thead><tr><th>Before</th><th>After</th></tr></thead>
+<tbody>
+<tr>
+<td>"implement a function that validates email"</td>
+<td>"write validateEmail. test: user@ex.com=true, invalid=false. run tests after."</td>
+</tr>
+<tr>
+<td>"make the dashboard look better"</td>
+<td>[paste screenshot] "implement this design, take screenshot, compare, fix differences"</td>
+</tr>
+<tr>
+<td>"the build is failing"</td>
+<td>"build fails with [error]. fix root cause, verify build succeeds."</td>
+</tr>
+</tbody>
+</table>
+<div class="info-box box-key">
+<div class="info-box-header">⚠ 重點提示</div>
+<div class="info-box-content">驗證可以是測試套件、linter、或檢查輸出的 Bash 指令。<span class="highlight-key">投資在讓你的驗證堅如磐石</span>。你也可以用 Claude in Chrome 擴充功能做 UI 的視覺驗證。</div>
+</div>
+</div>
+</div>
+</div>
 <!-- PART III -->
 <div class="content-section">
-    <div class="part-header"><h2>Part III: 先探索、再規劃、最後寫程式</h2></div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <p class="zh-text">讓 Claude 直接跳進寫程式，可能產出<span class="highlight-key">解決錯誤問題的程式碼</span>。用 Plan Mode 將探索和執行分開。推薦四階段工作流：</p>
-                <p class="en-text">"Letting Claude jump straight to coding can produce code that solves the wrong problem. Use Plan Mode to separate exploration from execution."</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><span class="highlight-concept">Explore</span>：進入 Plan Mode，Claude 讀取檔案、回答問題但不做修改。<span class="highlight-concept">Plan</span>：要求 Claude 建立詳細實作計畫，按 Ctrl+G 在編輯器中直接修改計畫。<span class="highlight-concept">Implement</span>：切回 Normal Mode 執行，根據計畫驗證。<span class="highlight-concept">Commit</span>：提交並建立 PR。</p>
-                <p class="en-text">"The recommended workflow has four phases: Explore, Plan, Implement, Commit."</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text">但 Plan Mode 也有開銷。<span class="highlight-practical">如果範圍明確、修改很小</span>（修正錯字、加 log、重新命名變數），直接做就好。規劃在你不確定方法、修改跨多個檔案、或不熟悉要改的程式碼時最有價值。</p>
-                <p class="en-text">"Plan Mode is useful, but also adds overhead... Planning is most useful when you're uncertain about the approach."</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>&#128187; 指令範例</h3>
-            <pre class="code-block"># Explore (Plan Mode)
+<div class="part-header"><h2>Part III: 先探索、再規劃、最後寫程式</h2></div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">讓 Claude 直接跳進寫程式，可能產出<span class="highlight-key">解決錯誤問題的程式碼</span>。用 Plan Mode 將探索和執行分開。推薦四階段工作流：</p>
+<p class="en-text">"Letting Claude jump straight to coding can produce code that solves the wrong problem. Use Plan Mode to separate exploration from execution."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><span class="highlight-concept">Explore</span>：進入 Plan Mode，Claude 讀取檔案、回答問題但不做修改。<span class="highlight-concept">Plan</span>：要求 Claude 建立詳細實作計畫，按 Ctrl+G 在編輯器中直接修改計畫。<span class="highlight-concept">Implement</span>：切回 Normal Mode 執行，根據計畫驗證。<span class="highlight-concept">Commit</span>：提交並建立 PR。</p>
+<p class="en-text">"The recommended workflow has four phases: Explore, Plan, Implement, Commit."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">但 Plan Mode 也有開銷。<span class="highlight-practical">如果範圍明確、修改很小</span>（修正錯字、加 log、重新命名變數），直接做就好。規劃在你不確定方法、修改跨多個檔案、或不熟悉要改的程式碼時最有價值。</p>
+<p class="en-text">"Plan Mode is useful, but also adds overhead... Planning is most useful when you're uncertain about the approach."</p>
+</div>
+</div>
+<div class="content-right">
+<h3>💻 指令範例</h3>
+<pre class="code-block"># Explore (Plan Mode)
 read /src/auth and understand how we
 handle sessions and login.
 
@@ -352,47 +193,46 @@ write tests, run suite, fix failures.
 # Commit (Normal Mode)
 commit with a descriptive message
 and open a PR</pre>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">&#128161; 比喻說明</div>
-                <div class="info-box-content">這就像裝修房子：你不會拿到鐵鎚就開始敲牆。先看圖紙（Explore）、做施工計畫（Plan）、然後按計畫施工（Implement）。小修補可以直接動手，大工程一定要先規劃。</div>
-            </div>
-        </div>
-    </div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">這就像裝修房子：你不會拿到鐵鎚就開始敲牆。先看圖紙（Explore）、做施工計畫（Plan）、然後按計畫施工（Implement）。小修補可以直接動手，大工程一定要先規劃。</div>
 </div>
-
+</div>
+</div>
+</div>
 <!-- PART IV -->
 <div class="content-section">
-    <div class="part-header"><h2>Part IV: 環境配置 — CLAUDE.md、Skills、Hooks、MCP</h2></div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <p class="zh-text"><span class="highlight-concept">CLAUDE.md</span> 是 Claude 在每次對話開始時讀取的特殊檔案。放入 Bash 指令、程式碼風格、工作流規則 — 這些是 Claude <span class="highlight-key">無法從程式碼本身推斷的持久性上下文</span>。用 <code class="inline">/init</code> 生成初始版本，然後逐步精煉。</p>
-                <p class="en-text">"CLAUDE.md is a special file that Claude reads at the start of every conversation. Include Bash commands, code style, and workflow rules."</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text">關鍵原則：<span class="highlight-key">保持精簡</span>。對每一行問：「移除這行會讓 Claude 犯錯嗎？」如果不會，就刪掉。臃腫的 CLAUDE.md 會讓 Claude 忽略你真正的指令。如果 Claude 持續做你不想要的事，檔案可能太長了。把 CLAUDE.md 當程式碼看待：定期審查、剪裁、測試。</p>
-                <p class="en-text">"Keep it concise. For each line, ask: 'Would removing this cause Claude to make mistakes?' If not, cut it. Bloated CLAUDE.md files cause Claude to ignore your actual instructions!"</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text">除了 CLAUDE.md，還有四個擴展機制：<span class="highlight-practical">Skills</span>（領域知識，按需載入）、<span class="highlight-practical">Hooks</span>（確定性自動化腳本）、<span class="highlight-practical">MCP Servers</span>（連接外部工具如 Notion、Figma）、<span class="highlight-practical">Plugins</span>（社群打包的完整擴展）。</p>
-                <p class="en-text">"Skills extend Claude's knowledge... Hooks run scripts automatically... MCP servers connect external tools... Plugins bundle everything."</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>&#9989; CLAUDE.md 該放什麼</h3>
-            <table class="comparison-table">
-                <thead><tr><th>&#9989; Include</th><th>&#10060; Exclude</th></tr></thead>
-                <tbody>
-                    <tr><td>Claude 猜不到的 Bash 指令</td><td>Claude 看程式碼就能推斷的事</td></tr>
-                    <tr><td>偏離預設的程式碼風格</td><td>標準語言慣例</td></tr>
-                    <tr><td>測試指令與偏好的 test runner</td><td>詳細 API 文件（改放連結）</td></tr>
-                    <tr><td>Repo 規範（branch 命名、PR 慣例）</td><td>經常變動的資訊</td></tr>
-                    <tr><td>架構決策、常見陷阱</td><td>逐檔案的 codebase 描述</td></tr>
-                </tbody>
-            </table>
-            <div class="info-box box-code">
-                <div class="info-box-header">&#128187; CLAUDE.md 範例</div>
-                <div class="info-box-content">
+<div class="part-header"><h2>Part IV: 環境配置 — CLAUDE.md、Skills、Hooks、MCP</h2></div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text"><span class="highlight-concept">CLAUDE.md</span> 是 Claude 在每次對話開始時讀取的特殊檔案。放入 Bash 指令、程式碼風格、工作流規則 — 這些是 Claude <span class="highlight-key">無法從程式碼本身推斷的持久性上下文</span>。用 <code class="inline">/init</code> 生成初始版本，然後逐步精煉。</p>
+<p class="en-text">"CLAUDE.md is a special file that Claude reads at the start of every conversation. Include Bash commands, code style, and workflow rules."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">關鍵原則：<span class="highlight-key">保持精簡</span>。對每一行問：「移除這行會讓 Claude 犯錯嗎？」如果不會，就刪掉。臃腫的 CLAUDE.md 會讓 Claude 忽略你真正的指令。如果 Claude 持續做你不想要的事，檔案可能太長了。把 CLAUDE.md 當程式碼看待：定期審查、剪裁、測試。</p>
+<p class="en-text">"Keep it concise. For each line, ask: 'Would removing this cause Claude to make mistakes?' If not, cut it. Bloated CLAUDE.md files cause Claude to ignore your actual instructions!"</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">除了 CLAUDE.md，還有四個擴展機制：<span class="highlight-practical">Skills</span>（領域知識，按需載入）、<span class="highlight-practical">Hooks</span>（確定性自動化腳本）、<span class="highlight-practical">MCP Servers</span>（連接外部工具如 Notion、Figma）、<span class="highlight-practical">Plugins</span>（社群打包的完整擴展）。</p>
+<p class="en-text">"Skills extend Claude's knowledge... Hooks run scripts automatically... MCP servers connect external tools... Plugins bundle everything."</p>
+</div>
+</div>
+<div class="content-right">
+<h3>✅ CLAUDE.md 該放什麼</h3>
+<table class="comparison-table">
+<thead><tr><th>✅ Include</th><th>❌ Exclude</th></tr></thead>
+<tbody>
+<tr><td>Claude 猜不到的 Bash 指令</td><td>Claude 看程式碼就能推斷的事</td></tr>
+<tr><td>偏離預設的程式碼風格</td><td>標準語言慣例</td></tr>
+<tr><td>測試指令與偏好的 test runner</td><td>詳細 API 文件（改放連結）</td></tr>
+<tr><td>Repo 規範（branch 命名、PR 慣例）</td><td>經常變動的資訊</td></tr>
+<tr><td>架構決策、常見陷阱</td><td>逐檔案的 codebase 描述</td></tr>
+</tbody>
+</table>
+<div class="info-box box-code">
+<div class="info-box-header">💻 CLAUDE.md 範例</div>
+<div class="info-box-content">
 <pre class="code-block"># Code style
 - Use ES modules (import/export), not CommonJS
 - Destructure imports when possible
@@ -400,77 +240,75 @@ and open a PR</pre>
 # Workflow
 - Typecheck after code changes
 - Prefer single tests over full suite</pre>
-                </div>
-            </div>
-            <div class="info-box box-practical">
-                <div class="info-box-header">&#128736; Skills vs Hooks 的區別</div>
-                <div class="info-box-content">Skills = 「建議」（Claude 視情況參考）。Hooks = 「規定」（每次都必須執行，零例外）。需要 100% 遵守的規則用 Hooks；需要領域知識的用 Skills。</div>
-            </div>
-        </div>
-    </div>
 </div>
-
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠 Skills vs Hooks 的區別</div>
+<div class="info-box-content">Skills = 「建議」（Claude 視情況參考）。Hooks = 「規定」（每次都必須執行，零例外）。需要 100% 遵守的規則用 Hooks；需要領域知識的用 Skills。</div>
+</div>
+</div>
+</div>
+</div>
 <!-- PART V -->
 <div class="content-section">
-    <div class="part-header"><h2>Part V: Session 管理 — 早修正、勤清理、善用 Checkpoint</h2></div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <p class="zh-text">最好的結果來自<span class="highlight-key">緊密的回饋迴路</span>。一發現偏離就修正。<code class="inline">Esc</code> 可以中途停止、<code class="inline">Esc+Esc</code> 或 <code class="inline">/rewind</code> 回到之前的狀態、<code class="inline">/clear</code> 在不相關任務間重置 context。</p>
-                <p class="en-text">"The best results come from tight feedback loops... Correct Claude as soon as you notice it going off track."</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text">黃金法則：<span class="highlight-key">如果你已經修正同一問題超過兩次，context 就被失敗方法污染了</span>。執行 <code class="inline">/clear</code>，用更精確的 prompt 重新開始。乾淨的 session + 更好的 prompt 幾乎總是優於累積修正的長 session。</p>
-                <p class="en-text">"If you've corrected Claude more than twice on the same issue... A clean session with a better prompt almost always outperforms a long session with accumulated corrections."</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text"><span class="highlight-concept">Subagents</span> 是管理 context 最強大的工具之一。它們在獨立的 context window 中執行研究，回報摘要，不會污染你的主對話。用於程式碼探索、code review、邊緣案例分析。</p>
-                <p class="en-text">"Since context is your fundamental constraint, subagents are one of the most powerful tools available."</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>&#128295; Session 管理快捷鍵</h3>
-            <table class="comparison-table">
-                <thead><tr><th>操作</th><th>說明</th></tr></thead>
-                <tbody>
-                    <tr><td><code class="inline">Esc</code></td><td>中途停止 Claude，context 保留</td></tr>
-                    <tr><td><code class="inline">Esc + Esc</code></td><td>開啟 rewind 選單，回復先前狀態</td></tr>
-                    <tr><td><code class="inline">/clear</code></td><td>重置 context（任務切換時必用）</td></tr>
-                    <tr><td><code class="inline">/compact</code></td><td>智慧壓縮，保留關鍵決策</td></tr>
-                    <tr><td><code class="inline">/rewind</code></td><td>checkpoint 還原（對話/程式碼/兩者）</td></tr>
-                    <tr><td><code class="inline">--continue</code></td><td>恢復最近的對話</td></tr>
-                    <tr><td><code class="inline">--resume</code></td><td>從最近 sessions 中選擇恢復</td></tr>
-                </tbody>
-            </table>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">&#128161; 比喻說明</div>
-                <div class="info-box-content">把每個 session 想像成 Git branch。不同工作流用不同 session，就像不同功能用不同 branch。用 <code class="inline">/rename</code> 給 session 取描述性名稱（如 "oauth-migration"、"debugging-memory-leak"）。</div>
-            </div>
-        </div>
-    </div>
+<div class="part-header"><h2>Part V: Session 管理 — 早修正、勤清理、善用 Checkpoint</h2></div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">最好的結果來自<span class="highlight-key">緊密的回饋迴路</span>。一發現偏離就修正。<code class="inline">Esc</code> 可以中途停止、<code class="inline">Esc+Esc</code> 或 <code class="inline">/rewind</code> 回到之前的狀態、<code class="inline">/clear</code> 在不相關任務間重置 context。</p>
+<p class="en-text">"The best results come from tight feedback loops... Correct Claude as soon as you notice it going off track."</p>
 </div>
-
+<div class="bilingual-block">
+<p class="zh-text">黃金法則：<span class="highlight-key">如果你已經修正同一問題超過兩次，context 就被失敗方法污染了</span>。執行 <code class="inline">/clear</code>，用更精確的 prompt 重新開始。乾淨的 session + 更好的 prompt 幾乎總是優於累積修正的長 session。</p>
+<p class="en-text">"If you've corrected Claude more than twice on the same issue... A clean session with a better prompt almost always outperforms a long session with accumulated corrections."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text"><span class="highlight-concept">Subagents</span> 是管理 context 最強大的工具之一。它們在獨立的 context window 中執行研究，回報摘要，不會污染你的主對話。用於程式碼探索、code review、邊緣案例分析。</p>
+<p class="en-text">"Since context is your fundamental constraint, subagents are one of the most powerful tools available."</p>
+</div>
+</div>
+<div class="content-right">
+<h3>🔧 Session 管理快捷鍵</h3>
+<table class="comparison-table">
+<thead><tr><th>操作</th><th>說明</th></tr></thead>
+<tbody>
+<tr><td><code class="inline">Esc</code></td><td>中途停止 Claude，context 保留</td></tr>
+<tr><td><code class="inline">Esc + Esc</code></td><td>開啟 rewind 選單，回復先前狀態</td></tr>
+<tr><td><code class="inline">/clear</code></td><td>重置 context（任務切換時必用）</td></tr>
+<tr><td><code class="inline">/compact</code></td><td>智慧壓縮，保留關鍵決策</td></tr>
+<tr><td><code class="inline">/rewind</code></td><td>checkpoint 還原（對話/程式碼/兩者）</td></tr>
+<tr><td><code class="inline">--continue</code></td><td>恢復最近的對話</td></tr>
+<tr><td><code class="inline">--resume</code></td><td>從最近 sessions 中選擇恢復</td></tr>
+</tbody>
+</table>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">把每個 session 想像成 Git branch。不同工作流用不同 session，就像不同功能用不同 branch。用 <code class="inline">/rename</code> 給 session 取描述性名稱（如 "oauth-migration"、"debugging-memory-leak"）。</div>
+</div>
+</div>
+</div>
+</div>
 <!-- PART VI -->
 <div class="content-section">
-    <div class="part-header"><h2>Part VI: 自動化與擴展 — Headless Mode、平行 Session、Fan-out</h2></div>
-    <div class="content-grid">
-        <div class="content-left">
-            <div class="bilingual-block">
-                <p class="zh-text">一旦你能有效使用一個 Claude，就可以<span class="highlight-practical">水平擴展</span>。三種平行模式：(1) <span class="highlight-concept">Headless Mode</span>（<code class="inline">claude -p "prompt"</code>）整合進 CI pipeline 和自動化工作流 (2) <span class="highlight-concept">多 Session 平行</span>（Desktop app、Web、Agent Teams）(3) <span class="highlight-concept">Fan-out</span>（迴圈處理檔案清單，每個檔案一個 Claude 實例）。</p>
-                <p class="en-text">"Once you're effective with one Claude, multiply your output with parallel sessions, headless mode, and fan-out patterns."</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text">Writer/Reviewer 模式特別值得注意：<span class="highlight-practical">一個 session 寫程式碼，另一個 session 做 code review</span>。新鮮的 context 提供更好的 review 品質，因為 Claude 不會偏向自己剛寫的程式碼。同樣邏輯可以應用在「一個寫測試，另一個寫程式碼通過測試」。</p>
-                <p class="en-text">"A fresh context improves code review since Claude won't be biased toward code it just wrote."</p>
-            </div>
-            <div class="bilingual-block">
-                <p class="zh-text">Fan-out 模式適合大規模遷移或分析。先讓 Claude 列出所有需要處理的檔案，寫腳本迴圈呼叫 <code class="inline">claude -p</code>，用 <code class="inline">--allowedTools</code> 限制權限。先在 2-3 個檔案上測試、精煉 prompt，然後全面執行。</p>
-                <p class="en-text">"For large migrations or analyses, you can distribute work across many parallel Claude invocations."</p>
-            </div>
-        </div>
-        <div class="content-right">
-            <h3>&#128187; Headless Mode 範例</h3>
-            <pre class="code-block"># 一次性查詢
+<div class="part-header"><h2>Part VI: 自動化與擴展 — Headless Mode、平行 Session、Fan-out</h2></div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">一旦你能有效使用一個 Claude，就可以<span class="highlight-practical">水平擴展</span>。三種平行模式：(1) <span class="highlight-concept">Headless Mode</span>（<code class="inline">claude -p "prompt"</code>）整合進 CI pipeline 和自動化工作流 (2) <span class="highlight-concept">多 Session 平行</span>（Desktop app、Web、Agent Teams）(3) <span class="highlight-concept">Fan-out</span>（迴圈處理檔案清單，每個檔案一個 Claude 實例）。</p>
+<p class="en-text">"Once you're effective with one Claude, multiply your output with parallel sessions, headless mode, and fan-out patterns."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">Writer/Reviewer 模式特別值得注意：<span class="highlight-practical">一個 session 寫程式碼，另一個 session 做 code review</span>。新鮮的 context 提供更好的 review 品質，因為 Claude 不會偏向自己剛寫的程式碼。同樣邏輯可以應用在「一個寫測試，另一個寫程式碼通過測試」。</p>
+<p class="en-text">"A fresh context improves code review since Claude won't be biased toward code it just wrote."</p>
+</div>
+<div class="bilingual-block">
+<p class="zh-text">Fan-out 模式適合大規模遷移或分析。先讓 Claude 列出所有需要處理的檔案，寫腳本迴圈呼叫 <code class="inline">claude -p</code>，用 <code class="inline">--allowedTools</code> 限制權限。先在 2-3 個檔案上測試、精煉 prompt，然後全面執行。</p>
+<p class="en-text">"For large migrations or analyses, you can distribute work across many parallel Claude invocations."</p>
+</div>
+</div>
+<div class="content-right">
+<h3>💻 Headless Mode 範例</h3>
+<pre class="code-block"># 一次性查詢
 claude -p "Explain what this project does"
 
 # 結構化輸出（供腳本處理）
@@ -483,147 +321,138 @@ for file in $(cat files.txt); do
     to Vue. Return OK or FAIL." \
     --allowedTools "Edit,Bash(git commit *)"
 done</pre>
-            <div class="info-box box-compare">
-                <div class="info-box-header">&#9878; Writer/Reviewer 模式</div>
-                <div class="info-box-content">
-                    <p><strong>Session A (Writer)：</strong>"Implement a rate limiter for our API endpoints"</p>
-                    <p><strong>Session B (Reviewer)：</strong>"Review the rate limiter in @src/middleware/rateLimiter.ts. Look for edge cases, race conditions."</p>
-                    <p><strong>Session A：</strong>"Here's the feedback: [B output]. Address these issues."</p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖ Writer/Reviewer 模式</div>
+<div class="info-box-content">
+<p><strong>Session A (Writer)：</strong>"Implement a rate limiter for our API endpoints"</p>
+<p><strong>Session B (Reviewer)：</strong>"Review the rate limiter in @src/middleware/rateLimiter.ts. Look for edge cases, race conditions."</p>
+<p><strong>Session A：</strong>"Here's the feedback: [B output]. Address these issues."</p>
 </div>
-
+</div>
+</div>
+</div>
+</div>
 <!-- PART VII - Common Failures -->
 <div class="content-section">
-    <div class="part-header"><h2>Part VII: 避免常見失敗模式</h2></div>
-    <div class="content-grid" style="grid-template-columns: 1fr;">
-        <div class="content-left" style="border-right: none;">
-            <table class="comparison-table">
-                <thead><tr><th>失敗模式</th><th>症狀</th><th>修正方法</th></tr></thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Kitchen Sink Session</strong></td>
-                        <td>一個 session 混雜多個不相關任務，context 充滿無關資訊</td>
-                        <td>不同任務之間用 <code class="inline">/clear</code></td>
-                    </tr>
-                    <tr>
-                        <td><strong>反覆修正</strong></td>
-                        <td>同一問題修正 3 次以上，context 被失敗嘗試污染</td>
-                        <td><code class="inline">/clear</code> + 寫更好的初始 prompt</td>
-                    </tr>
-                    <tr>
-                        <td><strong>臃腫 CLAUDE.md</strong></td>
-                        <td>指令太多，Claude 忽略一半</td>
-                        <td>無情剪裁；能正確就不寫、改用 Hook</td>
-                    </tr>
-                    <tr>
-                        <td><strong>信任-驗證落差</strong></td>
-                        <td>看起來正確但沒處理邊緣案例</td>
-                        <td>永遠提供驗證（測試/腳本/截圖）</td>
-                    </tr>
-                    <tr>
-                        <td><strong>無限探索</strong></td>
-                        <td>要求「調查」但不設範圍，Claude 讀數百個檔案</td>
-                        <td>限定探索範圍或用 Subagents</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div class="part-header"><h2>Part VII: 避免常見失敗模式</h2></div>
+<div class="content-grid" style="grid-template-columns: 1fr;">
+<div class="content-left" style="border-right: none;">
+<table class="comparison-table">
+<thead><tr><th>失敗模式</th><th>症狀</th><th>修正方法</th></tr></thead>
+<tbody>
+<tr>
+<td><strong>Kitchen Sink Session</strong></td>
+<td>一個 session 混雜多個不相關任務，context 充滿無關資訊</td>
+<td>不同任務之間用 <code class="inline">/clear</code></td>
+</tr>
+<tr>
+<td><strong>反覆修正</strong></td>
+<td>同一問題修正 3 次以上，context 被失敗嘗試污染</td>
+<td><code class="inline">/clear</code> + 寫更好的初始 prompt</td>
+</tr>
+<tr>
+<td><strong>臃腫 CLAUDE.md</strong></td>
+<td>指令太多，Claude 忽略一半</td>
+<td>無情剪裁；能正確就不寫、改用 Hook</td>
+</tr>
+<tr>
+<td><strong>信任-驗證落差</strong></td>
+<td>看起來正確但沒處理邊緣案例</td>
+<td>永遠提供驗證（測試/腳本/截圖）</td>
+</tr>
+<tr>
+<td><strong>無限探索</strong></td>
+<td>要求「調查」但不設範圍，Claude 讀數百個檔案</td>
+<td>限定探索範圍或用 Subagents</td>
+</tr>
+</tbody>
+</table>
 </div>
-
+</div>
+</div>
 <!-- KEY TAKEAWAYS -->
 <div class="takeaways">
-    <h2>Key Takeaways</h2>
-    <div class="takeaways-grid">
-        <div class="summary-card">
-            <div class="card-icon">&#127919;</div>
-            <h3>Context 是核心資源</h3>
-            <p>Claude Code 的效能直接受 Context Window 影響。積極管理：用 /clear 重置、用 Subagents 隔離研究、用 /compact 智慧壓縮。</p>
-        </div>
-        <div class="summary-card" style="border-left-color: #10b981;">
-            <div class="card-icon">&#128270;</div>
-            <h3>驗證 > 信任</h3>
-            <p>給 Claude 驗證自己工作的方法是最高槓桿動作。測試套件、截圖比對、linter — 投資在驗證機制上。</p>
-        </div>
-        <div class="summary-card" style="border-left-color: #8b5cf6;">
-            <div class="card-icon">&#128221;</div>
-            <h3>CLAUDE.md 精簡原則</h3>
-            <p>只放 Claude 猜不到的指令。每行都問「移除會犯錯嗎？」。太長會適得其反。定期審查和剪裁。</p>
-        </div>
-        <div class="summary-card" style="border-left-color: #f59e0b;">
-            <div class="card-icon">&#128640;</div>
-            <h3>水平擴展</h3>
-            <p>Headless Mode 整合 CI/CD、多 Session 平行工作（Writer/Reviewer）、Fan-out 處理大規模遷移。一個 Claude 有效後就該擴展。</p>
-        </div>
-    </div>
+<h2>Key Takeaways</h2>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="card-icon">🎯</div>
+<h3>Context 是核心資源</h3>
+<p>Claude Code 的效能直接受 Context Window 影響。積極管理：用 /clear 重置、用 Subagents 隔離研究、用 /compact 智慧壓縮。</p>
 </div>
-
+<div class="summary-card" style="border-left-color: #10b981;">
+<div class="card-icon">🔎</div>
+<h3>驗證 &gt; 信任</h3>
+<p>給 Claude 驗證自己工作的方法是最高槓桿動作。測試套件、截圖比對、linter — 投資在驗證機制上。</p>
+</div>
+<div class="summary-card" style="border-left-color: #8b5cf6;">
+<div class="card-icon">📝</div>
+<h3>CLAUDE.md 精簡原則</h3>
+<p>只放 Claude 猜不到的指令。每行都問「移除會犯錯嗎？」。太長會適得其反。定期審查和剪裁。</p>
+</div>
+<div class="summary-card" style="border-left-color: #f59e0b;">
+<div class="card-icon">🚀</div>
+<h3>水平擴展</h3>
+<p>Headless Mode 整合 CI/CD、多 Session 平行工作（Writer/Reviewer）、Fan-out 處理大規模遷移。一個 Claude 有效後就該擴展。</p>
+</div>
+</div>
+</div>
 <!-- PRACTICE QUESTIONS -->
 <div class="practice">
-    <h2>Practice Questions</h2>
-    
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q1</span>
-            <span class="question-type">概念理解</span>
-            <span class="question-text">為什麼文章將 Context Window 稱為「最重要的資源」而非 GPU 算力或 API 成本？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>因為 Context Window 直接影響 Claude Code 的輸出品質。GPU 和 API 成本影響的是速度和費用，但 Context Window 填滿會導致 Claude 遺忘指令、犯更多錯誤 — 這是品質問題而非效率問題。一個充滿無關內容的 context 會讓正確的指令「沉沒」在噪音中，類似於人類在資訊過載時的認知退化。因此管理 context 是提升 Claude Code 效能的第一優先。</p>
-        </div>
-    </details>
-    
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q2</span>
-            <span class="question-type">產業應用</span>
-            <span class="question-text">在 CDMO 的 GMP 環境中，你會如何應用 Claude Code 的「驗證迴路」和「CLAUDE.md」概念？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>在 GMP 環境中，「驗證迴路」可以對應到自動化文件生成後的合規性檢查 — 例如讓 Claude Code 產出 SOP 草稿後，自動檢查是否包含所有 ALCOA+ 必要元素（Attributable, Legible, Contemporaneous, Original, Accurate）。CLAUDE.md 則可以內嵌 21 CFR Part 11 的核心要求、公司特定的文件格式規範、以及批次記錄的欄位標準。關鍵差異在於：製藥環境中的 CLAUDE.md 應該更嚴謹（用 Hooks 強制驗證而非建議），而且所有 Claude Code 的輸出都必須經過人工審核（copilot mode），不能直接採用。</p>
-        </div>
-    </details>
-    
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q3</span>
-            <span class="question-type">批判思考</span>
-            <span class="question-text">文章建議「修正兩次後就 /clear 重新開始」。但什麼情境下這個建議反而是有害的？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>在複雜的多步驟除錯場景中，前面累積的失敗嘗試本身就是有價值的資訊 — 它們排除了錯誤方向。如果貿然 /clear，你可能讓 Claude 重走同樣的失敗路徑。更好的做法是：先記錄已嘗試的方法和失敗原因，然後 /clear 後在新 prompt 中明確說明「不要嘗試 X 和 Y，因為原因 Z」。另外，如果你正在做跨檔案的大型重構，累積的 context 包含了重要的檔案間依賴關係，清除可能導致新的不一致。此時用 /compact 智慧壓縮比 /clear 更合適。</p>
-        </div>
-    </details>
+<h2>Practice Questions</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">為什麼文章將 Context Window 稱為「最重要的資源」而非 GPU 算力或 API 成本？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>因為 Context Window 直接影響 Claude Code 的輸出品質。GPU 和 API 成本影響的是速度和費用，但 Context Window 填滿會導致 Claude 遺忘指令、犯更多錯誤 — 這是品質問題而非效率問題。一個充滿無關內容的 context 會讓正確的指令「沉沒」在噪音中，類似於人類在資訊過載時的認知退化。因此管理 context 是提升 Claude Code 效能的第一優先。</p>
 </div>
-
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在 CDMO 的 GMP 環境中，你會如何應用 Claude Code 的「驗證迴路」和「CLAUDE.md」概念？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>在 GMP 環境中，「驗證迴路」可以對應到自動化文件生成後的合規性檢查 — 例如讓 Claude Code 產出 SOP 草稿後，自動檢查是否包含所有 ALCOA+ 必要元素（Attributable, Legible, Contemporaneous, Original, Accurate）。CLAUDE.md 則可以內嵌 21 CFR Part 11 的核心要求、公司特定的文件格式規範、以及批次記錄的欄位標準。關鍵差異在於：製藥環境中的 CLAUDE.md 應該更嚴謹（用 Hooks 強制驗證而非建議），而且所有 Claude Code 的輸出都必須經過人工審核（copilot mode），不能直接採用。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">文章建議「修正兩次後就 /clear 重新開始」。但什麼情境下這個建議反而是有害的？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>在複雜的多步驟除錯場景中，前面累積的失敗嘗試本身就是有價值的資訊 — 它們排除了錯誤方向。如果貿然 /clear，你可能讓 Claude 重走同樣的失敗路徑。更好的做法是：先記錄已嘗試的方法和失敗原因，然後 /clear 後在新 prompt 中明確說明「不要嘗試 X 和 Y，因為原因 Z」。另外，如果你正在做跨檔案的大型重構，累積的 context 包含了重要的檔案間依賴關係，清除可能導致新的不一致。此時用 /compact 智慧壓縮比 /clear 更合適。</p>
+</div>
+</details>
+</div>
 <!-- BOTTOM LINE -->
 <div class="bottom-line">
-    <div class="bottom-line-header">&#127919; 我的行動結論</div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#10004; 核心洞察</div>
-        <div class="bottom-line-text">Claude Code 的核心不是「AI 幫你寫程式碼」，而是「管理一個有限 context 預算下的自主代理」。這和我在 CDMO 管理產線資源的邏輯完全一致 — 瓶頸不在機器能力，而在如何分配有限的注意力和驗證資源。CLAUDE.md 的「精簡原則」也呼應了 SOP 編寫的黃金法則：過多的指令等於沒有指令。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#128200; 立即應用</div>
-        <div class="bottom-line-text">這週開始在 Claude Code 專案中建立 CLAUDE.md，先用 /init 生成基礎版本，然後精煉到 20 行以內。同時建立第一個 Skill 檔案，把 CDMO 相關的文件格式規範和 GMP 術語放入 .claude/skills/ 目錄。測試 Writer/Reviewer 的雙 session 模式來做自動化腳本的 code review。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#9888; 需要補充</div>
-        <div class="bottom-line-text">文章缺少在企業環境（尤其是受監管產業）中使用 Claude Code 的安全考量和合規框架。--dangerously-skip-permissions 在 GMP 環境中完全不適用。需要另外研究：(1) Claude Code 的 audit trail 機制 (2) 如何讓 Claude Code 的輸出符合 21 CFR Part 11 的電子記錄要求 (3) Agent Teams 在團隊環境中的權限控管。建議 3 個月後重讀，屆時 Hooks 和 Plugins 生態應該更成熟。</div>
-    </div>
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">Claude Code 的核心不是「AI 幫你寫程式碼」，而是「管理一個有限 context 預算下的自主代理」。這和我在 CDMO 管理產線資源的邏輯完全一致 — 瓶頸不在機器能力，而在如何分配有限的注意力和驗證資源。CLAUDE.md 的「精簡原則」也呼應了 SOP 編寫的黃金法則：過多的指令等於沒有指令。</div>
 </div>
-
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">這週開始在 Claude Code 專案中建立 CLAUDE.md，先用 /init 生成基礎版本，然後精煉到 20 行以內。同時建立第一個 Skill 檔案，把 CDMO 相關的文件格式規範和 GMP 術語放入 .claude/skills/ 目錄。測試 Writer/Reviewer 的雙 session 模式來做自動化腳本的 code review。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">文章缺少在企業環境（尤其是受監管產業）中使用 Claude Code 的安全考量和合規框架。--dangerously-skip-permissions 在 GMP 環境中完全不適用。需要另外研究：(1) Claude Code 的 audit trail 機制 (2) 如何讓 Claude Code 的輸出符合 21 CFR Part 11 的電子記錄要求 (3) Agent Teams 在團隊環境中的權限控管。建議 3 個月後重讀，屆時 Hooks 和 Plugins 生態應該更成熟。</div>
+</div>
+</div>
 <!-- FOOTER -->
-<div class="footer">
-    <p>Produced: 2026-02-22 | Source: <a href="https://code.claude.com/en/best-practices" target="_blank">Anthropic - Best Practices for Claude Code</a></p>
-    <p>Suggested Chat Title: [Tool] Claude Code Best Practices - Context Management & Scaling</p>
-</div>
-
+<footer class="footer">
+<p>Produced: 2026-02-22 | Source: <a href="https://code.claude.com/en/best-practices" target="_blank">Anthropic - Best Practices for Claude Code</a></p>
+<p>Suggested Chat Title: [Tool] Claude Code Best Practices - Context Management &amp; Scaling</p>
+</footer>
 </body>
 </html>

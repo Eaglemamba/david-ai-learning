@@ -1,630 +1,389 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2026-02-18">
-    <meta name="doc-title" content="AI 使用指南：代理時代 - Ethan Mollick">
-    <meta name="doc-source" content="Ethan Mollick / One Useful Thing">
-    <meta name="doc-tags" content="LLM,Agent,Tool">
-    <meta name="doc-rating" content="4.0">
-    <meta name="doc-summary" content="Ethan Mollick的AI使用指南第八版：從聊天機器人到代理時代的三層框架（Models/Apps/Harnesses）">
-    <meta name="doc-file" content="2026-02-18_ai-guide-agentic-era.html">
-    <title>AI 使用指南：代理時代 - Ethan Mollick</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1e3a8a;
-            --primary-light: #dbeafe;
-            --accent: #7c3aed;
-            --accent-light: #ede9fe;
-            --green: #047857;
-            --green-light: #d1fae5;
-            --amber: #f59e0b;
-            --text: #1e293b;
-            --text-secondary: #64748b;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --border: #e2e8f0;
-        }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2026-02-18" name="doc-date"/>
+<meta content="AI 使用指南：代理時代 - Ethan Mollick" name="doc-title"/>
+<meta content="Ethan Mollick / One Useful Thing" name="doc-source"/>
+<meta content="LLM,Agent,Tool" name="doc-tags"/>
+<meta content="4.0" name="doc-rating"/>
+<meta content="Ethan Mollick的AI使用指南第八版：從聊天機器人到代理時代的三層框架（Models/Apps/Harnesses）" name="doc-summary"/>
+<meta content="2026-02-18_ai-guide-agentic-era.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>AI 使用指南：代理時代 - Ethan Mollick</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.8;
-            font-size: 15px;
-        }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e40af 100%);
-            color: white;
-            padding: 3rem 0 2.5rem;
-            text-align: center;
-        }
-        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
-        .header .subtitle { font-size: 1rem; opacity: 0.85; margin-bottom: 1.25rem; }
-        .domain-tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-        .domain-tag { padding: 0.2rem 0.7rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; }
-        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
-        .tag-agent { background: #c7d2fe; color: #3730a3; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .tag-integration { background: #99f6e4; color: #134e4a; }
-        .source-info { font-size: 0.8rem; opacity: 0.7; }
-        .source-info a { color: #93c5fd; text-decoration: none; }
-
-        /* Rating Bar */
-        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-        /* Executive Summary */
-        .exec-summary {
-            background: white;
-            margin: 2rem;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--primary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        .exec-summary h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 0.75rem; }
-        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
-
-        /* Learning Objectives */
-        .objectives-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 2rem;
-        }
-        .objective-item {
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            border-left: 4px solid var(--accent);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .objective-number { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
-        .objective-text { font-size: 0.9rem; color: #334155; line-height: 1.6; }
-
-        /* Framework Visual */
-        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 2rem; }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 140px; flex: 1; }
-        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
-        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-        /* Section Headers */
-        .section-header {
-            margin: 2rem 2rem 0;
-            padding: 1rem 1.25rem;
-            background: linear-gradient(135deg, var(--primary), #2563eb);
-            color: white;
-            border-radius: 0.75rem 0.75rem 0 0;
-            font-size: 1.05rem;
-            font-weight: 700;
-        }
-        .section-header .part-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; display: block; margin-bottom: 0.2rem; }
-
-        /* Content Grid */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            margin: 0 2rem 1.5rem;
-            background: white;
-            border-radius: 0 0 0.75rem 0.75rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            overflow: hidden;
-        }
-        .content-grid.linear { grid-template-columns: 1fr; }
-        .content-left {
-            padding: 1.5rem;
-            border-right: 1px solid #e2e8f0;
-        }
-        .content-grid.linear .content-left { border-right: none; }
-        .content-right { padding: 1.5rem; }
-        .content-full { padding: 1.5rem; grid-column: 1 / -1; }
-
-        @media (max-width: 768px) {
-            .content-grid { grid-template-columns: 1fr; }
-            .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
-        }
-
-        /* Bilingual Blocks */
-        .bilingual-block { margin-bottom: 1.25rem; }
-        .zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.3rem; }
-        .en-text { font-size: 0.85rem; line-height: 1.7; color: #64748b; font-style: italic; }
-
-        /* Highlight spans */
-        .hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-        /* Info Boxes */
-        .info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
-        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 700; font-size: 0.85rem; }
-        .info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
-        .info-box-content p { margin-bottom: 0.5rem; }
-        .info-box-content p:last-child { margin-bottom: 0; }
-
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
-
-        /* Comparison Table */
-        .compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.5rem 0; }
-        .compare-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; }
-        .compare-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
-        .compare-table tr:nth-child(even) td { background: #f8fafc; }
-        .compare-table .check { color: #10b981; font-weight: 700; }
-        .compare-table .cross { color: #ef4444; }
-        .compare-table .partial { color: #f59e0b; }
-
-        /* Key Takeaways */
-        .takeaways-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 2rem;
-        }
-        .summary-card {
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            border-left: 4px solid #3b82f6;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .summary-card:nth-child(2) { border-left-color: #10b981; }
-        .summary-card:nth-child(3) { border-left-color: #8b5cf6; }
-        .summary-card:nth-child(4) { border-left-color: #f59e0b; }
-        .summary-card .card-title { font-weight: 700; font-size: 0.9rem; color: var(--primary); margin-bottom: 0.5rem; }
-        .summary-card .card-text { font-size: 0.85rem; line-height: 1.7; color: #475569; }
-
-        /* Practice Accordion */
-        .practice-section { margin: 1.5rem 2rem; }
-        .practice-section h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 1rem; font-weight: 700; }
-        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-        .question-answer p:last-child { margin-bottom: 0; }
-
-        /* Bottom Line */
-        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
-        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-        /* Footer */
-        .footer {
-            margin: 2rem;
-            padding: 1.25rem;
-            background: #f1f5f9;
-            border-radius: 0.75rem;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-        .footer a { color: var(--primary); text-decoration: none; }
-        .chat-title { margin-top: 0.5rem; font-weight: 600; color: var(--primary); }
-    </style>
 </head>
 <body>
-
 <!-- HEADER -->
-<div class="header">
-    <div class="container">
-        <div class="domain-tags">
-            <span class="domain-tag tag-llm">LLM</span>
-            <span class="domain-tag tag-agent">Agent</span>
-            <span class="domain-tag tag-tool">Tool</span>
-            <span class="domain-tag tag-integration">Integration</span>
-        </div>
-        <h1>AI 使用指南：代理時代的新框架</h1>
-        <div class="subtitle">A Guide to Which AI to Use in the Agentic Era</div>
-        <div class="source-info">
-            Ethan Mollick / One Useful Thing / 2026-02-18<br>
-            <a href="https://www.oneusefulthing.org/p/a-guide-to-which-ai-to-use-in-the" target="_blank">Original Article</a>
-        </div>
-    </div>
+<header class="header">
+<div class="container">
+<div class="domain-tags">
+<span class="domain-tag tag-llm">LLM</span>
+<span class="domain-tag tag-agent">Agent</span>
+<span class="domain-tag tag-tool">Tool</span>
+<span class="domain-tag tag-integration">Integration</span>
 </div>
-
+<h1>AI 使用指南：代理時代的新框架</h1>
+<div class="subtitle">A Guide to Which AI to Use in the Agentic Era</div>
+<div class="source-info">
+            Ethan Mollick / One Useful Thing / 2026-02-18<br/>
+<a href="https://www.oneusefulthing.org/p/a-guide-to-which-ai-to-use-in-the" target="_blank">Original Article</a>
+</div>
+</div>
+</header>
 <!-- EXECUTIVE SUMMARY -->
 <div class="exec-summary">
-    <div class="rating-bar">
-        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.0/5</span>
-        <span class="rating-high">&uarr; Practical Value, Timeliness</span>
-        <span class="rating-low">&darr; Technical Depth</span>
-    </div>
-    <h2>Executive Summary</h2>
-    <p>Ethan Mollick 發表了他自 ChatGPT 問世以來的第八篇 AI 使用指南，但這次有根本性的轉變：「使用 AI」已從與聊天機器人對話，演進為<span class="hl-key">指派 AI 代理執行完整任務</span>。他提出一個全新的三層框架來思考 AI 選擇：<span class="hl-concept">Models（模型）、Apps（應用）、Harnesses（駕馭架構）</span>。三大前沿模型 GPT-5.2/5.3、Claude Opus 4.6、Gemini 3 Pro 在能力上已非常接近，真正的差異化來自 App 和 Harness 層面。Anthropic 目前在 agentic 工具生態上領先，Claude Code 和 Claude Cowork 代表了 AI 從「說話」到「做事」的根本轉變。</p>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+<span class="rating-high">↑ Practical Value, Timeliness</span>
+<span class="rating-low">↓ Technical Depth</span>
 </div>
-
+<h2>Executive Summary</h2>
+<p>Ethan Mollick 發表了他自 ChatGPT 問世以來的第八篇 AI 使用指南，但這次有根本性的轉變：「使用 AI」已從與聊天機器人對話，演進為<span class="highlight-key">指派 AI 代理執行完整任務</span>。他提出一個全新的三層框架來思考 AI 選擇：<span class="highlight-concept">Models（模型）、Apps（應用）、Harnesses（駕馭架構）</span>。三大前沿模型 GPT-5.2/5.3、Claude Opus 4.6、Gemini 3 Pro 在能力上已非常接近，真正的差異化來自 App 和 Harness 層面。Anthropic 目前在 agentic 工具生態上領先，Claude Code 和 Claude Cowork 代表了 AI 從「說話」到「做事」的根本轉變。</p>
+</div>
 <!-- LEARNING OBJECTIVES -->
 <div class="objectives-grid">
-    <div class="objective-item">
-        <div class="objective-number">Learning Objective 01</div>
-        <div class="objective-text">理解 Models / Apps / Harnesses 三層框架，以及為什麼選擇 AI 不再只是比較模型</div>
-    </div>
-    <div class="objective-item">
-        <div class="objective-number">Learning Objective 02</div>
-        <div class="objective-text">掌握三大前沿模型的差異、最佳模型選擇策略，以及為何「選對模型」是最重要的一步</div>
-    </div>
-    <div class="objective-item">
-        <div class="objective-number">Learning Objective 03</div>
-        <div class="objective-text">認識 Claude Code、Cowork、NotebookLM 等新世代 agentic 工具如何改變知識工作的本質</div>
-    </div>
+<div class="objective-item">
+<div class="objective-number">Learning Objective 01</div>
+<div class="objective-text">理解 Models / Apps / Harnesses 三層框架，以及為什麼選擇 AI 不再只是比較模型</div>
 </div>
-
+<div class="objective-item">
+<div class="objective-number">Learning Objective 02</div>
+<div class="objective-text">掌握三大前沿模型的差異、最佳模型選擇策略，以及為何「選對模型」是最重要的一步</div>
+</div>
+<div class="objective-item">
+<div class="objective-number">Learning Objective 03</div>
+<div class="objective-text">認識 Claude Code、Cowork、NotebookLM 等新世代 agentic 工具如何改變知識工作的本質</div>
+</div>
+</div>
 <!-- FRAMEWORK VISUAL -->
 <div class="framework-visual">
-    <div class="framework-title">Mollick's Three-Layer AI Framework</div>
-    <div class="framework-steps">
-        <div class="framework-step">
-            <div class="framework-icon">&#129504;</div>
-            <div class="framework-step-title">Models</div>
-            <div class="framework-step-desc">AI 大腦：GPT-5.2,<br>Claude Opus 4.6,<br>Gemini 3 Pro</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#128241;</div>
-            <div class="framework-step-title">Apps</div>
-            <div class="framework-step-desc">使用介面：網站、<br>手機 App、<br>桌面工具</div>
-        </div>
-        <div class="framework-arrow">&rarr;</div>
-        <div class="framework-step">
-            <div class="framework-icon">&#9881;</div>
-            <div class="framework-step-title">Harnesses</div>
-            <div class="framework-step-desc">駕馭架構：工具存取、<br>多步驟執行、<br>自主行動能力</div>
-        </div>
-    </div>
+<div class="framework-title">Mollick's Three-Layer AI Framework</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">🧠</div>
+<div class="framework-step-title">Models</div>
+<div class="framework-step-desc">AI 大腦：GPT-5.2,<br/>Claude Opus 4.6,<br/>Gemini 3 Pro</div>
 </div>
-
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📱</div>
+<div class="framework-step-title">Apps</div>
+<div class="framework-step-desc">使用介面：網站、<br/>手機 App、<br/>桌面工具</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">⚙</div>
+<div class="framework-step-title">Harnesses</div>
+<div class="framework-step-desc">駕馭架構：工具存取、<br/>多步驟執行、<br/>自主行動能力</div>
+</div>
+</div>
+</div>
 <!-- PART I: THREE-LAYER FRAMEWORK -->
 <div class="section-header">
-    <span class="part-label">Part I</span>
+<span class="part-label">Part I</span>
     Models / Apps / Harnesses 三層框架
 </div>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="bilingual-block">
-            <div class="zh-text">Mollick 指出，過去「使用 AI」就等於和聊天機器人來回對話。但過去幾個月，<span class="hl-key">AI 作為代理已變得實用</span>：你可以指派任務，AI 會自行使用工具來完成。因此，選擇 AI 時需要考慮三件事：Models、Apps、Harnesses。</div>
-            <div class="en-text">"Until a few months ago, for the vast majority of people, 'using AI' meant talking to a chatbot in a back-and-forth conversation. But over the past few months, it has become practical to use AI as an agent: you can assign them to a task and they do them, using tools as appropriate. Because of this change, you have to consider three things when deciding what AI to use: Models, Apps, and Harnesses."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text"><span class="hl-concept">Harness（駕馭架構）</span>就像馬具把馬的力量轉化為拉車或犁田的能力一樣，是讓 AI 模型能使用工具、採取行動、完成多步驟任務的系統。每個 App 都附帶 Harness。例如 Claude 網站的 Harness 讓 Opus 4.6 能搜尋網路和撰寫程式碼，也包含處理各種問題的指引。Claude Code 則有更廣泛的 Harness：給 Opus 4.6 一台虛擬電腦、瀏覽器、程式碼終端機，以及串聯這些工具的能力。</div>
-            <div class="en-text">"A harness is a system that lets the AI use tools, take actions, and complete multi-step tasks on its own. Apps come with a harness. Claude on the website has a harness that lets Claude 4.6 Opus do web searches and write code but also has instructions about how to approach various problems like creating spreadsheets or doing graphic design work. Claude Code has an even more extensive harness: it gives Claude 4.6 Opus a virtual computer, a web browser, a code terminal, and the ability to string these together to actually do stuff like researching, building, and testing your new website from scratch."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">關鍵洞察：<span class="hl-key">同一個模型在不同的 Harness 中會有截然不同的表現</span>。Claude Opus 4.6 在聊天窗口中對話，與在 Claude Code 中自主撰寫和測試軟體數小時，是完全不同的體驗。GPT-5.2 回答一個問題，與 GPT-5.2 Thinking 操作網站並為你建立投影片，也是完全不同的體驗。</div>
-            <div class="en-text">"Now the same model can behave very differently depending on what harness it's operating in. Claude Opus 4.6 talking to you in a chat window is a very different experience from Claude Opus 4.6 operating inside Claude Code, autonomously writing and testing software for hours at a stretch. GPT-5.2 answering a question is a very different experience from GPT-5.2 Thinking navigating websites and building you a slide deck."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">這意味著<span class="hl-key">「該用哪個 AI？」這個問題變得更難回答</span>，因為答案現在取決於你想用它做什麼。過去你不需要知道這些：模型就是產品，App 就是網站，Harness 微乎其微。你輸入文字，它回覆，你再輸入。</div>
-            <div class="en-text">"It means that the question 'which AI should I use?' has gotten harder to answer, because the answer now depends on what you're trying to do with it. Until recently, you didn't have to know this. The model was the product, the app was the website, and the harness was minimal. You typed, it responded, you typed again."</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-analogy">
-            <div class="info-box-header">&#128161; 比喻說明：馬匹與馬具</div>
-            <div class="info-box-content">
-                <p>想像一匹強壯的馬（Model）。沒有馬具，牠只能站在那裡被你觀賞。給牠一副簡單的韁繩（基本 App），你可以騎著牠走。但裝上完整的犁具（強大的 Harness），同一匹馬就能幫你翻整農田。</p>
-                <p>在藥廠情境中：同一個 Claude Opus 4.6，在 claude.ai 上問它「怎麼寫 SOP」只會給你建議；但在 Claude Cowork 中，它能直接讀取你的 PDF 文件、整理資料、產生格式化的文件。<strong>馬還是同一匹馬，差別在於你給牠什麼工具。</strong></p>
-            </div>
-        </div>
-        <div class="info-box box-concept">
-            <div class="info-box-header">&#128218; 核心概念：三層架構定義</div>
-            <div class="info-box-content">
-                <p><strong>Models</strong> = AI 大腦。決定推理能力、寫作品質、程式碼能力、圖像理解。</p>
-                <p><strong>Apps</strong> = 你實際使用的產品介面。chatgpt.com、claude.ai、手機 App 等。</p>
-                <p><strong>Harnesses</strong> = 讓模型「做事」的系統。提供工具存取、自主行動、多步驟任務執行能力。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">Mollick 指出，過去「使用 AI」就等於和聊天機器人來回對話。但過去幾個月，<span class="highlight-key">AI 作為代理已變得實用</span>：你可以指派任務，AI 會自行使用工具來完成。因此，選擇 AI 時需要考慮三件事：Models、Apps、Harnesses。</div>
+<div class="en-text">"Until a few months ago, for the vast majority of people, 'using AI' meant talking to a chatbot in a back-and-forth conversation. But over the past few months, it has become practical to use AI as an agent: you can assign them to a task and they do them, using tools as appropriate. Because of this change, you have to consider three things when deciding what AI to use: Models, Apps, and Harnesses."</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-concept">Harness（駕馭架構）</span>就像馬具把馬的力量轉化為拉車或犁田的能力一樣，是讓 AI 模型能使用工具、採取行動、完成多步驟任務的系統。每個 App 都附帶 Harness。例如 Claude 網站的 Harness 讓 Opus 4.6 能搜尋網路和撰寫程式碼，也包含處理各種問題的指引。Claude Code 則有更廣泛的 Harness：給 Opus 4.6 一台虛擬電腦、瀏覽器、程式碼終端機，以及串聯這些工具的能力。</div>
+<div class="en-text">"A harness is a system that lets the AI use tools, take actions, and complete multi-step tasks on its own. Apps come with a harness. Claude on the website has a harness that lets Claude 4.6 Opus do web searches and write code but also has instructions about how to approach various problems like creating spreadsheets or doing graphic design work. Claude Code has an even more extensive harness: it gives Claude 4.6 Opus a virtual computer, a web browser, a code terminal, and the ability to string these together to actually do stuff like researching, building, and testing your new website from scratch."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">關鍵洞察：<span class="highlight-key">同一個模型在不同的 Harness 中會有截然不同的表現</span>。Claude Opus 4.6 在聊天窗口中對話，與在 Claude Code 中自主撰寫和測試軟體數小時，是完全不同的體驗。GPT-5.2 回答一個問題，與 GPT-5.2 Thinking 操作網站並為你建立投影片，也是完全不同的體驗。</div>
+<div class="en-text">"Now the same model can behave very differently depending on what harness it's operating in. Claude Opus 4.6 talking to you in a chat window is a very different experience from Claude Opus 4.6 operating inside Claude Code, autonomously writing and testing software for hours at a stretch. GPT-5.2 answering a question is a very different experience from GPT-5.2 Thinking navigating websites and building you a slide deck."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">這意味著<span class="highlight-key">「該用哪個 AI？」這個問題變得更難回答</span>，因為答案現在取決於你想用它做什麼。過去你不需要知道這些：模型就是產品，App 就是網站，Harness 微乎其微。你輸入文字，它回覆，你再輸入。</div>
+<div class="en-text">"It means that the question 'which AI should I use?' has gotten harder to answer, because the answer now depends on what you're trying to do with it. Until recently, you didn't have to know this. The model was the product, the app was the website, and the harness was minimal. You typed, it responded, you typed again."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明：馬匹與馬具</div>
+<div class="info-box-content">
+<p>想像一匹強壯的馬（Model）。沒有馬具，牠只能站在那裡被你觀賞。給牠一副簡單的韁繩（基本 App），你可以騎著牠走。但裝上完整的犁具（強大的 Harness），同一匹馬就能幫你翻整農田。</p>
+<p>在藥廠情境中：同一個 Claude Opus 4.6，在 claude.ai 上問它「怎麼寫 SOP」只會給你建議；但在 Claude Cowork 中，它能直接讀取你的 PDF 文件、整理資料、產生格式化的文件。<strong>馬還是同一匹馬，差別在於你給牠什麼工具。</strong></p>
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念：三層架構定義</div>
+<div class="info-box-content">
+<p><strong>Models</strong> = AI 大腦。決定推理能力、寫作品質、程式碼能力、圖像理解。</p>
+<p><strong>Apps</strong> = 你實際使用的產品介面。chatgpt.com、claude.ai、手機 App 等。</p>
+<p><strong>Harnesses</strong> = 讓模型「做事」的系統。提供工具存取、自主行動、多步驟任務執行能力。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- PART II: THE MODELS -->
 <div class="section-header">
-    <span class="part-label">Part II</span>
+<span class="part-label">Part II</span>
     當前模型格局：選對模型是最重要的一步
 </div>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="bilingual-block">
-            <div class="zh-text">三大前沿模型在整體能力上<span class="hl-concept">已非常接近</span>，而且比以往更「聰明」、犯的錯更少。但要認真使用進階 AI，你至少需要每月付 $20 美元。這 $20 讓你獲得兩樣東西：選擇使用哪個模型的權利，以及使用更進階的前沿模型和 App 的能力。</div>
-            <div class="en-text">"The top models are remarkably close in overall capability and are generally 'smarter' and make fewer errors than ever. But, if you want to use an advanced AI seriously, you'll need to pay at least $20 a month. Those $20 get you two things: a choice of which model to use and the ability to use the more advanced frontier models and apps."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text"><span class="hl-key">免費模型針對聊天優化，而非準確性</span>，所以它們很快、更有趣，但準確度和能力遠不如付費版。當有人分享 AI 做蠢事的例子時，通常是因為使用了免費模型或沒有選擇更聰明的模型。</div>
-            <div class="en-text">"I wish I could tell you the free models currently available are as good as the paid models, but they are not. The free models are all optimized for chat, rather than accuracy, so they are very fast and often more fun to talk to, but much less accurate and capable. Often, when someone posts an example of an AI doing something stupid, it is because they are either using the free models or because they have not selected a smarter model to work with."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">Mollick 強調：<span class="hl-key">在任何 AI App 中，你能做的最重要的一件事就是選對模型</span>，而 AI 公司並沒有讓這件事變得簡單。以 ChatGPT 為例，預設的 GPT-5.2 不是一個模型，而是多個模型的集合，從很弱的 GPT-5.2 mini 到非常好的 GPT-5.2 Thinking。選擇 GPT-5.2 實際上是「auto」模式，由 AI 決定使用哪個模型，通常是較弱的那個。</div>
-            <div class="en-text">"The single most important thing you can do is pick the right model, which the AI companies do not make easy. For ChatGPT, no matter whether you use the free or pay version, the default model you are given is 'ChatGPT 5.2'. The issue is that GPT-5.2 is not one model, it is many, from the very weak GPT-5.2 mini to the very good GPT-5.2 Thinking to the extremely powerful GPT-5.2 Pro. When you select GPT-5.2, what you are really getting is 'auto' mode, where the AI decides which model to use, often a less powerful one."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">對大多數人來說，模型之間的差異現在已經小到 <span class="hl-concept">App 和 Harness 比模型本身更重要</span>。三大前沿模型都有不同的個性、優勢和弱點，但對大多數人來說，選一個自己最喜歡的就夠了。</div>
-            <div class="en-text">"Again, for most people, the model differences are now small enough that the app and harness matter more than the model. They all have different personalities and strengths and weaknesses, but for most people, just selecting the one they like best will suffice."</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-key">
-            <div class="info-box-header">&#9888;&#65039; 重點提示：模型選擇速查表</div>
-            <div class="info-box-content">
-                <p><strong>ChatGPT：</strong>避免預設的「auto」模式。手動選擇 <strong>GPT-5.2 Thinking Extended</strong>（$20 方案）或 <strong>GPT-5.2 Thinking Heavy</strong>（更高方案）。真正困難的問題用 GPT-5.2 Pro。</p>
-                <p><strong>Gemini：</strong>選擇 <strong>Gemini 3 Pro 或 Thinking</strong>。Ultra 方案可用 Gemini Deep Think。</p>
-                <p><strong>Claude：</strong>選擇 <strong>Opus 4.6</strong> 並開啟 Extended Thinking。Sonnet 4.6 也強大但稍遜。</p>
-            </div>
-        </div>
-        <div class="info-box box-compare">
-            <div class="info-box-header">&#9878;&#65039; 工具比較：三大平台模型層級</div>
-            <div class="info-box-content">
-                <table class="compare-table">
-                    <tr><th>層級</th><th>ChatGPT</th><th>Claude</th><th>Gemini</th></tr>
-                    <tr><td>最強</td><td>GPT-5.2 Pro</td><td>Opus 4.6</td><td>3 Deep Think</td></tr>
-                    <tr><td>推薦日常</td><td>5.2 Thinking Ext</td><td>Opus 4.6 + ET</td><td>3 Pro / Thinking</td></tr>
-                    <tr><td>免費/預設</td><td>5.2 auto (弱)</td><td>Sonnet</td><td>3 Flash</td></tr>
-                </table>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">三大前沿模型在整體能力上<span class="highlight-concept">已非常接近</span>，而且比以往更「聰明」、犯的錯更少。但要認真使用進階 AI，你至少需要每月付 $20 美元。這 $20 讓你獲得兩樣東西：選擇使用哪個模型的權利，以及使用更進階的前沿模型和 App 的能力。</div>
+<div class="en-text">"The top models are remarkably close in overall capability and are generally 'smarter' and make fewer errors than ever. But, if you want to use an advanced AI seriously, you'll need to pay at least $20 a month. Those $20 get you two things: a choice of which model to use and the ability to use the more advanced frontier models and apps."</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-key">免費模型針對聊天優化，而非準確性</span>，所以它們很快、更有趣，但準確度和能力遠不如付費版。當有人分享 AI 做蠢事的例子時，通常是因為使用了免費模型或沒有選擇更聰明的模型。</div>
+<div class="en-text">"I wish I could tell you the free models currently available are as good as the paid models, but they are not. The free models are all optimized for chat, rather than accuracy, so they are very fast and often more fun to talk to, but much less accurate and capable. Often, when someone posts an example of an AI doing something stupid, it is because they are either using the free models or because they have not selected a smarter model to work with."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Mollick 強調：<span class="highlight-key">在任何 AI App 中，你能做的最重要的一件事就是選對模型</span>，而 AI 公司並沒有讓這件事變得簡單。以 ChatGPT 為例，預設的 GPT-5.2 不是一個模型，而是多個模型的集合，從很弱的 GPT-5.2 mini 到非常好的 GPT-5.2 Thinking。選擇 GPT-5.2 實際上是「auto」模式，由 AI 決定使用哪個模型，通常是較弱的那個。</div>
+<div class="en-text">"The single most important thing you can do is pick the right model, which the AI companies do not make easy. For ChatGPT, no matter whether you use the free or pay version, the default model you are given is 'ChatGPT 5.2'. The issue is that GPT-5.2 is not one model, it is many, from the very weak GPT-5.2 mini to the very good GPT-5.2 Thinking to the extremely powerful GPT-5.2 Pro. When you select GPT-5.2, what you are really getting is 'auto' mode, where the AI decides which model to use, often a less powerful one."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">對大多數人來說，模型之間的差異現在已經小到 <span class="highlight-concept">App 和 Harness 比模型本身更重要</span>。三大前沿模型都有不同的個性、優勢和弱點，但對大多數人來說，選一個自己最喜歡的就夠了。</div>
+<div class="en-text">"Again, for most people, the model differences are now small enough that the app and harness matter more than the model. They all have different personalities and strengths and weaknesses, but for most people, just selecting the one they like best will suffice."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示：模型選擇速查表</div>
+<div class="info-box-content">
+<p><strong>ChatGPT：</strong>避免預設的「auto」模式。手動選擇 <strong>GPT-5.2 Thinking Extended</strong>（$20 方案）或 <strong>GPT-5.2 Thinking Heavy</strong>（更高方案）。真正困難的問題用 GPT-5.2 Pro。</p>
+<p><strong>Gemini：</strong>選擇 <strong>Gemini 3 Pro 或 Thinking</strong>。Ultra 方案可用 Gemini Deep Think。</p>
+<p><strong>Claude：</strong>選擇 <strong>Opus 4.6</strong> 並開啟 Extended Thinking。Sonnet 4.6 也強大但稍遜。</p>
+</div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 工具比較：三大平台模型層級</div>
+<div class="info-box-content">
+<table class="compare-table">
+<tr><th>層級</th><th>ChatGPT</th><th>Claude</th><th>Gemini</th></tr>
+<tr><td>最強</td><td>GPT-5.2 Pro</td><td>Opus 4.6</td><td>3 Deep Think</td></tr>
+<tr><td>推薦日常</td><td>5.2 Thinking Ext</td><td>Opus 4.6 + ET</td><td>3 Pro / Thinking</td></tr>
+<tr><td>免費/預設</td><td>5.2 auto (弱)</td><td>Sonnet</td><td>3 Flash</td></tr>
+</table>
+</div>
+</div>
+</div>
+</div>
 <!-- PART III: CHATBOT INTERFACES -->
 <div class="section-header">
-    <span class="part-label">Part III</span>
+<span class="part-label">Part III</span>
     聊天機器人介面：功能差異與 Harness 優勢
 </div>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="bilingual-block">
-            <div class="zh-text">三大聊天機器人在綁定功能上已有顯著差異。Gemini 綁定了 nano banana（最佳 AI 圖像生成工具）、Veo 3.1（影片）、Guided Learning 和 Deep Research。ChatGPT 綁定了更多混合功能，包括圖像生成、Study and Learn、Deep Research 和 Shopping Research（出人意料地好用且被忽視）。<span class="hl-practical">Claude 只綁定 Deep Research，但可透過 Project 建立學習模式。</span>所有 AI 模型都讓你連接數據，例如讓 AI 讀取你的電子郵件和行事曆、存取檔案或連接其他應用程式。</div>
-            <div class="en-text">"Bundled into the Gemini chatbot: you can access nano banana (the best current AI image creation tool), Veo 3.1 (a leading AI video creation tool), Guided Learning, and Deep Research. Bundled into ChatGPT is even more of a hodgepodge of options... You can Create Images, Study and Learn, Deep Research and Shopping Research (surprisingly good and overlooked). Claude has only Deep Research as bundled option, but you can access a study mode by creating a Project and selecting study project. All of the AI models let you connect to data, such as letting the AI read your email and calendar, access your files, or connect to other applications."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">然而，真正重要的是 Harness 的差異。<span class="hl-key">OpenAI 和 Anthropic 在 Harness 能力上明顯領先 Google</span>。Claude.ai 和 ChatGPT 都能撰寫和執行程式碼、提供檔案、進行深度研究等等。Google 的 Gemini 網站能力較弱（即使其 AI 模型同樣優秀）。對大多數進行真正工作的人來說，最重要的附加功能是 Deep Research 和將 AI 連接到你的內容。</div>
-            <div class="en-text">"Increasingly, however, what matters is the harness - the tools the AI has access to. And here, OpenAI and Anthropic have clear leads over Google. Both Claude.ai and ChatGPT have the ability to write and execute code, give you files, do extensive research, and a lot more. Google's Gemini website is much less capable (even though its AI model is just as good). For most people doing real work, the most important additional feature is Deep Research and connecting AI to your content."</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-compare">
-            <div class="info-box-header">&#9878;&#65039; 工具比較：聊天介面功能矩陣</div>
-            <div class="info-box-content">
-                <table class="compare-table">
-                    <tr><th>功能</th><th>ChatGPT</th><th>Claude</th><th>Gemini</th></tr>
-                    <tr><td>程式碼執行</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="cross">&#10007;</td></tr>
-                    <tr><td>檔案輸出</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="cross">&#10007;</td></tr>
-                    <tr><td>引用來源</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="cross">&#10007;</td></tr>
-                    <tr><td>Deep Research</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
-                    <tr><td>圖像生成</td><td class="check">&#10003;</td><td class="cross">&#10007;</td><td class="check">&#10003;</td></tr>
-                    <tr><td>影片生成</td><td class="partial">&#9679; Sora 另開</td><td class="cross">&#10007;</td><td class="check">&#10003; Veo 3.1</td></tr>
-                    <tr><td>數據連接</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td></tr>
-                </table>
-            </div>
-        </div>
-        <div class="info-box box-key">
-            <div class="info-box-header">&#9888;&#65039; 重點提示：GPT-5.2 Pro 的特殊地位</div>
-            <div class="info-box-content">
-                <p>Mollick 特別指出 GPT-5.2 Pro 加上其 Harness，是「非常聰明的模型」，<strong>剛協助推導出物理學的新結果</strong>，也是他認為最能處理複雜統計和分析工作的模型。但僅在更高價格方案可用。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">三大聊天機器人在綁定功能上已有顯著差異。Gemini 綁定了 nano banana（最佳 AI 圖像生成工具）、Veo 3.1（影片）、Guided Learning 和 Deep Research。ChatGPT 綁定了更多混合功能，包括圖像生成、Study and Learn、Deep Research 和 Shopping Research（出人意料地好用且被忽視）。<span class="highlight-practical">Claude 只綁定 Deep Research，但可透過 Project 建立學習模式。</span>所有 AI 模型都讓你連接數據，例如讓 AI 讀取你的電子郵件和行事曆、存取檔案或連接其他應用程式。</div>
+<div class="en-text">"Bundled into the Gemini chatbot: you can access nano banana (the best current AI image creation tool), Veo 3.1 (a leading AI video creation tool), Guided Learning, and Deep Research. Bundled into ChatGPT is even more of a hodgepodge of options... You can Create Images, Study and Learn, Deep Research and Shopping Research (surprisingly good and overlooked). Claude has only Deep Research as bundled option, but you can access a study mode by creating a Project and selecting study project. All of the AI models let you connect to data, such as letting the AI read your email and calendar, access your files, or connect to other applications."</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text">然而，真正重要的是 Harness 的差異。<span class="highlight-key">OpenAI 和 Anthropic 在 Harness 能力上明顯領先 Google</span>。Claude.ai 和 ChatGPT 都能撰寫和執行程式碼、提供檔案、進行深度研究等等。Google 的 Gemini 網站能力較弱（即使其 AI 模型同樣優秀）。對大多數進行真正工作的人來說，最重要的附加功能是 Deep Research 和將 AI 連接到你的內容。</div>
+<div class="en-text">"Increasingly, however, what matters is the harness - the tools the AI has access to. And here, OpenAI and Anthropic have clear leads over Google. Both Claude.ai and ChatGPT have the ability to write and execute code, give you files, do extensive research, and a lot more. Google's Gemini website is much less capable (even though its AI model is just as good). For most people doing real work, the most important additional feature is Deep Research and connecting AI to your content."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 工具比較：聊天介面功能矩陣</div>
+<div class="info-box-content">
+<table class="compare-table">
+<tr><th>功能</th><th>ChatGPT</th><th>Claude</th><th>Gemini</th></tr>
+<tr><td>程式碼執行</td><td class="check">✓</td><td class="check">✓</td><td class="cross">✗</td></tr>
+<tr><td>檔案輸出</td><td class="check">✓</td><td class="check">✓</td><td class="cross">✗</td></tr>
+<tr><td>引用來源</td><td class="check">✓</td><td class="check">✓</td><td class="cross">✗</td></tr>
+<tr><td>Deep Research</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+<tr><td>圖像生成</td><td class="check">✓</td><td class="cross">✗</td><td class="check">✓</td></tr>
+<tr><td>影片生成</td><td class="partial">● Sora 另開</td><td class="cross">✗</td><td class="check">✓ Veo 3.1</td></tr>
+<tr><td>數據連接</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+</table>
+</div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示：GPT-5.2 Pro 的特殊地位</div>
+<div class="info-box-content">
+<p>Mollick 特別指出 GPT-5.2 Pro 加上其 Harness，是「非常聰明的模型」，<strong>剛協助推導出物理學的新結果</strong>，也是他認為最能處理複雜統計和分析工作的模型。但僅在更高價格方案可用。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- PART IV: AGENTIC TOOLS -->
 <div class="section-header">
-    <span class="part-label">Part IV</span>
+<span class="part-label">Part IV</span>
     超越聊天：Agentic 工具生態
 </div>
 <div class="content-grid">
-    <div class="content-left">
-        <div class="bilingual-block">
-            <div class="zh-text">聊天網站雖然是多數人接觸 AI 的入口，但<span class="hl-key">最令人印象深刻的工作越來越不在那裡完成</span>。一系列新的 App 將同樣的模型包裝在更強大的 Harness 中，而這些才是真正重要的。</div>
-            <div class="en-text">"The chatbot websites are where most people interact with AI, but they are increasingly not where the most impressive work gets done. A growing set of other apps wrap these same models in more powerful harnesses, and they matter."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text"><span class="hl-concept">Claude Code、OpenAI Codex、Google Antigravity</span> 是最成熟的開發者工具，給 AI 存取程式碼庫、終端機，以及自主撰寫、執行和測試程式碼的能力。你描述想要建造的東西，AI 就去建造，完成或卡住時回來。如果你以寫程式為生，這些工具正在改變你的工作。因為它們有最廣泛的 Harness，即使你不寫程式，它們也能完成大量工作。</div>
-            <div class="en-text">"Claude Code, OpenAI Codex, and Google Antigravity are the most well-developed of these, and they are all aimed at coders. Each of them gives an AI model access to your codebase, a terminal, and the ability to write, run, and test code on its own. You describe what you want built and the AI goes and builds it, coming back when it's done or stuck. If you write code for a living, these tools are changing your job. Because they have the most extensive harnesses, even if you don't code, they can still do a tremendous amount."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">Mollick 分享了一個驚人案例：他讓 Claude Code 在大約一小時內產生了 80 本精美排版的書籍（包含 GPT-1 的所有 1.17 億個權重參數），設計封面、架設網站、串接 Stripe 支付和 Lulu 按需印刷系統，測試整個系統後上線。他從未接觸或查看過任何程式碼。他提供了 20 本以成本價銷售，當天售罄。</div>
-            <div class="en-text">"Over the course of an hour or so (mostly the AI working, with a couple suggestions), it made 80 beautifully laid out volumes containing all of GPT-1, along with a guide to the math. It also came up with, and executed, covers for each volume that visualized the interior weights. It then put together a very elegant website, hooked it up to Stripe for payment and Lulu to print on demand, tested the whole thing, and launched it for me. I never touched or looked at any code. I had it make 20 books available at cost to see what happened - and sold out the same day."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">但程式碼 Harness 對業餘使用者仍有風險，而且顯然聚焦在程式碼上。新的 App 和 Harness 開始聚焦其他類型的知識工作。<span class="hl-practical">Claude for Excel 和 PowerPoint</span> 是在應用程式內部的特定 Harness 範例。Claude for Excel 特別讓人感覺像是試算表工作的巨大變革 — 你越來越可以告訴 AI 你想做什麼，它就像初級分析師一樣完成工作。因為結果在 Excel 中，所以很容易檢查。</div>
-            <div class="en-text">"But the coding harnesses remain risky for amateurs and, obviously, focused on coding. New apps and harnesses are starting to focus on other types of knowledge work. Claude for Excel and Powerpoint are examples of specific harnesses inside of applications. Claude for Excel, in particular, feels like a massive change in working with spreadsheets, with the potential for a similar impact to Claude Code for those who work with Excel for a living - you can, increasingly, tell the AI what you want to do and it acts a sort of junior analyst and does the work. Because the results are in Excel, they are easy to check."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text"><span class="hl-practical">Claude Cowork</span> 是真正全新的東西，值得獨立一個類別。Anthropic 在一月推出，Cowork 本質上是給非技術工作者的 Claude Code。它在桌面運行，可直接操作本地檔案和瀏覽器。然而，它比 Claude Code 更安全，對非技術使用者也更安全（它在 VM 中運行，預設拒絕網路連接，並內建硬隔離）。你描述一個成果，Claude 就制定計畫、分解子任務、在你的電腦上執行。它建立在與 Claude Code 相同的 agentic 架構上，而且本身就是由 Claude Code 在約兩週內建造的。OpenAI 和 Google 都沒有直接對應的產品。</div>
-            <div class="en-text">"Claude Cowork is something genuinely new, and it deserves its own category. Released by Anthropic in January, Cowork is essentially Claude Code for non-technical work. It runs on your desktop and can work directly with your local files and your browser. However, it is much more secure than Claude Code and less dangerous for non-technical users (it runs in a VM with default-deny networking and hard isolation baked in, for those who care about the details). You describe an outcome and Claude makes a plan, breaks it into subtasks, and executes them on your computer while you watch (or don't). It was built on the same agentic architecture as Claude Code, and was itself largely built by Claude Code in about two weeks. Neither OpenAI or Google have a direct equivalent, at least this week."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">Cowork 仍然是 research preview，代表它還很早期，而且會快速消耗你的使用額度，但<span class="hl-key">這是所有事情發展方向的清晰信號：AI 不再只是和你談論你的工作，而是做你的工作</span>。</div>
-            <div class="en-text">"Cowork is still a research preview, meaning it's early and will eat through your usage limits fast, but it is a clear sign of where all of this is heading: AI that doesn't just talk to you about your work, but does your work."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text"><span class="hl-concept">NotebookLM</span> 是 Google 對另一個問題的解答：如何用 AI 理解大量資訊？你可以讓 NotebookLM 進行深度研究，或加入自己的論文、YouTube 影片、網站或檔案，NotebookLM 會建立一個互動知識庫，你可以查詢、轉換成投影片、心智圖、影片，以及最著名的 — AI 生成的播客。如果你是學生、研究者，或經常需要理解大量文件的人，NotebookLM 是非常有用的工具。</div>
-            <div class="en-text">"NotebookLM is Google's answer to a different problem: how do you use AI to make sense of a lot of information? You can ask NotebookLM to do its own deep research, or else add in your own papers, YouTube videos, websites, or files, and NotebookLM builds an interactive knowledge base you can query, turn into slides, mind maps, videos and, most famously, AI-generated podcasts where two hosts discuss your material. If you are a student, a researcher, or anyone who regularly needs to make sense of a pile of documents, NotebookLM is a very useful tool."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">最後提到 <span class="hl-key">OpenClaw</span>，一個在一月底爆紅的開源 AI 代理。它在本機運行，連接任何 AI 模型，你透過 WhatsApp 或 iMessage 等標準聊天與它對話。它能瀏覽網頁、管理檔案、發送電子郵件、執行命令。但它也是嚴重的安全風險：你給了 AI 廣泛存取你的電腦和帳號的權限，沒人確切知道你暴露在什麼危險中。</div>
-            <div class="en-text">"OpenClaw is an open-source AI agent that went viral in late January. It runs locally on your computer, connects to whatever AI model you want, and you talk to it like you were chatting with a person using standard chats like WhatsApp or iMessage. It can browse the web, manage your files, send emails, and run commands. It is also a serious security risk: you are giving an AI broad access to your computer and your accounts, and no one knows exactly what dangers you are exposing yourself to."</div>
-        </div>
-    </div>
-    <div class="content-right">
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#128736;&#65039; 實務應用：Agentic 工具速覽</div>
-            <div class="info-box-content">
-                <table class="compare-table">
-                    <tr><th>工具</th><th>對象</th><th>特色</th></tr>
-                    <tr><td><strong>Claude Code</strong></td><td>開發者</td><td>自主寫測試、建網站、完整專案</td></tr>
-                    <tr><td><strong>Claude Cowork</strong></td><td>非技術人員</td><td>操作本地檔案、瀏覽器、安全 VM</td></tr>
-                    <tr><td><strong>Claude for Excel</strong></td><td>數據分析</td><td>AI 初級分析師，結果可在 Excel 驗證</td></tr>
-                    <tr><td><strong>NotebookLM</strong></td><td>研究/學習</td><td>知識庫、AI 播客、心智圖、投影片</td></tr>
-                    <tr><td><strong>OpenClaw</strong></td><td>進階用戶</td><td>開源、本機代理、安全風險高</td></tr>
-                </table>
-            </div>
-        </div>
-        <div class="info-box box-analogy">
-            <div class="info-box-header">&#128161; 比喻說明：從「顧問」到「執行者」</div>
-            <div class="info-box-content">
-                <p>聊天機器人時代的 AI 像是一位<strong>顧問</strong>：你問問題，它給建議，但所有的執行還是你自己做。Agentic 時代的 AI 更像是一位<strong>實習生</strong>：你交代任務，它會去做，完成後回報，卡住時來問你。</p>
-                <p>在 CDMO 情境中：想像不是你親自整理批次紀錄，而是交代 AI「把這 20 份 PDF 的批次數據整理成一張對比表」，然後它自己去做。你的角色從「執行者」變成「審核者」。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">聊天網站雖然是多數人接觸 AI 的入口，但<span class="highlight-key">最令人印象深刻的工作越來越不在那裡完成</span>。一系列新的 App 將同樣的模型包裝在更強大的 Harness 中，而這些才是真正重要的。</div>
+<div class="en-text">"The chatbot websites are where most people interact with AI, but they are increasingly not where the most impressive work gets done. A growing set of other apps wrap these same models in more powerful harnesses, and they matter."</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-concept">Claude Code、OpenAI Codex、Google Antigravity</span> 是最成熟的開發者工具，給 AI 存取程式碼庫、終端機，以及自主撰寫、執行和測試程式碼的能力。你描述想要建造的東西，AI 就去建造，完成或卡住時回來。如果你以寫程式為生，這些工具正在改變你的工作。因為它們有最廣泛的 Harness，即使你不寫程式，它們也能完成大量工作。</div>
+<div class="en-text">"Claude Code, OpenAI Codex, and Google Antigravity are the most well-developed of these, and they are all aimed at coders. Each of them gives an AI model access to your codebase, a terminal, and the ability to write, run, and test code on its own. You describe what you want built and the AI goes and builds it, coming back when it's done or stuck. If you write code for a living, these tools are changing your job. Because they have the most extensive harnesses, even if you don't code, they can still do a tremendous amount."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Mollick 分享了一個驚人案例：他讓 Claude Code 在大約一小時內產生了 80 本精美排版的書籍（包含 GPT-1 的所有 1.17 億個權重參數），設計封面、架設網站、串接 Stripe 支付和 Lulu 按需印刷系統，測試整個系統後上線。他從未接觸或查看過任何程式碼。他提供了 20 本以成本價銷售，當天售罄。</div>
+<div class="en-text">"Over the course of an hour or so (mostly the AI working, with a couple suggestions), it made 80 beautifully laid out volumes containing all of GPT-1, along with a guide to the math. It also came up with, and executed, covers for each volume that visualized the interior weights. It then put together a very elegant website, hooked it up to Stripe for payment and Lulu to print on demand, tested the whole thing, and launched it for me. I never touched or looked at any code. I had it make 20 books available at cost to see what happened - and sold out the same day."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">但程式碼 Harness 對業餘使用者仍有風險，而且顯然聚焦在程式碼上。新的 App 和 Harness 開始聚焦其他類型的知識工作。<span class="highlight-practical">Claude for Excel 和 PowerPoint</span> 是在應用程式內部的特定 Harness 範例。Claude for Excel 特別讓人感覺像是試算表工作的巨大變革 — 你越來越可以告訴 AI 你想做什麼，它就像初級分析師一樣完成工作。因為結果在 Excel 中，所以很容易檢查。</div>
+<div class="en-text">"But the coding harnesses remain risky for amateurs and, obviously, focused on coding. New apps and harnesses are starting to focus on other types of knowledge work. Claude for Excel and Powerpoint are examples of specific harnesses inside of applications. Claude for Excel, in particular, feels like a massive change in working with spreadsheets, with the potential for a similar impact to Claude Code for those who work with Excel for a living - you can, increasingly, tell the AI what you want to do and it acts a sort of junior analyst and does the work. Because the results are in Excel, they are easy to check."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-practical">Claude Cowork</span> 是真正全新的東西，值得獨立一個類別。Anthropic 在一月推出，Cowork 本質上是給非技術工作者的 Claude Code。它在桌面運行，可直接操作本地檔案和瀏覽器。然而，它比 Claude Code 更安全，對非技術使用者也更安全（它在 VM 中運行，預設拒絕網路連接，並內建硬隔離）。你描述一個成果，Claude 就制定計畫、分解子任務、在你的電腦上執行。它建立在與 Claude Code 相同的 agentic 架構上，而且本身就是由 Claude Code 在約兩週內建造的。OpenAI 和 Google 都沒有直接對應的產品。</div>
+<div class="en-text">"Claude Cowork is something genuinely new, and it deserves its own category. Released by Anthropic in January, Cowork is essentially Claude Code for non-technical work. It runs on your desktop and can work directly with your local files and your browser. However, it is much more secure than Claude Code and less dangerous for non-technical users (it runs in a VM with default-deny networking and hard isolation baked in, for those who care about the details). You describe an outcome and Claude makes a plan, breaks it into subtasks, and executes them on your computer while you watch (or don't). It was built on the same agentic architecture as Claude Code, and was itself largely built by Claude Code in about two weeks. Neither OpenAI or Google have a direct equivalent, at least this week."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Cowork 仍然是 research preview，代表它還很早期，而且會快速消耗你的使用額度，但<span class="highlight-key">這是所有事情發展方向的清晰信號：AI 不再只是和你談論你的工作，而是做你的工作</span>。</div>
+<div class="en-text">"Cowork is still a research preview, meaning it's early and will eat through your usage limits fast, but it is a clear sign of where all of this is heading: AI that doesn't just talk to you about your work, but does your work."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-concept">NotebookLM</span> 是 Google 對另一個問題的解答：如何用 AI 理解大量資訊？你可以讓 NotebookLM 進行深度研究，或加入自己的論文、YouTube 影片、網站或檔案，NotebookLM 會建立一個互動知識庫，你可以查詢、轉換成投影片、心智圖、影片，以及最著名的 — AI 生成的播客。如果你是學生、研究者，或經常需要理解大量文件的人，NotebookLM 是非常有用的工具。</div>
+<div class="en-text">"NotebookLM is Google's answer to a different problem: how do you use AI to make sense of a lot of information? You can ask NotebookLM to do its own deep research, or else add in your own papers, YouTube videos, websites, or files, and NotebookLM builds an interactive knowledge base you can query, turn into slides, mind maps, videos and, most famously, AI-generated podcasts where two hosts discuss your material. If you are a student, a researcher, or anyone who regularly needs to make sense of a pile of documents, NotebookLM is a very useful tool."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">最後提到 <span class="highlight-key">OpenClaw</span>，一個在一月底爆紅的開源 AI 代理。它在本機運行，連接任何 AI 模型，你透過 WhatsApp 或 iMessage 等標準聊天與它對話。它能瀏覽網頁、管理檔案、發送電子郵件、執行命令。但它也是嚴重的安全風險：你給了 AI 廣泛存取你的電腦和帳號的權限，沒人確切知道你暴露在什麼危險中。</div>
+<div class="en-text">"OpenClaw is an open-source AI agent that went viral in late January. It runs locally on your computer, connects to whatever AI model you want, and you talk to it like you were chatting with a person using standard chats like WhatsApp or iMessage. It can browse the web, manage your files, send emails, and run commands. It is also a serious security risk: you are giving an AI broad access to your computer and your accounts, and no one knows exactly what dangers you are exposing yourself to."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用：Agentic 工具速覽</div>
+<div class="info-box-content">
+<table class="compare-table">
+<tr><th>工具</th><th>對象</th><th>特色</th></tr>
+<tr><td><strong>Claude Code</strong></td><td>開發者</td><td>自主寫測試、建網站、完整專案</td></tr>
+<tr><td><strong>Claude Cowork</strong></td><td>非技術人員</td><td>操作本地檔案、瀏覽器、安全 VM</td></tr>
+<tr><td><strong>Claude for Excel</strong></td><td>數據分析</td><td>AI 初級分析師，結果可在 Excel 驗證</td></tr>
+<tr><td><strong>NotebookLM</strong></td><td>研究/學習</td><td>知識庫、AI 播客、心智圖、投影片</td></tr>
+<tr><td><strong>OpenClaw</strong></td><td>進階用戶</td><td>開源、本機代理、安全風險高</td></tr>
+</table>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明：從「顧問」到「執行者」</div>
+<div class="info-box-content">
+<p>聊天機器人時代的 AI 像是一位<strong>顧問</strong>：你問問題，它給建議，但所有的執行還是你自己做。Agentic 時代的 AI 更像是一位<strong>實習生</strong>：你交代任務，它會去做，完成後回報，卡住時來問你。</p>
+<p>在 CDMO 情境中：想像不是你親自整理批次紀錄，而是交代 AI「把這 20 份 PDF 的批次數據整理成一張對比表」，然後它自己去做。你的角色從「執行者」變成「審核者」。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- PART V: WHAT TO DO NOW -->
 <div class="section-header">
-    <span class="part-label">Part V</span>
+<span class="part-label">Part V</span>
     行動建議：從聊天到代理的轉變
 </div>
 <div class="content-grid linear">
-    <div class="content-left">
-        <div class="bilingual-block">
-            <div class="zh-text">Mollick 的建議分為兩個層次。<strong>新手：</strong>選一個系統、付 $20、選進階模型，然後<span class="hl-practical">把 AI 邀請到你做的每件事中</span>。開始用它做真正的工作。上傳你正在處理的文件。以 RFP 或 SOP 的形式給 AI 非常複雜的任務。進行來回對話並推動它。光是這樣就能教你比任何指南更多的東西。</div>
-            <div class="en-text">"If you are just getting started, pick one of the three systems (ChatGPT, Claude, or Gemini), pay the $20, and select the advanced model. The advice from my book still holds: invite AI to everything you do. Start using it for real work. Upload a document you're actually working on. Give the AI a very complex task in the form of an RFP or SOP. Have a back-and-forth conversation and push it. This alone will teach you more than any guide."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text"><strong>進階用戶：</strong>嘗試特定的 App。NotebookLM 免費且好用，是很好的起點。想更深入，Anthropic 在 Claude Code、Claude Cowork 以及 PowerPoint 和 Excel 外掛中提供了最強大的組合包。試用它們 — 不是作為展示，而是用在你真正需要完成的事情上。觀察它做了什麼。當它出錯時引導它。<span class="hl-key">你不是在寫提示詞，你是在管理。</span></div>
-            <div class="en-text">"If you are already comfortable with chatbots, try the specific apps. NotebookLM is free and easy to use, which makes it a good starting place. If you want to go deeper, Anthropic offers the most powerful package in Claude Code, Claude Cowork as well as the specialized PowerPoint and Excel Plugins. Give them a try. Again, not as a demo, but with something you actually need done. Watch what it does. Steer it when it goes wrong. You aren't prompting, you are managing."</div>
-        </div>
-        <div class="bilingual-block">
-            <div class="zh-text">最後的核心訊息：<span class="hl-key">從聊天機器人到代理的轉變，是自 ChatGPT 推出以來人們使用 AI 方式最重要的變化</span>。這仍然是早期，這些工具仍然難以搞清楚，仍然會做出令人困惑的事情。但一個能做事的 AI 從根本上比一個只能說話的 AI 更有用，而學習以這種方式使用它值得你的時間。</div>
-            <div class="en-text">"The shift from chatbot to agent is the most important change in how people use AI since ChatGPT launched. It is still early, and these tools are still hard to figure out and will still do baffling things. But an AI that does things is fundamentally more useful than an AI that says things, and learning to use it that way is worth your time."</div>
-        </div>
-        <div class="info-box box-key" style="margin-top: 1rem;">
-            <div class="info-box-header">&#9888;&#65039; 重點提示：Mollick 的核心態度轉變</div>
-            <div class="info-box-content">
-                <p>注意 Mollick 用詞的變化：不再是 "prompting"（提示），而是 <strong>"managing"（管理）</strong>。這反映了人機互動的根本變化 — 你不再是在「寫指令」，而是在「管理一個能幹但需要指導的下屬」。對於追求 COO 角色的人來說，這是一個特別重要的訊號：<strong>管理 AI 代理正在成為管理能力的延伸</strong>。</p>
-            </div>
-        </div>
-    </div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">Mollick 的建議分為兩個層次。<strong>新手：</strong>選一個系統、付 $20、選進階模型，然後<span class="highlight-practical">把 AI 邀請到你做的每件事中</span>。開始用它做真正的工作。上傳你正在處理的文件。以 RFP 或 SOP 的形式給 AI 非常複雜的任務。進行來回對話並推動它。光是這樣就能教你比任何指南更多的東西。</div>
+<div class="en-text">"If you are just getting started, pick one of the three systems (ChatGPT, Claude, or Gemini), pay the $20, and select the advanced model. The advice from my book still holds: invite AI to everything you do. Start using it for real work. Upload a document you're actually working on. Give the AI a very complex task in the form of an RFP or SOP. Have a back-and-forth conversation and push it. This alone will teach you more than any guide."</div>
 </div>
-
+<div class="bilingual-block">
+<div class="zh-text"><strong>進階用戶：</strong>嘗試特定的 App。NotebookLM 免費且好用，是很好的起點。想更深入，Anthropic 在 Claude Code、Claude Cowork 以及 PowerPoint 和 Excel 外掛中提供了最強大的組合包。試用它們 — 不是作為展示，而是用在你真正需要完成的事情上。觀察它做了什麼。當它出錯時引導它。<span class="highlight-key">你不是在寫提示詞，你是在管理。</span></div>
+<div class="en-text">"If you are already comfortable with chatbots, try the specific apps. NotebookLM is free and easy to use, which makes it a good starting place. If you want to go deeper, Anthropic offers the most powerful package in Claude Code, Claude Cowork as well as the specialized PowerPoint and Excel Plugins. Give them a try. Again, not as a demo, but with something you actually need done. Watch what it does. Steer it when it goes wrong. You aren't prompting, you are managing."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">最後的核心訊息：<span class="highlight-key">從聊天機器人到代理的轉變，是自 ChatGPT 推出以來人們使用 AI 方式最重要的變化</span>。這仍然是早期，這些工具仍然難以搞清楚，仍然會做出令人困惑的事情。但一個能做事的 AI 從根本上比一個只能說話的 AI 更有用，而學習以這種方式使用它值得你的時間。</div>
+<div class="en-text">"The shift from chatbot to agent is the most important change in how people use AI since ChatGPT launched. It is still early, and these tools are still hard to figure out and will still do baffling things. But an AI that does things is fundamentally more useful than an AI that says things, and learning to use it that way is worth your time."</div>
+</div>
+<div class="info-box box-key" style="margin-top: 1rem;">
+<div class="info-box-header">⚠️ 重點提示：Mollick 的核心態度轉變</div>
+<div class="info-box-content">
+<p>注意 Mollick 用詞的變化：不再是 "prompting"（提示），而是 <strong>"managing"（管理）</strong>。這反映了人機互動的根本變化 — 你不再是在「寫指令」，而是在「管理一個能幹但需要指導的下屬」。對於追求 COO 角色的人來說，這是一個特別重要的訊號：<strong>管理 AI 代理正在成為管理能力的延伸</strong>。</p>
+</div>
+</div>
+</div>
+</div>
 <!-- KEY TAKEAWAYS -->
 <div style="margin: 2rem 2rem 0.5rem; font-size: 1.1rem; font-weight: 700; color: var(--primary);">Key Takeaways</div>
 <div class="takeaways-grid">
-    <div class="summary-card">
-        <div class="card-title">三層框架重新定義選擇</div>
-        <div class="card-text">AI 選擇不再只是比較模型。Models 決定「有多聰明」，Apps 決定「怎麼互動」，Harnesses 決定「能做多少事」。同一模型在不同 Harness 表現天差地別。</div>
-    </div>
-    <div class="summary-card">
-        <div class="card-title">選對模型是基本功</div>
-        <div class="card-text">AI 公司刻意讓選擇複雜化。預設模型通常不是最強的。ChatGPT 的「auto」模式、Claude 的預設 Sonnet、Gemini 的 Flash 都是「夠用」但非「最佳」。永遠手動選擇進階模型。</div>
-    </div>
-    <div class="summary-card">
-        <div class="card-title">Anthropic 的 Agentic 領先</div>
-        <div class="card-text">Claude Code + Cowork + Excel/PPT 外掛構成了目前最完整的 agentic 工具生態。Cowork 尤其值得關注：非技術人員的 AI 代理時代已經開始。</div>
-    </div>
-    <div class="summary-card">
-        <div class="card-title">從 Prompting 到 Managing</div>
-        <div class="card-text">AI 使用的核心技能正從「寫好提示詞」轉向「管理 AI 代理」。你不再是操作員，而是主管。這對領導者來說既是機會也是必修課。</div>
-    </div>
+<div class="summary-card">
+<div class="card-title">三層框架重新定義選擇</div>
+<div class="card-text">AI 選擇不再只是比較模型。Models 決定「有多聰明」，Apps 決定「怎麼互動」，Harnesses 決定「能做多少事」。同一模型在不同 Harness 表現天差地別。</div>
 </div>
-
+<div class="summary-card">
+<div class="card-title">選對模型是基本功</div>
+<div class="card-text">AI 公司刻意讓選擇複雜化。預設模型通常不是最強的。ChatGPT 的「auto」模式、Claude 的預設 Sonnet、Gemini 的 Flash 都是「夠用」但非「最佳」。永遠手動選擇進階模型。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">Anthropic 的 Agentic 領先</div>
+<div class="card-text">Claude Code + Cowork + Excel/PPT 外掛構成了目前最完整的 agentic 工具生態。Cowork 尤其值得關注：非技術人員的 AI 代理時代已經開始。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">從 Prompting 到 Managing</div>
+<div class="card-text">AI 使用的核心技能正從「寫好提示詞」轉向「管理 AI 代理」。你不再是操作員，而是主管。這對領導者來說既是機會也是必修課。</div>
+</div>
+</div>
 <!-- PRACTICE SECTION -->
 <div class="practice-section">
-    <h2>Practice Questions</h2>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q1</span>
-            <span class="question-type">概念理解</span>
-            <span class="question-text">為什麼 Mollick 認為「Harness」是這次指南與過去八次的根本差異？請用三層框架解釋。</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>過去八版指南中，Model 就等於產品，App 就是網站，Harness 幾乎不存在。使用者輸入文字、AI 回覆、再輸入。但現在同一個模型（如 Claude Opus 4.6）可以因為不同的 Harness 而產生完全不同的行為：在聊天窗口是問答式顧問，在 Claude Code 是自主工作數小時的開發者，在 Cowork 是能操作本地檔案的執行者。</p>
-            <p>Harness 的出現意味著 <strong>「which AI should I use?」這個問題的答案，從比較模型智力轉變為比較整個系統的行動能力</strong>。這是從「AI 說什麼」到「AI 做什麼」的根本轉變。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q2</span>
-            <span class="question-type">產業應用</span>
-            <span class="question-text">在 GMP 製藥環境中，「copilot mode」和「agent mode」分別對應 Mollick 框架中的什麼？你會如何決定何時使用哪種模式？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>Copilot mode</strong> 對應基本的 chatbot + 簡單 harness：AI 提供建議和草稿，人類審核每一步。例如：使用 Claude.ai 幫你起草偏差調查報告，你逐段審核修改。</p>
-            <p><strong>Agent mode</strong> 對應強大的 harness（如 Cowork 或 Claude Code）：AI 自主執行多步驟任務。例如：讓 AI 自動從 20 份批次紀錄 PDF 中提取數據，整理成對比表。</p>
-            <p>決策原則：<strong>風險越高，越需要 copilot</strong>。涉及法規合規（21 CFR Part 11）、產品品質決策、批次放行的工作 = copilot。涉及資料整理、格式轉換、初步分析的工作 = 可考慮 agent。關鍵是 O-ring bottleneck 理論：讓 AI 加速常規任務，把人類判斷保留在不可自動化的決策點。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q3</span>
-            <span class="question-type">批判思考</span>
-            <span class="question-text">Mollick 說「an AI that does things is fundamentally more useful than an AI that says things」。這個論斷有什麼盲點？在什麼情況下「說話的 AI」反而更有價值？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p>Mollick 的論斷在大多數生產力場景中是正確的，但有幾個盲點：</p>
-            <p><strong>1. 可驗證性問題：</strong>AI 做了事但做錯了，檢查成本可能比自己做還高。Agentic AI 的「黑箱執行」在需要 audit trail 的環境中是風險。</p>
-            <p><strong>2. 思考夥伴價值：</strong>有時你需要的不是執行，而是幫你釐清思路的對話。Socratic 式的 AI 對話在策略思考、問題定義階段可能比直接執行更有價值。</p>
-            <p><strong>3. 學習與能力建構：</strong>如果 AI 直接做完，你可能失去理解過程的機會。「wetware before software」原則在這裡很關鍵：先確保你理解，再讓 AI 加速。</p>
-            <p><strong>結論：</strong>最佳策略不是二選一，而是根據任務類型動態切換。「做事的 AI」適合重複性執行，「說話的 AI」適合決策支援和學習。</p>
-        </div>
-    </details>
+<h2>Practice Questions</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">為什麼 Mollick 認為「Harness」是這次指南與過去八次的根本差異？請用三層框架解釋。</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>過去八版指南中，Model 就等於產品，App 就是網站，Harness 幾乎不存在。使用者輸入文字、AI 回覆、再輸入。但現在同一個模型（如 Claude Opus 4.6）可以因為不同的 Harness 而產生完全不同的行為：在聊天窗口是問答式顧問，在 Claude Code 是自主工作數小時的開發者，在 Cowork 是能操作本地檔案的執行者。</p>
+<p>Harness 的出現意味著 <strong>「which AI should I use?」這個問題的答案，從比較模型智力轉變為比較整個系統的行動能力</strong>。這是從「AI 說什麼」到「AI 做什麼」的根本轉變。</p>
 </div>
-
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">在 GMP 製藥環境中，「copilot mode」和「agent mode」分別對應 Mollick 框架中的什麼？你會如何決定何時使用哪種模式？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>Copilot mode</strong> 對應基本的 chatbot + 簡單 harness：AI 提供建議和草稿，人類審核每一步。例如：使用 Claude.ai 幫你起草偏差調查報告，你逐段審核修改。</p>
+<p><strong>Agent mode</strong> 對應強大的 harness（如 Cowork 或 Claude Code）：AI 自主執行多步驟任務。例如：讓 AI 自動從 20 份批次紀錄 PDF 中提取數據，整理成對比表。</p>
+<p>決策原則：<strong>風險越高，越需要 copilot</strong>。涉及法規合規（21 CFR Part 11）、產品品質決策、批次放行的工作 = copilot。涉及資料整理、格式轉換、初步分析的工作 = 可考慮 agent。關鍵是 O-ring bottleneck 理論：讓 AI 加速常規任務，把人類判斷保留在不可自動化的決策點。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">Mollick 說「an AI that does things is fundamentally more useful than an AI that says things」。這個論斷有什麼盲點？在什麼情況下「說話的 AI」反而更有價值？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>Mollick 的論斷在大多數生產力場景中是正確的，但有幾個盲點：</p>
+<p><strong>1. 可驗證性問題：</strong>AI 做了事但做錯了，檢查成本可能比自己做還高。Agentic AI 的「黑箱執行」在需要 audit trail 的環境中是風險。</p>
+<p><strong>2. 思考夥伴價值：</strong>有時你需要的不是執行，而是幫你釐清思路的對話。Socratic 式的 AI 對話在策略思考、問題定義階段可能比直接執行更有價值。</p>
+<p><strong>3. 學習與能力建構：</strong>如果 AI 直接做完，你可能失去理解過程的機會。「wetware before software」原則在這裡很關鍵：先確保你理解，再讓 AI 加速。</p>
+<p><strong>結論：</strong>最佳策略不是二選一，而是根據任務類型動態切換。「做事的 AI」適合重複性執行，「說話的 AI」適合決策支援和學習。</p>
+</div>
+</details>
+</div>
 <!-- BOTTOM LINE -->
 <div class="bottom-line">
-    <div class="bottom-line-header">&#127919; 我的行動結論</div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#10004; 核心洞察</div>
-        <div class="bottom-line-text">AI 工具選擇已從「哪個模型最聰明」轉變為「哪個系統能幫我做最多事」。作為 CDMO 的 Operations Director，我需要用三層框架重新評估工具策略：模型層我已經選對了（Claude Opus + Max），但 Harness 層（Cowork、Excel 外掛）才是下一個效率槓桿的支點。Mollick 從 "prompting" 到 "managing" 的用詞轉變，與我追求 COO 角色直接相關 — 管理 AI 代理正在成為管理能力的核心延伸。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#128200; 立即應用</div>
-        <div class="bottom-line-text">本週具體行動：(1) 下載 Claude Desktop 並啟用 Cowork，用一個真實任務測試（例如：整理最近的偏差追蹤表）。(2) 在我的「Pharma x AI x Leadership」框架中加入 Harness 層的分析 — 評估目前工作中哪些任務適合從 copilot 升級到 agent mode。(3) 將 Mollick 的三層框架整理成一篇 Substack 文章，從藥廠 Operations 角度解讀 agentic 轉變對法規環境的意義。</div>
-    </div>
-    <div class="bottom-line-item">
-        <div class="bottom-line-label">&#9888; 需要補充</div>
-        <div class="bottom-line-text">Mollick 的文章完全沒有觸及法規合規環境中的 agentic AI 風險 — 這是可以理解的，因為他的讀者主要是一般知識工作者。但對我來說，關鍵問題是：當 AI agent 自主執行任務時，audit trail 怎麼確保？21 CFR Part 11 的電子紀錄要求如何適用？這些是我需要自己補充的盲點。另外，文章沒有提到企業級部署的安全考量（我們用的是 Google Workspace + Gemini Enterprise），Cowork 的 VM 隔離設計值得深入了解。建議 3 個月後重讀，屆時 Cowork 應已脫離 research preview。</div>
-    </div>
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">AI 工具選擇已從「哪個模型最聰明」轉變為「哪個系統能幫我做最多事」。作為 CDMO 的 Operations Director，我需要用三層框架重新評估工具策略：模型層我已經選對了（Claude Opus + Max），但 Harness 層（Cowork、Excel 外掛）才是下一個效率槓桿的支點。Mollick 從 "prompting" 到 "managing" 的用詞轉變，與我追求 COO 角色直接相關 — 管理 AI 代理正在成為管理能力的核心延伸。</div>
 </div>
-
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">本週具體行動：(1) 下載 Claude Desktop 並啟用 Cowork，用一個真實任務測試（例如：整理最近的偏差追蹤表）。(2) 在我的「Pharma x AI x Leadership」框架中加入 Harness 層的分析 — 評估目前工作中哪些任務適合從 copilot 升級到 agent mode。(3) 將 Mollick 的三層框架整理成一篇 Substack 文章，從藥廠 Operations 角度解讀 agentic 轉變對法規環境的意義。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">Mollick 的文章完全沒有觸及法規合規環境中的 agentic AI 風險 — 這是可以理解的，因為他的讀者主要是一般知識工作者。但對我來說，關鍵問題是：當 AI agent 自主執行任務時，audit trail 怎麼確保？21 CFR Part 11 的電子紀錄要求如何適用？這些是我需要自己補充的盲點。另外，文章沒有提到企業級部署的安全考量（我們用的是 Google Workspace + Gemini Enterprise），Cowork 的 VM 隔離設計值得深入了解。建議 3 個月後重讀，屆時 Cowork 應已脫離 research preview。</div>
+</div>
+</div>
 <!-- FOOTER -->
-<div class="footer">
-    <div>Generated: 2026-02-21 | AI Expert Learning System v1.4</div>
-    <div>Source: <a href="https://www.oneusefulthing.org/p/a-guide-to-which-ai-to-use-in-the" target="_blank">One Useful Thing - Ethan Mollick</a></div>
-    <div class="chat-title">Suggested Chat Title: [Agent] AI 使用指南 - Mollick Agentic Era Framework</div>
-</div>
-
+<footer class="footer">
+<div>Generated: 2026-02-21 | AI Expert Learning System v1.4</div>
+<div>Source: <a href="https://www.oneusefulthing.org/p/a-guide-to-which-ai-to-use-in-the" target="_blank">One Useful Thing - Ethan Mollick</a></div>
+<div class="chat-title">Suggested Chat Title: [Agent] AI 使用指南 - Mollick Agentic Era Framework</div>
+</footer>
 </body>
 </html>

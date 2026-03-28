@@ -1,370 +1,221 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2025-12-20">
-    <meta name="doc-title" content="Skill Graphs：從單一技能檔到可遍歷知識網路">
-    <meta name="doc-source" content="Heinrich @arscontexta / X Thread">
-    <meta name="doc-tags" content="Agent,Prompt,Tool">
-    <meta name="doc-rating" content="3.8">
-    <meta name="doc-summary" content="提出Skill Graph概念，用Markdown+Wikilinks+YAML frontmatter建構AI Agent可自主導航的結構化知識網路">
-    <meta name="doc-file" content="2025-12-20_skill-graphs-knowledge.html">
-    <title>Skill Graphs：從單一技能檔到可遍歷知識網路</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2025-12-20" name="doc-date"/>
+<meta content="Skill Graphs：從單一技能檔到可遍歷知識網路" name="doc-title"/>
+<meta content="Heinrich @arscontexta / X Thread" name="doc-source"/>
+<meta content="Agent,Prompt,Tool" name="doc-tags"/>
+<meta content="3.8" name="doc-rating"/>
+<meta content="提出Skill Graph概念，用Markdown+Wikilinks+YAML frontmatter建構AI Agent可自主導航的結構化知識網路" name="doc-summary"/>
+<meta content="2025-12-20_skill-graphs-knowledge.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>Skill Graphs：從單一技能檔到可遍歷知識網路</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 
-        /* Header */
-        .header { text-align: center; padding: 2.5rem 2rem; background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%); color: white; border-radius: 1rem; margin-bottom: 2rem; }
-        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1rem; }
-        .domain-tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-        .domain-tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 600; }
-        .tag-agent { background: #c7d2fe; color: #3730a3; }
-        .tag-prompt { background: #fde68a; color: #92400e; }
-        .tag-tool { background: #fecdd3; color: #9f1239; }
-        .tag-integration { background: #99f6e4; color: #134e4a; }
-        .source-info { font-size: 0.8rem; opacity: 0.8; }
-        .source-info a { color: #93c5fd; text-decoration: none; }
 
-        /* Rating Bar */
-        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
-        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-        /* Executive Summary */
-        .exec-summary { background: white; border-radius: 1rem; padding: 1.5rem 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .exec-summary h2 { font-size: 1.2rem; color: #1e3a8a; margin-bottom: 1rem; }
-        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
-
-        /* Learning Objectives */
-        .objectives { margin-bottom: 2rem; }
-        .objectives h2 { font-size: 1.2rem; color: #1e3a8a; margin-bottom: 1rem; padding-left: 2rem; }
-        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; padding: 0 2rem; }
-        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .objective-item:nth-child(2) { border-left-color: #10b981; }
-        .objective-item:nth-child(3) { border-left-color: #8b5cf6; }
-        .objective-number { font-size: 0.75rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.25rem; }
-        .objective-item:nth-child(2) .objective-number { color: #10b981; }
-        .objective-item:nth-child(3) .objective-number { color: #8b5cf6; }
-        .objective-text { font-size: 0.9rem; color: #334155; }
-
-        /* Framework Visual */
-        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 0 2rem 2rem; }
-        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-        .framework-step { text-align: center; min-width: 120px; }
-        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
-        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
-        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
-        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-        /* Content Grid */
-        .part-section { margin-bottom: 2rem; }
-        .part-header { background: linear-gradient(135deg, #1e3a5f, #2d5a8e); color: white; padding: 1rem 2rem; border-radius: 0.75rem 0.75rem 0 0; display: flex; align-items: center; gap: 0.75rem; }
-        .part-number { background: rgba(255,255,255,0.2); padding: 0.25rem 0.75rem; border-radius: 0.5rem; font-weight: 700; font-size: 0.85rem; }
-        .part-title { font-size: 1.1rem; font-weight: 700; }
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; background: white; border-radius: 0 0 0.75rem 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
-        .content-grid.linear { grid-template-columns: 1fr; }
-        .content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
-        .content-grid.linear .content-left { border-right: none; }
-        .content-right { padding: 1.5rem; background: #f8fafc; }
-
-        /* Bilingual Block */
-        .bilingual-block { margin-bottom: 1.25rem; }
-        .zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.3rem; }
-        .en-text { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
-
-        /* Highlights */
-        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
-        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
-
-        /* Info Boxes */
-        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
-        .info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
-        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
-        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
-        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
-        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
-        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
-        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
-
-        /* Code Blocks */
-        pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; line-height: 1.6; margin: 0.5rem 0; }
-        code { font-family: 'Source Code Pro', monospace; }
-        .inline-code { background: #f1f5f9; color: #7c3aed; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
-
-        /* Key Takeaways */
-        .takeaways { margin: 2rem; }
-        .takeaways h2 { font-size: 1.2rem; color: #1e3a8a; margin-bottom: 1rem; }
-        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
-        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-top: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-        .summary-card:nth-child(2) { border-top-color: #10b981; }
-        .summary-card:nth-child(3) { border-top-color: #8b5cf6; }
-        .summary-card:nth-child(4) { border-top-color: #f59e0b; }
-        .summary-card-title { font-weight: 700; font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
-        .summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
-
-        /* Practice Accordion */
-        .practice { margin: 2rem; }
-        .practice h2 { font-size: 1.2rem; color: #1e3a8a; margin-bottom: 1rem; }
-        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-        .question-header::-webkit-details-marker { display: none; }
-        .question-number { font-weight: 700; color: #6d28d9; }
-        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-        details[open] .accordion-icon { transform: rotate(180deg); }
-        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-        .question-answer p:last-child { margin-bottom: 0; }
-
-        /* Bottom Line */
-        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
-        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-        .bottom-line-item { margin-bottom: 1rem; }
-        .bottom-line-item:last-child { margin-bottom: 0; }
-        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-        /* Footer */
-        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-        .footer a { color: #3b82f6; text-decoration: none; }
-
-        @media (max-width: 768px) {
-            .content-grid { grid-template-columns: 1fr; }
-            .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
-            .objectives-grid { grid-template-columns: 1fr; padding: 0 1rem; }
-            .takeaways-grid { grid-template-columns: 1fr; }
-            .framework-visual, .takeaways, .practice, .bottom-line { margin: 1rem; }
-        }
-    </style>
 </head>
 <body>
 <div class="container">
-
-    <!-- HEADER -->
-    <div class="header">
-        <div class="domain-tags">
-            <span class="domain-tag tag-agent">Agent</span>
-            <span class="domain-tag tag-prompt">Prompt</span>
-            <span class="domain-tag tag-tool">Tool</span>
-            <span class="domain-tag tag-integration">Integration</span>
-        </div>
-        <h1>Skill Graphs：從單一技能檔到可遍歷知識網路</h1>
-        <div class="subtitle">當 AI Agent 需要的不只是一個指令，而是整個領域的理解</div>
-        <div class="source-info">
+<!-- HEADER -->
+<header class="header">
+<div class="domain-tags">
+<span class="domain-tag tag-agent">Agent</span>
+<span class="domain-tag tag-prompt">Prompt</span>
+<span class="domain-tag tag-tool">Tool</span>
+<span class="domain-tag tag-integration">Integration</span>
+</div>
+<h1>Skill Graphs：從單一技能檔到可遍歷知識網路</h1>
+<div class="subtitle">當 AI Agent 需要的不只是一個指令，而是整個領域的理解</div>
+<div class="source-info">
             Source: Heinrich @arscontexta | X Thread | 2025
         </div>
-    </div>
-
-    <!-- EXECUTIVE SUMMARY -->
-    <div class="exec-summary">
-        <div class="rating-bar">
-            <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
-            <span class="rating-high">↑ 實務應用, 工具生態</span>
-            <span class="rating-low">↓ 技術深度, 學習曲線</span>
-        </div>
-        <h2>Executive Summary</h2>
-        <p>
+</header>
+<!-- EXECUTIVE SUMMARY -->
+<div class="exec-summary">
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
+<span class="rating-high">↑ 實務應用, 工具生態</span>
+<span class="rating-low">↓ 技術深度, 學習曲線</span>
+</div>
+<h2>Executive Summary</h2>
+<p>
             這篇文章提出一個關鍵洞察：<span class="highlight-key">單一技能檔案（skill file）無法承載真正的領域深度</span>。當 AI Agent 需要理解的不只是「如何做一件事」，而是「如何在一個領域中思考」時，你需要的是一張可遍歷的知識圖譜 — Skill Graph。
         </p>
-        <p style="margin-top: 0.75rem;">
+<p style="margin-top: 0.75rem;">
             Heinrich 的核心論點是：用 Markdown 檔案 + Wikilinks + YAML frontmatter 就能建構出讓 Agent 自主導航的結構化知識網路。這不是理論 — 他的 arscontexta 專案已經用 249 個互相連結的檔案實現了這個架構。文章從「為什麼需要」講到「怎麼建構」，並提供了具體的 index 和 node 範例。
         </p>
-    </div>
-
-    <!-- LEARNING OBJECTIVES -->
-    <div class="objectives">
-        <h2>Learning Objectives</h2>
-        <div class="objectives-grid">
-            <div class="objective-item">
-                <div class="objective-number">OBJECTIVE 01</div>
-                <div class="objective-text">理解 Skill Graph 與單一 Skill File 的根本差異，以及為什麼領域深度需要圖結構</div>
-            </div>
-            <div class="objective-item">
-                <div class="objective-number">OBJECTIVE 02</div>
-                <div class="objective-text">掌握 Skill Graph 的三個核心原語（primitives）：Wikilinks、YAML Frontmatter、MOCs</div>
-            </div>
-            <div class="objective-item">
-                <div class="objective-number">OBJECTIVE 03</div>
-                <div class="objective-text">學會設計 Index 進入點和 Node 結構，讓 AI Agent 能高效遍歷知識網路</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- FRAMEWORK VISUAL -->
-    <div class="framework-visual">
-        <div class="framework-title">Skill Graph Progressive Disclosure（漸進式資訊揭露）</div>
-        <div class="framework-steps">
-            <div class="framework-step">
-                <div class="framework-icon">1</div>
-                <div class="framework-step-title">Index</div>
-                <div class="framework-step-desc">掃描全局地圖</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">2</div>
-                <div class="framework-step-title">Descriptions</div>
-                <div class="framework-step-desc">YAML 快速判斷</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">3</div>
-                <div class="framework-step-title">Links</div>
-                <div class="framework-step-desc">跟隨相關路徑</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">4</div>
-                <div class="framework-step-title">Sections</div>
-                <div class="framework-step-desc">讀取關鍵段落</div>
-            </div>
-            <div class="framework-arrow">→</div>
-            <div class="framework-step">
-                <div class="framework-icon">5</div>
-                <div class="framework-step-title">Full Content</div>
-                <div class="framework-step-desc">深入完整內容</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PART I -->
-    <div class="part-section">
-        <div class="part-header">
-            <span class="part-number">PART I</span>
-            <span class="part-title">問題：為什麼單一 Skill File 不夠？</span>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">
+</div>
+<!-- LEARNING OBJECTIVES -->
+<div class="objectives">
+<h2>Learning Objectives</h2>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-number">OBJECTIVE 01</div>
+<div class="objective-text">理解 Skill Graph 與單一 Skill File 的根本差異，以及為什麼領域深度需要圖結構</div>
+</div>
+<div class="objective-item">
+<div class="objective-number">OBJECTIVE 02</div>
+<div class="objective-text">掌握 Skill Graph 的三個核心原語（primitives）：Wikilinks、YAML Frontmatter、MOCs</div>
+</div>
+<div class="objective-item">
+<div class="objective-number">OBJECTIVE 03</div>
+<div class="objective-text">學會設計 Index 進入點和 Node 結構，讓 AI Agent 能高效遍歷知識網路</div>
+</div>
+</div>
+</div>
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+<div class="framework-title">Skill Graph Progressive Disclosure（漸進式資訊揭露）</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">1</div>
+<div class="framework-step-title">Index</div>
+<div class="framework-step-desc">掃描全局地圖</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">2</div>
+<div class="framework-step-title">Descriptions</div>
+<div class="framework-step-desc">YAML 快速判斷</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">3</div>
+<div class="framework-step-title">Links</div>
+<div class="framework-step-desc">跟隨相關路徑</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">4</div>
+<div class="framework-step-title">Sections</div>
+<div class="framework-step-desc">讀取關鍵段落</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">5</div>
+<div class="framework-step-title">Full Content</div>
+<div class="framework-step-desc">深入完整內容</div>
+</div>
+</div>
+</div>
+<!-- PART I -->
+<div class="part-section">
+<div class="part-header">
+<span class="part-number">PART I</span>
+<span class="part-title">問題：為什麼單一 Skill File 不夠？</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">
                         人們低估了<span class="highlight-key">結構化知識的力量</span>。它能催生全新類型的應用。現在人們寫的技能檔案只捕捉了某個面向 — 一個用來做摘要的 skill，一個用來做 code review 的 skill。一個檔案，一個能力。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "people underestimate the power of structured knowledge. it enables entirely new kinds of applications. right now people write skills that capture one aspect of something. a skill for summarizing, a skill for code review and so on. one file with one capability"
                     </p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">
+</div>
+<div class="bilingual-block">
+<p class="zh-text">
                         這對簡單任務沒問題，但<span class="highlight-concept">真正的深度需要另一種東西</span>。想像一個治療師技能，需要提供認知行為模式、依附理論、主動聆聽技巧、情緒調節框架等相關資訊 — 單一技能檔案無法容納這一切。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "thats fine for simple tasks but real depth requires something else. imagine a therapy skill that provides relevant information about cognitive behavioral patterns, attachment theory, active listening techniques, emotional regulation frameworks... a single skill file cant hold that"
                     </p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">💡 比喻說明</div>
-                    <div class="info-box-content">
-                        <p>把 Skill File 想成一張食譜卡。它能教你做一道菜，但不能教你理解烹飪。要真正「懂」烹飪，你需要理解食材科學、刀工技法、調味原理、熱傳導方式 — 這些知識彼此關聯，形成一張網，不是一張卡片。</p>
-                        <p style="margin-top: 0.5rem;">Skill Graph 就是那張網。每個節點是一個獨立的完整概念，但透過連結，它們組成了一個可以被 Agent 遍歷的知識體系。</p>
-                    </div>
-                </div>
-                <div class="info-box box-concept">
-                    <div class="info-box-header">📚 核心概念</div>
-                    <div class="info-box-content">
-                        <p><strong>Skill File（技能檔案）</strong>：單一 Markdown 檔案，包含一個能力的指令。適合獨立、明確的任務。</p>
-                        <p style="margin-top: 0.5rem;"><strong>Skill Graph（技能圖譜）</strong>：多個 Skill File 透過 Wikilinks 互相連結形成的知識網路。適合需要領域理解的複雜任務。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PART II -->
-    <div class="part-section">
-        <div class="part-header">
-            <span class="part-number">PART II</span>
-            <span class="part-title">解法：Skill Graph 的三個原語（Primitives）</span>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>把 Skill File 想成一張食譜卡。它能教你做一道菜，但不能教你理解烹飪。要真正「懂」烹飪，你需要理解食材科學、刀工技法、調味原理、熱傳導方式 — 這些知識彼此關聯，形成一張網，不是一張卡片。</p>
+<p style="margin-top: 0.5rem;">Skill Graph 就是那張網。每個節點是一個獨立的完整概念，但透過連結，它們組成了一個可以被 Agent 遍歷的知識體系。</p>
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<p><strong>Skill File（技能檔案）</strong>：單一 Markdown 檔案，包含一個能力的指令。適合獨立、明確的任務。</p>
+<p style="margin-top: 0.5rem;"><strong>Skill Graph（技能圖譜）</strong>：多個 Skill File 透過 Wikilinks 互相連結形成的知識網路。適合需要領域理解的複雜任務。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- PART II -->
+<div class="part-section">
+<div class="part-header">
+<span class="part-number">PART II</span>
+<span class="part-title">解法：Skill Graph 的三個原語（Primitives）</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">
                         你已經擁有所需的一切工具。<span class="highlight-concept">Wikilinks</span> 被編織在散文中，所以它們攜帶的是語意，不只是參照。<span class="highlight-concept">YAML frontmatter</span> 附帶描述，讓 Agent 可以掃描而不需要讀完整個檔案。<span class="highlight-concept">MOCs（Maps of Content，內容地圖）</span>將相關技能的集群組織成可導航的子主題。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "you already have everything you need. wikilinks that read as prose in sentences, so they carry meaning not just references. yaml frontmatter with descriptions so the agent can scan without reading full files. MOCs (maps of content) that organize clusters of related skills into navigable sub-topics"
                     </p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">
-                        <span class="highlight-key">Skill Graph 在圖本身內部遞迴地應用相同的 skill discovery 模式</span>。每個節點都有 YAML 描述讓 Agent 能掃描，每個 wikilink 因為嵌入在散文中而攜帶語意 — Agent 跟隨相關路徑，跳過不重要的。
+</div>
+<div class="bilingual-block">
+<p class="zh-text">
+<span class="highlight-key">Skill Graph 在圖本身內部遞迴地應用相同的 skill discovery 模式</span>。每個節點都有 YAML 描述讓 Agent 能掃描，每個 wikilink 因為嵌入在散文中而攜帶語意 — Agent 跟隨相關路徑，跳過不重要的。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "a skill graph applies the same skill discovery pattern recursively inside the graph itself. every node has a yaml description the agent can scan without reading the whole file. every wiki link carries meaning because its woven into prose so the agent follows relevant paths and skips what doesnt matter"
                     </p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-key">
-                    <div class="info-box-header">⚠️ 重點提示</div>
-                    <div class="info-box-content">
-                        <p><strong>Progressive Disclosure（漸進式揭露）</strong>是 Skill Graph 的核心設計原則：</p>
-                        <p style="margin-top: 0.5rem;">Index → Descriptions → Links → Sections → Full Content</p>
-                        <p style="margin-top: 0.5rem;">大多數決策在讀取任何完整檔案之前就已經做出了。這意味著 Agent 的 token 消耗被大幅降低，只在真正需要時才載入完整內容。</p>
-                    </div>
-                </div>
-                <div class="info-box box-compare">
-                    <div class="info-box-header">⚖️ 三個原語比較</div>
-                    <div class="info-box-content">
-                        <p><strong>Wikilinks：</strong>語意連結。寫在句子裡，Agent 根據上下文判斷是否跟隨。不是列表式的超連結。</p>
-                        <p style="margin-top: 0.5rem;"><strong>YAML Frontmatter：</strong>快速掃描層。Agent 讀描述就能決定是否需要深入，不需讀全文。</p>
-                        <p style="margin-top: 0.5rem;"><strong>MOCs：</strong>子圖譜導航。當圖譜變大時，MOCs 將相關節點組織成主題群組，避免迷路。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PART III -->
-    <div class="part-section">
-        <div class="part-header">
-            <span class="part-number">PART III</span>
-            <span class="part-title">架構：Index 進入點與 Node 結構</span>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p><strong>Progressive Disclosure（漸進式揭露）</strong>是 Skill Graph 的核心設計原則：</p>
+<p style="margin-top: 0.5rem;">Index → Descriptions → Links → Sections → Full Content</p>
+<p style="margin-top: 0.5rem;">大多數決策在讀取任何完整檔案之前就已經做出了。這意味著 Agent 的 token 消耗被大幅降低，只在真正需要時才載入完整內容。</p>
+</div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 三個原語比較</div>
+<div class="info-box-content">
+<p><strong>Wikilinks：</strong>語意連結。寫在句子裡，Agent 根據上下文判斷是否跟隨。不是列表式的超連結。</p>
+<p style="margin-top: 0.5rem;"><strong>YAML Frontmatter：</strong>快速掃描層。Agent 讀描述就能決定是否需要深入，不需讀全文。</p>
+<p style="margin-top: 0.5rem;"><strong>MOCs：</strong>子圖譜導航。當圖譜變大時，MOCs 將相關節點組織成主題群組，避免迷路。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- PART III -->
+<div class="part-section">
+<div class="part-header">
+<span class="part-number">PART III</span>
+<span class="part-title">架構：Index 進入點與 Node 結構</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">
                         Skill Graph 不需要存在你的 <span class="inline-code">.claude/skills/</span> 資料夾裡。<span class="highlight-key">關鍵是一個 index 檔案，告訴 Agent 什麼存在、如何遍歷</span>。Index 不是查找表，它是一個引導注意力的入口 — Agent 讀完後理解全局，然後跟隨對當前對話重要的連結。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "a skill graph doesnt need to live in your .claude/skills/ folder. the key is an index file that tells the agent what exists and how to traverse it... the index isnt a lookup table its an entry point that points attention. the agent reads it, understands the landscape and follows the links that matter for the current conversation"
                     </p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">
+</div>
+<div class="bilingual-block">
+<p class="zh-text">
                         每個被連結的檔案都是一個獨立的方法論聲明（methodology claim），也就是一個 skill。看看 wikilinks 如何在散文中告訴 Agent 何時以及為什麼要跟隨它們。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "each linked file is a standalone methodology claim (= skill)... see how the wikilinks inside the prose tell the agent when and why to follow them"
                     </p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-code">
-                    <div class="info-box-header">💻 Index 結構範例</div>
-                    <div class="info-box-content">
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-code">
+<div class="info-box-header">💻 Index 結構範例</div>
+<div class="info-box-content">
 <pre># knowledge-work
 
 ## Synthesis
@@ -384,214 +235,204 @@
 ## Explorations Needed
 - Missing: comparison between human 
   and agent traversal patterns</pre>
-                    </div>
-                </div>
-                <div class="info-box box-concept">
-                    <div class="info-box-header">📚 Node 結構</div>
-                    <div class="info-box-content">
-                        <p>每個 Node 包含：</p>
-                        <p style="margin-top: 0.5rem;"><strong>YAML Frontmatter</strong> — 描述這個節點是什麼、為什麼重要</p>
-                        <p><strong>Prose + Wikilinks</strong> — 正文中嵌入的連結，攜帶語境</p>
-                        <p><strong>Cross-Domain Claims</strong> — 跨領域的連結和洞察</p>
-                        <p><strong>Explorations Needed</strong> — 尚未探索的問題（圖譜的生長點）</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PART IV -->
-    <div class="part-section">
-        <div class="part-header">
-            <span class="part-number">PART IV</span>
-            <span class="part-title">應用場景與領域想像</span>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 Node 結構</div>
+<div class="info-box-content">
+<p>每個 Node 包含：</p>
+<p style="margin-top: 0.5rem;"><strong>YAML Frontmatter</strong> — 描述這個節點是什麼、為什麼重要</p>
+<p><strong>Prose + Wikilinks</strong> — 正文中嵌入的連結，攜帶語境</p>
+<p><strong>Cross-Domain Claims</strong> — 跨領域的連結和洞察</p>
+<p><strong>Explorations Needed</strong> — 尚未探索的問題（圖譜的生長點）</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- PART IV -->
+<div class="part-section">
+<div class="part-header">
+<span class="part-number">PART IV</span>
+<span class="part-title">應用場景與領域想像</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">
                         想想看：<span class="highlight-practical">交易 Skill Graph</span> — 風險管理、市場心理學、部位管理、技術分析，每個部分連結到相關概念，讓上下文在它們之間流動。<span class="highlight-practical">法律 Skill Graph</span> — 合約模式、合規要求、管轄權細節、判例鏈，全部從一個入口可遍歷。<span class="highlight-practical">公司 Skill Graph</span> — 組織架構、產品知識、流程、入職上下文、文化、競爭格局。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "a trading skill graph: risk management, market psychology, position sizing, technical analysis, each piece linked to related concepts so context flows between them. a legal skill graph... a company skill graph: org structure, product knowledge, processes, onboarding context, culture, competitive landscape"
                     </p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">
-                        <span class="highlight-key">這些都無法放進一個檔案，但全部都能作為 Graph 運作</span>。這就是 Skill 和 Skill Graph 的根本差異 — 前者是指令，後者是理解。
+</div>
+<div class="bilingual-block">
+<p class="zh-text">
+<span class="highlight-key">這些都無法放進一個檔案，但全部都能作為 Graph 運作</span>。這就是 Skill 和 Skill Graph 的根本差異 — 前者是指令，後者是理解。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "none of these fit in one file but all of them work as graphs"
                     </p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-practical">
-                    <div class="info-box-header">🛠️ 實務應用：藥廠 CDMO Skill Graph</div>
-                    <div class="info-box-content">
-                        <p>把這個概念套用到 CDMO 情境：</p>
-                        <p style="margin-top: 0.5rem;"><strong>GMP Skill Graph</strong> 可以包含：偏差調查流程 → CAPA 管理 → 根因分析方法 → FDA Warning Letter 案例 → PIC/S 指南對照 → 批次記錄審查 → Change Control 流程</p>
-                        <p style="margin-top: 0.5rem;">每個節點是獨立的 SOP 級知識，但透過 wikilinks 連結後，Agent 可以在處理一個偏差調查時，自動拉取相關的 CAPA 模板、歷史案例、和法規要求 — 不需要你手動指定。</p>
-                    </div>
-                </div>
-                <div class="info-box box-analogy">
-                    <div class="info-box-header">💡 比喻說明</div>
-                    <div class="info-box-content">
-                        <p>單一 Skill File 像是給新員工一份 SOP。Skill Graph 像是讓新員工跟著資深前輩待三個月 — 他不只學到步驟，還學到為什麼這樣做、什麼時候該變通、哪些歷史教訓很重要。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PART V -->
-    <div class="part-section">
-        <div class="part-header">
-            <span class="part-number">PART V</span>
-            <span class="part-title">從 Skills 到 Skill Graphs 的演化</span>
-        </div>
-        <div class="content-grid">
-            <div class="content-left">
-                <div class="bilingual-block">
-                    <p class="zh-text">
-                        <span class="highlight-concept">Skills 是 Context Engineering（上下文工程）</span> — 本質上是在正確的時機注入策展過的知識。Skill Graphs 是下一步：不是一次注入，而是<span class="highlight-key"> Agent 自主導航一個知識結構，精確提取當前情境所需的內容</span>。
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用：藥廠 CDMO Skill Graph</div>
+<div class="info-box-content">
+<p>把這個概念套用到 CDMO 情境：</p>
+<p style="margin-top: 0.5rem;"><strong>GMP Skill Graph</strong> 可以包含：偏差調查流程 → CAPA 管理 → 根因分析方法 → FDA Warning Letter 案例 → PIC/S 指南對照 → 批次記錄審查 → Change Control 流程</p>
+<p style="margin-top: 0.5rem;">每個節點是獨立的 SOP 級知識，但透過 wikilinks 連結後，Agent 可以在處理一個偏差調查時，自動拉取相關的 CAPA 模板、歷史案例、和法規要求 — 不需要你手動指定。</p>
+</div>
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
+<p>單一 Skill File 像是給新員工一份 SOP。Skill Graph 像是讓新員工跟著資深前輩待三個月 — 他不只學到步驟，還學到為什麼這樣做、什麼時候該變通、哪些歷史教訓很重要。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- PART V -->
+<div class="part-section">
+<div class="part-header">
+<span class="part-number">PART V</span>
+<span class="part-title">從 Skills 到 Skill Graphs 的演化</span>
+</div>
+<div class="content-grid">
+<div class="content-left">
+<div class="bilingual-block">
+<p class="zh-text">
+<span class="highlight-concept">Skills 是 Context Engineering（上下文工程）</span> — 本質上是在正確的時機注入策展過的知識。Skill Graphs 是下一步：不是一次注入，而是<span class="highlight-key"> Agent 自主導航一個知識結構，精確提取當前情境所需的內容</span>。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "skills are context engineering, basically curated knowledge injected where it matters. skill graphs are the next step. instead of one injection the agent navigates a knowledge structure, pulling in exactly what the current situation requires"
                     </p>
-                </div>
-                <div class="bilingual-block">
-                    <p class="zh-text">
+</div>
+<div class="bilingual-block">
+<p class="zh-text">
                         這是一個<span class="highlight-key">遵循指令的 Agent</span> 與一個<span class="highlight-key">理解領域的 Agent</span> 之間的差異。
                     </p>
-                    <p class="en-text">
+<p class="en-text">
                         "this is the difference between an agent that follows instructions and an agent that understands a domain"
                     </p>
-                </div>
-            </div>
-            <div class="content-right">
-                <div class="info-box box-key">
-                    <div class="info-box-header">⚠️ 重點提示</div>
-                    <div class="info-box-content">
-                        <p><strong>演化路徑：</strong></p>
-                        <p style="margin-top: 0.5rem;">Prompt → Skill File → Skill Graph</p>
-                        <p style="margin-top: 0.5rem;">每一步都是 Context Engineering 的深化。Prompt 是即時指令，Skill File 是持久指令，Skill Graph 是可導航的知識體系。Agent 從「做你說的」進化到「理解你的領域」。</p>
-                    </div>
-                </div>
-                <div class="info-box box-concept">
-                    <div class="info-box-header">📚 Context Engineering 的定位</div>
-                    <div class="info-box-content">
-                        <p>Heinrich 用「context engineering」定義 skills 的本質，這呼應了 AI 社群近期的共識：<strong>模型能力的上限由它獲得的上下文決定</strong>。</p>
-                        <p style="margin-top: 0.5rem;">Skill Graph 是 context engineering 的最高形式 — 不是你決定給 Agent 什麼上下文，而是 Agent 根據情境自己決定需要什麼上下文。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KEY TAKEAWAYS -->
-    <div class="takeaways">
-        <h2>Key Takeaways</h2>
-        <div class="takeaways-grid">
-            <div class="summary-card">
-                <div class="summary-card-title">深度需要結構</div>
-                <div class="summary-card-text">單一 Skill File 適合單一任務，但領域理解需要互相連結的知識節點 — Skill Graph 用圖結構解決了這個問題。</div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-card-title">三個原語就夠了</div>
-                <div class="summary-card-text">Wikilinks（語意連結）+ YAML Frontmatter（快速掃描）+ MOCs（主題導航）— 全部用 Markdown 就能實現，無需外部框架。</div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-card-title">Progressive Disclosure 省 Token</div>
-                <div class="summary-card-text">Agent 透過漸進式揭露（Index → Description → Links → Content）做出大部分決策，只在必要時才讀完整檔案。</div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-card-title">從遵循指令到理解領域</div>
-                <div class="summary-card-text">Skills 是 Context Engineering，Skill Graphs 是其進化 — Agent 不再被動接收上下文，而是主動導航知識結構。</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PRACTICE -->
-    <div class="practice">
-        <h2>Practice Questions</h2>
-
-        <details class="question-accordion">
-            <summary class="question-header">
-                <span class="question-number">Q1</span>
-                <span class="question-type">概念理解</span>
-                <span class="question-text">Wikilinks 在 Skill Graph 中為什麼要「嵌入散文」而不是用列表式連結？這對 Agent 的遍歷行為有什麼影響？</span>
-                <span class="accordion-icon"></span>
-            </summary>
-            <div class="question-answer">
-                <p>嵌入散文的 Wikilinks 攜帶語意上下文（semantic context）。當 Agent 讀到「[[the system is the argument]] — philosophy with proof of work」時，它不只知道有一個叫 "the system is the argument" 的節點存在，還理解這個節點的角色是「以實踐證明的哲學」。</p>
-                <p>這讓 Agent 能做出更精確的遍歷決策 — 它根據當前任務的需求，判斷是否值得跟隨這條連結。列表式連結只提供「存在」的資訊，散文式連結提供「何時有用」的資訊。這是 Progressive Disclosure 的第三層（Links），在這一層就能過濾掉大量不相關的路徑。</p>
-            </div>
-        </details>
-
-        <details class="question-accordion">
-            <summary class="question-header">
-                <span class="question-number">Q2</span>
-                <span class="question-type">產業應用</span>
-                <span class="question-text">如果要為你的 CDMO 建構一個 Skill Graph，你會如何設計 Index 的「Topic MOCs」分組？哪些節點之間的 Wikilinks 最關鍵？</span>
-                <span class="accordion-icon"></span>
-            </summary>
-            <div class="question-answer">
-                <p>一個 CDMO Skill Graph 的 Topic MOCs 可能包括：</p>
-                <p><strong>[[aseptic-manufacturing]]</strong> — Vanrx SA25 操作、環境監測、無菌製程驗證</p>
-                <p><strong>[[quality-systems]]</strong> — 偏差管理、CAPA、Change Control、批次記錄審查</p>
-                <p><strong>[[regulatory-compliance]]</strong> — 21 CFR Part 11、PIC/S 指南、FDA 查廠準備</p>
-                <p><strong>[[tech-transfer]]</strong> — 客戶對接、可行性評估、放大策略</p>
-                <p><strong>[[adjuvant-processing]]</strong> — QS-21 處理、佐劑配方、穩定性考量</p>
-                <p>最關鍵的 Wikilinks 是跨 MOC 的連結。例如：在 [[deviation-investigation]] 節點中連結到 [[capa-management]] 和 [[fda-warning-letters]]，這讓 Agent 在處理偏差時自動獲取 CAPA 模板和歷史 FDA 案例作為參考。</p>
-            </div>
-        </details>
-
-        <details class="question-accordion">
-            <summary class="question-header">
-                <span class="question-number">Q3</span>
-                <span class="question-type">批判思考</span>
-                <span class="question-text">Heinrich 聲稱 Skill Graph 讓 Agent 從「遵循指令」進化到「理解領域」。你認為這個說法有什麼限制？在 GMP 環境中，Agent「理解」是否等同於可信任？</span>
-                <span class="accordion-icon"></span>
-            </summary>
-            <div class="question-answer">
-                <p>這個說法的核心限制在於「理解」這個詞的含義。Skill Graph 讓 Agent 能遍歷和關聯知識節點，但這更接近「結構化檢索」而非真正的「理解」。Agent 跟隨 wikilinks 做出的判斷仍然受限於 LLM 的推理能力和上下文窗口。</p>
-                <p>在 GMP 環境中，這個區別至關重要。即使 Agent 能從 Skill Graph 拉取正確的 SOP、法規參考和歷史案例，它的「判斷」仍然需要人類審查（copilot mode）。尤其是偏差調查這類需要根因推理的任務，Agent 可能會過度依賴圖譜中已有的模式，而忽略 novel failure modes。</p>
-                <p>Skill Graph 的真正價值不在於取代人類判斷，而在於讓 Agent 能更快、更完整地準備好人類決策所需的上下文。這和 David 的「copilot vs agent mode」框架一致 — Skill Graph 增強的是 copilot 的上下文品質，不是 agent 的自主決策權。</p>
-            </div>
-        </details>
-    </div>
-
-    <!-- BOTTOM LINE -->
-    <div class="bottom-line">
-        <div class="bottom-line-header">🎯 我的行動結論</div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">✔ 核心洞察</div>
-            <div class="bottom-line-text">
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<p><strong>演化路徑：</strong></p>
+<p style="margin-top: 0.5rem;">Prompt → Skill File → Skill Graph</p>
+<p style="margin-top: 0.5rem;">每一步都是 Context Engineering 的深化。Prompt 是即時指令，Skill File 是持久指令，Skill Graph 是可導航的知識體系。Agent 從「做你說的」進化到「理解你的領域」。</p>
+</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 Context Engineering 的定位</div>
+<div class="info-box-content">
+<p>Heinrich 用「context engineering」定義 skills 的本質，這呼應了 AI 社群近期的共識：<strong>模型能力的上限由它獲得的上下文決定</strong>。</p>
+<p style="margin-top: 0.5rem;">Skill Graph 是 context engineering 的最高形式 — 不是你決定給 Agent 什麼上下文，而是 Agent 根據情境自己決定需要什麼上下文。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- KEY TAKEAWAYS -->
+<div class="takeaways">
+<h2>Key Takeaways</h2>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="summary-card-title">深度需要結構</div>
+<div class="summary-card-text">單一 Skill File 適合單一任務，但領域理解需要互相連結的知識節點 — Skill Graph 用圖結構解決了這個問題。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-title">三個原語就夠了</div>
+<div class="summary-card-text">Wikilinks（語意連結）+ YAML Frontmatter（快速掃描）+ MOCs（主題導航）— 全部用 Markdown 就能實現，無需外部框架。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-title">Progressive Disclosure 省 Token</div>
+<div class="summary-card-text">Agent 透過漸進式揭露（Index → Description → Links → Content）做出大部分決策，只在必要時才讀完整檔案。</div>
+</div>
+<div class="summary-card">
+<div class="summary-card-title">從遵循指令到理解領域</div>
+<div class="summary-card-text">Skills 是 Context Engineering，Skill Graphs 是其進化 — Agent 不再被動接收上下文，而是主動導航知識結構。</div>
+</div>
+</div>
+</div>
+<!-- PRACTICE -->
+<div class="practice">
+<h2>Practice Questions</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">Wikilinks 在 Skill Graph 中為什麼要「嵌入散文」而不是用列表式連結？這對 Agent 的遍歷行為有什麼影響？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>嵌入散文的 Wikilinks 攜帶語意上下文（semantic context）。當 Agent 讀到「[[the system is the argument]] — philosophy with proof of work」時，它不只知道有一個叫 "the system is the argument" 的節點存在，還理解這個節點的角色是「以實踐證明的哲學」。</p>
+<p>這讓 Agent 能做出更精確的遍歷決策 — 它根據當前任務的需求，判斷是否值得跟隨這條連結。列表式連結只提供「存在」的資訊，散文式連結提供「何時有用」的資訊。這是 Progressive Disclosure 的第三層（Links），在這一層就能過濾掉大量不相關的路徑。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">如果要為你的 CDMO 建構一個 Skill Graph，你會如何設計 Index 的「Topic MOCs」分組？哪些節點之間的 Wikilinks 最關鍵？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>一個 CDMO Skill Graph 的 Topic MOCs 可能包括：</p>
+<p><strong>[[aseptic-manufacturing]]</strong> — Vanrx SA25 操作、環境監測、無菌製程驗證</p>
+<p><strong>[[quality-systems]]</strong> — 偏差管理、CAPA、Change Control、批次記錄審查</p>
+<p><strong>[[regulatory-compliance]]</strong> — 21 CFR Part 11、PIC/S 指南、FDA 查廠準備</p>
+<p><strong>[[tech-transfer]]</strong> — 客戶對接、可行性評估、放大策略</p>
+<p><strong>[[adjuvant-processing]]</strong> — QS-21 處理、佐劑配方、穩定性考量</p>
+<p>最關鍵的 Wikilinks 是跨 MOC 的連結。例如：在 [[deviation-investigation]] 節點中連結到 [[capa-management]] 和 [[fda-warning-letters]]，這讓 Agent 在處理偏差時自動獲取 CAPA 模板和歷史 FDA 案例作為參考。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">Heinrich 聲稱 Skill Graph 讓 Agent 從「遵循指令」進化到「理解領域」。你認為這個說法有什麼限制？在 GMP 環境中，Agent「理解」是否等同於可信任？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p>這個說法的核心限制在於「理解」這個詞的含義。Skill Graph 讓 Agent 能遍歷和關聯知識節點，但這更接近「結構化檢索」而非真正的「理解」。Agent 跟隨 wikilinks 做出的判斷仍然受限於 LLM 的推理能力和上下文窗口。</p>
+<p>在 GMP 環境中，這個區別至關重要。即使 Agent 能從 Skill Graph 拉取正確的 SOP、法規參考和歷史案例，它的「判斷」仍然需要人類審查（copilot mode）。尤其是偏差調查這類需要根因推理的任務，Agent 可能會過度依賴圖譜中已有的模式，而忽略 novel failure modes。</p>
+<p>Skill Graph 的真正價值不在於取代人類判斷，而在於讓 Agent 能更快、更完整地準備好人類決策所需的上下文。這和 David 的「copilot vs agent mode」框架一致 — Skill Graph 增強的是 copilot 的上下文品質，不是 agent 的自主決策權。</p>
+</div>
+</details>
+</div>
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">
                 我目前在 Claude Projects 中已經建立了豐富的 Project Knowledge，但它們本質上仍是「扁平」的文件集合 — 沒有結構化的連結和遍歷路徑。Skill Graph 的概念讓我看到下一步：把我的 GMP 知識、設備規格、法規框架從「被動注入」升級為「Agent 可主動導航」的知識網路。Progressive Disclosure 原則特別重要 — 在 context window 寸土寸金的情況下，讓 Agent 只載入需要的內容，這是我目前缺少的設計。
             </div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">📈 立即應用</div>
-            <div class="bottom-line-text">
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">
                 這週我可以做一個小實驗：把目前偏差調查相關的 Project Knowledge 重組為 Skill Graph 的 Index + 5-7 個 Node 結構。用 Markdown + YAML frontmatter 為每個節點（偏差分類、根因分析工具、CAPA 模板、PIC/S 參考）加上描述，並在散文中嵌入 wikilinks。先不需要 arscontexta 外掛 — 手動建構能讓我更深入理解結構設計的取捨。
             </div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">⚠ 需要補充</div>
-            <div class="bottom-line-text">
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">
                 文章沒有討論 Skill Graph 在 Claude Projects（而非 Claude Code）中的實作路徑。我的主要工作環境是 Claude Projects，不是 CLI — 需要自己探索如何在 Project Knowledge 中模擬 Skill Graph 的遍歷行為。另外，在 GMP 環境中使用 Skill Graph，需要考慮版本控制和變更管理（Change Control）— 知識節點更新時如何確保一致性，這是 Heinrich 完全沒提到的。
             </div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        <p>製作日期：2025 年 6 月</p>
-        <p>Source: Heinrich @arscontexta | X Thread</p>
-        <p style="margin-top: 0.5rem;">Suggested Chat Title: <strong>[Agent] Skill Graphs — 從單一技能檔到可遍歷知識網路</strong></p>
-    </div>
-
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="footer">
+<p>製作日期：2025 年 6 月</p>
+<p>Source: Heinrich @arscontexta | X Thread</p>
+<p style="margin-top: 0.5rem;">Suggested Chat Title: <strong>[Agent] Skill Graphs — 從單一技能檔到可遍歷知識網路</strong></p>
+</footer>
 </div>
 </body>
 </html>

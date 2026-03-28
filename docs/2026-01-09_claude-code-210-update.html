@@ -1,1067 +1,898 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="doc-date" content="2026-01-09">
-    <meta name="doc-title" content="Claude Code 2.1.0 版本更新深度解析">
-    <meta name="doc-source" content="Claude Code Docs / Anthropic">
-    <meta name="doc-source-type" content="Anthropic-Docs">
-    <meta name="doc-tags" content="Anthropic-Docs,Tool,Agent,LLM">
-    <meta name="doc-rating" content="3.5">
-    <meta name="doc-summary" content="Claude Code 2.1.0 版 110+ 項改進解析，涵蓋 Skills 熱重載、安全性修復、效能優化">
-    <meta name="doc-file" content="2026-01-09_claude-code-210-update.html">
-    <title>Claude Code 2.1.0 版本更新深度解析 - 雙欄對照版</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; color: #1e293b; background: #f8fafc; }
-code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.2em 0.4em; border-radius: 4px; font-size: 0.85em; }
-pre { background: #1e293b; color: #e2e8f0; padding: 0.75rem; border-radius: 6px; overflow-x: auto; font-size: 0.8rem; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word; margin: 0.5rem 0; }
-pre code { background: transparent; padding: 0; }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="2026-01-09" name="doc-date"/>
+<meta content="Claude Code 2.1.0 版本更新深度解析" name="doc-title"/>
+<meta content="Claude Code Docs / Anthropic" name="doc-source"/>
+<meta content="Anthropic-Docs" name="doc-source-type"/>
+<meta content="Anthropic-Docs,Tool,Agent,LLM" name="doc-tags"/>
+<meta content="3.5" name="doc-rating"/>
+<meta content="Claude Code 2.1.0 版 110+ 項改進解析，涵蓋 Skills 熱重載、安全性修復、效能優化" name="doc-summary"/>
+<meta content="2026-01-09_claude-code-210-update.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<title>Claude Code 2.1.0 版本更新深度解析 - 雙欄對照版</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 
-/* Header */
-.header { background: linear-gradient(135deg, #1e3a5f, #3b5998, #4c6cb3); color: white; text-align: center; padding: 2rem 2rem 1.5rem; position: relative; }
-.header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899); }
-.header h1 { font-weight: 700; font-size: 1.5rem; margin-bottom: 0.5rem; }
-.header-meta { font-size: 0.8rem; opacity: 0.9; margin-bottom: 0.75rem; }
-.tag-container { display: flex; justify-content: center; gap: 0.4rem; flex-wrap: wrap; }
-.tag { font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 9999px; font-weight: 500; }
-.tag-tool { background: #fecdd3; color: #9f1239; }
-.tag-agent { background: #c7d2fe; color: #3730a3; }
-.tag-llm { background: #bfdbfe; color: #1e3a8a; }
 
-/* Executive Summary */
-.executive-summary { background: #f0f9ff; padding: 1.25rem 2rem; border-bottom: 1px solid #bae6fd; }
-.summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-@media (max-width: 900px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
-.summary-item { background: white; padding: 0.75rem; border-radius: 6px; border: 1px solid #bae6fd; }
-.item-label { font-size: 0.65rem; font-weight: 600; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
-.item-content { font-size: 0.85rem; line-height: 1.5; color: #334155; }
-
-/* Dual Column Layout */
-.content-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 100px; }
-@media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
-.left-column { background: #fafafa; padding: 1.25rem; border-right: 1px solid #e2e8f0; }
-.right-column { background: #fffbeb; padding: 1.25rem; }
-
-/* Section Headers */
-.section-header { background: #1e293b; color: white; padding: 0.6rem 2rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
-.tier-badge { background: rgba(255,255,255,0.2); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; }
-.tier-badge.tier-5 { background: #22c55e; }
-.tier-badge.tier-4 { background: #3b82f6; }
-.tier-badge.tier-3 { background: #f59e0b; }
-.tier-badge.tier-2 { background: #ef4444; }
-
-/* Feature Row */
-.feature-row { border-bottom: 1px solid #e2e8f0; }
-.feature-row:last-child { border-bottom: none; }
-
-/* Left Column Styles */
-.feature-number { font-size: 0.7rem; color: #64748b; margin-bottom: 0.3rem; }
-.feature-title-en { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
-.original-text { font-size: 0.9rem; line-height: 1.6; color: #374151; margin-bottom: 0.5rem; }
-.highlight { background: linear-gradient(to bottom, transparent 60%, #fde68a 60%); padding: 0 2px; }
-.highlight-green { background: linear-gradient(to bottom, transparent 60%, #bbf7d0 60%); padding: 0 2px; }
-.highlight-blue { background: linear-gradient(to bottom, transparent 60%, #bfdbfe 60%); padding: 0 2px; }
-.star-rating { color: #fbbf24; font-size: 0.9rem; letter-spacing: 1px; margin-top: 0.3rem; }
-
-/* Right Column Styles */
-.feature-title-zh { font-weight: 700; color: #92400e; font-size: 0.95rem; margin-bottom: 0.5rem; }
-.commentary-text { font-size: 0.9rem; line-height: 1.7; color: #78350f; }
-.commentary-text ul { margin: 0.4rem 0; padding-left: 1.2rem; }
-.commentary-text li { margin-bottom: 0.25rem; font-size: 0.85rem; }
-.commentary-text strong { color: #b45309; }
-.commentary-text code { background: #fef3c7; color: #92400e; font-size: 0.8rem; }
-
-/* Info Boxes */
-.info-box { border-radius: 6px; overflow: hidden; margin: 0.75rem 0; border: 1px solid; font-size: 0.85rem; }
-.info-box-header { padding: 0.4rem 0.75rem; font-weight: 600; font-size: 0.8rem; }
-.info-box-content { padding: 0.75rem; }
-.info-box-content p { margin-bottom: 0.4rem; line-height: 1.5; }
-.info-box-content ul { margin: 0.3rem 0; padding-left: 1.2rem; }
-.info-box-content li { margin-bottom: 0.2rem; }
-
-.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-.box-concept .info-box-content { background: #f0fdf4; }
-.box-concept { border-color: #86efac; }
-
-.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-.box-practical .info-box-content { background: #ecfdf5; }
-.box-practical { border-color: #6ee7b7; }
-
-.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-.box-key .info-box-content { background: #fff7ed; }
-.box-key { border-color: #fdba74; }
-
-/* Compact List Items */
-.compact-list { margin: 0; padding: 0; list-style: none; }
-.compact-item { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #e2e8f0; font-size: 0.85rem; }
-.compact-item:last-child { border-bottom: none; }
-.compact-left { background: #fafafa; padding: 0.6rem 1rem; border-right: 1px solid #e2e8f0; }
-.compact-right { background: #fffbeb; padding: 0.6rem 1rem; color: #78350f; }
-.compact-en { color: #374151; }
-.compact-zh { color: #78350f; }
-
-/* Article Rating */
-.article-rating { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 8px; padding: 1.25rem; margin: 1.5rem; color: white; }
-.rating-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.2); }
-.rating-title { font-size: 1rem; font-weight: 700; }
-.overall-score { background: rgba(255,255,255,0.1); padding: 0.4rem 0.8rem; border-radius: 6px; }
-.overall-value { font-size: 1.25rem; font-weight: 700; color: #fbbf24; margin-left: 0.5rem; }
-.rating-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
-@media (max-width: 768px) { .rating-grid { grid-template-columns: repeat(2, 1fr); } }
-.rating-item { background: rgba(255,255,255,0.05); border-radius: 6px; padding: 0.75rem; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-.rating-label { font-size: 0.7rem; color: #94a3b8; margin-bottom: 0.3rem; }
-.rating-stars { font-size: 0.9rem; letter-spacing: 1px; color: #fbbf24; }
-.star-empty { color: #475569; }
-
-/* Practice Section */
-.practice-section { background: #faf5ff; padding: 1.5rem 2rem; }
-.practice-header { font-size: 1rem; font-weight: 700; color: #6d28d9; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #c4b5fd; }
-.question { background: white; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid #e9d5ff; }
-.question-number { font-weight: 700; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.4rem; }
-.question-text { font-size: 0.9rem; line-height: 1.6; color: #374151; margin-bottom: 0.75rem; }
-.answer-toggle { background: #7c3aed; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
-.answer-toggle:hover { background: #6d28d9; }
-.answer-content { margin-top: 0.75rem; padding: 0.75rem; background: #faf5ff; border-radius: 4px; border-left: 3px solid #7c3aed; font-size: 0.85rem; line-height: 1.6; }
-.answer-content.hide { display: none; }
-
-/* Footer */
-.footer { background: #1e293b; color: #94a3b8; padding: 1.25rem 2rem; text-align: center; font-size: 0.8rem; }
-.footer a { color: #60a5fa; text-decoration: none; }
-    </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <h1>Claude Code 2.1.0 版本更新深度解析</h1>
-        <div class="header-meta">雙欄對照版 | 110+ Updates | 2026-01-07</div>
-        <div class="tag-container">
-            <span class="tag tag-tool">Tool</span>
-            <span class="tag tag-agent">Agent</span>
-            <span class="tag tag-llm">LLM</span>
-        </div>
-    </div>
+<!-- Header -->
+<header class="header">
+<h1>Claude Code 2.1.0 版本更新深度解析</h1>
+<div class="header-meta">雙欄對照版 | 110+ Updates | 2026-01-07</div>
+<div class="tag-container">
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-llm">LLM</span>
+</div>
+</header>
+<!-- Executive Summary -->
+<div class="executive-summary">
+<div class="summary-grid">
+<div class="summary-item">
+<div class="item-label">Core Concept 核心概念</div>
+<div class="item-content">Claude Code 2.1.0 包含 <strong>110+ 項改進</strong>，涵蓋 Skills 熱重載、安全性修復、效能優化、以及大量 UX 改善。</div>
+</div>
+<div class="summary-item">
+<div class="item-label">Practical Value 實務價值</div>
+<div class="item-content">Skills 系統可用於建立符合 GMP 的自動化工作流程，Hook 機制可實現審計追蹤。</div>
+</div>
+<div class="summary-item">
+<div class="item-label">Key Highlights 重點功能</div>
+<div class="item-content">安全修復、語言設定、Bash 通配符、Auto-continue、效能優化、LSP 工具。</div>
+</div>
+<div class="summary-item">
+<div class="item-label">Action Items 行動建議</div>
+<div class="item-content">1) <code>claude update</code> 2) 設置語言偏好 3) 評估 Skills 整合可能性</div>
+</div>
+</div>
+</div>
+<!-- ==================== TIER 5 ==================== -->
+<div class="section-header">
+<span>Part 1: Tier 5 Must-Know Features 必學功能</span>
+<span class="tier-badge tier-5">6 items</span>
+</div>
+<!-- Feature 1: Security Fix -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#1 of 110+</div>
+<div class="feature-title-en">Security Fix - Sensitive Data Protection</div>
+<div class="original-text">Fixed security issue where <span class="highlight">sensitive data (OAuth tokens, API keys, passwords)</span> could be exposed in debug logs.</div>
+<div class="star-rating">★★★★★</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">安全修復 - 敏感資料保護</div>
+<div class="commentary-text">
+<p><strong>為何這是最高優先級？</strong></p>
+<p>API keys 和 OAuth tokens 是存取敏感系統的憑證。現在不再被記錄到 debug logs，符合：</p>
+<ul>
+<li><strong>21 CFR Part 11</strong> 存取控制要求</li>
+<li><strong>GDPR</strong> 資料保護原則</li>
+<li>SOC 2 合規要求</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 2: Language Settings -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#2 of 110+</div>
+<div class="feature-title-en">Language Settings</div>
+<div class="original-text">Added <code>language</code> setting to configure Claude's response language (e.g., <span class="highlight">language: "japanese"</span>).</div>
+<div class="star-rating">★★★★★</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">語言設置</div>
+<div class="commentary-text">
+<p>可以讓 Claude 用日語、中文等其他語言回覆。</p>
+<p><strong>設定方式：</strong>在 <code>settings.json</code> 加入：</p>
+<p><code>language: "traditional-chinese"</code></p>
+<p>無需每次都在 prompt 中指定語言。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 3: Bash Wildcards -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#3 of 110+</div>
+<div class="feature-title-en">Bash Tool Permission Wildcards</div>
+<div class="original-text">Added wildcard pattern matching for Bash tool permissions using <span class="highlight-green">*</span> at any position in rules (e.g., <code>Bash(npm *)</code>, <code>Bash(* install)</code>, <code>Bash(git * main)</code>).</div>
+<div class="star-rating">★★★★★</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">Bash 權限通配符</div>
+<div class="commentary-text">
+<p><strong>比喻：</strong>以前每個工具都要簽名批准。現在可以設定：「所有 npm 開頭的工具都可以直接用」。</p>
+<ul>
+<li><code>Bash(npm *)</code> — 所有 npm 命令</li>
+<li><code>Bash(git * main)</code> — 對 main 的 git 操作</li>
+<li><code>Bash(python *.py)</code> — 執行任何 Python 腳本</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 4: Auto-Continue -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#4 of 110+</div>
+<div class="feature-title-en">Output Limit Auto-Continue</div>
+<div class="original-text">Improved Claude to <span class="highlight">automatically continue</span> when response is cut off due to output token limit, instead of showing an error message.</div>
+<div class="star-rating">★★★★★</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">輸出限制自動繼續</div>
+<div class="commentary-text">
+<p><strong>解決的痛點：</strong>處理長篇內容時（如分析大型 batch records），輸出被截斷需要手動輸入「continue」。</p>
+<p><strong>現在：</strong>Claude Code 會自動檢測截斷並無縫續寫，你看到的就是完整回應。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 5: Performance -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#5 of 110+</div>
+<div class="feature-title-en">Performance Optimizations</div>
+<div class="original-text">Multiple optimizations to improve <span class="highlight-blue">startup performance</span>. Improved terminal rendering performance when using native installer or Bun, especially for text with emoji, ANSI codes, and Unicode characters. Improved performance when reading <span class="highlight-blue">Jupyter notebooks</span> with many cells.</div>
+<div class="star-rating">★★★★★</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">效能優化</div>
+<div class="commentary-text">
+<p><strong>三個層面的優化：</strong></p>
+<ul>
+<li><strong>啟動時間：</strong>冷啟動更快</li>
+<li><strong>終端渲染：</strong>emoji、ANSI 代碼更流暢</li>
+<li><strong>Jupyter：</strong>大型 notebook 不再卡頓</li>
+</ul>
+<p>每天啟動數十次，每次省 1-2 秒，累積可觀。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 6: Piped Input -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#6 of 110+</div>
+<div class="feature-title-en">Piped Input Reliability</div>
+<div class="original-text">Improved reliability for <span class="highlight">piped input</span> like <code>cat refactor.md | claude</code>.</div>
+<div class="star-rating">★★★★★</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">管道輸入可靠性</div>
+<div class="commentary-text">
+<p><strong>自動化應用：</strong></p>
+<ul>
+<li><code>cat instructions.md | claude</code></li>
+<li><code>git diff | claude "review this"</code></li>
+</ul>
+<p>可以將 batch records 透過管道傳給 Claude Code 進行分析。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== TIER 4 ==================== -->
+<div class="section-header">
+<span>Part 2: Tier 4 High-Value Features 高價值功能</span>
+<span class="tier-badge tier-4">27 items</span>
+</div>
+<!-- Feature 7: Skills Hot Reload -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#7 of 110+</div>
+<div class="feature-title-en">Skills Hot Reload</div>
+<div class="original-text">Added automatic skill hot-reload - skills created or modified in <code>~/.claude/skills</code> or <code>.claude/skills</code> are now <span class="highlight-green">immediately available</span> without restarting the session.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">技能熱重載</div>
+<div class="commentary-text">
+<p><strong>以前：</strong>修改 Skill → 重啟 → 測試 → 重啟...</p>
+<p><strong>現在：</strong>修改 Skill → 立即測試 → 修改 → 立即測試</p>
+<p>類比：從「每次都要重新編譯」進化到「Hot Module Replacement」。迭代速度提升 3-5 倍。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 8: Skills Fork Context -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#8 of 110+</div>
+<div class="feature-title-en">Skills Isolated Environment</div>
+<div class="original-text">Added support for running skills and slash commands in a <span class="highlight">forked sub-agent context</span> using <code>context: fork</code> in skill frontmatter.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">技能隔離環境</div>
+<div class="commentary-text">
+<p><strong>比喻：QC 實驗室的隔離室</strong></p>
+<ul>
+<li><strong>Normal：</strong>所有測試在同一工作台</li>
+<li><strong>Fork：</strong>獨立隔離室，出錯不污染其他測試</li>
+</ul>
+<p>適合測試可能有副作用的自動化腳本。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 9: Terminal Shortcuts -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#9 of 110+</div>
+<div class="feature-title-en">Terminal Shortcuts (Shift+Enter)</div>
+<div class="original-text">Changed <span class="highlight-green">Shift+Enter</span> to work out of the box in iTerm2, WezTerm, Ghostty, and Kitty without modifying terminal configs.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">終端快捷鍵改進</div>
+<div class="commentary-text">
+<p>輸入多行命令時，Shift+Enter 換行不再需要手動配置終端。</p>
+<p><strong>支援：</strong>iTerm2、WezTerm、Ghostty、Kitty</p>
+<p>新手友好，減少配置問題。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 10: Demo Mode -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#10 of 110+</div>
+<div class="feature-title-en">Demo Mode (Hide Account Info)</div>
+<div class="original-text">Added <code>CLAUDE_CODE_HIDE_ACCOUNT_INFO</code> environment variable to <span class="highlight">hide email and organization</span> from the UI, useful for streaming or recording sessions.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">展示模式</div>
+<div class="commentary-text">
+<p><strong>使用場景：</strong></p>
+<ul>
+<li>錄製教學影片時隱藏 email</li>
+<li>直播時保護隱私</li>
+<li>截圖分享不洩露組織資訊</li>
+</ul>
+<p><code>export CLAUDE_CODE_HIDE_ACCOUNT_INFO=1</code></p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 11: Session Resume -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#11 of 110+</div>
+<div class="feature-title-en">Session Resume Fixes</div>
+<div class="original-text">Fixed files and skills not being properly discovered when resuming sessions with <code>-c</code> or <code>--resume</code>. Fixed pasted content being lost when replaying prompts from history. Fixed Esc key behavior with queued prompts.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">會話恢復修復</div>
+<div class="commentary-text">
+<p><strong>三個修復點：</strong></p>
+<ul>
+<li>Files/Skills 路徑解析正確</li>
+<li>歷史重放時貼上內容不遺失</li>
+<li>Esc 不會意外取消執行中任務</li>
+</ul>
+<p>長期專案會話恢復更穩定。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 12: Permission Prompt -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#12 of 110+</div>
+<div class="feature-title-en">Permission Prompt Optimization</div>
+<div class="original-text">Reduced permission prompts for complex bash commands. Improved permission prompt UX with Tab hint moved to footer, cleaner Yes/No input labels with contextual placeholders.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">權限提示優化</div>
+<div class="commentary-text">
+<p><strong>兩個改進：</strong></p>
+<ul>
+<li>複雜命令的權限提示減少</li>
+<li>Tab 提示移到頁尾，Yes/No 標籤更清晰</li>
+</ul>
+<p>減少「權限疲勞」(permission fatigue)。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 13: MCP Dynamic Updates -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#13 of 110+</div>
+<div class="feature-title-en">MCP Dynamic Updates (list_changed)</div>
+<div class="original-text">Added support for MCP <span class="highlight-blue">list_changed</span> notifications, allowing MCP servers to dynamically update their available tools, prompts, and resources without requiring reconnection.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">MCP 動態更新</div>
+<div class="commentary-text">
+<p><strong>MCP (Model Context Protocol)</strong> 是連接 AI 與外部服務的協議。</p>
+<p>現在 MCP 伺服器可以動態新增或移除工具，不需要斷開重連。</p>
+<p>適合整合不斷演進的企業系統。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 14: Ctrl+B Backgrounding -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#14 of 110+</div>
+<div class="feature-title-en">Unified Ctrl+B Backgrounding</div>
+<div class="original-text">Added unified <span class="highlight-green">Ctrl+B</span> backgrounding for both bash commands and agents - pressing Ctrl+B now backgrounds all running foreground tasks simultaneously.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">統一後台任務快捷鍵</div>
+<div class="commentary-text">
+<p>以前 bash 和 agent 有不同的後台化方式。</p>
+<p><strong>現在：</strong>按 <code>Ctrl+B</code>，當前任務會移到後台繼續執行。</p>
+<p>不論是 bash 還是 agent，都用同一個快捷鍵。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 15: Hooks -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#15 of 110+</div>
+<div class="feature-title-en">Hooks for Agents &amp; Skills</div>
+<div class="original-text">Added hooks support to agent frontmatter, allowing agents to define <span class="highlight">PreToolUse, PostToolUse, and Stop hooks</span> scoped to the agent's lifecycle. Added hooks support for skill and slash command frontmatter.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">Agent 和技能的 Hook 支援</div>
+<div class="commentary-text">
+<p><strong>Hook 類型：</strong></p>
+<ul>
+<li><strong>PreToolUse：</strong>工具執行前觸發</li>
+<li><strong>PostToolUse：</strong>執行後觸發（審計記錄）</li>
+<li><strong>Stop：</strong>會話結束時觸發</li>
+</ul>
+<p>可用 PostToolUse 自動記錄操作，滿足 ALCOA 可追溯性。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 16: Skills Frontmatter -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#16 of 110+</div>
+<div class="feature-title-en">Skills Frontmatter Enhancements</div>
+<div class="original-text">Added support for <code>agent</code> field in skills. Added support for YAML-style lists in frontmatter <code>allowed-tools</code>. Added <code>once: true</code> config for hooks. Skills from /skills/ directories now visible in slash command menu by default.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">技能 Frontmatter 增強</div>
+<div class="commentary-text">
+<ul>
+<li><strong>agent 欄位：</strong>指定執行 agent</li>
+<li><strong>YAML 列表：</strong>allowed-tools 更易讀</li>
+<li><strong>once: true：</strong>Hook 只執行一次</li>
+<li><strong>預設可見：</strong>/skills/ 自動出現在選單</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 17: Vim Motions -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#17 of 110+</div>
+<div class="feature-title-en">Vim Motions Expansion</div>
+<div class="original-text">Added new Vim motions: <code>;</code> and <code>,</code> to repeat f/F/t/T, <code>y</code> operator with yy/Y, p/P for paste, text objects (iw, aw, i", a", etc.), &gt;&gt; and &lt;&lt; for indent/dedent, J to join lines.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">Vim 動作擴展</div>
+<div class="commentary-text">
+<p>Vim 用戶會喜歡：</p>
+<ul>
+<li><code>yy</code> 複製整行、<code>p</code> 貼上</li>
+<li><code>ci"</code> 修改引號內內容</li>
+<li><code>&gt;&gt;</code> 增加縮排</li>
+<li><code>J</code> 合併行</li>
+</ul>
+<p>非 Vim 用戶可跳過。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 18: Subagent -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#18 of 110+</div>
+<div class="feature-title-en">Subagent Improvements</div>
+<div class="original-text">Improved subagents (Task tool) to <span class="highlight-green">continue working after permission denial</span>, allowing them to try alternative approaches. Fixed subagents sometimes not inheriting the parent's model by default.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">子 Agent 改進</div>
+<div class="commentary-text">
+<p><strong>比喻：</strong>助手被拒絕使用某工具，以前會完全停下。現在會嘗試其他方法完成任務。</p>
+<ul>
+<li>自動化工作流程更健壯</li>
+<li>模型配置正確繼承</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 19: OAuth -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#19 of 110+</div>
+<div class="feature-title-en">OAuth Token Refresh Fixes</div>
+<div class="original-text">Fixed OAuth token refresh not triggering when server reports expired but local check disagrees. Fixed session persistence stuck after transient server errors. Fixed race condition reading stale tokens during concurrent refresh.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">OAuth Token 刷新修復</div>
+<div class="commentary-text">
+<p>修復多個競態條件 (race condition)：</p>
+<ul>
+<li>長時間工作不會突然斷開</li>
+<li>網路不穩定時能更好恢復</li>
+<li>多工具同時執行不會認證錯誤</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 20: Tool Restriction -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#20 of 110+</div>
+<div class="feature-title-en">Interactive Mode Tool Restriction</div>
+<div class="original-text">Added <code>--tools</code> flag support in interactive mode to restrict which built-in tools Claude can use during interactive sessions.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">互動模式工具限制</div>
+<div class="commentary-text">
+<p><strong>範例：</strong></p>
+<p><code>claude --tools "Read,Write" --disallowedTools "Bash"</code></p>
+<ul>
+<li>Code review：只允許讀取分析</li>
+<li>安全環境：限制工具範圍</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 21: LSP -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#21 of 110+</div>
+<div class="feature-title-en">LSP Tool (Language Server Protocol)</div>
+<div class="original-text">Added <span class="highlight-blue">LSP (Language Server Protocol)</span> tool for code intelligence features like go-to-definition, find references, and hover documentation.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">LSP 工具</div>
+<div class="commentary-text">
+<p>LSP 是語言服務協議，提供：</p>
+<ul>
+<li><strong>Go-to-Definition：</strong>跳轉定義</li>
+<li><strong>Find References：</strong>查找引用</li>
+<li><strong>Hover：</strong>懸停文檔</li>
+</ul>
+<p>Claude Code 能更精確理解程式碼結構。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 22: Spinner Feedback -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#22 of 110+</div>
+<div class="feature-title-en">Spinner Feedback Improvement</div>
+<div class="original-text">Improved spinner feedback when waiting for first response token. Token count display in spinner now includes tokens from <span class="highlight">background agents</span>.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">Spinner 反饋改善</div>
+<div class="commentary-text">
+<p><strong>兩個改進：</strong></p>
+<ul>
+<li>等待第一個 token 時有更好的視覺反饋</li>
+<li>Token 計數包含後台 agent 的消耗</li>
+</ul>
+<p>更準確掌握 API 使用量和成本。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 23: Skills Progress -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#23 of 110+</div>
+<div class="feature-title-en">Skills Execution Progress</div>
+<div class="original-text">Skills now show <span class="highlight-green">progress while executing</span>, displaying tool uses as they happen. Skills suggestions prioritize recently and frequently used skills.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">技能執行進度顯示</div>
+<div class="commentary-text">
+<p><strong>比喻：</strong>以前像黑箱，只看到最終結果。現在像透明廚房，能看到每一步操作。</p>
+<ul>
+<li>實時顯示工具調用</li>
+<li>常用技能優先出現在建議列表</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 24: Sed Preview -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#24 of 110+</div>
+<div class="feature-title-en">Sed In-place Edit Preview</div>
+<div class="original-text">Sed in-place edit commands now render as <span class="highlight-blue">file edits with diff preview</span>, making it easier to review changes before they happen.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">Sed 編輯差異預覽</div>
+<div class="commentary-text">
+<p><code>sed -i</code> 是強大但危險的命令。</p>
+<p><strong>改進：</strong>執行前會顯示 diff 預覽，就像 git diff 一樣，可以清楚看到哪些行會被修改。</p>
+<p>減少意外修改檔案的風險。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 25: Git Diff Memory -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#25 of 110+</div>
+<div class="feature-title-en">Git Diff Memory Leak Fix</div>
+<div class="original-text">Fixed git diff parsing <span class="highlight">memory leak</span> where sliced strings retained large parent strings in memory.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">Git Diff 記憶體洩漏修復</div>
+<div class="commentary-text">
+<p><strong>技術細節：</strong>JavaScript 的字串切片會保留對原始字串的引用。處理大型 diff 時，即使只需要一小段，整個原始字串都會留在記憶體。</p>
+<p><strong>影響：</strong>大型 repo 的操作更穩定。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 26: API Context Overflow -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#26 of 110+</div>
+<div class="feature-title-en">API Context Overflow Fix</div>
+<div class="original-text">Fixed API context overflow when background tasks produce large output. Now <span class="highlight-green">truncates to 30K characters</span> and provides file path to full output.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">API 上下文溢出修復</div>
+<div class="commentary-text">
+<p><strong>問題：</strong>後台任務輸出太大會超出 context window 限制。</p>
+<p><strong>解法：</strong></p>
+<ul>
+<li>自動截斷到 30K 字元</li>
+<li>提供完整輸出的檔案路徑</li>
+</ul>
+<p>防止 context overflow 錯誤。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 27: Bedrock Cross-Region -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#27 of 110+</div>
+<div class="feature-title-en">AWS Bedrock Cross-Region Fix</div>
+<div class="original-text">Fixed AWS Bedrock subagents not inheriting <span class="highlight-blue">EU/APAC cross-region inference</span> model configuration, which caused 403 errors.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">Bedrock 跨區域推理修復</div>
+<div class="commentary-text">
+<p><strong>影響對象：</strong>使用 AWS Bedrock 的企業用戶，特別是歐洲和亞太區域。</p>
+<p><strong>問題：</strong>子 agent 沒有繼承跨區域配置，導致 403 權限錯誤。</p>
+<p>現在子 agent 正確繼承父 agent 的模型配置。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 28: Bash Command Prefix -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#28 of 110+</div>
+<div class="feature-title-en">Bash Command Prefix Extraction</div>
+<div class="original-text">Fixed bash command prefix extraction. Commands like <code>git -C /path log</code> now correctly match <span class="highlight">Bash(git log:*)</span> permission rules.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">Bash 命令前綴解析修復</div>
+<div class="commentary-text">
+<p><strong>問題：</strong>全域選項（如 <code>-C /path</code>）會干擾子命令辨識。</p>
+<p><strong>範例：</strong></p>
+<ul>
+<li><code>git -C /path log</code> 現在正確識別為 <code>git log</code></li>
+<li>權限規則 <code>Bash(git log:*)</code> 正確匹配</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 29: Real-time Thinking -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#29 of 110+</div>
+<div class="feature-title-en">Real-time Thinking Display</div>
+<div class="original-text">Added <span class="highlight-green">real-time thinking block display</span> in Ctrl+O transcript mode, allowing you to see Claude's reasoning as it happens.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">即時思考過程顯示</div>
+<div class="commentary-text">
+<p>在 <code>Ctrl+O</code> 轉錄模式下，可以看到 Claude 的思考過程。</p>
+<p><strong>用途：</strong></p>
+<ul>
+<li>Debug 複雜推理</li>
+<li>學習 Claude 的決策邏輯</li>
+<li>識別可能的錯誤假設</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 30: VSCode Context Menu -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#30 of 110+</div>
+<div class="feature-title-en">[VSCode] Context Menu Enhancement</div>
+<div class="original-text">Added currently selected <span class="highlight-blue">model name to context menu</span>. Added descriptive labels on auto-accept permission button (e.g., "Yes, allow npm for this project").</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">[VSCode] 上下文選單增強</div>
+<div class="commentary-text">
+<p><strong>兩個改進：</strong></p>
+<ul>
+<li>右鍵選單顯示目前使用的模型</li>
+<li>權限按鈕標籤更清晰：「是，允許此專案使用 npm」</li>
+</ul>
+<p>減少誤操作，提升信任感。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 31: VSCode Markdown -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#31 of 110+</div>
+<div class="feature-title-en">[VSCode] Markdown Rendering Fix</div>
+<div class="original-text">Fixed <span class="highlight">paragraph breaks not rendering</span> in markdown content within VSCode extension.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">[VSCode] Markdown 段落渲染修復</div>
+<div class="commentary-text">
+<p>以前段落之間沒有正確換行，文字擠成一團。</p>
+<p>現在 Markdown 內容正確渲染，閱讀體驗大幅改善。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 32: VSCode Tab Badges -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#32 of 110+</div>
+<div class="feature-title-en">[VSCode] Tab Icon Badges</div>
+<div class="original-text">Added tab icon badges showing <span class="highlight-green">pending permissions (blue)</span> and <span class="highlight">unread completions (orange)</span>.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">[VSCode] 分頁圖示徽章</div>
+<div class="commentary-text">
+<p>視覺提示讓你知道 Claude 需要你的注意：</p>
+<ul>
+<li><strong>藍色徽章：</strong>有待批准的權限請求</li>
+<li><strong>橘色徽章：</strong>有未讀的完成訊息</li>
+</ul>
+<p>多任務工作時不會漏掉重要通知。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Feature 33: Windows Rendering -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left">
+<div class="feature-number">#33 of 110+</div>
+<div class="feature-title-en">[Windows] Rendering Fix</div>
+<div class="original-text">Fixed issue with <span class="highlight-blue">improper rendering</span> on Windows platform.</div>
+<div class="star-rating">★★★★☆</div>
+</div>
+<div class="content-right">
+<div class="feature-title-zh">[Windows] 渲染問題修復</div>
+<div class="commentary-text">
+<p>Windows 用戶之前可能遇到顯示異常的問題。</p>
+<p>這個修復確保 Windows 平台上的渲染與其他平台一致。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- ==================== TIER 3 ==================== -->
+<div class="section-header">
+<span>Part 3: Tier 3 Nice-to-Have Features 實用功能</span>
+<span class="tier-badge tier-3">45+ items</span>
+</div>
+<!-- Feature 34: Project gitignore -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left"><div class="feature-number">#34</div><div class="feature-title-en">Project-Level .gitignore Control</div><div class="original-text">Added <code>respectGitignore</code> in settings.json for per-project control.</div><div class="star-rating">★★★☆☆</div></div>
+<div class="content-right"><div class="feature-title-zh">專案級 .gitignore 控制</div><div class="commentary-text">不同專案有不同策略，現在可以按專案決定是否遵守 .gitignore。</div></div>
+</div>
+</div>
+<!-- Feature 35: Remote Session -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left"><div class="feature-number">#35</div><div class="feature-title-en">Remote Session Commands</div><div class="original-text">Added <code>/teleport</code> and <code>/remote-env</code> for claude.ai subscribers.</div><div class="star-rating">★★★☆☆</div></div>
+<div class="content-right"><div class="feature-title-zh">遠端會話命令</div><div class="commentary-text">在辦公室開始的工作，回家後可以繼續。需要 claude.ai 訂閱。</div></div>
+</div>
+</div>
+<!-- Feature 36: Disable Agents -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left"><div class="feature-number">#36</div><div class="feature-title-en">Disable Specific Agents</div><div class="original-text">Use <code>Task(AgentName)</code> syntax or <code>--disallowedTools</code> to disable agents.</div><div class="star-rating">★★★☆☆</div></div>
+<div class="content-right"><div class="feature-title-zh">停用特定 Agent</div><div class="commentary-text">直接停用不符合需求的 agent，而不是每次都拒絕請求。</div></div>
+</div>
+</div>
+<!-- Feature 37: Command Search -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left"><div class="feature-number">#37</div><div class="feature-title-en">Command Search Improvement</div><div class="original-text">Prioritize exact and prefix matches on command names over fuzzy matches.</div><div class="star-rating">★★★☆☆</div></div>
+<div class="content-right"><div class="feature-title-zh">命令搜尋改進</div><div class="commentary-text">搜命令更準了，不會被無關的模糊結果干擾。</div></div>
+</div>
+</div>
+<!-- Feature 38: Hook Enhancement -->
+<div class="feature-row">
+<div class="content-grid">
+<div class="content-left"><div class="feature-number">#38</div><div class="feature-title-en">PreToolUse Hook Enhancement</div><div class="original-text">Hooks can now modify input while also requesting user consent.</div><div class="star-rating">★★★☆☆</div></div>
+<div class="content-right"><div class="feature-title-zh">Hook 功能增強</div><div class="commentary-text">Hook 可以同時修改命令內容並詢問用戶同意。適合「預處理 + 確認」流程。</div></div>
+</div>
+</div>
+<!-- Tier 3 Compact List -->
+<div class="section-header" style="background: #334155;"><span>Tier 3 Additional Items 其他三星功能</span><span class="tier-badge tier-3">35+ items</span></div>
+<ul class="compact-list">
+<li class="compact-item"><div class="compact-left">Added /plan command shortcut to enable plan mode directly</div><div class="compact-right">加了 /plan 命令，可以直接啟用計畫模式</div></li>
+<li class="compact-item"><div class="compact-left">Slash command autocomplete when / appears anywhere in input</div><div class="compact-right">任何位置輸入 / 都能觸發自動完成</div></li>
+<li class="compact-item"><div class="compact-left">Added once: true config for hooks</div><div class="compact-right">支援 Hook 的 once: true 配置</div></li>
+<li class="compact-item"><div class="compact-left">YAML-style lists in frontmatter allowed-tools field</div><div class="compact-right">frontmatter 的 allowed-tools 支援 YAML 列表</div></li>
+<li class="compact-item"><div class="compact-left">Plugin support for prompt and agent hook types</div><div class="compact-right">外掛支援 prompt 和 agent hook 類型</div></li>
+<li class="compact-item"><div class="compact-left">CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS environment variable</div><div class="compact-right">可用環境變數覆蓋檔案讀取 token 限制</div></li>
+<li class="compact-item"><div class="compact-left">/terminal-setup support for Kitty, Alacritty, Zed, Warp</div><div class="compact-right">新增對 Kitty、Alacritty、Zed、Warp 終端支援</div></li>
+<li class="compact-item"><div class="compact-left">Cmd+V support for image paste in iTerm2</div><div class="compact-right">iTerm2 支援 Cmd+V 貼上圖片</div></li>
+<li class="compact-item"><div class="compact-left">Left/right arrow key navigation for dialog tabs</div><div class="compact-right">左右箭頭切換對話框標籤頁</div></li>
+<li class="compact-item"><div class="compact-left">Skills as separate category in context visualization</div><div class="compact-right">Skill 在上下文可視化裡單獨顯示</div></li>
+<li class="compact-item"><div class="compact-left">Fixed Claude in Chrome for WSL environments</div><div class="compact-right">修復了 WSL 環境下 Claude in Chrome 支援</div></li>
+<li class="compact-item"><div class="compact-left">Fixed terminal keyboard mode reset on exit</div><div class="compact-right">修復了退出時終端鍵盤模式沒重置</div></li>
+<li class="compact-item"><div class="compact-left">Fixed Alt+B/Alt+F word navigation in terminals</div><div class="compact-right">修復了 Alt+B 和 Alt+F 不工作的問題</div></li>
+<li class="compact-item"><div class="compact-left">Fixed ${CLAUDE_PLUGIN_ROOT} substitution</div><div class="compact-right">修復了外掛變數沒被替換的問題</div></li>
+<li class="compact-item"><div class="compact-left">Write tool respects system umask</div><div class="compact-right">Write 工具建立的檔案遵守系統 umask</div></li>
+<li class="compact-item"><div class="compact-left">Fixed $() command substitution parse errors</div><div class="compact-right">修復了 $() 命令替換解析失敗</div></li>
+<li class="compact-item"><div class="compact-left">Fixed multi-line bash commands with backslash</div><div class="compact-right">修復了反斜線續行命令被錯誤分割</div></li>
+<li class="compact-item"><div class="compact-left">Fixed slash commands as CLI arguments</div><div class="compact-right">修復了 CLI 參數斜線命令沒執行</div></li>
+<li class="compact-item"><div class="compact-left">Fixed Tab-completing slash commands</div><div class="compact-right">修復了 Tab 完成後按 Enter 選中不同命令</div></li>
+<li class="compact-item"><div class="compact-left">Fixed skill token estimates in /context</div><div class="compact-right">技能 token 估算更準確了</div></li>
+<li class="compact-item"><div class="compact-left">Fixed subagent model inheritance</div><div class="compact-right">修復了子 agent 不繼承父模型</div></li>
+<li class="compact-item"><div class="compact-left">Fixed Bedrock/Vertex model picker display</div><div class="compact-right">修復了模型選取器顯示錯誤</div></li>
+<li class="compact-item"><div class="compact-left">Fixed background tasks for repos with dots in names</div><div class="compact-right">修復了名稱含點的 repo 後台任務失敗</div></li>
+<li class="compact-item"><div class="compact-left">Fixed large image paste error</div><div class="compact-right">修復了大圖片貼上失敗</div></li>
+<li class="compact-item"><div class="compact-left">Fixed Linux Wayland image paste</div><div class="compact-right">修復了 Linux Wayland 貼上圖片失敗</div></li>
+<li class="compact-item"><div class="compact-left">Fixed CJK multiline prompt blank lines</div><div class="compact-right">修復了中日韓多行提示多餘空行</div></li>
+<li class="compact-item"><div class="compact-left">Fixed "Reading X files" indicator tense</div><div class="compact-right">修復了讀取指示器時態切換問題</div></li>
+<li class="compact-item"><div class="compact-left">Removed plan mode permission prompt</div><div class="compact-right">進入計畫模式不需要權限提示</div></li>
+<li class="compact-item"><div class="compact-left">Improved AskQuestion tool reliability</div><div class="compact-right">提問工具的可靠性提升</div></li>
+<li class="compact-item"><div class="compact-left">Improved compaction reliability</div><div class="compact-right">壓縮功能的可靠性提升</div></li>
+<li class="compact-item"><div class="compact-left">Improved async agent incremental output</div><div class="compact-right">非同步 agent 增量輸出改進</div></li>
+<li class="compact-item"><div class="compact-left">Improved macOS screenshot paste with TIFF</div><div class="compact-right">macOS 截圖貼上支援 TIFF 格式</div></li>
+<li class="compact-item"><div class="compact-left">Updated Atlassian MCP to streamable HTTP</div><div class="compact-right">Atlassian MCP 更新為更可靠配置</div></li>
+</ul>
+<!-- ==================== TIER 2 ==================== -->
+<div class="section-header"><span>Part 4: Tier 2 Minor Improvements 小改進</span><span class="tier-badge tier-2">25+ items</span></div>
+<ul class="compact-list">
+<li class="compact-item"><div class="compact-left">Windows installer shows errors on failure</div><div class="compact-right">安裝失敗時能看到錯誤了</div></li>
+<li class="compact-item"><div class="compact-left">CLI help output in alphabetical order</div><div class="compact-right">幫助資訊按字母排序</div></li>
+<li class="compact-item"><div class="compact-left">Fixed FIFO file reading hang</div><div class="compact-right">讀取特殊檔案不會卡住了</div></li>
+<li class="compact-item"><div class="compact-left">Fixed duplicate Bash commands in permission labels</div><div class="compact-right">權限選項不會顯示重複命令</div></li>
+<li class="compact-item"><div class="compact-left">"Interrupted" message changed to grey</div><div class="compact-right">取消訊息從紅色改成灰色</div></li>
+<li class="compact-item"><div class="compact-left">Fixed cursor disappearing after permission dialogs</div><div class="compact-right">關閉對話框後光標不會消失</div></li>
+<li class="compact-item"><div class="compact-left">Fixed /hooks menu wrong selection</div><div class="compact-right">修復了選單選中錯誤類型</div></li>
+<li class="compact-item"><div class="compact-left">Fixed images showing as "[object Object]"</div><div class="compact-right">修復了圖片顯示為物件字串</div></li>
+<li class="compact-item"><div class="compact-left">Fixed ultrathink highlight on wrapped text</div><div class="compact-right">修復了換行時高亮錯位</div></li>
+<li class="compact-item"><div class="compact-left">Fixed feedback submission timeout hang</div><div class="compact-right">修復了反饋提交無限掛起</div></li>
+<li class="compact-item"><div class="compact-left">Fixed search mode exit on up arrow</div><div class="compact-right">修復了按上箭頭退出搜尋</div></li>
+<li class="compact-item"><div class="compact-left">Fixed hook success trailing colon</div><div class="compact-right">修復了成功訊息多餘冒號</div></li>
+<li class="compact-item"><div class="compact-left">Cleaner background task completion messages</div><div class="compact-right">後台任務完成訊息更乾淨</div></li>
+<li class="compact-item"><div class="compact-left">Fixed LSP tool incorrectly enabled</div><div class="compact-right">修復了 LSP 工具錯誤啟用</div></li>
+<li class="compact-item"><div class="compact-left">Removed image reference link underline</div><div class="compact-right">圖片連結去掉底線</div></li>
+<li class="compact-item"><div class="compact-left">[SDK] zod peer dependency ^4.0.0</div><div class="compact-right">[SDK] zod 最低版本 ^4.0.0</div></li>
+<li class="compact-item"><div class="compact-left">Esc only moves queued prompts to input</div><div class="compact-right">Esc 不會取消運行中任務</div></li>
+<li class="compact-item"><div class="compact-left">Memory usage improved 3x for large conversations</div><div class="compact-right">大型對話記憶體改善 3 倍</div></li>
+<li class="compact-item"><div class="compact-left">Improved stats screenshot resolution</div><div class="compact-right">截圖解析度提高</div></li>
+<li class="compact-item"><div class="compact-left">Removed # shortcut (use Claude to edit CLAUDE.md)</div><div class="compact-right">移除 # 快捷鍵</div></li>
+<li class="compact-item"><div class="compact-left">Fixed thinking mode toggle persistence</div><div class="compact-right">修復了思考模式切換保存</div></li>
+</ul>
+<!-- Key Takeaways -->
+<div class="section-header" style="background: linear-gradient(135deg, #059669, #10b981);"><span>Key Takeaways 重點整理</span></div>
+<div class="content-grid">
+<div class="content-left" style="background: #ecfdf5;">
+<div class="info-box box-concept"><div class="info-box-header">Skills System Matured</div><div class="info-box-content"><p>Hot-reload + Fork context + Hooks make Skills a true development platform.</p></div></div>
+<div class="info-box box-concept"><div class="info-box-header">UX Significantly Improved</div><div class="info-box-content"><p>Bash wildcards, Auto-continue, Permission optimization — daily usage is smoother.</p></div></div>
+</div>
+<div class="content-right" style="background: #fefce8;">
+<div class="info-box box-key"><div class="info-box-header">Skills 系統成熟化</div><div class="info-box-content"><p>熱重載 + 隔離環境 + Hooks 讓 Skills 成為真正的開發平台。</p></div></div>
+<div class="info-box box-key"><div class="info-box-header">安全性與效能提升</div><div class="info-box-content"><p>敏感資料不再洩露，啟動更快，記憶體改善 3 倍。</p></div></div>
+</div>
+</div>
+<!-- Article Rating -->
+<div class="article-rating">
+<div class="rating-header"><div class="rating-title">Article Rating 文章評價</div><div class="overall-score"><span>綜合</span><span class="overall-value">4.0</span></div></div>
+<div class="rating-grid">
+<div class="rating-item"><div class="rating-label">技術深度</div><div class="rating-stars">★★★★<span class="star-empty">☆</span></div></div>
+<div class="rating-item"><div class="rating-label">實務應用</div><div class="rating-stars">★★★★<span class="star-empty">☆</span></div></div>
+<div class="rating-item"><div class="rating-label">工具生態</div><div class="rating-stars">★★★★★</div></div>
+<div class="rating-item"><div class="rating-label">時效性</div><div class="rating-stars">★★★★★</div></div>
+<div class="rating-item"><div class="rating-label">學習曲線</div><div class="rating-stars">★★★★<span class="star-empty">☆</span></div></div>
+</div>
+</div>
+<!-- Practice Section -->
+<div class="practice-section">
+<h2 class="">Practice Questions 練習題</h2>
+<details class="question-accordion"><summary class="question-header"><span class="question-number">Q1</span><span class="question-type">理解應用</span><span class="question-text">Claude Code 2.1.0 的 Skills 系統新增了context: fork功能。請解釋這個功能的作用。</span><span class="accordion-icon"></span></summary><div class="question-answer"><p><strong>答案：</strong><code>context: fork</code> 讓 Skill 在<strong>隔離的子環境</strong>中執行，不會影響主工作區。適用於實驗性操作、多版本測試、風險隔離。</p></div></details>
+<details class="question-accordion"><summary class="question-header"><span class="question-number">Q2</span><span class="question-type">理解應用</span><span class="question-text">你會強調哪三個功能來說服 IT 和 QA 主管這個工具是安全且合規的？</span><span class="accordion-icon"></span></summary><div class="question-answer"><p><strong>1. Security Fix：</strong>敏感資料不再記錄到 logs<br/><strong>2. Hook System：</strong>自動記錄操作滿足 ALCOA<br/><strong>3. Tool Restriction：</strong>精確控制工具範圍</p></div></details>
+<details class="question-accordion"><summary class="question-header"><span class="question-number">Q3</span><span class="question-type">理解應用</span><span class="question-text">110+ 項改進大多是 bug fixes 和 UX 改善，從產品策略角度這代表什麼？</span><span class="accordion-icon"></span></summary><div class="question-answer"><p><strong>產品成熟度：</strong>從「早期採用者工具」轉變為「主流生產力工具」<br/><strong>平台化：</strong>Skills 強化顯示正在打造可擴展平台<br/><strong>企業準備：</strong>安全/權限改進是企業採用的先決條件</p></div></details>
+</div>
+<!-- Footer -->
+<footer class="footer">
+<p>Claude Code 2.1.0 版本更新深度解析 - 雙欄對照版 | 製作：2026-01-09</p>
+<p>來源：<a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">GitHub CHANGELOG.md</a></p>
+</footer>
 
-    <!-- Executive Summary -->
-    <div class="executive-summary">
-        <div class="summary-grid">
-            <div class="summary-item">
-                <div class="item-label">Core Concept 核心概念</div>
-                <div class="item-content">Claude Code 2.1.0 包含 <strong>110+ 項改進</strong>，涵蓋 Skills 熱重載、安全性修復、效能優化、以及大量 UX 改善。</div>
-            </div>
-            <div class="summary-item">
-                <div class="item-label">Practical Value 實務價值</div>
-                <div class="item-content">Skills 系統可用於建立符合 GMP 的自動化工作流程，Hook 機制可實現審計追蹤。</div>
-            </div>
-            <div class="summary-item">
-                <div class="item-label">Key Highlights 重點功能</div>
-                <div class="item-content">安全修復、語言設定、Bash 通配符、Auto-continue、效能優化、LSP 工具。</div>
-            </div>
-            <div class="summary-item">
-                <div class="item-label">Action Items 行動建議</div>
-                <div class="item-content">1) <code>claude update</code> 2) 設置語言偏好 3) 評估 Skills 整合可能性</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== TIER 5 ==================== -->
-    <div class="section-header">
-        <span>Part 1: Tier 5 Must-Know Features 必學功能</span>
-        <span class="tier-badge tier-5">6 items</span>
-    </div>
-
-    <!-- Feature 1: Security Fix -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#1 of 110+</div>
-                <div class="feature-title-en">Security Fix - Sensitive Data Protection</div>
-                <div class="original-text">Fixed security issue where <span class="highlight">sensitive data (OAuth tokens, API keys, passwords)</span> could be exposed in debug logs.</div>
-                <div class="star-rating">★★★★★</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">安全修復 - 敏感資料保護</div>
-                <div class="commentary-text">
-                    <p><strong>為何這是最高優先級？</strong></p>
-                    <p>API keys 和 OAuth tokens 是存取敏感系統的憑證。現在不再被記錄到 debug logs，符合：</p>
-                    <ul>
-                        <li><strong>21 CFR Part 11</strong> 存取控制要求</li>
-                        <li><strong>GDPR</strong> 資料保護原則</li>
-                        <li>SOC 2 合規要求</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 2: Language Settings -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#2 of 110+</div>
-                <div class="feature-title-en">Language Settings</div>
-                <div class="original-text">Added <code>language</code> setting to configure Claude's response language (e.g., <span class="highlight">language: "japanese"</span>).</div>
-                <div class="star-rating">★★★★★</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">語言設置</div>
-                <div class="commentary-text">
-                    <p>可以讓 Claude 用日語、中文等其他語言回覆。</p>
-                    <p><strong>設定方式：</strong>在 <code>settings.json</code> 加入：</p>
-                    <p><code>language: "traditional-chinese"</code></p>
-                    <p>無需每次都在 prompt 中指定語言。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 3: Bash Wildcards -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#3 of 110+</div>
-                <div class="feature-title-en">Bash Tool Permission Wildcards</div>
-                <div class="original-text">Added wildcard pattern matching for Bash tool permissions using <span class="highlight-green">*</span> at any position in rules (e.g., <code>Bash(npm *)</code>, <code>Bash(* install)</code>, <code>Bash(git * main)</code>).</div>
-                <div class="star-rating">★★★★★</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">Bash 權限通配符</div>
-                <div class="commentary-text">
-                    <p><strong>比喻：</strong>以前每個工具都要簽名批准。現在可以設定：「所有 npm 開頭的工具都可以直接用」。</p>
-                    <ul>
-                        <li><code>Bash(npm *)</code> — 所有 npm 命令</li>
-                        <li><code>Bash(git * main)</code> — 對 main 的 git 操作</li>
-                        <li><code>Bash(python *.py)</code> — 執行任何 Python 腳本</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 4: Auto-Continue -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#4 of 110+</div>
-                <div class="feature-title-en">Output Limit Auto-Continue</div>
-                <div class="original-text">Improved Claude to <span class="highlight">automatically continue</span> when response is cut off due to output token limit, instead of showing an error message.</div>
-                <div class="star-rating">★★★★★</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">輸出限制自動繼續</div>
-                <div class="commentary-text">
-                    <p><strong>解決的痛點：</strong>處理長篇內容時（如分析大型 batch records），輸出被截斷需要手動輸入「continue」。</p>
-                    <p><strong>現在：</strong>Claude Code 會自動檢測截斷並無縫續寫，你看到的就是完整回應。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 5: Performance -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#5 of 110+</div>
-                <div class="feature-title-en">Performance Optimizations</div>
-                <div class="original-text">Multiple optimizations to improve <span class="highlight-blue">startup performance</span>. Improved terminal rendering performance when using native installer or Bun, especially for text with emoji, ANSI codes, and Unicode characters. Improved performance when reading <span class="highlight-blue">Jupyter notebooks</span> with many cells.</div>
-                <div class="star-rating">★★★★★</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">效能優化</div>
-                <div class="commentary-text">
-                    <p><strong>三個層面的優化：</strong></p>
-                    <ul>
-                        <li><strong>啟動時間：</strong>冷啟動更快</li>
-                        <li><strong>終端渲染：</strong>emoji、ANSI 代碼更流暢</li>
-                        <li><strong>Jupyter：</strong>大型 notebook 不再卡頓</li>
-                    </ul>
-                    <p>每天啟動數十次，每次省 1-2 秒，累積可觀。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 6: Piped Input -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#6 of 110+</div>
-                <div class="feature-title-en">Piped Input Reliability</div>
-                <div class="original-text">Improved reliability for <span class="highlight">piped input</span> like <code>cat refactor.md | claude</code>.</div>
-                <div class="star-rating">★★★★★</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">管道輸入可靠性</div>
-                <div class="commentary-text">
-                    <p><strong>自動化應用：</strong></p>
-                    <ul>
-                        <li><code>cat instructions.md | claude</code></li>
-                        <li><code>git diff | claude "review this"</code></li>
-                    </ul>
-                    <p>可以將 batch records 透過管道傳給 Claude Code 進行分析。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== TIER 4 ==================== -->
-    <div class="section-header">
-        <span>Part 2: Tier 4 High-Value Features 高價值功能</span>
-        <span class="tier-badge tier-4">27 items</span>
-    </div>
-
-    <!-- Feature 7: Skills Hot Reload -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#7 of 110+</div>
-                <div class="feature-title-en">Skills Hot Reload</div>
-                <div class="original-text">Added automatic skill hot-reload - skills created or modified in <code>~/.claude/skills</code> or <code>.claude/skills</code> are now <span class="highlight-green">immediately available</span> without restarting the session.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">技能熱重載</div>
-                <div class="commentary-text">
-                    <p><strong>以前：</strong>修改 Skill → 重啟 → 測試 → 重啟...</p>
-                    <p><strong>現在：</strong>修改 Skill → 立即測試 → 修改 → 立即測試</p>
-                    <p>類比：從「每次都要重新編譯」進化到「Hot Module Replacement」。迭代速度提升 3-5 倍。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 8: Skills Fork Context -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#8 of 110+</div>
-                <div class="feature-title-en">Skills Isolated Environment</div>
-                <div class="original-text">Added support for running skills and slash commands in a <span class="highlight">forked sub-agent context</span> using <code>context: fork</code> in skill frontmatter.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">技能隔離環境</div>
-                <div class="commentary-text">
-                    <p><strong>比喻：QC 實驗室的隔離室</strong></p>
-                    <ul>
-                        <li><strong>Normal：</strong>所有測試在同一工作台</li>
-                        <li><strong>Fork：</strong>獨立隔離室，出錯不污染其他測試</li>
-                    </ul>
-                    <p>適合測試可能有副作用的自動化腳本。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 9: Terminal Shortcuts -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#9 of 110+</div>
-                <div class="feature-title-en">Terminal Shortcuts (Shift+Enter)</div>
-                <div class="original-text">Changed <span class="highlight-green">Shift+Enter</span> to work out of the box in iTerm2, WezTerm, Ghostty, and Kitty without modifying terminal configs.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">終端快捷鍵改進</div>
-                <div class="commentary-text">
-                    <p>輸入多行命令時，Shift+Enter 換行不再需要手動配置終端。</p>
-                    <p><strong>支援：</strong>iTerm2、WezTerm、Ghostty、Kitty</p>
-                    <p>新手友好，減少配置問題。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 10: Demo Mode -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#10 of 110+</div>
-                <div class="feature-title-en">Demo Mode (Hide Account Info)</div>
-                <div class="original-text">Added <code>CLAUDE_CODE_HIDE_ACCOUNT_INFO</code> environment variable to <span class="highlight">hide email and organization</span> from the UI, useful for streaming or recording sessions.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">展示模式</div>
-                <div class="commentary-text">
-                    <p><strong>使用場景：</strong></p>
-                    <ul>
-                        <li>錄製教學影片時隱藏 email</li>
-                        <li>直播時保護隱私</li>
-                        <li>截圖分享不洩露組織資訊</li>
-                    </ul>
-                    <p><code>export CLAUDE_CODE_HIDE_ACCOUNT_INFO=1</code></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 11: Session Resume -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#11 of 110+</div>
-                <div class="feature-title-en">Session Resume Fixes</div>
-                <div class="original-text">Fixed files and skills not being properly discovered when resuming sessions with <code>-c</code> or <code>--resume</code>. Fixed pasted content being lost when replaying prompts from history. Fixed Esc key behavior with queued prompts.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">會話恢復修復</div>
-                <div class="commentary-text">
-                    <p><strong>三個修復點：</strong></p>
-                    <ul>
-                        <li>Files/Skills 路徑解析正確</li>
-                        <li>歷史重放時貼上內容不遺失</li>
-                        <li>Esc 不會意外取消執行中任務</li>
-                    </ul>
-                    <p>長期專案會話恢復更穩定。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 12: Permission Prompt -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#12 of 110+</div>
-                <div class="feature-title-en">Permission Prompt Optimization</div>
-                <div class="original-text">Reduced permission prompts for complex bash commands. Improved permission prompt UX with Tab hint moved to footer, cleaner Yes/No input labels with contextual placeholders.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">權限提示優化</div>
-                <div class="commentary-text">
-                    <p><strong>兩個改進：</strong></p>
-                    <ul>
-                        <li>複雜命令的權限提示減少</li>
-                        <li>Tab 提示移到頁尾，Yes/No 標籤更清晰</li>
-                    </ul>
-                    <p>減少「權限疲勞」(permission fatigue)。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 13: MCP Dynamic Updates -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#13 of 110+</div>
-                <div class="feature-title-en">MCP Dynamic Updates (list_changed)</div>
-                <div class="original-text">Added support for MCP <span class="highlight-blue">list_changed</span> notifications, allowing MCP servers to dynamically update their available tools, prompts, and resources without requiring reconnection.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">MCP 動態更新</div>
-                <div class="commentary-text">
-                    <p><strong>MCP (Model Context Protocol)</strong> 是連接 AI 與外部服務的協議。</p>
-                    <p>現在 MCP 伺服器可以動態新增或移除工具，不需要斷開重連。</p>
-                    <p>適合整合不斷演進的企業系統。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 14: Ctrl+B Backgrounding -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#14 of 110+</div>
-                <div class="feature-title-en">Unified Ctrl+B Backgrounding</div>
-                <div class="original-text">Added unified <span class="highlight-green">Ctrl+B</span> backgrounding for both bash commands and agents - pressing Ctrl+B now backgrounds all running foreground tasks simultaneously.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">統一後台任務快捷鍵</div>
-                <div class="commentary-text">
-                    <p>以前 bash 和 agent 有不同的後台化方式。</p>
-                    <p><strong>現在：</strong>按 <code>Ctrl+B</code>，當前任務會移到後台繼續執行。</p>
-                    <p>不論是 bash 還是 agent，都用同一個快捷鍵。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 15: Hooks -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#15 of 110+</div>
-                <div class="feature-title-en">Hooks for Agents & Skills</div>
-                <div class="original-text">Added hooks support to agent frontmatter, allowing agents to define <span class="highlight">PreToolUse, PostToolUse, and Stop hooks</span> scoped to the agent's lifecycle. Added hooks support for skill and slash command frontmatter.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">Agent 和技能的 Hook 支援</div>
-                <div class="commentary-text">
-                    <p><strong>Hook 類型：</strong></p>
-                    <ul>
-                        <li><strong>PreToolUse：</strong>工具執行前觸發</li>
-                        <li><strong>PostToolUse：</strong>執行後觸發（審計記錄）</li>
-                        <li><strong>Stop：</strong>會話結束時觸發</li>
-                    </ul>
-                    <p>可用 PostToolUse 自動記錄操作，滿足 ALCOA 可追溯性。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 16: Skills Frontmatter -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#16 of 110+</div>
-                <div class="feature-title-en">Skills Frontmatter Enhancements</div>
-                <div class="original-text">Added support for <code>agent</code> field in skills. Added support for YAML-style lists in frontmatter <code>allowed-tools</code>. Added <code>once: true</code> config for hooks. Skills from /skills/ directories now visible in slash command menu by default.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">技能 Frontmatter 增強</div>
-                <div class="commentary-text">
-                    <ul>
-                        <li><strong>agent 欄位：</strong>指定執行 agent</li>
-                        <li><strong>YAML 列表：</strong>allowed-tools 更易讀</li>
-                        <li><strong>once: true：</strong>Hook 只執行一次</li>
-                        <li><strong>預設可見：</strong>/skills/ 自動出現在選單</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 17: Vim Motions -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#17 of 110+</div>
-                <div class="feature-title-en">Vim Motions Expansion</div>
-                <div class="original-text">Added new Vim motions: <code>;</code> and <code>,</code> to repeat f/F/t/T, <code>y</code> operator with yy/Y, p/P for paste, text objects (iw, aw, i", a", etc.), >> and << for indent/dedent, J to join lines.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">Vim 動作擴展</div>
-                <div class="commentary-text">
-                    <p>Vim 用戶會喜歡：</p>
-                    <ul>
-                        <li><code>yy</code> 複製整行、<code>p</code> 貼上</li>
-                        <li><code>ci"</code> 修改引號內內容</li>
-                        <li><code>>></code> 增加縮排</li>
-                        <li><code>J</code> 合併行</li>
-                    </ul>
-                    <p>非 Vim 用戶可跳過。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 18: Subagent -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#18 of 110+</div>
-                <div class="feature-title-en">Subagent Improvements</div>
-                <div class="original-text">Improved subagents (Task tool) to <span class="highlight-green">continue working after permission denial</span>, allowing them to try alternative approaches. Fixed subagents sometimes not inheriting the parent's model by default.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">子 Agent 改進</div>
-                <div class="commentary-text">
-                    <p><strong>比喻：</strong>助手被拒絕使用某工具，以前會完全停下。現在會嘗試其他方法完成任務。</p>
-                    <ul>
-                        <li>自動化工作流程更健壯</li>
-                        <li>模型配置正確繼承</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 19: OAuth -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#19 of 110+</div>
-                <div class="feature-title-en">OAuth Token Refresh Fixes</div>
-                <div class="original-text">Fixed OAuth token refresh not triggering when server reports expired but local check disagrees. Fixed session persistence stuck after transient server errors. Fixed race condition reading stale tokens during concurrent refresh.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">OAuth Token 刷新修復</div>
-                <div class="commentary-text">
-                    <p>修復多個競態條件 (race condition)：</p>
-                    <ul>
-                        <li>長時間工作不會突然斷開</li>
-                        <li>網路不穩定時能更好恢復</li>
-                        <li>多工具同時執行不會認證錯誤</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 20: Tool Restriction -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#20 of 110+</div>
-                <div class="feature-title-en">Interactive Mode Tool Restriction</div>
-                <div class="original-text">Added <code>--tools</code> flag support in interactive mode to restrict which built-in tools Claude can use during interactive sessions.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">互動模式工具限制</div>
-                <div class="commentary-text">
-                    <p><strong>範例：</strong></p>
-                    <p><code>claude --tools "Read,Write" --disallowedTools "Bash"</code></p>
-                    <ul>
-                        <li>Code review：只允許讀取分析</li>
-                        <li>安全環境：限制工具範圍</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 21: LSP -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#21 of 110+</div>
-                <div class="feature-title-en">LSP Tool (Language Server Protocol)</div>
-                <div class="original-text">Added <span class="highlight-blue">LSP (Language Server Protocol)</span> tool for code intelligence features like go-to-definition, find references, and hover documentation.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">LSP 工具</div>
-                <div class="commentary-text">
-                    <p>LSP 是語言服務協議，提供：</p>
-                    <ul>
-                        <li><strong>Go-to-Definition：</strong>跳轉定義</li>
-                        <li><strong>Find References：</strong>查找引用</li>
-                        <li><strong>Hover：</strong>懸停文檔</li>
-                    </ul>
-                    <p>Claude Code 能更精確理解程式碼結構。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 22: Spinner Feedback -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#22 of 110+</div>
-                <div class="feature-title-en">Spinner Feedback Improvement</div>
-                <div class="original-text">Improved spinner feedback when waiting for first response token. Token count display in spinner now includes tokens from <span class="highlight">background agents</span>.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">Spinner 反饋改善</div>
-                <div class="commentary-text">
-                    <p><strong>兩個改進：</strong></p>
-                    <ul>
-                        <li>等待第一個 token 時有更好的視覺反饋</li>
-                        <li>Token 計數包含後台 agent 的消耗</li>
-                    </ul>
-                    <p>更準確掌握 API 使用量和成本。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 23: Skills Progress -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#23 of 110+</div>
-                <div class="feature-title-en">Skills Execution Progress</div>
-                <div class="original-text">Skills now show <span class="highlight-green">progress while executing</span>, displaying tool uses as they happen. Skills suggestions prioritize recently and frequently used skills.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">技能執行進度顯示</div>
-                <div class="commentary-text">
-                    <p><strong>比喻：</strong>以前像黑箱，只看到最終結果。現在像透明廚房，能看到每一步操作。</p>
-                    <ul>
-                        <li>實時顯示工具調用</li>
-                        <li>常用技能優先出現在建議列表</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 24: Sed Preview -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#24 of 110+</div>
-                <div class="feature-title-en">Sed In-place Edit Preview</div>
-                <div class="original-text">Sed in-place edit commands now render as <span class="highlight-blue">file edits with diff preview</span>, making it easier to review changes before they happen.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">Sed 編輯差異預覽</div>
-                <div class="commentary-text">
-                    <p><code>sed -i</code> 是強大但危險的命令。</p>
-                    <p><strong>改進：</strong>執行前會顯示 diff 預覽，就像 git diff 一樣，可以清楚看到哪些行會被修改。</p>
-                    <p>減少意外修改檔案的風險。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 25: Git Diff Memory -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#25 of 110+</div>
-                <div class="feature-title-en">Git Diff Memory Leak Fix</div>
-                <div class="original-text">Fixed git diff parsing <span class="highlight">memory leak</span> where sliced strings retained large parent strings in memory.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">Git Diff 記憶體洩漏修復</div>
-                <div class="commentary-text">
-                    <p><strong>技術細節：</strong>JavaScript 的字串切片會保留對原始字串的引用。處理大型 diff 時，即使只需要一小段，整個原始字串都會留在記憶體。</p>
-                    <p><strong>影響：</strong>大型 repo 的操作更穩定。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 26: API Context Overflow -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#26 of 110+</div>
-                <div class="feature-title-en">API Context Overflow Fix</div>
-                <div class="original-text">Fixed API context overflow when background tasks produce large output. Now <span class="highlight-green">truncates to 30K characters</span> and provides file path to full output.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">API 上下文溢出修復</div>
-                <div class="commentary-text">
-                    <p><strong>問題：</strong>後台任務輸出太大會超出 context window 限制。</p>
-                    <p><strong>解法：</strong></p>
-                    <ul>
-                        <li>自動截斷到 30K 字元</li>
-                        <li>提供完整輸出的檔案路徑</li>
-                    </ul>
-                    <p>防止 context overflow 錯誤。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 27: Bedrock Cross-Region -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#27 of 110+</div>
-                <div class="feature-title-en">AWS Bedrock Cross-Region Fix</div>
-                <div class="original-text">Fixed AWS Bedrock subagents not inheriting <span class="highlight-blue">EU/APAC cross-region inference</span> model configuration, which caused 403 errors.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">Bedrock 跨區域推理修復</div>
-                <div class="commentary-text">
-                    <p><strong>影響對象：</strong>使用 AWS Bedrock 的企業用戶，特別是歐洲和亞太區域。</p>
-                    <p><strong>問題：</strong>子 agent 沒有繼承跨區域配置，導致 403 權限錯誤。</p>
-                    <p>現在子 agent 正確繼承父 agent 的模型配置。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 28: Bash Command Prefix -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#28 of 110+</div>
-                <div class="feature-title-en">Bash Command Prefix Extraction</div>
-                <div class="original-text">Fixed bash command prefix extraction. Commands like <code>git -C /path log</code> now correctly match <span class="highlight">Bash(git log:*)</span> permission rules.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">Bash 命令前綴解析修復</div>
-                <div class="commentary-text">
-                    <p><strong>問題：</strong>全域選項（如 <code>-C /path</code>）會干擾子命令辨識。</p>
-                    <p><strong>範例：</strong></p>
-                    <ul>
-                        <li><code>git -C /path log</code> 現在正確識別為 <code>git log</code></li>
-                        <li>權限規則 <code>Bash(git log:*)</code> 正確匹配</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 29: Real-time Thinking -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#29 of 110+</div>
-                <div class="feature-title-en">Real-time Thinking Display</div>
-                <div class="original-text">Added <span class="highlight-green">real-time thinking block display</span> in Ctrl+O transcript mode, allowing you to see Claude's reasoning as it happens.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">即時思考過程顯示</div>
-                <div class="commentary-text">
-                    <p>在 <code>Ctrl+O</code> 轉錄模式下，可以看到 Claude 的思考過程。</p>
-                    <p><strong>用途：</strong></p>
-                    <ul>
-                        <li>Debug 複雜推理</li>
-                        <li>學習 Claude 的決策邏輯</li>
-                        <li>識別可能的錯誤假設</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 30: VSCode Context Menu -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#30 of 110+</div>
-                <div class="feature-title-en">[VSCode] Context Menu Enhancement</div>
-                <div class="original-text">Added currently selected <span class="highlight-blue">model name to context menu</span>. Added descriptive labels on auto-accept permission button (e.g., "Yes, allow npm for this project").</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">[VSCode] 上下文選單增強</div>
-                <div class="commentary-text">
-                    <p><strong>兩個改進：</strong></p>
-                    <ul>
-                        <li>右鍵選單顯示目前使用的模型</li>
-                        <li>權限按鈕標籤更清晰：「是，允許此專案使用 npm」</li>
-                    </ul>
-                    <p>減少誤操作，提升信任感。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 31: VSCode Markdown -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#31 of 110+</div>
-                <div class="feature-title-en">[VSCode] Markdown Rendering Fix</div>
-                <div class="original-text">Fixed <span class="highlight">paragraph breaks not rendering</span> in markdown content within VSCode extension.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">[VSCode] Markdown 段落渲染修復</div>
-                <div class="commentary-text">
-                    <p>以前段落之間沒有正確換行，文字擠成一團。</p>
-                    <p>現在 Markdown 內容正確渲染，閱讀體驗大幅改善。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 32: VSCode Tab Badges -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#32 of 110+</div>
-                <div class="feature-title-en">[VSCode] Tab Icon Badges</div>
-                <div class="original-text">Added tab icon badges showing <span class="highlight-green">pending permissions (blue)</span> and <span class="highlight">unread completions (orange)</span>.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">[VSCode] 分頁圖示徽章</div>
-                <div class="commentary-text">
-                    <p>視覺提示讓你知道 Claude 需要你的注意：</p>
-                    <ul>
-                        <li><strong>藍色徽章：</strong>有待批准的權限請求</li>
-                        <li><strong>橘色徽章：</strong>有未讀的完成訊息</li>
-                    </ul>
-                    <p>多任務工作時不會漏掉重要通知。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Feature 33: Windows Rendering -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column">
-                <div class="feature-number">#33 of 110+</div>
-                <div class="feature-title-en">[Windows] Rendering Fix</div>
-                <div class="original-text">Fixed issue with <span class="highlight-blue">improper rendering</span> on Windows platform.</div>
-                <div class="star-rating">★★★★☆</div>
-            </div>
-            <div class="right-column">
-                <div class="feature-title-zh">[Windows] 渲染問題修復</div>
-                <div class="commentary-text">
-                    <p>Windows 用戶之前可能遇到顯示異常的問題。</p>
-                    <p>這個修復確保 Windows 平台上的渲染與其他平台一致。</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== TIER 3 ==================== -->
-    <div class="section-header">
-        <span>Part 3: Tier 3 Nice-to-Have Features 實用功能</span>
-        <span class="tier-badge tier-3">45+ items</span>
-    </div>
-
-    <!-- Feature 34: Project gitignore -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column"><div class="feature-number">#34</div><div class="feature-title-en">Project-Level .gitignore Control</div><div class="original-text">Added <code>respectGitignore</code> in settings.json for per-project control.</div><div class="star-rating">★★★☆☆</div></div>
-            <div class="right-column"><div class="feature-title-zh">專案級 .gitignore 控制</div><div class="commentary-text">不同專案有不同策略，現在可以按專案決定是否遵守 .gitignore。</div></div>
-        </div>
-    </div>
-    <!-- Feature 35: Remote Session -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column"><div class="feature-number">#35</div><div class="feature-title-en">Remote Session Commands</div><div class="original-text">Added <code>/teleport</code> and <code>/remote-env</code> for claude.ai subscribers.</div><div class="star-rating">★★★☆☆</div></div>
-            <div class="right-column"><div class="feature-title-zh">遠端會話命令</div><div class="commentary-text">在辦公室開始的工作，回家後可以繼續。需要 claude.ai 訂閱。</div></div>
-        </div>
-    </div>
-    <!-- Feature 36: Disable Agents -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column"><div class="feature-number">#36</div><div class="feature-title-en">Disable Specific Agents</div><div class="original-text">Use <code>Task(AgentName)</code> syntax or <code>--disallowedTools</code> to disable agents.</div><div class="star-rating">★★★☆☆</div></div>
-            <div class="right-column"><div class="feature-title-zh">停用特定 Agent</div><div class="commentary-text">直接停用不符合需求的 agent，而不是每次都拒絕請求。</div></div>
-        </div>
-    </div>
-    <!-- Feature 37: Command Search -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column"><div class="feature-number">#37</div><div class="feature-title-en">Command Search Improvement</div><div class="original-text">Prioritize exact and prefix matches on command names over fuzzy matches.</div><div class="star-rating">★★★☆☆</div></div>
-            <div class="right-column"><div class="feature-title-zh">命令搜尋改進</div><div class="commentary-text">搜命令更準了，不會被無關的模糊結果干擾。</div></div>
-        </div>
-    </div>
-    <!-- Feature 38: Hook Enhancement -->
-    <div class="feature-row">
-        <div class="content-grid">
-            <div class="left-column"><div class="feature-number">#38</div><div class="feature-title-en">PreToolUse Hook Enhancement</div><div class="original-text">Hooks can now modify input while also requesting user consent.</div><div class="star-rating">★★★☆☆</div></div>
-            <div class="right-column"><div class="feature-title-zh">Hook 功能增強</div><div class="commentary-text">Hook 可以同時修改命令內容並詢問用戶同意。適合「預處理 + 確認」流程。</div></div>
-        </div>
-    </div>
-
-    <!-- Tier 3 Compact List -->
-    <div class="section-header" style="background: #334155;"><span>Tier 3 Additional Items 其他三星功能</span><span class="tier-badge tier-3">35+ items</span></div>
-    <ul class="compact-list">
-        <li class="compact-item"><div class="compact-left">Added /plan command shortcut to enable plan mode directly</div><div class="compact-right">加了 /plan 命令，可以直接啟用計畫模式</div></li>
-        <li class="compact-item"><div class="compact-left">Slash command autocomplete when / appears anywhere in input</div><div class="compact-right">任何位置輸入 / 都能觸發自動完成</div></li>
-        <li class="compact-item"><div class="compact-left">Added once: true config for hooks</div><div class="compact-right">支援 Hook 的 once: true 配置</div></li>
-        <li class="compact-item"><div class="compact-left">YAML-style lists in frontmatter allowed-tools field</div><div class="compact-right">frontmatter 的 allowed-tools 支援 YAML 列表</div></li>
-        <li class="compact-item"><div class="compact-left">Plugin support for prompt and agent hook types</div><div class="compact-right">外掛支援 prompt 和 agent hook 類型</div></li>
-        <li class="compact-item"><div class="compact-left">CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS environment variable</div><div class="compact-right">可用環境變數覆蓋檔案讀取 token 限制</div></li>
-        <li class="compact-item"><div class="compact-left">/terminal-setup support for Kitty, Alacritty, Zed, Warp</div><div class="compact-right">新增對 Kitty、Alacritty、Zed、Warp 終端支援</div></li>
-        <li class="compact-item"><div class="compact-left">Cmd+V support for image paste in iTerm2</div><div class="compact-right">iTerm2 支援 Cmd+V 貼上圖片</div></li>
-        <li class="compact-item"><div class="compact-left">Left/right arrow key navigation for dialog tabs</div><div class="compact-right">左右箭頭切換對話框標籤頁</div></li>
-        <li class="compact-item"><div class="compact-left">Skills as separate category in context visualization</div><div class="compact-right">Skill 在上下文可視化裡單獨顯示</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed Claude in Chrome for WSL environments</div><div class="compact-right">修復了 WSL 環境下 Claude in Chrome 支援</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed terminal keyboard mode reset on exit</div><div class="compact-right">修復了退出時終端鍵盤模式沒重置</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed Alt+B/Alt+F word navigation in terminals</div><div class="compact-right">修復了 Alt+B 和 Alt+F 不工作的問題</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed ${CLAUDE_PLUGIN_ROOT} substitution</div><div class="compact-right">修復了外掛變數沒被替換的問題</div></li>
-        <li class="compact-item"><div class="compact-left">Write tool respects system umask</div><div class="compact-right">Write 工具建立的檔案遵守系統 umask</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed $() command substitution parse errors</div><div class="compact-right">修復了 $() 命令替換解析失敗</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed multi-line bash commands with backslash</div><div class="compact-right">修復了反斜線續行命令被錯誤分割</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed slash commands as CLI arguments</div><div class="compact-right">修復了 CLI 參數斜線命令沒執行</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed Tab-completing slash commands</div><div class="compact-right">修復了 Tab 完成後按 Enter 選中不同命令</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed skill token estimates in /context</div><div class="compact-right">技能 token 估算更準確了</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed subagent model inheritance</div><div class="compact-right">修復了子 agent 不繼承父模型</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed Bedrock/Vertex model picker display</div><div class="compact-right">修復了模型選取器顯示錯誤</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed background tasks for repos with dots in names</div><div class="compact-right">修復了名稱含點的 repo 後台任務失敗</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed large image paste error</div><div class="compact-right">修復了大圖片貼上失敗</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed Linux Wayland image paste</div><div class="compact-right">修復了 Linux Wayland 貼上圖片失敗</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed CJK multiline prompt blank lines</div><div class="compact-right">修復了中日韓多行提示多餘空行</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed "Reading X files" indicator tense</div><div class="compact-right">修復了讀取指示器時態切換問題</div></li>
-        <li class="compact-item"><div class="compact-left">Removed plan mode permission prompt</div><div class="compact-right">進入計畫模式不需要權限提示</div></li>
-        <li class="compact-item"><div class="compact-left">Improved AskQuestion tool reliability</div><div class="compact-right">提問工具的可靠性提升</div></li>
-        <li class="compact-item"><div class="compact-left">Improved compaction reliability</div><div class="compact-right">壓縮功能的可靠性提升</div></li>
-        <li class="compact-item"><div class="compact-left">Improved async agent incremental output</div><div class="compact-right">非同步 agent 增量輸出改進</div></li>
-        <li class="compact-item"><div class="compact-left">Improved macOS screenshot paste with TIFF</div><div class="compact-right">macOS 截圖貼上支援 TIFF 格式</div></li>
-        <li class="compact-item"><div class="compact-left">Updated Atlassian MCP to streamable HTTP</div><div class="compact-right">Atlassian MCP 更新為更可靠配置</div></li>
-    </ul>
-
-    <!-- ==================== TIER 2 ==================== -->
-    <div class="section-header"><span>Part 4: Tier 2 Minor Improvements 小改進</span><span class="tier-badge tier-2">25+ items</span></div>
-    <ul class="compact-list">
-        <li class="compact-item"><div class="compact-left">Windows installer shows errors on failure</div><div class="compact-right">安裝失敗時能看到錯誤了</div></li>
-        <li class="compact-item"><div class="compact-left">CLI help output in alphabetical order</div><div class="compact-right">幫助資訊按字母排序</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed FIFO file reading hang</div><div class="compact-right">讀取特殊檔案不會卡住了</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed duplicate Bash commands in permission labels</div><div class="compact-right">權限選項不會顯示重複命令</div></li>
-        <li class="compact-item"><div class="compact-left">"Interrupted" message changed to grey</div><div class="compact-right">取消訊息從紅色改成灰色</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed cursor disappearing after permission dialogs</div><div class="compact-right">關閉對話框後光標不會消失</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed /hooks menu wrong selection</div><div class="compact-right">修復了選單選中錯誤類型</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed images showing as "[object Object]"</div><div class="compact-right">修復了圖片顯示為物件字串</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed ultrathink highlight on wrapped text</div><div class="compact-right">修復了換行時高亮錯位</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed feedback submission timeout hang</div><div class="compact-right">修復了反饋提交無限掛起</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed search mode exit on up arrow</div><div class="compact-right">修復了按上箭頭退出搜尋</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed hook success trailing colon</div><div class="compact-right">修復了成功訊息多餘冒號</div></li>
-        <li class="compact-item"><div class="compact-left">Cleaner background task completion messages</div><div class="compact-right">後台任務完成訊息更乾淨</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed LSP tool incorrectly enabled</div><div class="compact-right">修復了 LSP 工具錯誤啟用</div></li>
-        <li class="compact-item"><div class="compact-left">Removed image reference link underline</div><div class="compact-right">圖片連結去掉底線</div></li>
-        <li class="compact-item"><div class="compact-left">[SDK] zod peer dependency ^4.0.0</div><div class="compact-right">[SDK] zod 最低版本 ^4.0.0</div></li>
-        <li class="compact-item"><div class="compact-left">Esc only moves queued prompts to input</div><div class="compact-right">Esc 不會取消運行中任務</div></li>
-        <li class="compact-item"><div class="compact-left">Memory usage improved 3x for large conversations</div><div class="compact-right">大型對話記憶體改善 3 倍</div></li>
-        <li class="compact-item"><div class="compact-left">Improved stats screenshot resolution</div><div class="compact-right">截圖解析度提高</div></li>
-        <li class="compact-item"><div class="compact-left">Removed # shortcut (use Claude to edit CLAUDE.md)</div><div class="compact-right">移除 # 快捷鍵</div></li>
-        <li class="compact-item"><div class="compact-left">Fixed thinking mode toggle persistence</div><div class="compact-right">修復了思考模式切換保存</div></li>
-    </ul>
-
-    <!-- Key Takeaways -->
-    <div class="section-header" style="background: linear-gradient(135deg, #059669, #10b981);"><span>Key Takeaways 重點整理</span></div>
-    <div class="content-grid">
-        <div class="left-column" style="background: #ecfdf5;">
-            <div class="info-box box-concept"><div class="info-box-header">Skills System Matured</div><div class="info-box-content"><p>Hot-reload + Fork context + Hooks make Skills a true development platform.</p></div></div>
-            <div class="info-box box-concept"><div class="info-box-header">UX Significantly Improved</div><div class="info-box-content"><p>Bash wildcards, Auto-continue, Permission optimization — daily usage is smoother.</p></div></div>
-        </div>
-        <div class="right-column" style="background: #fefce8;">
-            <div class="info-box box-key"><div class="info-box-header">Skills 系統成熟化</div><div class="info-box-content"><p>熱重載 + 隔離環境 + Hooks 讓 Skills 成為真正的開發平台。</p></div></div>
-            <div class="info-box box-key"><div class="info-box-header">安全性與效能提升</div><div class="info-box-content"><p>敏感資料不再洩露，啟動更快，記憶體改善 3 倍。</p></div></div>
-        </div>
-    </div>
-
-    <!-- Article Rating -->
-    <div class="article-rating">
-        <div class="rating-header"><div class="rating-title">Article Rating 文章評價</div><div class="overall-score"><span>綜合</span><span class="overall-value">4.0</span></div></div>
-        <div class="rating-grid">
-            <div class="rating-item"><div class="rating-label">技術深度</div><div class="rating-stars">★★★★<span class="star-empty">☆</span></div></div>
-            <div class="rating-item"><div class="rating-label">實務應用</div><div class="rating-stars">★★★★<span class="star-empty">☆</span></div></div>
-            <div class="rating-item"><div class="rating-label">工具生態</div><div class="rating-stars">★★★★★</div></div>
-            <div class="rating-item"><div class="rating-label">時效性</div><div class="rating-stars">★★★★★</div></div>
-            <div class="rating-item"><div class="rating-label">學習曲線</div><div class="rating-stars">★★★★<span class="star-empty">☆</span></div></div>
-        </div>
-    </div>
-
-    <!-- Practice Section -->
-    <div class="practice-section">
-        <div class="practice-header">Practice Questions 練習題</div>
-        <div class="question"><div class="question-number">Q1: 概念理解</div><div class="question-text">Claude Code 2.1.0 的 Skills 系統新增了 <code>context: fork</code> 功能。請解釋這個功能的作用。</div><button class="answer-toggle">隱藏答案</button><div class="answer-content"><p><strong>答案：</strong><code>context: fork</code> 讓 Skill 在<strong>隔離的子環境</strong>中執行，不會影響主工作區。適用於實驗性操作、多版本測試、風險隔離。</p></div></div>
-        <div class="question"><div class="question-number">Q2: 實務應用</div><div class="question-text">你會強調哪三個功能來說服 IT 和 QA 主管這個工具是安全且合規的？</div><button class="answer-toggle">隱藏答案</button><div class="answer-content"><p><strong>1. Security Fix：</strong>敏感資料不再記錄到 logs<br><strong>2. Hook System：</strong>自動記錄操作滿足 ALCOA<br><strong>3. Tool Restriction：</strong>精確控制工具範圍</p></div></div>
-        <div class="question"><div class="question-number">Q3: 批判思考</div><div class="question-text">110+ 項改進大多是 bug fixes 和 UX 改善，從產品策略角度這代表什麼？</div><button class="answer-toggle">隱藏答案</button><div class="answer-content"><p><strong>產品成熟度：</strong>從「早期採用者工具」轉變為「主流生產力工具」<br><strong>平台化：</strong>Skills 強化顯示正在打造可擴展平台<br><strong>企業準備：</strong>安全/權限改進是企業採用的先決條件</p></div></div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>Claude Code 2.1.0 版本更新深度解析 - 雙欄對照版 | 製作：2026-01-09</p>
-        <p>來源：<a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md">GitHub CHANGELOG.md</a></p>
-    </div>
-
-    <script>
-    document.querySelectorAll('.answer-toggle').forEach(button => {
-        button.addEventListener('click', function() {
-            const content = this.nextElementSibling;
-            content.classList.toggle('hide');
-            this.textContent = content.classList.contains('hide') ? '顯示答案' : '隱藏答案';
-        });
-    });
-    </script>
 </body>
 </html>

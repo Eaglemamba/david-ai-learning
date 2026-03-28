@@ -1,896 +1,682 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Certified Architect 自學完整課程</title>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claude Certified Architect 自學完整課程</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
 <!-- Dashboard Index Meta -->
-<meta name="doc-date" content="2026-03-16">
-<meta name="doc-title" content="Claude Architect 認證自學 - hooeem 5 Domain 完整拆解">
-<meta name="doc-source" content="@hooeem / X (Twitter)">
-<meta name="doc-source-type" content="">
-<meta name="doc-tags" content="Agent,API,Tool,Framework">
-<meta name="doc-rating" content="4.3">
-<meta name="doc-summary" content="拆解 Claude Certified Architect 考試五大 Domain，含反模式、建構練習、學習資源。">
-<meta name="doc-file" content="2026-03-16_claude-architect-certification.html">
+<meta content="2026-03-16" name="doc-date"/>
+<meta content="Claude Architect 認證自學 - hooeem 5 Domain 完整拆解" name="doc-title"/>
+<meta content="@hooeem / X (Twitter)" name="doc-source"/>
+<meta content="" name="doc-source-type"/>
+<meta content="Agent,API,Tool,Framework" name="doc-tags"/>
+<meta content="4.3" name="doc-rating"/>
+<meta content="拆解 Claude Certified Architect 考試五大 Domain，含反模式、建構練習、學習資源。" name="doc-summary"/>
+<meta content="2026-03-16_claude-architect-certification.html" name="doc-file"/><meta content="v1" name="normalized"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-/* === v1.4.3 MANDATORY PAGE LAYOUT === */
-body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
-.header {
-    text-align: center;
-    padding: 2.5rem 2rem;
-    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
-    color: white;
-}
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-}
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    margin-bottom: 2rem;
-}
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .content-grid { grid-template-columns: 1fr; }
-}
 
-/* Tags */
-.tag-container { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
-.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
-.tag-agent { background: #c7d2fe; color: #3730a3; }
-.tag-api { background: #ddd6fe; color: #4c1d95; }
-.tag-tool { background: #fecdd3; color: #9f1239; }
-.tag-framework { background: #fde68a; color: #92400e; }
-
-/* Header */
-.header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
-.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
-.header .source { font-size: 0.85rem; opacity: 0.7; }
-
-/* Rating Bar */
-.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
-.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
-.rating-stars { color: #f59e0b; letter-spacing: 1px; }
-.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
-
-/* Executive Summary */
-.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.executive-summary h2 { color: #1e3a8a; margin-top: 0; font-size: 1.2rem; }
-.executive-summary p { font-size: 0.95rem; color: #334155; margin-bottom: 0.75rem; }
-
-/* Learning Objectives */
-.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
-@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
-.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
-.objective-desc { font-size: 0.8rem; color: #64748b; }
-
-/* Framework Visual */
-.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
-.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
-.framework-steps { display: flex; justify-content: center; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
-.framework-step { text-align: center; min-width: 100px; flex: 1; }
-.framework-icon { font-size: 1.3rem; margin-bottom: 0.5rem; width: 3rem; height: 3rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
-.framework-step-title { font-weight: 700; font-size: 0.85rem; }
-.framework-step-desc { font-size: 0.75rem; opacity: 0.9; margin-top: 0.25rem; }
-.framework-arrow { font-size: 1.2rem; color: #93c5fd; }
-@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
-
-/* Tab Navigation */
-.tab-container { margin: 1.5rem 0; }
-.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
-.tab-btn { flex: 1; padding: 0.75rem 0.5rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.8rem; min-width: 80px; }
-.tab-btn:hover { color: #334155; }
-.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* Section Headers */
-.section-title { font-size: 1.15rem; font-weight: 700; color: #1e3a8a; margin: 1.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
-.part-header { background: linear-gradient(135deg, #1e3a5f, #2d4a7a); color: white; padding: 1rem 1.25rem; font-weight: 700; font-size: 1rem; }
-
-/* Content Grid Cells */
-.content-left { padding: 1.25rem; background: white; border-right: 1px solid #e2e8f0; }
-.content-right { padding: 1.25rem; background: #f8fafc; }
-.bilingual-block { margin-bottom: 1rem; }
-.bilingual-block .zh { color: #1e293b; line-height: 1.8; font-size: 0.95rem; }
-.bilingual-block .en { color: #64748b; font-style: italic; font-size: 0.9rem; line-height: 1.6; margin-top: 0.3rem; }
-.highlight-concept { background: #a5d6a7; padding: 0 3px; border-radius: 2px; }
-.highlight-key { background: #ffcc80; padding: 0 3px; border-radius: 2px; }
-.highlight-practical { background: #6ee7b7; padding: 0 3px; border-radius: 2px; }
-
-/* Info Boxes */
-.info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; font-size: 0.9rem; }
-.info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
-.info-box-content { padding: 0.75rem; line-height: 1.7; }
-.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
-.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: 0; }
-.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
-.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: 0; }
-.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
-.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: 0; }
-.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
-.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: 0; }
-.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: 0; }
-.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
-.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: 0; }
-
-/* Code blocks */
-code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; color: #7c3aed; }
-pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.82rem; line-height: 1.6; }
-
-/* Domain weight badge */
-.domain-weight { display: inline-block; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; font-weight: 700; font-size: 0.8rem; padding: 0.2rem 0.6rem; border-radius: 9999px; margin-left: 0.5rem; }
-
-/* Key Takeaways */
-.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
-@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
-.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
-.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.summary-card .card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
-.summary-card .card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
-
-/* Practice Accordion */
-.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
-.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
-.question-header::-webkit-details-marker { display: none; }
-.question-number { font-weight: 700; color: #6d28d9; }
-.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
-.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
-.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
-details[open] .accordion-icon { transform: rotate(180deg); }
-.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
-.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
-.question-answer p:last-child { margin-bottom: 0; }
-
-/* Bottom Line */
-.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin: 1.5rem 0; }
-.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
-.bottom-line-item { margin-bottom: 1rem; }
-.bottom-line-item:last-child { margin-bottom: 0; }
-.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
-.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
-
-/* Footer */
-.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
-.footer a { color: #3b82f6; text-decoration: none; }
-
-/* Task Statement styling */
-.task-statement { background: white; border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 1rem; border: 1px solid #e2e8f0; }
-.task-id { font-weight: 700; color: #7c3aed; font-size: 0.8rem; }
-.task-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
-.task-desc { font-size: 0.9rem; color: #475569; line-height: 1.7; }
-.anti-pattern { background: #fef2f2; border-left: 3px solid #ef4444; padding: 0.5rem 0.75rem; margin: 0.5rem 0; border-radius: 0 0.25rem 0.25rem 0; font-size: 0.85rem; color: #991b1b; }
-.correct-pattern { background: #f0fdf4; border-left: 3px solid #22c55e; padding: 0.5rem 0.75rem; margin: 0.5rem 0; border-radius: 0 0.25rem 0.25rem 0; font-size: 0.85rem; color: #166534; }
-.build-exercise { background: linear-gradient(135deg, #eff6ff, #f0f9ff); border: 1px solid #93c5fd; border-radius: 0.75rem; padding: 1rem 1.25rem; margin: 1rem 0; }
-.build-exercise-title { font-weight: 700; color: #1e40af; font-size: 0.9rem; margin-bottom: 0.5rem; }
-.build-exercise-desc { font-size: 0.85rem; color: #334155; line-height: 1.7; }
-.resource-link { display: inline-block; background: #eff6ff; color: #1e40af; font-size: 0.82rem; padding: 0.2rem 0.6rem; border-radius: 4px; margin: 0.2rem; text-decoration: none; border: 1px solid #bfdbfe; }
-
-/* Linear layout override for code-heavy sections */
-.content-grid.linear { grid-template-columns: 1fr; }
-.content-grid.linear .content-left { border-right: none; }
-</style>
 </head>
 <body>
-
-<div class="header">
-    <div class="tag-container">
-        <span class="tag tag-agent">Agent</span>
-        <span class="tag tag-api">API</span>
-        <span class="tag tag-tool">Tool</span>
-        <span class="tag tag-framework">Framework</span>
-    </div>
-    <h1>Claude Certified Architect 自學完整課程</h1>
-    <div class="subtitle">拆解認證考試 5 大 Domain，從 Agentic Loop 到 Context Management</div>
-    <div class="source">Source: @hooeem / X (Twitter) | 2026-03-16</div>
+<header class="header">
+<div class="tag-container">
+<span class="tag tag-agent">Agent</span>
+<span class="tag tag-api">API</span>
+<span class="tag tag-tool">Tool</span>
+<span class="tag tag-framework">Framework</span>
 </div>
-
+<h1>Claude Certified Architect 自學完整課程</h1>
+<div class="subtitle">拆解認證考試 5 大 Domain，從 Agentic Loop 到 Context Management</div>
+<div class="source">Source: @hooeem / X (Twitter) | 2026-03-16</div>
+</header>
 <div class="container">
-
-    <!-- Executive Summary -->
-    <div class="executive-summary">
-        <h2>Executive Summary</h2>
-        <div class="rating-bar">
-            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.3/5</span>
-            <span class="rating-high">&uarr; Practical Value, Timeliness</span>
-            <span class="rating-low">&darr; Learning Curve (info density extreme)</span>
-        </div>
-        <p>@hooeem 將 Claude Certified Architect (Foundations) 認證考試的完整考綱拆解為 5 大 Domain，涵蓋 Agentic Architecture (27%)、Tool Design & MCP (18%)、Claude Code Configuration (20%)、Prompt Engineering (20%)、Context Management (15%)。每個 Domain 附帶反模式辨識、建構練習、學習資源連結，以及一個完整的 Domain-specific study prompt。</p>
-        <p>核心觀點：你不需要認證資格才能成為 Claude Architect，你需要的是<span class="highlight-key">理解這些知識並能實作</span>。文章的最大價值在於將散落的 Anthropic 文件、SDK 文件、工程部落格，整合成一條結構化的學習路徑。</p>
-        <p><strong>批判觀察：</strong>文章本身不教概念，而是「教你怎麼學」——提供學習地圖和 study prompts。實際知識仍需自行從 Anthropic 官方資源學習。此外，認證考試本身僅開放給 Claude Partner，非 Partner 無法驗證學習成果。</p>
-    </div>
-
-    <!-- Learning Objectives -->
-    <h2 class="section-title">Learning Objectives</h2>
-    <div class="objectives-grid">
-        <div class="objective-item">
-            <div class="objective-icon">&#127959;</div>
-            <div class="objective-title">Agentic Architecture</div>
-            <div class="objective-desc">掌握 agentic loop、multi-agent orchestration、hooks、session management 的設計模式與反模式</div>
-        </div>
-        <div class="objective-item">
-            <div class="objective-icon">&#128295;</div>
-            <div class="objective-title">Tool & MCP Design</div>
-            <div class="objective-desc">理解 tool description 的關鍵作用、error response 結構、tool_choice 配置、MCP server 整合</div>
-        </div>
-        <div class="objective-item">
-            <div class="objective-icon">&#9881;</div>
-            <div class="objective-title">Production Configuration</div>
-            <div class="objective-desc">學會 CLAUDE.md hierarchy、path-specific rules、plan mode、CI/CD integration 的實務配置</div>
-        </div>
-    </div>
-
-    <!-- Framework Visual: 5 Domains -->
-    <div class="framework-visual">
-        <div class="framework-title">Claude Certified Architect - 5 Domain Exam Map</div>
-        <div class="framework-steps">
-            <div class="framework-step">
-                <div class="framework-icon">&#129302;</div>
-                <div class="framework-step-title">D1: Agentic</div>
-                <div class="framework-step-desc">27% - Loops, Orchestration, Hooks</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#128295;</div>
-                <div class="framework-step-title">D2: Tools</div>
-                <div class="framework-step-desc">18% - MCP, Descriptions, Errors</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#9881;</div>
-                <div class="framework-step-title">D3: Config</div>
-                <div class="framework-step-desc">20% - CLAUDE.md, Rules, CI/CD</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#128221;</div>
-                <div class="framework-step-title">D4: Prompt</div>
-                <div class="framework-step-desc">20% - Criteria, Schemas, Batch</div>
-            </div>
-            <div class="framework-arrow">&#8594;</div>
-            <div class="framework-step">
-                <div class="framework-icon">&#129504;</div>
-                <div class="framework-step-title">D5: Context</div>
-                <div class="framework-step-desc">15% - Preservation, Escalation</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tabbed Content -->
-    <div class="tab-container">
-        <div class="tab-nav">
-            <button class="tab-btn active" onclick="switchTab(event, 'tab-overview')">Overview</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-d1')">D1: Agentic 27%</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-d2')">D2: Tools 18%</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-d3')">D3: Config 20%</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-d4')">D4: Prompt 20%</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-d5')">D5: Context 15%</button>
-        </div>
-
-        <!-- TAB: Overview -->
-        <div id="tab-overview" class="tab-content active">
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">Part 0: Exam Overview &amp; Learning Path</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh">這篇文章的前提很直白：Claude Certified Architect 認證考試<span class="highlight-key">僅開放給 Claude Partner</span>，一般開發者無法參加。但作者認為這不重要——重要的是掌握考試涵蓋的知識，因為這些正是建構 production-grade AI 應用所需的技能。</div>
-                        <div class="en">"You don't need the certificate to build production-grade applications. You just need the knowledge."</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh">考試涵蓋六大 scenario-based 情境，每題有一個正確答案和三個高度合理的干擾選項。及格分數 720/1000。考試偏好<span class="highlight-concept">確定性解決方案</span>（programmatic enforcement）勝過概率性方案（prompt-based guidance），尤其在高風險場景。</div>
-                        <div class="en">"The exam consistently rewards deterministic solutions over probabilistic ones when stakes are high, proportionate fixes, and root cause tracing."</div>
-                    </div>
-
-                    <div class="info-box box-compare">
-                        <div class="info-box-header">&#9878;&#65039; 六大考試情境</div>
-                        <div class="info-box-content">
-                            <strong>1.</strong> Customer Support Resolution Agent (Agent SDK + MCP + escalation)<br>
-                            <strong>2.</strong> Code Generation with Claude Code (CLAUDE.md + plan mode + slash commands)<br>
-                            <strong>3.</strong> Multi-Agent Research System (coordinator-subagent orchestration)<br>
-                            <strong>4.</strong> Developer Productivity Tools (built-in tools + MCP servers)<br>
-                            <strong>5.</strong> Claude Code for CI/CD (non-interactive pipelines + structured output)<br>
-                            <strong>6.</strong> Structured Data Extraction (JSON schemas + tool_use + validation loops)
+<!-- Executive Summary -->
+<div class="executive-summary">
+<h2>Executive Summary</h2>
+<div class="rating-bar">
+<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.3/5</span>
+<span class="rating-high">↑ Practical Value, Timeliness</span>
+<span class="rating-low">↓ Learning Curve (info density extreme)</span>
+</div>
+<p>@hooeem 將 Claude Certified Architect (Foundations) 認證考試的完整考綱拆解為 5 大 Domain，涵蓋 Agentic Architecture (27%)、Tool Design &amp; MCP (18%)、Claude Code Configuration (20%)、Prompt Engineering (20%)、Context Management (15%)。每個 Domain 附帶反模式辨識、建構練習、學習資源連結，以及一個完整的 Domain-specific study prompt。</p>
+<p>核心觀點：你不需要認證資格才能成為 Claude Architect，你需要的是<span class="highlight-key">理解這些知識並能實作</span>。文章的最大價值在於將散落的 Anthropic 文件、SDK 文件、工程部落格，整合成一條結構化的學習路徑。</p>
+<p><strong>批判觀察：</strong>文章本身不教概念，而是「教你怎麼學」——提供學習地圖和 study prompts。實際知識仍需自行從 Anthropic 官方資源學習。此外，認證考試本身僅開放給 Claude Partner，非 Partner 無法驗證學習成果。</p>
+</div>
+<!-- Learning Objectives -->
+<h2 class="section-title">Learning Objectives</h2>
+<div class="objectives-grid">
+<div class="objective-item">
+<div class="objective-icon">🏗</div>
+<div class="objective-title">Agentic Architecture</div>
+<div class="objective-desc">掌握 agentic loop、multi-agent orchestration、hooks、session management 的設計模式與反模式</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">🔧</div>
+<div class="objective-title">Tool &amp; MCP Design</div>
+<div class="objective-desc">理解 tool description 的關鍵作用、error response 結構、tool_choice 配置、MCP server 整合</div>
+</div>
+<div class="objective-item">
+<div class="objective-icon">⚙</div>
+<div class="objective-title">Production Configuration</div>
+<div class="objective-desc">學會 CLAUDE.md hierarchy、path-specific rules、plan mode、CI/CD integration 的實務配置</div>
+</div>
+</div>
+<!-- Framework Visual: 5 Domains -->
+<div class="framework-visual">
+<div class="framework-title">Claude Certified Architect - 5 Domain Exam Map</div>
+<div class="framework-steps">
+<div class="framework-step">
+<div class="framework-icon">🤖</div>
+<div class="framework-step-title">D1: Agentic</div>
+<div class="framework-step-desc">27% - Loops, Orchestration, Hooks</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🔧</div>
+<div class="framework-step-title">D2: Tools</div>
+<div class="framework-step-desc">18% - MCP, Descriptions, Errors</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">⚙</div>
+<div class="framework-step-title">D3: Config</div>
+<div class="framework-step-desc">20% - CLAUDE.md, Rules, CI/CD</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">📝</div>
+<div class="framework-step-title">D4: Prompt</div>
+<div class="framework-step-desc">20% - Criteria, Schemas, Batch</div>
+</div>
+<div class="framework-arrow">→</div>
+<div class="framework-step">
+<div class="framework-icon">🧠</div>
+<div class="framework-step-title">D5: Context</div>
+<div class="framework-step-desc">15% - Preservation, Escalation</div>
+</div>
+</div>
+</div>
+<!-- Tabbed Content -->
+<div class="tab-container">
+<div class="tab-nav">
+<button class="tab-btn active" onclick="switchTab(event, 'tab-overview')">Overview</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-d1')">D1: Agentic 27%</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-d2')">D2: Tools 18%</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-d3')">D3: Config 20%</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-d4')">D4: Prompt 20%</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-d5')">D5: Context 15%</button>
+</div>
+<!-- TAB: Overview -->
+<div class="tab-content active" id="tab-overview">
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">Part 0: Exam Overview &amp; Learning Path</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">這篇文章的前提很直白：Claude Certified Architect 認證考試<span class="highlight-key">僅開放給 Claude Partner</span>，一般開發者無法參加。但作者認為這不重要——重要的是掌握考試涵蓋的知識，因為這些正是建構 production-grade AI 應用所需的技能。</div>
+<div class="en-text">"You don't need the certificate to build production-grade applications. You just need the knowledge."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">考試涵蓋六大 scenario-based 情境，每題有一個正確答案和三個高度合理的干擾選項。及格分數 720/1000。考試偏好<span class="highlight-concept">確定性解決方案</span>（programmatic enforcement）勝過概率性方案（prompt-based guidance），尤其在高風險場景。</div>
+<div class="en-text">"The exam consistently rewards deterministic solutions over probabilistic ones when stakes are high, proportionate fixes, and root cause tracing."</div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ 六大考試情境</div>
+<div class="info-box-content">
+<strong>1.</strong> Customer Support Resolution Agent (Agent SDK + MCP + escalation)<br/>
+<strong>2.</strong> Code Generation with Claude Code (CLAUDE.md + plan mode + slash commands)<br/>
+<strong>3.</strong> Multi-Agent Research System (coordinator-subagent orchestration)<br/>
+<strong>4.</strong> Developer Productivity Tools (built-in tools + MCP servers)<br/>
+<strong>5.</strong> Claude Code for CI/CD (non-interactive pipelines + structured output)<br/>
+<strong>6.</strong> Structured Data Extraction (JSON schemas + tool_use + validation loops)
                         </div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-key">
-                        <div class="info-box-header">&#9888;&#65039; 重點提示</div>
-                        <div class="info-box-content">
-                            <strong>考試設計哲學：</strong>錯誤選項聽起來像好的工程實踐，正確答案需要精確知道哪個技術對應哪個問題。<br><br>
-                            <strong>學習策略：</strong>作者為每個 Domain 提供了一個完整的 study prompt，可以直接貼進 Claude 開始結構化學習。這是「用 AI 學 AI」的自舉學習法。
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<strong>考試設計哲學：</strong>錯誤選項聽起來像好的工程實踐，正確答案需要精確知道哪個技術對應哪個問題。<br/><br/>
+<strong>學習策略：</strong>作者為每個 Domain 提供了一個完整的 study prompt，可以直接貼進 Claude 開始結構化學習。這是「用 AI 學 AI」的自舉學習法。
                         </div>
-                    </div>
-
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">&#128161; 比喻說明</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 比喻說明</div>
+<div class="info-box-content">
                             把認證考試想像成建築師執照考試：你不需要執照才能設計美麗的建築（尤其是自己的房子），但執照考試涵蓋的結構力學、防火規範、管線設計，這些知識確實讓你蓋出的東西<strong>不會倒</strong>。同理，即使你拿不到證書，這些 Domain 的知識讓你的 AI 系統不會在 production 中「倒塌」。
                         </div>
-                    </div>
-
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">&#128218; 核心概念</div>
-                        <div class="info-box-content">
-                            <strong>Domain 權重分佈：</strong><br>
-                            D1 Agentic Architecture: 27% (最重)<br>
-                            D3 Claude Code Config: 20%<br>
-                            D4 Prompt Engineering: 20%<br>
-                            D2 Tool Design & MCP: 18%<br>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<strong>Domain 權重分佈：</strong><br/>
+                            D1 Agentic Architecture: 27% (最重)<br/>
+                            D3 Claude Code Config: 20%<br/>
+                            D4 Prompt Engineering: 20%<br/>
+                            D2 Tool Design &amp; MCP: 18%<br/>
                             D5 Context Management: 15% (最輕但影響全局)
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB: Domain 1 -->
-        <div id="tab-d1" class="tab-content">
-            <h2 class="section-title">Domain 1: Agentic Architecture & Orchestration <span class="domain-weight">27%</span></h2>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">1.1 Agentic Loops &mdash; stop_reason 是唯一的真理</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh">Agentic loop 的生命週期很簡單：送 request 給 Claude &rarr; 檢查 <code>stop_reason</code> &rarr; 如果是 <code>"tool_use"</code> 就執行工具、把結果附回對話歷史、再送回 Claude &rarr; 如果是 <code>"end_turn"</code> 就結束。<span class="highlight-key">工具結果必須 append 到對話歷史</span>，模型才能在下一輪推理新資訊。</div>
-                        <div class="en">"Tool results must be appended to conversation history so the model can reason about new information on the next iteration."</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh">考試測試三個你必須一眼辨認的<span class="highlight-key">反模式</span>：</div>
-                    </div>
-                    <div class="anti-pattern"><strong>&#10060; 反模式 1：</strong>解析自然語言判斷迴圈結束（例如檢查助手是否說了「I'm done」）。自然語言模糊不可靠，stop_reason 才是正解。</div>
-                    <div class="anti-pattern"><strong>&#10060; 反模式 2：</strong>任意迭代次數上限作為主要停止機制（例如「跑 10 次就停」）。要嘛截斷有用工作，要嘛跑不必要的迭代。</div>
-                    <div class="anti-pattern"><strong>&#10060; 反模式 3：</strong>檢查助手回覆是否包含 text 作為完成指標。模型可以同時回傳 text 和 tool_use blocks。</div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">&#128218; 核心概念</div>
-                        <div class="info-box-content">
-                            <strong>Model-driven vs Pre-configured：</strong><br>
-                            考試偏好 model-driven decision-making（Claude 根據 context 決定呼叫哪個 tool），而非預設的 decision tree。<br><br>
-                            <strong>但例外：</strong>當涉及財務或安全關鍵邏輯時，必須用 programmatic enforcement（hooks + prerequisite gates），不能只靠 prompt。
+</div>
+</div>
+</div>
+</div>
+<!-- TAB: Domain 1 -->
+<div class="tab-content" id="tab-d1">
+<h2 class="section-title">Domain 1: Agentic Architecture &amp; Orchestration <span class="domain-weight">27%</span></h2>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">1.1 Agentic Loops — stop_reason 是唯一的真理</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">Agentic loop 的生命週期很簡單：送 request 給 Claude → 檢查 <code>stop_reason</code> → 如果是 <code>"tool_use"</code> 就執行工具、把結果附回對話歷史、再送回 Claude → 如果是 <code>"end_turn"</code> 就結束。<span class="highlight-key">工具結果必須 append 到對話歷史</span>，模型才能在下一輪推理新資訊。</div>
+<div class="en-text">"Tool results must be appended to conversation history so the model can reason about new information on the next iteration."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">考試測試三個你必須一眼辨認的<span class="highlight-key">反模式</span>：</div>
+</div>
+<div class="anti-pattern"><strong>❌ 反模式 1：</strong>解析自然語言判斷迴圈結束（例如檢查助手是否說了「I'm done」）。自然語言模糊不可靠，stop_reason 才是正解。</div>
+<div class="anti-pattern"><strong>❌ 反模式 2：</strong>任意迭代次數上限作為主要停止機制（例如「跑 10 次就停」）。要嘛截斷有用工作，要嘛跑不必要的迭代。</div>
+<div class="anti-pattern"><strong>❌ 反模式 3：</strong>檢查助手回覆是否包含 text 作為完成指標。模型可以同時回傳 text 和 tool_use blocks。</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">📚 核心概念</div>
+<div class="info-box-content">
+<strong>Model-driven vs Pre-configured：</strong><br/>
+                            考試偏好 model-driven decision-making（Claude 根據 context 決定呼叫哪個 tool），而非預設的 decision tree。<br/><br/>
+<strong>但例外：</strong>當涉及財務或安全關鍵邏輯時，必須用 programmatic enforcement（hooks + prerequisite gates），不能只靠 prompt。
                         </div>
-                    </div>
-                    <div class="info-box box-key">
-                        <div class="info-box-header">&#9888;&#65039; 考試陷阱</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 考試陷阱</div>
+<div class="info-box-content">
                             開發者的 agent 有時過早終止，因為他們檢查 <code>response.content[0].type == "text"</code> 來判斷完成。Bug：模型可能在 text block 旁邊同時回傳 tool_use block。必須檢查 <code>stop_reason</code>，而非 content type。
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">1.2-1.3 Multi-Agent Orchestration &mdash; 子代理隔離原則</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh">最大的誤解：人們假設<span class="highlight-key">子代理（subagents）與 coordinator 共享記憶。他們不共享。</span>子代理有獨立的 context。每一筆資訊都必須在 prompt 中明確傳遞。</div>
-                        <div class="en">"Subagents operate with isolated context. Every piece of information must be passed explicitly in the prompt."</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh">Hub-and-spoke 架構中，coordinator 負責：任務分解、選擇子代理、傳遞 context、彙總結果、錯誤處理。所有通訊都經過 coordinator，子代理之間<strong>永不直接通訊</strong>。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh">Context 傳遞的關鍵：使用<span class="highlight-practical">結構化資料格式</span>分離 content 和 metadata（source URLs、document names、page numbers），以保留跨 agent 的 attribution。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Narrow Decomposition Failure：</strong>考試中有題目是 coordinator 把「AI 對創意產業的影響」只分解成視覺藝術子主題，遺漏了音樂、寫作、電影。根本原因是 coordinator 的分解邏輯，不是下游 agent。<span class="highlight-key">考試期望你追溯失敗到根源</span>。</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-code">
-                        <div class="info-box-header">&#128187; 程式碼/API</div>
-                        <div class="info-box-content">
-                            <strong>Task tool：</strong>coordinator 用來生成子代理的機制。coordinator 的 <code>allowedTools</code> 必須包含 "Task"。<br><br>
-                            <strong>fork_session：</strong>從共享分析基線建立獨立分支，用於探索不同方法（如比較兩種測試策略）。<br><br>
-                            <strong>Parallel spawning：</strong>coordinator 在單一 response 中發出多個 Task tool calls，平行生成子代理，比逐步調用更快。
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">1.2-1.3 Multi-Agent Orchestration — 子代理隔離原則</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">最大的誤解：人們假設<span class="highlight-key">子代理（subagents）與 coordinator 共享記憶。他們不共享。</span>子代理有獨立的 context。每一筆資訊都必須在 prompt 中明確傳遞。</div>
+<div class="en-text">"Subagents operate with isolated context. Every piece of information must be passed explicitly in the prompt."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Hub-and-spoke 架構中，coordinator 負責：任務分解、選擇子代理、傳遞 context、彙總結果、錯誤處理。所有通訊都經過 coordinator，子代理之間<strong>永不直接通訊</strong>。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">Context 傳遞的關鍵：使用<span class="highlight-practical">結構化資料格式</span>分離 content 和 metadata（source URLs、document names、page numbers），以保留跨 agent 的 attribution。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Narrow Decomposition Failure：</strong>考試中有題目是 coordinator 把「AI 對創意產業的影響」只分解成視覺藝術子主題，遺漏了音樂、寫作、電影。根本原因是 coordinator 的分解邏輯，不是下游 agent。<span class="highlight-key">考試期望你追溯失敗到根源</span>。</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-code">
+<div class="info-box-header">💻 程式碼/API</div>
+<div class="info-box-content">
+<strong>Task tool：</strong>coordinator 用來生成子代理的機制。coordinator 的 <code>allowedTools</code> 必須包含 "Task"。<br/><br/>
+<strong>fork_session：</strong>從共享分析基線建立獨立分支，用於探索不同方法（如比較兩種測試策略）。<br/><br/>
+<strong>Parallel spawning：</strong>coordinator 在單一 response 中發出多個 Task tool calls，平行生成子代理，比逐步調用更快。
                         </div>
-                    </div>
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">&#128161; CDMO 類比</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 CDMO 類比</div>
+<div class="info-box-content">
                             Multi-agent orchestration 就像 CDMO 的 tech transfer：coordinator 是 Project Manager，subagents 是各部門（QA、QC、Production、RA）。PM 不會假設 QC 知道 Production 的 batch record 細節——每次 handoff 都要有明確的 tech transfer protocol，附帶完整文件。子代理記憶隔離 = 部門間沒有共享文件系統。
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">1.4-1.5 Workflow Enforcement & Hooks &mdash; 確定性 vs 概率性</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh">考試的決策規則很明確：當後果涉及<span class="highlight-key">財務、安全、合規</span>時，必須使用 programmatic enforcement（hooks / prerequisite gates）。低風險場景（格式偏好、風格指南）用 prompt-based guidance 即可。</div>
-                        <div class="en">"When consequences are financial, security-related, or compliance-related: use programmatic enforcement."</div>
-                    </div>
-                    <div class="correct-pattern"><strong>&#9989; 正確模式：</strong>PostToolUse hook 在工具執行後、模型處理結果前攔截，標準化異質資料格式（Unix timestamp → ISO 8601）。Tool call interception hook 在執行前攔截，阻擋超過 $500 的退款並轉向人工。</div>
-                    <div class="anti-pattern"><strong>&#10060; 反模式：</strong>用 enhanced system prompt 或 few-shot examples 來確保退款前驗證帳戶所有權。8% 的失敗率 = 真實的財務損失。</div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">&#128736;&#65039; 實務應用</div>
-                        <div class="info-box-content">
-                            <strong>Decision Framework：</strong><br>
-                            Hooks = 確定性保證（100% 遵守）<br>
-                            Prompts = 概率性引導（大多數時候有效）<br><br>
-                            <strong>判斷標準：</strong>如果單次失敗就會導致公司損失金錢或面臨法律風險，用 hooks。這與 GMP 環境中「critical process parameter 必須有 hard interlock，不能只靠 SOP」的邏輯完全一致。
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">1.4-1.5 Workflow Enforcement &amp; Hooks — 確定性 vs 概率性</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">考試的決策規則很明確：當後果涉及<span class="highlight-key">財務、安全、合規</span>時，必須使用 programmatic enforcement（hooks / prerequisite gates）。低風險場景（格式偏好、風格指南）用 prompt-based guidance 即可。</div>
+<div class="en-text">"When consequences are financial, security-related, or compliance-related: use programmatic enforcement."</div>
+</div>
+<div class="correct-pattern"><strong>✅ 正確模式：</strong>PostToolUse hook 在工具執行後、模型處理結果前攔截，標準化異質資料格式（Unix timestamp → ISO 8601）。Tool call interception hook 在執行前攔截，阻擋超過 $500 的退款並轉向人工。</div>
+<div class="anti-pattern"><strong>❌ 反模式：</strong>用 enhanced system prompt 或 few-shot examples 來確保退款前驗證帳戶所有權。8% 的失敗率 = 真實的財務損失。</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用</div>
+<div class="info-box-content">
+<strong>Decision Framework：</strong><br/>
+                            Hooks = 確定性保證（100% 遵守）<br/>
+                            Prompts = 概率性引導（大多數時候有效）<br/><br/>
+<strong>判斷標準：</strong>如果單次失敗就會導致公司損失金錢或面臨法律風險，用 hooks。這與 GMP 環境中「critical process parameter 必須有 hard interlock，不能只靠 SOP」的邏輯完全一致。
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">1.6-1.7 Task Decomposition & Session Management</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>兩種分解模式：</strong>Fixed sequential pipeline（預定步驟，適合結構化任務如 code review）vs Dynamic adaptive decomposition（根據發現生成子任務，適合開放式調查）。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Attention Dilution 問題：</strong>單次處理 14 個檔案會導致深度不一致，某些檔案的明顯 bug 被遺漏。解法：<span class="highlight-practical">多 pass 架構</span>——per-file local analysis + separate cross-file integration pass。</div>
-                        <div class="en">"Processing too many files in a single pass produces inconsistent depth."</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Session 管理三選項：</strong><code>--resume</code>（繼續 session）、<code>fork_session</code>（分支探索）、fresh start with summary injection（context 過時時重新開始）。當程式碼已修改，resume 會帶著過時的 tool results，造成矛盾建議。</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="build-exercise">
-                        <div class="build-exercise-title">&#128296; Domain 1 建構練習</div>
-                        <div class="build-exercise-desc">
-                            建構一個 coordinator agent + 2 個 subagents（web search + document analysis），實作：proper context passing with structured metadata、programmatic prerequisite gate、PostToolUse normalisation hook。用 multi-concern request 測試。<br><br>
-                            <strong>進階：</strong>加入 3-4 個 MCP tools、proper stop_reason handling、tool call interception hook 阻擋 policy violations。
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">1.6-1.7 Task Decomposition &amp; Session Management</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text"><strong>兩種分解模式：</strong>Fixed sequential pipeline（預定步驟，適合結構化任務如 code review）vs Dynamic adaptive decomposition（根據發現生成子任務，適合開放式調查）。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Attention Dilution 問題：</strong>單次處理 14 個檔案會導致深度不一致，某些檔案的明顯 bug 被遺漏。解法：<span class="highlight-practical">多 pass 架構</span>——per-file local analysis + separate cross-file integration pass。</div>
+<div class="en-text">"Processing too many files in a single pass produces inconsistent depth."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Session 管理三選項：</strong><code>--resume</code>（繼續 session）、<code>fork_session</code>（分支探索）、fresh start with summary injection（context 過時時重新開始）。當程式碼已修改，resume 會帶著過時的 tool results，造成矛盾建議。</div>
+</div>
+</div>
+<div class="content-right">
+<div class="build-exercise">
+<div class="build-exercise-title">🔨 Domain 1 建構練習</div>
+<div class="build-exercise-desc">
+                            建構一個 coordinator agent + 2 個 subagents（web search + document analysis），實作：proper context passing with structured metadata、programmatic prerequisite gate、PostToolUse normalisation hook。用 multi-concern request 測試。<br/><br/>
+<strong>進階：</strong>加入 3-4 個 MCP tools、proper stop_reason handling、tool call interception hook 阻擋 policy violations。
                         </div>
-                    </div>
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">&#128218; 學習資源</div>
-                        <div class="info-box-content">
-                            <span class="resource-link">Agent SDK Overview</span>
-                            <span class="resource-link">Building Agents with Claude Agent SDK</span>
-                            <span class="resource-link">Agent SDK Python repo + examples</span>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 學習資源</div>
+<div class="info-box-content">
+<span class="resource-link">Agent SDK Overview</span>
+<span class="resource-link">Building Agents with Claude Agent SDK</span>
+<span class="resource-link">Agent SDK Python repo + examples</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB: Domain 2 -->
+<div class="tab-content" id="tab-d2">
+<h2 class="section-title">Domain 2: Tool Design &amp; MCP Integration <span class="domain-weight">18%</span></h2>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">2.1 Tool Interface Design — 描述決定一切</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-key">Tool descriptions 是 Claude 選擇工具的主要機制。</span>不是輔助功能，就是「那個」機制。如果描述模糊或重疊，選擇就會不可靠。</div>
+<div class="en-text">"Tool descriptions are the primary mechanism Claude uses for tool selection."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">考試的 Q2 情境：<code>get_customer</code> 和 <code>lookup_order</code> 的描述幾乎一樣，導致持續 misrouting。正確修正不是 few-shot examples、不是 routing classifier、不是 tool consolidation——<span class="highlight-practical">而是改善 descriptions</span>。好的描述包含：工具用途、輸入格式、適用查詢範例、邊界情況、與相似工具的明確區分。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Tool 拆分原則：</strong>把 <code>analyze_document</code> 這種通用工具拆成 <code>extract_data_points</code>、<code>summarize_content</code>、<code>verify_claim_against_source</code>，每個有明確的 input/output contract。</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 重點提示</div>
+<div class="info-box-content">
+<strong>Tool overload 問題：</strong>給 agent 18 個 tools 會降低選擇可靠度。最佳做法：每個 agent <strong>4-5 個 tools</strong>，scope 到其角色。Synthesis agent 不該有 web search tools，web search agent 不該有 document analysis tools。
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB: Domain 2 -->
-        <div id="tab-d2" class="tab-content">
-            <h2 class="section-title">Domain 2: Tool Design & MCP Integration <span class="domain-weight">18%</span></h2>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">2.1 Tool Interface Design &mdash; 描述決定一切</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh"><span class="highlight-key">Tool descriptions 是 Claude 選擇工具的主要機制。</span>不是輔助功能，就是「那個」機制。如果描述模糊或重疊，選擇就會不可靠。</div>
-                        <div class="en">"Tool descriptions are the primary mechanism Claude uses for tool selection."</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh">考試的 Q2 情境：<code>get_customer</code> 和 <code>lookup_order</code> 的描述幾乎一樣，導致持續 misrouting。正確修正不是 few-shot examples、不是 routing classifier、不是 tool consolidation——<span class="highlight-practical">而是改善 descriptions</span>。好的描述包含：工具用途、輸入格式、適用查詢範例、邊界情況、與相似工具的明確區分。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Tool 拆分原則：</strong>把 <code>analyze_document</code> 這種通用工具拆成 <code>extract_data_points</code>、<code>summarize_content</code>、<code>verify_claim_against_source</code>，每個有明確的 input/output contract。</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-key">
-                        <div class="info-box-header">&#9888;&#65039; 重點提示</div>
-                        <div class="info-box-content">
-                            <strong>Tool overload 問題：</strong>給 agent 18 個 tools 會降低選擇可靠度。最佳做法：每個 agent <strong>4-5 個 tools</strong>，scope 到其角色。Synthesis agent 不該有 web search tools，web search agent 不該有 document analysis tools。
+</div>
+<div class="info-box box-code">
+<div class="info-box-header">💻 tool_choice 三模式</div>
+<div class="info-box-content">
+<code>"auto"</code>：模型決定是否呼叫工具。預設值。<br/>
+<code>"any"</code>：必須呼叫工具，自選哪個。用於保證結構化輸出。<br/>
+<code>{"type":"tool","name":"..."}</code>：必須呼叫指定工具。用於強制第一步。
                         </div>
-                    </div>
-                    <div class="info-box box-code">
-                        <div class="info-box-header">&#128187; tool_choice 三模式</div>
-                        <div class="info-box-content">
-                            <code>"auto"</code>：模型決定是否呼叫工具。預設值。<br>
-                            <code>"any"</code>：必須呼叫工具，自選哪個。用於保證結構化輸出。<br>
-                            <code>{"type":"tool","name":"..."}</code>：必須呼叫指定工具。用於強制第一步。
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">2.2-2.3 Structured Errors &amp; Tool Distribution</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text"><strong>四種錯誤類型：</strong>Transient（暫時性，可重試）、Validation（輸入無效，修正後重試）、Business（政策違規，<span class="highlight-key">不可重試</span>，需替代流程）、Permission（權限不足，需 escalation）。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text">關鍵區分：<span class="highlight-key">Access failure vs Valid empty result</span>。前者是工具無法連線（timeout、auth failure），可考慮重試。後者是工具成功查詢但沒有匹配——<strong>不該重試</strong>，這就是答案。搞混這兩者會破壞 recovery logic。</div>
+<div class="en-text">"Confusing these two breaks recovery logic. The exam tests this."</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Scoped cross-role tools：</strong>對高頻簡單操作，給 agent 一個受限工具直接使用，避免每次都要 round-trip 回 coordinator。例如 synthesis agent 有 scoped <code>verify_fact</code> 做簡單查詢，複雜查證才走 coordinator。考試 Q9 測的就是這個模式。</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ MCP Server 整合</div>
+<div class="info-box-content">
+<strong>Scoping 層級：</strong><br/>
+                            Project-level: <code>.mcp.json</code>（版控、團隊共享）<br/>
+                            User-level: <code>~/.claude.json</code>（個人、不共享）<br/><br/>
+<strong>環境變數：</strong><code>${GITHUB_TOKEN}</code> 語法，credentials 不進版控。<br/><br/>
+<strong>Build vs Use 決策：</strong>標準整合（Jira, GitHub, Slack）用 community MCP servers。只在團隊特有流程時才 build custom server。
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">2.2-2.3 Structured Errors & Tool Distribution</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>四種錯誤類型：</strong>Transient（暫時性，可重試）、Validation（輸入無效，修正後重試）、Business（政策違規，<span class="highlight-key">不可重試</span>，需替代流程）、Permission（權限不足，需 escalation）。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh">關鍵區分：<span class="highlight-key">Access failure vs Valid empty result</span>。前者是工具無法連線（timeout、auth failure），可考慮重試。後者是工具成功查詢但沒有匹配——<strong>不該重試</strong>，這就是答案。搞混這兩者會破壞 recovery logic。</div>
-                        <div class="en">"Confusing these two breaks recovery logic. The exam tests this."</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Scoped cross-role tools：</strong>對高頻簡單操作，給 agent 一個受限工具直接使用，避免每次都要 round-trip 回 coordinator。例如 synthesis agent 有 scoped <code>verify_fact</code> 做簡單查詢，複雜查證才走 coordinator。考試 Q9 測的就是這個模式。</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">&#128736;&#65039; MCP Server 整合</div>
-                        <div class="info-box-content">
-                            <strong>Scoping 層級：</strong><br>
-                            Project-level: <code>.mcp.json</code>（版控、團隊共享）<br>
-                            User-level: <code>~/.claude.json</code>（個人、不共享）<br><br>
-                            <strong>環境變數：</strong><code>${GITHUB_TOKEN}</code> 語法，credentials 不進版控。<br><br>
-                            <strong>Build vs Use 決策：</strong>標準整合（Jira, GitHub, Slack）用 community MCP servers。只在團隊特有流程時才 build custom server。
-                        </div>
-                    </div>
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">&#128161; CDMO 類比</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 CDMO 類比</div>
+<div class="info-box-content">
                             Tool description 就像 SOP 的「範圍 (Scope)」章節。如果兩份 SOP 的範圍描述幾乎一樣，operator 就不知道何時用哪份。同理，API 層級的 error category 就像 deviation classification（Critical / Major / Minor），每個類別有不同的 CAPA 流程。
                         </div>
-                    </div>
-                    <div class="build-exercise">
-                        <div class="build-exercise-title">&#128296; Domain 2 建構練習</div>
-                        <div class="build-exercise-desc">建立 3 個 MCP tools（其中 2 個故意描述模糊），寫 4 種 error category 的 responses，在 <code>.mcp.json</code> 中用環境變數配置。先體驗 misrouting，再修正描述，感受差異。</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB: Domain 3 -->
-        <div id="tab-d3" class="tab-content">
-            <h2 class="section-title">Domain 3: Claude Code Configuration & Workflows <span class="domain-weight">20%</span></h2>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">3.1-3.2 CLAUDE.md Hierarchy & Custom Commands</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh">CLAUDE.md 有三個層級，<span class="highlight-key">層級決定誰能看到指令</span>：</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>User-level</strong> <code>~/.claude/CLAUDE.md</code>：只有你自己。不受版控、不共享。新團隊成員 clone repo <strong>不會</strong>得到這些指令。<br>
-                        <strong>Project-level</strong> <code>.claude/CLAUDE.md</code>：所有人。版控、共享。團隊標準放這裡。<br>
-                        <strong>Directory-level</strong>（子目錄 CLAUDE.md）：在該目錄工作時才適用。</div>
-                    </div>
-                    <div class="anti-pattern"><strong>&#10060; 考試最愛的陷阱：</strong>新團隊成員沒收到指令。根本原因：指令在 user-level config 而非 project-level。</div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Commands vs Skills 的區分：</strong><br>
-                        <code>.claude/commands/</code> = project-scoped，版控共享<br>
-                        <code>~/.claude/commands/</code> = 個人，不共享<br>
-                        <code>.claude/skills/</code> + <code>SKILL.md</code> = on-demand invocation，有 frontmatter 配置<br><br>
+</div>
+<div class="build-exercise">
+<div class="build-exercise-title">🔨 Domain 2 建構練習</div>
+<div class="build-exercise-desc">建立 3 個 MCP tools（其中 2 個故意描述模糊），寫 4 種 error category 的 responses，在 <code>.mcp.json</code> 中用環境變數配置。先體驗 misrouting，再修正描述，感受差異。</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB: Domain 3 -->
+<div class="tab-content" id="tab-d3">
+<h2 class="section-title">Domain 3: Claude Code Configuration &amp; Workflows <span class="domain-weight">20%</span></h2>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">3.1-3.2 CLAUDE.md Hierarchy &amp; Custom Commands</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">CLAUDE.md 有三個層級，<span class="highlight-key">層級決定誰能看到指令</span>：</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>User-level</strong> <code>~/.claude/CLAUDE.md</code>：只有你自己。不受版控、不共享。新團隊成員 clone repo <strong>不會</strong>得到這些指令。<br/>
+<strong>Project-level</strong> <code>.claude/CLAUDE.md</code>：所有人。版控、共享。團隊標準放這裡。<br/>
+<strong>Directory-level</strong>（子目錄 CLAUDE.md）：在該目錄工作時才適用。</div>
+</div>
+<div class="anti-pattern"><strong>❌ 考試最愛的陷阱：</strong>新團隊成員沒收到指令。根本原因：指令在 user-level config 而非 project-level。</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Commands vs Skills 的區分：</strong><br/>
+<code>.claude/commands/</code> = project-scoped，版控共享<br/>
+<code>~/.claude/commands/</code> = 個人，不共享<br/>
+<code>.claude/skills/</code> + <code>SKILL.md</code> = on-demand invocation，有 frontmatter 配置<br/><br/>
                         Skills 是任務特定的 workflow（需要時調用），CLAUDE.md 是始終載入的通用標準。<span class="highlight-key">不要把任務流程放在 CLAUDE.md，不要把通用標準放在 skills。</span></div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-code">
-                        <div class="info-box-header">&#128187; Skill Frontmatter</div>
-                        <div class="info-box-content">
-                            <code>context: fork</code> &mdash; 在隔離子代理中執行，verbose 輸出不影響主對話<br><br>
-                            <code>allowed-tools</code> &mdash; 限制 skill 可用的工具，防止破壞性操作<br><br>
-                            <code>argument-hint</code> &mdash; 無參數調用時提示開發者輸入必要參數
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-code">
+<div class="info-box-header">💻 Skill Frontmatter</div>
+<div class="info-box-content">
+<code>context: fork</code> — 在隔離子代理中執行，verbose 輸出不影響主對話<br/><br/>
+<code>allowed-tools</code> — 限制 skill 可用的工具，防止破壞性操作<br/><br/>
+<code>argument-hint</code> — 無參數調用時提示開發者輸入必要參數
                         </div>
-                    </div>
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">&#128218; Path-Specific Rules (3.3)</div>
-                        <div class="info-box-content">
-                            <code>.claude/rules/</code> 目錄下的檔案可帶 YAML frontmatter glob pattern：<br><br>
-                            <code>paths: ["**/*.test.tsx"]</code><br><br>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 Path-Specific Rules (3.3)</div>
+<div class="info-box-content">
+<code>.claude/rules/</code> 目錄下的檔案可帶 YAML frontmatter glob pattern：<br/><br/>
+<code>paths: ["**/*.test.tsx"]</code><br/><br/>
                             Glob pattern 匹配<strong>整個 codebase</strong> 的檔案，不像 directory-level CLAUDE.md 只限單一目錄。50+ 個目錄的 test 規範用一條 rule 搞定。且 path-scoped rules 只在編輯匹配檔案時載入，<strong>節省 token</strong>。
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">3.4-3.6 Plan Mode, Iterative Refinement & CI/CD</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Plan mode 決策框架：</strong><br>
-                        Plan mode：monolith 重構、多檔案 migration、架構決策<br>
-                        Direct execution：單檔 bug fix、一個 validation check、scope 明確的修改<br>
-                        <span class="highlight-practical">混合模式最常見</span>：plan mode 做調查設計，direct execution 做實作。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Iterative Refinement 技術層級：</strong><br>
-                        1. Concrete input/output examples（2-3 個 before/after 範例）打敗 prose descriptions<br>
-                        2. Test-driven iteration：先寫測試，分享 failure 引導改善<br>
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">3.4-3.6 Plan Mode, Iterative Refinement &amp; CI/CD</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text"><strong>Plan mode 決策框架：</strong><br/>
+                        Plan mode：monolith 重構、多檔案 migration、架構決策<br/>
+                        Direct execution：單檔 bug fix、一個 validation check、scope 明確的修改<br/>
+<span class="highlight-practical">混合模式最常見</span>：plan mode 做調查設計，direct execution 做實作。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Iterative Refinement 技術層級：</strong><br/>
+                        1. Concrete input/output examples（2-3 個 before/after 範例）打敗 prose descriptions<br/>
+                        2. Test-driven iteration：先寫測試，分享 failure 引導改善<br/>
                         3. Interview pattern：讓 Claude 先問問題再實作</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>CI/CD 整合重點：</strong></div>
-                    </div>
-                    <div class="correct-pattern"><strong>&#9989; <code>-p</code> flag：</strong>非互動模式（print mode）。沒有這個 flag，CI job 會掛起等待互動輸入。考試 Q10 就考這個。</div>
-                    <div class="bilingual-block">
-                        <div class="zh"><span class="highlight-key">同一 session 產生的程式碼，由獨立 instance 來 review 效果更好</span>——同 session review 會保留推理 context，較不容易質疑自己的決策。</div>
-                        <div class="en">"The same Claude session that generated code is LESS effective at reviewing its own changes."</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-key">
-                        <div class="info-box-header">&#9888;&#65039; CI/CD 實務要點</div>
-                        <div class="info-box-content">
-                            <code>--output-format json</code> + <code>--json-schema</code>：產生機器可解析的結構化輸出<br><br>
-                            <strong>Incremental review：</strong>新 commit 後重跑 review 時，帶入先前 review findings，指示只報告新的或未解決的問題。避免重複 comments 侵蝕開發者信任。<br><br>
-                            <strong>CLAUDE.md for CI：</strong>記錄 testing standards、valuable test criteria、available fixtures，否則 test generation 只會產出低價值 boilerplate。
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>CI/CD 整合重點：</strong></div>
+</div>
+<div class="correct-pattern"><strong>✅ <code>-p</code> flag：</strong>非互動模式（print mode）。沒有這個 flag，CI job 會掛起等待互動輸入。考試 Q10 就考這個。</div>
+<div class="bilingual-block">
+<div class="zh-text"><span class="highlight-key">同一 session 產生的程式碼，由獨立 instance 來 review 效果更好</span>——同 session review 會保留推理 context，較不容易質疑自己的決策。</div>
+<div class="en-text">"The same Claude session that generated code is LESS effective at reviewing its own changes."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ CI/CD 實務要點</div>
+<div class="info-box-content">
+<code>--output-format json</code> + <code>--json-schema</code>：產生機器可解析的結構化輸出<br/><br/>
+<strong>Incremental review：</strong>新 commit 後重跑 review 時，帶入先前 review findings，指示只報告新的或未解決的問題。避免重複 comments 侵蝕開發者信任。<br/><br/>
+<strong>CLAUDE.md for CI：</strong>記錄 testing standards、valuable test criteria、available fixtures，否則 test generation 只會產出低價值 boilerplate。
                         </div>
-                    </div>
-                    <div class="build-exercise">
-                        <div class="build-exercise-title">&#128296; Domain 3 建構練習</div>
-                        <div class="build-exercise-desc">建立專案：CLAUDE.md hierarchy（project + directory level）、<code>.claude/rules/</code> 含 glob patterns（test files + API files）、custom skill 用 <code>context: fork</code>、CI script 用 <code>-p</code> flag + JSON output。測試 plan mode 做 multi-file refactor，direct execution 做 single bug fix。</div>
-                    </div>
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">&#128218; 學習資源</div>
-                        <div class="info-box-content">
-                            <span class="resource-link">Claude Code official docs</span>
-                            <span class="resource-link">Claude Code CLI Cheatsheet</span>
-                            <span class="resource-link">Creating the Perfect CLAUDE.md</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB: Domain 4 -->
-        <div id="tab-d4" class="tab-content">
-            <h2 class="section-title">Domain 4: Prompt Engineering & Structured Output <span class="domain-weight">20%</span></h2>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">4.1-4.2 Explicit Criteria & Few-Shot Prompting</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh">整個 Domain 4 的核心兩個字：<span class="highlight-key">be explicit</span>。「Be conservative」不會改善精確度。「Only report high-confidence findings」不會降低 false positives。</div>
-                    </div>
-                    <div class="anti-pattern"><strong>&#10060; 無效指令：</strong>"Be conservative." / "Only report high-confidence findings."</div>
-                    <div class="correct-pattern"><strong>&#9989; 有效指令：</strong>"Flag comments only when claimed behaviour contradicts actual code behaviour. Report bugs and security vulnerabilities. Skip minor style preferences and local patterns."</div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>False positive trust 問題：</strong>某一類別的高 false positive rate 會摧毀<span class="highlight-key">所有類別</span>的信任。解法：暫時停用高 false positive 的類別，邊改善 prompt 邊恢復。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Few-shot examples 是最高槓桿技術：</strong>2-4 個針對 ambiguous case 的範例，每個展示推理過程（為什麼選擇 A 而非 B）。這教的是泛化能力，不只是 pattern matching。</div>
-                        <div class="en">"Few-shot examples are the highest-leverage technique tested."</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">&#128218; Severity Calibration</div>
-                        <div class="info-box-content">
+</div>
+<div class="build-exercise">
+<div class="build-exercise-title">🔨 Domain 3 建構練習</div>
+<div class="build-exercise-desc">建立專案：CLAUDE.md hierarchy（project + directory level）、<code>.claude/rules/</code> 含 glob patterns（test files + API files）、custom skill 用 <code>context: fork</code>、CI script 用 <code>-p</code> flag + JSON output。測試 plan mode 做 multi-file refactor，direct execution 做 single bug fix。</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 學習資源</div>
+<div class="info-box-content">
+<span class="resource-link">Claude Code official docs</span>
+<span class="resource-link">Claude Code CLI Cheatsheet</span>
+<span class="resource-link">Creating the Perfect CLAUDE.md</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB: Domain 4 -->
+<div class="tab-content" id="tab-d4">
+<h2 class="section-title">Domain 4: Prompt Engineering &amp; Structured Output <span class="domain-weight">20%</span></h2>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">4.1-4.2 Explicit Criteria &amp; Few-Shot Prompting</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text">整個 Domain 4 的核心兩個字：<span class="highlight-key">be explicit</span>。「Be conservative」不會改善精確度。「Only report high-confidence findings」不會降低 false positives。</div>
+</div>
+<div class="anti-pattern"><strong>❌ 無效指令：</strong>"Be conservative." / "Only report high-confidence findings."</div>
+<div class="correct-pattern"><strong>✅ 有效指令：</strong>"Flag comments only when claimed behaviour contradicts actual code behaviour. Report bugs and security vulnerabilities. Skip minor style preferences and local patterns."</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>False positive trust 問題：</strong>某一類別的高 false positive rate 會摧毀<span class="highlight-key">所有類別</span>的信任。解法：暫時停用高 false positive 的類別，邊改善 prompt 邊恢復。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Few-shot examples 是最高槓桿技術：</strong>2-4 個針對 ambiguous case 的範例，每個展示推理過程（為什麼選擇 A 而非 B）。這教的是泛化能力，不只是 pattern matching。</div>
+<div class="en-text">"Few-shot examples are the highest-leverage technique tested."</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-concept">
+<div class="info-box-header">📚 Severity Calibration</div>
+<div class="info-box-content">
                             不要用 prose 描述 severity。用<strong>實際程式碼範例</strong>展示 "critical" vs "minor" 的差異。具體的程式碼比抽象的文字說明有效 10 倍。
                         </div>
-                    </div>
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">&#128161; CDMO 類比</div>
-                        <div class="info-box-content">
-                            這和 GMP 偏差調查的道理一模一樣。「嚴格調查」是空話。有效的 SOP 會寫：「當 particulate count > 10 particles/mL at >= 25um，classify as Major deviation，啟動 CAPA。當 particulate count 介於 warning limit 到 action limit 之間，記錄為 Minor deviation，trend monitoring。」<strong>明確的閾值 + 具體範例 = 可執行</strong>。
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 CDMO 類比</div>
+<div class="info-box-content">
+                            這和 GMP 偏差調查的道理一模一樣。「嚴格調查」是空話。有效的 SOP 會寫：「當 particulate count &gt; 10 particles/mL at &gt;= 25um，classify as Major deviation，啟動 CAPA。當 particulate count 介於 warning limit 到 action limit 之間，記錄為 Minor deviation，trend monitoring。」<strong>明確的閾值 + 具體範例 = 可執行</strong>。
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">4.3-4.6 Structured Output, Batch API & Multi-Instance Review</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>tool_use + JSON schema</strong> 消除語法錯誤，但<span class="highlight-key">不防止語義錯誤</span>（line items 加總不等於 stated total）、field placement 錯誤、fabrication。Schema 設計原則：source 可能沒有的資訊用 nullable fields（防止 fabrication）、模糊情況用 "unclear" enum、可擴展分類用 "other" + detail string。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Validation-Retry Loop：</strong>把原始文件 + 失敗的 extraction + 具體 validation error 一起送回。對 format mismatch 有效，對 source 中根本不存在的資訊<strong>無效</strong>。考試會同時出現這兩種場景，你必須辨別哪個可修復。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Message Batches API：</strong>50% 成本節省、最長 24 小時處理、無 latency SLA、不支援 multi-turn tool calling。</div>
-                    </div>
-                    <div class="correct-pattern"><strong>&#9989; Synchronous API：</strong>blocking workflows（pre-merge checks，開發者在等）</div>
-                    <div class="correct-pattern"><strong>&#9989; Batch API：</strong>latency-tolerant workflows（overnight reports、weekly audits、nightly test generation）</div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-key">
-                        <div class="info-box-header">&#9888;&#65039; Multi-Instance Review</div>
-                        <div class="info-box-content">
-                            同一 session 的 self-review 保留推理 context，較不會質疑自己的決策。<strong>獨立 instance（無先前 context）能抓到更多 subtle issues。</strong><br><br>
-                            Multi-pass 架構：per-file local analysis + separate cross-file integration pass，避免 attention dilution。<br><br>
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">4.3-4.6 Structured Output, Batch API &amp; Multi-Instance Review</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text"><strong>tool_use + JSON schema</strong> 消除語法錯誤，但<span class="highlight-key">不防止語義錯誤</span>（line items 加總不等於 stated total）、field placement 錯誤、fabrication。Schema 設計原則：source 可能沒有的資訊用 nullable fields（防止 fabrication）、模糊情況用 "unclear" enum、可擴展分類用 "other" + detail string。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Validation-Retry Loop：</strong>把原始文件 + 失敗的 extraction + 具體 validation error 一起送回。對 format mismatch 有效，對 source 中根本不存在的資訊<strong>無效</strong>。考試會同時出現這兩種場景，你必須辨別哪個可修復。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Message Batches API：</strong>50% 成本節省、最長 24 小時處理、無 latency SLA、不支援 multi-turn tool calling。</div>
+</div>
+<div class="correct-pattern"><strong>✅ Synchronous API：</strong>blocking workflows（pre-merge checks，開發者在等）</div>
+<div class="correct-pattern"><strong>✅ Batch API：</strong>latency-tolerant workflows（overnight reports、weekly audits、nightly test generation）</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Multi-Instance Review</div>
+<div class="info-box-content">
+                            同一 session 的 self-review 保留推理 context，較不會質疑自己的決策。<strong>獨立 instance（無先前 context）能抓到更多 subtle issues。</strong><br/><br/>
+                            Multi-pass 架構：per-file local analysis + separate cross-file integration pass，避免 attention dilution。<br/><br/>
                             Confidence-based routing：模型自報 confidence，低信心項目轉人工 review。用 labelled validation set 校準閾值。
                         </div>
-                    </div>
-                    <div class="build-exercise">
-                        <div class="build-exercise-title">&#128296; Domain 4 建構練習</div>
-                        <div class="build-exercise-desc">建立 extraction tool（JSON schema 含 required, optional, nullable fields, enums with 'other'）。實作 validation-retry loop。用 Batches API 批次處理 10 份文件。加 few-shot examples 處理不同文件格式，比較 before/after extraction quality。</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB: Domain 5 -->
-        <div id="tab-d5" class="tab-content">
-            <h2 class="section-title">Domain 5: Context Management & Reliability <span class="domain-weight">15%</span></h2>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">5.1-5.2 Context Preservation & Escalation</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Progressive Summarisation 陷阱：</strong>壓縮對話歷史會把「客戶要求退款 $247.83，訂單 #8891，3月3日」變成「客戶想退款」。數字、日期、百分比、客戶期望全消失。</div>
-                    </div>
-                    <div class="correct-pattern"><strong>&#9989; 解法：</strong>把交易事實提取到 persistent "case facts" block，每次 prompt 都帶入，永不壓縮。</div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>"Lost in the middle" 效應：</strong>模型可靠處理長輸入的<span class="highlight-key">開頭和結尾</span>，中間的 findings 可能被遺漏。解法：關鍵摘要放開頭，全文用明確 section headers。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>三個有效的 escalation triggers：</strong><br>
-                        1. 客戶明確要求人工（<strong>立即執行</strong>，不要先嘗試解決）<br>
-                        2. 政策例外或空白（請求超出文件化政策）<br>
+</div>
+<div class="build-exercise">
+<div class="build-exercise-title">🔨 Domain 4 建構練習</div>
+<div class="build-exercise-desc">建立 extraction tool（JSON schema 含 required, optional, nullable fields, enums with 'other'）。實作 validation-retry loop。用 Batches API 批次處理 10 份文件。加 few-shot examples 處理不同文件格式，比較 before/after extraction quality。</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB: Domain 5 -->
+<div class="tab-content" id="tab-d5">
+<h2 class="section-title">Domain 5: Context Management &amp; Reliability <span class="domain-weight">15%</span></h2>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">5.1-5.2 Context Preservation &amp; Escalation</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text"><strong>Progressive Summarisation 陷阱：</strong>壓縮對話歷史會把「客戶要求退款 $247.83，訂單 #8891，3月3日」變成「客戶想退款」。數字、日期、百分比、客戶期望全消失。</div>
+</div>
+<div class="correct-pattern"><strong>✅ 解法：</strong>把交易事實提取到 persistent "case facts" block，每次 prompt 都帶入，永不壓縮。</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>"Lost in the middle" 效應：</strong>模型可靠處理長輸入的<span class="highlight-key">開頭和結尾</span>，中間的 findings 可能被遺漏。解法：關鍵摘要放開頭，全文用明確 section headers。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>三個有效的 escalation triggers：</strong><br/>
+                        1. 客戶明確要求人工（<strong>立即執行</strong>，不要先嘗試解決）<br/>
+                        2. 政策例外或空白（請求超出文件化政策）<br/>
                         3. 無法取得實質進展</div>
-                    </div>
-                    <div class="anti-pattern"><strong>&#10060; 兩個不可靠的 triggers：</strong>Sentiment-based escalation（挫折感 ≠ 案件複雜度）、Self-reported confidence scores（模型在困難案件上常過度自信，簡單案件上反而不確定）。</div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-practical">
-                        <div class="info-box-header">&#128736;&#65039; 實務應用</div>
-                        <div class="info-box-content">
-                            <strong>Tool result trimming：</strong>Order lookup 回傳 40+ 欄位，你只需要 5 個。在 append 到 context 前先裁剪，防止 token 預算被不相關資料耗盡。<br><br>
-                            <strong>Upstream agent 最佳化：</strong>修改 agent 回傳結構化資料（key facts + citations + relevance scores）而非 verbose content + reasoning chains。
+</div>
+<div class="anti-pattern"><strong>❌ 兩個不可靠的 triggers：</strong>Sentiment-based escalation（挫折感 ≠ 案件複雜度）、Self-reported confidence scores（模型在困難案件上常過度自信，簡單案件上反而不確定）。</div>
+</div>
+<div class="content-right">
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ 實務應用</div>
+<div class="info-box-content">
+<strong>Tool result trimming：</strong>Order lookup 回傳 40+ 欄位，你只需要 5 個。在 append 到 context 前先裁剪，防止 token 預算被不相關資料耗盡。<br/><br/>
+<strong>Upstream agent 最佳化：</strong>修改 agent 回傳結構化資料（key facts + citations + relevance scores）而非 verbose content + reasoning chains。
                         </div>
-                    </div>
-                    <div class="info-box box-analogy">
-                        <div class="info-box-header">&#128161; CDMO 類比</div>
-                        <div class="info-box-content">
+</div>
+<div class="info-box box-analogy">
+<div class="info-box-header">💡 CDMO 類比</div>
+<div class="info-box-content">
                             Persistent case facts block = Batch Record 的 Master Data Section。不管 batch 進行到哪一步，Product Code、Lot Number、Expiry Date 這些 critical identifiers 永遠保留在 batch record 的固定位置，不會因為中間步驟的註解而被「壓縮」掉。
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-grid">
-                <div class="part-header" style="grid-column: 1 / -1;">5.3-5.6 Error Propagation, Exploration & Provenance</div>
-                <div class="content-left">
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Error propagation 反模式：</strong></div>
-                    </div>
-                    <div class="anti-pattern"><strong>&#10060; Silent suppression：</strong>回傳空結果標記為成功。阻止任何 recovery。</div>
-                    <div class="anti-pattern"><strong>&#10060; Workflow termination：</strong>單一失敗就殺掉整個 pipeline。丟棄 partial results。</div>
-                    <div class="correct-pattern"><strong>&#9989; 正確做法：</strong>結構化 error context（failure type、attempted query、partial results、alternative approaches）。子代理處理局部 transient failures，只 propagate 無法解決的。</div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Context degradation 與 Codebase exploration：</strong>長 session 後，模型開始引用「典型模式」而非先前發現的具體 class。緩解策略：Scratchpad files（寫 findings 到檔案）、subagent delegation、summary injection、<code>/compact</code>。</div>
-                    </div>
-                    <div class="bilingual-block">
-                        <div class="zh"><strong>Information Provenance：</strong>每個 finding 應有 claim + source URL + document name + excerpt + publication date。衝突來源<span class="highlight-key">不要任意選一個</span>——標註兩個值和 source attribution，讓 consumer 決定。不同日期解釋不同數字（不是矛盾）。</div>
-                    </div>
-                </div>
-                <div class="content-right">
-                    <div class="info-box box-key">
-                        <div class="info-box-header">&#9888;&#65039; Human Review & Confidence</div>
-                        <div class="info-box-content">
-                            <strong>Aggregate metrics 陷阱：</strong>97% overall accuracy 可能隱藏某文件類型 40% 的 error rate。永遠按<strong>文件類型 AND 欄位</strong>分別驗證。<br><br>
-                            <strong>Stratified random sampling：</strong>對高信心 extraction 也抽樣驗證，偵測 novel error patterns。<br><br>
-                            <strong>Field-level confidence calibration：</strong>模型輸出每欄位信心值，用 labelled validation set 校準閾值，低信心轉人工 review。
+</div>
+</div>
+</div>
+<div class="content-grid">
+<div class="part-header" style="grid-column: 1 / -1;">5.3-5.6 Error Propagation, Exploration &amp; Provenance</div>
+<div class="content-left">
+<div class="bilingual-block">
+<div class="zh-text"><strong>Error propagation 反模式：</strong></div>
+</div>
+<div class="anti-pattern"><strong>❌ Silent suppression：</strong>回傳空結果標記為成功。阻止任何 recovery。</div>
+<div class="anti-pattern"><strong>❌ Workflow termination：</strong>單一失敗就殺掉整個 pipeline。丟棄 partial results。</div>
+<div class="correct-pattern"><strong>✅ 正確做法：</strong>結構化 error context（failure type、attempted query、partial results、alternative approaches）。子代理處理局部 transient failures，只 propagate 無法解決的。</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Context degradation 與 Codebase exploration：</strong>長 session 後，模型開始引用「典型模式」而非先前發現的具體 class。緩解策略：Scratchpad files（寫 findings 到檔案）、subagent delegation、summary injection、<code>/compact</code>。</div>
+</div>
+<div class="bilingual-block">
+<div class="zh-text"><strong>Information Provenance：</strong>每個 finding 應有 claim + source URL + document name + excerpt + publication date。衝突來源<span class="highlight-key">不要任意選一個</span>——標註兩個值和 source attribution，讓 consumer 決定。不同日期解釋不同數字（不是矛盾）。</div>
+</div>
+</div>
+<div class="content-right">
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Human Review &amp; Confidence</div>
+<div class="info-box-content">
+<strong>Aggregate metrics 陷阱：</strong>97% overall accuracy 可能隱藏某文件類型 40% 的 error rate。永遠按<strong>文件類型 AND 欄位</strong>分別驗證。<br/><br/>
+<strong>Stratified random sampling：</strong>對高信心 extraction 也抽樣驗證，偵測 novel error patterns。<br/><br/>
+<strong>Field-level confidence calibration：</strong>模型輸出每欄位信心值，用 labelled validation set 校準閾值，低信心轉人工 review。
                         </div>
-                    </div>
-                    <div class="build-exercise">
-                        <div class="build-exercise-title">&#128296; Domain 5 建構練習</div>
-                        <div class="build-exercise-desc">建構 coordinator + 2 subagents。實作 persistent case facts block。模擬 timeout 並驗證 structured error propagation。用衝突來源測試，確認 synthesis 保留 attribution。</div>
-                    </div>
-                    <div class="info-box box-concept">
-                        <div class="info-box-header">&#128218; 推薦學習順序</div>
-                        <div class="info-box-content">
-                            <strong>1.</strong> Building with the Claude API<br>
-                            <strong>2.</strong> Introduction to Model Context Protocol<br>
-                            <strong>3.</strong> Claude Code in Action<br>
-                            <strong>4.</strong> Claude 101
+</div>
+<div class="build-exercise">
+<div class="build-exercise-title">🔨 Domain 5 建構練習</div>
+<div class="build-exercise-desc">建構 coordinator + 2 subagents。實作 persistent case facts block。模擬 timeout 並驗證 structured error propagation。用衝突來源測試，確認 synthesis 保留 attribution。</div>
+</div>
+<div class="info-box box-concept">
+<div class="info-box-header">📚 推薦學習順序</div>
+<div class="info-box-content">
+<strong>1.</strong> Building with the Claude API<br/>
+<strong>2.</strong> Introduction to Model Context Protocol<br/>
+<strong>3.</strong> Claude Code in Action<br/>
+<strong>4.</strong> Claude 101
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div><!-- end tab-container -->
-
-    <!-- Key Takeaways -->
-    <h2 class="section-title">Key Takeaways</h2>
-    <div class="takeaways-grid">
-        <div class="summary-card">
-            <div class="card-title">&#129302; Deterministic > Probabilistic</div>
-            <div class="card-text">高風險場景（財務、安全、合規）必須用 programmatic enforcement（hooks / gates），不能只靠 prompt。這是整份考試最一致的設計哲學，也是 production AI 系統與 demo AI 系統的根本分界線。</div>
-        </div>
-        <div class="summary-card">
-            <div class="card-title">&#128295; Tool Description 就是一切</div>
-            <div class="card-text">Claude 選擇工具的唯一機制是 tool description。描述模糊 = misrouting。修正 description 是第一優先步驟，在 routing classifier 或 few-shot examples 之前。每個 agent 限 4-5 tools。</div>
-        </div>
-        <div class="summary-card">
-            <div class="card-title">&#9881; Configuration 必須 Team-Visible</div>
-            <div class="card-text">CLAUDE.md 的三層 hierarchy 是考試高頻考點。指令放 user-level = 新成員看不到。Path-specific rules 用 glob pattern 跨目錄生效，比 directory-level CLAUDE.md 更精確且省 token。</div>
-        </div>
-        <div class="summary-card">
-            <div class="card-title">&#129504; Context 是有限資源</div>
-            <div class="card-text">Progressive summarisation 殺死交易資料。Tool results 要 trim 再 append。長 session 的 context degradation 需要 scratchpad files 或 /compact 緩解。Independent review instance 比 self-review 更有效。</div>
-        </div>
-    </div>
-
-    <!-- Practice Questions -->
-    <h2 class="section-title">Practice Questions</h2>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q1</span>
-            <span class="question-type">概念理解</span>
-            <span class="question-text">一個 customer support agent 在 8% 的案例中未驗證帳戶所有權就處理退款。最佳修正方案是什麼？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>正確答案：</strong>Programmatic prerequisite gate（hooks），在退款工具執行前強制要求帳戶驗證完成。</p>
-            <p><strong>為什麼不是其他選項：</strong></p>
-            <p>Enhanced system prompt &mdash; 概率性解決方案，8% 失敗率意味著真實財務損失，不可接受。</p>
-            <p>Few-shot examples &mdash; 高 token overhead，而且根本原因不是模型不理解（它理解），是偶爾跳過步驟。</p>
-            <p>Routing classifier &mdash; 過度工程化，問題不在路由而在流程控制。</p>
-            <p><strong>考試原則：</strong>財務/安全後果 = 確定性 enforcement，不接受概率性方案。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q2</span>
-            <span class="question-type">產業應用</span>
-            <span class="question-text">你在設計 CDMO 的 deviation triage agent。如何確保 Critical deviation 一定經過 QA Head review，而不只是「偶爾」經過？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>套用 Domain 1 (Task 1.4) 的 enforcement spectrum：</strong></p>
-            <p>GMP 環境中，deviation classification 的後果是合規性的（regulatory consequence），屬於 Domain 1 定義的「必須 programmatic enforcement」場景。</p>
-            <p><strong>實作：</strong>Tool call interception hook 在 deviation 工具回傳 classification = "Critical" 時，攔截後續 routing，強制加入 QA Head review step。不能只在 system prompt 寫「Critical deviations 需 QA Head 簽核」——這是概率性指令，在 GMP 環境中風險不可接受。</p>
-            <p>這完美對應 O-Ring 理論：regulatory judgment nodes 不可被 AI 自主跳過。</p>
-        </div>
-    </details>
-
-    <details class="question-accordion">
-        <summary class="question-header">
-            <span class="question-number">Q3</span>
-            <span class="question-type">批判思考</span>
-            <span class="question-text">作者說「你不需要認證就能建構 production-grade 應用」。這個觀點有什麼限制？認證的價值除了知識本身還有什麼？</span>
-            <span class="accordion-icon"></span>
-        </summary>
-        <div class="question-answer">
-            <p><strong>作者觀點的限制：</strong></p>
-            <p>1. <strong>Signal value：</strong>認證在勞動市場中是一個 credible signal，告訴雇主你通過了標準化評估。自學相同知識但缺乏 signal 時，需要用 portfolio / build projects 來替代。</p>
-            <p>2. <strong>Structured assessment gap：</strong>自學者缺乏「你是否真正掌握了」的外部驗證機制。考試的 scenario-based MCQ 會暴露你以為理解但實際上混淆的概念（如 access failure vs valid empty result）。</p>
-            <p>3. <strong>Partner network access：</strong>認證通常附帶 partner ecosystem 的 networking 價值，這不是知識可以替代的。</p>
-            <p><strong>反面觀點：</strong>在 AI 領域變化極快的今天，能實際 build 的人比能考試的人更有市場價值。認證的知識有效期可能只有 6-12 個月。</p>
-        </div>
-    </details>
-
-    <!-- Bottom Line -->
-    <div class="bottom-line">
-        <div class="bottom-line-header">&#127919; 我的行動結論</div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">&#10004; 核心洞察</div>
-            <div class="bottom-line-text">這份考綱拆解揭示了 production AI 系統的「結構力學」——五個 Domain 不是獨立知識點，而是一套完整的工程思維框架。其中 <strong>deterministic enforcement vs probabilistic guidance</strong> 的區分，與我在 GMP 環境中「hard interlock vs SOP guidance」的經驗完全同構。這意味著我的 CDMO 背景不只是「可以類比」，而是直接可遷移的判斷框架。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">&#128200; 立即應用</div>
-            <div class="bottom-line-text">本週開始用 Domain 1 的 study prompt 在 Claude 中進行結構化學習，完成 agentic loop + multi-agent orchestration 的概念掌握。同時，把 <code>/triage-deviation</code> slash command 的設計對照 Task 1.4（enforcement spectrum）和 Task 2.2（structured error responses）重新審視——確保 Critical deviation 的路由用 hook 而非 prompt。</div>
-        </div>
-        <div class="bottom-line-item">
-            <div class="bottom-line-label">&#9888; 需要補充</div>
-            <div class="bottom-line-text">文章提供學習地圖但不教概念，實際深度學習仍需回到 Anthropic 官方文件。作者提到的六大考試情境 study prompts 非常長（每個 3000+ words），需要評估是直接使用還是根據我的 CDMO context 客製化。另外，Domain 2 的 MCP server 整合部分需要 hands-on 練習——我目前的 Claude Code 使用偏向文件生成，還沒大量做 custom MCP server development。計畫在完成 Domain 1 後，用 2-3 週時間走完 Domain 2-5。</div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>&#x1F4C4; 製作日期：2026-03-16 | Source: <a href="https://x.com/hooeem" target="_blank">@hooeem on X</a></p>
-        <p>Suggested Chat Title: 2026-03-16 [Framework] hooeem - Claude Architect Full Course</p>
-    </div>
-
+</div>
+</div>
+</div>
+</div>
+</div><!-- end tab-container -->
+<!-- Key Takeaways -->
+<h2 class="section-title">Key Takeaways</h2>
+<div class="takeaways-grid">
+<div class="summary-card">
+<div class="card-title">🤖 Deterministic &gt; Probabilistic</div>
+<div class="card-text">高風險場景（財務、安全、合規）必須用 programmatic enforcement（hooks / gates），不能只靠 prompt。這是整份考試最一致的設計哲學，也是 production AI 系統與 demo AI 系統的根本分界線。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">🔧 Tool Description 就是一切</div>
+<div class="card-text">Claude 選擇工具的唯一機制是 tool description。描述模糊 = misrouting。修正 description 是第一優先步驟，在 routing classifier 或 few-shot examples 之前。每個 agent 限 4-5 tools。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">⚙ Configuration 必須 Team-Visible</div>
+<div class="card-text">CLAUDE.md 的三層 hierarchy 是考試高頻考點。指令放 user-level = 新成員看不到。Path-specific rules 用 glob pattern 跨目錄生效，比 directory-level CLAUDE.md 更精確且省 token。</div>
+</div>
+<div class="summary-card">
+<div class="card-title">🧠 Context 是有限資源</div>
+<div class="card-text">Progressive summarisation 殺死交易資料。Tool results 要 trim 再 append。長 session 的 context degradation 需要 scratchpad files 或 /compact 緩解。Independent review instance 比 self-review 更有效。</div>
+</div>
+</div>
+<!-- Practice Questions -->
+<h2 class="section-title">Practice Questions</h2>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q1</span>
+<span class="question-type">概念理解</span>
+<span class="question-text">一個 customer support agent 在 8% 的案例中未驗證帳戶所有權就處理退款。最佳修正方案是什麼？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>正確答案：</strong>Programmatic prerequisite gate（hooks），在退款工具執行前強制要求帳戶驗證完成。</p>
+<p><strong>為什麼不是其他選項：</strong></p>
+<p>Enhanced system prompt — 概率性解決方案，8% 失敗率意味著真實財務損失，不可接受。</p>
+<p>Few-shot examples — 高 token overhead，而且根本原因不是模型不理解（它理解），是偶爾跳過步驟。</p>
+<p>Routing classifier — 過度工程化，問題不在路由而在流程控制。</p>
+<p><strong>考試原則：</strong>財務/安全後果 = 確定性 enforcement，不接受概率性方案。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q2</span>
+<span class="question-type">產業應用</span>
+<span class="question-text">你在設計 CDMO 的 deviation triage agent。如何確保 Critical deviation 一定經過 QA Head review，而不只是「偶爾」經過？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>套用 Domain 1 (Task 1.4) 的 enforcement spectrum：</strong></p>
+<p>GMP 環境中，deviation classification 的後果是合規性的（regulatory consequence），屬於 Domain 1 定義的「必須 programmatic enforcement」場景。</p>
+<p><strong>實作：</strong>Tool call interception hook 在 deviation 工具回傳 classification = "Critical" 時，攔截後續 routing，強制加入 QA Head review step。不能只在 system prompt 寫「Critical deviations 需 QA Head 簽核」——這是概率性指令，在 GMP 環境中風險不可接受。</p>
+<p>這完美對應 O-Ring 理論：regulatory judgment nodes 不可被 AI 自主跳過。</p>
+</div>
+</details>
+<details class="question-accordion">
+<summary class="question-header">
+<span class="question-number">Q3</span>
+<span class="question-type">批判思考</span>
+<span class="question-text">作者說「你不需要認證就能建構 production-grade 應用」。這個觀點有什麼限制？認證的價值除了知識本身還有什麼？</span>
+<span class="accordion-icon"></span>
+</summary>
+<div class="question-answer">
+<p><strong>作者觀點的限制：</strong></p>
+<p>1. <strong>Signal value：</strong>認證在勞動市場中是一個 credible signal，告訴雇主你通過了標準化評估。自學相同知識但缺乏 signal 時，需要用 portfolio / build projects 來替代。</p>
+<p>2. <strong>Structured assessment gap：</strong>自學者缺乏「你是否真正掌握了」的外部驗證機制。考試的 scenario-based MCQ 會暴露你以為理解但實際上混淆的概念（如 access failure vs valid empty result）。</p>
+<p>3. <strong>Partner network access：</strong>認證通常附帶 partner ecosystem 的 networking 價值，這不是知識可以替代的。</p>
+<p><strong>反面觀點：</strong>在 AI 領域變化極快的今天，能實際 build 的人比能考試的人更有市場價值。認證的知識有效期可能只有 6-12 個月。</p>
+</div>
+</details>
+<!-- Bottom Line -->
+<div class="bottom-line">
+<div class="bottom-line-header">🎯 我的行動結論</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">✔ 核心洞察</div>
+<div class="bottom-line-text">這份考綱拆解揭示了 production AI 系統的「結構力學」——五個 Domain 不是獨立知識點，而是一套完整的工程思維框架。其中 <strong>deterministic enforcement vs probabilistic guidance</strong> 的區分，與我在 GMP 環境中「hard interlock vs SOP guidance」的經驗完全同構。這意味著我的 CDMO 背景不只是「可以類比」，而是直接可遷移的判斷框架。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">📈 立即應用</div>
+<div class="bottom-line-text">本週開始用 Domain 1 的 study prompt 在 Claude 中進行結構化學習，完成 agentic loop + multi-agent orchestration 的概念掌握。同時，把 <code>/triage-deviation</code> slash command 的設計對照 Task 1.4（enforcement spectrum）和 Task 2.2（structured error responses）重新審視——確保 Critical deviation 的路由用 hook 而非 prompt。</div>
+</div>
+<div class="bottom-line-item">
+<div class="bottom-line-label">⚠ 需要補充</div>
+<div class="bottom-line-text">文章提供學習地圖但不教概念，實際深度學習仍需回到 Anthropic 官方文件。作者提到的六大考試情境 study prompts 非常長（每個 3000+ words），需要評估是直接使用還是根據我的 CDMO context 客製化。另外，Domain 2 的 MCP server 整合部分需要 hands-on 練習——我目前的 Claude Code 使用偏向文件生成，還沒大量做 custom MCP server development。計畫在完成 Domain 1 後，用 2-3 週時間走完 Domain 2-5。</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+<p>📄 製作日期：2026-03-16 | Source: <a href="https://x.com/hooeem" target="_blank">@hooeem on X</a></p>
+<p>Suggested Chat Title: 2026-03-16 [Framework] hooeem - Claude Architect Full Course</p>
+</footer>
 </div><!-- end container -->
-
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');
@@ -900,6 +686,5 @@ function switchTab(evt, tabId) {
     evt.currentTarget.classList.add('active');
 }
 </script>
-
 </body>
 </html>
