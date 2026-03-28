@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>.claude/ 資料夾完整解析 - Claude Code 配置控制中心</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-03-24">
+<meta name="doc-title" content=".claude/ 資料夾解析 - Claude Code 配置中心">
+<meta name="doc-source" content="Akshay Pachaar / @akshay_pachaar">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Tool,Agent,Framework,API">
+<meta name="doc-rating" content="4.0">
+<meta name="doc-summary" content="Claude Code .claude/ 資料夾完整解析：CLAUDE.md、commands、skills、agents、permissions 設定指南">
+<meta name="doc-file" content="2026-03-24_claude-code-dot-claude-folder.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Tags */
+.tag-container { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-framework { background: #e9d5ff; color: #6d28d9; }
+.tag-api { background: #ddd6fe; color: #4c1d95; }
+
+.header h1 { font-size: 1.8rem; margin: 0 0 0.5rem; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid #3b82f6; }
+.executive-summary h2 { color: #1e3a8a; margin-top: 0; font-size: 1.2rem; }
+.executive-summary p { font-size: 0.95rem; color: #334155; margin-bottom: 0.75rem; }
+.executive-summary p:last-child { margin-bottom: 0; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+.objective-desc { font-size: 0.8rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+/* Tabs */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tab-btn { flex: 1; padding: 0.75rem 0.5rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; min-width: 80px; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Content Grid */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.content-grid.linear { grid-template-columns: 1fr; }
+.content-grid.linear .content-left { border-right: none; }
+
+.part-label { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; display: inline-block; margin-bottom: 0.75rem; }
+.section-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; }
+
+/* Bilingual */
+.bilingual-block { margin-bottom: 1.25rem; }
+.chinese-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.25rem; }
+.english-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
+
+/* Highlights */
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 0.75rem; font-size: 0.85rem; line-height: 1.7; }
+
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Code blocks */
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; line-height: 1.6; margin: 0.75rem 0; }
+code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
+.inline-code { background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; color: #6d28d9; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-icon { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+
+/* Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* Table */
+.comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+.comparison-table th { background: #1e3a5f; color: white; padding: 0.75rem; text-align: left; }
+.comparison-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
+.comparison-table tr:nth-child(even) { background: #f8fafc; }
+
+/* File tree */
+.file-tree { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; line-height: 1.8; margin: 0.75rem 0; }
+.file-tree .dir { color: #93c5fd; }
+.file-tree .file { color: #86efac; }
+.file-tree .comment { color: #94a3b8; }
+
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-left { border-right: none; }
+    .objectives-grid { grid-template-columns: 1fr; }
+    .takeaways-grid { grid-template-columns: 1fr; }
+    .framework-arrow { display: none; }
+    .framework-steps { gap: 1.5rem; }
+    .tab-nav { flex-wrap: wrap; }
+    .tab-btn { min-width: 45%; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-framework">Framework</span>
+        <span class="tag tag-api">API</span>
+    </div>
+    <h1>.claude/ 資料夾完整解析</h1>
+    <div class="subtitle">Claude Code 配置控制中心 — 從 CLAUDE.md 到 Skills、Agents、Permissions</div>
+    <div class="source">Akshay Pachaar (@akshay_pachaar) | 2025-03-21</div>
+</div>
+
+<div class="container">
+
+<!-- Executive Summary -->
+<div class="executive-summary">
+    <h2>Executive Summary</h2>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+        <span class="rating-high">↑ Practical Value, Learning Curve</span>
+        <span class="rating-low">↓ Technical Depth, Tool Ecosystem</span>
+    </div>
+    <p>這篇文章是目前最完整的 <span class="inline-code">.claude/</span> 資料夾結構解析。作者系統性拆解了 Claude Code 的配置層級：從最核心的 CLAUDE.md 指令檔，到 rules/（模組化規則）、commands/（自訂斜線指令）、skills/（自動觸發工作流）、agents/（子代理人角色），以及 settings.json（權限控制）。文章的最大價值在於實務導向 — 每個概念都附有可直接複製使用的範例檔案和建議的漸進式導入策略。</p>
+    <p>限制：本文是使用者社群撰寫的教學，並非 Anthropic 官方文件。部分細節（如 agents/ 資料夾的 model 欄位支援）需以官方文件為準。整體而言，這是 Claude Code 配置的優質入門指南，但缺乏進階的除錯技巧和效能最佳化討論。</p>
+</div>
+
+<!-- Learning Objectives -->
+<h2 style="color: #1e3a8a; margin-bottom: 1rem;">Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-icon">📁</div>
+        <div class="objective-title">雙層資料夾架構</div>
+        <div class="objective-desc">理解 project-level .claude/ vs global ~/.claude/ 的分工邏輯</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">📝</div>
+        <div class="objective-title">CLAUDE.md 最佳實踐</div>
+        <div class="objective-desc">掌握高效撰寫 CLAUDE.md 的原則：200 行內、具體指令、避免冗餘</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">⚡</div>
+        <div class="objective-title">Commands vs Skills vs Agents</div>
+        <div class="objective-desc">區分三種擴充機制的觸發方式和適用場景</div>
+    </div>
+</div>
+
+<!-- Framework Visual -->
+<div class="framework-visual">
+    <div class="framework-title">Claude Code 配置優先順序</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">📝</div>
+            <div class="framework-step-title">CLAUDE.md</div>
+            <div class="framework-step-desc">核心指令檔<br/>最高槓桿</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">📐</div>
+            <div class="framework-step-title">rules/</div>
+            <div class="framework-step-desc">模組化規則<br/>路徑範圍限定</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">⚡</div>
+            <div class="framework-step-title">commands/</div>
+            <div class="framework-step-desc">手動觸發<br/>斜線指令</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🤖</div>
+            <div class="framework-step-title">skills/ + agents/</div>
+            <div class="framework-step-desc">自動觸發<br/>專業子代理</div>
+        </div>
+    </div>
+</div>
+
+<!-- TABBED CONTENT -->
+<h2 style="color: #1e3a8a; margin-bottom: 1rem;">Content</h2>
+
+<div class="tab-container">
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">Foundation</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-claude-md')">CLAUDE.md</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-rules')">Rules</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-commands')">Commands</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-skills-agents')">Skills &amp; Agents</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-permissions')">Permissions</button>
+    </div>
+
+    <!-- TAB 1: Foundation -->
+    <div id="tab-foundation" class="tab-content active">
+        <div class="content-grid">
+            <div class="content-left">
+                <span class="part-label">Part I — 雙資料夾架構</span>
+                <div class="section-title">Two Folders, Not One</div>
+                
+                <div class="bilingual-block">
+                    <div class="chinese-text">在深入之前，有一件事值得先知道：實際上有<span class="highlight-key">兩個 .claude 目錄</span>，不是一個。第一個位於專案內部，第二個位於你的 home 目錄。</div>
+                    <div class="english-text">Before diving in, one thing worth knowing upfront: there are actually two .claude directories, not one. The first lives inside your project and the second lives in your home directory.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><span class="highlight-concept">專案層級資料夾</span>存放團隊配置。你把它提交到 git。團隊中每個人都使用相同的規則、相同的自訂指令、相同的權限策略。</div>
+                    <div class="english-text">The project-level folder holds team configuration. You commit it to git. Everyone on the team gets the same rules, the same custom commands, the same permission policies.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><span class="highlight-concept">全域 ~/.claude/ 資料夾</span>存放你的個人偏好和機器本地狀態，例如 session 歷史記錄和自動記憶。</div>
+                    <div class="english-text">The global ~/.claude/ folder holds your personal preferences and machine-local state like session history and auto-memory.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 比喻說明</div>
+                    <div class="info-box-content">
+                        想像一家製藥廠的 SOP 系統：<strong>專案層級</strong>就像廠區的標準作業程序（每個人都必須遵守），<strong>全域層級</strong>就像你個人的工作偏好設定（你習慣的工具排列、快捷鍵）。SOP 歸公司管，偏好歸個人管。
+                    </div>
+                </div>
+
+                <div class="info-box box-compare">
+                    <div class="info-box-header">⚖️ 工具比較</div>
+                    <div class="info-box-content">
+                        <table class="comparison-table">
+                            <tr><th>層級</th><th>路徑</th><th>Git 提交</th><th>用途</th></tr>
+                            <tr><td>Project</td><td><code>.claude/</code></td><td>Yes</td><td>團隊共用規則</td></tr>
+                            <tr><td>Global</td><td><code>~/.claude/</code></td><td>No</td><td>個人偏好</td></tr>
+                            <tr><td>Local override</td><td><code>CLAUDE.local.md</code></td><td>No (gitignored)</td><td>個人覆寫</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 重點提示</div>
+                    <div class="info-box-content">
+                        <code>CLAUDE.local.md</code> 和 <code>settings.local.json</code> 會自動被 gitignore，確保個人覆寫不會被提交到版本庫。這是個很聰明的設計 — 團隊標準和個人偏好可以共存。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: CLAUDE.md -->
+    <div id="tab-claude-md" class="tab-content">
+        <div class="content-grid">
+            <div class="content-left">
+                <span class="part-label">Part II — CLAUDE.md 核心指令檔</span>
+                <div class="section-title">CLAUDE.md: Claude's Instruction Manual</div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">這是整個系統中<span class="highlight-key">最重要的檔案</span>。當你啟動 Claude Code session 時，它讀取的第一個東西就是 CLAUDE.md。它直接將內容載入 system prompt，並在整個對話過程中記住它。</div>
+                    <div class="english-text">This is the most important file in the entire system. When you start a Claude Code session, the first thing it reads is CLAUDE.md. It loads it straight into the system prompt and keeps it in mind for the entire conversation.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">簡單來說：<span class="highlight-concept">你寫在 CLAUDE.md 裡的東西，Claude 都會遵守</span>。如果你告訴它在實作之前永遠先寫測試，它就會這樣做。</div>
+                    <div class="english-text">Simply put: whatever you write in CLAUDE.md, Claude will follow. If you tell Claude to always write tests before implementation, it will.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">專案根目錄的 CLAUDE.md 是最常見的設定。但你也可以在 <span class="inline-code">~/.claude/CLAUDE.md</span> 放一個用於全域偏好，甚至在子目錄中放一個用於資料夾特定規則。Claude 會讀取所有這些檔案並<span class="highlight-key">合併它們</span>。</div>
+                    <div class="english-text">A CLAUDE.md at your project root is the most common setup. But you can also have one in ~/.claude/CLAUDE.md for global preferences that apply across all projects, and even one inside subdirectories for folder-specific rules. Claude reads all of them and combines them.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>該寫什麼：</strong>建置/測試/lint 指令、關鍵架構決策、不明顯的陷阱、import 慣例、命名模式、錯誤處理風格、主要模組的檔案和資料夾結構。</div>
+                    <div class="english-text">Write: Build, test, and lint commands; key architectural decisions; non-obvious gotchas; import conventions, naming patterns, error handling styles; file and folder structure for the main modules.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>不該寫什麼：</strong>任何已經屬於 linter 或 formatter 設定的東西、可以直接連結的完整文件、解釋理論的長篇段落。</div>
+                    <div class="english-text">Don't write: Anything that belongs in a linter or formatter config; full documentation you can already link to; long paragraphs explaining theory.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><span class="highlight-key">保持 CLAUDE.md 在 200 行以內</span>。超過這個長度的檔案會開始消耗太多 context，Claude 的指令遵從性實際上會下降。</div>
+                    <div class="english-text">Keep CLAUDE.md under 200 lines. Files longer than that start eating too much context, and Claude's instruction adherence actually drops.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 程式碼/API — 有效的 CLAUDE.md 範例</div>
+                    <div class="info-box-content">
+<pre># Project: Acme API
+
+## Commands
+npm run dev          # Start dev server
+npm run test         # Run tests (Jest)
+npm run lint         # ESLint + Prettier check
+
+## Architecture
+- Express REST API, Node 20
+- PostgreSQL via Prisma ORM
+- All handlers live in src/handlers/
+
+## Conventions
+- Use zod for request validation
+- Return shape: { data, error }
+- Never expose stack traces
+- Use logger module, not console.log
+
+## Watch out for
+- Tests use real local DB
+- Strict TypeScript: no unused imports</pre>
+                        <p>只有約 20 行。給了 Claude 在這個程式碼庫中高效工作所需的一切。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 重點提示 — 200 行法則</div>
+                    <div class="info-box-content">
+                        這個 200 行限制是 context window 管理的核心原則。CLAUDE.md 的內容會被注入到 system prompt 中，每個 token 都在佔用你的 context window 空間。<br/><br/>
+                        這跟我們在 Master Prompt 設計中的經驗一致 — <strong>context engineering 的精髓是精準而非大量</strong>。與其給 Claude 一份 500 行的百科全書，不如給它 20 行的精確指令。
+                    </div>
+                </div>
+
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ 實務應用 — CDMO 情境</div>
+                    <div class="info-box-content">
+                        如果你的團隊用 Claude Code 開發 GMP 相關的自動化腳本，CLAUDE.md 應該包含：<br/>
+                        - 資料完整性要求（ALCOA+ 原則）<br/>
+                        - 日誌記錄規範（不得使用 console.log）<br/>
+                        - 驗證規則（所有輸入必須 schema 驗證）<br/>
+                        - 禁止事項（不得直接修改生產資料庫）
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: Rules -->
+    <div id="tab-rules" class="tab-content">
+        <div class="content-grid">
+            <div class="content-left">
+                <span class="part-label">Part III — rules/ 模組化指令</span>
+                <div class="section-title">The rules/ Folder: Modular Instructions That Scale</div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">CLAUDE.md 對單一專案很好用。但一旦你的團隊成長，你最終會有一份 300 行的 CLAUDE.md，<span class="highlight-key">沒人維護，每個人都忽略</span>。</div>
+                    <div class="english-text">CLAUDE.md works great for a single project. But once your team grows, you end up with a 300-line CLAUDE.md that nobody maintains and everyone ignores.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><span class="inline-code">.claude/rules/</span> 資料夾解決了這個問題。裡面的每個 markdown 檔案都會<span class="highlight-concept">自動和 CLAUDE.md 一起載入</span>。你可以按關注點拆分指令，而不是塞在一個巨大的檔案裡。</div>
+                    <div class="english-text">The rules/ folder solves that. Every markdown file inside .claude/rules/ gets loaded alongside your CLAUDE.md automatically. Instead of one giant file, you split instructions by concern.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">真正的威力來自<span class="highlight-key">路徑範圍限定的規則</span>。在規則檔案中加入 YAML frontmatter 區塊，它就只會在 Claude 處理匹配的檔案時啟動。</div>
+                    <div class="english-text">The real power comes from path-scoped rules. Add a YAML frontmatter block to a rule file and it only activates when Claude is working with matching files.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">沒有 paths 欄位的規則會<span class="highlight-concept">無條件載入</span>，每個 session 都會生效。</div>
+                    <div class="english-text">Rules without a paths field load unconditionally, every session.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 rules/ 資料夾結構範例</div>
+                    <div class="info-box-content">
+<pre>.claude/rules/
+├── code-style.md
+├── testing.md
+├── api-conventions.md
+└── security.md</pre>
+                        <p>每個檔案保持專注且容易更新。負責 API 慣例的團隊成員編輯 api-conventions.md，不會互相影響。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 路徑範圍限定規則</div>
+                    <div class="info-box-content">
+<pre>---
+paths:
+  - "src/api/**/*.ts"
+  - "src/handlers/**/*.ts"
+---
+# API Design Rules
+
+- All handlers return { data, error }
+- Use zod for request body validation
+- Never expose internal error details</pre>
+                        <p>Claude 編輯 React 元件時不會載入這個規則檔案。只有在 <code>src/api/</code> 或 <code>src/handlers/</code> 裡工作時才會載入。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 比喻說明</div>
+                    <div class="info-box-content">
+                        就像製藥廠裡不同區域有不同 SOP — 無菌區的 SOP 跟倉儲區的完全不同。path-scoped rules 讓你的 Claude Code 也能「看到自己在哪個區域」，只套用該區域的規則。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: Commands -->
+    <div id="tab-commands" class="tab-content">
+        <div class="content-grid">
+            <div class="content-left">
+                <span class="part-label">Part IV — commands/ 自訂斜線指令</span>
+                <div class="section-title">The commands/ Folder: Custom Slash Commands</div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">Claude Code 有內建的斜線指令如 <span class="inline-code">/help</span> 和 <span class="inline-code">/compact</span>。<span class="inline-code">commands/</span> 資料夾讓你可以<span class="highlight-concept">新增自己的指令</span>。</div>
+                    <div class="english-text">Out of the box, Claude Code has built-in slash commands like /help and /compact. The commands/ folder lets you add your own.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">你放進 <span class="inline-code">.claude/commands/</span> 的<span class="highlight-key">每個 markdown 檔案都會變成一個斜線指令</span>。名為 <span class="inline-code">review.md</span> 的檔案會建立 <span class="inline-code">/project:review</span>。檔案名就是指令名。</div>
+                    <div class="english-text">Every markdown file you drop into .claude/commands/ becomes a slash command. A file named review.md creates /project:review. The filename is the command name.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><span class="inline-code">!</span> 反引號語法會<span class="highlight-practical">執行 shell 指令並嵌入輸出</span>。這讓這些指令真正有用，而不只是儲存的文字。</div>
+                    <div class="english-text">The ! backtick syntax runs shell commands and embeds the output. That's what makes these commands genuinely useful instead of just saved text.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">使用 <span class="inline-code">$ARGUMENTS</span> 來傳入指令名之後的文字。例如執行 <span class="inline-code">/project:fix-issue 234</span> 會把 issue 234 的內容直接送入 prompt。</div>
+                    <div class="english-text">Use $ARGUMENTS to pass text after the command name. Running /project:fix-issue 234 feeds issue 234's content directly into the prompt.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>專案 vs 個人指令：</strong>專案指令在 <span class="inline-code">.claude/commands/</span> 中提交給團隊共用。個人指令放在 <span class="inline-code">~/.claude/commands/</span>，顯示為 <span class="inline-code">/user:command-name</span>。</div>
+                    <div class="english-text">Project commands in .claude/commands/ are committed and shared with your team. For commands you want everywhere, put them in ~/.claude/commands/. Those show up as /user:command-name.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 review.md 範例</div>
+                    <div class="info-box-content">
+<pre>---
+description: Review current branch diff
+---
+## Changes to Review
+
+!`git diff --name-only main...HEAD`
+
+## Detailed Diff
+
+!`git diff main...HEAD`
+
+Review the above changes for:
+1. Code quality issues
+2. Security vulnerabilities
+3. Missing test coverage
+4. Performance concerns</pre>
+                    </div>
+                </div>
+
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 帶參數的 fix-issue.md</div>
+                    <div class="info-box-content">
+<pre>---
+description: Investigate and fix a GitHub issue
+argument-hint: [issue-number]
+---
+Look at issue #$ARGUMENTS in this repo.
+
+!`gh issue view $ARGUMENTS`
+
+Understand the bug, trace it to root cause,
+fix it, and write a test.</pre>
+                    </div>
+                </div>
+
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ 實務應用</div>
+                    <div class="info-box-content">
+                        Claude Code 的 commands/ 機制跟我們在 claude.ai Projects 裡用的 Master Prompt 有異曲同工之妙 — 都是把重複的指令結構化保存。差異在於 commands 還能嵌入 shell 指令的即時輸出，這是 Projects 做不到的。<br/><br/>
+                        潛在的 CDMO 用途：建立一個 <code>/project:deviation-check</code> 指令，自動拉出最近的程式碼變更並交叉檢查 SOP 合規性。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 5: Skills & Agents -->
+    <div id="tab-skills-agents" class="tab-content">
+        <div class="content-grid">
+            <div class="content-left">
+                <span class="part-label">Part V — skills/ 自動觸發工作流</span>
+                <div class="section-title">Skills: Auto-Invoked Workflows</div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">Skills 和 Commands 表面上看起來相似，但<span class="highlight-key">觸發方式根本不同</span>。Commands 等待你輸入斜線指令。Skills 會<span class="highlight-concept">監聽對話並在時機正確時自動執行</span>。</div>
+                    <div class="english-text">Skills look similar on the surface, but the trigger is fundamentally different. Commands wait for you. Skills watch the conversation and act when the moment is right.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">每個 skill 位於自己的子目錄中，帶有一個 SKILL.md 檔案。SKILL.md 使用 YAML frontmatter 來描述何時使用它。</div>
+                    <div class="english-text">Each skill lives in its own subdirectory with a SKILL.md file. The SKILL.md uses YAML frontmatter to describe when to use it.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">Commands 和 Skills 的<span class="highlight-key">關鍵區別</span>：skills 可以將支援檔案打包在一起。<span class="inline-code">@DETAILED_GUIDE.md</span> 引用會拉入一份位於 SKILL.md 旁邊的詳細文件。Commands 是單一檔案，Skills 是<span class="highlight-concept">套件包</span>。</div>
+                    <div class="english-text">The key difference from commands: skills can bundle supporting files alongside them. The @DETAILED_GUIDE.md reference pulls in a detailed document that lives right next to SKILL.md. Commands are single files. Skills are packages.</div>
+                </div>
+
+                <span class="part-label" style="margin-top: 1.5rem;">Part VI — agents/ 子代理人</span>
+                <div class="section-title">Agents: Specialized Subagent Personas</div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">當任務複雜到需要一個<span class="highlight-concept">專門的專家</span>時，你可以在 <span class="inline-code">.claude/agents/</span> 中定義子代理人角色。每個 agent 是一個 markdown 檔案，擁有自己的 system prompt、工具存取權限和模型偏好。</div>
+                    <div class="english-text">When a task is complex enough to benefit from a dedicated specialist, you can define a subagent persona in .claude/agents/. Each agent is a markdown file with its own system prompt, tool access, and model preference.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">當 Claude 需要完成程式碼審查時，它會<span class="highlight-practical">在自己獨立的 context window 中啟動這個 agent</span>。Agent 完成工作、壓縮結果，然後回報。你的主要 session 不會被數千個中間探索的 token 塞滿。</div>
+                    <div class="english-text">When Claude needs a code review done, it spawns this agent in its own isolated context window. The agent does its work, compresses the findings, and reports back. Your main session doesn't get cluttered.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><span class="inline-code">model</span> 欄位讓你可以使用<span class="highlight-practical">更便宜、更快的模型</span>來處理專注任務。Haiku 能很好地處理大多數唯讀探索。把 Sonnet 和 Opus 留給真正需要它們的工作。</div>
+                    <div class="english-text">The model field lets you use a cheaper, faster model for focused tasks. Haiku handles most read-only exploration well. Save Sonnet and Opus for the work that actually needs them.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 SKILL.md 範例</div>
+                    <div class="info-box-content">
+<pre>.claude/skills/
+├── security-review/
+│   ├── SKILL.md
+│   └── DETAILED_GUIDE.md
+└── deploy/
+    ├── SKILL.md
+    └── templates/
+        └── release-notes.md</pre>
+<pre>---
+name: security-review
+description: Use when reviewing code
+  for vulnerabilities or before deploy
+allowed-tools: Read, Grep, Glob
+---
+Analyze the codebase for:
+1. SQL injection and XSS risks
+2. Exposed credentials
+3. Insecure configurations
+4. Auth gaps
+
+Reference @DETAILED_GUIDE.md</pre>
+                    </div>
+                </div>
+
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 Agent 範例 — code-reviewer.md</div>
+                    <div class="info-box-content">
+<pre>---
+name: code-reviewer
+description: Expert code reviewer.
+  Use PROACTIVELY when reviewing PRs.
+model: sonnet
+tools: Read, Grep, Glob
+---
+You are a senior code reviewer.
+
+When reviewing code:
+- Flag bugs, not just style issues
+- Suggest specific fixes
+- Check for edge cases
+- Note performance concerns only
+  when they matter at scale</pre>
+                    </div>
+                </div>
+
+                <div class="info-box box-compare">
+                    <div class="info-box-header">⚖️ Commands vs Skills vs Agents</div>
+                    <div class="info-box-content">
+                        <table class="comparison-table">
+                            <tr><th>特性</th><th>Commands</th><th>Skills</th><th>Agents</th></tr>
+                            <tr><td>觸發方式</td><td>手動 /slash</td><td>自動偵測</td><td>自動委派</td></tr>
+                            <tr><td>檔案結構</td><td>單一 .md</td><td>目錄 + 支援檔</td><td>單一 .md</td></tr>
+                            <tr><td>Context</td><td>主 session</td><td>主 session</td><td>獨立 window</td></tr>
+                            <tr><td>Shell 嵌入</td><td>Yes (!`cmd`)</td><td>No</td><td>No</td></tr>
+                            <tr><td>模型選擇</td><td>No</td><td>No</td><td>Yes</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 重點提示</div>
+                    <div class="info-box-content">
+                        Agent 的 <code>tools</code> 欄位是<strong>安全邊界</strong>。一個安全審計 agent 只需要 Read、Grep、Glob — 它不應該有寫入檔案的能力。這種最小權限原則跟 GMP 環境中的權限隔離完全一致。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 6: Permissions -->
+    <div id="tab-permissions" class="tab-content">
+        <div class="content-grid">
+            <div class="content-left">
+                <span class="part-label">Part VII — settings.json 權限控制</span>
+                <div class="section-title">settings.json: Permissions and Project Config</div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><span class="inline-code">settings.json</span> 控制 Claude <span class="highlight-key">可以做和不可以做什麼</span>。它是你定義哪些工具 Claude 可以執行、哪些檔案可以讀取、以及執行某些指令前是否需要詢問的地方。</div>
+                    <div class="english-text">The settings.json file controls what Claude is and isn't allowed to do. It's where you define which tools Claude can run, which files it can read, and whether it needs to ask before running certain commands.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>allow 清單</strong>包含<span class="highlight-practical">無需確認即可執行</span>的指令。對大多數專案，一個好的 allow 清單涵蓋：你的 run 指令、唯讀 git 指令、以及檔案操作。</div>
+                    <div class="english-text">The allow list contains commands that run without Claude asking for confirmation. For most projects, a good allow list covers your run commands, read-only git commands, and file operations.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>deny 清單</strong>包含<span class="highlight-key">完全被封鎖</span>的指令，無論如何都不行。一個合理的 deny 清單會封鎖：破壞性 shell 指令如 <span class="inline-code">rm -rf</span>、直接網路指令如 <span class="inline-code">curl</span>、以及敏感檔案如 <span class="inline-code">.env</span>。</div>
+                    <div class="english-text">The deny list contains commands that are blocked entirely, no matter what. A sensible deny list blocks destructive shell commands, direct network commands, and sensitive files.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text">如果某個操作<span class="highlight-concept">不在任何一個清單中</span>，Claude 會在繼續之前詢問。這個中間地帶是刻意設計的。它給你一個安全網，而不需要預先考慮每一個可能的指令。</div>
+                    <div class="english-text">If something isn't in either list, Claude asks before proceeding. That middle ground is intentional. It gives you a safety net without having to anticipate every possible command upfront.</div>
+                </div>
+
+                <span class="part-label" style="margin-top: 1.5rem;">Part VIII — 全域 ~/.claude/ 與漸進式導入</span>
+                <div class="section-title">Global ~/.claude/ and Getting Started</div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><span class="inline-code">~/.claude/CLAUDE.md</span> 會載入<span class="highlight-concept">每一個 Claude Code session</span>，跨所有專案。適合放你的個人編碼原則、偏好風格，或任何你希望 Claude 不論在哪個 repo 都記住的東西。</div>
+                    <div class="english-text">~/.claude/CLAUDE.md loads into every Claude Code session, across all your projects. Good place for your personal coding principles, preferred style, or anything you want Claude to remember regardless of which repo you're in.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="chinese-text"><span class="inline-code">~/.claude/projects/</span> 儲存每個專案的 session 記錄和自動記憶。Claude Code 在工作時會<span class="highlight-practical">自動儲存筆記給自己</span>：它發現的指令、觀察到的模式、架構洞察。這些會跨 session 保留。</div>
+                    <div class="english-text">~/.claude/projects/ stores session transcripts and auto-memory per project. Claude Code automatically saves notes to itself as it works: commands it discovers, patterns it observes, architecture insights. These persist across sessions.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 settings.json 完整範例</div>
+                    <div class="info-box-content">
+<pre>{
+  "$schema": "https://json.schemastore.org/
+    claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Read",
+      "Write",
+      "Edit"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(curl *)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  }
+}</pre>
+                    </div>
+                </div>
+
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ 漸進式導入策略</div>
+                    <div class="info-box-content">
+                        <strong>Step 1:</strong> 執行 <code>/init</code>，自動產生 CLAUDE.md。精簡到必要內容。<br/>
+                        <strong>Step 2:</strong> 新增 settings.json，設定 allow/deny 規則。<br/>
+                        <strong>Step 3:</strong> 為最常用工作流建立 1-2 個 commands。<br/>
+                        <strong>Step 4:</strong> CLAUDE.md 太擁擠時，拆分到 rules/。<br/>
+                        <strong>Step 5:</strong> 加入 ~/.claude/CLAUDE.md 個人偏好。<br/><br/>
+                        <em>這就是 95% 專案需要的一切。Skills 和 Agents 是當你有需要打包的複雜工作流時才用。</em>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 重點提示 — 三層權限模型</div>
+                    <div class="info-box-content">
+                        <strong>Allow</strong> = 自動執行（白名單）<br/>
+                        <strong>Deny</strong> = 完全封鎖（黑名單）<br/>
+                        <strong>Neither</strong> = 詢問後執行（灰名單）<br/><br/>
+                        這跟 GMP 環境的電子記錄權限管理很像：有些操作免簽核（查看記錄）、有些永遠禁止（繞過驗證）、有些需要主管核准（修改批次記錄）。
+                    </div>
+                </div>
+
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 核心概念 — Auto-Memory</div>
+                    <div class="info-box-content">
+                        <code>~/.claude/projects/</code> 裡的自動記憶是 Claude Code 的「長期記憶」。它不需要你手動設定 — Claude 會在工作過程中自動學習你的程式碼庫模式。你可以用 <code>/memory</code> 指令瀏覽和編輯這些記憶。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- end tab-container -->
+
+<!-- KEY TAKEAWAYS -->
+<h2 style="color: #1e3a8a; margin-bottom: 1rem;">Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-icon">📝</div>
+        <div class="summary-card-title">CLAUDE.md 是最高槓桿檔案</div>
+        <div class="summary-card-text">它是 system prompt 的直接注入點。保持在 200 行以內，寫具體指令而非理論解釋。先把這個搞對，其他一切都是優化。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="summary-card-icon">🔀</div>
+        <div class="summary-card-title">Commands / Skills / Agents 三層擴充</div>
+        <div class="summary-card-text">Commands 是手動觸發的斜線指令；Skills 是自動偵測並執行的工作流套件；Agents 是在獨立 context window 中工作的專家子代理。三者適用於不同的複雜度層級。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="summary-card-icon">🔐</div>
+        <div class="summary-card-title">三層權限模型</div>
+        <div class="summary-card-text">settings.json 的 allow/deny/neither 模型提供精細的安全控制。白名單自動執行、黑名單完全封鎖、灰名單詢問確認。最小權限原則是核心設計。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="summary-card-icon">🏗️</div>
+        <div class="summary-card-title">Project vs Global 分層設計</div>
+        <div class="summary-card-text">團隊標準放 project-level（git 提交），個人偏好放 global 或 .local 檔案（gitignored）。這個設計讓團隊一致性和個人靈活性可以共存。</div>
+    </div>
+</div>
+
+<!-- PRACTICE -->
+<h2 style="color: #1e3a8a; margin-bottom: 1rem;">Practice Questions</h2>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">CLAUDE.md、rules/ 資料夾中的規則檔、和 CLAUDE.local.md 三者之間的載入優先順序和可見範圍有何不同？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>CLAUDE.md</strong>（專案根目錄）：每個 session 都載入，提交到 git，團隊共用。這是基礎層。</p>
+        <p><strong>rules/ 中的檔案</strong>：也自動載入，但可以用 YAML frontmatter 的 <code>paths</code> 欄位限定只在特定路徑工作時才生效。提交到 git。</p>
+        <p><strong>CLAUDE.local.md</strong>：自動 gitignored，僅限個人使用。它的內容會和 CLAUDE.md 合併，但不會影響團隊其他成員。</p>
+        <p>Claude 會讀取所有這些檔案並合併它們。如果有衝突，更具體的規則（如路徑限定的 rules）通常會優先。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">在一個需要 GMP 合規的 CDMO 軟體專案中，你會如何設計 settings.json 的 deny 清單？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>GMP 環境的 deny 清單應該比一般專案更嚴格：</p>
+        <p><strong>必須封鎖：</strong>任何直接修改生產資料庫的指令（如 <code>Bash(psql *)</code>）、存取驗證金鑰和密碼的操作（<code>Read(./.env*)</code>、<code>Read(./secrets/*)</code>）、破壞性操作（<code>Bash(rm *)</code>、<code>Bash(drop *)</code>）、繞過測試的部署指令。</p>
+        <p><strong>建議封鎖：</strong>直接網路存取（<code>Bash(curl *)</code>、<code>Bash(wget *)</code>），因為 GMP 環境中不應該有未經審核的外部資料流入。</p>
+        <p>這體現了 21 CFR Part 11 的權限控制原則 — 系統應該限制操作到授權範圍內，並記錄所有操作。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">作者說「Skills watch the conversation and act when the moment is right」。從 Copilot vs Agent Mode 的角度，這種自動觸發在 GMP 環境中有什麼潛在風險？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>Skills 的自動觸發機制本質上是 <strong>Agent Mode</strong> — AI 自主判斷何時介入。在一般軟體開發中這很有效率，但在 GMP 環境中，這違反了「copilot mode」的基本原則。</p>
+        <p><strong>風險一：</strong>Skills 可能在不適當的時機觸發，對受監管的程式碼做出未經人類審核的變更。</p>
+        <p><strong>風險二：</strong>觸發條件是基於 description 的語意匹配，而非精確規則。「大致正確」在 GMP 環境中是不夠的。</p>
+        <p><strong>緩解策略：</strong>在 GMP 專案中，考慮只使用 Commands（手動觸發）而非 Skills（自動觸發），確保每個操作都有明確的人類決策點。如果使用 Skills，應限制其 <code>allowed-tools</code> 為唯讀操作（Read, Grep, Glob）。</p>
+    </div>
+</details>
+
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+    <div class="bottom-line-header">🎯 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">CLAUDE.md 是 Claude Code 的「system prompt 注入點」，這跟我在 claude.ai Projects 裡用的 Master Prompt 本質上是同一件事 — 差異只在媒介（檔案系統 vs 對話介面）。更重要的是 rules/ 的路徑範圍限定（path-scoped rules）機制，這讓不同資料夾可以套用不同指令集，跟製藥廠不同區域有不同 SOP 的概念完全對應。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用</div>
+        <div class="bottom-line-text">本週在我的 MacBook Air 上為 Claude Code 專案建立一個基礎的 CLAUDE.md（控制在 20-30 行內），加上 settings.json 的 allow/deny 清單。同時建立一個 <code>/user:doc-review</code> 個人指令，用來快速審查我產生的 HTML 教學文件品質。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠ 需要補充</div>
+        <div class="bottom-line-text">這篇文章是社群教學而非官方文件 — agents/ 的 model 欄位、skills 的 allowed-tools 支援範圍等細節需要用 Anthropic 官方 docs 交叉驗證。此外，文章完全沒有討論 .claude/ 配置的除錯方法（如何確認規則是否正確載入）、也沒有 context window 消耗的量化資料。建議兩週後結合官方文件重新對照。</div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>製作日期：2026-03-24 | 來源：<a href="https://x.com/akshay_pachaar" target="_blank">Akshay Pachaar (@akshay_pachaar)</a> — Anatomy of the .claude/ folder (2025-03-21)</p>
+    <p>建議 Chat Title: <strong>2026-03-24 [Tool] Claude Code .claude/ Folder Anatomy</strong></p>
+    <p>建議檔名: <strong>2026-03-24_claude-code-dot-claude-folder.html</strong></p>
+</div>
+
+</div><!-- end container -->
+
+<script>
+function switchTab(evt, tabId) {
+    const container = evt.currentTarget.closest('.tab-container');
+    container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>

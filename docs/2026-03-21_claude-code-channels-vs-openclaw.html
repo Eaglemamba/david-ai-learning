@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Channels vs OpenClaw - 遠端 AI 開發的安全抉擇</title>
+
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-03-21">
+    <meta name="doc-title" content="Claude Code Channels vs OpenClaw 遠端 AI 操控比較">
+    <meta name="doc-source" content="实践哥MinLi (@MinLiBuilds)">
+    <meta name="doc-source-type" content="">
+    <meta name="doc-tags" content="Tool,Agent,Automation,Security">
+    <meta name="doc-rating" content="3.6">
+    <meta name="doc-summary" content="OpenClaw 三天踩坑經驗 vs Claude Code Channels 一鍵接入。Telegram/Discord 設定教學、安全模型比較。">
+    <meta name="doc-file" content="2026-03-21_claude-code-channels-vs-openclaw.html">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* === v1.4.3 MANDATORY PAGE LAYOUT === */
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+            color: white;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Tags */
+        .tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 600; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-security { background: #fed7aa; color: #9a3412; }
+
+        .header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+        .header .source { font-size: 0.85rem; opacity: 0.75; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .exec-summary h2 { font-size: 1.2rem; color: #1e3a5f; margin-top: 0; }
+        .exec-summary p { font-size: 0.95rem; color: #475569; }
+
+        /* Learning Objectives */
+        .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-item h3 { font-size: 0.95rem; color: #1e3a5f; margin: 0 0 0.25rem; }
+        .objective-item p { font-size: 0.85rem; color: #64748b; margin: 0; }
+
+        /* Section Titles */
+        .section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+        /* Content Grid internals */
+        .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        .content-left h3 { font-size: 1.05rem; color: #1e3a5f; margin-top: 0; }
+        .content-right h3 { font-size: 1.05rem; color: #1e3a5f; margin-top: 0; }
+
+        /* Bilingual */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; }
+        .en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; margin-top: 0.25rem; }
+        .highlight-concept { background: #a5d6a7; padding: 0 0.2rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0 0.2rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0 0.2rem; border-radius: 3px; }
+        .highlight-cost { background: #5eead4; padding: 0 0.2rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+
+        /* Code blocks */
+        code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+        pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; }
+        pre code { background: none; padding: 0; color: inherit; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Comparison Table */
+        .compare-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+        .compare-table th { background: #1e3a5f; color: white; padding: 0.75rem 1rem; text-align: left; font-weight: 600; }
+        .compare-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #e2e8f0; }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:hover td { background: #e0f2fe; }
+
+        /* Key Takeaways */
+        .takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
+        @media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card h4 { font-size: 0.95rem; color: #1e3a5f; margin: 0 0 0.5rem; }
+        .summary-card p { font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.6; }
+
+        /* Accordion */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Linear layout override for code-heavy sections */
+        .content-grid-linear { display: block; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; background: white; }
+        .content-grid-linear .content-left { border-right: none; }
+        .content-grid-linear .content-right { background: white; border-top: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="tags">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-automation">Automation</span>
+        <span class="tag tag-security">Security</span>
+    </div>
+    <h1>Claude Code Channels vs OpenClaw</h1>
+    <div class="subtitle">遠端 AI 開發的安全抉擇：從三天踩坑到一鍵接入</div>
+    <div class="source">Source: 实践哥MinLi (@MinLiBuilds) | Supplemented by official docs &amp; security research</div>
+</div>
+
+<div class="container">
+
+    <!-- Executive Summary -->
+    <div class="exec-summary">
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
+            <span class="rating-high">&#8593; Practical Value, Timeliness</span>
+            <span class="rating-low">&#8595; Technical Depth, Tool Ecosystem</span>
+        </div>
+        <h2>Executive Summary</h2>
+        <p>這篇文章記錄了作者使用 OpenClaw（開源 AI 代理框架）三天踩坑後放棄、轉用 Claude Code 新功能 Channels 的實際體驗。Channels 於 2026 年 3 月 20 日發布研究預覽版，讓開發者透過 Telegram 或 Discord 直接向本機運行的 Claude Code 發送指令。本文件在原文基礎上大幅補充了 OpenClaw 的安全漏洞背景（Cisco 報告、OWASP ASI 評估）以及 Channels 的技術架構細節，提供更完整的決策框架。</p>
+    </div>
+
+    <!-- Learning Objectives -->
+    <h2 class="section-title">Learning Objectives</h2>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">&#x1F50D;</div>
+            <h3>OpenClaw 風險全景</h3>
+            <p>理解開源 AI Agent 的安全模型缺陷，包含 Cisco 實測的資料外洩風險</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#x1F517;</div>
+            <h3>Channels 架構原理</h3>
+            <p>掌握 MCP 事件推送機制、sender allowlist 安全設計、本機執行模型</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#x2696;</div>
+            <h3>安全邊界決策</h3>
+            <p>建立「bounded autonomy」思維框架，區分何時該用 Copilot 何時用 Agent</p>
+        </div>
+    </div>
+
+    <!-- Framework Visual -->
+    <div class="framework-visual">
+        <div class="framework-title">Remote AI Development: Security Decision Framework</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4F1;</div>
+                <div class="framework-step-title">Mobile Trigger</div>
+                <div class="framework-step-desc">Telegram / Discord</div>
+            </div>
+            <div class="framework-arrow">&#8594;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F50C;</div>
+                <div class="framework-step-title">MCP Channel</div>
+                <div class="framework-step-desc">Allowlist + Pairing</div>
+            </div>
+            <div class="framework-arrow">&#8594;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4BB;</div>
+                <div class="framework-step-title">Local Session</div>
+                <div class="framework-step-desc">Project Dir Only</div>
+            </div>
+            <div class="framework-arrow">&#8594;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F512;</div>
+                <div class="framework-step-title">Bounded Output</div>
+                <div class="framework-step-desc">Reply via Same Channel</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part I: OpenClaw Experience -->
+    <h2 class="section-title">Part I: OpenClaw 的三天踩坑紀實</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <h3>Original Content (Bilingual)</h3>
+
+            <div class="bilingual-block">
+                <div class="zh-text">作者嘗試了當時爆紅的 OpenClaw（前身為 Clawdbot/Moltbot），這是由奧地利開發者 Peter Steinberger 在 2025 年 11 月發布的<span class="highlight-concept">開源個人 AI 代理框架</span>。它讓使用者透過 WhatsApp、Telegram 等聊天平台操控 AI 執行真實任務：管理郵件、執行腳本、控制瀏覽器、排程自動化。</div>
+                <div class="en-text">OpenClaw is an open-source, self-hosted AI agent that runs locally and executes actions on the user's behalf, interfacing through popular messaging applications.</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Day 1 - 搭環境：</strong>Docker、各種依賴，裝到一半報錯，查了半小時原來是<span class="highlight-key">版本問題</span>。</div>
+                <div class="en-text">"Docker, various dependencies, half-way through installation it errored out, spent half an hour debugging only to find it was a version issue."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Day 2 - 配 API 和權限：</strong>一個平台一套邏輯，手動對接，改完這個壞那個。</div>
+                <div class="en-text">"Each platform has its own logic, manual integration, fix one thing and break another."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Day 3 - 升級即崩潰：</strong>剛以為跑起來了，升級了一下，服務直接癱掉。<span class="highlight-cost">Token 消耗也超出預期好幾倍</span>。</div>
+                <div class="en-text">"Just when I thought it was working, I upgraded and the service completely crashed. Token consumption also exceeded my expectations by several times."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">最後看到 <span class="highlight-key">Cisco 出了報告說有第三方插件在做資料竊取</span>，直接刪了。</div>
+                <div class="en-text">"Saw Cisco's report about third-party plugins doing data exfiltration, and deleted it outright."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <h3>Analysis &amp; Supplementary Context</h3>
+
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：OpenClaw 安全事件時間線</div>
+                <div class="info-box-content">
+                    <p>作者提到的「Cisco 報告」遠比他描述的嚴重。根據 Cisco AI Threat & Security Research 團隊的完整評估：</p>
+                    <p><strong>1. 資料外洩實測：</strong>Cisco 測試了一個名為「What Would Elon Do?」的第三方 skill，發現它會靜默執行 curl 指令將使用者資料發送到外部伺服器，且完全不通知使用者。</p>
+                    <p><strong>2. 漏洞規模：</strong>安全研究員發現超過 42,000 個公開暴露的 OpenClaw 實例，洩漏 API 金鑰、對話記錄和帳號憑證。</p>
+                    <p><strong>3. 供應鏈攻擊：</strong>ClawHub（OpenClaw 的 skill 市場）中約 12% 的 skills 被發現是惡意的（341/2,857），代號「ClawHavoc」事件。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明：Simon Willison 的「致命三角」</div>
+                <div class="info-box-content">
+                    <p>安全專家 Simon Willison（提出 prompt injection 一詞的人）定義了 AI Agent 的「致命三角」(Lethal Trifecta)：</p>
+                    <p><strong>1. 存取私人資料</strong>（郵件、文件）+ <strong>2. 接觸不受信任的內容</strong>（第三方 skills）+ <strong>3. 對外通訊能力</strong>（發送訊息、HTTP 請求）</p>
+                    <p>OpenClaw 三者皆具，且預設信任 localhost，所有連線看起來都像本機流量。這就像一個 GMP 製造環境裡，<strong>品質管制 (QC) 直接授權給外包商自行放行</strong>，沒有獨立覆核機制。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：Security by Default vs Security by Option</div>
+                <div class="info-box-content">
+                    <p>OpenClaw 官方文件自己承認：「There is no 'perfectly secure' setup.」安全是選配而非預設。這在受監管產業（如製藥）是根本性的架構問題——<strong>GMP 的核心原則是 built-in quality，不是 tested-in quality</strong>。同理，安全應該是 built-in security，不是 bolted-on security。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part II: Claude Code Channels Concept -->
+    <h2 class="section-title">Part II: Claude Code Channels 架構解析</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <h3>Original Content (Bilingual)</h3>
+
+            <div class="bilingual-block">
+                <div class="zh-text">Claude Code 出了新功能叫 <span class="highlight-concept">Channels</span>。原理：Telegram 或 Discord 發消息 → Claude Code 在電腦上執行 → 結果發回手機。</div>
+                <div class="en-text">"Claude Code released a new feature called Channels. Principle: send message via Telegram or Discord → Claude Code executes on your computer → results sent back to your phone."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">不用自己搭伺服器。不用折騰第三方平台。Claude Code 裝好就能用。</div>
+                <div class="en-text">"No need to set up your own server. No need to fuss with third-party platforms. Install Claude Code and you're ready."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text"><span class="highlight-practical">安全邊界比較克制</span>：只操作當前 project 目錄，不接管整台機器。配對以後還有<span class="highlight-key">發送者白名單</span>，只有你的帳號能推訊息進來，其他人發了直接靜默丟棄。</div>
+                <div class="en-text">"Security boundaries are more restrained: only operates within current project directory, doesn't take over the whole machine. After pairing, there's a sender allowlist — only your account can push messages, others are silently discarded."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">第一次真正用是在咖啡館。想起項目裡有個腳本沒跑，拿出手機在 Telegram 發了一條：「幫我跑一下 run.py」。等了一會兒，有返回了。日誌、輸出、完成狀態，全在手機上。</div>
+                <div class="en-text">"First real use was in a cafe. Remembered a script hadn't been run, pulled out my phone and sent via Telegram: 'run run.py for me.' Waited a bit. Got a response. Logs, output, completion status, all on my phone."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <h3>Technical Architecture Deep Dive</h3>
+
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：Channel = MCP Server + Event Push</div>
+                <div class="info-box-content">
+                    <p>Channel 本質上是一個 MCP (Model Context Protocol) 伺服器，以<span class="highlight-concept">事件推送</span>模式運作。與傳統的 request-response 不同，Channel 會在你的 Claude Code session 中「注入」外部事件。</p>
+                    <p>技術流程：<br>
+                    1. 你安裝 Channel plugin（如 Telegram）→ plugin 作為 MCP server 運行<br>
+                    2. 啟動 Claude Code 時加上 <code>--channels</code> flag → 啟動 plugin<br>
+                    3. MCP server 連接到 Telegram（polling 模式）或 Discord（WebSocket 模式）<br>
+                    4. 收到訊息 → 包裝為 <code>&lt;channel&gt;</code> event → 推入 Claude Code session<br>
+                    5. Claude 用本機環境處理 → 透過 MCP server 提供的 reply tool 回覆</p>
+                </div>
+            </div>
+
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#x2696;&#xFE0F; 工具比較：Channels vs Remote Control vs OpenClaw</div>
+                <div class="info-box-content">
+                    <table class="compare-table">
+                        <tr>
+                            <th>維度</th>
+                            <th>Channels</th>
+                            <th>Remote Control</th>
+                            <th>OpenClaw</th>
+                        </tr>
+                        <tr>
+                            <td>執行位置</td>
+                            <td>本機 session</td>
+                            <td>本機 session</td>
+                            <td>本機 gateway</td>
+                        </tr>
+                        <tr>
+                            <td>存取範圍</td>
+                            <td>當前 project dir</td>
+                            <td>當前 project dir</td>
+                            <td>整台機器 + 100+ 服務</td>
+                        </tr>
+                        <tr>
+                            <td>認證模型</td>
+                            <td>Pairing + Allowlist</td>
+                            <td>claude.ai 帳號</td>
+                            <td>預設信任 localhost</td>
+                        </tr>
+                        <tr>
+                            <td>Skill/Plugin</td>
+                            <td>官方白名單</td>
+                            <td>N/A</td>
+                            <td>開放 ClawHub</td>
+                        </tr>
+                        <tr>
+                            <td>設定複雜度</td>
+                            <td>中（5-7 步）</td>
+                            <td>低（1 步）</td>
+                            <td>高（多天）</td>
+                        </tr>
+                        <tr>
+                            <td>安全設計</td>
+                            <td>Built-in</td>
+                            <td>Built-in</td>
+                            <td>Bolt-on</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：何時用哪個？</div>
+                <div class="info-box-content">
+                    <p><strong>Channels：</strong>你已經用 Claude Code，想從手機非同步觸發任務、接收結果通知。偏好可客製化的系統。</p>
+                    <p><strong>Remote Control：</strong>你想要 claude.ai 的完整介面（rich formatting、file preview），不想額外建 bot。設定最簡單。</p>
+                    <p><strong>OpenClaw：</strong>你需要跨 100+ 服務的深度整合（WhatsApp、iMessage、日曆、瀏覽器），願意自己承擔安全風險。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part III: Setup Guide -->
+    <h2 class="section-title">Part III: Telegram &amp; Discord 設定實戰</h2>
+
+    <!-- Telegram: code-heavy, use linear layout -->
+    <h3 style="color: #1e3a5f; margin-bottom: 0.5rem;">Telegram 接入（5 步驟）</h3>
+    <div class="content-grid-linear">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Step 1 - 建機器人：</strong>Telegram 找 <code>BotFather</code>，發 <code>/newbot</code>，使用者名稱以 bot 結尾，拿 token，複製好。</div>
+                <div class="en-text">"Find BotFather in Telegram, send /newbot, username ending in bot, get token, copy it."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Step 2 - Claude Code 裝插件：</strong></div>
+            </div>
+<pre><code>/plugin install telegram@claude-plugins-official
+/reload-plugins
+# 輸入 /telegram: 能自動補全 configure 就成功了</code></pre>
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Step 3 - 填 Token：</strong></div>
+            </div>
+<pre><code>/telegram:configure 你的token</code></pre>
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Step 4 - 重啟，帶 channels 參數：</strong></div>
+            </div>
+<pre><code>claude --channels plugin:telegram@claude-plugins-official --dangerously-skip-permissions</code></pre>
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Step 5 - 配對 + 鎖白名單：</strong>給機器人隨便發條訊息，它會回一個配對碼。然後<span class="highlight-key">依序執行（順序不能反）</span>：</div>
+            </div>
+<pre><code>/telegram:access pair &lt;配對碼&gt;
+/telegram:access policy allowlist</code></pre>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：踩坑備忘</div>
+                <div class="info-box-content">
+                    <p><strong>坑一：Bun 環境變數未載入。</strong>安裝 Bun 後必須執行 <code>source ~/.zshrc</code>，否則 Telegram MCP 服務起不來。報錯訊息不會直接告訴你原因。</p>
+                    <p><strong>坑二：多終端搶佔。</strong>Claude Code 預設使用最後一個終端。專門留一個乾淨的終端跑 channels，不要和其他任務混用。</p>
+                    <p><strong>坑三：Permission prompt 會卡死遠端 session。</strong>不加 <code>--dangerously-skip-permissions</code>，Claude Code 遇到需要確認的操作會暫停等待本機點擊。你不在電腦旁就一直卡著。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：安全取捨建議</div>
+                <div class="info-box-content">
+                    <p><code>--dangerously-skip-permissions</code> 這個 flag 名稱本身就是警告。只在<strong>你信任的機器、你信任的 project 目錄</strong>中使用。MacStories 的實測確認，即使跳過權限，Channels 的操作範圍仍限於當前 project directory，不會自動存取整台機器的檔案系統。</p>
+                    <p>替代方案：搭配 <code>tmux</code> 或 <code>screen</code> 讓 session 在背景持續運行，方便隨時從手機觸發任務。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discord -->
+    <h3 style="color: #1e3a5f; margin-bottom: 0.5rem;">Discord 接入（7 步驟）</h3>
+    <div class="content-grid-linear">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text">Discord 步驟多幾個，邏輯一樣：</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Step 1-2：</strong>Discord Developer Portal → New Application → Bot 頁面 → Reset Token → 複製 token。</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Step 3：</strong>Bot 設定裡找 <span class="highlight-key">Privileged Gateway Intents</span>，打開 <strong>Message Content Intent</strong>——這個不開，機器人看不到訊息內容。</div>
+                <div class="en-text">"In Bot settings, find Privileged Gateway Intents and enable Message Content Intent — without this, the bot can't see message content."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Step 4：</strong>OAuth2 → URL Generator，Scope 選 bot，權限勾上：View Channels, Send Messages, Send Messages in Threads, Read Message History, Attach Files, Add Reactions。用生成的連結把機器人加進伺服器。</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text"><strong>Step 5-7：</strong>安裝、設定、啟動、配對、鎖白名單。</div>
+            </div>
+<pre><code>/plugin install discord@claude-plugins-official
+/discord:configure 你的token
+claude --channels plugin:discord@claude-plugins-official --dangerously-skip-permissions
+
+# 私訊機器人，拿配對碼，然後：
+/discord:access pair &lt;配對碼&gt;
+/discord:access policy allowlist</code></pre>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：Telegram vs Discord 技術差異</div>
+                <div class="info-box-content">
+                    <p><strong>Telegram：</strong>使用 polling 模式（定期輪詢新訊息），設定較簡單，適合個人 1:1 場景。照片會被壓縮，需要原檔要以「文件」方式發送。不支援語音訊息。</p>
+                    <p><strong>Discord：</strong>使用 WebSocket 即時連線，設定多了 Intent 和 OAuth 權限步驟，但支援 guild channel（團隊協作場景）。</p>
+                    <p>兩者共通限制：session 必須保持開啟狀態，訊息才能進來。關掉 Claude Code，channel 就斷了。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part IV: Key Considerations -->
+    <h2 class="section-title">Part IV: 幾件要知道的事</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <h3>Original Content (Bilingual)</h3>
+
+            <div class="bilingual-block">
+                <div class="zh-text">Claude Code 需要 <span class="highlight-practical">v2.1.80+</span>，要用 claude.ai 帳號登入，<span class="highlight-key">API key 不行</span>。</div>
+                <div class="en-text">"Claude Code requires v2.1.80+, must login with claude.ai account, API key won't work."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">研究預覽階段，只接受<span class="highlight-key">官方插件列表裡的頻道</span>。</div>
+                <div class="en-text">"Research preview phase, only accepts channels from the official plugin allowlist."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">團隊/企業版需要管理員後台手動開啟。</div>
+                <div class="en-text">"Team/Enterprise editions require admin to manually enable in backend."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">Claude Code 會話得<span class="highlight-key">一直開著</span>，訊息才能進來。</div>
+                <div class="en-text">"Claude Code session must stay open for messages to come in."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">作者的結論：OpenClaw 這麼火，說明大家都在找同一件事：<span class="highlight-concept">不坐在電腦前，AI 也能幫你幹活</span>。這個需求不會消失。只是不同的人，能接受的折騰程度不一樣。</div>
+                <div class="en-text">"OpenClaw's popularity shows everyone is looking for the same thing: AI working for you even when you're not at the computer. This need won't disappear. Different people just have different tolerance for tinkering."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <h3>Critical Analysis</h3>
+
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：研究預覽的限制</div>
+                <div class="info-box-content">
+                    <p>Channels 目前仍是 Research Preview，有幾個實際限制需要注意：</p>
+                    <p><strong>1. Plugin 白名單：</strong>只能使用 Anthropic 官方維護的 claude-plugins-official 中的 plugin。自建 channel 需要用 <code>--dangerously-load-development-channels</code> flag。</p>
+                    <p><strong>2. 無持久化：</strong>session 關閉就斷線。要 always-on 需要搭配 <code>tmux</code>、<code>screen</code> 或 VPS 背景 process。</p>
+                    <p><strong>3. 無語音：</strong>Telegram plugin 不支援語音訊息。照片有壓縮。</p>
+                    <p><strong>4. 認證限制：</strong>必須用 claude.ai 帳號，Console 和 API key 認證不支援。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明：Bounded Autonomy 與 GMP 思維</div>
+                <div class="info-box-content">
+                    <p>Claude Code Channels 的安全設計體現了<strong>「有界自主」(Bounded Autonomy)</strong>原則：</p>
+                    <p>想像一個藥廠的生產線。OpenClaw 像是給外包商一把萬能鑰匙，能開所有門、存取所有系統。Claude Code Channels 則像是給核准人員<strong>一張限定區域的門禁卡</strong>——只能進入指定的生產房間（project directory），必須經過身份驗證（pairing + allowlist），而且所有操作都在既定框架內執行。</p>
+                    <p>這正是<strong>Copilot Mode 在 Agent 時代的實踐</strong>：讓 AI 在明確的邊界內自主工作，同時保持人類的監督權。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-cost">
+                <div class="info-box-header">&#x1F4B0; 成本分析：隱性成本比較</div>
+                <div class="info-box-content">
+                    <p><strong>OpenClaw：</strong>免費開源，但隱性成本巨大——設定時間（作者花了 3 天）、API token 消耗超預期、安全風險的潛在損失、維護和升級的持續投入。</p>
+                    <p><strong>Claude Code Channels：</strong>需要 Claude Code 訂閱（Max plan 或 API），但設定時間約 15-30 分鐘，安全模型內建，plugin 由 Anthropic 官方維護。Trade-off 是 vendor lock-in 和功能受限於 Anthropic 的 roadmap。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Takeaways -->
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <h4>1. 安全邊界是架構決策，不是附加功能</h4>
+            <p>OpenClaw 的「Security by Option」vs Claude Code 的「Security by Design」不只是工具差異，而是根本的設計哲學差異。Cisco 實測證明，開放式 skill 生態加上預設信任 localhost，等同於主動邀請供應鏈攻擊。</p>
+        </div>
+        <div class="summary-card" style="border-left-color: #10b981;">
+            <h4>2. MCP 正在成為 AI Agent 的通用連接層</h4>
+            <p>Channels 建立在 MCP 之上，這代表 Anthropic 正在用同一套協議統一 tool use、integration、和 remote messaging。理解 MCP 的事件推送模型，對未來的 AI 工具生態至關重要。</p>
+        </div>
+        <div class="summary-card" style="border-left-color: #8b5cf6;">
+            <h4>3. 「手機遙控 AI 工作」是真實需求</h4>
+            <p>OpenClaw 180,000+ GitHub stars 證明這個需求的強度。Channels 提供了一個更安全但功能較受限的替代方案。市場會持續在「功能廣度」和「安全深度」之間拉鋸。</p>
+        </div>
+        <div class="summary-card" style="border-left-color: #f59e0b;">
+            <h4>4. Research Preview = 搶先卡位的機會</h4>
+            <p>Channels 目前功能有限（只有 Telegram/Discord、需要 session 持續開啟），但架構是可擴展的。提前熟悉 Channel plugin 的開發模式，等 GA 時就能快速建立自訂整合。</p>
+        </div>
+    </div>
+
+    <!-- Practice Questions -->
+    <h2 class="section-title">Practice Questions</h2>
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">為什麼 OpenClaw 的「預設信任 localhost」設計會導致安全問題？這和 Claude Code Channels 的 sender allowlist 有什麼根本差異？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>OpenClaw 部署時通常使用 nginx 或 Caddy 作為反向代理，這代表所有外部連線都以 127.0.0.1 的身份進入，被視為「可信任的本機流量」。攻擊者只需要找到暴露的端口就能直接存取系統。</p>
+            <p>Claude Code Channels 的 sender allowlist 則採用<strong>身份驗證層</strong>的方式：先透過 pairing 確認使用者 ID，再將 policy 切換為 allowlist 模式。未經配對的發送者訊息會被靜默丟棄，連錯誤回應都不會返回（避免資訊洩漏）。</p>
+            <p>根本差異在於：OpenClaw 信任「來源位置」（IP），Channels 信任「來源身份」（User ID）。在網路安全領域，位置可以偽造，身份更難偽造。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">在 GMP 環境中，如果要導入類似 Claude Code Channels 的遠端 AI 工具，你會設計什麼樣的 SOP 來確保合規性？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>GMP 環境導入遠端 AI 工具的 SOP 應至少包含：</p>
+            <p><strong>1. 風險評估 (Risk Assessment)：</strong>依 ICH Q9 品質風險管理原則，評估 AI 代理存取的資料範圍、操作權限、和潛在的偏離 (deviation) 風險。確認是 Copilot Mode（人類覆核）還是 Agent Mode（自主執行）。</p>
+            <p><strong>2. 存取控制：</strong>類似 Channels 的 allowlist 機制，但需要加上 21 CFR Part 11 要求的電子簽章和審計追蹤。每個遠端指令應記錄 who, what, when, why。</p>
+            <p><strong>3. 變更管控：</strong>任何 plugin 更新等同於電腦化系統變更 (Computerized System Change Control)，需要經過 IQ/OQ/PQ 驗證流程。</p>
+            <p><strong>4. 偏離處理：</strong>預定義 AI 執行失敗或異常行為的偏離處理流程，包含通報層級、根因分析 (RCA)、和 CAPA 要求。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">作者刪掉 OpenClaw 的決策是否太草率？有沒有 OpenClaw 比 Channels 更適合的場景？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>作者的決策對他的情境來說是合理的——他不是安全專家，也沒有需要深度跨平台整合的需求。但從更廣的視角看：</p>
+            <p><strong>OpenClaw 更適合的場景：</strong>需要連接 iMessage、WhatsApp 等 Channels 不支援的平台；需要 AI 代理存取瀏覽器、日曆等系統層功能；有安全團隊能夠正確配置和監控；需要跨多個 LLM 供應商運行（OpenClaw 支援 Claude、GPT、DeepSeek）。</p>
+            <p><strong>批判思考角度：</strong>OpenClaw 的安全問題很多是「部署問題」而非「架構問題」——正確配置的 OpenClaw 實例（網路隔離、skill 白名單、定期安全掃描）可以大幅降低風險。問題在於大多數使用者不會這樣做，就像大多數 Docker 容器也不會被正確配置一樣。</p>
+            <p>這也是「2-3x 折扣原則」的應用場景：OpenClaw 社群聲稱的便利性，實際體驗要打 2-3 倍的折扣，尤其是安全和穩定性方面。</p>
+        </div>
+    </details>
+
+    <!-- Bottom Line -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x2714; 核心洞察</div>
+            <div class="bottom-line-text">Claude Code Channels 驗證了一個重要架構模式：<strong>將 AI Agent 的遠端介面建立在 MCP 事件推送之上，而不是開放 API 端口</strong>。這個模式和我在 CDMO 環境中理解的安全原則一致——存取權限應該基於「身份 + 白名單」，而非「網路位置」。對我的 Claude Code headless pipeline 來說，Channels 可能是未來替代 cron + claude -p 的更優雅方案。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+            <div class="bottom-line-text">這週在 MacBook Air 上嘗試設定 Telegram Channel：(1) 確認 Claude Code 版本 >= v2.1.80；(2) 安裝 Bun runtime；(3) 走完 Telegram 5 步驟設定；(4) 測試從手機觸發一個簡單的文件處理任務。成功後評估是否能用來遠端觸發教育文件生成 pipeline。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x26A0; 需要補充</div>
+            <div class="bottom-line-text">原文作者是實作導向的中國科技博主，安全分析僅點到為止。本文件已大幅補充 Cisco、Astrix、OWASP 等來源的安全背景。但仍缺少：(1) Channels 的實際 token 消耗數據（研究預覽階段可能還不穩定）；(2) 與 Remote Control 的詳細效能比較；(3) Channels session 持久化的最佳實踐（tmux vs screen vs systemd service）。等 Channels 進入 GA 後需重新評估。</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>製作日期：2026-03-21 | Source: <a href="https://x.com/MinLiBuilds" target="_blank">实践哥MinLi (@MinLiBuilds)</a></p>
+        <p>Supplementary Sources: <a href="https://code.claude.com/docs/en/channels" target="_blank">Claude Code Channels Docs</a> | <a href="https://blogs.cisco.com/ai/personal-ai-agents-like-openclaw-are-a-security-nightmare" target="_blank">Cisco OpenClaw Security Report</a> | <a href="https://www.macstories.net/stories/first-look-hands-on-with-claude-codes-new-telegram-and-discord-integrations/" target="_blank">MacStories Hands-On</a></p>
+        <p>Suggested Chat Title: <strong>2026-03-21 [Tool] MinLi - Claude Code Channels vs OpenClaw</strong></p>
+    </div>
+
+</div>
+</body>
+</html>

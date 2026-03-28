@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser Use CLI - AI 瀏覽器自動化的命令列工具</title>
+
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-03-21">
+    <meta name="doc-title" content="Browser Use CLI - AI 瀏覽器自動化命令列工具">
+    <meta name="doc-source" content="Browser Use / docs.browser-use.com">
+    <meta name="doc-source-type" content="">
+    <meta name="doc-tags" content="Tool,Agent,Automation,API">
+    <meta name="doc-rating" content="4.0">
+    <meta name="doc-summary" content="Browser Use CLI 完整指南：daemon 架構、三種瀏覽器模式、命令體系、Cloud API 整合與 MCP 應用。">
+    <meta name="doc-file" content="2026-03-21_browser-use-cli.html">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* === v1.4.3 MANDATORY PAGE LAYOUT === */
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+            color: white;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Tags */
+        .tags { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-api { background: #ddd6fe; color: #4c1d95; }
+
+        .header h1 { font-size: 1.8rem; margin: 0 0 0.5rem 0; font-weight: 700; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
+        .header .source { font-size: 0.8rem; opacity: 0.7; }
+        .header .source a { color: #93c5fd; text-decoration: none; }
+        .header .source a:hover { text-decoration: underline; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .exec-summary h2 { color: #1e3a8a; font-size: 1.2rem; margin: 0 0 1rem 0; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.75rem; }
+        .exec-summary p:last-child { margin-bottom: 0; }
+
+        /* Learning Objectives */
+        .objectives { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .objective-desc { font-size: 0.8rem; color: #64748b; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+        /* Section Headers */
+        .section-header { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        .content-left h3 { color: #1e3a8a; font-size: 1.05rem; margin: 0 0 1rem 0; }
+        .content-right h3 { color: #1e3a8a; font-size: 1.05rem; margin: 0 0 1rem 0; }
+
+        /* Bilingual blocks */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .bilingual-block .zh { color: #1e293b; font-size: 0.95rem; line-height: 1.8; }
+        .bilingual-block .en { color: #64748b; font-style: italic; font-size: 0.9rem; line-height: 1.7; margin-top: 0.25rem; }
+
+        /* Highlights */
+        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .info-box-content p { margin: 0 0 0.5rem 0; }
+        .info-box-content p:last-child { margin: 0; }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+
+        /* Code blocks */
+        pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; margin: 0.75rem 0; }
+        code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
+        .inline-code { background: #e2e8f0; color: #1e293b; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+
+        /* Tables */
+        .cmd-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.75rem 0; }
+        .cmd-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; }
+        .cmd-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
+        .cmd-table tr:nth-child(even) { background: #f8fafc; }
+        .cmd-table code { background: #e2e8f0; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.8rem; }
+
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card .card-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .summary-card .card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #8b5cf6; }
+        .summary-card:nth-child(4) { border-left-color: #f59e0b; }
+
+        /* Accordion / Practice */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Linear layout override for code-heavy sections */
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-grid.linear .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+            .objectives { grid-template-columns: 1fr; }
+            .takeaways { grid-template-columns: 1fr; }
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header">
+    <div class="tags">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-automation">Automation</span>
+        <span class="tag tag-api">API</span>
+    </div>
+    <h1>Browser Use CLI - AI 瀏覽器自動化的命令列工具</h1>
+    <div class="subtitle">從終端機直接控制瀏覽器：Daemon 持久架構、三種瀏覽器模式、完整命令體系與 Cloud API</div>
+    <div class="source">Source: <a href="https://docs.browser-use.com/open-source/browser-use-cli" target="_blank">Browser Use Official Docs</a> | GitHub 79k+ Stars</div>
+</div>
+
+<!-- ===== CONTAINER START ===== -->
+<div class="container">
+
+<!-- Executive Summary -->
+<div class="exec-summary">
+    <h2>Executive Summary</h2>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.0/5</span>
+        <span class="rating-high">&uarr; Practical Value, Tool Ecosystem</span>
+        <span class="rating-low">&darr; Technical Depth, Learning Curve</span>
+    </div>
+    <p>Browser Use CLI 是一款開源命令列瀏覽器自動化工具，讓 AI Agent 或開發者直接從終端機操控瀏覽器。它的核心設計是<span class="highlight-concept">多 Session Daemon 架構</span>——第一個命令啟動背景 daemon，後續命令透過 Unix socket 溝通，延遲僅約 50ms。支援三種瀏覽器模式（Headless Chromium、帶 Profile 的 Chrome、Cloud 瀏覽器），並提供完整的 Cloud API passthrough 用於管理任務和遠端瀏覽器。</p>
+    <p>這份文件是<strong>工具參考手冊型</strong>官方文件，涵蓋安裝、所有命令語法、Cloud API、Tunnel、Profile 同步等功能。對於需要在自動化 Pipeline 中加入瀏覽器操作的開發者來說，這是不可或缺的參考。</p>
+</div>
+
+<!-- Learning Objectives -->
+<h2 class="section-header">Learning Objectives</h2>
+<div class="objectives">
+    <div class="objective-item">
+        <div class="objective-icon">&#127959;</div>
+        <div class="objective-title">理解 Daemon 架構</div>
+        <div class="objective-desc">掌握 Browser Use CLI 的多 Session daemon 設計，以及為何它能達到 ~50ms 延遲</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#128268;</div>
+        <div class="objective-title">掌握三種瀏覽器模式</div>
+        <div class="objective-desc">Headless Chromium、Profile Chrome、Cloud Browser 的使用場景與切換</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#9889;</div>
+        <div class="objective-title">活用命令體系</div>
+        <div class="objective-desc">Navigation、Inspection、Interaction、Cloud API 等完整命令分類及 CDMO 應用場景</div>
+    </div>
+</div>
+
+<!-- Framework Visual -->
+<div class="framework-visual">
+    <div class="framework-title">Browser Use CLI 核心工作流程</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#128187;</div>
+            <div class="framework-step-title">Open</div>
+            <div class="framework-step-desc">啟動 daemon + 開啟頁面</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128270;</div>
+            <div class="framework-step-title">State</div>
+            <div class="framework-step-desc">取得元素索引清單</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128073;</div>
+            <div class="framework-step-title">Interact</div>
+            <div class="framework-step-desc">click / type / input</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128247;</div>
+            <div class="framework-step-title">Capture</div>
+            <div class="framework-step-desc">screenshot / eval / get</div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ===== PART I ===== -->
+<h2 class="section-header">Part I: 什麼是 Browser Use CLI？</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <h3>&#127760; 定位與核心功能</h3>
+        <div class="bilingual-block">
+            <div class="zh">Browser Use CLI（指令 <span class="inline-code">browser-use</span>）是 Browser Use 平台的命令列介面。它做兩件事：<span class="highlight-concept">直接瀏覽器控制</span>（導航頁面、點擊元素、填表、上傳檔案、執行 JavaScript）和 <span class="highlight-concept">Cloud 平台管理</span>（透過 REST passthrough 存取 Browser Use Cloud API）。</div>
+            <div class="en">The Browser Use CLI (browser-use) is the command-line interface for the Browser Use platform. It does two things: direct browser control and cloud platform management.</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">背後靠一個<span class="highlight-key">持久背景 daemon</span> 保持瀏覽器在命令間持續運行，因此每次命令的延遲約 50ms，不用每次重新啟動瀏覽器。</div>
+            <div class="en">A persistent background daemon keeps the browser alive between commands for fast ~50ms latency.</div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#128161; 比喻說明</div>
+            <div class="info-box-content">
+                <p>想像你在工廠裡需要反覆使用同一台設備。傳統做法是每次用完就關機、下次再開機（Browser 啟動 = 數秒等待）。Daemon 架構就像讓設備始終處於待命狀態——你只需走過去按按鈕，設備立刻回應。這個「待命」就是 daemon，而「按按鈕」就是你在終端輸入的每個命令。</p>
+            </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <h3>&#128736; 關鍵架構</h3>
+        <div class="info-box box-concept">
+            <div class="info-box-header">&#128218; 核心概念：Multi-Session Daemon Architecture</div>
+            <div class="info-box-content">
+                <p><strong>運作原理：</strong></p>
+                <p>1. 第一個命令自動啟動該 session 的背景 daemon（瀏覽器保持開啟）</p>
+                <p>2. 後續命令透過 Unix socket（Windows 用 TCP）與 daemon 溝通</p>
+                <p>3. 每個 <span class="inline-code">--session</span> 擁有獨立的 daemon、socket 和 PID 檔案</p>
+                <p>4. Daemon 在瀏覽器關閉時自動退出，或可手動 <span class="inline-code">browser-use close</span></p>
+            </div>
+        </div>
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+            <div class="info-box-content">
+                <p>所有 CLI 相關檔案存放在 <span class="inline-code">~/.browser-use/</span> 目錄下，包括 config.json（API 金鑰）、daemon 的 socket 和 PID 檔案、tunnel 的 metadata 和日誌。可用 <span class="inline-code">BROWSER_USE_HOME</span> 環境變數自訂路徑。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ===== PART II ===== -->
+<h2 class="section-header">Part II: 安裝與設定</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <h3>&#128230; 安裝方式</h3>
+        <div class="bilingual-block">
+            <div class="zh">安裝需要 <span class="highlight-key">Python 3.11+</span>。macOS/Linux 可用一行指令安裝，Windows 需要先安裝 Git for Windows。</div>
+            <div class="en">Prerequisites: Python 3.11+ on all platforms. macOS/Linux uses a one-line installer; Windows requires Git for Windows.</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">安裝完成後，強烈建議同時安裝 <span class="highlight-practical">CLI Skill</span>，這會給你的 coding agent（如 Claude Code）完整的命令上下文，讓 AI 輔助更精準。</div>
+            <div class="en">It is highly recommended to install the skill alongside the CLI, which gives your coding agent full context on every command, flag, and workflow.</div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 實務應用：CDMO 情境</div>
+            <div class="info-box-content">
+                <p>在製藥環境中，Browser Use CLI 可以用於自動化登入內部品質系統（QMS）、定期擷取環境監測報告、或從供應商入口網站抓取 CoA 資料。但請注意：任何接觸 GMP 資料的自動化必須在 Copilot Mode 下運作，人類審核不可繞過。</p>
+            </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <h3>&#128187; 安裝指令</h3>
+        <p style="font-size: 0.85rem; color: #475569; margin-bottom: 0.5rem;"><strong>macOS / Linux 一行安裝：</strong></p>
+<pre>curl -fsSL https://browser-use.com/cli/install.sh | bash</pre>
+
+        <p style="font-size: 0.85rem; color: #475569; margin-bottom: 0.5rem;"><strong>Windows（PowerShell）：</strong></p>
+<pre>&amp; "C:\Program Files\Git\bin\bash.exe" -c \
+  'curl -fsSL https://browser-use.com/cli/install.sh | bash'</pre>
+
+        <p style="font-size: 0.85rem; color: #475569; margin-bottom: 0.5rem;"><strong>安裝 Skill（給 Claude Code 等 coding agent）：</strong></p>
+<pre>npx skills add https://github.com/browser-use/browser-use \
+  --skill browser-use</pre>
+
+        <p style="font-size: 0.85rem; color: #475569; margin-bottom: 0.5rem;"><strong>安裝後驗證：</strong></p>
+<pre>browser-use doctor   # 驗證安裝
+browser-use setup    # 設定精靈（可選）</pre>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 重點提示：手動安裝</div>
+            <div class="info-box-content">
+                <p>若不想用一行安裝腳本，可以手動用 <span class="inline-code">uv pip install browser-use</span>，再執行 <span class="inline-code">browser-use install</span> 安裝 Chromium，最後 <span class="inline-code">browser-use doctor</span> 驗證。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== PART III ===== -->
+<h2 class="section-header">Part III: 三種瀏覽器模式</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <h3>&#127760; 模式選擇邏輯</h3>
+        <div class="bilingual-block">
+            <div class="zh">Browser Use CLI 支援<span class="highlight-concept">三種瀏覽器模式</span>，各自適用不同場景：Headless Chromium（預設，適合自動化腳本）、帶 Profile 的 Chrome（可沿用現有登入和 cookies）、Cloud Browser（透過 Browser Use Cloud API 遠端託管）。</div>
+            <div class="en">Supports three browser modes: managed headless Chromium, real Chrome with existing user profiles and logins, and cloud-hosted browsers via the Browser Use Cloud API.</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">還可以透過 <span class="inline-code">--connect</span> 自動偵測已運行的 Chrome，或用 <span class="inline-code">--cdp-url</span> 直接連接到指定的 CDP（Chrome DevTools Protocol）位址。</div>
+            <div class="en">Auto-discover and connect to running Chrome, or connect to an existing browser via CDP URL.</div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">&#9878;&#65039; 工具比較：三種模式</div>
+            <div class="info-box-content">
+                <table class="cmd-table">
+                    <tr><th>模式</th><th>Flag</th><th>適用場景</th></tr>
+                    <tr><td>Headless Chromium</td><td>（預設）</td><td>CI/CD、腳本自動化、無 GUI 伺服器</td></tr>
+                    <tr><td>Headed Chromium</td><td><code>--headed</code></td><td>除錯、視覺驗證</td></tr>
+                    <tr><td>Chrome Profile</td><td><code>--profile "Default"</code></td><td>沿用已登入的 cookies/session</td></tr>
+                    <tr><td>Cloud Browser</td><td><code>cloud connect</code></td><td>遠端執行、地理位置代理</td></tr>
+                    <tr><td>CDP 連接</td><td><code>--cdp-url &lt;url&gt;</code></td><td>連接已運行的瀏覽器實例</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <h3>&#128187; 模式切換範例</h3>
+<pre># 預設：headless Chromium
+browser-use open https://example.com
+
+# 帶視窗的瀏覽器（除錯用）
+browser-use --headed open https://example.com
+
+# 用你的 Chrome Default profile（保留登入狀態）
+browser-use --profile "Default" open https://gmail.com
+
+# 用特定 Chrome profile
+browser-use --profile "Profile 1" open https://gmail.com
+
+# 自動偵測已運行的 Chrome
+browser-use --connect open https://example.com
+
+# 透過 CDP URL 連接
+browser-use --cdp-url http://localhost:9222 open https://example.com</pre>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#128161; 比喻說明：Profile 模式</div>
+            <div class="info-box-content">
+                <p>Profile 模式就像借用同事已經刷好門禁卡的電腦——你不用重新登入，所有 session 和 cookies 都已經在那裡。這對需要登入才能存取的內部系統特別實用，但安全性考量下，<strong>不建議在共享環境使用</strong>。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ===== PART IV ===== -->
+<h2 class="section-header">Part IV: 命令體系全覽</h2>
+<div class="content-grid linear" style="grid-template-columns: 1fr;">
+    <div class="content-left" style="border-right: none;">
+        <h3>&#9889; 核心命令分類</h3>
+        <div class="bilingual-block">
+            <div class="zh">Browser Use CLI 的命令分為七大類：Navigation（導航）、Inspection（檢查）、Interaction（互動）、Tabs（分頁）、Cookies、Wait（等待）、Get（資訊擷取）。核心工作流程是：<span class="highlight-key">open &rarr; state &rarr; interact</span>。<span class="inline-code">state</span> 回傳頁面上可互動元素的編號索引，後續用索引號操作。</div>
+            <div class="en">The core browser workflow is: navigate to a page, run state to get numbered element indices, then interact using those indices.</div>
+        </div>
+
+        <p style="font-weight: 700; color: #1e3a8a; margin: 1.25rem 0 0.5rem 0;">Navigation (導航)</p>
+        <table class="cmd-table">
+            <tr><th>Command</th><th>Description</th></tr>
+            <tr><td><code>open &lt;url&gt;</code></td><td>導航到指定 URL</td></tr>
+            <tr><td><code>back</code></td><td>返回上一頁</td></tr>
+            <tr><td><code>scroll down/up</code></td><td>頁面滾動（可加 <code>--amount 1000</code> 指定像素）</td></tr>
+        </table>
+
+        <p style="font-weight: 700; color: #1e3a8a; margin: 1.25rem 0 0.5rem 0;">Inspection (檢查)</p>
+        <table class="cmd-table">
+            <tr><th>Command</th><th>Description</th></tr>
+            <tr><td><code>state</code></td><td>取得 URL、標題、可點擊元素清單及索引</td></tr>
+            <tr><td><code>screenshot [path]</code></td><td>截圖（不指定路徑則輸出 base64）</td></tr>
+            <tr><td><code>screenshot --full path.png</code></td><td>全頁截圖</td></tr>
+        </table>
+
+        <p style="font-weight: 700; color: #1e3a8a; margin: 1.25rem 0 0.5rem 0;">Interaction (互動)</p>
+        <table class="cmd-table">
+            <tr><th>Command</th><th>Description</th></tr>
+            <tr><td><code>click &lt;index&gt;</code></td><td>點擊指定索引元素</td></tr>
+            <tr><td><code>click &lt;x&gt; &lt;y&gt;</code></td><td>點擊像素座標</td></tr>
+            <tr><td><code>type "text"</code></td><td>在目前焦點元素輸入文字</td></tr>
+            <tr><td><code>input &lt;index&gt; "text"</code></td><td>點擊元素後輸入文字（click + type）</td></tr>
+            <tr><td><code>keys "Enter"</code></td><td>送出鍵盤按鍵</td></tr>
+            <tr><td><code>keys "Control+a"</code></td><td>送出組合鍵</td></tr>
+            <tr><td><code>select &lt;index&gt; "value"</code></td><td>選擇下拉選單選項</td></tr>
+            <tr><td><code>upload &lt;index&gt; &lt;path&gt;</code></td><td>上傳檔案到 file input</td></tr>
+        </table>
+
+        <p style="font-weight: 700; color: #1e3a8a; margin: 1.25rem 0 0.5rem 0;">Wait (等待) &amp; Get (資訊擷取)</p>
+        <table class="cmd-table">
+            <tr><th>Command</th><th>Description</th></tr>
+            <tr><td><code>wait selector "css"</code></td><td>等待元素出現</td></tr>
+            <tr><td><code>wait text "Success"</code></td><td>等待文字出現</td></tr>
+            <tr><td><code>get title</code></td><td>取得頁面標題</td></tr>
+            <tr><td><code>get html --selector "h1"</code></td><td>取得指定元素 HTML</td></tr>
+            <tr><td><code>get text &lt;index&gt;</code></td><td>取得元素文字內容</td></tr>
+            <tr><td><code>get value &lt;index&gt;</code></td><td>取得 input 的值</td></tr>
+            <tr><td><code>eval "js code"</code></td><td>執行 JavaScript</td></tr>
+        </table>
+
+        <div class="info-box box-practical" style="margin-top: 1.25rem;">
+            <div class="info-box-header">&#128736;&#65039; 實務應用：表單填寫完整流程</div>
+            <div class="info-box-content">
+<pre># 1. 開啟表單頁面
+browser-use open https://example.com/contact
+
+# 2. 檢查可互動元素
+browser-use state
+# 輸出: [0] input "Name", [1] input "Email", [2] button "Submit"
+
+# 3. 填寫表單
+browser-use input 0 "John Doe"
+browser-use input 1 "john@example.com"
+
+# 4. 送出
+browser-use click 2</pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ===== PART V ===== -->
+<h2 class="section-header">Part V: Cloud API、Tunnel 與進階功能</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <h3>&#9729; Cloud API</h3>
+        <div class="bilingual-block">
+            <div class="zh">Browser Use CLI 提供<span class="highlight-concept">通用 REST passthrough</span> 到 Browser Use Cloud API（v2/v3），可以從終端機管理 agent 任務、雲端瀏覽器 session、profiles、workspaces 等。Cloud dashboard 上能做的事，CLI 都能做。</div>
+            <div class="en">A generic REST passthrough to the Browser Use API (v2 and v3) for managing agent tasks, cloud browser sessions, profiles, workspaces, files, skills, and billing.</div>
+        </div>
+
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; 程式碼/API：Cloud 操作範例</div>
+            <div class="info-box-content">
+<pre># 儲存 API 金鑰
+browser-use cloud login sk-abc123...
+
+# 配置雲端瀏覽器並連接
+browser-use cloud connect
+
+# 帶地理代理的雲端瀏覽器
+browser-use cloud connect --proxy-country US
+
+# 列出瀏覽器
+browser-use cloud v2 GET /browsers
+
+# 建立任務
+browser-use cloud v2 POST /tasks \
+  '{"task":"Search for AI news","url":"https://google.com"}'
+
+# 等待任務完成
+browser-use cloud v2 poll &lt;task-id&gt;</pre>
+            </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh"><strong>Tunnel 功能：</strong>透過 Cloudflare tunnel 將本地開發伺服器暴露給雲端瀏覽器。</div>
+            <div class="en">Expose local dev servers to cloud browsers via Cloudflare tunnels.</div>
+        </div>
+<pre># 開 tunnel 到 localhost:3000
+npm run dev &amp;
+browser-use tunnel 3000
+# 取得公開 URL → https://abc.trycloudflare.com
+
+# 用雲端瀏覽器測試
+browser-use cloud connect
+browser-use open https://abc.trycloudflare.com</pre>
+    </div>
+    <div class="content-right">
+        <h3>&#128100; Session 與 Profile 管理</h3>
+        <div class="bilingual-block">
+            <div class="zh"><strong>Session 管理</strong>讓你同時運行多個獨立的瀏覽器 session。每個 session 有自己的 daemon，互不干擾。</div>
+            <div class="en">Each --session gets its own daemon, socket, and PID file.</div>
+        </div>
+<pre># 預設 session
+browser-use open https://example.com
+
+# 命名 session
+browser-use --session work open https://app.example.com
+browser-use --session work state
+
+# 列出所有活躍 session
+browser-use sessions
+
+# 關閉特定 session
+browser-use --session work close
+
+# 關閉全部
+browser-use close --all</pre>
+
+        <div class="bilingual-block">
+            <div class="zh"><strong>Profile 管理</strong>使用 <span class="inline-code">profile-use</span> Go binary 將本地瀏覽器 cookies 同步到 Browser Use Cloud。首次使用時自動下載。</div>
+            <div class="en">The profile subcommand delegates to the profile-use Go binary, which syncs local browser cookies to Browser-Use cloud.</div>
+        </div>
+        <table class="cmd-table">
+            <tr><th>Command</th><th>Description</th></tr>
+            <tr><td><code>profile list</code></td><td>列出偵測到的瀏覽器及 profiles</td></tr>
+            <tr><td><code>profile sync --all</code></td><td>同步所有 profiles 到 cloud</td></tr>
+            <tr><td><code>profile inspect ...</code></td><td>在本地檢查 cookies</td></tr>
+        </table>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 重點提示：MCP 模式</div>
+            <div class="info-box-content">
+                <p>加上 <span class="inline-code">--mcp</span> flag 可以將 CLI 作為 MCP server 運行，透過 stdin/stdout 與 AI agent 溝通。這代表 Browser Use 可以直接整合進 Claude Code 或其他支援 MCP 的 AI 工具鏈中。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 實務應用：與 Claude Code 整合</div>
+            <div class="info-box-content">
+                <p>安裝 Browser Use skill 後，Claude Code 可以直接呼叫 <span class="inline-code">browser-use</span> 命令來瀏覽網頁、擷取資料、填寫表單。搭配 MCP 模式，AI agent 能在 coding workflow 中無縫加入瀏覽器操作——例如自動測試剛部署的前端頁面。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ===== KEY TAKEAWAYS ===== -->
+<h2 class="section-header">Key Takeaways</h2>
+<div class="takeaways">
+    <div class="summary-card">
+        <div class="card-title">&#127959; Daemon 架構 = 速度</div>
+        <div class="card-text">Multi-session daemon 讓瀏覽器持續運行，命令間延遲僅 ~50ms。每個 session 獨立，支援多任務並行。這是它和傳統「每次啟動新瀏覽器」工具最大的差異。</div>
+    </div>
+    <div class="summary-card">
+        <div class="card-title">&#128268; 三種模式覆蓋全場景</div>
+        <div class="card-text">Headless 給 CI/CD、Profile 沿用登入狀態、Cloud 給遠端與跨地域測試。加上 CDP 連接，幾乎所有瀏覽器自動化場景都能處理。</div>
+    </div>
+    <div class="summary-card">
+        <div class="card-title">&#9889; State-Index 是核心 Pattern</div>
+        <div class="card-text">open &rarr; state &rarr; interact 是所有操作的基礎模式。state 回傳元素索引，後續所有互動以索引為基準——這個設計對 AI agent 非常友善（結構化可解析）。</div>
+    </div>
+    <div class="summary-card">
+        <div class="card-title">&#128279; MCP + Cloud = Agent 整合</div>
+        <div class="card-text">--mcp flag 讓 CLI 成為 MCP server，可直接與 Claude Code 等 AI 工具整合。Cloud API passthrough 讓所有 dashboard 功能都能腳本化。79k+ GitHub stars 代表活躍的社群支援。</div>
+    </div>
+</div>
+
+
+<!-- ===== PRACTICE ===== -->
+<h2 class="section-header">Practice Questions</h2>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">Browser Use CLI 的 daemon 架構與傳統 Selenium WebDriver 的「每次新建 session」模式有什麼根本差異？這個差異對 AI agent 的行為設計有什麼影響？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>根本差異：</strong>Selenium 每次操作通常啟動新的 WebDriver session（瀏覽器啟動 + 關閉 = 數秒開銷），而 Browser Use CLI 的 daemon 讓瀏覽器持續運行於背景，命令間通過 socket 溝通，延遲僅 ~50ms。</p>
+        <p><strong>對 AI agent 的影響：</strong>低延遲意味著 agent 可以用「快速試探」策略——先 state 檢查頁面，如果元素不對就重新導航或等待，成本極低。傳統模式下，agent 會傾向一次性規劃所有步驟以避免重啟成本，這會增加出錯時的代價。Daemon 架構讓 agent 更接近人類「邊看邊做」的行為模式。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">在 CDMO 環境中，你會如何使用 Browser Use CLI 自動化從供應商入口網站擷取原料 Certificate of Analysis (CoA)？請設計完整的命令序列，並說明 GMP 合規的注意事項。</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>命令序列設計：</strong></p>
+<pre># 1. 用已登入的 Chrome profile 開啟供應商入口
+browser-use --profile "Default" open https://supplier-portal.com/coa
+
+# 2. 檢查頁面元素
+browser-use state
+
+# 3. 填入批號搜尋
+browser-use input 3 "LOT-2026-0321"
+browser-use click 5  # Search button
+
+# 4. 等待結果載入
+browser-use wait text "Certificate of Analysis"
+
+# 5. 截圖留證
+browser-use screenshot /evidence/coa-search-2026-0321.png
+
+# 6. 下載 CoA（點擊下載連結）
+browser-use click 8</pre>
+        <p><strong>GMP 合規注意事項：</strong></p>
+        <p>1. <strong>Copilot Mode 強制：</strong>自動擷取的 CoA 必須經過 QA 人員人工審核，AI 不能自行判定合格/不合格。</p>
+        <p>2. <strong>Audit Trail：</strong>每次操作的 screenshot 和 log 必須保存，作為 21 CFR Part 11 電子記錄的一部分。</p>
+        <p>3. <strong>資料完整性（ALCOA+）：</strong>擷取後的 CoA 檔案應計算 hash 值並記錄，確保後續未被竄改。</p>
+        <p>4. <strong>驗證（Validation）：</strong>這類自動化腳本在 GMP 環境中需要經過 IQ/OQ/PQ 驗證。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">Browser Use CLI 的 state-index 模式（用編號索引操作元素）和 Vercel Agent Browser 的 annotated screenshot 模式（用視覺標記）各有什麼優劣？對不同類型的 AI agent 有什麼取捨？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>State-Index 模式（Browser Use）：</strong></p>
+        <p>優勢：結構化輸出、token 開銷低（只需文字索引）、LLM 容易解析和推理。</p>
+        <p>劣勢：只能操作有 accessible name 的元素；對純視覺元素（icon button 沒有 label、canvas 內容）無能為力。</p>
+        <p><strong>Annotated Screenshot 模式（Vercel Agent Browser）：</strong></p>
+        <p>優勢：可以操作任何可見元素（包括 canvas、視覺 icon），更接近人類「看到什麼操作什麼」。</p>
+        <p>劣勢：需要多模態 LLM、token 成本高（圖片 encoding）、推理速度較慢。</p>
+        <p><strong>取捨建議：</strong>Text-based agent（如 Claude Code 命令模式）適合 state-index；Vision-based agent（如需要處理複雜 UI 的場景）適合 annotated screenshot。在 CDMO 的表單操作場景中，state-index 就足夠且更可靠。</p>
+    </div>
+</details>
+
+
+<!-- ===== BOTTOM LINE ===== -->
+<div class="bottom-line">
+    <div class="bottom-line-header">&#127919; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#10004; 核心洞察</div>
+        <div class="bottom-line-text">Browser Use CLI 的 daemon + state-index 模式是目前 AI agent 做瀏覽器自動化最輕量、最友善的方案。它不是「另一個 Selenium」——它是專為 AI agent 設計的瀏覽器操控層，MCP 支援讓它直接嵌入 Claude Code 工作流。79k+ stars 代表社群已驗證其實用性。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#128200; 立即應用</div>
+        <div class="bottom-line-text">本週在 MacBook Air 上安裝 Browser Use CLI 並配合 Claude Code Skill。先用簡單場景測試：open &rarr; state &rarr; screenshot 流程，驗證 daemon 架構的速度。接著嘗試用 --profile 模式登入一個常用的內部系統，評估是否能自動化定期報表擷取。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#9888; 需要補充</div>
+        <div class="bottom-line-text">這份文件是純參考手冊，缺乏錯誤處理的最佳實務（如元素找不到時的 retry 策略、動態頁面的等待模式設計）。也沒有涵蓋 Browser Use 的 Python SDK（Agent class），那是更高層的抽象。需要另外閱讀 Agent Quickstart 和 Supported Models 文件來補完全貌。另外，cloud connect 的定價模型沒有在這份文件提及，需要查詢 Cloud 文件。</div>
+    </div>
+</div>
+
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+    <p>製作日期：2026-03-21 | Source: <a href="https://docs.browser-use.com/open-source/browser-use-cli" target="_blank">Browser Use CLI Official Documentation</a></p>
+    <p>建議 Chat Title: <strong>2026-03-21 [Tool] Browser Use CLI - Daemon Architecture Commands</strong></p>
+    <p>建議檔名: <strong>2026-03-21_browser-use-cli.html</strong></p>
+</div>
+
+</div><!-- end container -->
+</body>
+</html>

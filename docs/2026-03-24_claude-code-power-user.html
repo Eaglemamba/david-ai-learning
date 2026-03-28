@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 高效工作流 - Matt Van Horn 實戰指南</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-03-24">
+<meta name="doc-title" content="Claude Code Power User - Van Horn Workflow Guide">
+<meta name="doc-source" content="Matt Van Horn / @mvanhorn (X)">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Tool,Agent,Automation,Framework">
+<meta name="doc-rating" content="4.5">
+<meta name="doc-summary" content="Van Horn 全套 Claude Code 工作流：plan.md 驅動、語音輸入、六路並行、設定調校、研究循環。">
+<meta name="doc-file" content="2026-03-24_claude-code-power-user.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
+
+/* Tags */
+.tag-container { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+.tag-framework { background: #ddd6fe; color: #4c1d95; }
+
+.header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-top: 0.5rem; }
+.header .source-info { font-size: 0.85rem; opacity: 0.7; margin-top: 0.75rem; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+.executive-summary h2 { color: #1e3a5f; font-size: 1.2rem; margin-top: 0; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.25rem; }
+.objective-desc { font-size: 0.85rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Section Headers */
+.section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+
+/* Content Grid Internals */
+.content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+@media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+.bilingual-block { margin-bottom: 1.25rem; }
+.chinese-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; }
+.english-ref { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; margin-top: 0.25rem; }
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Code blocks */
+code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; }
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; }
+pre code { background: none; padding: 0; color: inherit; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+
+/* Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Tabs */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* Linear layout override for code-heavy sections */
+.content-grid.linear { grid-template-columns: 1fr; }
+.content-grid.linear .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-content">
+        <div class="tag-container">
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-automation">Automation</span>
+            <span class="tag tag-framework">Framework</span>
+        </div>
+        <h1>Claude Code 高效工作流全攻略</h1>
+        <div class="subtitle">Matt Van Horn 的 Plan-First 開發哲學與實戰技巧</div>
+        <div class="source-info">Matt Van Horn (@mvanhorn) | X Thread | 2026-03-24</div>
+    </div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="executive-summary">
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.5/5</span>
+        <span class="rating-high">&uarr; 實務應用, 工具生態</span>
+        <span class="rating-low">&darr; 技術深度（偏工作流非底層機制）</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>Matt Van Horn 分享了他使用 Claude Code 的完整工作流系統：以 <span class="highlight-concept">plan.md 檔案</span>作為一切工作的核心起點，結合語音輸入、4-6 路並行工作階段、自動化設定、以及 <code>/last30days</code> 研究工具，將傳統「80% 寫程式 + 20% 規劃」的比例徹底翻轉。他的方法不僅適用於程式開發，也延伸到策略文件、會議記錄轉化、開源貢獻、甚至迪士尼旅遊規劃。核心主張：<span class="highlight-key">No IDE. Just plan.md files and voice.</span></p>
+    <p><strong>批判性觀察：</strong>本文為個人經驗分享，使用者為高度熟練的 power user（263 commits/30 days），部分工作流（如 dangerously skip permissions）有安全風險。文中提到的 Compound Engineering Plugin 來自 Every Inc（與作者有合作關係），需注意利益關係。多工並行的效率宣稱缺乏量化對照資料。</p>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<h2 class="section-title">Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-icon">&#x1F4CB;</div>
+        <div class="objective-title">Plan-First 方法論</div>
+        <div class="objective-desc">理解為何「先規劃後執行」能顛覆傳統開發流程，以及 plan.md 如何成為跨 session 的檢查點</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #10b981;">
+        <div class="objective-icon">&#x2699;</div>
+        <div class="objective-title">關鍵設定與工具鏈</div>
+        <div class="objective-desc">掌握三項核心設定（bypass permissions、完成音效、autosave）及語音輸入工具</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #8b5cf6;">
+        <div class="objective-icon">&#x1F504;</div>
+        <div class="objective-title">多路並行工作流</div>
+        <div class="objective-desc">學習 4-6 路 Claude Code session 並行執行的方法，以及 Research-Plan-Build 循環</div>
+    </div>
+</div>
+
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+    <div class="framework-title">Van Horn 核心工作流循環：Research &rarr; Plan &rarr; Build</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F50D;</div>
+            <div class="framework-step-title">Research</div>
+            <div class="framework-step-desc">/last30days 搜集<br>社群即時資訊</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F4DD;</div>
+            <div class="framework-step-title">Plan</div>
+            <div class="framework-step-desc">/ce:plan 產出<br>結構化 plan.md</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F528;</div>
+            <div class="framework-step-title">Build</div>
+            <div class="framework-step-desc">/ce:work 執行<br>任務並勾選完成</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F501;</div>
+            <div class="framework-step-title">Iterate</div>
+            <div class="framework-step-desc">語音微調<br>持續迭代</div>
+        </div>
+    </div>
+</div>
+
+<!-- TABBED CONTENT (8 major sections -> 3 tab groups) -->
+<h2 class="section-title">Content Sections</h2>
+
+<div class="tab-container">
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">Foundation: Plan + Voice</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-setup')">Setup: Config + Parallel</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-extend')">Extend: Research + Beyond Code</button>
+    </div>
+
+    <!-- TAB 1: FOUNDATION -->
+    <div id="tab-foundation" class="tab-content active">
+
+        <!-- Part I: Plan-First -->
+        <h3 style="color:#1e3a5f; margin-top:0;">Part I: Plan-First 哲學 — 一切從 /ce:plan 開始</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-block">
+                    <div class="chinese-text">Van Horn 最核心的觀點：<span class="highlight-concept">當你有任何想法的瞬間，輸入 /ce:plan</span>。不是「讓我想想」，不是「讓我開始寫程式」。產品點子、GitHub bug、終端機錯誤截圖 — 全部先進入規劃階段。</div>
+                    <div class="english-ref">"The single most important thing I've learned: the moment I have an idea, it's /ce:plan. Not 'let me think about this.' Not 'let me start coding.' /ce:plan. Every time."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">執行 <code>/ce:plan</code> 時，底層會<span class="highlight-key">同時啟動多個研究 Agent</span>：一個分析你的程式碼庫（讀取檔案、找出慣例模式），另一個搜尋 <code>docs/solutions/</code> 資料夾裡過去的 bug 修復紀錄。如果主題需要，還會有更多 Agent 同步研究外部最佳實踐和框架文件。</div>
+                    <div class="english-ref">"One analyzes your codebase - reads your files, finds patterns, checks your conventions. Another searches your docs/solutions/ for learnings from past bugs."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">最終產出一份結構化的 <code>plan.md</code>：問題描述、建議方法、需要修改的檔案、含核取方塊的驗收標準、以及從你自己程式碼中提取的設計模式。不是泛用建議，而是<span class="highlight-practical">植根於你的程式碼庫、你的慣例、你的歷史</span>。</div>
+                    <div class="english-ref">"Then it consolidates and writes a structured plan.md: what's wrong, what approach to take, which files to touch, acceptance criteria with checkboxes, patterns to follow from your own code."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text"><code>/ce:work</code> 接手執行計畫：分解任務、逐一實作、執行測試、勾選標準。Context 中斷時？開啟新 session，指向 plan.md，從斷點繼續。<span class="highlight-key">plan.md 就是能存活於一切中斷的檢查點</span>。</div>
+                    <div class="english-ref">"Context gets lost? Start a new session, point it at the plan, pick up where you left off. The plan is the checkpoint that survives everything."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念：80/20 翻轉</div>
+                    <div class="info-box-content">
+                        <p>傳統開發是 80% 寫程式 + 20% 規劃。Van Horn 的方法完全翻轉：<strong>80% 時間在規劃（用 Opus 思考），20% 讓 subagent 蜂群式執行</strong>。</p>
+                        <p>這與 Anthropic 官方「Building Effective Agents」文章的理念一致：AI Agent 的價值不在取代人類編碼，而在<strong>將人類判斷力集中在規劃層，把執行層委託給 AI</strong>。</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：Compound Engineering Plugin</div>
+                    <div class="info-box-content">
+                        <p><code>/ce:plan</code> 和 <code>/ce:work</code> 來自 Compound Engineering Plugin（Every Inc 開發）。安裝指令：</p>
+                        <pre><code>/plugin marketplace add EveryInc/compound-engineering-plugin</code></pre>
+                        <p>Van Horn 是此 Plugin 的 #3 貢獻者（21 commits），與 Every Inc 有合作關係。評估其推薦時需考慮此利益關係。</p>
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; CDMO 類比</div>
+                    <div class="info-box-content">
+                        <p>plan.md 的角色類似 <strong>批次生產紀錄（Batch Record）</strong>：在任何製造步驟開始前，先確認配方、設備、驗收標準全部到位。就像 GMP 要求的「先審核再執行」，Van Horn 要求的是「先 plan 再 build」。</p>
+                        <p>context 中斷後用 plan.md 恢復，等同於製程異常後的<strong>偏差調查 + 復工程序</strong>。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part II: Voice -->
+        <h3 style="color:#1e3a5f;">Part II: 語音輸入 — 用說的比打的快</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-block">
+                    <div class="chinese-text">Van Horn 過去討厭語音備忘錄 — Apple 內建語音輸入讓他想摔手機。但<span class="highlight-concept">語音對 LLM 輸入完全不同</span>：轉錄不需要完美，因為 Claude Code 理解上下文。你可以含糊、斷句、重新開始。語音終於能用了，因為接收端夠聰明，能補上空缺。</div>
+                    <div class="english-ref">"Voice finally works because the listener is smart enough to fill in the gaps."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">他推薦兩個工具：<span class="highlight-practical">Monologue</span>（@usemonologue，也是 Every Inc 產品）將語音直接輸入到聚焦的應用程式中；<span class="highlight-practical">WhisperFlow</span> 也是不錯的選擇。他甚至買了鵝頸麥克風放在辦公室。</div>
+                    <div class="english-ref">"Monologue pipes speech into whatever app is focused. You talk, it types into Claude Code."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">Van Horn 表示他正在自動駕駛的 Tesla 中、送小孩上學途中口述這篇文章。語音不只是程式開發的輸入方式，而是<span class="highlight-key">整個內容創作流程的核心</span>。</div>
+                    <div class="english-ref">"I'm dictating this right now from Full Self-Driving in my Tesla, dropping off my kids."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：語音工具比較</div>
+                    <div class="info-box-content">
+                        <table style="width:100%; font-size:0.85rem; border-collapse:collapse;">
+                            <tr style="background:#d1fae5;"><th style="padding:0.5rem; text-align:left;">工具</th><th style="padding:0.5rem;">特色</th><th style="padding:0.5rem;">來源</th></tr>
+                            <tr><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">Monologue</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">語音直接輸入焦點 App</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">Every Inc</td></tr>
+                            <tr><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">WhisperFlow</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">替代方案</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">獨立開發</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明：LLM 容錯的語音</div>
+                    <div class="info-box-content">
+                        <p>傳統語音轉文字像是跟一個<strong>嚴格的抄寫員</strong>說話 — 每個字都要清楚，否則出錯。LLM 驅動的語音輸入像是跟一個<strong>聰明的助理</strong>說話 — 他們理解你要表達什麼，即使你說得含糊。</p>
+                        <p>這也是 context engineering 的體現：<strong>LLM 利用周圍的程式碼上下文來修正語音轉錄的錯誤</strong>。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end tab-foundation -->
+
+    <!-- TAB 2: SETUP -->
+    <div id="tab-setup" class="tab-content">
+        <!-- Part III: Parallel Sessions -->
+        <h3 style="color:#1e3a5f; margin-top:0;">Part III: 4-6 路並行工作 — 上下文切換的極致</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-block">
+                    <div class="chinese-text">Van Horn 的日常工作方式：<span class="highlight-concept">4 到 6 個 Ghostty 視窗，每個執行獨立的 Claude Code session</span>。一個在寫 plan，一個在根據另一份 plan 執行 build，一個在跑 /last30days 研究，一個在修他測試時發現的 bug。</div>
+                    <div class="english-ref">"Four to six Ghostty windows, each running a separate Claude Code session. One is writing a plan. One is building from a different plan."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">當 <code>/ce:plan</code> 在第一個視窗啟動研究 Agent 時，他切到第二個視窗執行已完成的 plan。同時第三個視窗貼上新的 bug。等他循環回第一個視窗時，plan 已經完成等待在 Zed 中。</div>
+                    <div class="english-ref">"While /ce:plan spins up research agents in one window, I switch to another window and /ce:work a plan that's already written."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">這也是為什麼<span class="highlight-key">bypass permissions 是不可妥協的</span>。如果每個 session 每個動作都要問「允許嗎？」，你無法在視窗間切換。它們都需要自主運行。檢查、反應、繼續。Git 隨時可以回滾。</div>
+                    <div class="english-ref">"If every session asks 'Allow?' on every action, you can't context-switch. They all need to run autonomously."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">代價：他的 MacBook 大約一小時就沒電。六個 Claude session 並行執行。他剛訂了新的 MacBook Pro。</div>
+                    <div class="english-ref">"This is also why my MacBook dies in about an hour."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：並行工作的前提</div>
+                    <div class="info-box-content">
+                        <p>多路並行需要三個前提才能有效運作：</p>
+                        <p><strong>1. bypass permissions</strong> — 每個 session 必須能自主執行，否則人工瓶頸抵消並行效益</p>
+                        <p><strong>2. 完成音效</strong> — 需要知道哪個 session 結束了（下一段設定）</p>
+                        <p><strong>3. Git 安全網</strong> — 任何錯誤都可以 git revert，這是 bypass permissions 的安全保障</p>
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; CDMO 類比：製程並行</div>
+                    <div class="info-box-content">
+                        <p>類似 CDMO 廠區內同時進行多條產線的<strong>並行製造</strong>：一條線在做配液，另一條在充填，第三條在凍乾。每條線有獨立的 Batch Record（= plan.md），操作員在產線間巡迴監控。</p>
+                        <p>差異：CDMO 並行有嚴格的交叉汙染防護和 SOP；Van Horn 的並行防護是 Git。<strong>在 GMP 環境中，bypass permissions 模式絕對不適用。</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part IV: Config -->
+        <h3 style="color:#1e3a5f;">Part IV: 三項關鍵設定 — 解放 Claude Code 的枷鎖</h3>
+        <div class="content-grid linear">
+            <div class="content-left" style="border-right:none;">
+                <div class="bilingual-block">
+                    <div class="chinese-text">Claude Code 預設模式對每次編輯、每個指令都要求權限確認。Van Horn 認為需要三項設定改變才能真正發揮效率。</div>
+                    <div class="english-ref">"Claude Code's default mode asks permission for every edit, every command. You need three config changes."</div>
+                </div>
+
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#x1F4BB; 設定 1：Dangerously Skip Permissions</div>
+                    <div class="info-box-content">
+                        <p>在 <code>~/.claude/settings.json</code> 中加入：</p>
+<pre><code>{
+  "permissions": {
+    "allow": [
+      "WebSearch", "WebFetch", "Bash", "Read", "Write",
+      "Edit", "Glob", "Grep", "Task", "TodoWrite"
+    ],
+    "deny": [],
+    "defaultMode": "bypassPermissions"
+  },
+  "skipDangerousModePermissionPrompt": true
+}</code></pre>
+                        <p><code>skipDangerousModePermissionPrompt: true</code> 是關鍵。沒有它，Claude 每次新 session 都會要求確認。也可以用 <strong>Shift+Tab</strong> 臨時切換。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#x1F4BB; 設定 2：完成時播放音效</div>
+                    <div class="info-box-content">
+                        <p>在同一個 settings.json 中加入 hooks：</p>
+<pre><code>{
+  "hooks": {
+    "Stop": [{
+      "hooks": [{
+        "type": "command",
+        "command": "afplay /System/Library/Sounds/Blow.aiff"
+      }]
+    }]
+  }
+}</code></pre>
+                        <p>用途：離開螢幕，聽到音效再回來。多路並行時，用來判斷哪個 session 完成了。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#x1F4BB; 設定 3：Zed Autosave（500ms）</div>
+                    <div class="info-box-content">
+                        <p>在 Zed 設定（Cmd+,）中：</p>
+<pre><code>{
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 500
+    }
+  }
+}</code></pre>
+                        <p>效果：Zed 每 500 毫秒自動儲存。Claude Code 監視檔案系統。雙方即時同步 — <span class="highlight-practical">像 Google Docs 協作，但另一個協作者是 AI</span>。Ghostty 放一半螢幕，Zed 放另一半，看著同一個檔案。</p>
+                    </div>
+                </div>
+
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 安全性警告</div>
+                    <div class="info-box-content">
+                        <p><strong>「Dangerously skip permissions」如其名 — 有危險性。</strong>啟用後 Claude Code 可以不經確認執行任何 Bash 指令、讀寫任何檔案。Van Horn 依賴 Git 作為安全網，但對於以下情境需要特別謹慎：</p>
+                        <p>- 含有敏感資料的目錄（API keys、.env 檔案）<br>
+                        - 系統層級指令（rm -rf、chmod 等）<br>
+                        - 多人共用的開發環境<br>
+                        - <strong>任何 GMP/法規相關的工作環境 — 絕對不要使用此設定</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: EXTEND -->
+    <div id="tab-extend" class="tab-content">
+        <!-- Part V: Research -->
+        <h3 style="color:#1e3a5f; margin-top:0;">Part V: 研究先行 — /last30days 的威力</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-block">
+                    <div class="chinese-text">在執行 <code>/ce:plan</code> 之前，Van Horn 通常先跑 <code>/last30days</code> 做研究。例如他在考慮 Vercel 的 agent-browser 和 Playwright 之間的選擇時，跑了一次研究指令，幾分鐘內取得：<span class="highlight-concept">78 篇 Reddit 討論、76 則 X 貼文、22 個 YouTube 影片、15 篇 HN 文章</span>。</div>
+                    <div class="english-ref">"I ran /last30days Vercel agent browser vs Playwright. In a few minutes: 78 Reddit threads, 76 X posts, 22 YouTube videos, 15 HN stories."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">研究結果顯示 agent-browser 使用的 context tokens 少了 82-93%，而 Playwright 光是工具定義就吃掉 13,700 tokens。他把整個研究結果輸入 <code>/ce:plan</code>，<span class="highlight-key">產出的計畫植根於社群當下的真實認知，而非六個月前的訓練資料</span>。</div>
+                    <div class="english-ref">"The plan came out grounded in what the community actually knows right now, not six-month-old training data."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text"><code>/last30days</code> 是開源專案（GitHub 4.5K stars），能同步搜尋 Reddit、X、YouTube、TikTok、Instagram、HN、Polymarket 及一般網頁。Van Horn 將此用於一切決策：選函式庫前、開發功能前、寫文章前。</div>
+                    <div class="english-ref">"/last30days is open source (4.5K stars). It searches Reddit, X, YouTube, TikTok, Instagram, HN, Polymarket, and the web in parallel."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念：Research-Plan-Build 三段式</div>
+                    <div class="info-box-content">
+                        <p>Van Horn 的完整循環：<strong>Research &rarr; Plan &rarr; Build</strong>。</p>
+                        <p>/last30days 解決的是 LLM 訓練資料時效性問題 — 將「社群即時認知」注入 plan 的上下文中。這本質上是一種<strong>手動 RAG（Retrieval Augmented Generation）</strong>：先檢索最新資訊，再餵入 LLM 做規劃。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：搜尋來源涵蓋</div>
+                    <div class="info-box-content">
+                        <p><strong>同步搜尋的平台：</strong>Reddit、X (Twitter)、YouTube、TikTok、Instagram、Hacker News、Polymarket、一般網頁搜尋</p>
+                        <p><strong>適用場景：</strong>技術選型、函式庫評估、趨勢分析、競品研究、寫作前的素材收集</p>
+                        <p><strong>GitHub：</strong>github.com/mvanhorn/last30days-skill</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part VI: Meetings to Plans -->
+        <h3 style="color:#1e3a5f;">Part VI: 會議轉 Plan — Granola + Claude Code</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-block">
+                    <div class="chinese-text">Van Horn 與一位候選人共進午餐，討論了一個尚未開發的新產品構想。一個半小時的對話，夾雜著壽司、餐廳、小孩話題。他用 <span class="highlight-practical">Granola</span>（會議記錄工具）錄音。午餐後，把完整逐字稿貼進 Claude Code：<code>/ce:plan turn this into a product proposal</code>。</div>
+                    <div class="english-ref">"I pasted the full transcript - ninety minutes mixed with tangents about sushi - into Claude Code: /ce:plan turn this into a product proposal."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">關鍵在於：Claude Code 已經知道公司產品程式碼在 GitHub 的位置，也能存取他的公司策略資料夾 — 每一份先前寫過的策略 plan.md。所以處理逐字稿時，它不只是從午餐對話中提取點子，而是<span class="highlight-key">同時交叉比對實際程式碼庫和每個過去的策略決策</span>。</div>
+                    <div class="english-ref">"It was cross-referencing against our actual codebase and every strategic decision we've made before."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text">結果：一次就產出了完整的產品提案 — 目標、使用者故事、技術方法、里程碑。自動忽略了關於餐廳的部分。當晚寄給候選人。那位候選人現在全職加入團隊。Granola 現在支援 MCP，可以在 Claude Code 中直接使用。</div>
+                    <div class="english-ref">"One-shotted an incredible proposal. Goals, user stories, technical approach, milestones. Ignored the parts about restaurants."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明：累積上下文的複利效應</div>
+                    <div class="info-box-content">
+                        <p>Van Horn 的策略資料夾就像一個不斷增值的<strong>「決策記憶庫」</strong>。每一份新的 plan.md 都建立在所有過去 plan 的基礎上。這是<strong>知識複利</strong>：第 10 份策略文件的品質，遠高於第 1 份，因為 AI 有更多歷史脈絡可以參考。</p>
+                        <p>這個概念連結到你的 <strong>context engineering</strong> 認知：context window 的價值不在大小，而在<strong>累積的相關資訊密度</strong>。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：會議工具整合</div>
+                    <div class="info-box-content">
+                        <p><strong>Granola</strong> — 會議錄音 + 自動逐字稿，現支援 MCP 直接整合 Claude Code</p>
+                        <p><strong>工作流：</strong>開會（Granola 錄音）&rarr; 逐字稿自動進入 Claude Code &rarr; /ce:plan 產出結構化提案</p>
+                        <p><strong>關鍵成功因素：</strong>Claude Code 必須能存取公司程式碼 + 策略文件庫，才能交叉比對產出高品質提案</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part VII: Beyond Code + Mac Mini -->
+        <h3 style="color:#1e3a5f;">Part VII: 超越程式碼 — 策略文件、遠端存取、Token 管理</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-block">
+                    <div class="chinese-text">Van Horn 撰寫公司策略文件時，<span class="highlight-practical">Claude Code 和 Markdown 檔案並排開啟</span>。用 Monologue 口述：「給我三個市場策略方案，列出每個的優缺點。」三個選項立刻出現在 Zed 中。「第二個最接近但第一個的用詞更好，合併它們。」即時更新。策略文件、產品規格、競爭分析、這篇文章本身 — 全用相同的工作流。</div>
+                    <div class="english-ref">"Strategy docs, product specs, competitive analysis, this article. Same workflow. Talk, plan, iterate."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>Mac Mini 遠端工作站：</strong>透過 Telegram 整合，從手機傳訊息給 Mac Mini 上的 Claude Code。吃飯時想到一個 bug？在 Telegram 輸入 <code>/ce:plan fix the timeout issue</code>，回到電腦時 plan 已經等在 Zed 中。搭飛機時用 <span class="highlight-key">tmux</span> 連線到 Mac Mini — WiFi 中斷 20 分鐘也不影響，session 在遠端持續運行。</div>
+                    <div class="english-ref">"tmux into your Mac Mini first and the session runs on that machine. Your laptop is just a window."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>Token 用量管理：</strong>4-6 路並行的 Opus session 會快速消耗 $200/月的 Claude Max 額度。解法：同時訂閱 $200/月的 <span class="highlight-concept">Codex plan</span>，用 Compound Engineering 的 <code>/ce:work --codex</code> 將執行層工作委託給 Codex credits。Claude 負責規劃，Codex 負責大量實作。兩個方案互補。</div>
+                    <div class="english-ref">"Claude for planning, Codex for heavy implementation."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-compare">
+                    <div class="info-box-header">&#x2696;&#xFE0F; 工具比較：Claude Max vs Codex</div>
+                    <div class="info-box-content">
+                        <table style="width:100%; font-size:0.85rem; border-collapse:collapse;">
+                            <tr style="background:#c7d2fe;"><th style="padding:0.5rem; text-align:left;">面向</th><th style="padding:0.5rem;">Claude Max</th><th style="padding:0.5rem;">Codex Plan</th></tr>
+                            <tr><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">費用</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">$200/月</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">$200/月</td></tr>
+                            <tr><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">最適用途</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">規劃、研究、策略</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">程式碼實作、Review</td></tr>
+                            <tr><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">整合方式</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">原生 Claude Code</td><td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">/ce:work --codex</td></tr>
+                            <tr><td style="padding:0.4rem;">互補策略</td><td colspan="2" style="padding:0.4rem;">Claude 做 Opus 級規劃 + Codex 做大量執行，分散 token 消耗</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：tmux 飛行模式</div>
+                    <div class="info-box-content">
+                        <p><strong>問題：</strong>Claude Code 在飛機 WiFi 下體驗差 — 連線中斷時 session 直接死亡，甚至不會通知你。</p>
+                        <p><strong>解法：</strong>先 <code>tmux</code> 連到遠端 Mac Mini，所有 Claude Code session 在那台機器上運行。你的筆電只是顯示窗口。WiFi 中斷 &rarr; 重連 &rarr; session 完整保存。</p>
+                        <p>這也適用於任何不穩定的網路環境。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part VIII: Disney World Example -->
+        <h3 style="color:#1e3a5f;">Part VIII: 實戰案例 — 迪士尼世界旅遊規劃</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-block">
+                    <div class="chinese-text">為了展示完整工作流用於非程式碼場景，Van Horn 分享了一個迪士尼樂園旅遊規劃的實例。在足球場邊看小孩比賽時，用筆電演示了完整流程：</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>Step 1：</strong><code>/last30days Disney World</code> — 兩分鐘內取得 66 篇 Reddit 討論（11,804 upvotes）、34 則 X 貼文、8 個 YouTube 影片。價格衝擊是主要討論主題，一篇 $8,500 旅遊報告收到 183 則留言。</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>Step 2-3：</strong>口述了完整需求（含錯字 — Claude Code 不在意）：四個園區、指定遊樂設施、Genie Plus 策略、預算考量。Claude 研究 Agent 啟動，交叉比對 /last30days 資料，產出<span class="highlight-practical">結構化 plan.md</span>：園區順序、精確的 Lightning Lane 預訂策略、三個鬧鐘提醒。</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="chinese-text"><strong>Step 4-6：</strong>在 Zed 中檢視 plan，請 Claude 為另一位家長也做一份 305 行的三日行程。接著直接部署到 Vercel 網站。最後把 .md 檔丟進 Telegram，讓 OpenClaw 設定日曆事件 + cron 備份提醒。<span class="highlight-key">語音到研究到計畫到網站到自動提醒</span>，全部在足球場邊完成。</div>
+                    <div class="english-ref">"Voice to research to plan to website to automated reminders. At a soccer field."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念：工作流的通用性</div>
+                    <div class="info-box-content">
+                        <p>迪士尼案例的重要性不在旅遊規劃本身，而在於證明<strong>同一套 Research-Plan-Build 工作流適用於任何領域</strong>。Van Horn 用完全相同的方法論處理：</p>
+                        <p>- 程式碼開發<br>- 策略文件撰寫<br>- 開源專案貢獻<br>- 文章寫作<br>- 旅遊規劃</p>
+                        <p>框架的通用性是其最大價值。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：端到端自動化</div>
+                    <div class="info-box-content">
+                        <p>迪士尼案例展示了完整的工具鏈串接：</p>
+                        <p><strong>/last30days</strong> &rarr; 即時資訊搜集<br>
+                        <strong>/ce:plan</strong> &rarr; 結構化計畫<br>
+                        <strong>Zed</strong> &rarr; 檢視與微調<br>
+                        <strong>Vercel</strong> &rarr; 部署為網頁<br>
+                        <strong>Telegram + OpenClaw</strong> &rarr; 自動提醒設定</p>
+                        <p>每一步的輸出直接成為下一步的輸入，零手動轉換。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div><!-- end tab-container -->
+
+<!-- KEY TAKEAWAYS -->
+<h2 class="section-title">Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-title">Plan-First 是系統，不是習慣</div>
+        <div class="summary-card-text">plan.md 不只是「先想清楚」的好建議 — 它是跨 session 的狀態保存機制、AI Agent 的任務規格書、以及 Git 回滾時的參考基準。70 份 plan 檔案 + 263 commits 在 30 天內，量化了這套方法的產出規模。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="summary-card-title">語音 + LLM 容錯 = 新的輸入典範</div>
+        <div class="summary-card-text">語音輸入之所以能用，是因為 LLM 的上下文理解能力彌補了語音轉錄的錯誤。這不是語音辨識技術的進步，而是「接收端智慧」的質變。Van Horn 的整篇文章、策略文件、甚至程式碼都是口述完成的。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="summary-card-title">並行工作需要系統級設定</div>
+        <div class="summary-card-text">4-6 路並行不是打開更多終端機就能實現的。它需要 bypass permissions（自主執行）、音效通知（狀態感知）、autosave（即時同步）三者配合。缺少任何一項，並行效率就會崩潰。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="summary-card-title">工作流框架的通用性</div>
+        <div class="summary-card-text">Research &rarr; Plan &rarr; Build 循環適用於程式碼、策略文件、開源貢獻、文章寫作、旅遊規劃。框架的價值在於可遷移性 — 一旦建立，每個新領域的適應成本趨近於零。</div>
+    </div>
+</div>
+
+<!-- PRACTICE -->
+<h2 class="section-title">Practice Questions</h2>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">Van Horn 說 plan.md 是「能存活於一切中斷的檢查點」。這個設計解決了 AI coding 工作流中的什麼根本問題？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>LLM 的 context window 有限且不持久 — 每次新 session 都從零開始。plan.md 將規劃結果「外部化」為檔案，脫離了 context window 的限制。這解決了三個問題：(1) context 長度不夠時可以分段執行，(2) session 中斷時不需重做分析，(3) 多個 Agent/session 可以共享同一份任務定義。本質上，plan.md 是人類與 AI 之間的「共享記憶體」，類似分散式系統中的持久化狀態（persistent state）。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">如果你要將 Van Horn 的 Research-Plan-Build 循環應用到 CDMO 的偏差調查（Deviation Investigation）流程中，每個階段對應什麼？有什麼需要調適的？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>Research（/last30days 對應）：</strong>搜集相關偏差歷史紀錄、CAPA 資料庫、SOP 版本變更記錄、類似產品的 FDA Warning Letter 案例。</p>
+        <p><strong>Plan（/ce:plan 對應）：</strong>產出結構化的偏差調查計畫 — 根本原因假設、需要檢視的文件清單、訪談對象、時間線、驗收標準。</p>
+        <p><strong>Build（/ce:work 對應）：</strong>執行調查、撰寫報告、提出 CAPA 建議。</p>
+        <p><strong>關鍵調適：</strong>GMP 環境中 AI 必須是 <strong>Copilot Mode</strong> — 每一步都需要 SME（Subject Matter Expert）審核簽名。bypass permissions 完全不適用。此外，偏差調查的 plan.md 等同於受控文件，需要版本管理和審計追蹤（Audit Trail），不能只靠 Git。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">Van Horn 報告了 70 份 plan + 263 commits 在 30 天內的產出。這些數字能證明 Plan-First 方法論的有效性嗎？缺少什麼資訊？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>不能完全證明，因為缺少對照：</strong></p>
+        <p>(1) <strong>基線比較</strong>：他在採用 Plan-First 之前的 30 天產出是多少？沒有 before/after 比較，就無法歸因於方法論本身。</p>
+        <p>(2) <strong>品質指標</strong>：commits 數量不等於程式碼品質。需要知道 bug rate、code review 通過率、revert 比例。</p>
+        <p>(3) <strong>單人樣本</strong>：這是 N=1 的個案研究，Van Horn 是高度熟練的 power user，結果可能無法推廣到一般開發者。</p>
+        <p>(4) <strong>利益關係</strong>：他是 Compound Engineering Plugin 的核心貢獻者，推廣此工作流直接受益。</p>
+        <p>儘管如此，plan.md 作為「持久化上下文」的設計理念仍然有獨立的工程價值，值得在受控條件下測試。</p>
+    </div>
+</details>
+
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+    <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x2714; 核心洞察</div>
+        <div class="bottom-line-text">plan.md 作為「跨 session 持久化上下文」的概念，與我正在建構的 Claude Code 自動化 pipeline 高度相關。我的 successor prompt / handoff 文件本質上就是一種 plan.md — 差異在於 Van Horn 的 plan.md 是每個任務一份，而我的 handoff 是整個 pipeline 一份。可以考慮將 pipeline 分解為多個獨立的 plan.md，每份對應一個可獨立執行的步驟，讓 Claude Code headless mode 能更靈活地並行處理。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+        <div class="bottom-line-text">本週在 MacBook Air 上安裝 Compound Engineering Plugin，用 /ce:plan 測試自動化 pipeline 的下一個模組（repo-registry.conf 掃描邏輯）。同時設定 Zed 的 500ms autosave 和 Claude Code 完成音效 — 這兩項是零成本、即時生效的效率提升。暫不啟用 bypass permissions（個人偏好保留安全確認）。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x26A0; 需要補充</div>
+        <div class="bottom-line-text">文章缺乏：(1) plan.md 的模板/結構範例 — 需要去看 Compound Engineering 的 GitHub 源碼了解 plan 的具體格式；(2) Token 消耗量的具體數字 — /ce:plan 一次用多少 tokens？4-6 路並行一天消耗多少？(3) 品質控制機制 — 當 /ce:work 執行結果不符合 plan 時，回饋迴路如何運作？建議三個月後重讀，屆時 Compound Engineering 應該會更成熟。</div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>&#x1F4C4; 製作日期：2026-03-24 | 來源：<a href="https://x.com/mvanhorn" target="_blank">Matt Van Horn (@mvanhorn) X Thread</a></p>
+    <p>&#x1F4C1; 建議檔名：2026-03-24_claude-code-power-user.html</p>
+    <p>&#x1F4AC; 建議 Chat Title：2026-03-24 [Tool] Van Horn - Claude Code Power User Workflow</p>
+</div>
+
+</div><!-- end container -->
+
+<script>
+function switchTab(evt, tabId) {
+    const container = evt.currentTarget.closest('.tab-container');
+    container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
