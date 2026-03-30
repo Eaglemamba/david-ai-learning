@@ -1,751 +1,1471 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2025-11-30" name="doc-date"/>
-<meta content="AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子" name="doc-title"/>
-<meta content="Wyndo / AI Maker Newsletter" name="doc-source"/>
-<meta content="Automation,Agent,Tool,Prompt" name="doc-tags"/>
-<meta content="4.2" name="doc-rating"/>
-<meta content="用語音備忘錄自動產出Substack Notes和商業點子的AI Second Brain系統" name="doc-summary"/>
-<meta content="2025-11-30_ai-second-brain-voice.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-11-30">
+    <meta name="doc-title" content="AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子">
+    <meta name="doc-source" content="Wyndo / AI Maker Newsletter">
+    <meta name="doc-tags" content="Automation,Agent,Tool,Prompt">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="用語音備忘錄自動產出Substack Notes和商業點子的AI Second Brain系統">
+    <meta name="doc-file" content="2025-11-30_ai-second-brain-voice.html">
+    <title>AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --accent: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --concept-bg: #f0fdf4;
+            --concept-border: #86efac;
+            --concept-header: #bbf7d0;
+            --analogy-bg: #fffbeb;
+            --analogy-border: #fcd34d;
+            --analogy-header: #fef3c7;
+            --key-bg: #fff7ed;
+            --key-border: #fdba74;
+            --key-header: #fed7aa;
+            --code-bg: #f5f3ff;
+            --code-border: #c4b5fd;
+            --code-header: #ddd6fe;
+            --practical-bg: #ecfdf5;
+            --practical-border: #6ee7b7;
+            --practical-header: #a7f3d0;
+            --cost-bg: #f0fdfa;
+            --cost-border: #5eead4;
+            --cost-header: #99f6e4;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: #1f2937;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border-radius: 1rem;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+        
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        
+        .source-info {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        .source-info a {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+        
+        /* Rating Bar */
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.6rem 1rem;
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: 8px;
+            flex-wrap: wrap;
+            border: 1px solid #bae6fd;
+        }
+        
+        .rating-score {
+            font-weight: 700;
+            color: #0c4a6e;
+            font-size: 1rem;
+        }
+        
+        .rating-stars {
+            color: #f59e0b;
+            letter-spacing: 1px;
+        }
+        
+        .rating-high {
+            font-size: 0.8rem;
+            color: #047857;
+            background: #d1fae5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .rating-low {
+            font-size: 0.8rem;
+            color: #64748b;
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        /* Executive Summary */
+        .executive-summary {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .executive-summary h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .summary-content p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        
+        /* Learning Objectives */
+        .objectives {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .objective-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .objective-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .objective-item h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .objective-item p {
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+        
+        /* Framework Visual */
+        .framework-visual {
+            background: linear-gradient(135deg, #1e3a5f, #3b5998);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: white;
+            margin: 1.5rem 0;
+        }
+        
+        .framework-title {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .framework-steps {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .framework-step {
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .framework-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+        }
+        
+        .framework-step-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        
+        .framework-step-desc {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+        
+        .framework-arrow {
+            font-size: 1.5rem;
+            color: #93c5fd;
+        }
+        
+        @media (max-width: 600px) {
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1.5rem; }
+        }
+        
+        /* Tabs */
+        .tab-container {
+            margin: 1.5rem 0;
+        }
+        
+        .tab-nav {
+            display: flex;
+            gap: 0.25rem;
+            background: #f1f5f9;
+            padding: 0.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.75rem 1rem;
+            border: none;
+            background: transparent;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        
+        .tab-btn:hover {
+            color: #334155;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #1e3a8a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 900px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+        
+        .original-content {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .original-content h3 {
+            color: #64748b;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .bilingual-text {
+            margin-bottom: 1rem;
+        }
+        
+        .chinese-text {
+            color: #1f2937;
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .english-text {
+            color: #64748b;
+            font-style: italic;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        
+        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        
+        .commentary {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .commentary h3 {
+            color: var(--primary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Info Boxes */
+        .info-box {
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .info-box-header {
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-box-content {
+            padding: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .box-concept .info-box-header { background: var(--concept-header); color: #14532d; }
+        .box-concept .info-box-content { background: var(--concept-bg); border: 1px solid var(--concept-border); border-top: none; }
+        
+        .box-analogy .info-box-header { background: var(--analogy-header); color: #92400e; }
+        .box-analogy .info-box-content { background: var(--analogy-bg); border: 1px solid var(--analogy-border); border-top: none; }
+        
+        .box-key .info-box-header { background: var(--key-header); color: #9a3412; }
+        .box-key .info-box-content { background: var(--key-bg); border: 1px solid var(--key-border); border-top: none; }
+        
+        .box-code .info-box-header { background: var(--code-header); color: #4c1d95; }
+        .box-code .info-box-content { background: var(--code-bg); border: 1px solid var(--code-border); border-top: none; }
+        
+        .box-practical .info-box-header { background: var(--practical-header); color: #065f46; }
+        .box-practical .info-box-content { background: var(--practical-bg); border: 1px solid var(--practical-border); border-top: none; }
+        
+        .box-cost .info-box-header { background: var(--cost-header); color: #134e4a; }
+        .box-cost .info-box-content { background: var(--cost-bg); border: 1px solid var(--cost-border); border-top: none; }
+        
+        /* Code blocks */
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.85rem;
+            margin: 0.5rem 0;
+        }
+        
+        code {
+            font-family: 'Source Code Pro', monospace;
+            background: #f1f5f9;
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Key Takeaways */
+        .key-takeaways {
+            margin: 2rem 0;
+        }
+        
+        .key-takeaways h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .takeaway-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .summary-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .summary-card:nth-child(2) { border-left-color: var(--success); }
+        .summary-card:nth-child(3) { border-left-color: var(--accent); }
+        .summary-card:nth-child(4) { border-left-color: var(--warning); }
+        
+        .summary-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .summary-card p {
+            font-size: 0.9rem;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        
+        /* Practice Questions - Accordion */
+        .practice-section {
+            margin: 2rem 0;
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .practice-section h2 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .question-accordion {
+            background: white;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e9d5ff;
+            overflow: hidden;
+        }
+        
+        .question-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            list-style: none;
+        }
+        
+        .question-header::-webkit-details-marker {
+            display: none;
+        }
+        
+        .question-number {
+            font-weight: 700;
+            color: #6d28d9;
+        }
+        
+        .question-type {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6d28d9;
+            background: #e9d5ff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+        
+        .question-text {
+            flex: 1;
+            font-size: 0.95rem;
+            color: #374151;
+            min-width: 200px;
+        }
+        
+        .accordion-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.2s;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
+        }
+        
+        details[open] .accordion-icon {
+            transform: rotate(180deg);
+        }
+        
+        .question-answer {
+            padding: 1rem 1.25rem;
+            background: #faf5ff;
+            border-top: 1px solid #e9d5ff;
+        }
+        
+        .question-answer p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 0.75rem;
+        }
+        
+        .question-answer p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .question-answer ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .question-answer li {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: #374151;
+            margin-bottom: 0.3rem;
+        }
+        
+        /* Bottom Line */
+        .bottom-line {
+            background: linear-gradient(135deg, #faf5ff, #f0f9ff);
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #7c3aed;
+        }
+        
+        .bottom-line-header {
+            font-weight: 700;
+            color: #5b21b6;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .bottom-line-item {
+            margin-bottom: 1rem;
+        }
+        
+        .bottom-line-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .bottom-line-label {
+            font-weight: 600;
+            color: #6d28d9;
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .bottom-line-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #334155;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .footer p {
+            margin-bottom: 0.5rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        .chat-title {
+            background: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            margin-top: 1rem;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.85rem;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        .part-label {
+            font-size: 0.75rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.25rem;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<!-- Header -->
-<header class="header">
-<div class="tags">
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-agent">AI Agent</span>
-<span class="tag tag-tool">Make.com</span>
-<span class="tag tag-prompt">Prompt Engineering</span>
-</div>
-<h1>AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子</h1>
-<p class="source-info">
-                來源：AI Maker Newsletter by Wyndo | 2025-10-30<br/>
-<a href="https://www.theaimaker.io/p/building-ai-second-brain-how-i-turn" target="_blank">原文連結</a>
-</p>
-</header>
-<!-- Executive Summary -->
-<section class="executive-summary">
-<h2>快速摘要 Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
-<span class="rating-high">↑ 實務應用、工具生態</span>
-<span class="rating-low">↓ 技術深度（無底層原理）</span>
-</div>
-<div class="summary-content">
-<p>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="tags">
+                <span class="tag tag-automation">Automation</span>
+                <span class="tag tag-agent">AI Agent</span>
+                <span class="tag tag-tool">Make.com</span>
+                <span class="tag tag-prompt">Prompt Engineering</span>
+            </div>
+            <h1>AI Second Brain：用語音備忘錄自動產出 Substack Notes 和商業點子</h1>
+            <p class="source-info">
+                來源：AI Maker Newsletter by Wyndo | 2025-10-30<br>
+                <a href="https://www.theaimaker.io/p/building-ai-second-brain-how-i-turn" target="_blank">原文連結</a>
+            </p>
+        </header>
+        
+        <!-- Executive Summary -->
+        <section class="executive-summary">
+            <h2>快速摘要 Executive Summary</h2>
+            <div class="rating-bar">
+                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
+                <span class="rating-high">↑ 實務應用、工具生態</span>
+                <span class="rating-low">↓ 技術深度（無底層原理）</span>
+            </div>
+            <div class="summary-content">
+                <p>
                     這篇文章解決一個常見痛點：語音備忘錄累積成「點子墳場」。作者 Wyndo 分享他用 <strong>Make.com + OpenAI API + Notion</strong> 建立的自動化系統，將語音轉錄自動轉化為 10 篇 Substack Notes、5 個 Newsletter 主題、3-5 個商業點子，並自動分類到 8 個類別。
                 </p>
-<p>
+                <p>
                     這篇是完整的 Step-by-step 教學，包含 4 個完整的 System Prompt、Make.com Blueprint、Notion 模板連結。對於想要建立「第二大腦」自動化流程的人來說，這是一篇可以直接複製執行的實戰指南。
                 </p>
-</div>
-</section>
-<!-- Learning Objectives -->
-<section>
-<div class="section-header">
-<h2>學習目標 Learning Objectives</h2>
-</div>
-<div class="objectives">
-<div class="objective-item">
-<h4>理解自動化架構</h4>
-<p>學會用 Router 模組設計多輸出的 AI 自動化流程，根據 Email Subject Line 觸發不同的處理邏輯</p>
-</div>
-<div class="objective-item">
-<h4>掌握 Prompt Engineering</h4>
-<p>拆解 4 個高品質 System Prompt 的設計模式：角色定義、輸出 Schema、品質護欄、範例引導</p>
-</div>
-<div class="objective-item">
-<h4>應用 JSON Parse + Iterator</h4>
-<p>理解如何將 OpenAI 的 JSON 輸出拆解成多筆資料，批次寫入 Notion Database</p>
-</div>
-</div>
-</section>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">Voice Memo to Content Pipeline</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">🎤</div>
-<div class="framework-step-title">Capture</div>
-<div class="framework-step-desc">Wisprflow 語音轉錄</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📧</div>
-<div class="framework-step-title">Trigger</div>
-<div class="framework-step-desc">Email to Mailhook</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔀</div>
-<div class="framework-step-title">Route</div>
-<div class="framework-step-desc">Subject Line 分流</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🤖</div>
-<div class="framework-step-title">Process</div>
-<div class="framework-step-desc">OpenAI 轉化</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📊</div>
-<div class="framework-step-title">Store</div>
-<div class="framework-step-desc">Notion Database</div>
-</div>
-</div>
-</div>
-<!-- Tabbed Content -->
-<div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-problem')">問題與解法</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-setup')">基礎設置</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-prompts')">Prompt 設計</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-integration')">整合與測試</button>
-</div>
-<!-- Tab 1: Problem & Solution -->
-<div class="tab-content active" id="tab-problem">
-<div class="section-header">
-<div class="part-label">Part I</div>
-<h2>痛點：語音備忘錄的墳場效應</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
+            </div>
+        </section>
+        
+        <!-- Learning Objectives -->
+        <section>
+            <div class="section-header">
+                <h2>學習目標 Learning Objectives</h2>
+            </div>
+            <div class="objectives">
+                <div class="objective-item">
+                    <h4>理解自動化架構</h4>
+                    <p>學會用 Router 模組設計多輸出的 AI 自動化流程，根據 Email Subject Line 觸發不同的處理邏輯</p>
+                </div>
+                <div class="objective-item">
+                    <h4>掌握 Prompt Engineering</h4>
+                    <p>拆解 4 個高品質 System Prompt 的設計模式：角色定義、輸出 Schema、品質護欄、範例引導</p>
+                </div>
+                <div class="objective-item">
+                    <h4>應用 JSON Parse + Iterator</h4>
+                    <p>理解如何將 OpenAI 的 JSON 輸出拆解成多筆資料，批次寫入 Notion Database</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Framework Visual -->
+        <div class="framework-visual">
+            <div class="framework-title">Voice Memo to Content Pipeline</div>
+            <div class="framework-steps">
+                <div class="framework-step">
+                    <div class="framework-icon">🎤</div>
+                    <div class="framework-step-title">Capture</div>
+                    <div class="framework-step-desc">Wisprflow 語音轉錄</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">📧</div>
+                    <div class="framework-step-title">Trigger</div>
+                    <div class="framework-step-desc">Email to Mailhook</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">🔀</div>
+                    <div class="framework-step-title">Route</div>
+                    <div class="framework-step-desc">Subject Line 分流</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">🤖</div>
+                    <div class="framework-step-title">Process</div>
+                    <div class="framework-step-desc">OpenAI 轉化</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">📊</div>
+                    <div class="framework-step-title">Store</div>
+                    <div class="framework-step-desc">Notion Database</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tabbed Content -->
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-problem')">問題與解法</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-setup')">基礎設置</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-prompts')">Prompt 設計</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-integration')">整合與測試</button>
+            </div>
+            
+            <!-- Tab 1: Problem & Solution -->
+            <div id="tab-problem" class="tab-content active">
+                <div class="section-header">
+                    <div class="part-label">Part I</div>
+                    <h2>痛點：語音備忘錄的墳場效應</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 我花了好幾個月完善我的語音備忘錄捕捉系統：透過 Wisprflow 自動轉錄、即時存到 Apple Notes。結果只是創造了一個 <span class="highlight-key">100+ 好點子的墳場，永遠不會再碰</span>。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "I spent months perfecting my voice memo capture system: automatic transcription through Wisprflow, instant save to Apple Notes. Only to create a graveyard of 100+ good ideas I'd never touch again."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
-<span class="highlight-concept">捕捉點子從來不是問題。知道如何處理它們才是。</span>每一則語音備忘錄都增加了「我之後會處理」的隱形堆積。
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
+                                <span class="highlight-concept">捕捉點子從來不是問題。知道如何處理它們才是。</span>每一則語音備忘錄都增加了「我之後會處理」的隱形堆積。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "Capturing ideas was never the problem. Knowing what to do with them was. Every voice memo I recorded added to an invisible pile of 'I'll process this later.'"
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 處理一則語音備忘錄需要 <span class="highlight-cost">15 分鐘</span>：開啟轉錄、複製到 ChatGPT、要求 AI 提取洞察、手動格式化存到 Notion。每天錄 3-5 則，就是<span class="highlight-cost">超過 1 小時的手動處理</span>。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "15 minutes per voice memo. Just to organize my own thinking. When you're recording 3-5 thoughts daily, that's over an hour of manual processing."
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">💡 比喻說明</div>
+                            <div class="info-box-content">
                                 這就像 CDMO 的「製程瓶頸分析」：作者發現<strong>輸入端（capture）已經優化</strong>，但<strong>處理端（process）才是真正的瓶頸</strong>。他解決錯誤的問題解決得太好，反而讓真正的問題更明顯。
                             </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>「Capture-Process Gap」</strong>是知識管理的常見陷阱。很多人投資在 capture 工具（筆記 app、語音轉錄），卻忽略 process 的自動化。這篇文章的核心價值就是解決這個 gap。
+                        </div>
+                        
+                        <div class="info-box box-key">
+                            <div class="info-box-header">⚠️ 重點提示</div>
+                            <div class="info-box-content">
+                                <strong>「Capture-Process Gap」</strong>是知識管理的常見陷阱。很多人投資在 capture 工具（筆記 app、語音轉錄），卻忽略 process 的自動化。這篇文章的核心價值就是解決這個 gap。
                             </div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>Second Brain（第二大腦）</strong>：Tiago Forte 提出的概念，指用數位工具建立個人知識管理系統。但傳統 Second Brain 假設人會手動整理，這篇文章用 AI 自動化挑戰這個假設。
+                        </div>
+                        
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">📚 核心概念</div>
+                            <div class="info-box-content">
+                                <strong>Second Brain（第二大腦）</strong>：Tiago Forte 提出的概念，指用數位工具建立個人知識管理系統。但傳統 Second Brain 假設人會手動整理，這篇文章用 AI 自動化挑戰這個假設。
                             </div>
-</div>
-</div>
-</div>
-<div class="section-header">
-<div class="part-label">Part II</div>
-<h2>解法：Make.com 自動化架構</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <div class="part-label">Part II</div>
+                    <h2>解法：Make.com 自動化架構</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 我建了一個 AI 自動化，自動處理語音備忘錄。我在 Wisprflow 錄一個想法，它即時轉錄並 email 到我的自動化。<span class="highlight-practical">AI 根據我的需求分析和轉化</span>：
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "So I built an AI automation that processes voice memos automatically: I record a thought on Wisprflow during my walk. It transcribes instantly and emails the transcript to my automation."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
-                                • Subject line 寫 "Substack" → 產出 <span class="highlight-practical">10 篇策略性 Substack Notes</span><br/>
-                                • Subject line 寫 "Newsletter" → 產出<span class="highlight-practical">完整的 Newsletter Brief</span><br/>
-                                • Subject line 寫 "Business" → 產出 <span class="highlight-practical">3-5 個經過驗證的商業概念</span><br/>
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
+                                • Subject line 寫 "Substack" → 產出 <span class="highlight-practical">10 篇策略性 Substack Notes</span><br>
+                                • Subject line 寫 "Newsletter" → 產出<span class="highlight-practical">完整的 Newsletter Brief</span><br>
+                                • Subject line 寫 "Business" → 產出 <span class="highlight-practical">3-5 個經過驗證的商業概念</span><br>
                                 • 無論內容是什麼，都會整理到 <span class="highlight-concept">8 個類別</span>
-</p>
-<p class="en-text">
+                            </p>
+                            <p class="english-text">
                                 "'Substack' in the subject line → 10 strategic Substack Notes. 'Newsletter' → Complete newsletter brief. 'Business' → 3-5 validated business concepts."
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<strong>Router Pattern（路由模式）</strong>：用 Email Subject Line 作為「路由器」，決定要執行哪個 AI 處理邏輯。這是一個簡單但強大的設計：
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-practical">
+                            <div class="info-box-header">🛠️ 實務應用</div>
+                            <div class="info-box-content">
+                                <strong>Router Pattern（路由模式）</strong>：用 Email Subject Line 作為「路由器」，決定要執行哪個 AI 處理邏輯。這是一個簡單但強大的設計：
                                 <ul style="margin-top:0.5rem;">
-<li>輸入端統一（都是 email）</li>
-<li>輸出端多樣化（不同的 Notion DB）</li>
-<li>使用者控制觸發條件</li>
-</ul>
-</div>
-</div>
-<div class="info-box box-cost">
-<div class="info-box-header">💰 成本分析</div>
-<div class="info-box-content">
+                                    <li>輸入端統一（都是 email）</li>
+                                    <li>輸出端多樣化（不同的 Notion DB）</li>
+                                    <li>使用者控制觸發條件</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="info-box box-cost">
+                            <div class="info-box-header">💰 成本分析</div>
+                            <div class="info-box-content">
                                 作者計算的 ROI：
                                 <ul style="margin-top:0.5rem;">
-<li><strong>每週節省</strong>：5 則 x 15 分鐘 = 75 分鐘</li>
-<li><strong>每年節省</strong>：65+ 小時</li>
-<li><strong>運營成本</strong>：Make.com 免費 + OpenAI ~$2-3/月</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 2: Setup -->
-<div class="tab-content" id="tab-setup">
-<div class="section-header">
-<div class="part-label">Part III</div>
-<h2>前置需求與 Mailhook 設定</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
+                                    <li><strong>每週節省</strong>：5 則 x 15 分鐘 = 75 分鐘</li>
+                                    <li><strong>每年節省</strong>：65+ 小時</li>
+                                    <li><strong>運營成本</strong>：Make.com 免費 + OpenAI ~$2-3/月</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab 2: Setup -->
+            <div id="tab-setup" class="tab-content">
+                <div class="section-header">
+                    <div class="part-label">Part III</div>
+                    <h2>前置需求與 Mailhook 設定</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 運行這個自動化之前你需要：
                                 <ul style="margin-top:0.5rem;">
-<li>Wisprflow 帳號（免費版可用）</li>
-<li>Notion 頁面 + 4 個資料庫</li>
-<li><span class="highlight-cost">OpenAI API key + $5 額度</span></li>
-<li>Make.com 帳號（免費版足夠）</li>
-</ul>
-</p>
-<p class="en-text">
+                                    <li>Wisprflow 帳號（免費版可用）</li>
+                                    <li>Notion 頁面 + 4 個資料庫</li>
+                                    <li><span class="highlight-cost">OpenAI API key + $5 額度</span></li>
+                                    <li>Make.com 帳號（免費版足夠）</li>
+                                </ul>
+                            </p>
+                            <p class="english-text">
                                 "What you'll need: Wisprflow account, A Notion page + 4 databases, OpenAI API key with credits worth of $5, Make.com account (free tier works)."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 自動化從 email 發送語音轉錄開始。開啟 Gmail → 寫新郵件 → 用 Wisprflow 從鍵盤建立內容 → 設定 subject line，收件人填 <span class="highlight-practical">mailhook 地址</span>，發送。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "This automation starts by sending your voice transcription via email. Open Gmail, Compose a new message, Use Wisprflow from your keyboard to create the content..."
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>Mailhook</strong> 是 Make.com 提供的 email webhook。它給你一個專屬 email 地址，任何寄到這個地址的郵件都會觸發你的自動化 scenario。這比傳統的 Gmail 監控更可靠、更即時。
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">📚 核心概念</div>
+                            <div class="info-box-content">
+                                <strong>Mailhook</strong> 是 Make.com 提供的 email webhook。它給你一個專屬 email 地址，任何寄到這個地址的郵件都會觸發你的自動化 scenario。這比傳統的 Gmail 監控更可靠、更即時。
                             </div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
+                        </div>
+                        
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">💡 比喻說明</div>
+                            <div class="info-box-content">
                                 Mailhook 就像 CDMO 的「樣品收件室」：任何符合格式的「樣品」（email）進來，就啟動後續的「分析流程」（automation）。你不需要有人盯著收件匣，系統會自動處理。
                             </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>為什麼用 Email 而不是 Webhook？</strong><br/>
+                        </div>
+                        
+                        <div class="info-box box-key">
+                            <div class="info-box-header">⚠️ 重點提示</div>
+                            <div class="info-box-content">
+                                <strong>為什麼用 Email 而不是 Webhook？</strong><br>
                                 作者提到 Wisprflow 目前還不支援 webhook 整合。Voicenotes 有原生 webhook 支援，可以跳過 email 這一層。工具選擇要根據你的 workflow 需求。
                             </div>
-</div>
-</div>
-</div>
-<div class="section-header">
-<div class="part-label">Part IV</div>
-<h2>Router 模組：多輸出控制</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <div class="part-label">Part IV</div>
+                    <h2>Router 模組：多輸出控制</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 這個 AI Second Brain 有 <span class="highlight-concept">4 種輸出</span>：Substack notes、newsletter brief、business ideas、thoughts organization。每一種都到不同的 Notion 資料庫。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "This AI second brain has four outputs: Substack notes, newsletter brief, business ideas, and thoughts organization. And each goes to a different Notion database."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
-<span class="highlight-practical">我們透過 email subject line 控制要產出哪些輸出</span>。如果你的語音備忘錄適合「business ideas」但不適合「newsletter brief」，你可以透過 Router 用 subject line 決定要處理哪一個。
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
+                                <span class="highlight-practical">我們透過 email subject line 控制要產出哪些輸出</span>。如果你的語音備忘錄適合「business ideas」但不適合「newsletter brief」，你可以透過 Router 用 subject line 決定要處理哪一個。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "You should know we have control over which outputs we want to produce with AI. If your voice memo fits 'business ideas' but not 'newsletter brief,' you can tell the Router through the email subject line."
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-code">
-<div class="info-box-header">💻 程式碼/API</div>
-<div class="info-box-content">
-<strong>Router Filter 邏輯</strong>：
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-code">
+                            <div class="info-box-header">💻 程式碼/API</div>
+                            <div class="info-box-content">
+                                <strong>Router Filter 邏輯</strong>：
                                 <pre>Subject contains "substack" → Substack Notes 分支
 Subject contains "newsletter" → Newsletter Brief 分支
 Subject contains "business" → Business Ideas 分支
 Subject contains "memo" OR fallback → Memo Organization</pre>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
+                            </div>
+                        </div>
+                        
+                        <div class="info-box box-practical">
+                            <div class="info-box-header">🛠️ 實務應用</div>
+                            <div class="info-box-content">
                                 這個設計的優點是<strong>使用者保持控制權</strong>。不是每則語音備忘錄都適合所有輸出類型。你可以選擇只要一種輸出，或全部都要。這種「可選擇性」在自動化設計中很重要。
                             </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 3: Prompts -->
-<div class="tab-content" id="tab-prompts">
-<div class="section-header">
-<div class="part-label">Part V</div>
-<h2>Substack Notes Prompt 設計解析</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
-                                System Prompt 將語音備忘錄轉化為 <span class="highlight-concept">10 種策略性 Notes 格式</span>：Signature Thesis、Contrarian Perspective、Vulnerable Story、Tactical Wisdom、Curiosity Catalyst、Insight Revelation、Mistake &amp; Lesson、Industry Commentary、Community Connection、Future-Focused Vision。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab 3: Prompts -->
+            <div id="tab-prompts" class="tab-content">
+                <div class="section-header">
+                    <div class="part-label">Part V</div>
+                    <h2>Substack Notes Prompt 設計解析</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
+                                System Prompt 將語音備忘錄轉化為 <span class="highlight-concept">10 種策略性 Notes 格式</span>：Signature Thesis、Contrarian Perspective、Vulnerable Story、Tactical Wisdom、Curiosity Catalyst、Insight Revelation、Mistake & Lesson、Industry Commentary、Community Connection、Future-Focused Vision。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "Transform the voice memo into 10 strategic Notes using these proven formats: Signature Thesis, Contrarian Perspective, Vulnerable Story..."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
-<span class="highlight-key">品質護欄（Quality Guardrails）</span>：每則 note 必須 3-8 行、約 200-300 字元。第一行 = 最強洞察或 hook。每一行都要有價值。不要通用陳述或填充內容。
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
+                                <span class="highlight-key">品質護欄（Quality Guardrails）</span>：每則 note 必須 3-8 行、約 200-300 字元。第一行 = 最強洞察或 hook。每一行都要有價值。不要通用陳述或填充內容。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "Critical Quality Guardrails: Each note must be 3-8 lines long and around 200-300 characters. First line = strongest insight or hook. Every line must add value. No generic statements or filler."
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 Prompt Engineering 拆解</div>
-<div class="info-box-content">
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">📚 Prompt Engineering 拆解</div>
+                            <div class="info-box-content">
                                 這個 Prompt 展示了高品質 System Prompt 的結構：
                                 <ol style="margin-top:0.5rem;">
-<li><strong>角色定義</strong>：「You are an expert Substack Notes strategist...」</li>
-<li><strong>上下文理解</strong>：解釋 voice memo 和 Substack Notes 的特性</li>
-<li><strong>分析階段</strong>：要 AI 先識別說話者風格、內容元素、互動潛力</li>
-<li><strong>輸出格式</strong>：10 種明確定義的 note 類型</li>
-<li><strong>品質護欄</strong>：具體的字數、行數限制</li>
-<li><strong>JSON Schema</strong>：嚴格的輸出格式</li>
-<li><strong>範例</strong>：展示期望的輸出風格</li>
-</ol>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>Voice Preservation（聲音保留）</strong>是這個 prompt 的亮點。它要求 AI「match speaker's natural patterns」、「preserve authentic imperfections」。這避免了 AI 生成內容常見的「太完美、失去人味」問題。
+                                    <li><strong>角色定義</strong>：「You are an expert Substack Notes strategist...」</li>
+                                    <li><strong>上下文理解</strong>：解釋 voice memo 和 Substack Notes 的特性</li>
+                                    <li><strong>分析階段</strong>：要 AI 先識別說話者風格、內容元素、互動潛力</li>
+                                    <li><strong>輸出格式</strong>：10 種明確定義的 note 類型</li>
+                                    <li><strong>品質護欄</strong>：具體的字數、行數限制</li>
+                                    <li><strong>JSON Schema</strong>：嚴格的輸出格式</li>
+                                    <li><strong>範例</strong>：展示期望的輸出風格</li>
+                                </ol>
                             </div>
-</div>
-</div>
-</div>
-<div class="section-header">
-<div class="part-label">Part VI</div>
-<h2>Memo Organization Prompt：8 類別分類</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
-                                這個模組的目的是將語音備忘錄整理到 <span class="highlight-concept">8 個類別</span>：Content Ideas、Business Ideas、Quick Observations、Personal Journal、Tasks &amp; Reminders、Learning Notes、Framework Development、Research Notes。
+                        </div>
+                        
+                        <div class="info-box box-key">
+                            <div class="info-box-header">⚠️ 重點提示</div>
+                            <div class="info-box-content">
+                                <strong>Voice Preservation（聲音保留）</strong>是這個 prompt 的亮點。它要求 AI「match speaker's natural patterns」、「preserve authentic imperfections」。這避免了 AI 生成內容常見的「太完美、失去人味」問題。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <div class="part-label">Part VI</div>
+                    <h2>Memo Organization Prompt：8 類別分類</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
+                                這個模組的目的是將語音備忘錄整理到 <span class="highlight-concept">8 個類別</span>：Content Ideas、Business Ideas、Quick Observations、Personal Journal、Tasks & Reminders、Learning Notes、Framework Development、Research Notes。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "The purpose of this module is to organize your voice memo into eight categories with a title, summary, and the original transcript."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
-<span class="highlight-key">關鍵規則</span>：永遠不要失去上下文 — 摘要應該能獨立理解。保留聲音 — 維持說話者表達想法的自然方式。具體描述 — 標題要有描述性，不要通用。
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
+                                <span class="highlight-key">關鍵規則</span>：永遠不要失去上下文 — 摘要應該能獨立理解。保留聲音 — 維持說話者表達想法的自然方式。具體描述 — 標題要有描述性，不要通用。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "Critical Rules: Never lose context — Your summary should be standalone understandable. Preserve voice — Maintain the speaker's natural way of expressing ideas. Be specific — Make titles descriptive, not generic."
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-practical">
+                            <div class="info-box-header">🛠️ 實務應用</div>
+                            <div class="info-box-content">
                                 這 8 個類別覆蓋了知識工作者的主要思考類型。如果你要建自己的系統，可以根據你的工作調整：
                                 <ul style="margin-top:0.5rem;">
-<li><strong>CDMO 版本</strong>：Process Improvement、Customer Feedback、Regulatory Notes、Equipment Issues、Training Ideas</li>
-</ul>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
+                                    <li><strong>CDMO 版本</strong>：Process Improvement、Customer Feedback、Regulatory Notes、Equipment Issues、Training Ideas</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">💡 比喻說明</div>
+                            <div class="info-box-content">
                                 這就像 QC 實驗室的「樣品分類系統」：不同類型的樣品（stability、release、in-process）有不同的處理流程和存放位置。AI 在這裡扮演的是「分類員」角色。
                             </div>
-</div>
-</div>
-</div>
-<div class="section-header">
-<div class="part-label">Part VII</div>
-<h2>Newsletter Brief Prompt：個人化上下文</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <div class="part-label">Part VII</div>
+                    <h2>Newsletter Brief Prompt：個人化上下文</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 Newsletter Brief 的目標是<span class="highlight-practical">推銷我一個可以寫的 newsletter 主題</span>。我加了一個額外的調整：設定<span class="highlight-key">關於我是誰和我想做什麼的上下文</span>。這是大多數人產出低品質輸出失敗的地方，因為他們很少告訴 AI 他們是誰、做什麼、想達成什麼。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "The goal of Newsletter Brief is to sell me a newsletter topic I can write based on my voice memo. I added an extra tweak: setting context about who I am and what I'm trying to do. This is where most people fail to generate high-quality output."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 Prompt 包含完整的 <span class="highlight-concept">CONTEXT 區塊</span>：Publication 名稱、Focus 領域、Voice 風格、Audience 描述、Content Pillars、Core Values。AI 會根據這些上下文產出 5 個不同角度的 newsletter 主題。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "Context about Wyndo's Newsletter: Publication: AI Maker Newsletter (7K+ subscribers), Focus: Practical AI implementation for knowledge workers, Voice: Conversational, vulnerable about failures..."
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 關鍵洞察</div>
-<div class="info-box-content">
-<strong>「Experience Check」</strong>是這個 prompt 的創新設計。它要求 AI 評估：
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-key">
+                            <div class="info-box-header">⚠️ 關鍵洞察</div>
+                            <div class="info-box-content">
+                                <strong>「Experience Check」</strong>是這個 prompt 的創新設計。它要求 AI 評估：
                                 <ul style="margin-top:0.5rem;">
-<li>✅ Ready to write（有實際經驗）</li>
-<li>⚠️ Needs testing（概念可行但需驗證）</li>
-<li>❌ Needs research（缺乏足夠個人經驗）</li>
-</ul>
+                                    <li>✅ Ready to write（有實際經驗）</li>
+                                    <li>⚠️ Needs testing（概念可行但需驗證）</li>
+                                    <li>❌ Needs research（缺乏足夠個人經驗）</li>
+                                </ul>
                                 這避免了 AI 推薦你沒有資格寫的主題。
                             </div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>Context Engineering（上下文工程）</strong>：這個 prompt 示範了如何用「個人上下文」提升 AI 輸出品質。關鍵是提供：Who you are、What you do、Who you serve、What you value。
+                        </div>
+                        
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">📚 核心概念</div>
+                            <div class="info-box-content">
+                                <strong>Context Engineering（上下文工程）</strong>：這個 prompt 示範了如何用「個人上下文」提升 AI 輸出品質。關鍵是提供：Who you are、What you do、Who you serve、What you value。
                             </div>
-</div>
-</div>
-</div>
-<div class="section-header">
-<div class="part-label">Part VIII</div>
-<h2>Business Ideas Prompt：360 度商業分析</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <div class="part-label">Part VIII</div>
+                    <h2>Business Ideas Prompt：360 度商業分析</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 這個模組的目標是提取語音備忘錄，產出 <span class="highlight-practical">3-5 個商業點子</span>，包含：Core Problem、Solution Overview、Target Market、Business Model、Unique Advantage、Implementation Complexity、Validation Steps、Market Timing、Revenue Potential、Next Action。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "The goal of this module is to extract voice memos and generate 3-5 business ideas by understanding the real core problem, solution, target market, business model, unique advantage, implementation, and validation steps."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
-<span class="highlight-key">驗證框架（Validation Framework）</span>：Demand Validation（需求驗證）、Execution Validation（執行驗證）、Competitive Validation（競爭驗證）。每個點子都要通過這三個維度的評估。
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
+                                <span class="highlight-key">驗證框架（Validation Framework）</span>：Demand Validation（需求驗證）、Execution Validation（執行驗證）、Competitive Validation（競爭驗證）。每個點子都要通過這三個維度的評估。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "Validation Framework: Demand Validation — Does this solve an expensive problem? Execution Validation — Can this be built with available skills? Competitive Validation — Who else is solving this?"
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-practical">
+                            <div class="info-box-header">🛠️ 實務應用</div>
+                            <div class="info-box-content">
                                 這個 prompt 的 <strong>Meta Analysis</strong> 輸出特別有用：
                                 <ul style="margin-top:0.5rem;">
-<li><strong>strongest_opportunity</strong>：哪個點子潛力最高？</li>
-<li><strong>quickest_validation</strong>：哪個點子最快能驗證？</li>
-<li><strong>best_leverage</strong>：哪個點子最能發揮現有優勢？</li>
-</ul>
+                                    <li><strong>strongest_opportunity</strong>：哪個點子潛力最高？</li>
+                                    <li><strong>quickest_validation</strong>：哪個點子最快能驗證？</li>
+                                    <li><strong>best_leverage</strong>：哪個點子最能發揮現有優勢？</li>
+                                </ul>
                                 這幫助決策而不只是產出點子。
                             </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
+                        </div>
+                        
+                        <div class="info-box box-key">
+                            <div class="info-box-header">⚠️ 重點提示</div>
+                            <div class="info-box-content">
                                 作者強調：<strong>「Spend more time [on context] before running this system prompt.」</strong> 如果不提供個人上下文，AI 會產出和你的技能、資源、興趣無關的通用商業點子。
                             </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 4: Integration -->
-<div class="tab-content" id="tab-integration">
-<div class="section-header">
-<div class="part-label">Part IX</div>
-<h2>JSON Parse + Iterator：批次寫入 Notion</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab 4: Integration -->
+            <div id="tab-integration" class="tab-content">
+                <div class="section-header">
+                    <div class="part-label">Part IX</div>
+                    <h2>JSON Parse + Iterator：批次寫入 Notion</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 要將 OpenAI 輸出傳到 Notion，用 <span class="highlight-concept">JSON Parse 模組</span>。設定很簡單：把前一個 OpenAI 輸出餵進這個模組。然後進到 Iterator 模組。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "To pass OpenAI outputs into Notion later, use the JSON Parse module. Setup is simple: feed the previous OpenAI output into this module. Then move on to the Iterator module."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 我們用 <span class="highlight-practical">Iterator 模組</span>是因為我們想把前一個 OpenAI 輸出的全部 10 篇 Substack Notes 拆解成 10 個項目，然後產生到 Notion 資料庫。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "We use the Iterator module because we want to unbundle all 10 Substack Notes from the previous OpenAI output into 10 items, which will be generated into the Notion database."
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-code">
-<div class="info-box-header">💻 Make.com 模組流程</div>
-<div class="info-box-content">
-<pre>OpenAI (JSON output)
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-code">
+                            <div class="info-box-header">💻 Make.com 模組流程</div>
+                            <div class="info-box-content">
+                                <pre>OpenAI (JSON output)
     ↓
 JSON Parse (解析 JSON 結構)
     ↓
 Iterator (拆解 array 成單筆)
     ↓
 Notion: Create Database Item (每筆寫入一列)</pre>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>Iterator Pattern</strong>：當 AI 輸出是一個 array（如 10 篇 notes），你需要 Iterator 來「展開」這個 array，讓後續模組可以對每一筆資料執行操作。這是 Make.com 處理批次資料的標準做法。
                             </div>
-</div>
-</div>
-</div>
-<div class="section-header">
-<div class="part-label">Part X</div>
-<h2>測試與常見問題</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<h3>原文摘要</h3>
-<div class="bilingual-text">
-<p class="zh-text">
+                        </div>
+                        
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">📚 核心概念</div>
+                            <div class="info-box-content">
+                                <strong>Iterator Pattern</strong>：當 AI 輸出是一個 array（如 10 篇 notes），你需要 Iterator 來「展開」這個 array，讓後續模組可以對每一筆資料執行操作。這是 Make.com 處理批次資料的標準做法。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-header">
+                    <div class="part-label">Part X</div>
+                    <h2>測試與常見問題</h2>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="original-content">
+                        <h3>原文摘要</h3>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
                                 在你依賴這個自動化處理每一則語音備忘錄之前，用真實錄音跑一個完整測試。用 Wisprflow 錄一則測試語音備忘錄。<span class="highlight-practical">用 3-5 種不同的備忘錄類型測試</span>，看看系統如何處理各種輸入。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "Before you rely on this automation for every voice memo, run a complete test with a real recording. Run this test 3-5 times with different memo types to see how the system handles various inputs."
                             </p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">
-<strong>Q: Make.com 免費版夠用嗎？</strong><br/>
+                        </div>
+                        <div class="bilingual-text">
+                            <p class="chinese-text">
+                                <strong>Q: Make.com 免費版夠用嗎？</strong><br>
                                 A: 如果你每天錄 3-5 則備忘錄，免費版足夠。OpenAI 成本很低 — 每月大約 <span class="highlight-cost">$2-3</span>。總成本：每月 ~$5 或更少。
                             </p>
-<p class="en-text">
+                            <p class="english-text">
                                 "Make.com free tier handles this fine if you're recording 3-5 memos daily. OpenAI costs are minimal — maybe $2-3 monthly depending on volume."
                             </p>
-</div>
-</div>
-<div class="content-right">
-<h3>學習筆記</h3>
-<div class="info-box box-cost">
-<div class="info-box-header">💰 成本分析</div>
-<div class="info-box-content">
-<table style="width:100%; border-collapse: collapse; margin-top:0.5rem;">
-<tr style="border-bottom:1px solid #ccc;">
-<td style="padding:0.5rem;"><strong>項目</strong></td>
-<td style="padding:0.5rem;"><strong>成本</strong></td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:0.5rem;">Wisprflow</td>
-<td style="padding:0.5rem;">Free</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:0.5rem;">Make.com</td>
-<td style="padding:0.5rem;">Free tier</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:0.5rem;">OpenAI API</td>
-<td style="padding:0.5rem;">~$2-3/月</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:0.5rem;">Notion</td>
-<td style="padding:0.5rem;">Free</td>
-</tr>
-<tr>
-<td style="padding:0.5rem;"><strong>總計</strong></td>
-<td style="padding:0.5rem;"><strong>~$5/月</strong></td>
-</tr>
-</table>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>「If the AI output misses the mark?」</strong><br/>
+                        </div>
+                    </div>
+                    
+                    <div class="commentary">
+                        <h3>學習筆記</h3>
+                        
+                        <div class="info-box box-cost">
+                            <div class="info-box-header">💰 成本分析</div>
+                            <div class="info-box-content">
+                                <table style="width:100%; border-collapse: collapse; margin-top:0.5rem;">
+                                    <tr style="border-bottom:1px solid #ccc;">
+                                        <td style="padding:0.5rem;"><strong>項目</strong></td>
+                                        <td style="padding:0.5rem;"><strong>成本</strong></td>
+                                    </tr>
+                                    <tr style="border-bottom:1px solid #eee;">
+                                        <td style="padding:0.5rem;">Wisprflow</td>
+                                        <td style="padding:0.5rem;">Free</td>
+                                    </tr>
+                                    <tr style="border-bottom:1px solid #eee;">
+                                        <td style="padding:0.5rem;">Make.com</td>
+                                        <td style="padding:0.5rem;">Free tier</td>
+                                    </tr>
+                                    <tr style="border-bottom:1px solid #eee;">
+                                        <td style="padding:0.5rem;">OpenAI API</td>
+                                        <td style="padding:0.5rem;">~$2-3/月</td>
+                                    </tr>
+                                    <tr style="border-bottom:1px solid #eee;">
+                                        <td style="padding:0.5rem;">Notion</td>
+                                        <td style="padding:0.5rem;">Free</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:0.5rem;"><strong>總計</strong></td>
+                                        <td style="padding:0.5rem;"><strong>~$5/月</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="info-box box-key">
+                            <div class="info-box-header">⚠️ 重點提示</div>
+                            <div class="info-box-content">
+                                <strong>「If the AI output misses the mark?」</strong><br>
                                 作者的答案：<strong>加更多個人上下文</strong>。所有輸出都必須根據你的情況個人化。用他的 Newsletter Brief prompt 作為範例，他加了大量關於自己的上下文。
                             </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Key Takeaways -->
-<section class="key-takeaways">
-<h2>重點整理 Key Takeaways</h2>
-<div class="takeaway-grid">
-<div class="summary-card">
-<h4>Capture ≠ Process</h4>
-<p>捕捉點子容易，處理點子難。自動化應該解決「處理」的瓶頸，而不是繼續優化「捕捉」。</p>
-</div>
-<div class="summary-card">
-<h4>Router Pattern</h4>
-<p>用 Email Subject Line 作為路由器，同一個輸入可以觸發不同的處理邏輯，使用者保持控制權。</p>
-</div>
-<div class="summary-card">
-<h4>Context is King</h4>
-<p>AI 輸出品質取決於你提供的個人上下文。告訴 AI 你是誰、做什麼、想達成什麼。</p>
-</div>
-<div class="summary-card">
-<h4>Quality Guardrails</h4>
-<p>好的 Prompt 需要明確的品質護欄：字數限制、格式要求、禁止事項、範例引導。</p>
-</div>
-</div>
-</section>
-<!-- Practice Questions -->
-<section class="practice-section">
-<h2>練習題 Practice Questions</h2>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">作者說「Capturing ideas was never the problem」，但大多數人還是花很多時間在選擇筆記 app。為什麼會有這個落差？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>參考答案：</strong></p>
-<p>這是「可見性偏誤」（Visibility Bias）：Capture 是可見的動作（選 app、錄音、存檔），Process 是隱形的認知負擔（什麼時候處理？如何分類？怎麼找到？）。</p>
-<p>人們傾向解決「看得見」的問題，而忽略「感覺不到但持續消耗」的問題。這就像 CDMO 的「批次記錄審核」：看起來是文書工作，但實際上是品質的關鍵瓶頸。</p>
-<p><strong>延伸思考：</strong>你自己的工作中，有哪些「隱形瓶頸」被忽略了？</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要為 CDMO 設計類似的「Voice Memo to Action」系統，會有哪些 output 類別？需要考慮哪些 GMP 合規問題？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>參考答案：</strong></p>
-<p><strong>可能的 Output 類別：</strong></p>
-<ul>
-<li>Deviation / CAPA Notes（偏差/糾正預防記錄）</li>
-<li>Process Improvement Ideas（製程改進點子）</li>
-<li>Training Observations（訓練觀察）</li>
-<li>Equipment Issues（設備問題）</li>
-<li>Customer Feedback（客戶回饋）</li>
-</ul>
-<p><strong>GMP 合規考量：</strong></p>
-<ul>
-<li>ALCOA+ 原則：Attributable, Legible, Contemporaneous, Original, Accurate</li>
-<li>21 CFR Part 11：電子記錄和電子簽章的要求</li>
-<li>Audit Trail：任何 AI 產出都需要人工審核和簽章</li>
-<li>Data Integrity：語音轉錄的原始檔案需要保留</li>
-</ul>
-<p><strong>關鍵差異：</strong>這個系統只能是「Copilot」模式，不能是「Agent」模式。所有 AI 輸出都是「草稿」，必須經過人工審核。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">作者的系統假設「更多輸出 = 更好」（10 篇 Substack Notes、5 個 Newsletter Briefs）。這個假設有什麼風險？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>參考答案：</strong></p>
-<p><strong>潛在風險：</strong></p>
-<ul>
-<li><strong>Decision Fatigue</strong>：10 個選項可能比 3 個選項更難決策</li>
-<li><strong>Quality Dilution</strong>：強迫產出 10 個版本，有些可能是低品質的變體</li>
-<li><strong>False Productivity</strong>：產出很多「看起來像工作」的內容，但實際上沒有發布</li>
-<li><strong>New Graveyard</strong>：從「voice memo graveyard」變成「AI-generated content graveyard」</li>
-</ul>
-<p><strong>可能的改進：</strong></p>
-<ul>
-<li>只產出 3 個最強的選項，而不是 10 個</li>
-<li>加入「AI 推薦」欄位，告訴你哪個選項最值得執行</li>
-<li>追蹤「產出到發布」的轉換率，優化系統</li>
-</ul>
-</div>
-</details>
-</section>
-<!-- Bottom Line -->
-<div class="bottom-line">
-<div class="bottom-line-header">我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">核心洞察</div>
-<div class="bottom-line-text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Key Takeaways -->
+        <section class="key-takeaways">
+            <h2>重點整理 Key Takeaways</h2>
+            <div class="takeaway-grid">
+                <div class="summary-card">
+                    <h4>Capture ≠ Process</h4>
+                    <p>捕捉點子容易，處理點子難。自動化應該解決「處理」的瓶頸，而不是繼續優化「捕捉」。</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Router Pattern</h4>
+                    <p>用 Email Subject Line 作為路由器，同一個輸入可以觸發不同的處理邏輯，使用者保持控制權。</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Context is King</h4>
+                    <p>AI 輸出品質取決於你提供的個人上下文。告訴 AI 你是誰、做什麼、想達成什麼。</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Quality Guardrails</h4>
+                    <p>好的 Prompt 需要明確的品質護欄：字數限制、格式要求、禁止事項、範例引導。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Practice Questions -->
+        <section class="practice-section">
+            <h2>練習題 Practice Questions</h2>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q1</span>
+                    <span class="question-type">概念理解</span>
+                    <span class="question-text">作者說「Capturing ideas was never the problem」，但大多數人還是花很多時間在選擇筆記 app。為什麼會有這個落差？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>參考答案：</strong></p>
+                    <p>這是「可見性偏誤」（Visibility Bias）：Capture 是可見的動作（選 app、錄音、存檔），Process 是隱形的認知負擔（什麼時候處理？如何分類？怎麼找到？）。</p>
+                    <p>人們傾向解決「看得見」的問題，而忽略「感覺不到但持續消耗」的問題。這就像 CDMO 的「批次記錄審核」：看起來是文書工作，但實際上是品質的關鍵瓶頸。</p>
+                    <p><strong>延伸思考：</strong>你自己的工作中，有哪些「隱形瓶頸」被忽略了？</p>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q2</span>
+                    <span class="question-type">產業應用</span>
+                    <span class="question-text">如果你要為 CDMO 設計類似的「Voice Memo to Action」系統，會有哪些 output 類別？需要考慮哪些 GMP 合規問題？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>參考答案：</strong></p>
+                    <p><strong>可能的 Output 類別：</strong></p>
+                    <ul>
+                        <li>Deviation / CAPA Notes（偏差/糾正預防記錄）</li>
+                        <li>Process Improvement Ideas（製程改進點子）</li>
+                        <li>Training Observations（訓練觀察）</li>
+                        <li>Equipment Issues（設備問題）</li>
+                        <li>Customer Feedback（客戶回饋）</li>
+                    </ul>
+                    <p><strong>GMP 合規考量：</strong></p>
+                    <ul>
+                        <li>ALCOA+ 原則：Attributable, Legible, Contemporaneous, Original, Accurate</li>
+                        <li>21 CFR Part 11：電子記錄和電子簽章的要求</li>
+                        <li>Audit Trail：任何 AI 產出都需要人工審核和簽章</li>
+                        <li>Data Integrity：語音轉錄的原始檔案需要保留</li>
+                    </ul>
+                    <p><strong>關鍵差異：</strong>這個系統只能是「Copilot」模式，不能是「Agent」模式。所有 AI 輸出都是「草稿」，必須經過人工審核。</p>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q3</span>
+                    <span class="question-type">批判思考</span>
+                    <span class="question-text">作者的系統假設「更多輸出 = 更好」（10 篇 Substack Notes、5 個 Newsletter Briefs）。這個假設有什麼風險？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>參考答案：</strong></p>
+                    <p><strong>潛在風險：</strong></p>
+                    <ul>
+                        <li><strong>Decision Fatigue</strong>：10 個選項可能比 3 個選項更難決策</li>
+                        <li><strong>Quality Dilution</strong>：強迫產出 10 個版本，有些可能是低品質的變體</li>
+                        <li><strong>False Productivity</strong>：產出很多「看起來像工作」的內容，但實際上沒有發布</li>
+                        <li><strong>New Graveyard</strong>：從「voice memo graveyard」變成「AI-generated content graveyard」</li>
+                    </ul>
+                    <p><strong>可能的改進：</strong></p>
+                    <ul>
+                        <li>只產出 3 個最強的選項，而不是 10 個</li>
+                        <li>加入「AI 推薦」欄位，告訴你哪個選項最值得執行</li>
+                        <li>追蹤「產出到發布」的轉換率，優化系統</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+        
+        <!-- Bottom Line -->
+        <div class="bottom-line">
+            <div class="bottom-line-header">我的行動結論</div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">核心洞察</div>
+                <div class="bottom-line-text">
                     這篇文章驗證了「Context Engineering」的威力：同樣的 AI 模型，加上個人化上下文後，輸出品質大幅提升。這和我在 Claude Projects 中做的事情一樣 — 用 System Prompt 告訴 AI 我是誰、做什麼、想達成什麼。
                 </div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">立即應用</div>
-<div class="bottom-line-text">
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">立即應用</div>
+                <div class="bottom-line-text">
                     這週可以做：用作者的 Newsletter Brief prompt 結構，為我的 CDMO 情境建立一個「Voice Memo to Feasibility Assessment」的初步 prompt。重點是加入我的個人上下文：CDMO 類型、目標客戶、技術能力、產能限制。
                 </div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">需要補充</div>
-<div class="bottom-line-text">
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">需要補充</div>
+                <div class="bottom-line-text">
                     文章缺少「輸出品質追蹤」的機制 — 10 篇 Substack Notes 中有多少真的被發布？需要建立 feedback loop 來優化 prompt。另外，Wisprflow 在台灣的中文轉錄品質需要實測。
                 </div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-01-15</p>
-<p>原文來源：<a href="https://www.theaimaker.io/p/building-ai-second-brain-how-i-turn" target="_blank">AI Maker Newsletter - Building AI Second Brain</a></p>
-<div class="chat-title">建議 Chat Title: [Automation] AI Second Brain - Voice Memo to Content Pipeline</div>
-</footer>
-</div>
-<script>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>製作日期：2026-01-15</p>
+            <p>原文來源：<a href="https://www.theaimaker.io/p/building-ai-second-brain-how-i-turn" target="_blank">AI Maker Newsletter - Building AI Second Brain</a></p>
+            <div class="chat-title">建議 Chat Title: [Automation] AI Second Brain - Voice Memo to Content Pipeline</div>
+        </footer>
+    </div>
+    
+    <script>
         function switchTab(evt, tabId) {
             const container = evt.currentTarget.closest('.tab-container');
             container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));

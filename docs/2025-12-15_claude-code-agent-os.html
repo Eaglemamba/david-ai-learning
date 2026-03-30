@@ -1,267 +1,822 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2025-12-15" name="doc-date"/>
-<meta content="Claude Code 個人 AI Agent 作業系統完整指南" name="doc-title"/>
-<meta content="Wyndo / AI Maker Substack" name="doc-source"/>
-<meta content="Agent,Tool,Automation" name="doc-tags"/>
-<meta content="3.5" name="doc-rating"/>
-<meta content="Claude Code作為個人AI Agent作業系統的完整操作指南" name="doc-summary"/>
-<meta content="2025-12-15_claude-code-agent-os.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>Claude Code 個人 AI Agent 作業系統完整指南 | 學習筆記</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-12-15">
+    <meta name="doc-title" content="Claude Code 個人 AI Agent 作業系統完整指南">
+    <meta name="doc-source" content="Wyndo / AI Maker Substack">
+    <meta name="doc-tags" content="Agent,Tool,Automation">
+    <meta name="doc-rating" content="3.5">
+    <meta name="doc-summary" content="Claude Code作為個人AI Agent作業系統的完整操作指南">
+    <meta name="doc-file" content="2025-12-15_claude-code-agent-os.html">
+    <title>Claude Code 個人 AI Agent 作業系統完整指南 | 學習筆記</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Source+Code+Pro:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1e3a5f;
+            --accent-orange: #e67e22;
+            --accent-green: #27ae60;
+            --accent-purple: #8e44ad;
+            --accent-yellow: #f39c12;
+            --light-bg: #fafafa;
+            --commentary-bg: #f0f7ff;
+            --text-dark: #2c3e50;
+            --text-light: #5d6d7e;
+            --border-light: #e8e8e8;
+            --code-bg: #2d2d2d;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #2c5282 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .meta {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .source-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: background 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .source-link:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .toc h2 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent-orange);
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .toc-item {
+            padding: 0.75rem 1rem;
+            background: var(--light-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-orange);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .toc-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .toc-item a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .original-content {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-right: 1px solid var(--border-light);
+        }
+
+        .commentary {
+            background: var(--commentary-bg);
+            padding: 2rem;
+        }
+
+        .column-header {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .original-content .column-header {
+            border-bottom-color: var(--accent-orange);
+        }
+
+        .commentary .column-header {
+            border-bottom-color: var(--accent-green);
+        }
+
+        /* Section Headers */
+        .section-title {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-orange);
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        /* Content Styling */
+        .content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .content h3 {
+            color: var(--primary-blue);
+            margin: 1.5rem 0 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .content h4 {
+            color: var(--text-dark);
+            margin: 1rem 0 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: white;
+            border-left: 4px solid var(--accent-orange);
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            padding: 1.25rem;
+            border-radius: 10px;
+            margin: 1.25rem 0;
+        }
+
+        .info-box h4 {
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-box h4::before {
+            font-size: 1.2rem;
+        }
+
+        /* Analogy Box - Yellow */
+        .analogy-box {
+            background: linear-gradient(135deg, #fef9e7 0%, #fcf3cf 100%);
+            border: 1px solid #f7dc6f;
+        }
+
+        .analogy-box h4 {
+            color: #b7950b;
+        }
+
+        .analogy-box h4::before {
+            content: '💡';
+        }
+
+        /* Key Term Box - Green */
+        .key-term-box {
+            background: linear-gradient(135deg, #e8f8f5 0%, #d5f5e3 100%);
+            border: 1px solid #58d68d;
+        }
+
+        .key-term-box h4 {
+            color: #1e8449;
+        }
+
+        .key-term-box h4::before {
+            content: '📚';
+        }
+
+        /* Key Point Box - Orange */
+        .key-point-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border: 1px solid #f5b041;
+        }
+
+        .key-point-box h4 {
+            color: #ca6f1e;
+        }
+
+        .key-point-box h4::before {
+            content: '🎯';
+        }
+
+        /* Code Box - Purple */
+        .code-box {
+            background: linear-gradient(135deg, #f5eef8 0%, #ebdef0 100%);
+            border: 1px solid #bb8fce;
+        }
+
+        .code-box h4 {
+            color: #7d3c98;
+        }
+
+        .code-box h4::before {
+            content: '⚙️';
+        }
+
+        /* Practice Box - Blue */
+        .practice-box {
+            background: linear-gradient(135deg, #ebf5fb 0%, #d6eaf8 100%);
+            border: 1px solid #5dade2;
+        }
+
+        .practice-box h4 {
+            color: #2874a6;
+        }
+
+        .practice-box h4::before {
+            content: '✏️';
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--code-bg);
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+
+        code {
+            font-family: 'Source Code Pro', monospace;
+            background: #e8e8e8;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--accent-purple);
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: #f8f8f2;
+        }
+
+        /* Lists */
+        .content ul, .content ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 1rem;
+            background: white;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-green);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: var(--accent-green);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .comparison-table th {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(0,0,0,0.02);
+        }
+
+        /* Workflow Steps */
+        .workflow-steps {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+        }
+
+        .workflow-steps li {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .workflow-steps li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--accent-orange);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .summary-section h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent-green);
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .original-content,
+            .commentary {
+                padding: 1.5rem;
+            }
+
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                background: var(--primary-blue);
+            }
+        }
+    </style>
 </head>
 <body>
-<header class="header">
-<h1>Claude Code：個人 AI Agent 作業系統</h1>
-<p class="subtitle">如何將 Claude Code 轉化為 24/7 全天候寫作與研究助理</p>
-<p class="meta">原文作者：Wyndo | 發布日期：2025年9月25日 | 學習筆記整理</p>
-<a class="source-link" href="https://open.substack.com/pub/theaimakernewsletter/p/how-i-turned-claude-code-into-my" target="_blank">閱讀原文 →</a>
-</header>
-<div class="container">
-<!-- Table of Contents -->
-<nav class="toc">
-<h2>目錄 Table of Contents</h2>
-<div class="toc-grid">
-<div class="toc-item"><a href="#intro">1. 導論：為什麼 Claude Code 不只是給工程師用的</a></div>
-<div class="toc-item"><a href="#setup">2. 快速上手：安裝與專案設定</a></div>
-<div class="toc-item"><a href="#claudemd">3. Claude.md：專案的持久記憶系統</a></div>
-<div class="toc-item"><a href="#slash">4. Slash Commands：工作流程的快捷指令</a></div>
-<div class="toc-item"><a href="#plan">5. Plan Mode：先思考再行動</a></div>
-<div class="toc-item"><a href="#subagent">6. Sub-Agents：背景運作的 AI 團隊</a></div>
-<div class="toc-item"><a href="#output">7. Output Styles：訓練 AI 符合你的思維模式</a></div>
-<div class="toc-item"><a href="#mcp">8. MCP Integration：連結外部工具</a></div>
-<div class="toc-item"><a href="#mobile">9. GitHub + Obsidian：隨時隨地存取的 24/7 工作流</a></div>
-<div class="toc-item"><a href="#summary">10. 總結與下一步行動</a></div>
-</div>
-</nav>
-<!-- Section 1: Introduction -->
-<section class="content-grid" id="intro">
-<div class="content-left">
-<div class="column-header">原文內容 Original Content</div>
-<h2 class="section-title">Introduction: Beyond the Developer Tool</h2>
-<p>Most people think Claude Code is for engineers who want to build apps faster. I thought that too. But as much as I wanted to try, I already had a coding setup that worked. Cursor handled my vibe-coding projects just fine. Claude web/desktop was perfect for brainstorming, researching, and writing. My workflows were humming along smoothly.</p>
-<p>So when Claude Code launched, my honest reaction was: "Why would I complicate a system that's already working?"</p>
-<div class="highlight-box">
+    <header class="header">
+        <h1>Claude Code：個人 AI Agent 作業系統</h1>
+        <p class="subtitle">如何將 Claude Code 轉化為 24/7 全天候寫作與研究助理</p>
+        <p class="meta">原文作者：Wyndo | 發布日期：2025年9月25日 | 學習筆記整理</p>
+        <a href="https://open.substack.com/pub/theaimakernewsletter/p/how-i-turned-claude-code-into-my" class="source-link" target="_blank">閱讀原文 →</a>
+    </header>
+
+    <div class="container">
+        <!-- Table of Contents -->
+        <nav class="toc">
+            <h2>目錄 Table of Contents</h2>
+            <div class="toc-grid">
+                <div class="toc-item"><a href="#intro">1. 導論：為什麼 Claude Code 不只是給工程師用的</a></div>
+                <div class="toc-item"><a href="#setup">2. 快速上手：安裝與專案設定</a></div>
+                <div class="toc-item"><a href="#claudemd">3. Claude.md：專案的持久記憶系統</a></div>
+                <div class="toc-item"><a href="#slash">4. Slash Commands：工作流程的快捷指令</a></div>
+                <div class="toc-item"><a href="#plan">5. Plan Mode：先思考再行動</a></div>
+                <div class="toc-item"><a href="#subagent">6. Sub-Agents：背景運作的 AI 團隊</a></div>
+                <div class="toc-item"><a href="#output">7. Output Styles：訓練 AI 符合你的思維模式</a></div>
+                <div class="toc-item"><a href="#mcp">8. MCP Integration：連結外部工具</a></div>
+                <div class="toc-item"><a href="#mobile">9. GitHub + Obsidian：隨時隨地存取的 24/7 工作流</a></div>
+                <div class="toc-item"><a href="#summary">10. 總結與下一步行動</a></div>
+            </div>
+        </nav>
+
+        <!-- Section 1: Introduction -->
+        <section id="intro" class="two-column">
+            <div class="original-content">
+                <div class="column-header">原文內容 Original Content</div>
+                <h2 class="section-title">Introduction: Beyond the Developer Tool</h2>
+                
+                <p>Most people think Claude Code is for engineers who want to build apps faster. I thought that too. But as much as I wanted to try, I already had a coding setup that worked. Cursor handled my vibe-coding projects just fine. Claude web/desktop was perfect for brainstorming, researching, and writing. My workflows were humming along smoothly.</p>
+
+                <p>So when Claude Code launched, my honest reaction was: "Why would I complicate a system that's already working?"</p>
+
+                <div class="highlight-box">
                     "Claude Code might be the best writing and research assistant I've ever used."
                 </div>
-<p>I was working on a complex article and drowning in research. Ten PDF files, screenshots from different experiments, random notes scattered everywhere. You know that feeling when you can't remember which file contains that perfect quote? Or when you have documents open and you're losing track of how they all connect?</p>
-<p>On a whim, I pointed Claude Code at my messy research folder. Instead of me explaining what each file contained, Claude Code read everything and immediately started connecting dots I'd missed.</p>
-<h3>What makes Claude Code different:</h3>
-<ul>
-<li><strong>Agentic:</strong> It understands context better and proactively completes tasks for you</li>
-<li><strong>Fast:</strong> Since it lives in your terminal, latency is low, so it thinks and executes faster</li>
-<li><strong>Direct file access:</strong> This is the big one—it can access and edit your files directly</li>
-</ul>
-</div>
-<div class="content-right">
-<div class="column-header">學習筆記 Commentary</div>
-<div class="box-key info-box">
-<h4>關鍵術語解析</h4>
-<p><strong>Claude Code</strong>：Anthropic 推出的終端機（Terminal）AI 工具，讓 Claude 能直接在你的電腦上讀取、編輯檔案，執行命令。與一般的 Claude Web/Desktop 不同，它能主動操作你的本機環境。</p>
-<p><strong>Agentic（代理式）</strong>：指 AI 具備自主完成任務的能力，不只是被動回答問題，而是能主動規劃、執行多步驟工作。</p>
-<p><strong>Terminal（終端機）</strong>：電腦的命令列介面，讓你用文字指令控制電腦，而非圖形化點擊。</p>
-</div>
-<div class="box-analogy info-box">
-<h4>比喻說明</h4>
-<p>想像你請了一位新助理。</p>
-<p><strong>傳統 Claude Web</strong> 像是「遠端視訊助理」——他很聰明，但只能透過螢幕看你描述的東西，無法直接翻閱你桌上的文件。你得把文件內容唸給他聽或截圖傳過去。</p>
-<p><strong>Claude Code</strong> 則像是「坐在你隔壁的助理」——他可以直接打開你的檔案櫃、翻閱資料、整理文件，甚至幫你把筆記歸檔。你不用解釋「那份報告在第三個抽屜」，他自己就能找到。</p>
-</div>
-<div class="box-key info-box">
-<h4>重點提示</h4>
-<p>作者原本的工作流已經運作良好（Cursor 寫程式 + Claude Web 做研究），但 Claude Code 帶來的關鍵突破是：<strong>直接檔案存取</strong>。</p>
-<p>這解決了知識工作者最常見的痛點：</p>
-<ul>
-<li>研究資料散落各處，難以整合</li>
-<li>每次開新對話都要重新解釋專案背景</li>
-<li>AI 無法直接看到你的工作脈絡</li>
-</ul>
-</div>
-<div class="box-key info-box">
-<h4>IDE 是什麼？</h4>
-<p><strong>IDE（Integrated Development Environment，整合開發環境）</strong>：一種軟體工具，把程式碼編輯、檔案管理、終端機等功能整合在一個介面裡。</p>
-<p>常見的 IDE 包括：</p>
-<ul>
-<li><strong>VSCode</strong>：微軟出品，免費，適合各種程式語言</li>
-<li><strong>Cursor</strong>：基於 VSCode，內建 AI 功能，適合 AI 輔助開發</li>
-</ul>
-<p>即使你不寫程式，IDE 也能當作檔案管理器使用，讓你視覺化地瀏覽專案結構。</p>
-</div>
-</div>
-</section>
-<!-- Section 2: Setup -->
-<section class="content-grid" id="setup">
-<div class="content-left">
-<div class="column-header">原文內容 Original Content</div>
-<h2 class="section-title">Getting Started with Claude Code</h2>
-<h3>Step 1: Install Claude Code</h3>
-<p>Open your Terminal, copy and paste this code:</p>
-<pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
-<p>Before installing Claude Code, make sure you have NodeJS 18+ installed.</p>
-<h3>Step 2: Set up your project structure</h3>
-<p>First create a folder on your computer. In my case, it's "AI Maker Newsletter."</p>
-<h3>Step 3: Use your IDE for visual file management</h3>
-<p>Open Cursor and click "Open Project" to access your project folder. To access and manage your project files while using Claude Code, you need to use an IDE like VSCode or Cursor.</p>
-<h3>Step 4: Test your setup and activate Claude Code</h3>
-<p>Go to the Terminal tab inside your IDE, simply type "claude," and Claude Code will be activated.</p>
-<p>Once you have both Claude Code running and your project folder open in your IDE, try this simple test:</p>
-<ul>
-<li>In your terminal with Claude Code activated, type: "Show me what files are in this project"</li>
-<li>In your IDE, create a new text file called "test.md"</li>
-<li>Ask Claude Code: "What did I just add to this project?"</li>
-</ul>
-</div>
-<div class="content-right">
-<div class="column-header">學習筆記 Commentary</div>
-<div class="code-box info-box">
-<h4>安裝前置作業</h4>
-<p><strong>npm</strong>：Node Package Manager，是 Node.js 的套件管理工具，用來安裝各種 JavaScript 工具和程式庫。</p>
-<p><strong>Node.js</strong>：讓 JavaScript 能在電腦上執行的環境（不只是瀏覽器）。Claude Code 需要 Node.js 18 以上版本。</p>
-<p>如果你不確定怎麼安裝 Node.js，可以：</p>
-<ol>
-<li>前往 <a href="https://nodejs.org" target="_blank">nodejs.org</a> 下載安裝</li>
-<li>或詢問 Claude Web 協助你完成安裝步驟</li>
-</ol>
-</div>
-<div class="box-analogy info-box">
-<h4>比喻說明</h4>
-<p>把安裝過程想像成「開一家新店」：</p>
-<ul>
-<li><strong>Node.js</strong> = 店面的基礎設施（水電、網路）</li>
-<li><strong>npm install</strong> = 請搬家公司把 Claude Code 這個員工送到你店裡</li>
-<li><strong>專案資料夾</strong> = 你的辦公室，所有工作文件都放這裡</li>
-<li><strong>IDE（VSCode/Cursor）</strong> = 辦公室的監控螢幕，讓你看到所有檔案和工作狀態</li>
-</ul>
-</div>
-<div class="box-key info-box">
-<h4>實務建議</h4>
-<p><strong>為什麼要用 IDE？</strong></p>
-<p>純用終端機操作 Claude Code 就像「在黑暗中工作」——你看不到檔案結構、無法輕鬆瀏覽文件。IDE 提供視覺化介面，讓你：</p>
-<ul>
-<li>一目了然看到所有檔案</li>
-<li>快速預覽文件內容</li>
-<li>同時在終端機下指令</li>
-</ul>
-<p><strong>推薦選擇：</strong>Cursor（基於 VSCode，對 AI 工作流更友善）</p>
-</div>
-<div class="practice-box info-box">
-<h4>練習思考</h4>
-<p><strong>問題 1：</strong>如果你是電子報創作者，你會在專案資料夾裡放哪些類型的檔案？</p>
-<p><strong>問題 2：</strong>為什麼作者說「測試步驟」很重要？這能驗證什麼？</p>
-<p><em>提示：想想 Claude Code 需要「看到」什麼才能幫助你。</em></p>
-</div>
-</div>
-</section>
-<!-- Section 3: Claude.md -->
-<section class="content-grid" id="claudemd">
-<div class="content-left">
-<div class="column-header">原文內容 Original Content</div>
-<h2 class="section-title">Claude.md: Your Project's Memory System</h2>
-<p>Most people treat Claude Code like a chat session that happens to access files. They start fresh every time, explain their project context over and over, and wonder why Claude Code doesn't seem that much better than regular Claude.</p>
-<p>The secret is <code>claude.md</code>—a special file that acts as your project's persistent memory system.</p>
-<div class="highlight-box">
+
+                <p>I was working on a complex article and drowning in research. Ten PDF files, screenshots from different experiments, random notes scattered everywhere. You know that feeling when you can't remember which file contains that perfect quote? Or when you have documents open and you're losing track of how they all connect?</p>
+
+                <p>On a whim, I pointed Claude Code at my messy research folder. Instead of me explaining what each file contained, Claude Code read everything and immediately started connecting dots I'd missed.</p>
+
+                <h3>What makes Claude Code different:</h3>
+                <ul>
+                    <li><strong>Agentic:</strong> It understands context better and proactively completes tasks for you</li>
+                    <li><strong>Fast:</strong> Since it lives in your terminal, latency is low, so it thinks and executes faster</li>
+                    <li><strong>Direct file access:</strong> This is the big one—it can access and edit your files directly</li>
+                </ul>
+            </div>
+
+            <div class="commentary">
+                <div class="column-header">學習筆記 Commentary</div>
+                
+                <div class="key-term-box info-box">
+                    <h4>關鍵術語解析</h4>
+                    <p><strong>Claude Code</strong>：Anthropic 推出的終端機（Terminal）AI 工具，讓 Claude 能直接在你的電腦上讀取、編輯檔案，執行命令。與一般的 Claude Web/Desktop 不同，它能主動操作你的本機環境。</p>
+                    <p><strong>Agentic（代理式）</strong>：指 AI 具備自主完成任務的能力，不只是被動回答問題，而是能主動規劃、執行多步驟工作。</p>
+                    <p><strong>Terminal（終端機）</strong>：電腦的命令列介面，讓你用文字指令控制電腦，而非圖形化點擊。</p>
+                </div>
+
+                <div class="analogy-box info-box">
+                    <h4>比喻說明</h4>
+                    <p>想像你請了一位新助理。</p>
+                    <p><strong>傳統 Claude Web</strong> 像是「遠端視訊助理」——他很聰明，但只能透過螢幕看你描述的東西，無法直接翻閱你桌上的文件。你得把文件內容唸給他聽或截圖傳過去。</p>
+                    <p><strong>Claude Code</strong> 則像是「坐在你隔壁的助理」——他可以直接打開你的檔案櫃、翻閱資料、整理文件，甚至幫你把筆記歸檔。你不用解釋「那份報告在第三個抽屜」，他自己就能找到。</p>
+                </div>
+
+                <div class="key-point-box info-box">
+                    <h4>重點提示</h4>
+                    <p>作者原本的工作流已經運作良好（Cursor 寫程式 + Claude Web 做研究），但 Claude Code 帶來的關鍵突破是：<strong>直接檔案存取</strong>。</p>
+                    <p>這解決了知識工作者最常見的痛點：</p>
+                    <ul>
+                        <li>研究資料散落各處，難以整合</li>
+                        <li>每次開新對話都要重新解釋專案背景</li>
+                        <li>AI 無法直接看到你的工作脈絡</li>
+                    </ul>
+                </div>
+
+                <div class="key-term-box info-box">
+                    <h4>IDE 是什麼？</h4>
+                    <p><strong>IDE（Integrated Development Environment，整合開發環境）</strong>：一種軟體工具，把程式碼編輯、檔案管理、終端機等功能整合在一個介面裡。</p>
+                    <p>常見的 IDE 包括：</p>
+                    <ul>
+                        <li><strong>VSCode</strong>：微軟出品，免費，適合各種程式語言</li>
+                        <li><strong>Cursor</strong>：基於 VSCode，內建 AI 功能，適合 AI 輔助開發</li>
+                    </ul>
+                    <p>即使你不寫程式，IDE 也能當作檔案管理器使用，讓你視覺化地瀏覽專案結構。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Setup -->
+        <section id="setup" class="two-column">
+            <div class="original-content">
+                <div class="column-header">原文內容 Original Content</div>
+                <h2 class="section-title">Getting Started with Claude Code</h2>
+
+                <h3>Step 1: Install Claude Code</h3>
+                <p>Open your Terminal, copy and paste this code:</p>
+                <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+                <p>Before installing Claude Code, make sure you have NodeJS 18+ installed.</p>
+
+                <h3>Step 2: Set up your project structure</h3>
+                <p>First create a folder on your computer. In my case, it's "AI Maker Newsletter."</p>
+
+                <h3>Step 3: Use your IDE for visual file management</h3>
+                <p>Open Cursor and click "Open Project" to access your project folder. To access and manage your project files while using Claude Code, you need to use an IDE like VSCode or Cursor.</p>
+
+                <h3>Step 4: Test your setup and activate Claude Code</h3>
+                <p>Go to the Terminal tab inside your IDE, simply type "claude," and Claude Code will be activated.</p>
+
+                <p>Once you have both Claude Code running and your project folder open in your IDE, try this simple test:</p>
+                <ul>
+                    <li>In your terminal with Claude Code activated, type: "Show me what files are in this project"</li>
+                    <li>In your IDE, create a new text file called "test.md"</li>
+                    <li>Ask Claude Code: "What did I just add to this project?"</li>
+                </ul>
+            </div>
+
+            <div class="commentary">
+                <div class="column-header">學習筆記 Commentary</div>
+
+                <div class="code-box info-box">
+                    <h4>安裝前置作業</h4>
+                    <p><strong>npm</strong>：Node Package Manager，是 Node.js 的套件管理工具，用來安裝各種 JavaScript 工具和程式庫。</p>
+                    <p><strong>Node.js</strong>：讓 JavaScript 能在電腦上執行的環境（不只是瀏覽器）。Claude Code 需要 Node.js 18 以上版本。</p>
+                    <p>如果你不確定怎麼安裝 Node.js，可以：</p>
+                    <ol>
+                        <li>前往 <a href="https://nodejs.org" target="_blank">nodejs.org</a> 下載安裝</li>
+                        <li>或詢問 Claude Web 協助你完成安裝步驟</li>
+                    </ol>
+                </div>
+
+                <div class="analogy-box info-box">
+                    <h4>比喻說明</h4>
+                    <p>把安裝過程想像成「開一家新店」：</p>
+                    <ul>
+                        <li><strong>Node.js</strong> = 店面的基礎設施（水電、網路）</li>
+                        <li><strong>npm install</strong> = 請搬家公司把 Claude Code 這個員工送到你店裡</li>
+                        <li><strong>專案資料夾</strong> = 你的辦公室，所有工作文件都放這裡</li>
+                        <li><strong>IDE（VSCode/Cursor）</strong> = 辦公室的監控螢幕，讓你看到所有檔案和工作狀態</li>
+                    </ul>
+                </div>
+
+                <div class="key-point-box info-box">
+                    <h4>實務建議</h4>
+                    <p><strong>為什麼要用 IDE？</strong></p>
+                    <p>純用終端機操作 Claude Code 就像「在黑暗中工作」——你看不到檔案結構、無法輕鬆瀏覽文件。IDE 提供視覺化介面，讓你：</p>
+                    <ul>
+                        <li>一目了然看到所有檔案</li>
+                        <li>快速預覽文件內容</li>
+                        <li>同時在終端機下指令</li>
+                    </ul>
+                    <p><strong>推薦選擇：</strong>Cursor（基於 VSCode，對 AI 工作流更友善）</p>
+                </div>
+
+                <div class="practice-box info-box">
+                    <h4>練習思考</h4>
+                    <p><strong>問題 1：</strong>如果你是電子報創作者，你會在專案資料夾裡放哪些類型的檔案？</p>
+                    <p><strong>問題 2：</strong>為什麼作者說「測試步驟」很重要？這能驗證什麼？</p>
+                    <p><em>提示：想想 Claude Code 需要「看到」什麼才能幫助你。</em></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Claude.md -->
+        <section id="claudemd" class="two-column">
+            <div class="original-content">
+                <div class="column-header">原文內容 Original Content</div>
+                <h2 class="section-title">Claude.md: Your Project's Memory System</h2>
+
+                <p>Most people treat Claude Code like a chat session that happens to access files. They start fresh every time, explain their project context over and over, and wonder why Claude Code doesn't seem that much better than regular Claude.</p>
+
+                <p>The secret is <code>claude.md</code>—a special file that acts as your project's persistent memory system.</p>
+
+                <div class="highlight-box">
                     "claude.md is Claude Code's brain for your specific project. Every time you start a session, Claude Code reads this file first to understand what you're working on, how you work, and what your goals are."
                 </div>
-<h3>What claude.md actually does:</h3>
-<ul>
-<li>Stores project context that persists across all sessions</li>
-<li>Remembers your working style and preferences</li>
-<li>Contains your specific instructions for how Claude should help you</li>
-</ul>
-<h3>How I set up claude.md for my newsletter project</h3>
-<p>First, I gathered all my newsletter-related files into my "AI Maker Newsletter" project folder:</p>
-<ul>
-<li>Performance data from past newsletters</li>
-<li>All my published posts</li>
-<li>My about page and newsletter description</li>
-<li>Welcome email</li>
-<li>Collection of my social notes</li>
-<li>Reader feedback and comments</li>
-<li>Content strategy documents</li>
-</ul>
-<p>Once everything was in the folder, I opened my terminal with Claude Code activated and ran this command:</p>
-<pre><code>/init</code></pre>
-<p>That's it. Claude Code read through my entire project folder and automatically generated a comprehensive claude.md file.</p>
-</div>
-<div class="content-right">
-<div class="column-header">學習筆記 Commentary</div>
-<div class="box-key info-box">
-<h4>關鍵術語解析</h4>
-<p><strong>claude.md</strong>：一個 Markdown 格式的設定檔，放在專案根目錄。Claude Code 每次啟動時會先讀取這個檔案，了解專案背景、你的偏好、工作方式。</p>
-<p><strong>Persistent Memory（持久記憶）</strong>：不同於一般聊天會話結束就遺忘的情況，claude.md 讓 Claude Code 在每次新會話開始時都能「記住」你的專案脈絡。</p>
-<p><strong>/init</strong>：Claude Code 的初始化指令，會自動掃描專案資料夾，並生成適合的 claude.md 檔案。</p>
-</div>
-<div class="box-analogy info-box">
-<h4>比喻說明</h4>
-<p>想像 claude.md 就像是你交給新員工的「工作手冊」：</p>
-<ul>
-<li><strong>公司文化</strong> = 你的寫作風格、語調偏好</li>
-<li><strong>過去專案紀錄</strong> = 已發布的文章、表現數據</li>
-<li><strong>客戶資料</strong> = 讀者回饋、目標受眾特徵</li>
-<li><strong>SOP 流程</strong> = 你希望 Claude 如何協助你的具體指示</li>
-</ul>
-<p>有了這本手冊，新員工（Claude Code）第一天上班就能立刻進入狀況，而不是每天都要你從頭解釋一遍。</p>
-</div>
-<div class="box-key info-box">
-<h4>重點提示</h4>
-<p><strong>這是 Claude Code 的核心競爭力！</strong></p>
-<p>很多人用 AI 的痛點是「每次都要重新解釋背景」。claude.md 解決了這個問題：</p>
-<table class="comparison-table">
-<tr>
-<th>沒有 claude.md</th>
-<th>有 claude.md</th>
-</tr>
-<tr>
-<td>每次開始都要解釋「我是誰、做什麼」</td>
-<td>Claude 一開始就知道專案背景</td>
-</tr>
-<tr>
-<td>無法維持一致的風格建議</td>
-<td>了解你的寫作聲音和偏好</td>
-</tr>
-<tr>
-<td>建議往往太通用</td>
-<td>能給出針對你專案的具體建議</td>
-</tr>
-</table>
-</div>
-<div class="code-box info-box">
-<h4>claude.md 應該包含什麼？</h4>
-<p>一個好的 claude.md 通常包含：</p>
-<ol>
-<li><strong>專案描述</strong>：這是什麼專案？目標是什麼？</li>
-<li><strong>受眾資訊</strong>：誰是目標讀者/用戶？</li>
-<li><strong>風格指南</strong>：語調、用詞偏好、禁忌</li>
-<li><strong>工作流程</strong>：你希望 Claude 如何協助</li>
-<li><strong>成功指標</strong>：什麼算是好的產出？</li>
-</ol>
-</div>
-</div>
-</section>
-<!-- Section 4: Slash Commands -->
-<section class="content-grid" id="slash">
-<div class="content-left">
-<div class="column-header">原文內容 Original Content</div>
-<h2 class="section-title">Slash Commands: Shortcuts to Your Work</h2>
-<p>Slash commands are one of Claude Code's powerful weapons. They're pre-built shortcuts that tell Claude Code exactly what type of help you need, without you having to explain the context every single time.</p>
-<p>Think of slash commands like having a toolbox where each tool is designed for a specific job.</p>
-<h3>Top 5 built-in slash commands:</h3>
-<ul>
-<li><code>/agents</code> - Shows you active sub-agents working on different parts of your project</li>
-<li><code>/compact</code> - Clear conversations history but keep a summary in the context</li>
-<li><code>/exit</code> - Cleanly closes your Claude Code session</li>
-<li><code>/mcp</code> - Lists and manages your Model Context Protocol connections</li>
-<li><code>/memory</code> - Shows what Claude Code remembers about your current project session</li>
-</ul>
-<h3>Creating custom commands</h3>
-<p>Here's mine that saves me hours every week:</p>
-<h4>My /quick-edit command:</h4>
-<pre><code>Help me quickly improve this existing AI Maker newsletter content by:
+
+                <h3>What claude.md actually does:</h3>
+                <ul>
+                    <li>Stores project context that persists across all sessions</li>
+                    <li>Remembers your working style and preferences</li>
+                    <li>Contains your specific instructions for how Claude should help you</li>
+                </ul>
+
+                <h3>How I set up claude.md for my newsletter project</h3>
+                <p>First, I gathered all my newsletter-related files into my "AI Maker Newsletter" project folder:</p>
+                <ul>
+                    <li>Performance data from past newsletters</li>
+                    <li>All my published posts</li>
+                    <li>My about page and newsletter description</li>
+                    <li>Welcome email</li>
+                    <li>Collection of my social notes</li>
+                    <li>Reader feedback and comments</li>
+                    <li>Content strategy documents</li>
+                </ul>
+
+                <p>Once everything was in the folder, I opened my terminal with Claude Code activated and ran this command:</p>
+                <pre><code>/init</code></pre>
+                <p>That's it. Claude Code read through my entire project folder and automatically generated a comprehensive claude.md file.</p>
+            </div>
+
+            <div class="commentary">
+                <div class="column-header">學習筆記 Commentary</div>
+
+                <div class="key-term-box info-box">
+                    <h4>關鍵術語解析</h4>
+                    <p><strong>claude.md</strong>：一個 Markdown 格式的設定檔，放在專案根目錄。Claude Code 每次啟動時會先讀取這個檔案，了解專案背景、你的偏好、工作方式。</p>
+                    <p><strong>Persistent Memory（持久記憶）</strong>：不同於一般聊天會話結束就遺忘的情況，claude.md 讓 Claude Code 在每次新會話開始時都能「記住」你的專案脈絡。</p>
+                    <p><strong>/init</strong>：Claude Code 的初始化指令，會自動掃描專案資料夾，並生成適合的 claude.md 檔案。</p>
+                </div>
+
+                <div class="analogy-box info-box">
+                    <h4>比喻說明</h4>
+                    <p>想像 claude.md 就像是你交給新員工的「工作手冊」：</p>
+                    <ul>
+                        <li><strong>公司文化</strong> = 你的寫作風格、語調偏好</li>
+                        <li><strong>過去專案紀錄</strong> = 已發布的文章、表現數據</li>
+                        <li><strong>客戶資料</strong> = 讀者回饋、目標受眾特徵</li>
+                        <li><strong>SOP 流程</strong> = 你希望 Claude 如何協助你的具體指示</li>
+                    </ul>
+                    <p>有了這本手冊，新員工（Claude Code）第一天上班就能立刻進入狀況，而不是每天都要你從頭解釋一遍。</p>
+                </div>
+
+                <div class="key-point-box info-box">
+                    <h4>重點提示</h4>
+                    <p><strong>這是 Claude Code 的核心競爭力！</strong></p>
+                    <p>很多人用 AI 的痛點是「每次都要重新解釋背景」。claude.md 解決了這個問題：</p>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>沒有 claude.md</th>
+                            <th>有 claude.md</th>
+                        </tr>
+                        <tr>
+                            <td>每次開始都要解釋「我是誰、做什麼」</td>
+                            <td>Claude 一開始就知道專案背景</td>
+                        </tr>
+                        <tr>
+                            <td>無法維持一致的風格建議</td>
+                            <td>了解你的寫作聲音和偏好</td>
+                        </tr>
+                        <tr>
+                            <td>建議往往太通用</td>
+                            <td>能給出針對你專案的具體建議</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="code-box info-box">
+                    <h4>claude.md 應該包含什麼？</h4>
+                    <p>一個好的 claude.md 通常包含：</p>
+                    <ol>
+                        <li><strong>專案描述</strong>：這是什麼專案？目標是什麼？</li>
+                        <li><strong>受眾資訊</strong>：誰是目標讀者/用戶？</li>
+                        <li><strong>風格指南</strong>：語調、用詞偏好、禁忌</li>
+                        <li><strong>工作流程</strong>：你希望 Claude 如何協助</li>
+                        <li><strong>成功指標</strong>：什麼算是好的產出？</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Slash Commands -->
+        <section id="slash" class="two-column">
+            <div class="original-content">
+                <div class="column-header">原文內容 Original Content</div>
+                <h2 class="section-title">Slash Commands: Shortcuts to Your Work</h2>
+
+                <p>Slash commands are one of Claude Code's powerful weapons. They're pre-built shortcuts that tell Claude Code exactly what type of help you need, without you having to explain the context every single time.</p>
+
+                <p>Think of slash commands like having a toolbox where each tool is designed for a specific job.</p>
+
+                <h3>Top 5 built-in slash commands:</h3>
+                <ul>
+                    <li><code>/agents</code> - Shows you active sub-agents working on different parts of your project</li>
+                    <li><code>/compact</code> - Clear conversations history but keep a summary in the context</li>
+                    <li><code>/exit</code> - Cleanly closes your Claude Code session</li>
+                    <li><code>/mcp</code> - Lists and manages your Model Context Protocol connections</li>
+                    <li><code>/memory</code> - Shows what Claude Code remembers about your current project session</li>
+                </ul>
+
+                <h3>Creating custom commands</h3>
+                <p>Here's mine that saves me hours every week:</p>
+
+                <h4>My /quick-edit command:</h4>
+                <pre><code>Help me quickly improve this existing AI Maker newsletter content by:
 
 1. Strengthening the personal hook/opening
 2. Making the framework clearer and more actionable  
@@ -270,524 +825,602 @@
 5. Ensuring voice consistency throughout
 
 Please review the content and suggest specific edits that will increase engagement and value while maintaining The AI Maker brand voice and approach.</code></pre>
-<h4>Other custom commands I use:</h4>
-<ul>
-<li><code>/generate-ideas</code> - Analyzes audience engagement data and suggests new newsletter ideas</li>
-<li><code>/seo-optimize</code> - Reviews past posts and suggests SEO improvements</li>
-<li><code>/perspective-analysis</code> - Reviews content through five different perspectives</li>
-</ul>
-</div>
-<div class="content-right">
-<div class="column-header">學習筆記 Commentary</div>
-<div class="box-key info-box">
-<h4>關鍵術語解析</h4>
-<p><strong>Slash Commands（斜線指令）</strong>：以 <code>/</code> 開頭的快捷指令，類似於 Slack、Discord 等應用中的斜線指令概念。預先定義好的指令讓你不用每次都打一長串說明。</p>
-<p><strong>Custom Commands（自訂指令）</strong>：你可以建立自己的斜線指令，把常用的複雜 Prompt 封裝成一個簡單的指令。</p>
-</div>
-<div class="box-analogy info-box">
-<h4>比喻說明</h4>
-<p>斜線指令就像是「速食店的套餐」：</p>
-<p>沒有套餐時，你要說：「我要一個漢堡、不要洋蔥、多加番茄醬、配薯條中份、可樂去冰......」</p>
-<p>有套餐後，你只要說：「一號餐」，服務生就知道所有細節。</p>
-<p><code>/quick-edit</code> 就是作者的「一號餐」——包含了五個編輯要點、品牌聲音要求，一次指令搞定。</p>
-</div>
-<div class="box-key info-box">
-<h4>重點提示</h4>
-<p><strong>為什麼自訂指令這麼重要？</strong></p>
-<p>根據原文，作者每次手動輸入編輯需求需要寫：</p>
-<p><em>「Please help me improve this article by making the introduction stronger, clarifying the main points, improving transitions, and ensuring the conclusion has clear next steps while maintaining my writing voice.」</em></p>
-<p>有了 <code>/quick-edit</code> 後，只需要三個字元就能完成同樣的指示。這種效率提升在日復一日的工作中會累積成巨大的時間節省。</p>
-</div>
-<div class="code-box info-box">
-<h4>設計好用自訂指令的原則</h4>
-<ol>
-<li><strong>單一目的</strong>：每個指令專注解決一種問題</li>
-<li><strong>具體明確</strong>：列出具體步驟，而非模糊指示</li>
-<li><strong>包含品質標準</strong>：說明什麼是好的產出</li>
-<li><strong>整合品牌/風格</strong>：讓 AI 知道要符合你的聲音</li>
-</ol>
-</div>
-<div class="practice-box info-box">
-<h4>練習思考</h4>
-<p><strong>問題：</strong>假設你是社群媒體經理，每天要把長文轉成 5 篇短貼文。你會如何設計一個 <code>/repurpose</code> 指令？</p>
-<p>思考要包含：</p>
-<ul>
-<li>哪些平台？（LinkedIn、Twitter、IG......）</li>
-<li>每篇的字數限制？</li>
-<li>語調風格？</li>
-<li>是否需要 CTA（Call to Action）？</li>
-</ul>
-</div>
-</div>
-</section>
-<!-- Section 5: Plan Mode -->
-<section class="content-grid" id="plan">
-<div class="content-left">
-<div class="column-header">原文內容 Original Content</div>
-<h2 class="section-title">Plan Mode: Think Before You Act</h2>
-<p>Those of you who have done vibe-coding before can relate to this problem: we ask for a brainstorming session and AI starts coding without us asking for it. This also happens with writing. Half the time, we realize halfway through that it's going in the wrong direction, but by then it has already modified files or created content we didn't want.</p>
-<div class="highlight-box">
+
+                <h4>Other custom commands I use:</h4>
+                <ul>
+                    <li><code>/generate-ideas</code> - Analyzes audience engagement data and suggests new newsletter ideas</li>
+                    <li><code>/seo-optimize</code> - Reviews past posts and suggests SEO improvements</li>
+                    <li><code>/perspective-analysis</code> - Reviews content through five different perspectives</li>
+                </ul>
+            </div>
+
+            <div class="commentary">
+                <div class="column-header">學習筆記 Commentary</div>
+
+                <div class="key-term-box info-box">
+                    <h4>關鍵術語解析</h4>
+                    <p><strong>Slash Commands（斜線指令）</strong>：以 <code>/</code> 開頭的快捷指令，類似於 Slack、Discord 等應用中的斜線指令概念。預先定義好的指令讓你不用每次都打一長串說明。</p>
+                    <p><strong>Custom Commands（自訂指令）</strong>：你可以建立自己的斜線指令，把常用的複雜 Prompt 封裝成一個簡單的指令。</p>
+                </div>
+
+                <div class="analogy-box info-box">
+                    <h4>比喻說明</h4>
+                    <p>斜線指令就像是「速食店的套餐」：</p>
+                    <p>沒有套餐時，你要說：「我要一個漢堡、不要洋蔥、多加番茄醬、配薯條中份、可樂去冰......」</p>
+                    <p>有套餐後，你只要說：「一號餐」，服務生就知道所有細節。</p>
+                    <p><code>/quick-edit</code> 就是作者的「一號餐」——包含了五個編輯要點、品牌聲音要求，一次指令搞定。</p>
+                </div>
+
+                <div class="key-point-box info-box">
+                    <h4>重點提示</h4>
+                    <p><strong>為什麼自訂指令這麼重要？</strong></p>
+                    <p>根據原文，作者每次手動輸入編輯需求需要寫：</p>
+                    <p><em>「Please help me improve this article by making the introduction stronger, clarifying the main points, improving transitions, and ensuring the conclusion has clear next steps while maintaining my writing voice.」</em></p>
+                    <p>有了 <code>/quick-edit</code> 後，只需要三個字元就能完成同樣的指示。這種效率提升在日復一日的工作中會累積成巨大的時間節省。</p>
+                </div>
+
+                <div class="code-box info-box">
+                    <h4>設計好用自訂指令的原則</h4>
+                    <ol>
+                        <li><strong>單一目的</strong>：每個指令專注解決一種問題</li>
+                        <li><strong>具體明確</strong>：列出具體步驟，而非模糊指示</li>
+                        <li><strong>包含品質標準</strong>：說明什麼是好的產出</li>
+                        <li><strong>整合品牌/風格</strong>：讓 AI 知道要符合你的聲音</li>
+                    </ol>
+                </div>
+
+                <div class="practice-box info-box">
+                    <h4>練習思考</h4>
+                    <p><strong>問題：</strong>假設你是社群媒體經理，每天要把長文轉成 5 篇短貼文。你會如何設計一個 <code>/repurpose</code> 指令？</p>
+                    <p>思考要包含：</p>
+                    <ul>
+                        <li>哪些平台？（LinkedIn、Twitter、IG......）</li>
+                        <li>每篇的字數限制？</li>
+                        <li>語調風格？</li>
+                        <li>是否需要 CTA（Call to Action）？</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Plan Mode -->
+        <section id="plan" class="two-column">
+            <div class="original-content">
+                <div class="column-header">原文內容 Original Content</div>
+                <h2 class="section-title">Plan Mode: Think Before You Act</h2>
+
+                <p>Those of you who have done vibe-coding before can relate to this problem: we ask for a brainstorming session and AI starts coding without us asking for it. This also happens with writing. Half the time, we realize halfway through that it's going in the wrong direction, but by then it has already modified files or created content we didn't want.</p>
+
+                <div class="highlight-box">
                     "Plan mode solves this completely. Instead of Claude Code jumping straight into action, it first shows you a detailed plan of what it's going to do, then waits for your approval before executing anything."
                 </div>
-<h3>How plan mode can save you from accidental AI execution</h3>
-<p>When you're working on research or writing projects, you want to see the thinking process before the execution.</p>
-<p>Let's say I ask Claude Code to "generate 5 LinkedIn posts." Without plan mode, Claude Code might start editing files around immediately. With plan mode, it first shows me its plan—and I can see exactly what Claude Code is planning to do.</p>
-<h3>How to activate plan mode</h3>
-<p>Plan mode is not running by default. To activate it, simply select <strong>Shift + Tab</strong> on your keyboard until you see the plan mode is on.</p>
-<h3>When to use plan mode</h3>
-<p>For my newsletter work, I always want plan mode when I'm asking Claude Code to:</p>
-<ul>
-<li>Analyze multiple research sources and create summary documents</li>
-<li>Reorganize content folders or research materials</li>
-<li>Process reader feedback and suggest content improvements</li>
-</ul>
-</div>
-<div class="content-right">
-<div class="column-header">學習筆記 Commentary</div>
-<div class="box-key info-box">
-<h4>關鍵術語解析</h4>
-<p><strong>Plan Mode（計畫模式）</strong>：Claude Code 的一種執行模式，在這個模式下，AI 會先展示它打算做什麼，等你確認後才真正執行。這是一種「人類在迴圈中」（Human-in-the-Loop）的設計。</p>
-<p><strong>Vibe-coding</strong>：一種用自然語言描述需求、讓 AI 生成程式碼的工作方式。特點是快速但有時候會「失控」。</p>
-</div>
-<div class="box-analogy info-box">
-<h4>比喻說明</h4>
-<p>想像你請室內設計師改造房間：</p>
-<p><strong>沒有 Plan Mode</strong>：你說「我想要現代風格」，設計師直接開始拆牆、搬家具。等你回來發現：「等等，我的收藏牆被拆了！」</p>
-<p><strong>有 Plan Mode</strong>：設計師先給你看設計圖：「我打算拆這面牆、把沙發移到這邊、換掉窗簾......」你可以說：「不要拆那面牆，其他可以。」然後才開始動工。</p>
-</div>
-<div class="box-key info-box">
-<h4>重點提示</h4>
-<p><strong>Plan Mode 解決的核心問題：</strong></p>
-<p>Agentic AI（代理式 AI）的特點是「主動執行」，這帶來效率但也帶來風險——AI 可能會：</p>
-<ul>
-<li>修改你不想改的檔案</li>
-<li>產生你不需要的內容</li>
-<li>走向你沒預期的方向</li>
-</ul>
-<p>Plan Mode 在「效率」和「控制」之間找到平衡：你仍然能享受 AI 的主動性，但在關鍵步驟前有確認機會。</p>
-</div>
-<div class="code-box info-box">
-<h4>何時該用 Plan Mode？</h4>
-<table class="comparison-table">
-<tr>
-<th>使用 Plan Mode</th>
-<th>可以跳過</th>
-</tr>
-<tr>
-<td>涉及多個檔案的操作</td>
-<td>單純的問答查詢</td>
-</tr>
-<tr>
-<td>會修改現有內容</td>
-<td>從零開始創建新內容</td>
-</tr>
-<tr>
-<td>複雜的多步驟任務</td>
-<td>簡單的格式調整</td>
-</tr>
-<tr>
-<td>不可逆的操作（刪除、移動）</td>
-<td>可輕易撤銷的操作</td>
-</tr>
-</table>
-</div>
-</div>
-</section>
-<!-- Section 6: Sub-Agents -->
-<section class="content-grid" id="subagent">
-<div class="content-left">
-<div class="column-header">原文內容 Original Content</div>
-<h2 class="section-title">Sub-Agents: Your AI Team Working in the Background</h2>
-<p>One of the most mind-blowing features of Claude Code is sub-agents. These are smaller, specialized AI assistants that Claude Code can spawn to handle specific tasks while you work on something else.</p>
-<h3>What makes sub-agent so special?</h3>
-<ul>
-<li>Has a specific purpose and expertise area</li>
-<li>Uses its own context window separate from the main conversation</li>
-<li>Can use specific tools like MCP</li>
-<li>Has its own system prompt that guides its behavior</li>
-</ul>
-<h3>Why sub-agents change how you work</h3>
-<p>Normally, the way we work with AI is linear: you ask for something, wait for the response, then ask for the next thing. Sub-agents break this pattern completely.</p>
-<p>Instead of stopping your writing to research a topic, you can deploy a sub-agent to handle the research while you keep writing.</p>
-<h3>How I use sub-agents for newsletter automation</h3>
-<p>Every morning, I ask the sub-agent to:</p>
-<ul>
-<li>Scan daily AI news sources using Perplexity MCP</li>
-<li>Filter content specifically for my audience</li>
-<li>Suggest personalized content ideas based on findings and past performance</li>
-<li>Output everything to a specific file in my "Content Ideas" folder</li>
-</ul>
-<div class="highlight-box">
+
+                <h3>How plan mode can save you from accidental AI execution</h3>
+                <p>When you're working on research or writing projects, you want to see the thinking process before the execution.</p>
+
+                <p>Let's say I ask Claude Code to "generate 5 LinkedIn posts." Without plan mode, Claude Code might start editing files around immediately. With plan mode, it first shows me its plan—and I can see exactly what Claude Code is planning to do.</p>
+
+                <h3>How to activate plan mode</h3>
+                <p>Plan mode is not running by default. To activate it, simply select <strong>Shift + Tab</strong> on your keyboard until you see the plan mode is on.</p>
+
+                <h3>When to use plan mode</h3>
+                <p>For my newsletter work, I always want plan mode when I'm asking Claude Code to:</p>
+                <ul>
+                    <li>Analyze multiple research sources and create summary documents</li>
+                    <li>Reorganize content folders or research materials</li>
+                    <li>Process reader feedback and suggest content improvements</li>
+                </ul>
+            </div>
+
+            <div class="commentary">
+                <div class="column-header">學習筆記 Commentary</div>
+
+                <div class="key-term-box info-box">
+                    <h4>關鍵術語解析</h4>
+                    <p><strong>Plan Mode（計畫模式）</strong>：Claude Code 的一種執行模式，在這個模式下，AI 會先展示它打算做什麼，等你確認後才真正執行。這是一種「人類在迴圈中」（Human-in-the-Loop）的設計。</p>
+                    <p><strong>Vibe-coding</strong>：一種用自然語言描述需求、讓 AI 生成程式碼的工作方式。特點是快速但有時候會「失控」。</p>
+                </div>
+
+                <div class="analogy-box info-box">
+                    <h4>比喻說明</h4>
+                    <p>想像你請室內設計師改造房間：</p>
+                    <p><strong>沒有 Plan Mode</strong>：你說「我想要現代風格」，設計師直接開始拆牆、搬家具。等你回來發現：「等等，我的收藏牆被拆了！」</p>
+                    <p><strong>有 Plan Mode</strong>：設計師先給你看設計圖：「我打算拆這面牆、把沙發移到這邊、換掉窗簾......」你可以說：「不要拆那面牆，其他可以。」然後才開始動工。</p>
+                </div>
+
+                <div class="key-point-box info-box">
+                    <h4>重點提示</h4>
+                    <p><strong>Plan Mode 解決的核心問題：</strong></p>
+                    <p>Agentic AI（代理式 AI）的特點是「主動執行」，這帶來效率但也帶來風險——AI 可能會：</p>
+                    <ul>
+                        <li>修改你不想改的檔案</li>
+                        <li>產生你不需要的內容</li>
+                        <li>走向你沒預期的方向</li>
+                    </ul>
+                    <p>Plan Mode 在「效率」和「控制」之間找到平衡：你仍然能享受 AI 的主動性，但在關鍵步驟前有確認機會。</p>
+                </div>
+
+                <div class="code-box info-box">
+                    <h4>何時該用 Plan Mode？</h4>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>使用 Plan Mode</th>
+                            <th>可以跳過</th>
+                        </tr>
+                        <tr>
+                            <td>涉及多個檔案的操作</td>
+                            <td>單純的問答查詢</td>
+                        </tr>
+                        <tr>
+                            <td>會修改現有內容</td>
+                            <td>從零開始創建新內容</td>
+                        </tr>
+                        <tr>
+                            <td>複雜的多步驟任務</td>
+                            <td>簡單的格式調整</td>
+                        </tr>
+                        <tr>
+                            <td>不可逆的操作（刪除、移動）</td>
+                            <td>可輕易撤銷的操作</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Sub-Agents -->
+        <section id="subagent" class="two-column">
+            <div class="original-content">
+                <div class="column-header">原文內容 Original Content</div>
+                <h2 class="section-title">Sub-Agents: Your AI Team Working in the Background</h2>
+
+                <p>One of the most mind-blowing features of Claude Code is sub-agents. These are smaller, specialized AI assistants that Claude Code can spawn to handle specific tasks while you work on something else.</p>
+
+                <h3>What makes sub-agent so special?</h3>
+                <ul>
+                    <li>Has a specific purpose and expertise area</li>
+                    <li>Uses its own context window separate from the main conversation</li>
+                    <li>Can use specific tools like MCP</li>
+                    <li>Has its own system prompt that guides its behavior</li>
+                </ul>
+
+                <h3>Why sub-agents change how you work</h3>
+                <p>Normally, the way we work with AI is linear: you ask for something, wait for the response, then ask for the next thing. Sub-agents break this pattern completely.</p>
+
+                <p>Instead of stopping your writing to research a topic, you can deploy a sub-agent to handle the research while you keep writing.</p>
+
+                <h3>How I use sub-agents for newsletter automation</h3>
+                <p>Every morning, I ask the sub-agent to:</p>
+                <ul>
+                    <li>Scan daily AI news sources using Perplexity MCP</li>
+                    <li>Filter content specifically for my audience</li>
+                    <li>Suggest personalized content ideas based on findings and past performance</li>
+                    <li>Output everything to a specific file in my "Content Ideas" folder</li>
+                </ul>
+
+                <div class="highlight-box">
                     "This sub-agent has saved me at least 5 hours per week of manual research and idea generation."
                 </div>
-<h3>My sub-agents:</h3>
-<ul>
-<li><strong>Substack Notes Generator:</strong> Crafts 10 Substack Notes tailored to my project</li>
-<li><strong>Tool Analysis Review:</strong> Runs competitive analyses of AI tools</li>
-<li><strong>Daily AI News Summary:</strong> Searches latest AI news and explains why each story matters</li>
-</ul>
-</div>
-<div class="content-right">
-<div class="column-header">學習筆記 Commentary</div>
-<div class="box-key info-box">
-<h4>關鍵術語解析</h4>
-<p><strong>Sub-Agent（子代理）</strong>：Claude Code 能夠「召喚」的專門化小型 AI 助手，各自有獨立的任務範圍、工具權限、系統提示。</p>
-<p><strong>Context Window（上下文窗口）</strong>：AI 一次能「記住」的資訊量。子代理有自己獨立的上下文，不會佔用主對話的空間。</p>
-<p><strong>System Prompt（系統提示）</strong>：給 AI 的角色設定和行為指南，決定這個 AI 會「扮演」什麼角色。</p>
-</div>
-<div class="box-analogy info-box">
-<h4>比喻說明</h4>
-<p>想像你是一家小公司的老闆，只有你一個人時：</p>
-<p><strong>沒有 Sub-Agent</strong>：你寫文章寫到一半，想到需要查資料，就得停下來去查。查完資料，思路已經斷了，又要花時間重新進入狀態。</p>
-<p><strong>有 Sub-Agent</strong>：你有三個專職員工——研究員（Daily AI News Summary）、社群編輯（Substack Notes Generator）、市場分析師（Tool Analysis Review）。你繼續寫文章，他們各自在旁邊默默工作，做完就把結果放到你的桌上。</p>
-<p>這就是「平行處理」vs「串行處理」的差別。</p>
-</div>
-<div class="box-key info-box">
-<h4>重點提示</h4>
-<p><strong>Sub-Agent 的威力在於：打破線性工作流</strong></p>
-<p>傳統 AI 對話是「問→答→問→答」的序列模式。Sub-Agent 讓你能：</p>
-<ul>
-<li>同時進行多項任務</li>
-<li>後台自動執行重複性工作</li>
-<li>專注在高價值的創意工作，把例行任務外包給 AI</li>
-</ul>
-<p>作者每週省下 5 小時，換算成一年就是 260 小時——超過 10 個整天！</p>
-</div>
-<div class="code-box info-box">
-<h4>設計有效 Sub-Agent 的原則</h4>
-<p>根據原文，好的 Sub-Agent 需要：</p>
-<ol>
-<li><strong>明確的重複性任務</strong>：有固定模式的工作最適合</li>
-<li><strong>清楚的輸出要求</strong>：結果要放在哪裡、用什麼格式</li>
-<li><strong>定義好的篩選標準</strong>：什麼來源、什麼條件要納入</li>
-</ol>
-</div>
-<div class="practice-box info-box">
-<h4>練習思考</h4>
-<p><strong>問題：</strong>如果你是 Podcast 製作人，你會設計哪些 Sub-Agent？</p>
-<p>提示思考方向：</p>
-<ul>
-<li>來賓研究（查詢潛在來賓背景）</li>
-<li>話題追蹤（監測你領域的熱門話題）</li>
-<li>剪輯建議（標記可能需要剪輯的段落）</li>
-<li>社群內容（生成節目宣傳貼文）</li>
-</ul>
-</div>
-</div>
-</section>
-<!-- Section 7: Output Styles -->
-<section class="content-grid" id="output">
-<div class="content-left">
-<div class="column-header">原文內容 Original Content</div>
-<h2 class="section-title">Output Styles: Training Claude Code to Think Like You</h2>
-<p>Output styles might be Claude Code's most underrated feature. Most people never realize they can train Claude Code to respond in completely different ways depending on the type of work they're doing.</p>
-<div class="highlight-box">
+
+                <h3>My sub-agents:</h3>
+                <ul>
+                    <li><strong>Substack Notes Generator:</strong> Crafts 10 Substack Notes tailored to my project</li>
+                    <li><strong>Tool Analysis Review:</strong> Runs competitive analyses of AI tools</li>
+                    <li><strong>Daily AI News Summary:</strong> Searches latest AI news and explains why each story matters</li>
+                </ul>
+            </div>
+
+            <div class="commentary">
+                <div class="column-header">學習筆記 Commentary</div>
+
+                <div class="key-term-box info-box">
+                    <h4>關鍵術語解析</h4>
+                    <p><strong>Sub-Agent（子代理）</strong>：Claude Code 能夠「召喚」的專門化小型 AI 助手，各自有獨立的任務範圍、工具權限、系統提示。</p>
+                    <p><strong>Context Window（上下文窗口）</strong>：AI 一次能「記住」的資訊量。子代理有自己獨立的上下文，不會佔用主對話的空間。</p>
+                    <p><strong>System Prompt（系統提示）</strong>：給 AI 的角色設定和行為指南，決定這個 AI 會「扮演」什麼角色。</p>
+                </div>
+
+                <div class="analogy-box info-box">
+                    <h4>比喻說明</h4>
+                    <p>想像你是一家小公司的老闆，只有你一個人時：</p>
+                    <p><strong>沒有 Sub-Agent</strong>：你寫文章寫到一半，想到需要查資料，就得停下來去查。查完資料，思路已經斷了，又要花時間重新進入狀態。</p>
+                    <p><strong>有 Sub-Agent</strong>：你有三個專職員工——研究員（Daily AI News Summary）、社群編輯（Substack Notes Generator）、市場分析師（Tool Analysis Review）。你繼續寫文章，他們各自在旁邊默默工作，做完就把結果放到你的桌上。</p>
+                    <p>這就是「平行處理」vs「串行處理」的差別。</p>
+                </div>
+
+                <div class="key-point-box info-box">
+                    <h4>重點提示</h4>
+                    <p><strong>Sub-Agent 的威力在於：打破線性工作流</strong></p>
+                    <p>傳統 AI 對話是「問→答→問→答」的序列模式。Sub-Agent 讓你能：</p>
+                    <ul>
+                        <li>同時進行多項任務</li>
+                        <li>後台自動執行重複性工作</li>
+                        <li>專注在高價值的創意工作，把例行任務外包給 AI</li>
+                    </ul>
+                    <p>作者每週省下 5 小時，換算成一年就是 260 小時——超過 10 個整天！</p>
+                </div>
+
+                <div class="code-box info-box">
+                    <h4>設計有效 Sub-Agent 的原則</h4>
+                    <p>根據原文，好的 Sub-Agent 需要：</p>
+                    <ol>
+                        <li><strong>明確的重複性任務</strong>：有固定模式的工作最適合</li>
+                        <li><strong>清楚的輸出要求</strong>：結果要放在哪裡、用什麼格式</li>
+                        <li><strong>定義好的篩選標準</strong>：什麼來源、什麼條件要納入</li>
+                    </ol>
+                </div>
+
+                <div class="practice-box info-box">
+                    <h4>練習思考</h4>
+                    <p><strong>問題：</strong>如果你是 Podcast 製作人，你會設計哪些 Sub-Agent？</p>
+                    <p>提示思考方向：</p>
+                    <ul>
+                        <li>來賓研究（查詢潛在來賓背景）</li>
+                        <li>話題追蹤（監測你領域的熱門話題）</li>
+                        <li>剪輯建議（標記可能需要剪輯的段落）</li>
+                        <li>社群內容（生成節目宣傳貼文）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Output Styles -->
+        <section id="output" class="two-column">
+            <div class="original-content">
+                <div class="column-header">原文內容 Original Content</div>
+                <h2 class="section-title">Output Styles: Training Claude Code to Think Like You</h2>
+
+                <p>Output styles might be Claude Code's most underrated feature. Most people never realize they can train Claude Code to respond in completely different ways depending on the type of work they're doing.</p>
+
+                <div class="highlight-box">
                     "I like to think output styles as different hats Claude Code can wear. When you're brainstorming, you want creative, exploratory responses. When you're analyzing data, you want structured, analytical output."
                 </div>
-<h3>Why output styles make a huge difference</h3>
-<p>The problem with most AI conversations is that you get one-size-fits-all responses. Claude gives you the same type of answer whether you're asking for creative ideas or strategic analysis.</p>
-<h3>My three specialized output styles:</h3>
-<h4>1. Growth Strategist Mode</h4>
-<ul>
-<li>Specific growth metrics and benchmarks</li>
-<li>Actionable strategies with timeline estimates</li>
-<li>Competitive analysis and positioning insights</li>
-<li>Growth experiment suggestions with success criteria</li>
-</ul>
-<h4>2. Funnel Conversion Mode</h4>
-<ul>
-<li>Content gaps between free and paid tiers</li>
-<li>Value proposition optimization for paid content</li>
-<li>Conversion sequence improvements</li>
-<li>Pricing psychology and positioning strategies</li>
-</ul>
-<h4>3. Social Media Strategist Mode</h4>
-<ul>
-<li>Content repurposing for maximum social impact</li>
-<li>Platform-specific optimization strategies</li>
-<li>Viral content patterns and timing</li>
-<li>Cross-platform funnel optimization</li>
-</ul>
-</div>
-<div class="content-right">
-<div class="column-header">學習筆記 Commentary</div>
-<div class="box-key info-box">
-<h4>關鍵術語解析</h4>
-<p><strong>Output Styles（輸出風格）</strong>：本質上是 Claude Code 的 System Prompt（系統提示），但概念更像是「角色切換」。不同的 Output Style 讓 Claude Code 以不同的思維框架來回應你。</p>
-<p><strong>System Prompt</strong>：給 AI 的「角色說明書」，定義它應該如何思考、回應、著重什麼。</p>
-</div>
-<div class="box-analogy info-box">
-<h4>比喻說明</h4>
-<p>Output Styles 就像「戴不同的帽子」：</p>
-<ul>
-<li><strong>Growth Strategist 帽子</strong>：戴上這頂帽子，Claude 變成專注成長指標的顧問，會給你數據、基準、實驗建議</li>
-<li><strong>Funnel Conversion 帽子</strong>：變成轉換率專家，專注在「如何讓免費用戶付費」</li>
-<li><strong>Social Media 帽子</strong>：變成社群經理，思考的是「這內容在哪個平台會火」</li>
-</ul>
-<p>同樣的問題「如何增加訂閱者」，不同帽子會給出完全不同角度的建議。</p>
-</div>
-<div class="box-key info-box">
-<h4>重點提示</h4>
-<p><strong>為什麼這是「最被低估的功能」？</strong></p>
-<p>因為大多數人從未想過要「切換 AI 的思維模式」。他們期待一個萬能的 AI，結果得到的是「什麼都會一點，但都不夠專精」的回答。</p>
-<p>原文的例子很說明問題：</p>
-<table class="comparison-table">
-<tr>
-<th>沒有 Output Style</th>
-<th>有 Growth Strategist Style</th>
-</tr>
-<tr>
-<td>「要成長，就要持續產出高品質內容、保持一致性......」（通用建議）</td>
-<td>「根據你目前的指標，瓶頸在 X，建議執行 A 實驗，預計 2 週見效......」（具體策略）</td>
-</tr>
-</table>
-</div>
-<div class="code-box info-box">
-<h4>如何設計自己的 Output Style？</h4>
-<ol>
-<li><strong>識別你的「思維模式」</strong>：你工作時有幾種不同的「帽子」？創意、分析、策略、執行？</li>
-<li><strong>定義每種模式的特徵</strong>：
+
+                <h3>Why output styles make a huge difference</h3>
+                <p>The problem with most AI conversations is that you get one-size-fits-all responses. Claude gives you the same type of answer whether you're asking for creative ideas or strategic analysis.</p>
+
+                <h3>My three specialized output styles:</h3>
+
+                <h4>1. Growth Strategist Mode</h4>
+                <ul>
+                    <li>Specific growth metrics and benchmarks</li>
+                    <li>Actionable strategies with timeline estimates</li>
+                    <li>Competitive analysis and positioning insights</li>
+                    <li>Growth experiment suggestions with success criteria</li>
+                </ul>
+
+                <h4>2. Funnel Conversion Mode</h4>
+                <ul>
+                    <li>Content gaps between free and paid tiers</li>
+                    <li>Value proposition optimization for paid content</li>
+                    <li>Conversion sequence improvements</li>
+                    <li>Pricing psychology and positioning strategies</li>
+                </ul>
+
+                <h4>3. Social Media Strategist Mode</h4>
+                <ul>
+                    <li>Content repurposing for maximum social impact</li>
+                    <li>Platform-specific optimization strategies</li>
+                    <li>Viral content patterns and timing</li>
+                    <li>Cross-platform funnel optimization</li>
+                </ul>
+            </div>
+
+            <div class="commentary">
+                <div class="column-header">學習筆記 Commentary</div>
+
+                <div class="key-term-box info-box">
+                    <h4>關鍵術語解析</h4>
+                    <p><strong>Output Styles（輸出風格）</strong>：本質上是 Claude Code 的 System Prompt（系統提示），但概念更像是「角色切換」。不同的 Output Style 讓 Claude Code 以不同的思維框架來回應你。</p>
+                    <p><strong>System Prompt</strong>：給 AI 的「角色說明書」，定義它應該如何思考、回應、著重什麼。</p>
+                </div>
+
+                <div class="analogy-box info-box">
+                    <h4>比喻說明</h4>
+                    <p>Output Styles 就像「戴不同的帽子」：</p>
+                    <ul>
+                        <li><strong>Growth Strategist 帽子</strong>：戴上這頂帽子，Claude 變成專注成長指標的顧問，會給你數據、基準、實驗建議</li>
+                        <li><strong>Funnel Conversion 帽子</strong>：變成轉換率專家，專注在「如何讓免費用戶付費」</li>
+                        <li><strong>Social Media 帽子</strong>：變成社群經理，思考的是「這內容在哪個平台會火」</li>
+                    </ul>
+                    <p>同樣的問題「如何增加訂閱者」，不同帽子會給出完全不同角度的建議。</p>
+                </div>
+
+                <div class="key-point-box info-box">
+                    <h4>重點提示</h4>
+                    <p><strong>為什麼這是「最被低估的功能」？</strong></p>
+                    <p>因為大多數人從未想過要「切換 AI 的思維模式」。他們期待一個萬能的 AI，結果得到的是「什麼都會一點，但都不夠專精」的回答。</p>
+                    <p>原文的例子很說明問題：</p>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>沒有 Output Style</th>
+                            <th>有 Growth Strategist Style</th>
+                        </tr>
+                        <tr>
+                            <td>「要成長，就要持續產出高品質內容、保持一致性......」（通用建議）</td>
+                            <td>「根據你目前的指標，瓶頸在 X，建議執行 A 實驗，預計 2 週見效......」（具體策略）</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="code-box info-box">
+                    <h4>如何設計自己的 Output Style？</h4>
+                    <ol>
+                        <li><strong>識別你的「思維模式」</strong>：你工作時有幾種不同的「帽子」？創意、分析、策略、執行？</li>
+                        <li><strong>定義每種模式的特徵</strong>：
                             <ul>
-<li>優先考慮什麼資訊？</li>
-<li>回答要多詳細？</li>
-<li>偏好什麼格式（條列、段落、框架）？</li>
-<li>成功的標準是什麼？</li>
-</ul>
-</li>
-<li><strong>測試和迭代</strong>：實際使用，觀察哪些回應不符預期，持續調整</li>
-</ol>
-</div>
-</div>
-</section>
-<!-- Section 8: MCP -->
-<section class="content-grid" id="mcp">
-<div class="content-left">
-<div class="column-header">原文內容 Original Content</div>
-<h2 class="section-title">MCP Integration: Extending Claude Code Beyond Your Files</h2>
-<p>Just like Claude web and desktop, you can use MCP (Model Context Protocol) to connect Claude Code with multiple external apps and services.</p>
-<p>The difference with Claude Code is that MCP integrations work seamlessly within your project context. Instead of switching between Claude desktop and your project files, everything happens in one unified workspace.</p>
-<h3>My current MCP setup for research workflows:</h3>
-<h4>Perplexity MCP</h4>
-<p>This lets Claude Code perform real-time web searches and analysis without me leaving my project. When I'm working on an article about a new AI tool, Claude Code can instantly research the tool, find user reviews, and gather competitive information—all while maintaining context about my specific article and audience.</p>
-<h4>Firecrawl MCP</h4>
-<p>This integration lets Claude Code extract and analyze content from websites directly. When I find a relevant article or tool documentation, Claude Code can pull the full content, analyze it for key insights, and integrate findings into my research notes automatically.</p>
-<h3>Setting up MCP with Claude Code</h3>
-<p>The setup process is similar to what you've seen with Claude desktop—you configure the MCP connections through Claude Code's settings, authenticate your services with API key, and start using them in a conversation.</p>
-<p>The key difference is that Claude Code's MCP integrations understand your project context, so they can automatically organize results, maintain consistency with your existing files, and follow the patterns established in your claude.md file.</p>
-</div>
-<div class="content-right">
-<div class="column-header">學習筆記 Commentary</div>
-<div class="box-key info-box">
-<h4>關鍵術語解析</h4>
-<p><strong>MCP（Model Context Protocol，模型上下文協議）</strong>：Anthropic 開發的標準協議，讓 AI 模型能夠連接和使用外部工具、服務。可以把它想成「AI 的 USB 接口」——任何遵循這個標準的工具，都能插上來讓 AI 使用。</p>
-<p><strong>Perplexity</strong>：一個 AI 驅動的搜尋引擎，特點是會給出帶有來源引用的綜合答案。</p>
-<p><strong>Firecrawl</strong>：一個網頁爬蟲工具，能夠擷取網站內容並轉換成結構化資料。</p>
-</div>
-<div class="box-analogy info-box">
-<h4>比喻說明</h4>
-<p>把 Claude Code 想像成你的「大腦」，MCP 就是讓大腦能夠「伸出手」觸及外界的神經連結：</p>
-<ul>
-<li><strong>Perplexity MCP</strong> = 讓你的大腦能即時「看到」網路上最新資訊</li>
-<li><strong>Firecrawl MCP</strong> = 讓你的大腦能「深讀」任何網頁的完整內容</li>
-<li><strong>Notion MCP</strong>（作者以前用的）= 讓你的大腦能「存取」你的知識庫</li>
-</ul>
-<p>有了 MCP，Claude Code 不再是一個「只能看本機檔案」的助手，而是能觸及整個數位生態系的智能中樞。</p>
-</div>
-<div class="box-key info-box">
-<h4>重點提示</h4>
-<p><strong>Claude Code MCP vs Claude Desktop MCP 的關鍵差異</strong></p>
-<p>雖然兩者都支援 MCP，但 Claude Code 的優勢是：</p>
-<ul>
-<li><strong>專案脈絡整合</strong>：搜尋結果會自動參考你的 claude.md 設定</li>
-<li><strong>檔案自動組織</strong>：結果可以直接存到指定位置</li>
-<li><strong>風格一致性</strong>：產出會符合你定義的格式和風格</li>
-</ul>
-<p>這就是為什麼作者說「我不再需要 Notion MCP」——因為 Claude Code 本身就能直接管理本機檔案，不需要透過 Notion 作為中介。</p>
-</div>
-<div class="code-box info-box">
-<h4>常見 MCP 工具一覽</h4>
-<table class="comparison-table">
-<tr>
-<th>MCP 工具</th>
-<th>功能</th>
-<th>適用場景</th>
-</tr>
-<tr>
-<td>Perplexity</td>
-<td>AI 搜尋引擎</td>
-<td>即時研究、新聞追蹤</td>
-</tr>
-<tr>
-<td>Firecrawl</td>
-<td>網頁內容擷取</td>
-<td>深度閱讀、資料收集</td>
-</tr>
-<tr>
-<td>Notion</td>
-<td>知識庫存取</td>
-<td>筆記整合、文件管理</td>
-</tr>
-<tr>
-<td>Google Calendar</td>
-<td>行事曆管理</td>
-<td>排程、提醒</td>
-</tr>
-<tr>
-<td>Slack</td>
-<td>團隊通訊</td>
-<td>訊息發送、頻道監控</td>
-</tr>
-</table>
-</div>
-</div>
-</section>
-<!-- Section 9: Mobile Workflow -->
-<section class="content-grid" id="mobile">
-<div class="content-left">
-<div class="column-header">原文內容 Original Content</div>
-<h2 class="section-title">GitHub + Obsidian: 24/7 AI Assistant Across All Devices</h2>
-<div class="highlight-box">
+                                <li>優先考慮什麼資訊？</li>
+                                <li>回答要多詳細？</li>
+                                <li>偏好什麼格式（條列、段落、框架）？</li>
+                                <li>成功的標準是什麼？</li>
+                            </ul>
+                        </li>
+                        <li><strong>測試和迭代</strong>：實際使用，觀察哪些回應不符預期，持續調整</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: MCP -->
+        <section id="mcp" class="two-column">
+            <div class="original-content">
+                <div class="column-header">原文內容 Original Content</div>
+                <h2 class="section-title">MCP Integration: Extending Claude Code Beyond Your Files</h2>
+
+                <p>Just like Claude web and desktop, you can use MCP (Model Context Protocol) to connect Claude Code with multiple external apps and services.</p>
+
+                <p>The difference with Claude Code is that MCP integrations work seamlessly within your project context. Instead of switching between Claude desktop and your project files, everything happens in one unified workspace.</p>
+
+                <h3>My current MCP setup for research workflows:</h3>
+
+                <h4>Perplexity MCP</h4>
+                <p>This lets Claude Code perform real-time web searches and analysis without me leaving my project. When I'm working on an article about a new AI tool, Claude Code can instantly research the tool, find user reviews, and gather competitive information—all while maintaining context about my specific article and audience.</p>
+
+                <h4>Firecrawl MCP</h4>
+                <p>This integration lets Claude Code extract and analyze content from websites directly. When I find a relevant article or tool documentation, Claude Code can pull the full content, analyze it for key insights, and integrate findings into my research notes automatically.</p>
+
+                <h3>Setting up MCP with Claude Code</h3>
+                <p>The setup process is similar to what you've seen with Claude desktop—you configure the MCP connections through Claude Code's settings, authenticate your services with API key, and start using them in a conversation.</p>
+
+                <p>The key difference is that Claude Code's MCP integrations understand your project context, so they can automatically organize results, maintain consistency with your existing files, and follow the patterns established in your claude.md file.</p>
+            </div>
+
+            <div class="commentary">
+                <div class="column-header">學習筆記 Commentary</div>
+
+                <div class="key-term-box info-box">
+                    <h4>關鍵術語解析</h4>
+                    <p><strong>MCP（Model Context Protocol，模型上下文協議）</strong>：Anthropic 開發的標準協議，讓 AI 模型能夠連接和使用外部工具、服務。可以把它想成「AI 的 USB 接口」——任何遵循這個標準的工具，都能插上來讓 AI 使用。</p>
+                    <p><strong>Perplexity</strong>：一個 AI 驅動的搜尋引擎，特點是會給出帶有來源引用的綜合答案。</p>
+                    <p><strong>Firecrawl</strong>：一個網頁爬蟲工具，能夠擷取網站內容並轉換成結構化資料。</p>
+                </div>
+
+                <div class="analogy-box info-box">
+                    <h4>比喻說明</h4>
+                    <p>把 Claude Code 想像成你的「大腦」，MCP 就是讓大腦能夠「伸出手」觸及外界的神經連結：</p>
+                    <ul>
+                        <li><strong>Perplexity MCP</strong> = 讓你的大腦能即時「看到」網路上最新資訊</li>
+                        <li><strong>Firecrawl MCP</strong> = 讓你的大腦能「深讀」任何網頁的完整內容</li>
+                        <li><strong>Notion MCP</strong>（作者以前用的）= 讓你的大腦能「存取」你的知識庫</li>
+                    </ul>
+                    <p>有了 MCP，Claude Code 不再是一個「只能看本機檔案」的助手，而是能觸及整個數位生態系的智能中樞。</p>
+                </div>
+
+                <div class="key-point-box info-box">
+                    <h4>重點提示</h4>
+                    <p><strong>Claude Code MCP vs Claude Desktop MCP 的關鍵差異</strong></p>
+                    <p>雖然兩者都支援 MCP，但 Claude Code 的優勢是：</p>
+                    <ul>
+                        <li><strong>專案脈絡整合</strong>：搜尋結果會自動參考你的 claude.md 設定</li>
+                        <li><strong>檔案自動組織</strong>：結果可以直接存到指定位置</li>
+                        <li><strong>風格一致性</strong>：產出會符合你定義的格式和風格</li>
+                    </ul>
+                    <p>這就是為什麼作者說「我不再需要 Notion MCP」——因為 Claude Code 本身就能直接管理本機檔案，不需要透過 Notion 作為中介。</p>
+                </div>
+
+                <div class="code-box info-box">
+                    <h4>常見 MCP 工具一覽</h4>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>MCP 工具</th>
+                            <th>功能</th>
+                            <th>適用場景</th>
+                        </tr>
+                        <tr>
+                            <td>Perplexity</td>
+                            <td>AI 搜尋引擎</td>
+                            <td>即時研究、新聞追蹤</td>
+                        </tr>
+                        <tr>
+                            <td>Firecrawl</td>
+                            <td>網頁內容擷取</td>
+                            <td>深度閱讀、資料收集</td>
+                        </tr>
+                        <tr>
+                            <td>Notion</td>
+                            <td>知識庫存取</td>
+                            <td>筆記整合、文件管理</td>
+                        </tr>
+                        <tr>
+                            <td>Google Calendar</td>
+                            <td>行事曆管理</td>
+                            <td>排程、提醒</td>
+                        </tr>
+                        <tr>
+                            <td>Slack</td>
+                            <td>團隊通訊</td>
+                            <td>訊息發送、頻道監控</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Mobile Workflow -->
+        <section id="mobile" class="two-column">
+            <div class="original-content">
+                <div class="column-header">原文內容 Original Content</div>
+                <h2 class="section-title">GitHub + Obsidian: 24/7 AI Assistant Across All Devices</h2>
+
+                <div class="highlight-box">
                     "This is the most insane feeling I've had recently with AI. Everything we just covered—slash commands, sub-agents, MCP integrations, output styles—can now be accessed from anywhere, anytime, through your mobile phone."
                 </div>
-<h3>The mobile breakthrough: GitHub issues as Claude Code commands</h3>
-<p>By connecting your Claude Code project to GitHub, you can use GitHub's mobile app to command Claude Code through issue tickets.</p>
-<p>Want Claude Code to repurpose your latest newsletter into LinkedIn posts while you're on the train? Create a GitHub issue, mention Claude, and describe what you need. Claude Code processes your request, executes the work using all your project context then updates the issue with results.</p>
-<h3>The workflow:</h3>
-<ol>
-<li>Open GitHub mobile app</li>
-<li>Create new issue in your project repository</li>
-<li>Write your request description</li>
-<li>Write a comment: "Hey @claude, please handle this issue."</li>
-<li>Results delivered - Claude updates the issue with completed work</li>
-</ol>
-<h3>Obsidian: Your project data everywhere</h3>
-<p>Unlike Notion or other cloud-based tools, Obsidian stores everything as local markdown files. Since my entire newsletter project uses markdown files, I can sync the complete project folder through Obsidian and access it from any device.</p>
-<h3>Pro tip for voice capture:</h3>
-<p>I use Wisprflow through Apple Shortcuts to record voice memos that automatically get inserted into my Obsidian vault. When I have a content idea while walking or driving, I just trigger the shortcut, record my thoughts, and the transcribed memo appears in my brain-dump folder.</p>
-</div>
-<div class="content-right">
-<div class="column-header">學習筆記 Commentary</div>
-<div class="box-key info-box">
-<h4>關鍵術語解析</h4>
-<p><strong>GitHub</strong>：原本是程式碼版本控制平台，但這裡被創意運用為「遠端任務派發系統」。透過 GitHub Issues 功能，你可以從任何裝置指派任務給 Claude Code。</p>
-<p><strong>GitHub Issues</strong>：GitHub 的任務追蹤功能，原本用於回報 Bug 或功能需求。</p>
-<p><strong>Obsidian</strong>：一款本機優先的筆記軟體，所有資料以 Markdown 檔案形式儲存在你的電腦上，而非雲端伺服器。</p>
-<p><strong>Wisprflow</strong>：語音轉文字工具，可搭配 Apple Shortcuts 自動化工作流程。</p>
-</div>
-<div class="box-analogy info-box">
-<h4>比喻說明</h4>
-<p>這個工作流就像是建立了一個「24 小時待命的遠端秘書系統」：</p>
-<p><strong>GitHub</strong> = 你和秘書之間的「交辦事項信箱」，你隨時可以丟任務進去</p>
-<p><strong>Claude Code</strong> = 那位秘書，會讀取任務、執行工作、回報結果</p>
-<p><strong>Obsidian</strong> = 你和秘書共用的「檔案櫃」，不管誰在哪裡都能存取同一份資料</p>
-<p><strong>Wisprflow</strong> = 錄音筆，讓你的靈感能即時轉成文字進入系統</p>
-</div>
-<div class="box-key info-box">
-<h4>重點提示</h4>
-<p><strong>這個架構的突破性意義：</strong></p>
-<p>傳統上，Claude Code 是「桌面工具」——你得坐在電腦前才能用。但透過 GitHub + Obsidian 的組合：</p>
-<ul>
-<li><strong>輸入端（GitHub Issues）</strong>：任何裝置都能下達任務</li>
-<li><strong>處理端（Claude Code）</strong>：在你的電腦/伺服器上自動執行</li>
-<li><strong>輸出端（Obsidian Sync）</strong>：結果同步到所有裝置</li>
-</ul>
-<p>你在通勤時想到點子 → 用手機發 GitHub Issue → 到辦公室時，文章初稿已經在 Obsidian 裡等你了。</p>
-</div>
-<div class="code-box info-box">
-<h4>為什麼選擇 Obsidian 而非 Notion？</h4>
-<table class="comparison-table">
-<tr>
-<th>特性</th>
-<th>Obsidian</th>
-<th>Notion</th>
-</tr>
-<tr>
-<td>檔案格式</td>
-<td>本機 Markdown（.md）</td>
-<td>專屬格式（雲端）</td>
-</tr>
-<tr>
-<td>Claude Code 存取</td>
-<td>直接讀寫本機檔案</td>
-<td>需透過 API/MCP</td>
-</tr>
-<tr>
-<td>離線使用</td>
-<td>完全支援</td>
-<td>有限</td>
-</tr>
-<tr>
-<td>資料所有權</td>
-<td>100% 在你手上</td>
-<td>存在 Notion 伺服器</td>
-</tr>
-</table>
-<p>對於 Claude Code 工作流，本機檔案是更直接的選擇，省去了 API 呼叫的複雜度。</p>
-</div>
-<div class="practice-box info-box">
-<h4>練習思考</h4>
-<p><strong>問題：</strong>如果你要建立自己的「24/7 AI 工作流」，你會用它來自動化哪些任務？</p>
-<p>思考這些場景：</p>
-<ul>
-<li>每天早上自動生成的內容有哪些？</li>
-<li>哪些任務你經常「想到但沒時間做」？</li>
-<li>什麼樣的結果你希望「一覺醒來就準備好」？</li>
-</ul>
-</div>
-</div>
-</section>
-<!-- Summary Section -->
-<section class="summary-section" id="summary">
-<h2>總結：將 Claude Code 打造成個人 AI 作業系統</h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 1.5rem;">
-<div>
-<h3 style="color: var(--accent-orange); margin-bottom: 1rem;">核心概念回顧</h3>
-<ul class="feature-list">
-<li><strong>Claude Code</strong> 不只是工程師的工具，更是寫作者和研究者的強力助手</li>
-<li><strong>claude.md</strong> 是專案的「記憶核心」，讓 AI 能跨會話記住你的脈絡</li>
-<li><strong>Slash Commands</strong> 把複雜指令封裝成一鍵執行的快捷方式</li>
-<li><strong>Plan Mode</strong> 在效率和控制之間取得平衡，先看計畫再執行</li>
-<li><strong>Sub-Agents</strong> 打破線性工作流，讓多項任務平行進行</li>
-<li><strong>Output Styles</strong> 讓 AI 切換不同的「思維模式」來回應你</li>
-<li><strong>MCP</strong> 擴展 AI 能觸及的範圍，連結外部工具和服務</li>
-<li><strong>GitHub + Obsidian</strong> 實現隨時隨地的 24/7 工作流</li>
-</ul>
-</div>
-<div>
-<h3 style="color: var(--accent-green); margin-bottom: 1rem;">分階段學習路徑</h3>
-<ul class="workflow-steps">
-<li><strong>Phase 1</strong>：安裝 Claude Code，設定專案資料夾，執行 <code>/init</code> 生成 claude.md</li>
-<li><strong>Phase 2</strong>：建立你的第一個自訂 Slash Command，針對最常做的任務</li>
-<li><strong>Phase 3</strong>：在複雜任務中使用 Plan Mode，體驗「先看計畫」的好處</li>
-<li><strong>Phase 4</strong>：部署第一個 Sub-Agent，處理固定的背景任務（如每日新聞摘要）</li>
-<li><strong>Phase 5</strong>：加入 MCP 整合和行動工作流，打造完整的 AI 作業系統</li>
-</ul>
-</div>
-</div>
-<div style="margin-top: 2rem;">
-<h3 style="color: var(--accent-purple); margin-bottom: 1rem;">實作檢查清單</h3>
-<ul class="checklist">
-<li>安裝 Node.js 18+ 和 npm</li>
-<li>安裝 Claude Code：<code>npm install -g @anthropic-ai/claude-code</code></li>
-<li>建立專案資料夾，放入相關檔案（過去的作品、風格指南、受眾資料）</li>
-<li>執行 <code>/init</code> 生成 claude.md</li>
-<li>建立至少一個自訂 Slash Command</li>
-<li>學會切換 Plan Mode（Shift + Tab）</li>
-<li>設計並部署一個 Sub-Agent</li>
-<li>設定至少一個 MCP 整合（推薦從 Perplexity 開始）</li>
-<li>（進階）設定 GitHub + Obsidian 行動工作流</li>
-</ul>
-</div>
-<div class="box-key info-box" style="margin-top: 2rem;">
-<h4>最終思考</h4>
-<p>作者在文末提出了一個很重要的現實觀點：Claude Code 不會解決所有生產力問題，也會有讓你挫折的時刻。但一旦你體驗過「AI 真正理解你的專案脈絡」是什麼感覺，回去用傳統的 AI 對話就會感覺「像是單手被綁住工作」。</p>
-<p>關鍵不在於一次學會所有功能，而是<strong>逐步建立</strong>——從最能立即解決你痛點的功能開始，慢慢擴展你的 AI 作業系統。</p>
-</div>
-</section>
-</div>
-<footer class="footer">
-<p>學習筆記整理 | 原文來源：<a href="https://open.substack.com/pub/theaimakernewsletter/p/how-i-turned-claude-code-into-my" target="_blank">The AI Maker Newsletter</a></p>
-<p>本文件僅供學習參考，所有引用內容版權歸原作者所有</p>
-</footer>
+
+                <h3>The mobile breakthrough: GitHub issues as Claude Code commands</h3>
+                <p>By connecting your Claude Code project to GitHub, you can use GitHub's mobile app to command Claude Code through issue tickets.</p>
+
+                <p>Want Claude Code to repurpose your latest newsletter into LinkedIn posts while you're on the train? Create a GitHub issue, mention Claude, and describe what you need. Claude Code processes your request, executes the work using all your project context then updates the issue with results.</p>
+
+                <h3>The workflow:</h3>
+                <ol>
+                    <li>Open GitHub mobile app</li>
+                    <li>Create new issue in your project repository</li>
+                    <li>Write your request description</li>
+                    <li>Write a comment: "Hey @claude, please handle this issue."</li>
+                    <li>Results delivered - Claude updates the issue with completed work</li>
+                </ol>
+
+                <h3>Obsidian: Your project data everywhere</h3>
+                <p>Unlike Notion or other cloud-based tools, Obsidian stores everything as local markdown files. Since my entire newsletter project uses markdown files, I can sync the complete project folder through Obsidian and access it from any device.</p>
+
+                <h3>Pro tip for voice capture:</h3>
+                <p>I use Wisprflow through Apple Shortcuts to record voice memos that automatically get inserted into my Obsidian vault. When I have a content idea while walking or driving, I just trigger the shortcut, record my thoughts, and the transcribed memo appears in my brain-dump folder.</p>
+            </div>
+
+            <div class="commentary">
+                <div class="column-header">學習筆記 Commentary</div>
+
+                <div class="key-term-box info-box">
+                    <h4>關鍵術語解析</h4>
+                    <p><strong>GitHub</strong>：原本是程式碼版本控制平台，但這裡被創意運用為「遠端任務派發系統」。透過 GitHub Issues 功能，你可以從任何裝置指派任務給 Claude Code。</p>
+                    <p><strong>GitHub Issues</strong>：GitHub 的任務追蹤功能，原本用於回報 Bug 或功能需求。</p>
+                    <p><strong>Obsidian</strong>：一款本機優先的筆記軟體，所有資料以 Markdown 檔案形式儲存在你的電腦上，而非雲端伺服器。</p>
+                    <p><strong>Wisprflow</strong>：語音轉文字工具，可搭配 Apple Shortcuts 自動化工作流程。</p>
+                </div>
+
+                <div class="analogy-box info-box">
+                    <h4>比喻說明</h4>
+                    <p>這個工作流就像是建立了一個「24 小時待命的遠端秘書系統」：</p>
+                    <p><strong>GitHub</strong> = 你和秘書之間的「交辦事項信箱」，你隨時可以丟任務進去</p>
+                    <p><strong>Claude Code</strong> = 那位秘書，會讀取任務、執行工作、回報結果</p>
+                    <p><strong>Obsidian</strong> = 你和秘書共用的「檔案櫃」，不管誰在哪裡都能存取同一份資料</p>
+                    <p><strong>Wisprflow</strong> = 錄音筆，讓你的靈感能即時轉成文字進入系統</p>
+                </div>
+
+                <div class="key-point-box info-box">
+                    <h4>重點提示</h4>
+                    <p><strong>這個架構的突破性意義：</strong></p>
+                    <p>傳統上，Claude Code 是「桌面工具」——你得坐在電腦前才能用。但透過 GitHub + Obsidian 的組合：</p>
+                    <ul>
+                        <li><strong>輸入端（GitHub Issues）</strong>：任何裝置都能下達任務</li>
+                        <li><strong>處理端（Claude Code）</strong>：在你的電腦/伺服器上自動執行</li>
+                        <li><strong>輸出端（Obsidian Sync）</strong>：結果同步到所有裝置</li>
+                    </ul>
+                    <p>你在通勤時想到點子 → 用手機發 GitHub Issue → 到辦公室時，文章初稿已經在 Obsidian 裡等你了。</p>
+                </div>
+
+                <div class="code-box info-box">
+                    <h4>為什麼選擇 Obsidian 而非 Notion？</h4>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>特性</th>
+                            <th>Obsidian</th>
+                            <th>Notion</th>
+                        </tr>
+                        <tr>
+                            <td>檔案格式</td>
+                            <td>本機 Markdown（.md）</td>
+                            <td>專屬格式（雲端）</td>
+                        </tr>
+                        <tr>
+                            <td>Claude Code 存取</td>
+                            <td>直接讀寫本機檔案</td>
+                            <td>需透過 API/MCP</td>
+                        </tr>
+                        <tr>
+                            <td>離線使用</td>
+                            <td>完全支援</td>
+                            <td>有限</td>
+                        </tr>
+                        <tr>
+                            <td>資料所有權</td>
+                            <td>100% 在你手上</td>
+                            <td>存在 Notion 伺服器</td>
+                        </tr>
+                    </table>
+                    <p>對於 Claude Code 工作流，本機檔案是更直接的選擇，省去了 API 呼叫的複雜度。</p>
+                </div>
+
+                <div class="practice-box info-box">
+                    <h4>練習思考</h4>
+                    <p><strong>問題：</strong>如果你要建立自己的「24/7 AI 工作流」，你會用它來自動化哪些任務？</p>
+                    <p>思考這些場景：</p>
+                    <ul>
+                        <li>每天早上自動生成的內容有哪些？</li>
+                        <li>哪些任務你經常「想到但沒時間做」？</li>
+                        <li>什麼樣的結果你希望「一覺醒來就準備好」？</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section id="summary" class="summary-section">
+            <h2>總結：將 Claude Code 打造成個人 AI 作業系統</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 1.5rem;">
+                <div>
+                    <h3 style="color: var(--accent-orange); margin-bottom: 1rem;">核心概念回顧</h3>
+                    <ul class="feature-list">
+                        <li><strong>Claude Code</strong> 不只是工程師的工具，更是寫作者和研究者的強力助手</li>
+                        <li><strong>claude.md</strong> 是專案的「記憶核心」，讓 AI 能跨會話記住你的脈絡</li>
+                        <li><strong>Slash Commands</strong> 把複雜指令封裝成一鍵執行的快捷方式</li>
+                        <li><strong>Plan Mode</strong> 在效率和控制之間取得平衡，先看計畫再執行</li>
+                        <li><strong>Sub-Agents</strong> 打破線性工作流，讓多項任務平行進行</li>
+                        <li><strong>Output Styles</strong> 讓 AI 切換不同的「思維模式」來回應你</li>
+                        <li><strong>MCP</strong> 擴展 AI 能觸及的範圍，連結外部工具和服務</li>
+                        <li><strong>GitHub + Obsidian</strong> 實現隨時隨地的 24/7 工作流</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="color: var(--accent-green); margin-bottom: 1rem;">分階段學習路徑</h3>
+                    <ul class="workflow-steps">
+                        <li><strong>Phase 1</strong>：安裝 Claude Code，設定專案資料夾，執行 <code>/init</code> 生成 claude.md</li>
+                        <li><strong>Phase 2</strong>：建立你的第一個自訂 Slash Command，針對最常做的任務</li>
+                        <li><strong>Phase 3</strong>：在複雜任務中使用 Plan Mode，體驗「先看計畫」的好處</li>
+                        <li><strong>Phase 4</strong>：部署第一個 Sub-Agent，處理固定的背景任務（如每日新聞摘要）</li>
+                        <li><strong>Phase 5</strong>：加入 MCP 整合和行動工作流，打造完整的 AI 作業系統</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="color: var(--accent-purple); margin-bottom: 1rem;">實作檢查清單</h3>
+                <ul class="checklist">
+                    <li>安裝 Node.js 18+ 和 npm</li>
+                    <li>安裝 Claude Code：<code>npm install -g @anthropic-ai/claude-code</code></li>
+                    <li>建立專案資料夾，放入相關檔案（過去的作品、風格指南、受眾資料）</li>
+                    <li>執行 <code>/init</code> 生成 claude.md</li>
+                    <li>建立至少一個自訂 Slash Command</li>
+                    <li>學會切換 Plan Mode（Shift + Tab）</li>
+                    <li>設計並部署一個 Sub-Agent</li>
+                    <li>設定至少一個 MCP 整合（推薦從 Perplexity 開始）</li>
+                    <li>（進階）設定 GitHub + Obsidian 行動工作流</li>
+                </ul>
+            </div>
+
+            <div class="key-point-box info-box" style="margin-top: 2rem;">
+                <h4>最終思考</h4>
+                <p>作者在文末提出了一個很重要的現實觀點：Claude Code 不會解決所有生產力問題，也會有讓你挫折的時刻。但一旦你體驗過「AI 真正理解你的專案脈絡」是什麼感覺，回去用傳統的 AI 對話就會感覺「像是單手被綁住工作」。</p>
+                <p>關鍵不在於一次學會所有功能，而是<strong>逐步建立</strong>——從最能立即解決你痛點的功能開始，慢慢擴展你的 AI 作業系統。</p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>學習筆記整理 | 原文來源：<a href="https://open.substack.com/pub/theaimakernewsletter/p/how-i-turned-claude-code-into-my" target="_blank">The AI Maker Newsletter</a></p>
+        <p>本文件僅供學習參考，所有引用內容版權歸原作者所有</p>
+    </footer>
 </body>
 </html>

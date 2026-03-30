@@ -1,566 +1,803 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Claude Code 互動模式完全指南 - Interactive Mode Reference</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 互動模式完全指南 - Interactive Mode Reference</title>
+
 <!-- Dashboard Index Meta -->
-<meta content="2026-03-11" name="doc-date"/>
-<meta content="Claude Code 互動模式 - Interactive Mode Reference" name="doc-title"/>
-<meta content="Anthropic / Claude Code Docs" name="doc-source"/>
-<meta content="Anthropic-Docs" name="doc-source-type"/>
-<meta content="Anthropic-Docs,Tool,API,Framework" name="doc-tags"/>
-<meta content="4.0" name="doc-rating"/>
-<meta content="Claude Code 鍵盤快捷鍵、Vim 模式、內建指令、背景任務完整參考手冊。" name="doc-summary"/>
-<meta content="2026-03-11_claude-code-interactive-mode.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<meta name="doc-date" content="2026-03-11">
+<meta name="doc-title" content="Claude Code 互動模式 - Interactive Mode Reference">
+<meta name="doc-source" content="Anthropic / Claude Code Docs">
+<meta name="doc-source-type" content="Anthropic-Docs">
+<meta name="doc-tags" content="Anthropic-Docs,Tool,API,Framework">
+<meta name="doc-rating" content="4.0">
+<meta name="doc-summary" content="Claude Code 鍵盤快捷鍵、Vim 模式、內建指令、背景任務完整參考手冊。">
+<meta name="doc-file" content="2026-03-11_claude-code-interactive-mode.html">
 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
 
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Tags */
+.tag-container { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; }
+.tag-anthropic-docs { background: #fef3c7; color: #d97706; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-api { background: #ddd6fe; color: #4c1d95; }
+.tag-framework { background: #c7d2fe; color: #3730a3; }
+
+.header h1 { font-size: 1.8rem; margin: 0 0 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; }
+.header .source a { color: #93c5fd; text-decoration: none; }
+.header .source a:hover { text-decoration: underline; }
+
+/* Executive Summary */
+.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.executive-summary h2 { font-size: 1.1rem; color: #1e3a5f; margin: 0 0 0.75rem 0; }
+.executive-summary p { font-size: 0.95rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; font-size: 0.9rem; color: #1e3a5f; margin-bottom: 0.3rem; }
+.objective-desc { font-size: 0.8rem; color: #64748b; line-height: 1.5; }
+
+/* Content Grid (bilingual) */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.part-label { font-size: 0.75rem; font-weight: 600; color: #3b82f6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+.part-title { font-size: 1.2rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; }
+.bilingual-block { margin-bottom: 1.25rem; }
+.chinese-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.3rem; }
+.english-text { font-size: 0.9rem; line-height: 1.6; color: #64748b; font-style: italic; }
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Linear layout for code-heavy sections */
+.content-grid.linear { grid-template-columns: 1fr; }
+.content-grid.linear .content-left { border-right: none; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Code blocks */
+.code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; overflow-x: auto; margin: 0.75rem 0; line-height: 1.6; }
+.code-block .comment { color: #64748b; }
+.code-block .keyword { color: #7dd3fc; }
+.code-block .string { color: #86efac; }
+
+/* Reference tables */
+.ref-table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.85rem; }
+.ref-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; }
+.ref-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
+.ref-table tr:nth-child(even) { background: #f8fafc; }
+.ref-table code { background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 3px; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; color: #7c3aed; }
+
+/* Tabs */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; min-width: 120px; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.summary-card-title { font-weight: 700; font-size: 0.95rem; color: #1e3a5f; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+
+/* Practice Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Section Headers */
+.section-header { font-size: 1.2rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+    .objectives-grid { grid-template-columns: 1fr; }
+    .takeaways-grid { grid-template-columns: 1fr; }
+    .tab-btn { min-width: 80px; font-size: 0.8rem; }
+}
+</style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="tag-container">
-<span class="tag tag-anthropic-docs">Anthropic-Docs</span>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-api">API</span>
-<span class="tag tag-framework">Framework</span>
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-anthropic-docs">Anthropic-Docs</span>
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-api">API</span>
+        <span class="tag tag-framework">Framework</span>
+    </div>
+    <h1>Claude Code 互動模式完全指南</h1>
+    <div class="subtitle">Interactive Mode - Keyboard Shortcuts, Input Modes & Interactive Features</div>
+    <div class="source">Source: <a href="https://docs.anthropic.com/en/docs/claude-code/interactive-mode" target="_blank">Anthropic Docs - Claude Code Interactive Mode</a></div>
 </div>
-<h1>Claude Code 互動模式完全指南</h1>
-<div class="subtitle">Interactive Mode - Keyboard Shortcuts, Input Modes &amp; Interactive Features</div>
-<div class="source">Source: <a href="https://docs.anthropic.com/en/docs/claude-code/interactive-mode" target="_blank">Anthropic Docs - Claude Code Interactive Mode</a></div>
-</header>
+
 <!-- Container -->
 <div class="container">
+
 <!-- Executive Summary -->
 <div class="executive-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
-<span class="rating-high">↑ 實務應用, 工具生態</span>
-<span class="rating-low">↓ 技術深度, 學習曲線</span>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+        <span class="rating-high">↑ 實務應用, 工具生態</span>
+        <span class="rating-low">↓ 技術深度, 學習曲線</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>這是 Claude Code 互動模式的完整參考文件，涵蓋鍵盤快捷鍵、內建指令（50+ 個 slash commands）、Vim 編輯模式、背景任務管理、提示建議等功能。本文是操作手冊性質 — 價值在於「需要時能快速查到」而非「讀完有深度洞察」。對於已使用 Claude Code 的開發者，這份文件是提升效率的快捷鍵速查表；對於評估 Claude Code 的管理者，這份文件展示了 CLI 工具的成熟度和功能完整性。</p>
 </div>
-<h2>Executive Summary</h2>
-<p>這是 Claude Code 互動模式的完整參考文件，涵蓋鍵盤快捷鍵、內建指令（50+ 個 slash commands）、Vim 編輯模式、背景任務管理、提示建議等功能。本文是操作手冊性質 — 價值在於「需要時能快速查到」而非「讀完有深度洞察」。對於已使用 Claude Code 的開發者，這份文件是提升效率的快捷鍵速查表；對於評估 Claude Code 的管理者，這份文件展示了 CLI 工具的成熟度和功能完整性。</p>
-</div>
+
 <!-- Learning Objectives -->
 <h2 class="section-header">Learning Objectives</h2>
 <div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">⌨</div>
-<div class="objective-title">掌握核心快捷鍵</div>
-<div class="objective-desc">學習 Ctrl+C/D/L/R/B 等基礎控制和文字編輯快捷鍵，提升 CLI 操作效率</div>
+    <div class="objective-item">
+        <div class="objective-icon">&#9000;</div>
+        <div class="objective-title">掌握核心快捷鍵</div>
+        <div class="objective-desc">學習 Ctrl+C/D/L/R/B 等基礎控制和文字編輯快捷鍵，提升 CLI 操作效率</div>
+    </div>
+    <div class="objective-item" style="border-color: #10b981;">
+        <div class="objective-icon">&#128736;</div>
+        <div class="objective-title">理解 50+ 內建指令</div>
+        <div class="objective-desc">熟悉 /compact、/diff、/resume、/mcp 等指令的用途和使用時機</div>
+    </div>
+    <div class="objective-item" style="border-color: #8b5cf6;">
+        <div class="objective-icon">&#9881;</div>
+        <div class="objective-title">善用背景任務與進階功能</div>
+        <div class="objective-desc">掌握 Ctrl+B 背景執行、/btw 側問、Task List 等進階互動模式</div>
+    </div>
 </div>
-<div class="objective-item" style="border-color: #10b981;">
-<div class="objective-icon">🛠</div>
-<div class="objective-title">理解 50+ 內建指令</div>
-<div class="objective-desc">熟悉 /compact、/diff、/resume、/mcp 等指令的用途和使用時機</div>
-</div>
-<div class="objective-item" style="border-color: #8b5cf6;">
-<div class="objective-icon">⚙</div>
-<div class="objective-title">善用背景任務與進階功能</div>
-<div class="objective-desc">掌握 Ctrl+B 背景執行、/btw 側問、Task List 等進階互動模式</div>
-</div>
-</div>
+
 <!-- Tabbed Content -->
 <div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-shortcuts')">Part I-II: 快捷鍵</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-commands')">Part III-IV: 指令與 Vim</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-advanced')">Part V-VI: 進階功能</button>
-</div>
-<!-- TAB 1: Shortcuts -->
-<div class="tab-content active" id="tab-shortcuts">
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-shortcuts')">Part I-II: 快捷鍵</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-commands')">Part III-IV: 指令與 Vim</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-advanced')">Part V-VI: 進階功能</button>
+    </div>
+
+    <!-- TAB 1: Shortcuts -->
+    <div id="tab-shortcuts" class="tab-content active">
+
 <!-- Part I: General Controls & Text Editing -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part I</div>
-<div class="part-title">通用控制與文字編輯快捷鍵</div>
-<div class="bilingual-block">
-<div class="zh-text">Claude Code 的鍵盤快捷鍵可能因<span class="highlight-key">平台和終端機</span>而異。按下 <code>?</code> 可查看當前環境可用的快捷鍵。</div>
-<div class="en-text">Keyboard shortcuts may vary by platform and terminal. Press <code>?</code> to see available shortcuts for your environment.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>macOS 用戶注意：</strong>Option/Alt 鍵快捷鍵（<code>Alt+B</code>、<code>Alt+F</code> 等）需要在終端機中<span class="highlight-concept">將 Option 設定為 Meta 鍵</span>。iTerm2 在 Settings → Profiles → Keys 中設定；Terminal.app 在 Settings → Profiles → Keyboard 中勾選。</div>
-<div class="en-text">macOS users: Option/Alt key shortcuts (Alt+B, Alt+F, Alt+Y, Alt+M, Alt+P) require configuring Option as Meta in your terminal.</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>最常用的 5 個快捷鍵：</strong><br/>
-<code>Ctrl+C</code> 取消當前輸入/生成 |
+    <div class="content-left">
+        <div class="part-label">Part I</div>
+        <div class="part-title">通用控制與文字編輯快捷鍵</div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text">Claude Code 的鍵盤快捷鍵可能因<span class="highlight-key">平台和終端機</span>而異。按下 <code>?</code> 可查看當前環境可用的快捷鍵。</div>
+            <div class="english-text">Keyboard shortcuts may vary by platform and terminal. Press <code>?</code> to see available shortcuts for your environment.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><strong>macOS 用戶注意：</strong>Option/Alt 鍵快捷鍵（<code>Alt+B</code>、<code>Alt+F</code> 等）需要在終端機中<span class="highlight-concept">將 Option 設定為 Meta 鍵</span>。iTerm2 在 Settings → Profiles → Keys 中設定；Terminal.app 在 Settings → Profiles → Keyboard 中勾選。</div>
+            <div class="english-text">macOS users: Option/Alt key shortcuts (Alt+B, Alt+F, Alt+Y, Alt+M, Alt+P) require configuring Option as Meta in your terminal.</div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+            <div class="info-box-content">
+                <strong>最常用的 5 個快捷鍵：</strong><br>
+                <code>Ctrl+C</code> 取消當前輸入/生成 |
                 <code>Ctrl+L</code> 清屏（保留對話） |
                 <code>Ctrl+B</code> 背景執行任務 |
                 <code>Ctrl+R</code> 反向搜尋歷史 |
                 <code>Esc+Esc</code> 回退/摘要
             </div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">通用控制</span>涵蓋了從中斷當前操作（<code>Ctrl+C</code>）、終止背景 Agent（<code>Ctrl+F</code> 按兩次確認）、退出會話（<code>Ctrl+D</code>）到切換詳細輸出（<code>Ctrl+O</code>）的基礎操作。</div>
-<div class="en-text">General controls cover canceling current input or generation (Ctrl+C), killing all background agents (Ctrl+F, press twice within 3 seconds to confirm), exiting the session (Ctrl+D), and toggling verbose output (Ctrl+O).</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><code>Ctrl+G</code> 可在<span class="highlight-practical">預設文字編輯器</span>中編輯你的 prompt 或自訂回應 — 適合需要撰寫長篇 prompt 時使用。<code>Ctrl+V</code>（或 macOS iTerm2 的 <code>Cmd+V</code>）可以直接<span class="highlight-key">從剪貼簿貼上圖片</span>。</div>
-<div class="en-text">Ctrl+G opens your prompt in the default text editor. Ctrl+V (or Cmd+V in iTerm2) pastes an image from clipboard — it pastes an image or path to an image file.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">文字編輯快捷鍵</span>遵循標準 Emacs/readline 風格：<code>Ctrl+K</code> 刪除到行尾、<code>Ctrl+U</code> 刪除整行、<code>Ctrl+Y</code> 貼回刪除的文字。<code>Alt+B</code>/<code>Alt+F</code> 以單詞為單位前後移動游標。</div>
-<div class="en-text">Text editing shortcuts follow standard Emacs/readline style: Ctrl+K deletes to end of line, Ctrl+U deletes entire line, Ctrl+Y pastes deleted text. Alt+B/Alt+F move cursor back/forward one word.</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<strong>CDMO 情境：</strong>在 Claude Code 中處理批次記錄審查腳本時，<code>Ctrl+B</code> 可以讓 Python 腳本在背景執行，你可以同時請 Claude 協助分析下一批資料。<code>Ctrl+R</code> 則讓你快速找到之前用過的複雜 git 命令。
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><span class="highlight-concept">通用控制</span>涵蓋了從中斷當前操作（<code>Ctrl+C</code>）、終止背景 Agent（<code>Ctrl+F</code> 按兩次確認）、退出會話（<code>Ctrl+D</code>）到切換詳細輸出（<code>Ctrl+O</code>）的基礎操作。</div>
+            <div class="english-text">General controls cover canceling current input or generation (Ctrl+C), killing all background agents (Ctrl+F, press twice within 3 seconds to confirm), exiting the session (Ctrl+D), and toggling verbose output (Ctrl+O).</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><code>Ctrl+G</code> 可在<span class="highlight-practical">預設文字編輯器</span>中編輯你的 prompt 或自訂回應 — 適合需要撰寫長篇 prompt 時使用。<code>Ctrl+V</code>（或 macOS iTerm2 的 <code>Cmd+V</code>）可以直接<span class="highlight-key">從剪貼簿貼上圖片</span>。</div>
+            <div class="english-text">Ctrl+G opens your prompt in the default text editor. Ctrl+V (or Cmd+V in iTerm2) pastes an image from clipboard — it pastes an image or path to an image file.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><span class="highlight-concept">文字編輯快捷鍵</span>遵循標準 Emacs/readline 風格：<code>Ctrl+K</code> 刪除到行尾、<code>Ctrl+U</code> 刪除整行、<code>Ctrl+Y</code> 貼回刪除的文字。<code>Alt+B</code>/<code>Alt+F</code> 以單詞為單位前後移動游標。</div>
+            <div class="english-text">Text editing shortcuts follow standard Emacs/readline style: Ctrl+K deletes to end of line, Ctrl+U deletes entire line, Ctrl+Y pastes deleted text. Alt+B/Alt+F move cursor back/forward one word.</div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 實務應用</div>
+            <div class="info-box-content">
+                <strong>CDMO 情境：</strong>在 Claude Code 中處理批次記錄審查腳本時，<code>Ctrl+B</code> 可以讓 Python 腳本在背景執行，你可以同時請 Claude 協助分析下一批資料。<code>Ctrl+R</code> 則讓你快速找到之前用過的複雜 git 命令。
             </div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="part-label">Original Reference</div>
+
+        <p style="font-size:0.85rem; color:#64748b; margin-bottom:1rem;">General Controls — Key shortcuts table:</p>
+        <table class="ref-table">
+            <tr><th>Shortcut</th><th>Description</th></tr>
+            <tr><td><code>Ctrl+C</code></td><td>Cancel current input or generation</td></tr>
+            <tr><td><code>Ctrl+F</code></td><td>Kill all background agents (press twice)</td></tr>
+            <tr><td><code>Ctrl+D</code></td><td>Exit Claude Code session</td></tr>
+            <tr><td><code>Ctrl+G</code></td><td>Open in default text editor</td></tr>
+            <tr><td><code>Ctrl+L</code></td><td>Clear terminal screen (keeps history)</td></tr>
+            <tr><td><code>Ctrl+O</code></td><td>Toggle verbose output</td></tr>
+            <tr><td><code>Ctrl+R</code></td><td>Reverse search command history</td></tr>
+            <tr><td><code>Ctrl+V</code></td><td>Paste image from clipboard</td></tr>
+            <tr><td><code>Ctrl+B</code></td><td>Background running tasks</td></tr>
+            <tr><td><code>Ctrl+T</code></td><td>Toggle task list</td></tr>
+            <tr><td><code>Esc+Esc</code></td><td>Rewind or summarize</td></tr>
+            <tr><td><code>Shift+Tab</code></td><td>Toggle permission modes</td></tr>
+            <tr><td><code>Alt+P</code></td><td>Switch model</td></tr>
+            <tr><td><code>Alt+T</code></td><td>Toggle extended thinking</td></tr>
+        </table>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Text Editing shortcuts:</p>
+        <table class="ref-table">
+            <tr><th>Shortcut</th><th>Description</th></tr>
+            <tr><td><code>Ctrl+K</code></td><td>Delete to end of line</td></tr>
+            <tr><td><code>Ctrl+U</code></td><td>Delete entire line</td></tr>
+            <tr><td><code>Ctrl+Y</code></td><td>Paste deleted text</td></tr>
+            <tr><td><code>Alt+Y</code></td><td>Cycle paste history (after Ctrl+Y)</td></tr>
+            <tr><td><code>Alt+B</code></td><td>Move cursor back one word</td></tr>
+            <tr><td><code>Alt+F</code></td><td>Move cursor forward one word</td></tr>
+        </table>
+    </div>
 </div>
-</div>
-<div class="content-right">
-<div class="part-label">Original Reference</div>
-<p style="font-size:0.85rem; color:#64748b; margin-bottom:1rem;">General Controls — Key shortcuts table:</p>
-<table class="ref-table">
-<tr><th>Shortcut</th><th>Description</th></tr>
-<tr><td><code>Ctrl+C</code></td><td>Cancel current input or generation</td></tr>
-<tr><td><code>Ctrl+F</code></td><td>Kill all background agents (press twice)</td></tr>
-<tr><td><code>Ctrl+D</code></td><td>Exit Claude Code session</td></tr>
-<tr><td><code>Ctrl+G</code></td><td>Open in default text editor</td></tr>
-<tr><td><code>Ctrl+L</code></td><td>Clear terminal screen (keeps history)</td></tr>
-<tr><td><code>Ctrl+O</code></td><td>Toggle verbose output</td></tr>
-<tr><td><code>Ctrl+R</code></td><td>Reverse search command history</td></tr>
-<tr><td><code>Ctrl+V</code></td><td>Paste image from clipboard</td></tr>
-<tr><td><code>Ctrl+B</code></td><td>Background running tasks</td></tr>
-<tr><td><code>Ctrl+T</code></td><td>Toggle task list</td></tr>
-<tr><td><code>Esc+Esc</code></td><td>Rewind or summarize</td></tr>
-<tr><td><code>Shift+Tab</code></td><td>Toggle permission modes</td></tr>
-<tr><td><code>Alt+P</code></td><td>Switch model</td></tr>
-<tr><td><code>Alt+T</code></td><td>Toggle extended thinking</td></tr>
-</table>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Text Editing shortcuts:</p>
-<table class="ref-table">
-<tr><th>Shortcut</th><th>Description</th></tr>
-<tr><td><code>Ctrl+K</code></td><td>Delete to end of line</td></tr>
-<tr><td><code>Ctrl+U</code></td><td>Delete entire line</td></tr>
-<tr><td><code>Ctrl+Y</code></td><td>Paste deleted text</td></tr>
-<tr><td><code>Alt+Y</code></td><td>Cycle paste history (after Ctrl+Y)</td></tr>
-<tr><td><code>Alt+B</code></td><td>Move cursor back one word</td></tr>
-<tr><td><code>Alt+F</code></td><td>Move cursor forward one word</td></tr>
-</table>
-</div>
-</div>
+
 <!-- Part II: Multiline Input & Quick Commands -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part II</div>
-<div class="part-title">多行輸入、快速指令與主題顯示</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">多行輸入</span>在不同終端機中有多種方式。最通用的是<span class="highlight-key">反斜線 + Enter</span>（<code>\</code> + <code>Enter</code>），所有終端機都支援。macOS 預設使用 <code>Option+Enter</code>，而 <code>Shift+Enter</code> 在 iTerm2、WezTerm、Ghostty、Kitty 中無需設定即可使用。</div>
-<div class="en-text">Multiline input has multiple methods across terminals. The quick escape method (\ + Enter) works in all terminals. macOS defaults to Option+Enter, and Shift+Enter works out of the box in iTerm2, WezTerm, Ghostty, Kitty.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">對於其他終端機（VS Code、Alacritty、Zed、Warp），需要執行 <code>/terminal-setup</code> 來安裝 Shift+Enter 的鍵位綁定。<code>Ctrl+J</code> 是換行字元（Line Feed），也可以用於多行輸入。直接貼上程式碼區塊或 log 時，會自動進入貼上模式。</div>
-<div class="en-text">For other terminals (VS Code, Alacritty, Zed, Warp), run /terminal-setup to install the binding. Ctrl+J is a line feed character for multiline. Paste mode activates when pasting code blocks or logs directly.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-practical">快速指令</span>有三種前綴：<code>/</code> 用於 slash commands 和 skills；<code>!</code> 用於 Bash 模式（直接執行 shell 命令並將結果加入對話脈絡）；<code>@</code> 觸發檔案路徑自動完成。</div>
-<div class="en-text">Quick commands have three prefixes: / at start for commands or skills; ! at start for Bash mode (run commands directly and add output to session); @ for file path autocomplete.</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<strong>三種前綴像三條車道：</strong><br/>
-<code>/</code> 是「Claude 專用車道」— 啟動 Claude 的內建功能<br/>
-<code>!</code> 是「系統直通車道」— 繞過 Claude 直接跟系統對話<br/>
-<code>@</code> 是「導航輔助車道」— 幫你找到正確的檔案路徑
+    <div class="content-left">
+        <div class="part-label">Part II</div>
+        <div class="part-title">多行輸入、快速指令與主題顯示</div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><span class="highlight-concept">多行輸入</span>在不同終端機中有多種方式。最通用的是<span class="highlight-key">反斜線 + Enter</span>（<code>\</code> + <code>Enter</code>），所有終端機都支援。macOS 預設使用 <code>Option+Enter</code>，而 <code>Shift+Enter</code> 在 iTerm2、WezTerm、Ghostty、Kitty 中無需設定即可使用。</div>
+            <div class="english-text">Multiline input has multiple methods across terminals. The quick escape method (\ + Enter) works in all terminals. macOS defaults to Option+Enter, and Shift+Enter works out of the box in iTerm2, WezTerm, Ghostty, Kitty.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text">對於其他終端機（VS Code、Alacritty、Zed、Warp），需要執行 <code>/terminal-setup</code> 來安裝 Shift+Enter 的鍵位綁定。<code>Ctrl+J</code> 是換行字元（Line Feed），也可以用於多行輸入。直接貼上程式碼區塊或 log 時，會自動進入貼上模式。</div>
+            <div class="english-text">For other terminals (VS Code, Alacritty, Zed, Warp), run /terminal-setup to install the binding. Ctrl+J is a line feed character for multiline. Paste mode activates when pasting code blocks or logs directly.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><span class="highlight-practical">快速指令</span>有三種前綴：<code>/</code> 用於 slash commands 和 skills；<code>!</code> 用於 Bash 模式（直接執行 shell 命令並將結果加入對話脈絡）；<code>@</code> 觸發檔案路徑自動完成。</div>
+            <div class="english-text">Quick commands have three prefixes: / at start for commands or skills; ! at start for Bash mode (run commands directly and add output to session); @ for file path autocomplete.</div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#128161; 比喻說明</div>
+            <div class="info-box-content">
+                <strong>三種前綴像三條車道：</strong><br>
+                <code>/</code> 是「Claude 專用車道」— 啟動 Claude 的內建功能<br>
+                <code>!</code> 是「系統直通車道」— 繞過 Claude 直接跟系統對話<br>
+                <code>@</code> 是「導航輔助車道」— 幫你找到正確的檔案路徑
             </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><strong>主題與語法高亮：</strong>在 <code>/theme</code> 選擇器內，<code>Ctrl+T</code> 可切換程式碼區塊的<span class="highlight-concept">語法高亮</span>功能。主題包含亮色和暗色變體、色盲友善（daltonized）主題，以及使用終端機色彩面板的 ANSI 主題。語法高亮僅在 Claude Code 的原生版本中可用。</div>
+            <div class="english-text">Inside the /theme picker menu, Ctrl+T toggles syntax highlighting for code blocks. Themes include light and dark variants, colorblind-accessible (daltonized) themes, and ANSI themes that use your terminal's color palette. Syntax highlighting is only available in the native build of Claude Code.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="part-label">Original Reference</div>
+
+        <p style="font-size:0.85rem; color:#64748b; margin-bottom:1rem;">Multiline Input methods:</p>
+        <table class="ref-table">
+            <tr><th>Method</th><th>Shortcut</th><th>Context</th></tr>
+            <tr><td>Quick escape</td><td><code>\</code> + <code>Enter</code></td><td>Works in all terminals</td></tr>
+            <tr><td>macOS default</td><td><code>Option+Enter</code></td><td>Default on macOS</td></tr>
+            <tr><td>Shift+Enter</td><td><code>Shift+Enter</code></td><td>iTerm2, WezTerm, Ghostty, Kitty</td></tr>
+            <tr><td>Control seq</td><td><code>Ctrl+J</code></td><td>Line feed character</td></tr>
+            <tr><td>Paste mode</td><td>Paste directly</td><td>For code blocks, logs</td></tr>
+        </table>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Quick Commands — prefix shortcuts:</p>
+        <table class="ref-table">
+            <tr><th>Prefix</th><th>Function</th></tr>
+            <tr><td><code>/</code></td><td>Command or skill</td></tr>
+            <tr><td><code>!</code></td><td>Bash mode — run commands directly</td></tr>
+            <tr><td><code>@</code></td><td>File path mention — trigger autocomplete</td></tr>
+        </table>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Bash mode features:</p>
+        <ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
+            <li>Adds command and output to conversation context</li>
+            <li>Shows real-time progress and output</li>
+            <li>Supports Ctrl+B backgrounding</li>
+            <li>History-based autocomplete with Tab</li>
+            <li>Exit with Escape, Backspace, or Ctrl+U on empty prompt</li>
+        </ul>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>主題與語法高亮：</strong>在 <code>/theme</code> 選擇器內，<code>Ctrl+T</code> 可切換程式碼區塊的<span class="highlight-concept">語法高亮</span>功能。主題包含亮色和暗色變體、色盲友善（daltonized）主題，以及使用終端機色彩面板的 ANSI 主題。語法高亮僅在 Claude Code 的原生版本中可用。</div>
-<div class="en-text">Inside the /theme picker menu, Ctrl+T toggles syntax highlighting for code blocks. Themes include light and dark variants, colorblind-accessible (daltonized) themes, and ANSI themes that use your terminal's color palette. Syntax highlighting is only available in the native build of Claude Code.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="part-label">Original Reference</div>
-<p style="font-size:0.85rem; color:#64748b; margin-bottom:1rem;">Multiline Input methods:</p>
-<table class="ref-table">
-<tr><th>Method</th><th>Shortcut</th><th>Context</th></tr>
-<tr><td>Quick escape</td><td><code>\</code> + <code>Enter</code></td><td>Works in all terminals</td></tr>
-<tr><td>macOS default</td><td><code>Option+Enter</code></td><td>Default on macOS</td></tr>
-<tr><td>Shift+Enter</td><td><code>Shift+Enter</code></td><td>iTerm2, WezTerm, Ghostty, Kitty</td></tr>
-<tr><td>Control seq</td><td><code>Ctrl+J</code></td><td>Line feed character</td></tr>
-<tr><td>Paste mode</td><td>Paste directly</td><td>For code blocks, logs</td></tr>
-</table>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Quick Commands — prefix shortcuts:</p>
-<table class="ref-table">
-<tr><th>Prefix</th><th>Function</th></tr>
-<tr><td><code>/</code></td><td>Command or skill</td></tr>
-<tr><td><code>!</code></td><td>Bash mode — run commands directly</td></tr>
-<tr><td><code>@</code></td><td>File path mention — trigger autocomplete</td></tr>
-</table>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Bash mode features:</p>
-<ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
-<li>Adds command and output to conversation context</li>
-<li>Shows real-time progress and output</li>
-<li>Supports Ctrl+B backgrounding</li>
-<li>History-based autocomplete with Tab</li>
-<li>Exit with Escape, Backspace, or Ctrl+U on empty prompt</li>
-</ul>
-</div>
-</div>
-</div><!-- end tab-shortcuts -->
-<!-- TAB 2: Commands & Vim -->
-<div class="tab-content" id="tab-commands">
+
+    </div><!-- end tab-shortcuts -->
+
+    <!-- TAB 2: Commands & Vim -->
+    <div id="tab-commands" class="tab-content">
+
 <!-- Part III: Built-in Commands -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part III</div>
-<div class="part-title">50+ 內建指令完整分類</div>
-<div class="bilingual-block">
-<div class="zh-text">在 Claude Code 中輸入 <code>/</code> 即可查看所有可用指令，或輸入 <code>/</code> 後接任意字母進行篩選。<span class="highlight-key">並非所有指令對每位用戶都可見</span> — 有些取決於平台、方案或環境。例如 <code>/desktop</code> 只在 macOS 和 Windows 出現，<code>/upgrade</code> 和 <code>/privacy-settings</code> 僅限 Pro 和 Max 方案。</div>
-<div class="en-text">Type / in Claude Code to see all available commands, or type / followed by any letters to filter. Not all commands are visible to every user. Some depend on your platform, plan, or environment.</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念 — 指令分類</div>
-<div class="info-box-content">
-<strong>會話管理：</strong><code>/clear</code>（清除歷史）、<code>/compact</code>（壓縮對話）、<code>/resume</code>（恢復會話）、<code>/fork</code>（分岔對話）、<code>/export</code>（匯出對話）<br/><br/>
-<strong>開發工具：</strong><code>/diff</code>（查看變更）、<code>/security-review</code>（安全審查）、<code>/pr-comments</code>（PR 評論）、<code>/review</code>（已棄用，改用 plugin）<br/><br/>
-<strong>配置管理：</strong><code>/config</code>（設定）、<code>/permissions</code>（權限）、<code>/hooks</code>（事件鉤子）、<code>/mcp</code>（MCP 伺服器）、<code>/memory</code>（CLAUDE.md）<br/><br/>
-<strong>模型控制：</strong><code>/model</code>（切換模型）、<code>/fast</code>（快速模式）、<code>/plan</code>（規劃模式）<br/><br/>
-<strong>帳戶與診斷：</strong><code>/login</code>、<code>/logout</code>、<code>/doctor</code>（診斷安裝）、<code>/cost</code>（用量統計）、<code>/usage</code>（限額狀態）
+    <div class="content-left">
+        <div class="part-label">Part III</div>
+        <div class="part-title">50+ 內建指令完整分類</div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text">在 Claude Code 中輸入 <code>/</code> 即可查看所有可用指令，或輸入 <code>/</code> 後接任意字母進行篩選。<span class="highlight-key">並非所有指令對每位用戶都可見</span> — 有些取決於平台、方案或環境。例如 <code>/desktop</code> 只在 macOS 和 Windows 出現，<code>/upgrade</code> 和 <code>/privacy-settings</code> 僅限 Pro 和 Max 方案。</div>
+            <div class="english-text">Type / in Claude Code to see all available commands, or type / followed by any letters to filter. Not all commands are visible to every user. Some depend on your platform, plan, or environment.</div>
+        </div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">&#128218; 核心概念 — 指令分類</div>
+            <div class="info-box-content">
+                <strong>會話管理：</strong><code>/clear</code>（清除歷史）、<code>/compact</code>（壓縮對話）、<code>/resume</code>（恢復會話）、<code>/fork</code>（分岔對話）、<code>/export</code>（匯出對話）<br><br>
+                <strong>開發工具：</strong><code>/diff</code>（查看變更）、<code>/security-review</code>（安全審查）、<code>/pr-comments</code>（PR 評論）、<code>/review</code>（已棄用，改用 plugin）<br><br>
+                <strong>配置管理：</strong><code>/config</code>（設定）、<code>/permissions</code>（權限）、<code>/hooks</code>（事件鉤子）、<code>/mcp</code>（MCP 伺服器）、<code>/memory</code>（CLAUDE.md）<br><br>
+                <strong>模型控制：</strong><code>/model</code>（切換模型）、<code>/fast</code>（快速模式）、<code>/plan</code>（規劃模式）<br><br>
+                <strong>帳戶與診斷：</strong><code>/login</code>、<code>/logout</code>、<code>/doctor</code>（診斷安裝）、<code>/cost</code>（用量統計）、<code>/usage</code>（限額狀態）
             </div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Claude Code 還附帶<span class="highlight-concept">打包技能（bundled skills）</span>，例如 <code>/simplify</code>、<code>/batch</code> 和 <code>/debug</code>，它們與內建指令一起出現在 <code>/</code> 選單中。你也可以建立自己的指令，參見 skills 文件。</div>
-<div class="en-text">Claude Code also ships with bundled skills like /simplify, /batch, and /debug that appear alongside built-in commands when you type /. To create your own commands, see skills documentation.</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<strong>最值得記住的 10 個指令：</strong><br/>
-                1. <code>/compact</code> — 壓縮對話以釋放 context，可加 focus 指示<br/>
-                2. <code>/diff</code> — 互動式 diff 檢視器，顯示未提交的變更<br/>
-                3. <code>/resume</code> — 恢復之前的對話（by ID 或名稱）<br/>
-                4. <code>/memory</code> — 編輯 CLAUDE.md 記憶檔、管理 auto-memory<br/>
-                5. <code>/mcp</code> — 管理 MCP 伺服器連線和 OAuth 認證<br/>
-                6. <code>/model</code> — 即時切換模型，用左右箭頭調整 effort level<br/>
-                7. <code>/btw</code> — 快速側問，不加入對話歷史<br/>
-                8. <code>/security-review</code> — 分析分支上的安全漏洞<br/>
-                9. <code>/insights</code> — 分析 Claude Code 使用模式的報告<br/>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text">Claude Code 還附帶<span class="highlight-concept">打包技能（bundled skills）</span>，例如 <code>/simplify</code>、<code>/batch</code> 和 <code>/debug</code>，它們與內建指令一起出現在 <code>/</code> 選單中。你也可以建立自己的指令，參見 skills 文件。</div>
+            <div class="english-text">Claude Code also ships with bundled skills like /simplify, /batch, and /debug that appear alongside built-in commands when you type /. To create your own commands, see skills documentation.</div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 實務應用</div>
+            <div class="info-box-content">
+                <strong>最值得記住的 10 個指令：</strong><br>
+                1. <code>/compact</code> — 壓縮對話以釋放 context，可加 focus 指示<br>
+                2. <code>/diff</code> — 互動式 diff 檢視器，顯示未提交的變更<br>
+                3. <code>/resume</code> — 恢復之前的對話（by ID 或名稱）<br>
+                4. <code>/memory</code> — 編輯 CLAUDE.md 記憶檔、管理 auto-memory<br>
+                5. <code>/mcp</code> — 管理 MCP 伺服器連線和 OAuth 認證<br>
+                6. <code>/model</code> — 即時切換模型，用左右箭頭調整 effort level<br>
+                7. <code>/btw</code> — 快速側問，不加入對話歷史<br>
+                8. <code>/security-review</code> — 分析分支上的安全漏洞<br>
+                9. <code>/insights</code> — 分析 Claude Code 使用模式的報告<br>
                 10. <code>/rewind</code> — 回退對話和/或程式碼到先前狀態
             </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><strong>MCP Prompts 作為指令：</strong>MCP 伺服器可以暴露 prompts 作為指令，格式為 <code>/mcp__&lt;server&gt;__&lt;prompt&gt;</code>，從已連線的伺服器動態發現。這意味著<span class="highlight-practical">你的 MCP 整合也可以變成 slash command</span>。</div>
+            <div class="english-text">MCP servers can expose prompts that appear as commands. These use the format /mcp__&lt;server&gt;__&lt;prompt&gt; and are dynamically discovered from connected servers.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="part-label">Original Reference</div>
+
+        <p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">Selected built-in commands (categorized):</p>
+        <table class="ref-table">
+            <tr><th>Command</th><th>Purpose</th></tr>
+            <tr><td><code>/clear</code></td><td>Clear conversation history. Aliases: /reset, /new</td></tr>
+            <tr><td><code>/compact [inst]</code></td><td>Compact conversation with optional focus</td></tr>
+            <tr><td><code>/resume [session]</code></td><td>Resume conversation by ID or name</td></tr>
+            <tr><td><code>/fork [name]</code></td><td>Fork current conversation at this point</td></tr>
+            <tr><td><code>/export [file]</code></td><td>Export conversation as plain text</td></tr>
+            <tr><td><code>/diff</code></td><td>Interactive diff viewer for uncommitted changes</td></tr>
+            <tr><td><code>/security-review</code></td><td>Analyze branch changes for vulnerabilities</td></tr>
+            <tr><td><code>/config</code></td><td>Open Settings interface. Alias: /settings</td></tr>
+            <tr><td><code>/permissions</code></td><td>View or update permissions</td></tr>
+            <tr><td><code>/mcp</code></td><td>Manage MCP server connections</td></tr>
+            <tr><td><code>/memory</code></td><td>Edit CLAUDE.md, manage auto-memory</td></tr>
+            <tr><td><code>/model [model]</code></td><td>Select or change AI model</td></tr>
+            <tr><td><code>/fast [on|off]</code></td><td>Toggle fast mode</td></tr>
+            <tr><td><code>/plan</code></td><td>Enter plan mode from prompt</td></tr>
+            <tr><td><code>/btw &lt;question&gt;</code></td><td>Quick side question without adding to history</td></tr>
+            <tr><td><code>/rewind</code></td><td>Rewind conversation/code. Alias: /checkpoint</td></tr>
+            <tr><td><code>/insights</code></td><td>Analyze usage sessions report</td></tr>
+            <tr><td><code>/doctor</code></td><td>Diagnose installation and settings</td></tr>
+            <tr><td><code>/cost</code></td><td>Show token usage statistics</td></tr>
+            <tr><td><code>/rename [name]</code></td><td>Rename current session</td></tr>
+            <tr><td><code>/skills</code></td><td>List available skills</td></tr>
+            <tr><td><code>/agents</code></td><td>Manage agent configurations</td></tr>
+            <tr><td><code>/hooks</code></td><td>Manage hook configs for tool events</td></tr>
+            <tr><td><code>/tasks</code></td><td>List and manage background tasks</td></tr>
+        </table>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>MCP Prompts 作為指令：</strong>MCP 伺服器可以暴露 prompts 作為指令，格式為 <code>/mcp__&lt;server&gt;__&lt;prompt&gt;</code>，從已連線的伺服器動態發現。這意味著<span class="highlight-practical">你的 MCP 整合也可以變成 slash command</span>。</div>
-<div class="en-text">MCP servers can expose prompts that appear as commands. These use the format /mcp__&lt;server&gt;__&lt;prompt&gt; and are dynamically discovered from connected servers.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="part-label">Original Reference</div>
-<p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">Selected built-in commands (categorized):</p>
-<table class="ref-table">
-<tr><th>Command</th><th>Purpose</th></tr>
-<tr><td><code>/clear</code></td><td>Clear conversation history. Aliases: /reset, /new</td></tr>
-<tr><td><code>/compact [inst]</code></td><td>Compact conversation with optional focus</td></tr>
-<tr><td><code>/resume [session]</code></td><td>Resume conversation by ID or name</td></tr>
-<tr><td><code>/fork [name]</code></td><td>Fork current conversation at this point</td></tr>
-<tr><td><code>/export [file]</code></td><td>Export conversation as plain text</td></tr>
-<tr><td><code>/diff</code></td><td>Interactive diff viewer for uncommitted changes</td></tr>
-<tr><td><code>/security-review</code></td><td>Analyze branch changes for vulnerabilities</td></tr>
-<tr><td><code>/config</code></td><td>Open Settings interface. Alias: /settings</td></tr>
-<tr><td><code>/permissions</code></td><td>View or update permissions</td></tr>
-<tr><td><code>/mcp</code></td><td>Manage MCP server connections</td></tr>
-<tr><td><code>/memory</code></td><td>Edit CLAUDE.md, manage auto-memory</td></tr>
-<tr><td><code>/model [model]</code></td><td>Select or change AI model</td></tr>
-<tr><td><code>/fast [on|off]</code></td><td>Toggle fast mode</td></tr>
-<tr><td><code>/plan</code></td><td>Enter plan mode from prompt</td></tr>
-<tr><td><code>/btw &lt;question&gt;</code></td><td>Quick side question without adding to history</td></tr>
-<tr><td><code>/rewind</code></td><td>Rewind conversation/code. Alias: /checkpoint</td></tr>
-<tr><td><code>/insights</code></td><td>Analyze usage sessions report</td></tr>
-<tr><td><code>/doctor</code></td><td>Diagnose installation and settings</td></tr>
-<tr><td><code>/cost</code></td><td>Show token usage statistics</td></tr>
-<tr><td><code>/rename [name]</code></td><td>Rename current session</td></tr>
-<tr><td><code>/skills</code></td><td>List available skills</td></tr>
-<tr><td><code>/agents</code></td><td>Manage agent configurations</td></tr>
-<tr><td><code>/hooks</code></td><td>Manage hook configs for tool events</td></tr>
-<tr><td><code>/tasks</code></td><td>List and manage background tasks</td></tr>
-</table>
-</div>
-</div>
+
 <!-- Part IV: Vim Mode -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part IV</div>
-<div class="part-title">Vim 編輯模式</div>
-<div class="bilingual-block">
-<div class="zh-text">使用 <code>/vim</code> 指令啟用 vim 風格的編輯，或透過 <code>/config</code> 永久設定。支援完整的<span class="highlight-concept">模式切換</span>（NORMAL / INSERT）、NORMAL 模式下的導航和編輯操作，以及 text objects。</div>
-<div class="en-text">Enable vim-style editing with /vim command or configure permanently via /config. Supports mode switching (NORMAL / INSERT), navigation and editing in NORMAL mode, and text objects.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>模式切換：</strong><code>Esc</code> 進入 NORMAL 模式，<code>i</code>/<code>I</code>/<code>a</code>/<code>A</code>/<code>o</code>/<code>O</code> 進入 INSERT 模式（各有不同的插入位置）。導航使用標準 <code>h</code>/<code>j</code>/<code>k</code>/<code>l</code>，以及 <code>w</code>/<code>e</code>/<code>b</code> 單詞移動、<code>0</code>/<code>$</code>/<code>^</code> 行首行尾、<code>gg</code>/<code>G</code> 文件首尾。</div>
-<div class="en-text">Mode switching: Esc enters NORMAL mode; i/I/a/A/o/O enter INSERT mode at different positions. Navigation uses standard h/j/k/l, w/e/b for word movement, 0/$/^ for line positions, gg/G for document start/end.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-practical">Text Objects</span> 與 <code>d</code>、<code>c</code>、<code>y</code> 操作符配合使用：<code>iw</code>/<code>aw</code>（inner/around word）、<code>i"</code>/<code>a"</code>（引號內/含引號）、<code>i(</code>/<code>a(</code>（括號內/含括號）等。還支援字元跳轉 <code>f{char}</code>/<code>t{char}</code> 及重複 <code>;</code>/<code>,</code>。</div>
-<div class="en-text">Text objects work with operators like d, c, and y: iw/aw (inner/around word), i"/a" (inner/around double quotes), i(/a( (inner/around parentheses). Also supports character jumps f{char}/t{char} and repeat ;/,.</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<strong>Vim 模式的意義不在 Vim 本身。</strong>它代表 Claude Code 的設計哲學：不要求用戶改變既有的肌肉記憶，而是讓工具適應用戶。就像 GMP 系統中好的 MES 應該適配既有流程而非反過來。
+    <div class="content-left">
+        <div class="part-label">Part IV</div>
+        <div class="part-title">Vim 編輯模式</div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text">使用 <code>/vim</code> 指令啟用 vim 風格的編輯，或透過 <code>/config</code> 永久設定。支援完整的<span class="highlight-concept">模式切換</span>（NORMAL / INSERT）、NORMAL 模式下的導航和編輯操作，以及 text objects。</div>
+            <div class="english-text">Enable vim-style editing with /vim command or configure permanently via /config. Supports mode switching (NORMAL / INSERT), navigation and editing in NORMAL mode, and text objects.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><strong>模式切換：</strong><code>Esc</code> 進入 NORMAL 模式，<code>i</code>/<code>I</code>/<code>a</code>/<code>A</code>/<code>o</code>/<code>O</code> 進入 INSERT 模式（各有不同的插入位置）。導航使用標準 <code>h</code>/<code>j</code>/<code>k</code>/<code>l</code>，以及 <code>w</code>/<code>e</code>/<code>b</code> 單詞移動、<code>0</code>/<code>$</code>/<code>^</code> 行首行尾、<code>gg</code>/<code>G</code> 文件首尾。</div>
+            <div class="english-text">Mode switching: Esc enters NORMAL mode; i/I/a/A/o/O enter INSERT mode at different positions. Navigation uses standard h/j/k/l, w/e/b for word movement, 0/$/^ for line positions, gg/G for document start/end.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><span class="highlight-practical">Text Objects</span> 與 <code>d</code>、<code>c</code>、<code>y</code> 操作符配合使用：<code>iw</code>/<code>aw</code>（inner/around word）、<code>i"</code>/<code>a"</code>（引號內/含引號）、<code>i(</code>/<code>a(</code>（括號內/含括號）等。還支援字元跳轉 <code>f{char}</code>/<code>t{char}</code> 及重複 <code>;</code>/<code>,</code>。</div>
+            <div class="english-text">Text objects work with operators like d, c, and y: iw/aw (inner/around word), i"/a" (inner/around double quotes), i(/a( (inner/around parentheses). Also supports character jumps f{char}/t{char} and repeat ;/,.</div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#128161; 比喻說明</div>
+            <div class="info-box-content">
+                <strong>Vim 模式的意義不在 Vim 本身。</strong>它代表 Claude Code 的設計哲學：不要求用戶改變既有的肌肉記憶，而是讓工具適應用戶。就像 GMP 系統中好的 MES 應該適配既有流程而非反過來。
             </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><strong>特殊行為：</strong>在 vim NORMAL 模式下，如果游標在輸入的開頭或結尾且無法繼續移動，<span class="highlight-key">方向鍵會改為瀏覽命令歷史</span>。這個細節體現了「不同情境下相同按鍵有不同語義」的 vim 哲學。</div>
+            <div class="english-text">In vim normal mode, if the cursor is at the beginning or end of input and cannot move further, the arrow keys navigate command history instead.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="part-label">Original Reference</div>
+
+        <p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">Mode Switching:</p>
+        <table class="ref-table">
+            <tr><th>Command</th><th>Action</th><th>From</th></tr>
+            <tr><td><code>Esc</code></td><td>Enter NORMAL mode</td><td>INSERT</td></tr>
+            <tr><td><code>i</code> / <code>I</code></td><td>Insert before cursor / at line start</td><td>NORMAL</td></tr>
+            <tr><td><code>a</code> / <code>A</code></td><td>Insert after cursor / at line end</td><td>NORMAL</td></tr>
+            <tr><td><code>o</code> / <code>O</code></td><td>Open line below / above</td><td>NORMAL</td></tr>
+        </table>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Editing (NORMAL mode) — selected:</p>
+        <table class="ref-table">
+            <tr><th>Command</th><th>Action</th></tr>
+            <tr><td><code>x</code></td><td>Delete character</td></tr>
+            <tr><td><code>dd</code></td><td>Delete line</td></tr>
+            <tr><td><code>D</code></td><td>Delete to end of line</td></tr>
+            <tr><td><code>cc</code> / <code>C</code></td><td>Change line / to end of line</td></tr>
+            <tr><td><code>yy</code> / <code>Y</code></td><td>Yank (copy) line</td></tr>
+            <tr><td><code>p</code> / <code>P</code></td><td>Paste after / before cursor</td></tr>
+            <tr><td><code>&gt;&gt;</code> / <code>&lt;&lt;</code></td><td>Indent / Dedent line</td></tr>
+            <tr><td><code>.</code></td><td>Repeat last change</td></tr>
+        </table>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Text Objects (with d, c, y operators):</p>
+        <table class="ref-table">
+            <tr><th>Command</th><th>Action</th></tr>
+            <tr><td><code>iw</code> / <code>aw</code></td><td>Inner / around word</td></tr>
+            <tr><td><code>iW</code> / <code>aW</code></td><td>Inner / around WORD</td></tr>
+            <tr><td><code>i"</code> / <code>a"</code></td><td>Inner / around double quotes</td></tr>
+            <tr><td><code>i(</code> / <code>a(</code></td><td>Inner / around parentheses</td></tr>
+            <tr><td><code>i{</code> / <code>a{</code></td><td>Inner / around braces</td></tr>
+        </table>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>特殊行為：</strong>在 vim NORMAL 模式下，如果游標在輸入的開頭或結尾且無法繼續移動，<span class="highlight-key">方向鍵會改為瀏覽命令歷史</span>。這個細節體現了「不同情境下相同按鍵有不同語義」的 vim 哲學。</div>
-<div class="en-text">In vim normal mode, if the cursor is at the beginning or end of input and cannot move further, the arrow keys navigate command history instead.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="part-label">Original Reference</div>
-<p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">Mode Switching:</p>
-<table class="ref-table">
-<tr><th>Command</th><th>Action</th><th>From</th></tr>
-<tr><td><code>Esc</code></td><td>Enter NORMAL mode</td><td>INSERT</td></tr>
-<tr><td><code>i</code> / <code>I</code></td><td>Insert before cursor / at line start</td><td>NORMAL</td></tr>
-<tr><td><code>a</code> / <code>A</code></td><td>Insert after cursor / at line end</td><td>NORMAL</td></tr>
-<tr><td><code>o</code> / <code>O</code></td><td>Open line below / above</td><td>NORMAL</td></tr>
-</table>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Editing (NORMAL mode) — selected:</p>
-<table class="ref-table">
-<tr><th>Command</th><th>Action</th></tr>
-<tr><td><code>x</code></td><td>Delete character</td></tr>
-<tr><td><code>dd</code></td><td>Delete line</td></tr>
-<tr><td><code>D</code></td><td>Delete to end of line</td></tr>
-<tr><td><code>cc</code> / <code>C</code></td><td>Change line / to end of line</td></tr>
-<tr><td><code>yy</code> / <code>Y</code></td><td>Yank (copy) line</td></tr>
-<tr><td><code>p</code> / <code>P</code></td><td>Paste after / before cursor</td></tr>
-<tr><td><code>&gt;&gt;</code> / <code>&lt;&lt;</code></td><td>Indent / Dedent line</td></tr>
-<tr><td><code>.</code></td><td>Repeat last change</td></tr>
-</table>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Text Objects (with d, c, y operators):</p>
-<table class="ref-table">
-<tr><th>Command</th><th>Action</th></tr>
-<tr><td><code>iw</code> / <code>aw</code></td><td>Inner / around word</td></tr>
-<tr><td><code>iW</code> / <code>aW</code></td><td>Inner / around WORD</td></tr>
-<tr><td><code>i"</code> / <code>a"</code></td><td>Inner / around double quotes</td></tr>
-<tr><td><code>i(</code> / <code>a(</code></td><td>Inner / around parentheses</td></tr>
-<tr><td><code>i{</code> / <code>a{</code></td><td>Inner / around braces</td></tr>
-</table>
-</div>
-</div>
-</div><!-- end tab-commands -->
-<!-- TAB 3: Advanced -->
-<div class="tab-content" id="tab-advanced">
+
+    </div><!-- end tab-commands -->
+
+    <!-- TAB 3: Advanced -->
+    <div id="tab-advanced" class="tab-content">
+
 <!-- Part V: Background Tasks & Command History -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part V</div>
-<div class="part-title">背景任務與命令歷史</div>
-<div class="bilingual-block">
-<div class="zh-text">Claude Code 支援在<span class="highlight-concept">背景執行 bash 指令</span>，讓你在長時間程序執行期間繼續工作。背景執行後立即返回一個 task ID，Claude Code 可以在背景指令執行期間回應新的 prompt。</div>
-<div class="en-text">Claude Code supports running bash commands in the background, allowing you to continue working while long-running processes execute. It immediately returns a background task ID. Claude Code can respond to new prompts while the command continues executing.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">啟動背景執行有兩種方式：(1) 直接請 Claude Code 在背景執行指令；(2) 按 <code>Ctrl+B</code> 將正在執行的 Bash 工具調用移到背景。<span class="highlight-key">Tmux 用戶需要按兩次</span> Ctrl+B，因為 tmux 的前綴鍵也是 Ctrl+B。</div>
-<div class="en-text">You can either prompt Claude Code to run a command in the background, or press Ctrl+B to move a regular Bash tool invocation to the background. Tmux users must press Ctrl+B twice due to tmux's prefix key.</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<strong>常見的背景指令場景：</strong>Build tools（webpack, vite, make）、Package managers（npm, yarn）、Test runners（jest, pytest）、Development servers、Long-running processes（docker, terraform）。<br/><br/>
-<strong>CDMO 應用：</strong>在 Claude Code 中執行 Python 批次記錄分析腳本時，用 <code>Ctrl+B</code> 把它放到背景，同時繼續請 Claude 協助撰寫下一個分析模組。這把線性工作流轉變為並行。
+    <div class="content-left">
+        <div class="part-label">Part V</div>
+        <div class="part-title">背景任務與命令歷史</div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text">Claude Code 支援在<span class="highlight-concept">背景執行 bash 指令</span>，讓你在長時間程序執行期間繼續工作。背景執行後立即返回一個 task ID，Claude Code 可以在背景指令執行期間回應新的 prompt。</div>
+            <div class="english-text">Claude Code supports running bash commands in the background, allowing you to continue working while long-running processes execute. It immediately returns a background task ID. Claude Code can respond to new prompts while the command continues executing.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text">啟動背景執行有兩種方式：(1) 直接請 Claude Code 在背景執行指令；(2) 按 <code>Ctrl+B</code> 將正在執行的 Bash 工具調用移到背景。<span class="highlight-key">Tmux 用戶需要按兩次</span> Ctrl+B，因為 tmux 的前綴鍵也是 Ctrl+B。</div>
+            <div class="english-text">You can either prompt Claude Code to run a command in the background, or press Ctrl+B to move a regular Bash tool invocation to the background. Tmux users must press Ctrl+B twice due to tmux's prefix key.</div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 實務應用</div>
+            <div class="info-box-content">
+                <strong>常見的背景指令場景：</strong>Build tools（webpack, vite, make）、Package managers（npm, yarn）、Test runners（jest, pytest）、Development servers、Long-running processes（docker, terraform）。<br><br>
+                <strong>CDMO 應用：</strong>在 Claude Code 中執行 Python 批次記錄分析腳本時，用 <code>Ctrl+B</code> 把它放到背景，同時繼續請 Claude 協助撰寫下一個分析模組。這把線性工作流轉變為並行。
             </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><strong>輸出緩衝：</strong>背景任務的輸出會被緩衝，Claude 可以使用 TaskOutput 工具取回。背景任務有唯一 ID 用於追蹤。當 Claude Code 退出時，背景任務會自動清理。設定環境變數 <code>CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1</code> 可禁用所有背景任務功能。</div>
+            <div class="english-text">Output is buffered and Claude can retrieve it using the TaskOutput tool. Background tasks have unique IDs for tracking. Background tasks are automatically cleaned up when Claude Code exits. Set CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1 to disable.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><span class="highlight-concept">命令歷史</span>功能：輸入歷史按工作目錄儲存，執行 <code>/clear</code> 時會重置（但之前的會話可以用 <code>/resume</code> 恢復）。使用上下箭頭瀏覽歷史。<code>Ctrl+R</code> 啟動<span class="highlight-practical">反向搜尋</span>：輸入文字搜尋之前的指令，<code>Ctrl+R</code> 循環匹配結果，<code>Tab</code>/<code>Esc</code> 接受匹配，<code>Enter</code> 接受並執行。</div>
+            <div class="english-text">Input history is stored per working directory and resets when you run /clear. Use Up/Down arrows to navigate. Ctrl+R activates reverse search: type to search, Ctrl+R to cycle matches, Tab/Esc to accept, Enter to accept and execute. History expansion (!) is disabled by default.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="part-label">Original Reference</div>
+
+        <p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">Background Task key features:</p>
+        <ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
+            <li>Output is buffered and Claude can retrieve it using the TaskOutput tool</li>
+            <li>Background tasks have unique IDs for tracking and output retrieval</li>
+            <li>Background tasks are automatically cleaned up when Claude Code exits</li>
+        </ul>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Common backgrounded commands:</p>
+        <ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
+            <li>Build tools (webpack, vite, make)</li>
+            <li>Package managers (npm, yarn, pnpm)</li>
+            <li>Test runners (jest, pytest)</li>
+            <li>Development servers</li>
+            <li>Long-running processes (docker, terraform)</li>
+        </ul>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Reverse search with Ctrl+R:</p>
+        <ol style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
+            <li>Press Ctrl+R to activate reverse history search</li>
+            <li>Type query to search in previous commands</li>
+            <li>Press Ctrl+R again to cycle through older matches</li>
+            <li>Tab or Esc to accept; Enter to accept and execute</li>
+            <li>Ctrl+C to cancel and restore original input</li>
+        </ol>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>輸出緩衝：</strong>背景任務的輸出會被緩衝，Claude 可以使用 TaskOutput 工具取回。背景任務有唯一 ID 用於追蹤。當 Claude Code 退出時，背景任務會自動清理。設定環境變數 <code>CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1</code> 可禁用所有背景任務功能。</div>
-<div class="en-text">Output is buffered and Claude can retrieve it using the TaskOutput tool. Background tasks have unique IDs for tracking. Background tasks are automatically cleaned up when Claude Code exits. Set CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1 to disable.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">命令歷史</span>功能：輸入歷史按工作目錄儲存，執行 <code>/clear</code> 時會重置（但之前的會話可以用 <code>/resume</code> 恢復）。使用上下箭頭瀏覽歷史。<code>Ctrl+R</code> 啟動<span class="highlight-practical">反向搜尋</span>：輸入文字搜尋之前的指令，<code>Ctrl+R</code> 循環匹配結果，<code>Tab</code>/<code>Esc</code> 接受匹配，<code>Enter</code> 接受並執行。</div>
-<div class="en-text">Input history is stored per working directory and resets when you run /clear. Use Up/Down arrows to navigate. Ctrl+R activates reverse search: type to search, Ctrl+R to cycle matches, Tab/Esc to accept, Enter to accept and execute. History expansion (!) is disabled by default.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="part-label">Original Reference</div>
-<p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">Background Task key features:</p>
-<ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
-<li>Output is buffered and Claude can retrieve it using the TaskOutput tool</li>
-<li>Background tasks have unique IDs for tracking and output retrieval</li>
-<li>Background tasks are automatically cleaned up when Claude Code exits</li>
-</ul>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Common backgrounded commands:</p>
-<ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
-<li>Build tools (webpack, vite, make)</li>
-<li>Package managers (npm, yarn, pnpm)</li>
-<li>Test runners (jest, pytest)</li>
-<li>Development servers</li>
-<li>Long-running processes (docker, terraform)</li>
-</ul>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Reverse search with Ctrl+R:</p>
-<ol style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
-<li>Press Ctrl+R to activate reverse history search</li>
-<li>Type query to search in previous commands</li>
-<li>Press Ctrl+R again to cycle through older matches</li>
-<li>Tab or Esc to accept; Enter to accept and execute</li>
-<li>Ctrl+C to cancel and restore original input</li>
-</ol>
-</div>
-</div>
+
 <!-- Part VI: Side Questions, Prompt Suggestions, Task List & PR Status -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part VI</div>
-<div class="part-title">側問、提示建議、任務清單與 PR 狀態</div>
-<div class="bilingual-block">
-<div class="zh-text"><code>/btw</code> 讓你在不影響對話歷史的情況下<span class="highlight-concept">快速問一個問題</span>。它能看到當前對話的完整脈絡，但<span class="highlight-key">沒有工具存取權限</span>（不能讀檔、執行指令或搜尋）。回答以浮動視窗顯示，按 Space/Enter/Esc 關閉。</div>
-<div class="en-text">Use /btw to ask a quick question about your current work without adding to the conversation history. It has full visibility into the current conversation but no tool access — Claude cannot read files, run commands, or search. Press Space, Enter, or Escape to dismiss.</div>
+    <div class="content-left">
+        <div class="part-label">Part VI</div>
+        <div class="part-title">側問、提示建議、任務清單與 PR 狀態</div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><code>/btw</code> 讓你在不影響對話歷史的情況下<span class="highlight-concept">快速問一個問題</span>。它能看到當前對話的完整脈絡，但<span class="highlight-key">沒有工具存取權限</span>（不能讀檔、執行指令或搜尋）。回答以浮動視窗顯示，按 Space/Enter/Esc 關閉。</div>
+            <div class="english-text">Use /btw to ask a quick question about your current work without adding to the conversation history. It has full visibility into the current conversation but no tool access — Claude cannot read files, run commands, or search. Press Space, Enter, or Escape to dismiss.</div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">&#9878;&#65039; 工具比較 — /btw vs Subagent</div>
+            <div class="info-box-content">
+                <table class="ref-table" style="margin:0;">
+                    <tr><th>特性</th><th>/btw 側問</th><th>Subagent</th></tr>
+                    <tr><td>對話脈絡</td><td>&#10004; 完整可見</td><td>&#10008; 空白開始</td></tr>
+                    <tr><td>工具存取</td><td>&#10008; 無</td><td>&#10004; 完整工具</td></tr>
+                    <tr><td>追蹤對話</td><td>&#10008; 單次回應</td><td>&#10004; 可多輪</td></tr>
+                    <tr><td>成本</td><td>低（重用 prompt cache）</td><td>較高</td></tr>
+                    <tr><td>用途</td><td>查詢已知脈絡中的資訊</td><td>去發現新資訊</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><strong>提示建議（Prompt Suggestions）：</strong>開啟會話時，會出現灰色的範例指令建議，基於你專案的 git 歷史。Claude 回應後，建議會基於對話歷史持續出現。按 <code>Tab</code> 接受建議，按 <code>Enter</code> 接受並送出。建議以背景請求執行，重用 prompt cache，<span class="highlight-practical">額外成本極低</span>。</div>
+            <div class="english-text">A grayed-out example command appears based on your project's git history. After Claude responds, suggestions continue based on conversation history. Press Tab to accept, Enter to accept and submit. The suggestion runs as a background request reusing the parent conversation's prompt cache, so additional cost is minimal.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><strong>Task List（任務清單）：</strong>處理複雜多步驟工作時，Claude 會建立任務清單追蹤進度。按 <code>Ctrl+T</code> 切換顯示（最多 10 項）。任務<span class="highlight-key">在 context 壓縮後仍然保留</span>，幫助 Claude 在大型專案中保持組織。設定 <code>CLAUDE_CODE_TASK_LIST_ID=my-project</code> 可在會話間共享任務清單。</div>
+            <div class="english-text">When working on complex multi-step work, Claude creates a task list to track progress. Press Ctrl+T to toggle (shows up to 10 tasks). Tasks persist across context compactions. Set CLAUDE_CODE_TASK_LIST_ID=my-project to share task lists across sessions.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="chinese-text"><strong>PR 審查狀態：</strong>當你在有開啟 PR 的分支上工作時，Claude Code 在 footer 顯示可點擊的 PR 連結，<span class="highlight-practical">底線顏色表示審查狀態</span>：綠色=已批准、黃色=待審查、紅色=要求修改、灰色=草稿、紫色=已合併。需要安裝 <code>gh</code> CLI 並認證。</div>
+            <div class="english-text">When working on a branch with an open PR, Claude Code displays a clickable PR link in the footer. The colored underline indicates review state: green=approved, yellow=pending, red=changes requested, gray=draft, purple=merged. Requires gh CLI to be installed and authenticated.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="part-label">Original Reference</div>
+
+        <p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">Side questions with /btw:</p>
+        <ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
+            <li>Available while Claude is working — runs independently</li>
+            <li>No tool access — answers only from what is already in context</li>
+            <li>Single response — no follow-up turns</li>
+            <li>Low cost — reuses parent conversation's prompt cache</li>
+        </ul>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">/btw is the inverse of a subagent: it sees your full conversation but has no tools, while a subagent has full tools but starts with an empty context.</p>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Prompt Suggestions behavior:</p>
+        <ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
+            <li>Suggestions picked from project's git history</li>
+            <li>Skipped after first turn, in non-interactive mode, and in plan mode</li>
+            <li>Disable: CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false</li>
+        </ul>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">PR Review Status colors:</p>
+        <table class="ref-table">
+            <tr><th>Color</th><th>State</th></tr>
+            <tr><td style="color:green;">Green</td><td>Approved</td></tr>
+            <tr><td style="color:#d4a017;">Yellow</td><td>Pending review</td></tr>
+            <tr><td style="color:red;">Red</td><td>Changes requested</td></tr>
+            <tr><td style="color:gray;">Gray</td><td>Draft</td></tr>
+            <tr><td style="color:purple;">Purple</td><td>Merged</td></tr>
+        </table>
+
+        <p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Task List: Ctrl+T toggles display, shows up to 10 tasks. Tasks persist across context compactions. Set CLAUDE_CODE_TASK_LIST_ID for cross-session sharing.</p>
+    </div>
 </div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較 — /btw vs Subagent</div>
-<div class="info-box-content">
-<table class="ref-table" style="margin:0;">
-<tr><th>特性</th><th>/btw 側問</th><th>Subagent</th></tr>
-<tr><td>對話脈絡</td><td>✔ 完整可見</td><td>✘ 空白開始</td></tr>
-<tr><td>工具存取</td><td>✘ 無</td><td>✔ 完整工具</td></tr>
-<tr><td>追蹤對話</td><td>✘ 單次回應</td><td>✔ 可多輪</td></tr>
-<tr><td>成本</td><td>低（重用 prompt cache）</td><td>較高</td></tr>
-<tr><td>用途</td><td>查詢已知脈絡中的資訊</td><td>去發現新資訊</td></tr>
-</table>
-</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>提示建議（Prompt Suggestions）：</strong>開啟會話時，會出現灰色的範例指令建議，基於你專案的 git 歷史。Claude 回應後，建議會基於對話歷史持續出現。按 <code>Tab</code> 接受建議，按 <code>Enter</code> 接受並送出。建議以背景請求執行，重用 prompt cache，<span class="highlight-practical">額外成本極低</span>。</div>
-<div class="en-text">A grayed-out example command appears based on your project's git history. After Claude responds, suggestions continue based on conversation history. Press Tab to accept, Enter to accept and submit. The suggestion runs as a background request reusing the parent conversation's prompt cache, so additional cost is minimal.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Task List（任務清單）：</strong>處理複雜多步驟工作時，Claude 會建立任務清單追蹤進度。按 <code>Ctrl+T</code> 切換顯示（最多 10 項）。任務<span class="highlight-key">在 context 壓縮後仍然保留</span>，幫助 Claude 在大型專案中保持組織。設定 <code>CLAUDE_CODE_TASK_LIST_ID=my-project</code> 可在會話間共享任務清單。</div>
-<div class="en-text">When working on complex multi-step work, Claude creates a task list to track progress. Press Ctrl+T to toggle (shows up to 10 tasks). Tasks persist across context compactions. Set CLAUDE_CODE_TASK_LIST_ID=my-project to share task lists across sessions.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>PR 審查狀態：</strong>當你在有開啟 PR 的分支上工作時，Claude Code 在 footer 顯示可點擊的 PR 連結，<span class="highlight-practical">底線顏色表示審查狀態</span>：綠色=已批准、黃色=待審查、紅色=要求修改、灰色=草稿、紫色=已合併。需要安裝 <code>gh</code> CLI 並認證。</div>
-<div class="en-text">When working on a branch with an open PR, Claude Code displays a clickable PR link in the footer. The colored underline indicates review state: green=approved, yellow=pending, red=changes requested, gray=draft, purple=merged. Requires gh CLI to be installed and authenticated.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="part-label">Original Reference</div>
-<p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">Side questions with /btw:</p>
-<ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
-<li>Available while Claude is working — runs independently</li>
-<li>No tool access — answers only from what is already in context</li>
-<li>Single response — no follow-up turns</li>
-<li>Low cost — reuses parent conversation's prompt cache</li>
-</ul>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">/btw is the inverse of a subagent: it sees your full conversation but has no tools, while a subagent has full tools but starts with an empty context.</p>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Prompt Suggestions behavior:</p>
-<ul style="font-size:0.85rem; color:#64748b; line-height:1.7; padding-left:1.5rem;">
-<li>Suggestions picked from project's git history</li>
-<li>Skipped after first turn, in non-interactive mode, and in plan mode</li>
-<li>Disable: CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false</li>
-</ul>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">PR Review Status colors:</p>
-<table class="ref-table">
-<tr><th>Color</th><th>State</th></tr>
-<tr><td style="color:green;">Green</td><td>Approved</td></tr>
-<tr><td style="color:#d4a017;">Yellow</td><td>Pending review</td></tr>
-<tr><td style="color:red;">Red</td><td>Changes requested</td></tr>
-<tr><td style="color:gray;">Gray</td><td>Draft</td></tr>
-<tr><td style="color:purple;">Purple</td><td>Merged</td></tr>
-</table>
-<p style="font-size:0.85rem; color:#64748b; margin: 1rem 0 0.5rem;">Task List: Ctrl+T toggles display, shows up to 10 tasks. Tasks persist across context compactions. Set CLAUDE_CODE_TASK_LIST_ID for cross-session sharing.</p>
-</div>
-</div>
-</div><!-- end tab-advanced -->
+
+    </div><!-- end tab-advanced -->
+
 </div><!-- end tab-container -->
+
 <!-- Key Takeaways -->
 <h2 class="section-header">Key Takeaways</h2>
 <div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-icon">⌨</div>
-<div class="summary-card-title">Ctrl+B 是最被低估的快捷鍵</div>
-<div class="summary-card-text">把長時間 bash 指令放到背景執行，繼續跟 Claude 對話。這改變了 CLI 工具「等待 → 繼續」的線性工作模式。</div>
+    <div class="summary-card">
+        <div class="summary-card-icon">&#9000;</div>
+        <div class="summary-card-title">Ctrl+B 是最被低估的快捷鍵</div>
+        <div class="summary-card-text">把長時間 bash 指令放到背景執行，繼續跟 Claude 對話。這改變了 CLI 工具「等待 → 繼續」的線性工作模式。</div>
+    </div>
+    <div class="summary-card" style="border-color: #10b981;">
+        <div class="summary-card-icon">&#128269;</div>
+        <div class="summary-card-title">/btw 是 Subagent 的反面</div>
+        <div class="summary-card-text">Subagent 有工具但沒有對話脈絡；/btw 有完整脈絡但沒有工具。理解這個設計哲學，才能選擇正確的功能。</div>
+    </div>
+    <div class="summary-card" style="border-color: #8b5cf6;">
+        <div class="summary-card-icon">&#128221;</div>
+        <div class="summary-card-title">50+ 指令暗示 CLI-first 設計哲學</div>
+        <div class="summary-card-text">Claude Code 不只是「終端機裡的聊天」，而是完整的開發環境。/diff、/security-review、/insights 等指令證明它是專業工具鏈。</div>
+    </div>
+    <div class="summary-card" style="border-color: #f59e0b;">
+        <div class="summary-card-icon">&#127919;</div>
+        <div class="summary-card-title">Vim 模式是開發者親和力指標</div>
+        <div class="summary-card-text">內建 Vim 支援（含 text objects）表明目標使用者是重度終端機用戶。這也暗示 Claude Code 團隊自己就是這類用戶。</div>
+    </div>
 </div>
-<div class="summary-card" style="border-color: #10b981;">
-<div class="summary-card-icon">🔍</div>
-<div class="summary-card-title">/btw 是 Subagent 的反面</div>
-<div class="summary-card-text">Subagent 有工具但沒有對話脈絡；/btw 有完整脈絡但沒有工具。理解這個設計哲學，才能選擇正確的功能。</div>
-</div>
-<div class="summary-card" style="border-color: #8b5cf6;">
-<div class="summary-card-icon">📝</div>
-<div class="summary-card-title">50+ 指令暗示 CLI-first 設計哲學</div>
-<div class="summary-card-text">Claude Code 不只是「終端機裡的聊天」，而是完整的開發環境。/diff、/security-review、/insights 等指令證明它是專業工具鏈。</div>
-</div>
-<div class="summary-card" style="border-color: #f59e0b;">
-<div class="summary-card-icon">🎯</div>
-<div class="summary-card-title">Vim 模式是開發者親和力指標</div>
-<div class="summary-card-text">內建 Vim 支援（含 text objects）表明目標使用者是重度終端機用戶。這也暗示 Claude Code 團隊自己就是這類用戶。</div>
-</div>
-</div>
+
 <!-- Practice Questions -->
 <h2 class="section-header">Practice Questions</h2>
+
 <!-- Practice Question 1 -->
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">/btw 和 Subagent 的設計哲學差異是什麼？在什麼情境下你會選擇 /btw 而非 Subagent？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>/btw 是「用已知脈絡回答問題」，Subagent 是「去發現新資訊」。</strong></p>
-<p>/btw 擁有完整的對話脈絡但沒有工具存取權限（不能讀檔、執行指令），成本低因為重用 prompt cache。Subagent 有完整工具但從空白脈絡開始，成本較高。</p>
-<p>選擇 /btw 的情境：Claude 已經讀過你的程式碼，你想問「剛才那個 config 檔叫什麼名字？」。選擇 Subagent 的情境：你需要 Claude 去搜尋文件或讀取新檔案來回答問題。</p>
-<p><strong>CDMO 類比：</strong>/btw 像是在批次記錄審查會議中快速問旁邊的同事一個你們都已知道的問題；Subagent 像是派人去查閱 SOP 原文再回報。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">/btw 和 Subagent 的設計哲學差異是什麼？在什麼情境下你會選擇 /btw 而非 Subagent？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>/btw 是「用已知脈絡回答問題」，Subagent 是「去發現新資訊」。</strong></p>
+        <p>/btw 擁有完整的對話脈絡但沒有工具存取權限（不能讀檔、執行指令），成本低因為重用 prompt cache。Subagent 有完整工具但從空白脈絡開始，成本較高。</p>
+        <p>選擇 /btw 的情境：Claude 已經讀過你的程式碼，你想問「剛才那個 config 檔叫什麼名字？」。選擇 Subagent 的情境：你需要 Claude 去搜尋文件或讀取新檔案來回答問題。</p>
+        <p><strong>CDMO 類比：</strong>/btw 像是在批次記錄審查會議中快速問旁邊的同事一個你們都已知道的問題；Subagent 像是派人去查閱 SOP 原文再回報。</p>
+    </div>
 </details>
+
 <!-- Practice Question 2 -->
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">在 CDMO 的技術轉移專案中，如何利用 Claude Code 的背景任務（Ctrl+B）和 Task List 功能來管理多個並行的自動化腳本？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>核心策略：把線性工作流轉為並行。</strong></p>
-<p>假設技術轉移需要同時處理：(1) 解析批次記錄 PDF 提取關鍵參數、(2) 比對不同廠區的 SOP 差異、(3) 生成 gap analysis 報告。</p>
-<p>傳統方式是逐一執行，每次等待完成才開始下一個。使用 Claude Code 背景任務：用 Ctrl+B 把 PDF 解析腳本放到背景 → 請 Claude 協助撰寫 SOP 比對邏輯 → 用 TaskOutput 工具取回 PDF 解析結果 → 整合所有結果生成報告。Task List（Ctrl+T）追蹤每個子任務的進度。</p>
-<p><strong>關鍵注意：</strong>設定 CLAUDE_CODE_TASK_LIST_ID 可以在不同 Claude Code 會話間共享任務清單，適合跨天的大型專案。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">在 CDMO 的技術轉移專案中，如何利用 Claude Code 的背景任務（Ctrl+B）和 Task List 功能來管理多個並行的自動化腳本？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>核心策略：把線性工作流轉為並行。</strong></p>
+        <p>假設技術轉移需要同時處理：(1) 解析批次記錄 PDF 提取關鍵參數、(2) 比對不同廠區的 SOP 差異、(3) 生成 gap analysis 報告。</p>
+        <p>傳統方式是逐一執行，每次等待完成才開始下一個。使用 Claude Code 背景任務：用 Ctrl+B 把 PDF 解析腳本放到背景 → 請 Claude 協助撰寫 SOP 比對邏輯 → 用 TaskOutput 工具取回 PDF 解析結果 → 整合所有結果生成報告。Task List（Ctrl+T）追蹤每個子任務的進度。</p>
+        <p><strong>關鍵注意：</strong>設定 CLAUDE_CODE_TASK_LIST_ID 可以在不同 Claude Code 會話間共享任務清單，適合跨天的大型專案。</p>
+    </div>
 </details>
+
 <!-- Practice Question 3 -->
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">Claude Code 的 50+ slash commands 和 Vim 模式反映了什麼樣的使用者假設？這對非技術人員的 AI 採用有什麼啟示？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>使用者假設：目標用戶是重度終端機用戶（開發者、DevOps 工程師）。</strong></p>
-<p>證據：(1) Vim 模式含 text objects 支援，這只有 vim 老手才會用；(2) 50+ 指令中包含 /diff、/security-review、/pr-comments 等 git-native 操作；(3) 背景任務設計假設用戶知道什麼是 tmux 前綴鍵。</p>
-<p><strong>對非技術人員的啟示：</strong>Claude Code 不是「讓非工程師也能寫程式」的工具 — 那是 Claude.ai 的 Artifacts 和 Cowork 的角色。Claude Code 是「讓好的工程師變得更快」的工具。在 CDMO 中推動 AI 採用時，需要區分這兩條路線：Claude.ai 適合品質管理、法規事務人員；Claude Code 適合 IT 自動化、數據工程團隊。</p>
-<p><strong>文件盲點：</strong>這份參考手冊完全缺少「學習路徑」建議 — 新用戶應該先掌握哪 5 個指令？什麼順序學習最有效率？這是操作手冊的典型弱點。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">Claude Code 的 50+ slash commands 和 Vim 模式反映了什麼樣的使用者假設？這對非技術人員的 AI 採用有什麼啟示？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>使用者假設：目標用戶是重度終端機用戶（開發者、DevOps 工程師）。</strong></p>
+        <p>證據：(1) Vim 模式含 text objects 支援，這只有 vim 老手才會用；(2) 50+ 指令中包含 /diff、/security-review、/pr-comments 等 git-native 操作；(3) 背景任務設計假設用戶知道什麼是 tmux 前綴鍵。</p>
+        <p><strong>對非技術人員的啟示：</strong>Claude Code 不是「讓非工程師也能寫程式」的工具 — 那是 Claude.ai 的 Artifacts 和 Cowork 的角色。Claude Code 是「讓好的工程師變得更快」的工具。在 CDMO 中推動 AI 採用時，需要區分這兩條路線：Claude.ai 適合品質管理、法規事務人員；Claude Code 適合 IT 自動化、數據工程團隊。</p>
+        <p><strong>文件盲點：</strong>這份參考手冊完全缺少「學習路徑」建議 — 新用戶應該先掌握哪 5 個指令？什麼順序學習最有效率？這是操作手冊的典型弱點。</p>
+    </div>
 </details>
+
 <!-- Bottom Line -->
 <div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Claude Code 的互動設計反映了一個關鍵決定：<strong>讓 AI 助手融入開發者既有的終端機工作流</strong>，而非要求開發者適應新的 GUI。50+ slash commands、Vim 模式、背景任務等設計，都是在說「你不需要離開終端機」。對 CDMO 情境，這代表 Claude Code 適合整合進已有 CLI 工具鏈的技術團隊，但對非技術人員的採用門檻較高。</div>
+    <div class="bottom-line-header">&#127919; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#10004; 核心洞察</div>
+        <div class="bottom-line-text">Claude Code 的互動設計反映了一個關鍵決定：<strong>讓 AI 助手融入開發者既有的終端機工作流</strong>，而非要求開發者適應新的 GUI。50+ slash commands、Vim 模式、背景任務等設計，都是在說「你不需要離開終端機」。對 CDMO 情境，這代表 Claude Code 適合整合進已有 CLI 工具鏈的技術團隊，但對非技術人員的採用門檻較高。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#128200; 立即應用</div>
+        <div class="bottom-line-text">本週在 Claude Code 中練習三個快捷鍵組合：(1) <code>Ctrl+B</code> 背景執行 build/test 指令；(2) <code>/btw</code> 在工作中快速查詢而不中斷脈絡；(3) <code>Esc+Esc</code> 用 rewind 功能恢復到之前的狀態。同時在 CLAUDE.md 中記錄常用的自訂 skills。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#9888; 需要補充</div>
+        <div class="bottom-line-text">文件是純參考手冊，缺少「常見工作流範例」和「效率提升量化數據」。例如：背景任務搭配 Task List 的典型工作流是什麼？使用快捷鍵 vs. 手動操作的時間差距多少？這些需要自己在實際使用中累積經驗。另外，部分指令（如 /chrome、/desktop）暗示 Claude Code 正在擴展到 CLI 以外的平台，值得持續關注。</div>
+    </div>
 </div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週在 Claude Code 中練習三個快捷鍵組合：(1) <code>Ctrl+B</code> 背景執行 build/test 指令；(2) <code>/btw</code> 在工作中快速查詢而不中斷脈絡；(3) <code>Esc+Esc</code> 用 rewind 功能恢復到之前的狀態。同時在 CLAUDE.md 中記錄常用的自訂 skills。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文件是純參考手冊，缺少「常見工作流範例」和「效率提升量化數據」。例如：背景任務搭配 Task List 的典型工作流是什麼？使用快捷鍵 vs. 手動操作的時間差距多少？這些需要自己在實際使用中累積經驗。另外，部分指令（如 /chrome、/desktop）暗示 Claude Code 正在擴展到 CLI 以外的平台，值得持續關注。</div>
-</div>
-</div>
+
 <!-- Footer -->
-<footer class="footer">
-<p>Source: <a href="https://docs.anthropic.com/en/docs/claude-code/interactive-mode" target="_blank">Anthropic Docs - Claude Code Interactive Mode</a></p>
-<p>製作日期：2026-03-11 | AI Expert Learning System v1.5.0</p>
-<p>建議 Chat Title：<strong>2026-03-11 [Anthropic-Docs] [Tool] Claude Code Interactive Mode</strong></p>
-</footer>
+<div class="footer">
+    <p>Source: <a href="https://docs.anthropic.com/en/docs/claude-code/interactive-mode" target="_blank">Anthropic Docs - Claude Code Interactive Mode</a></p>
+    <p>製作日期：2026-03-11 | AI Expert Learning System v1.5.0</p>
+    <p>建議 Chat Title：<strong>2026-03-11 [Anthropic-Docs] [Tool] Claude Code Interactive Mode</strong></p>
+</div>
+
 </div><!-- end container -->
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

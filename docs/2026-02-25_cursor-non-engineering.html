@@ -1,319 +1,485 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Cursor 非工程用途指南 - PM/設計師實戰手冊</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-<!-- Dashboard Index Meta -->
-<meta content="2026-02-25" name="doc-date"/>
-<meta content="Cursor 非工程用途指南 - PM 設計師實戰" name="doc-title"/>
-<meta content="Rich Holmes / Department of Product" name="doc-source"/>
-<meta content="Tool,Agent,Automation,Integration" name="doc-tags"/>
-<meta content="4.0" name="doc-rating"/>
-<meta content="Cursor 非工程師指南：視覺化架構、Browser 測試、Plugin Pipeline、Claude Code + Figma MCP 整合。" name="doc-summary"/>
-<meta content="2026-02-25_cursor-non-engineering.html" name="doc-file"/><meta content="v1" name="normalized"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor 非工程用途指南 - PM/設計師實戰手冊</title>
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-02-25">
+    <meta name="doc-title" content="Cursor 非工程用途指南 - PM 設計師實戰">
+    <meta name="doc-source" content="Rich Holmes / Department of Product">
+    <meta name="doc-tags" content="Tool,Agent,Automation,Integration">
+    <meta name="doc-rating" content="4.0">
+    <meta name="doc-summary" content="Cursor 非工程師指南：視覺化架構、Browser 測試、Plugin Pipeline、Claude Code + Figma MCP 整合。">
+    <meta name="doc-file" content="2026-02-25_cursor-non-engineering.html">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
 
+/* Header */
+.header-tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 0.25rem; font-size: 0.8rem; font-weight: 600; margin: 0 0.25rem 0.5rem; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+.tag-integration { background: #99f6e4; color: #134e4a; }
+.header h1 { font-size: 1.6rem; margin: 0.75rem 0 0.5rem; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.75; }
 
+/* Section titles */
+.section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* Executive Summary */
+.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.executive-summary h2 { font-size: 1.1rem; color: #1e3a5f; margin: 0 0 0.75rem; }
+.executive-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.75rem; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.25rem; }
+.objective-desc { font-size: 0.85rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Content Grid Parts */
+.part-header { background: #f0f9ff; padding: 0.75rem 1rem; font-weight: 700; color: #1e3a8a; font-size: 1rem; border-bottom: 1px solid #e2e8f0; grid-column: 1 / -1; }
+.content-left { padding: 1.25rem; border-right: 1px solid #e2e8f0; background: white; }
+.content-right { padding: 1.25rem; background: #f8fafc; }
+@media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+.content-left p, .content-right p { font-size: 0.92rem; line-height: 1.8; margin-bottom: 0.75rem; }
+.content-left p:last-child, .content-right p:last-child { margin-bottom: 0; }
+.en-ref { color: #64748b; font-style: italic; font-size: 0.9rem; display: block; margin-top: 0.25rem; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 0.75rem; font-weight: 700; font-size: 0.85rem; }
+.info-box-content { padding: 0.75rem; font-size: 0.88rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Highlights */
+.hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.88rem; color: #475569; line-height: 1.7; }
+
+/* Practice Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Comparison table */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 0.75rem 0; }
+.compare-table th { background: #f1f5f9; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; color: #334155; border-bottom: 2px solid #cbd5e1; }
+.compare-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; color: #475569; }
+    </style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="header-content">
-<div>
-<span class="header-tag tag-tool">Tool</span>
-<span class="header-tag tag-agent">Agent</span>
-<span class="header-tag tag-automation">Automation</span>
-<span class="header-tag tag-integration">Integration</span>
+<div class="header">
+    <div class="header-content">
+        <div>
+            <span class="header-tag tag-tool">Tool</span>
+            <span class="header-tag tag-agent">Agent</span>
+            <span class="header-tag tag-automation">Automation</span>
+            <span class="header-tag tag-integration">Integration</span>
+        </div>
+        <h1>Cursor 非工程用途指南：PM/設計師實戰手冊</h1>
+        <div class="subtitle">視覺化架構、Browser 測試、Plugin Pipeline、Claude Code + Figma MCP 整合</div>
+        <div class="source">Rich Holmes / Department of Product / Knowledge Series #101 / 2026-02-23</div>
+    </div>
 </div>
-<h1>Cursor 非工程用途指南：PM/設計師實戰手冊</h1>
-<div class="subtitle">視覺化架構、Browser 測試、Plugin Pipeline、Claude Code + Figma MCP 整合</div>
-<div class="source">Rich Holmes / Department of Product / Knowledge Series #101 / 2026-02-23</div>
-</div>
-</header>
+
 <!-- Container -->
 <div class="container">
-<!-- Executive Summary -->
-<div class="executive-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
-<span class="rating-high">↑ 實務應用, 工具生態</span>
-<span class="rating-low">↓ 技術深度, 學習曲線</span>
-</div>
-<h2>Executive Summary</h2>
-<p>這篇指南是少數<span class="highlight-key">專門為非工程師撰寫的 Cursor 使用教學</span>，涵蓋四個核心用例：用 Mermaid 圖視覺化程式碼架構、用內建 Browser 測試功能、用新推出的 Plugin Marketplace 建立產品分析 Pipeline、以及用 Claude Code + Figma MCP 雙向推送原型設計。文章強調 Cursor 已從「工程師 IDE」轉型為<span class="highlight-concept">產品團隊的多功能工作站</span>，特別是 Plugin 生態系統讓 PM 可以一鍵串接 Amplitude、Linear、Notion 等工具。內容偏實操導向，概念深度適中，適合想快速上手 Cursor 的產品人員。</p>
-</div>
-<!-- Learning Objectives -->
-<div class="section-title">Learning Objectives</div>
-<div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">🗺️</div>
-<div class="objective-title">Cursor 核心介面與模式</div>
-<div class="objective-desc">理解 Agent/Ask/Plan/Edit 四種模式的適用場景，掌握 Working Directory 的設定邏輯</div>
-</div>
-<div class="objective-item" style="border-left-color: #10b981;">
-<div class="objective-icon">🔌</div>
-<div class="objective-title">Plugin Pipeline 建構</div>
-<div class="objective-desc">學會用 Cursor Plugin Marketplace 串接 Amplitude + Linear + Notion 建立自動化產品分析流程</div>
-</div>
-<div class="objective-item" style="border-left-color: #8b5cf6;">
-<div class="objective-icon">🎨</div>
-<div class="objective-title">Claude Code + Figma MCP</div>
-<div class="objective-desc">掌握雙向 Figma 整合：從本地 UI 擷取並推送為可編輯的 Figma 設計稿</div>
-</div>
-</div>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">Cursor 非工程師工作流四步驟</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">📂</div>
-<div class="framework-step-title">理解架構</div>
-<div class="framework-step-desc">視覺化 Codebase</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🧪</div>
-<div class="framework-step-title">測試功能</div>
-<div class="framework-step-desc">Browser + Design Bar</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔗</div>
-<div class="framework-step-title">自動化 Pipeline</div>
-<div class="framework-step-desc">Plugin 串接工具</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🎨</div>
-<div class="framework-step-title">原型設計</div>
-<div class="framework-step-desc">Claude Code → Figma</div>
-</div>
-</div>
-</div>
-<!-- PART I -->
-<div class="content-grid">
-<div class="part-header">Part I — Cursor 定位與介面基礎</div>
-<div class="content-left">
-<p>Cursor 本質上是一個<span class="highlight-concept">以 AI 為核心的程式碼編輯器</span>，但它正快速演化為產品團隊的多功能工作站。Stripe 已將 Cursor 部署給超過 3,000 名工程師，而越來越多的 PM 和設計師也開始將它作為日常工具。</p>
-<span class="en-ref">"Cursor is used by some of the world's leading tech companies, including Stripe, who recently rolled it out to over 3,000 engineers."</span>
-<p>對非工程師來說，Cursor 有兩種主要使用方式：<span class="highlight-key">從零建構東西</span>（例如原型）或<span class="highlight-key">與現有程式碼互動</span>（例如理解架構、生成文件）。不需要寫程式就能獲得巨大價值。</p>
-<span class="en-ref">"...you can build something entirely from scratch... or you can use it to interact with your existing code base..."</span>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：Working Directory</div>
-<div class="info-box-content">Working Directory（工作目錄）是 Cursor 的「視野範圍」。開太高層的資料夾 → Agent 雜訊太多；開太低層 → 失去專案全貌上下文。正確的做法是開啟<span class="highlight-practical">專案根目錄</span>。</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">Working Directory 就像你走進一間辦公室——如果你站在大樓門口（太高層），你看到的是所有公司的招牌但什麼都不清楚；如果你只進了一間會議室（太低層），你不知道隔壁在做什麼。正確的做法是走進你自己團隊的樓層。</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：四種模式</div>
-<div class="info-box-content">
-<table class="compare-table">
-<tr><th>模式</th><th>用途</th><th>PM 適用場景</th></tr>
-<tr><td><strong>Agent</strong></td><td>自主執行任務、寫/改程式碼</td><td>建構原型、Plugin Pipeline</td></tr>
-<tr><td><strong>Ask</strong></td><td>問答、不修改檔案</td><td>理解架構、詢問技術細節</td></tr>
-<tr><td><strong>Plan</strong></td><td>規劃方案再確認</td><td>需求拆解、技術方案評估</td></tr>
-<tr><td><strong>Edit</strong></td><td>精準編輯特定程式碼</td><td>微調 UI 文字/樣式</td></tr>
-</table>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ Web App vs Desktop App</div>
-<div class="info-box-content">Web 版定位為「啟動與監控」工具——適合遠端委派 Agent 任務；Desktop 版才是真正的開發環境。兩者互補：在外面用 Web 啟動任務，回到桌面用 Desktop 審查和完善。</div>
-</div>
-</div>
-</div>
-<!-- PART II -->
-<div class="content-grid">
-<div class="part-header">Part II — 視覺化程式碼架構</div>
-<div class="content-left">
-<p>第一個實用場景是讓 Cursor 生成程式碼架構圖。只要輸入一句話，Cursor 就會用 <span class="highlight-concept">Mermaid 圖表語法</span>產出整個應用的架構概覽。</p>
-<span class="en-ref">"Create a technical diagram showing the architecture of this app"</span>
-<p>你還可以進一步聚焦到特定頁面或功能模組，例如只看首頁的建構邏輯，然後請 Cursor 逐一解釋每個元件的作用。</p>
-<span class="en-ref">"...we can ask Cursor to dig deeper and focus specifically on a particular part of our code base..."</span>
-<p>這對兩種場景特別有價值：<span class="highlight-practical">剛上任需要理解技術棧</span>，或<span class="highlight-practical">新功能上線後想了解背後的技術實作</span>。</p>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：CDMO 場景</div>
-<div class="info-box-content">想像你的團隊剛導入新的 MES（Manufacturing Execution System, 製造執行系統）或 Batch Record 電子化系統。即使你看不懂程式碼，你可以把系統的程式碼資料夾拖進 Cursor，請它用 Mermaid 畫出資料流架構圖——從原料秤量、充填參數到批次放行的完整資料路徑。這比等工程師開會解釋快得多。</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">把 Cursor 的架構視覺化功能想像成 Google Maps 的衛星視圖：你不需要親自走過每條街道，就能看到整個城市的佈局、主要道路和關鍵地標。先看大圖，再 zoom in 到你關心的區域。</div>
-</div>
-</div>
-</div>
-<!-- PART III -->
-<div class="content-grid">
-<div class="part-header">Part III — Browser 內建測試與 Design Bar</div>
-<div class="content-left">
-<p>Cursor 新推出的 <span class="highlight-concept">Browser 功能</span>在 IDE 內嵌了一個完整的瀏覽器，讓 AI Agent 可以直接控制瀏覽器進行導航、點擊、滾動、截圖，甚至監控 Console 輸出和網路流量。</p>
-<span class="en-ref">"Cursor's Browser tool gives the AI agent direct control over a web browser... navigate, click, type, scroll, take screenshots, and monitor console output and network traffic..."</span>
-<p>目前使用 <code>@browser</code> 指令讓 Agent 自動測試<span class="highlight-key">在外部託管的產品版本上效果較穩定</span>，本地版本的自動化測試仍有限制。</p>
-<p>另一個值得關注的新功能是 <span class="highlight-concept">Design Side Bar（設計側邊欄）</span>，它讓你可以選取頁面上的任何 HTML 元素，即時修改 padding、layout 等屬性，非常適合做 Accessibility（無障礙性）檢查和快速的 UI 微調實驗。</p>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 Browser 功能架構</div>
-<div class="info-box-content">
-<p><strong>開啟方式：</strong>三個點選單 → Open Browser，或快捷鍵 ⇧⌘B</p>
-<p><strong>能力範圍：</strong>導航、點擊、輸入、滾動、截圖、監控 Console 和網路請求</p>
-<p><strong>DevTools：</strong>右鍵即可開啟，與一般瀏覽器完全相同</p>
-<p><strong>限制：</strong>@browser 自動測試目前對外部託管網站較穩定</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">Design Side Bar 對 PM 來說是個隱藏寶物——你可以在不動程式碼的情況下快速測試「如果按鈕再大一點？」「如果間距縮小？」這類問題。把截圖帶到設計評審會議，比空口描述有效率得多。</div>
-</div>
-</div>
-</div>
-<!-- PART IV -->
-<div class="content-grid">
-<div class="part-header">Part IV — Plugin Marketplace 與產品分析 Pipeline</div>
-<div class="content-left">
-<p>Cursor 本週剛推出的 <span class="highlight-key">Plugin Marketplace</span> 被作者評為「對非工程師最有用的更新」。Plugin 將 MCP 整合、Skills（技能）、Agents（代理）和 Hooks（鉤子）打包成<span class="highlight-concept">一鍵安裝的套件</span>。</p>
-<span class="en-ref">"Plugins bundle together MCP integrations, Skills, Agents and Hooks into a single, one-click install."</span>
-<p>文章示範了一個完整的產品分析 Pipeline：串接 <span class="highlight-practical">Amplitude</span>（行為數據）+ <span class="highlight-practical">Linear</span>（工單管理）+ <span class="highlight-practical">Notion</span>（文件記錄），一個指令就能監控關鍵指標、偵測異常、自動建立調查工單並更新 Notion 文件。</p>
-<p>關鍵設計包含：一份 <code>product-context.md</code> 定義「正常」的指標範圍，一份 <code>intel-workflow.md</code> 作為 Master Prompt（主提示），最後存成斜線指令（Slash Command）以便重複執行。</p>
-</div>
-<div class="content-right">
-<div class="info-box box-code">
-<div class="info-box-header">💻 Pipeline 建構步驟</div>
-<div class="info-box-content">
-<p><strong>Step 1：</strong>安裝 Amplitude、Linear、Notion 三個 Plugin 並完成認證</p>
-<p><strong>Step 2：</strong>建立 Working Directory（context/ findings/ prompts/ 三個子資料夾）</p>
-<p><strong>Step 3：</strong>撰寫 product-context.md（定義正常指標範圍）</p>
-<p><strong>Step 4：</strong>撰寫 intel-workflow.md（Agent 執行邏輯）</p>
-<p><strong>Step 5：</strong>在 Notion 建立 Findings 頁面</p>
-<p><strong>Step 6：</strong>用 /add-command 存成可重複使用的斜線指令</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：Context File 是關鍵</div>
-<div class="info-box-content">Pipeline 的品質取決於 <code>product-context.md</code> 的精確度。如果 Agent 誤報異常，就收緊範圍；如果漏報，就補充更多上下文。這跟所有 AI 系統一樣——<span class="highlight-key">Garbage In, Garbage Out</span>。第一次執行後必須校準。</div>
-</div>
-</div>
-</div>
-<!-- PART V -->
-<div class="content-grid">
-<div class="part-header">Part V — Claude Code + Figma MCP 雙向整合</div>
-<div class="content-left">
-<p>最後一個用例是目前討論度最高的整合：<span class="highlight-key">Claude Code → Figma 雙向推送</span>。過去 Figma 的 MCP 是唯讀的——你只能拉取設計上下文到 Cursor，但無法推送回去。</p>
-<span class="en-ref">"Until recently, Figma's MCP was read-only... But now a new MCP tool called generate_figma_design makes the connection bidirectional..."</span>
-<p>新的 <code>generate_figma_design</code> MCP 工具改變了這一點。Claude Code 現在可以<span class="highlight-concept">擷取正在運行的本地 Web UI，並將其作為完全可編輯的 Frame 推送到 Figma 畫布上</span>——包含真正的圖層和元件，不是扁平的截圖。</p>
-<p>整個流程在 Cursor 的 Terminal（終端機）中透過 Claude Code 執行，而不是透過 Cursor 內建的 Agent Chat。你需要：安裝 Figma MCP、啟動本地應用、準備好 Figma 檔案 URL，然後一句話描述你要擷取什麼和推送到哪裡。</p>
-</div>
-<div class="content-right">
-<div class="info-box box-code">
-<div class="info-box-header">💻 操作步驟</div>
-<div class="info-box-content">
-<p><strong>Step 1：</strong>在 Cursor Terminal 中輸入 <code>claude</code> 啟動 Claude Code</p>
-<p><strong>Step 2：</strong>要求安裝 Figma MCP 並輸入 Figma Access Token</p>
-<p><strong>Step 3：</strong>重啟 Cursor（重要！否則 MCP 連線不會生效）</p>
-<p><strong>Step 4：</strong>確認本地 App 正在運行（如 localhost:5173）</p>
-<p><strong>Step 5：</strong>在 Claude Code 中描述擷取目標和 Figma 檔案 URL</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：CDMO 場景</div>
-<div class="info-box-content">這個 Figma 雙向整合對內部工具的 UI 原型設計特別有意義。例如，你正在規劃一個新的 Batch Record Review Dashboard（批次記錄審查儀表板），可以先用 Claude Code 快速生成一個 functional prototype（功能原型），然後推送到 Figma 讓設計師接手精修——<span class="highlight-practical">從「想法」到「可討論的設計稿」的時間從數天壓縮到數小時</span>。</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 注意事項</div>
-<div class="info-box-content">作者特別提到忘記重啟 Cursor 導致 MCP 連線失敗的問題。安裝任何新的 MCP 後，務必完全關閉並重新開啟 Cursor。</div>
-</div>
-</div>
-</div>
-<!-- Key Takeaways -->
-<div class="section-title">Key Takeaways</div>
-<div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-title">Cursor 已不只是 IDE</div>
-<div class="summary-card-text">Plugin Marketplace 的推出標誌著 Cursor 從「工程師的程式碼編輯器」轉型為「產品團隊的 AI 工作站」。PM、設計師都能在此建構端到端的自動化流程。</div>
-</div>
-<div class="summary-card" style="border-left-color: #10b981;">
-<div class="summary-card-title">四種模式，各有其位</div>
-<div class="summary-card-text">Agent 模式用於建構和執行，Ask/Plan 模式用於理解和規劃。非工程師最常用 Ask 來理解架構，用 Agent 來建構原型和 Pipeline。</div>
-</div>
-<div class="summary-card" style="border-left-color: #8b5cf6;">
-<div class="summary-card-title">Context File 決定 Pipeline 品質</div>
-<div class="summary-card-text">無論是 product-context.md 還是 intel-workflow.md，AI Agent 的表現完全取決於你提供的上下文品質。第一次執行後的校準是必要步驟。</div>
-</div>
-<div class="summary-card" style="border-left-color: #f59e0b;">
-<div class="summary-card-title">Figma MCP 從唯讀變雙向</div>
-<div class="summary-card-text">generate_figma_design 讓 Claude Code 可以把本地 UI 推送為 Figma 可編輯 Frame。這打通了「原型 → 設計」的最後一哩路。</div>
-</div>
-</div>
-<!-- Practice Questions -->
-<div class="section-title">Practice Questions</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">Cursor 的 Agent 模式和 Ask 模式在實際使用中的核心差異是什麼？為什麼非工程師需要區分這兩者？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>Agent 模式</strong>具有自主執行能力——它會讀取檔案、寫入程式碼、執行命令，直到任務完成。<strong>Ask 模式</strong>只回答問題，不修改任何檔案。</p>
-<p>對非工程師來說，這個區分非常重要：當你只想「理解」某個東西時（架構圖、技術解釋），用 Ask 模式更安全，不會意外修改程式碼。當你要「建構」東西時（原型、Pipeline），才切到 Agent 模式。這就像「只問問題」和「動手改東西」的差別——在 GMP 環境中，我們對「唯讀查詢」和「寫入修改」的權限管控概念完全一致。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要在 CDMO 環境中建構類似的「產品分析 Pipeline」，用 Cursor Plugin 串接哪些系統最有價值？需要考慮哪些合規限制？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>在 CDMO 場景中，最有價值的串接可能是：<strong>LIMS/MES</strong>（取代 Amplitude，作為製造數據源）→ <strong>Deviation Management System</strong>（取代 Linear，作為調查工單系統）→ <strong>電子批次記錄或 SharePoint</strong>（取代 Notion，作為文件記錄）。</p>
-<p>但合規限制是最大的障礙：製造數據通常受 21 CFR Part 11 和 GMP 管控，不能直接透過 AI Agent 存取和分析。最可行的起點是用 <strong>非 GMP 的營運指標</strong>（如設備稼動率、排程達成率、客戶回應時間）來建構類似的 Pipeline，這些數據的合規敏感度較低，但同樣能產生有價值的營運洞察。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">文章呈現了一個相當理想化的 Plugin Pipeline 流程。在實際部署中，你認為最可能遇到的三個挑戰是什麼？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>三個最可能的現實挑戰：</p>
-<p><strong>1. 認證與權限管理：</strong>三個 Plugin 的 OAuth Token 過期、權限變更、或公司 IT 政策限制 MCP 連線。在企業環境中，讓三個外部服務同時保持穩定連線並不簡單。</p>
-<p><strong>2. 誤報與校準成本：</strong>文章輕描淡寫了「校準 context file」這一步，但實際上這可能需要數週的反覆調整。指標的「正常範圍」本身就會隨季節、產品週期變化，需要持續維護。</p>
-<p><strong>3. Agent 判斷的可靠性：</strong>讓 AI Agent 自動建立 Linear 工單意味著你信任它的異常判斷。一旦誤判產生大量無效工單，團隊會迅速失去信任並停止使用。需要一個人工審查的 checkpoint——這呼應了 Copilot Mode 優於 Agent Mode 的原則。</p>
-</div>
-</details>
-<!-- Bottom Line -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Cursor 的 Plugin Marketplace 代表了一個重要轉折：AI IDE 正在從「寫程式碼的工具」變成「串接工作流程的平台」。這跟我一直關注的 MCP 生態發展方向一致——真正的價值不在單一工具，而在工具之間的連接。對 COO 定位來說，理解這類「orchestration layer（編排層）」的演化比學會寫程式碼重要得多。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週安裝 Cursor Desktop，用公司某個內部工具或文件系統的 repo 作為 Working Directory，測試 Ask 模式的架構視覺化功能。目標不是建構 Pipeline，而是先驗證「Cursor 能在多大程度上幫助我理解現有系統」這個基本問題。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章缺乏企業環境的考量——IT 安全政策、資料外洩風險、Plugin 認證管理都未提及。在 GMP/CDMO 環境中，任何涉及生產數據的 AI Pipeline 都需要經過 Validation（驗證）和 Change Control（變更管制）。文章的 Pipeline 範例適合非管制環境，直接套用到製藥場景需要大幅調整。</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-02-25</p>
-<p>原文來源：<a href="https://www.departmentofproduct.com/blog/how-to-use-cursor-for-non-engineering-use-cases" target="_blank">Department of Product - How to use Cursor for Non-Engineering use cases</a></p>
-<p>Knowledge Series #101 by Rich Holmes</p>
-<p>建議 Chat Title：<strong>2026-02-25 [Tool] Cursor - Non-Engineering Use Cases</strong></p>
-<p>建議檔名：<strong>2026-02-25_cursor-non-engineering.html</strong></p>
-</footer>
+
+    <!-- Executive Summary -->
+    <div class="executive-summary">
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+            <span class="rating-high">↑ 實務應用, 工具生態</span>
+            <span class="rating-low">↓ 技術深度, 學習曲線</span>
+        </div>
+        <h2>Executive Summary</h2>
+        <p>這篇指南是少數<span class="hl-key">專門為非工程師撰寫的 Cursor 使用教學</span>，涵蓋四個核心用例：用 Mermaid 圖視覺化程式碼架構、用內建 Browser 測試功能、用新推出的 Plugin Marketplace 建立產品分析 Pipeline、以及用 Claude Code + Figma MCP 雙向推送原型設計。文章強調 Cursor 已從「工程師 IDE」轉型為<span class="hl-concept">產品團隊的多功能工作站</span>，特別是 Plugin 生態系統讓 PM 可以一鍵串接 Amplitude、Linear、Notion 等工具。內容偏實操導向，概念深度適中，適合想快速上手 Cursor 的產品人員。</p>
+    </div>
+
+    <!-- Learning Objectives -->
+    <div class="section-title">Learning Objectives</div>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">🗺️</div>
+            <div class="objective-title">Cursor 核心介面與模式</div>
+            <div class="objective-desc">理解 Agent/Ask/Plan/Edit 四種模式的適用場景，掌握 Working Directory 的設定邏輯</div>
+        </div>
+        <div class="objective-item" style="border-left-color: #10b981;">
+            <div class="objective-icon">🔌</div>
+            <div class="objective-title">Plugin Pipeline 建構</div>
+            <div class="objective-desc">學會用 Cursor Plugin Marketplace 串接 Amplitude + Linear + Notion 建立自動化產品分析流程</div>
+        </div>
+        <div class="objective-item" style="border-left-color: #8b5cf6;">
+            <div class="objective-icon">🎨</div>
+            <div class="objective-title">Claude Code + Figma MCP</div>
+            <div class="objective-desc">掌握雙向 Figma 整合：從本地 UI 擷取並推送為可編輯的 Figma 設計稿</div>
+        </div>
+    </div>
+
+    <!-- Framework Visual -->
+    <div class="framework-visual">
+        <div class="framework-title">Cursor 非工程師工作流四步驟</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">📂</div>
+                <div class="framework-step-title">理解架構</div>
+                <div class="framework-step-desc">視覺化 Codebase</div>
+            </div>
+            <div class="framework-arrow">→</div>
+            <div class="framework-step">
+                <div class="framework-icon">🧪</div>
+                <div class="framework-step-title">測試功能</div>
+                <div class="framework-step-desc">Browser + Design Bar</div>
+            </div>
+            <div class="framework-arrow">→</div>
+            <div class="framework-step">
+                <div class="framework-icon">🔗</div>
+                <div class="framework-step-title">自動化 Pipeline</div>
+                <div class="framework-step-desc">Plugin 串接工具</div>
+            </div>
+            <div class="framework-arrow">→</div>
+            <div class="framework-step">
+                <div class="framework-icon">🎨</div>
+                <div class="framework-step-title">原型設計</div>
+                <div class="framework-step-desc">Claude Code → Figma</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART I -->
+    <div class="content-grid">
+        <div class="part-header">Part I — Cursor 定位與介面基礎</div>
+        <div class="content-left">
+            <p>Cursor 本質上是一個<span class="hl-concept">以 AI 為核心的程式碼編輯器</span>，但它正快速演化為產品團隊的多功能工作站。Stripe 已將 Cursor 部署給超過 3,000 名工程師，而越來越多的 PM 和設計師也開始將它作為日常工具。</p>
+            <span class="en-ref">"Cursor is used by some of the world's leading tech companies, including Stripe, who recently rolled it out to over 3,000 engineers."</span>
+            <p>對非工程師來說，Cursor 有兩種主要使用方式：<span class="hl-key">從零建構東西</span>（例如原型）或<span class="hl-key">與現有程式碼互動</span>（例如理解架構、生成文件）。不需要寫程式就能獲得巨大價值。</p>
+            <span class="en-ref">"...you can build something entirely from scratch... or you can use it to interact with your existing code base..."</span>
+
+            <div class="info-box box-key">
+                <div class="info-box-header">⚠️ 重點提示：Working Directory</div>
+                <div class="info-box-content">Working Directory（工作目錄）是 Cursor 的「視野範圍」。開太高層的資料夾 → Agent 雜訊太多；開太低層 → 失去專案全貌上下文。正確的做法是開啟<span class="hl-practical">專案根目錄</span>。</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">💡 比喻說明</div>
+                <div class="info-box-content">Working Directory 就像你走進一間辦公室——如果你站在大樓門口（太高層），你看到的是所有公司的招牌但什麼都不清楚；如果你只進了一間會議室（太低層），你不知道隔壁在做什麼。正確的做法是走進你自己團隊的樓層。</div>
+            </div>
+
+            <div class="info-box box-concept">
+                <div class="info-box-header">📚 核心概念：四種模式</div>
+                <div class="info-box-content">
+                    <table class="compare-table">
+                        <tr><th>模式</th><th>用途</th><th>PM 適用場景</th></tr>
+                        <tr><td><strong>Agent</strong></td><td>自主執行任務、寫/改程式碼</td><td>建構原型、Plugin Pipeline</td></tr>
+                        <tr><td><strong>Ask</strong></td><td>問答、不修改檔案</td><td>理解架構、詢問技術細節</td></tr>
+                        <tr><td><strong>Plan</strong></td><td>規劃方案再確認</td><td>需求拆解、技術方案評估</td></tr>
+                        <tr><td><strong>Edit</strong></td><td>精準編輯特定程式碼</td><td>微調 UI 文字/樣式</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="info-box box-compare">
+                <div class="info-box-header">⚖️ Web App vs Desktop App</div>
+                <div class="info-box-content">Web 版定位為「啟動與監控」工具——適合遠端委派 Agent 任務；Desktop 版才是真正的開發環境。兩者互補：在外面用 Web 啟動任務，回到桌面用 Desktop 審查和完善。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART II -->
+    <div class="content-grid">
+        <div class="part-header">Part II — 視覺化程式碼架構</div>
+        <div class="content-left">
+            <p>第一個實用場景是讓 Cursor 生成程式碼架構圖。只要輸入一句話，Cursor 就會用 <span class="hl-concept">Mermaid 圖表語法</span>產出整個應用的架構概覽。</p>
+            <span class="en-ref">"Create a technical diagram showing the architecture of this app"</span>
+            <p>你還可以進一步聚焦到特定頁面或功能模組，例如只看首頁的建構邏輯，然後請 Cursor 逐一解釋每個元件的作用。</p>
+            <span class="en-ref">"...we can ask Cursor to dig deeper and focus specifically on a particular part of our code base..."</span>
+            <p>這對兩種場景特別有價值：<span class="hl-practical">剛上任需要理解技術棧</span>，或<span class="hl-practical">新功能上線後想了解背後的技術實作</span>。</p>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-practical">
+                <div class="info-box-header">🛠️ 實務應用：CDMO 場景</div>
+                <div class="info-box-content">想像你的團隊剛導入新的 MES（Manufacturing Execution System, 製造執行系統）或 Batch Record 電子化系統。即使你看不懂程式碼，你可以把系統的程式碼資料夾拖進 Cursor，請它用 Mermaid 畫出資料流架構圖——從原料秤量、充填參數到批次放行的完整資料路徑。這比等工程師開會解釋快得多。</div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">💡 比喻說明</div>
+                <div class="info-box-content">把 Cursor 的架構視覺化功能想像成 Google Maps 的衛星視圖：你不需要親自走過每條街道，就能看到整個城市的佈局、主要道路和關鍵地標。先看大圖，再 zoom in 到你關心的區域。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART III -->
+    <div class="content-grid">
+        <div class="part-header">Part III — Browser 內建測試與 Design Bar</div>
+        <div class="content-left">
+            <p>Cursor 新推出的 <span class="hl-concept">Browser 功能</span>在 IDE 內嵌了一個完整的瀏覽器，讓 AI Agent 可以直接控制瀏覽器進行導航、點擊、滾動、截圖，甚至監控 Console 輸出和網路流量。</p>
+            <span class="en-ref">"Cursor's Browser tool gives the AI agent direct control over a web browser... navigate, click, type, scroll, take screenshots, and monitor console output and network traffic..."</span>
+            <p>目前使用 <code>@browser</code> 指令讓 Agent 自動測試<span class="hl-key">在外部託管的產品版本上效果較穩定</span>，本地版本的自動化測試仍有限制。</p>
+            <p>另一個值得關注的新功能是 <span class="hl-concept">Design Side Bar（設計側邊欄）</span>，它讓你可以選取頁面上的任何 HTML 元素，即時修改 padding、layout 等屬性，非常適合做 Accessibility（無障礙性）檢查和快速的 UI 微調實驗。</p>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">📚 Browser 功能架構</div>
+                <div class="info-box-content">
+                    <p><strong>開啟方式：</strong>三個點選單 → Open Browser，或快捷鍵 ⇧⌘B</p>
+                    <p><strong>能力範圍：</strong>導航、點擊、輸入、滾動、截圖、監控 Console 和網路請求</p>
+                    <p><strong>DevTools：</strong>右鍵即可開啟，與一般瀏覽器完全相同</p>
+                    <p><strong>限制：</strong>@browser 自動測試目前對外部託管網站較穩定</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">🛠️ 實務應用</div>
+                <div class="info-box-content">Design Side Bar 對 PM 來說是個隱藏寶物——你可以在不動程式碼的情況下快速測試「如果按鈕再大一點？」「如果間距縮小？」這類問題。把截圖帶到設計評審會議，比空口描述有效率得多。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART IV -->
+    <div class="content-grid">
+        <div class="part-header">Part IV — Plugin Marketplace 與產品分析 Pipeline</div>
+        <div class="content-left">
+            <p>Cursor 本週剛推出的 <span class="hl-key">Plugin Marketplace</span> 被作者評為「對非工程師最有用的更新」。Plugin 將 MCP 整合、Skills（技能）、Agents（代理）和 Hooks（鉤子）打包成<span class="hl-concept">一鍵安裝的套件</span>。</p>
+            <span class="en-ref">"Plugins bundle together MCP integrations, Skills, Agents and Hooks into a single, one-click install."</span>
+            <p>文章示範了一個完整的產品分析 Pipeline：串接 <span class="hl-practical">Amplitude</span>（行為數據）+ <span class="hl-practical">Linear</span>（工單管理）+ <span class="hl-practical">Notion</span>（文件記錄），一個指令就能監控關鍵指標、偵測異常、自動建立調查工單並更新 Notion 文件。</p>
+            <p>關鍵設計包含：一份 <code>product-context.md</code> 定義「正常」的指標範圍，一份 <code>intel-workflow.md</code> 作為 Master Prompt（主提示），最後存成斜線指令（Slash Command）以便重複執行。</p>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">💻 Pipeline 建構步驟</div>
+                <div class="info-box-content">
+                    <p><strong>Step 1：</strong>安裝 Amplitude、Linear、Notion 三個 Plugin 並完成認證</p>
+                    <p><strong>Step 2：</strong>建立 Working Directory（context/ findings/ prompts/ 三個子資料夾）</p>
+                    <p><strong>Step 3：</strong>撰寫 product-context.md（定義正常指標範圍）</p>
+                    <p><strong>Step 4：</strong>撰寫 intel-workflow.md（Agent 執行邏輯）</p>
+                    <p><strong>Step 5：</strong>在 Notion 建立 Findings 頁面</p>
+                    <p><strong>Step 6：</strong>用 /add-command 存成可重複使用的斜線指令</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">⚠️ 重點提示：Context File 是關鍵</div>
+                <div class="info-box-content">Pipeline 的品質取決於 <code>product-context.md</code> 的精確度。如果 Agent 誤報異常，就收緊範圍；如果漏報，就補充更多上下文。這跟所有 AI 系統一樣——<span class="hl-key">Garbage In, Garbage Out</span>。第一次執行後必須校準。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART V -->
+    <div class="content-grid">
+        <div class="part-header">Part V — Claude Code + Figma MCP 雙向整合</div>
+        <div class="content-left">
+            <p>最後一個用例是目前討論度最高的整合：<span class="hl-key">Claude Code → Figma 雙向推送</span>。過去 Figma 的 MCP 是唯讀的——你只能拉取設計上下文到 Cursor，但無法推送回去。</p>
+            <span class="en-ref">"Until recently, Figma's MCP was read-only... But now a new MCP tool called generate_figma_design makes the connection bidirectional..."</span>
+            <p>新的 <code>generate_figma_design</code> MCP 工具改變了這一點。Claude Code 現在可以<span class="hl-concept">擷取正在運行的本地 Web UI，並將其作為完全可編輯的 Frame 推送到 Figma 畫布上</span>——包含真正的圖層和元件，不是扁平的截圖。</p>
+            <p>整個流程在 Cursor 的 Terminal（終端機）中透過 Claude Code 執行，而不是透過 Cursor 內建的 Agent Chat。你需要：安裝 Figma MCP、啟動本地應用、準備好 Figma 檔案 URL，然後一句話描述你要擷取什麼和推送到哪裡。</p>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">💻 操作步驟</div>
+                <div class="info-box-content">
+                    <p><strong>Step 1：</strong>在 Cursor Terminal 中輸入 <code>claude</code> 啟動 Claude Code</p>
+                    <p><strong>Step 2：</strong>要求安裝 Figma MCP 並輸入 Figma Access Token</p>
+                    <p><strong>Step 3：</strong>重啟 Cursor（重要！否則 MCP 連線不會生效）</p>
+                    <p><strong>Step 4：</strong>確認本地 App 正在運行（如 localhost:5173）</p>
+                    <p><strong>Step 5：</strong>在 Claude Code 中描述擷取目標和 Figma 檔案 URL</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">🛠️ 實務應用：CDMO 場景</div>
+                <div class="info-box-content">這個 Figma 雙向整合對內部工具的 UI 原型設計特別有意義。例如，你正在規劃一個新的 Batch Record Review Dashboard（批次記錄審查儀表板），可以先用 Claude Code 快速生成一個 functional prototype（功能原型），然後推送到 Figma 讓設計師接手精修——<span class="hl-practical">從「想法」到「可討論的設計稿」的時間從數天壓縮到數小時</span>。</div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">⚠️ 注意事項</div>
+                <div class="info-box-content">作者特別提到忘記重啟 Cursor 導致 MCP 連線失敗的問題。安裝任何新的 MCP 後，務必完全關閉並重新開啟 Cursor。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Takeaways -->
+    <div class="section-title">Key Takeaways</div>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <div class="summary-card-title">Cursor 已不只是 IDE</div>
+            <div class="summary-card-text">Plugin Marketplace 的推出標誌著 Cursor 從「工程師的程式碼編輯器」轉型為「產品團隊的 AI 工作站」。PM、設計師都能在此建構端到端的自動化流程。</div>
+        </div>
+        <div class="summary-card" style="border-left-color: #10b981;">
+            <div class="summary-card-title">四種模式，各有其位</div>
+            <div class="summary-card-text">Agent 模式用於建構和執行，Ask/Plan 模式用於理解和規劃。非工程師最常用 Ask 來理解架構，用 Agent 來建構原型和 Pipeline。</div>
+        </div>
+        <div class="summary-card" style="border-left-color: #8b5cf6;">
+            <div class="summary-card-title">Context File 決定 Pipeline 品質</div>
+            <div class="summary-card-text">無論是 product-context.md 還是 intel-workflow.md，AI Agent 的表現完全取決於你提供的上下文品質。第一次執行後的校準是必要步驟。</div>
+        </div>
+        <div class="summary-card" style="border-left-color: #f59e0b;">
+            <div class="summary-card-title">Figma MCP 從唯讀變雙向</div>
+            <div class="summary-card-text">generate_figma_design 讓 Claude Code 可以把本地 UI 推送為 Figma 可編輯 Frame。這打通了「原型 → 設計」的最後一哩路。</div>
+        </div>
+    </div>
+
+    <!-- Practice Questions -->
+    <div class="section-title">Practice Questions</div>
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">Cursor 的 Agent 模式和 Ask 模式在實際使用中的核心差異是什麼？為什麼非工程師需要區分這兩者？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>Agent 模式</strong>具有自主執行能力——它會讀取檔案、寫入程式碼、執行命令，直到任務完成。<strong>Ask 模式</strong>只回答問題，不修改任何檔案。</p>
+            <p>對非工程師來說，這個區分非常重要：當你只想「理解」某個東西時（架構圖、技術解釋），用 Ask 模式更安全，不會意外修改程式碼。當你要「建構」東西時（原型、Pipeline），才切到 Agent 模式。這就像「只問問題」和「動手改東西」的差別——在 GMP 環境中，我們對「唯讀查詢」和「寫入修改」的權限管控概念完全一致。</p>
+        </div>
+    </details>
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">如果你要在 CDMO 環境中建構類似的「產品分析 Pipeline」，用 Cursor Plugin 串接哪些系統最有價值？需要考慮哪些合規限制？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>在 CDMO 場景中，最有價值的串接可能是：<strong>LIMS/MES</strong>（取代 Amplitude，作為製造數據源）→ <strong>Deviation Management System</strong>（取代 Linear，作為調查工單系統）→ <strong>電子批次記錄或 SharePoint</strong>（取代 Notion，作為文件記錄）。</p>
+            <p>但合規限制是最大的障礙：製造數據通常受 21 CFR Part 11 和 GMP 管控，不能直接透過 AI Agent 存取和分析。最可行的起點是用 <strong>非 GMP 的營運指標</strong>（如設備稼動率、排程達成率、客戶回應時間）來建構類似的 Pipeline，這些數據的合規敏感度較低，但同樣能產生有價值的營運洞察。</p>
+        </div>
+    </details>
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">文章呈現了一個相當理想化的 Plugin Pipeline 流程。在實際部署中，你認為最可能遇到的三個挑戰是什麼？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>三個最可能的現實挑戰：</p>
+            <p><strong>1. 認證與權限管理：</strong>三個 Plugin 的 OAuth Token 過期、權限變更、或公司 IT 政策限制 MCP 連線。在企業環境中，讓三個外部服務同時保持穩定連線並不簡單。</p>
+            <p><strong>2. 誤報與校準成本：</strong>文章輕描淡寫了「校準 context file」這一步，但實際上這可能需要數週的反覆調整。指標的「正常範圍」本身就會隨季節、產品週期變化，需要持續維護。</p>
+            <p><strong>3. Agent 判斷的可靠性：</strong>讓 AI Agent 自動建立 Linear 工單意味著你信任它的異常判斷。一旦誤判產生大量無效工單，團隊會迅速失去信任並停止使用。需要一個人工審查的 checkpoint——這呼應了 Copilot Mode 優於 Agent Mode 的原則。</p>
+        </div>
+    </details>
+
+    <!-- Bottom Line -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">🎯 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">✔ 核心洞察</div>
+            <div class="bottom-line-text">Cursor 的 Plugin Marketplace 代表了一個重要轉折：AI IDE 正在從「寫程式碼的工具」變成「串接工作流程的平台」。這跟我一直關注的 MCP 生態發展方向一致——真正的價值不在單一工具，而在工具之間的連接。對 COO 定位來說，理解這類「orchestration layer（編排層）」的演化比學會寫程式碼重要得多。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">📈 立即應用</div>
+            <div class="bottom-line-text">本週安裝 Cursor Desktop，用公司某個內部工具或文件系統的 repo 作為 Working Directory，測試 Ask 模式的架構視覺化功能。目標不是建構 Pipeline，而是先驗證「Cursor 能在多大程度上幫助我理解現有系統」這個基本問題。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">⚠ 需要補充</div>
+            <div class="bottom-line-text">文章缺乏企業環境的考量——IT 安全政策、資料外洩風險、Plugin 認證管理都未提及。在 GMP/CDMO 環境中，任何涉及生產數據的 AI Pipeline 都需要經過 Validation（驗證）和 Change Control（變更管制）。文章的 Pipeline 範例適合非管制環境，直接套用到製藥場景需要大幅調整。</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>製作日期：2026-02-25</p>
+        <p>原文來源：<a href="https://www.departmentofproduct.com/blog/how-to-use-cursor-for-non-engineering-use-cases" target="_blank">Department of Product - How to use Cursor for Non-Engineering use cases</a></p>
+        <p>Knowledge Series #101 by Rich Holmes</p>
+        <p>建議 Chat Title：<strong>2026-02-25 [Tool] Cursor - Non-Engineering Use Cases</strong></p>
+        <p>建議檔名：<strong>2026-02-25_cursor-non-engineering.html</strong></p>
+    </div>
+
 </div>
 </body>
 </html>

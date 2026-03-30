@@ -1,612 +1,1037 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2025-12-04" name="doc-date"/>
-<meta content="AI 新聞代理系統學習指南 | AI News Agent Study Guide" name="doc-title"/>
-<meta content="Wyndo / AI Maker" name="doc-source"/>
-<meta content="Agent,Tool,Automation" name="doc-tags"/>
-<meta content="3.5" name="doc-rating"/>
-<meta content="AI新聞代理系統學習指南：用Perplexity建構自動化新聞蒐集與整理系統" name="doc-summary"/>
-<meta content="2025-12-04_ai-news-agent-perplexity.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>AI 新聞代理系統學習指南 | AI News Agent Study Guide</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-12-04">
+    <meta name="doc-title" content="AI 新聞代理系統學習指南 | AI News Agent Study Guide">
+    <meta name="doc-source" content="Wyndo / AI Maker">
+    <meta name="doc-tags" content="Agent,Tool,Automation">
+    <meta name="doc-rating" content="3.5">
+    <meta name="doc-summary" content="AI新聞代理系統學習指南：用Perplexity建構自動化新聞蒐集與整理系統">
+    <meta name="doc-file" content="2025-12-04_ai-news-agent-perplexity.html">
+    <title>AI 新聞代理系統學習指南 | AI News Agent Study Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans TC', sans-serif;
+            line-height: 1.7;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header .meta {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .grid-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .grid-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .left-column {
+            background: #fafafa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #2c3e50;
+        }
+        
+        .right-column {
+            background: #f0f7ff;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .original-content {
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+        
+        .original-content p {
+            margin-bottom: 15px;
+        }
+        
+        .highlight-term {
+            background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .quote-box {
+            background: #fff;
+            border-left: 4px solid #9b59b6;
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        /* Commentary Boxes */
+        .analogy-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+            border: 1px solid #f0d78c;
+            border-radius: 8px;
+            padding: 18px;
+            margin: 15px 0;
+        }
+        
+        .analogy-box .box-title {
+            color: #856404;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .key-term-box {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 1px solid #a3cfbb;
+            border-radius: 8px;
+            padding: 18px;
+            margin: 15px 0;
+        }
+        
+        .key-term-box .box-title {
+            color: #155724;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .key-note-box {
+            background: linear-gradient(135deg, #ffe5d0 0%, #ffd4b8 100%);
+            border: 1px solid #f5c6a5;
+            border-radius: 8px;
+            padding: 18px;
+            margin: 15px 0;
+        }
+        
+        .key-note-box .box-title {
+            color: #c45c00;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .formula-box {
+            background: linear-gradient(135deg, #e8daef 0%, #d7bde2 100%);
+            border: 1px solid #bb8fce;
+            border-radius: 8px;
+            padding: 18px;
+            margin: 15px 0;
+        }
+        
+        .formula-box .box-title {
+            color: #6c3483;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .practice-box {
+            background: linear-gradient(135deg, #d6eaf8 0%, #aed6f1 100%);
+            border: 1px solid #85c1e9;
+            border-radius: 8px;
+            padding: 18px;
+            margin: 15px 0;
+        }
+        
+        .practice-box .box-title {
+            color: #1a5276;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .application-box {
+            background: linear-gradient(135deg, #fadbd8 0%, #f5b7b1 100%);
+            border: 1px solid #f1948a;
+            border-radius: 8px;
+            padding: 18px;
+            margin: 15px 0;
+        }
+        
+        .application-box .box-title {
+            color: #922b21;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        
+        .comparison-table th {
+            background: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .workflow-step {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+            padding-left: 50px;
+        }
+        
+        .workflow-step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #3498db;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+        
+        .architecture-diagram {
+            background: #fff;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .diagram-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .diagram-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        
+        .diagram-arrow {
+            font-size: 1.5em;
+            color: #3498db;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .summary-section h3 {
+            color: #ffeaa7;
+            margin-bottom: 15px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #1a1a2e;
+            color: white;
+            margin-top: 40px;
+        }
+        
+        .toc {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .toc h3 {
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+        
+        .toc ul {
+            list-style: none;
+            margin: 0;
+        }
+        
+        .toc li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<header class="header">
-<h1>AI 新聞代理系統完整學習指南</h1>
-<div class="subtitle">How I Built an AI Agent That Scours the Internet for News I Actually Care About</div>
-<div class="meta">原文作者：Wyndo | 發布日期：2025年12月4日 | 學習文檔製作：Claude AI</div>
-</header>
-<div class="container">
-<!-- Table of Contents -->
-<div class="toc">
-<h3>目錄 Table of Contents</h3>
-<ul>
-<li><a href="#section1">1. 核心問題：為什麼需要這個系統？</a></li>
-<li><a href="#section2">2. 系統架構總覽</a></li>
-<li><a href="#section3">3. Scenario 1：資料收集流程</a></li>
-<li><a href="#section4">4. Scenario 2：摘要與洞察生成</a></li>
-<li><a href="#section5">5. Prompt Engineering 深度解析</a></li>
-<li><a href="#section6">6. 客製化應用場景</a></li>
-<li><a href="#section7">7. 練習題與自我評估</a></li>
-</ul>
-</div>
-<!-- Section 1: The Problem -->
-<div class="grid-row" id="section1">
-<div class="content-left">
-<h2 class="section-title">原文：核心痛點</h2>
-<div class="content-left">
-<p>Keeping up with AI news is overwhelming work and so tiring. You don't know who's going to lead this week and no idea what new tools will rise to the surface.</p>
-<p>Every AI model tells they are better. Until another AI model takes over. The King throne only lasts for a week or two. That's how brutal AI news is.</p>
-<p>To keep up with AI, I run an <span class="highlight-term">RSS reader</span> with AI automation 24/7. It delivers every newsletter and blog post from 30+ sources I curated: the system works exactly as designed.</p>
-<p>But it only covers what I already know.</p>
-<div class="quote-box">
+    <div class="header">
+        <h1>AI 新聞代理系統完整學習指南</h1>
+        <div class="subtitle">How I Built an AI Agent That Scours the Internet for News I Actually Care About</div>
+        <div class="meta">原文作者：Wyndo | 發布日期：2025年12月4日 | 學習文檔製作：Claude AI</div>
+    </div>
+    
+    <div class="container">
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3>目錄 Table of Contents</h3>
+            <ul>
+                <li><a href="#section1">1. 核心問題：為什麼需要這個系統？</a></li>
+                <li><a href="#section2">2. 系統架構總覽</a></li>
+                <li><a href="#section3">3. Scenario 1：資料收集流程</a></li>
+                <li><a href="#section4">4. Scenario 2：摘要與洞察生成</a></li>
+                <li><a href="#section5">5. Prompt Engineering 深度解析</a></li>
+                <li><a href="#section6">6. 客製化應用場景</a></li>
+                <li><a href="#section7">7. 練習題與自我評估</a></li>
+            </ul>
+        </div>
+
+        <!-- Section 1: The Problem -->
+        <div id="section1" class="grid-row">
+            <div class="left-column">
+                <h2 class="section-title">原文：核心痛點</h2>
+                <div class="original-content">
+                    <p>Keeping up with AI news is overwhelming work and so tiring. You don't know who's going to lead this week and no idea what new tools will rise to the surface.</p>
+                    
+                    <p>Every AI model tells they are better. Until another AI model takes over. The King throne only lasts for a week or two. That's how brutal AI news is.</p>
+                    
+                    <p>To keep up with AI, I run an <span class="highlight-term">RSS reader</span> with AI automation 24/7. It delivers every newsletter and blog post from 30+ sources I curated: the system works exactly as designed.</p>
+                    
+                    <p>But it only covers what I already know.</p>
+                    
+                    <div class="quote-box">
                         "The real gap is the sources I don't know to follow yet. If I miss a few weeks, that blind spot turns into 3–5 hours of catch‑up just to get back to speed."
                     </div>
-<p>RSS only monitors sources I've manually added. If a breakthrough gets published on a blog I've never heard of, or discussed in a paper from a researcher I don't follow, or mentioned in a newsletter I'm not subscribed to—I miss it completely.</p>
-</div>
-</div>
-<div class="content-right">
-<h2 class="section-title">解析與評論</h2>
-<div class="box-key">
-<div class="box-title">關鍵術語 Key Terms</div>
-<p><strong>RSS (Really Simple Syndication, 簡易資訊聚合)</strong>：一種標準化的內容訂閱格式，讓用戶可以訂閱特定網站的更新。就像訂報紙一樣，但只有你選擇訂閱的報紙才會送到你家。</p>
-<p style="margin-top:10px;"><strong>Blind Spot (盲點)</strong>：你不知道自己不知道的資訊來源。這是資訊焦慮的根源——你無法訂閱一個你根本不知道存在的部落格。</p>
-</div>
-<div class="box-analogy">
-<div class="box-title">比喻說明 Analogy</div>
-<p>想像你經營一家餐廳，你有一份固定的供應商名單（RSS 訂閱）。這些供應商每天準時送貨，品質穩定。</p>
-<p style="margin-top:10px;">但問題是：如果有一家新的農場種出了更好的有機蔬菜，而你根本不知道這家農場存在，你就永遠無法品嚐到這些食材。</p>
-<p style="margin-top:10px;"><strong>這篇文章要解決的問題</strong>：建立一個「食材偵察員」，主動出去探索整個市場，找到你從未聽過但可能對你有價值的供應商。</p>
-</div>
-<div class="key-note-box">
-<div class="box-title">重點提示 Key Insight</div>
-<p>作者點出了一個關鍵區別：</p>
-<ul>
-<li><strong>RSS = Known Network (已知網絡)</strong>：被動監控你已經知道的來源</li>
-<li><strong>AI Agent = Discovery Engine (發現引擎)</strong>：主動搜尋整個網路，找到你不知道存在的資訊</li>
-</ul>
-<p style="margin-top:10px;">這不是二選一，而是兩者互補。你需要 RSS 來追蹤固定來源，也需要 AI Agent 來發現新來源。</p>
-</div>
-</div>
-</div>
-<!-- Section 2: System Architecture -->
-<div class="grid-row" id="section2">
-<div class="content-left">
-<h2 class="section-title">原文：系統架構</h2>
-<div class="content-left">
-<p>By the time you finish implementing this system, you'll have a fully automated AI news agent that:</p>
-<ul>
-<li><strong>Searches intelligently across the entire internet</strong> - Not limited to RSS feeds or pre-selected sources. Perplexity AI actively searches based on your custom topics and queries.</li>
-<li><strong>Stores everything in organized Google Sheets</strong> - Every research finding gets logged with metadata (source, date, topic, relevance score).</li>
-<li><strong>Sends weekly intelligence summaries to your email</strong> - OpenAI analyzes your accumulated findings and generates one clean summary email.</li>
-<li><strong>Runs completely on autopilot</strong> - Webhook trigger in Make.com kicks off the entire workflow.</li>
-<li><strong>Costs almost nothing to operate</strong> - Runs free within Make.com's limits. Perplexity and OpenAI API costs typically under $3-5 monthly.</li>
-</ul>
-<p><strong>Prerequisites you'll need:</strong></p>
-<ul>
-<li>Make.com account (free tier works)</li>
-<li>Perplexity API access (minimum $5 in token credits)</li>
-<li>OpenAI API key (minimum $5 in token credits)</li>
-<li>Google Sheets (free)</li>
-<li>Gmail account</li>
-</ul>
-<p><strong>Time to implement:</strong> 30-45 minutes for initial setup.</p>
-</div>
-</div>
-<div class="content-right">
-<h2 class="section-title">解析與評論</h2>
-<div class="architecture-diagram">
-<p style="font-weight:700; margin-bottom:15px;">系統流程圖 System Architecture</p>
-<div class="diagram-flow">
-<div class="diagram-box">Email 觸發<br/>(Mailhook)</div>
-<span class="diagram-arrow">→</span>
-<div class="diagram-box">Perplexity<br/>搜尋研究</div>
-<span class="diagram-arrow">→</span>
-<div class="diagram-box">Google Sheets<br/>資料儲存</div>
-<span class="diagram-arrow">→</span>
-<div class="diagram-box">OpenAI<br/>摘要分析</div>
-<span class="diagram-arrow">→</span>
-<div class="diagram-box">Gmail<br/>發送報告</div>
-</div>
-</div>
-<div class="box-key">
-<div class="box-title">關鍵術語 Key Terms</div>
-<p><strong>Webhook (網路掛鉤)</strong>：一種讓不同應用程式之間自動傳遞資訊的機制。當某個事件發生（例如收到 Email），就會自動觸發另一個動作。</p>
-<p style="margin-top:10px;"><strong>API (Application Programming Interface, 應用程式介面)</strong>：讓不同軟體可以「對話」的標準化方式。Perplexity API 讓你可以用程式的方式使用 Perplexity 的搜尋功能。</p>
-<p style="margin-top:10px;"><strong>Token (代幣)</strong>：AI API 計費的基本單位。大約每 4 個英文字母 = 1 個 token。中文每個字約 2-3 個 token。</p>
-</div>
-<div class="box-analogy">
-<div class="box-title">比喻說明 Analogy</div>
-<p>這個系統就像一家公司的情報部門：</p>
-<ul>
-<li><strong>Mailhook</strong> = 總經理的指令（「去調查這個主題」）</li>
-<li><strong>Perplexity</strong> = 外勤情報員（出去實地調查、蒐集資料）</li>
-<li><strong>Google Sheets</strong> = 檔案室（整理歸檔所有蒐集到的情報）</li>
-<li><strong>OpenAI</strong> = 分析師（閱讀所有情報，寫出摘要報告）</li>
-<li><strong>Gmail</strong> = 秘書（把報告送到老闆桌上）</li>
-</ul>
-</div>
-<div class="formula-box">
-<div class="box-title">成本估算 Cost Calculation</div>
-<p>每月營運成本：</p>
-<ul>
-<li>Make.com: $0（免費額度內）或 $9/月</li>
-<li>Perplexity API: ~$2-3/月（假設每週 5-10 次查詢）</li>
-<li>OpenAI API: ~$1-2/月（每週 1 次摘要）</li>
-</ul>
-<p style="margin-top:10px;"><strong>總計：$3-15/月</strong>，但節省每週 3-5 小時 = 每月 12-20 小時</p>
-<p style="margin-top:10px;">如果你的時薪是 $50，這系統每月幫你「賺回」$600-1000 的時間價值。</p>
-</div>
-</div>
-</div>
-<!-- Section 3: Scenario 1 - Data Collection -->
-<div class="grid-row" id="section3">
-<div class="content-left">
-<h2 class="section-title">原文：Scenario 1 資料收集</h2>
-<div class="content-left">
-<p>The goal of this scenario is to begin requesting information from Perplexity to collect the data. We start this workflow with a <span class="highlight-term">Mailhook module</span>.</p>
-<p><strong>Step 1: Use Mailhook to start your research</strong></p>
-<p>This automation begins by triggering a Mailhook and sending the request to Perplexity as the next module. You need to write your request in the email body. For example: "Research New AI tools this week."</p>
-<p><strong>Step 2: Perplexity to start researching</strong></p>
-<p>I chose Perplexity because it's great at deep research, scouring the internet to find relevant information based on your queries.</p>
-<p>Key configuration fields:</p>
-<ul>
-<li><strong>Model:</strong> Choose "Sonar Pro" first. For more complex research, use Sonar Reasoning or Sonar Deep Research.</li>
-<li><strong>Max tokens:</strong> Set to 10,000</li>
-<li><strong>Web Search Options:</strong> Tweak between Medium and High</li>
-</ul>
-<p><strong>Step 3: Text Parser to fix JSON</strong></p>
-<p>Sometimes Perplexity returns output with leading "json" that breaks Google Sheets import. This module removes it.</p>
-<p><strong>Step 4: JSON Parse module</strong></p>
-<p>Parse the corrected JSON for downstream processing.</p>
-<p><strong>Step 5: Send to Google Sheets</strong></p>
-<p>Use Google Sheets: Bulk Add Rows (Advanced) to add all results.</p>
-</div>
-</div>
-<div class="content-right">
-<h2 class="section-title">解析與評論</h2>
-<div class="workflow-step" data-step="1">
-<strong>Mailhook 觸發器</strong><br/>
+                    
+                    <p>RSS only monitors sources I've manually added. If a breakthrough gets published on a blog I've never heard of, or discussed in a paper from a researcher I don't follow, or mentioned in a newsletter I'm not subscribed to—I miss it completely.</p>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <h2 class="section-title">解析與評論</h2>
+                
+                <div class="key-term-box">
+                    <div class="box-title">關鍵術語 Key Terms</div>
+                    <p><strong>RSS (Really Simple Syndication, 簡易資訊聚合)</strong>：一種標準化的內容訂閱格式，讓用戶可以訂閱特定網站的更新。就像訂報紙一樣，但只有你選擇訂閱的報紙才會送到你家。</p>
+                    <p style="margin-top:10px;"><strong>Blind Spot (盲點)</strong>：你不知道自己不知道的資訊來源。這是資訊焦慮的根源——你無法訂閱一個你根本不知道存在的部落格。</p>
+                </div>
+                
+                <div class="analogy-box">
+                    <div class="box-title">比喻說明 Analogy</div>
+                    <p>想像你經營一家餐廳，你有一份固定的供應商名單（RSS 訂閱）。這些供應商每天準時送貨，品質穩定。</p>
+                    <p style="margin-top:10px;">但問題是：如果有一家新的農場種出了更好的有機蔬菜，而你根本不知道這家農場存在，你就永遠無法品嚐到這些食材。</p>
+                    <p style="margin-top:10px;"><strong>這篇文章要解決的問題</strong>：建立一個「食材偵察員」，主動出去探索整個市場，找到你從未聽過但可能對你有價值的供應商。</p>
+                </div>
+                
+                <div class="key-note-box">
+                    <div class="box-title">重點提示 Key Insight</div>
+                    <p>作者點出了一個關鍵區別：</p>
+                    <ul>
+                        <li><strong>RSS = Known Network (已知網絡)</strong>：被動監控你已經知道的來源</li>
+                        <li><strong>AI Agent = Discovery Engine (發現引擎)</strong>：主動搜尋整個網路，找到你不知道存在的資訊</li>
+                    </ul>
+                    <p style="margin-top:10px;">這不是二選一，而是兩者互補。你需要 RSS 來追蹤固定來源，也需要 AI Agent 來發現新來源。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: System Architecture -->
+        <div id="section2" class="grid-row">
+            <div class="left-column">
+                <h2 class="section-title">原文：系統架構</h2>
+                <div class="original-content">
+                    <p>By the time you finish implementing this system, you'll have a fully automated AI news agent that:</p>
+                    
+                    <ul>
+                        <li><strong>Searches intelligently across the entire internet</strong> - Not limited to RSS feeds or pre-selected sources. Perplexity AI actively searches based on your custom topics and queries.</li>
+                        <li><strong>Stores everything in organized Google Sheets</strong> - Every research finding gets logged with metadata (source, date, topic, relevance score).</li>
+                        <li><strong>Sends weekly intelligence summaries to your email</strong> - OpenAI analyzes your accumulated findings and generates one clean summary email.</li>
+                        <li><strong>Runs completely on autopilot</strong> - Webhook trigger in Make.com kicks off the entire workflow.</li>
+                        <li><strong>Costs almost nothing to operate</strong> - Runs free within Make.com's limits. Perplexity and OpenAI API costs typically under $3-5 monthly.</li>
+                    </ul>
+                    
+                    <p><strong>Prerequisites you'll need:</strong></p>
+                    <ul>
+                        <li>Make.com account (free tier works)</li>
+                        <li>Perplexity API access (minimum $5 in token credits)</li>
+                        <li>OpenAI API key (minimum $5 in token credits)</li>
+                        <li>Google Sheets (free)</li>
+                        <li>Gmail account</li>
+                    </ul>
+                    
+                    <p><strong>Time to implement:</strong> 30-45 minutes for initial setup.</p>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <h2 class="section-title">解析與評論</h2>
+                
+                <div class="architecture-diagram">
+                    <p style="font-weight:700; margin-bottom:15px;">系統流程圖 System Architecture</p>
+                    <div class="diagram-flow">
+                        <div class="diagram-box">Email 觸發<br>(Mailhook)</div>
+                        <span class="diagram-arrow">→</span>
+                        <div class="diagram-box">Perplexity<br>搜尋研究</div>
+                        <span class="diagram-arrow">→</span>
+                        <div class="diagram-box">Google Sheets<br>資料儲存</div>
+                        <span class="diagram-arrow">→</span>
+                        <div class="diagram-box">OpenAI<br>摘要分析</div>
+                        <span class="diagram-arrow">→</span>
+                        <div class="diagram-box">Gmail<br>發送報告</div>
+                    </div>
+                </div>
+                
+                <div class="key-term-box">
+                    <div class="box-title">關鍵術語 Key Terms</div>
+                    <p><strong>Webhook (網路掛鉤)</strong>：一種讓不同應用程式之間自動傳遞資訊的機制。當某個事件發生（例如收到 Email），就會自動觸發另一個動作。</p>
+                    <p style="margin-top:10px;"><strong>API (Application Programming Interface, 應用程式介面)</strong>：讓不同軟體可以「對話」的標準化方式。Perplexity API 讓你可以用程式的方式使用 Perplexity 的搜尋功能。</p>
+                    <p style="margin-top:10px;"><strong>Token (代幣)</strong>：AI API 計費的基本單位。大約每 4 個英文字母 = 1 個 token。中文每個字約 2-3 個 token。</p>
+                </div>
+                
+                <div class="analogy-box">
+                    <div class="box-title">比喻說明 Analogy</div>
+                    <p>這個系統就像一家公司的情報部門：</p>
+                    <ul>
+                        <li><strong>Mailhook</strong> = 總經理的指令（「去調查這個主題」）</li>
+                        <li><strong>Perplexity</strong> = 外勤情報員（出去實地調查、蒐集資料）</li>
+                        <li><strong>Google Sheets</strong> = 檔案室（整理歸檔所有蒐集到的情報）</li>
+                        <li><strong>OpenAI</strong> = 分析師（閱讀所有情報，寫出摘要報告）</li>
+                        <li><strong>Gmail</strong> = 秘書（把報告送到老闆桌上）</li>
+                    </ul>
+                </div>
+                
+                <div class="formula-box">
+                    <div class="box-title">成本估算 Cost Calculation</div>
+                    <p>每月營運成本：</p>
+                    <ul>
+                        <li>Make.com: $0（免費額度內）或 $9/月</li>
+                        <li>Perplexity API: ~$2-3/月（假設每週 5-10 次查詢）</li>
+                        <li>OpenAI API: ~$1-2/月（每週 1 次摘要）</li>
+                    </ul>
+                    <p style="margin-top:10px;"><strong>總計：$3-15/月</strong>，但節省每週 3-5 小時 = 每月 12-20 小時</p>
+                    <p style="margin-top:10px;">如果你的時薪是 $50，這系統每月幫你「賺回」$600-1000 的時間價值。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Scenario 1 - Data Collection -->
+        <div id="section3" class="grid-row">
+            <div class="left-column">
+                <h2 class="section-title">原文：Scenario 1 資料收集</h2>
+                <div class="original-content">
+                    <p>The goal of this scenario is to begin requesting information from Perplexity to collect the data. We start this workflow with a <span class="highlight-term">Mailhook module</span>.</p>
+                    
+                    <p><strong>Step 1: Use Mailhook to start your research</strong></p>
+                    <p>This automation begins by triggering a Mailhook and sending the request to Perplexity as the next module. You need to write your request in the email body. For example: "Research New AI tools this week."</p>
+                    
+                    <p><strong>Step 2: Perplexity to start researching</strong></p>
+                    <p>I chose Perplexity because it's great at deep research, scouring the internet to find relevant information based on your queries.</p>
+                    
+                    <p>Key configuration fields:</p>
+                    <ul>
+                        <li><strong>Model:</strong> Choose "Sonar Pro" first. For more complex research, use Sonar Reasoning or Sonar Deep Research.</li>
+                        <li><strong>Max tokens:</strong> Set to 10,000</li>
+                        <li><strong>Web Search Options:</strong> Tweak between Medium and High</li>
+                    </ul>
+                    
+                    <p><strong>Step 3: Text Parser to fix JSON</strong></p>
+                    <p>Sometimes Perplexity returns output with leading "json" that breaks Google Sheets import. This module removes it.</p>
+                    
+                    <p><strong>Step 4: JSON Parse module</strong></p>
+                    <p>Parse the corrected JSON for downstream processing.</p>
+                    
+                    <p><strong>Step 5: Send to Google Sheets</strong></p>
+                    <p>Use Google Sheets: Bulk Add Rows (Advanced) to add all results.</p>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <h2 class="section-title">解析與評論</h2>
+                
+                <div class="workflow-step" data-step="1">
+                    <strong>Mailhook 觸發器</strong><br>
                     這就像一個私人信箱地址。當你發 Email 到這個地址，Make.com 就知道要開始執行自動化流程。這個設計的好處是：你可以從手機、電腦、任何地方隨時觸發研究。
                 </div>
-<div class="workflow-step" data-step="2">
-<strong>Perplexity 搜尋</strong><br/>
+                
+                <div class="workflow-step" data-step="2">
+                    <strong>Perplexity 搜尋</strong><br>
                     Perplexity 的優勢在於它不只是關鍵字搜尋，而是會「理解」你的問題，然後去網路上找相關資訊並整合。這比傳統 Google 搜尋更接近「研究助理」的功能。
                 </div>
-<div class="workflow-step" data-step="3">
-<strong>JSON 清理</strong><br/>
+                
+                <div class="workflow-step" data-step="3">
+                    <strong>JSON 清理</strong><br>
                     這是一個常見的技術問題：AI 有時會在 JSON 前面加上 "```json" 這樣的標記。這個步驟用 Regex (正規表達式) 來清除這些多餘的字元。
                 </div>
-<div class="box-key">
-<div class="box-title">關鍵術語 Key Terms</div>
-<p><strong>JSON (JavaScript Object Notation)</strong>：一種資料交換格式，用花括號 {} 和方括號 [] 來組織資料。它是現代 API 最常用的資料格式，因為它既人類可讀，又容易被程式處理。</p>
-<p style="margin-top:10px;"><strong>Regex (Regular Expression, 正規表達式)</strong>：一種用來描述文字模式的語言。例如 <code>```json\s*|\s*```</code> 這個 pattern 可以找到並移除 JSON 前後的標記。</p>
-</div>
-<div class="box-analogy">
-<div class="box-title">比喻說明 Analogy</div>
-<p>想像 Perplexity 是一位超強的研究員。你給他一個任務（「調查本週的 AI 新工具」），他就會：</p>
-<ol>
-<li>去圖書館（整個網路）</li>
-<li>找到相關的書籍和論文</li>
-<li>閱讀並理解內容</li>
-<li>寫成一份結構化的報告（JSON 格式）</li>
-</ol>
-<p style="margin-top:10px;">JSON 清理這步就像是：研究員交報告時，有時會用信封裝著（加上 ```json 標記）。我們需要拆開信封，只保留報告本身。</p>
-</div>
-<div class="key-note-box">
-<div class="box-title">重點提示 Key Insight</div>
-<p><strong>為什麼選擇 Perplexity 而不是直接用 ChatGPT？</strong></p>
-<p>Perplexity 專門為「即時網路搜尋」設計。ChatGPT 雖然也能搜尋，但 Perplexity 在以下方面更強：</p>
-<ul>
-<li>更新更快（幾乎即時）</li>
-<li>來源引用更完整</li>
-<li>專為研究任務優化</li>
-<li>API 成本較低</li>
-</ul>
-</div>
-</div>
-</div>
-<!-- Section 4: Perplexity Prompts Deep Dive -->
-<div class="grid-row" id="section4">
-<div class="content-left">
-<h2 class="section-title">原文：System Prompt 核心邏輯</h2>
-<div class="content-left">
-<p>The system prompt is the agent's brain. It tells Perplexity: "You're not just finding AI news - you're filtering signal from noise for people who actually USE AI tools, not just read about them."</p>
-<p><strong>EVALUATION CRITERIA:</strong></p>
-<ul>
-<li>Practical implementation potential for knowledge workers</li>
-<li>Integration possibilities with existing workflows</li>
-<li>Actual availability and accessibility (not vaporware)</li>
-<li>Relevance to AI-augmented thinking, productivity, or learning</li>
-</ul>
-<p><strong>CATEGORIZATION FRAMEWORK:</strong></p>
-<ul>
-<li>"Tool Mastery" = Specific AI tools/platforms</li>
-<li>"Workflow Mastery" = AI integration into daily work</li>
-<li>"Thinking Mastery" = AI as cognitive partner</li>
-<li>"Industry News" = Company announcements, funding</li>
-<li>"Research" = Academic papers, benchmarks</li>
-</ul>
-<p><strong>RELEVANCE SCORING GUIDE:</strong></p>
-<ul>
-<li>10 = Game-changing tool/feature available RIGHT NOW</li>
-<li>9 = High-value feature launching within days/weeks</li>
-<li>8 = Significant improvement with clear use case</li>
-<li>7 = Interesting new capability with medium-term relevance</li>
-<li>6 = Notable development worth tracking</li>
-<li>5 = Industry news with indirect impact</li>
-<li>4-1 = Decreasing relevance</li>
-</ul>
-</div>
-</div>
-<div class="content-right">
-<h2 class="section-title">解析與評論</h2>
-<div class="box-key">
-<div class="box-title">關鍵術語 Key Terms</div>
-<p><strong>System Prompt vs User Prompt</strong></p>
-<ul>
-<li><strong>System Prompt (系統提示)</strong>：定義 AI 的「人格」和「工作方式」。這是永久性的指令，告訴 AI「你是誰」以及「你應該如何思考」。</li>
-<li><strong>User Prompt (用戶提示)</strong>：每次互動時給的具體任務。這是「做什麼」的指令。</li>
-</ul>
-<p style="margin-top:10px;"><strong>Vaporware (畫餅軟體)</strong>：指那些被大肆宣傳但實際上還不存在或無法使用的產品。這個詞提醒我們要專注於「真正可用」的工具。</p>
-</div>
-<div class="box-analogy">
-<div class="box-title">比喻說明 Analogy</div>
-<p>System Prompt 和 User Prompt 的關係，就像是：</p>
-<p style="margin-top:10px;"><strong>System Prompt = 員工手冊</strong>：定義公司文化、工作標準、評估準則。員工入職時就要學會，之後每次工作都遵循這些原則。</p>
-<p style="margin-top:10px;"><strong>User Prompt = 每日工作指令</strong>：今天要完成什麼任務、要調查什麼主題。</p>
-<p style="margin-top:10px;">這個設計的優點是：你可以改變「做什麼」（User Prompt），但不需要重新教 AI「怎麼做」（System Prompt）。</p>
-</div>
-<div class="comparison-table">
-<table>
-<tr>
-<th>分數</th>
-<th>意義</th>
-<th>範例</th>
-</tr>
-<tr>
-<td>10</td>
-<td>現在就能用的革命性功能</td>
-<td>Claude 推出 100 萬 token 上下文</td>
-</tr>
-<tr>
-<td>8-9</td>
-<td>即將推出的高價值功能</td>
-<td>GPT-5 下月發布</td>
-</tr>
-<tr>
-<td>6-7</td>
-<td>中期相關的有趣發展</td>
-<td>公司公布產品路線圖</td>
-</tr>
-<tr>
-<td>4-5</td>
-<td>值得知道但不緊急</td>
-<td>AI 公司獲得新融資</td>
-</tr>
-<tr>
-<td>1-3</td>
-<td>相關性低或純投機</td>
-<td>純學術論文、遠期規劃</td>
-</tr>
-</table>
-</div>
-<div class="key-note-box">
-<div class="box-title">重點提示 Key Insight</div>
-<p><strong>Relevance Score 的設計智慧</strong></p>
-<p>這個評分系統回答了一個核心問題：「這條消息對我的『現在』有多重要？」</p>
-<p style="margin-top:10px;">注意分數的邏輯：越是「立即可用」分數越高，越是「未來可能」分數越低。這反映了一個實用主義原則：資訊的價值與你能多快行動成正比。</p>
-</div>
-</div>
-</div>
-<!-- Section 5: Scenario 2 - Summary Generation -->
-<div class="grid-row" id="section5">
-<div class="content-left">
-<h2 class="section-title">原文：Scenario 2 摘要生成</h2>
-<div class="content-left">
-<p><strong>Step 1: Get the data from Google Sheets</strong></p>
-<p>Filter and get data using Google Sheets: Search Rows (Advanced). The query returns rows where:</p>
-<ul>
-<li>The date falls within the last 7 days</li>
-<li>The relevance score is greater than or equal to 7</li>
-</ul>
-<p><strong>SQL-like Query:</strong></p>
-<div class="code-block">
-where C &gt;= date 'YYYY-MM-DD' 
-and C &lt;= date 'YYYY-MM-DD' 
-and E &gt;= 7 
+                
+                <div class="key-term-box">
+                    <div class="box-title">關鍵術語 Key Terms</div>
+                    <p><strong>JSON (JavaScript Object Notation)</strong>：一種資料交換格式，用花括號 {} 和方括號 [] 來組織資料。它是現代 API 最常用的資料格式，因為它既人類可讀，又容易被程式處理。</p>
+                    <p style="margin-top:10px;"><strong>Regex (Regular Expression, 正規表達式)</strong>：一種用來描述文字模式的語言。例如 <code>```json\s*|\s*```</code> 這個 pattern 可以找到並移除 JSON 前後的標記。</p>
+                </div>
+                
+                <div class="analogy-box">
+                    <div class="box-title">比喻說明 Analogy</div>
+                    <p>想像 Perplexity 是一位超強的研究員。你給他一個任務（「調查本週的 AI 新工具」），他就會：</p>
+                    <ol>
+                        <li>去圖書館（整個網路）</li>
+                        <li>找到相關的書籍和論文</li>
+                        <li>閱讀並理解內容</li>
+                        <li>寫成一份結構化的報告（JSON 格式）</li>
+                    </ol>
+                    <p style="margin-top:10px;">JSON 清理這步就像是：研究員交報告時，有時會用信封裝著（加上 ```json 標記）。我們需要拆開信封，只保留報告本身。</p>
+                </div>
+                
+                <div class="key-note-box">
+                    <div class="box-title">重點提示 Key Insight</div>
+                    <p><strong>為什麼選擇 Perplexity 而不是直接用 ChatGPT？</strong></p>
+                    <p>Perplexity 專門為「即時網路搜尋」設計。ChatGPT 雖然也能搜尋，但 Perplexity 在以下方面更強：</p>
+                    <ul>
+                        <li>更新更快（幾乎即時）</li>
+                        <li>來源引用更完整</li>
+                        <li>專為研究任務優化</li>
+                        <li>API 成本較低</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Perplexity Prompts Deep Dive -->
+        <div id="section4" class="grid-row">
+            <div class="left-column">
+                <h2 class="section-title">原文：System Prompt 核心邏輯</h2>
+                <div class="original-content">
+                    <p>The system prompt is the agent's brain. It tells Perplexity: "You're not just finding AI news - you're filtering signal from noise for people who actually USE AI tools, not just read about them."</p>
+                    
+                    <p><strong>EVALUATION CRITERIA:</strong></p>
+                    <ul>
+                        <li>Practical implementation potential for knowledge workers</li>
+                        <li>Integration possibilities with existing workflows</li>
+                        <li>Actual availability and accessibility (not vaporware)</li>
+                        <li>Relevance to AI-augmented thinking, productivity, or learning</li>
+                    </ul>
+                    
+                    <p><strong>CATEGORIZATION FRAMEWORK:</strong></p>
+                    <ul>
+                        <li>"Tool Mastery" = Specific AI tools/platforms</li>
+                        <li>"Workflow Mastery" = AI integration into daily work</li>
+                        <li>"Thinking Mastery" = AI as cognitive partner</li>
+                        <li>"Industry News" = Company announcements, funding</li>
+                        <li>"Research" = Academic papers, benchmarks</li>
+                    </ul>
+                    
+                    <p><strong>RELEVANCE SCORING GUIDE:</strong></p>
+                    <ul>
+                        <li>10 = Game-changing tool/feature available RIGHT NOW</li>
+                        <li>9 = High-value feature launching within days/weeks</li>
+                        <li>8 = Significant improvement with clear use case</li>
+                        <li>7 = Interesting new capability with medium-term relevance</li>
+                        <li>6 = Notable development worth tracking</li>
+                        <li>5 = Industry news with indirect impact</li>
+                        <li>4-1 = Decreasing relevance</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <h2 class="section-title">解析與評論</h2>
+                
+                <div class="key-term-box">
+                    <div class="box-title">關鍵術語 Key Terms</div>
+                    <p><strong>System Prompt vs User Prompt</strong></p>
+                    <ul>
+                        <li><strong>System Prompt (系統提示)</strong>：定義 AI 的「人格」和「工作方式」。這是永久性的指令，告訴 AI「你是誰」以及「你應該如何思考」。</li>
+                        <li><strong>User Prompt (用戶提示)</strong>：每次互動時給的具體任務。這是「做什麼」的指令。</li>
+                    </ul>
+                    <p style="margin-top:10px;"><strong>Vaporware (畫餅軟體)</strong>：指那些被大肆宣傳但實際上還不存在或無法使用的產品。這個詞提醒我們要專注於「真正可用」的工具。</p>
+                </div>
+                
+                <div class="analogy-box">
+                    <div class="box-title">比喻說明 Analogy</div>
+                    <p>System Prompt 和 User Prompt 的關係，就像是：</p>
+                    <p style="margin-top:10px;"><strong>System Prompt = 員工手冊</strong>：定義公司文化、工作標準、評估準則。員工入職時就要學會，之後每次工作都遵循這些原則。</p>
+                    <p style="margin-top:10px;"><strong>User Prompt = 每日工作指令</strong>：今天要完成什麼任務、要調查什麼主題。</p>
+                    <p style="margin-top:10px;">這個設計的優點是：你可以改變「做什麼」（User Prompt），但不需要重新教 AI「怎麼做」（System Prompt）。</p>
+                </div>
+                
+                <div class="comparison-table">
+                    <table>
+                        <tr>
+                            <th>分數</th>
+                            <th>意義</th>
+                            <th>範例</th>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>現在就能用的革命性功能</td>
+                            <td>Claude 推出 100 萬 token 上下文</td>
+                        </tr>
+                        <tr>
+                            <td>8-9</td>
+                            <td>即將推出的高價值功能</td>
+                            <td>GPT-5 下月發布</td>
+                        </tr>
+                        <tr>
+                            <td>6-7</td>
+                            <td>中期相關的有趣發展</td>
+                            <td>公司公布產品路線圖</td>
+                        </tr>
+                        <tr>
+                            <td>4-5</td>
+                            <td>值得知道但不緊急</td>
+                            <td>AI 公司獲得新融資</td>
+                        </tr>
+                        <tr>
+                            <td>1-3</td>
+                            <td>相關性低或純投機</td>
+                            <td>純學術論文、遠期規劃</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="key-note-box">
+                    <div class="box-title">重點提示 Key Insight</div>
+                    <p><strong>Relevance Score 的設計智慧</strong></p>
+                    <p>這個評分系統回答了一個核心問題：「這條消息對我的『現在』有多重要？」</p>
+                    <p style="margin-top:10px;">注意分數的邏輯：越是「立即可用」分數越高，越是「未來可能」分數越低。這反映了一個實用主義原則：資訊的價值與你能多快行動成正比。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Scenario 2 - Summary Generation -->
+        <div id="section5" class="grid-row">
+            <div class="left-column">
+                <h2 class="section-title">原文：Scenario 2 摘要生成</h2>
+                <div class="original-content">
+                    <p><strong>Step 1: Get the data from Google Sheets</strong></p>
+                    <p>Filter and get data using Google Sheets: Search Rows (Advanced). The query returns rows where:</p>
+                    <ul>
+                        <li>The date falls within the last 7 days</li>
+                        <li>The relevance score is greater than or equal to 7</li>
+                    </ul>
+                    
+                    <p><strong>SQL-like Query:</strong></p>
+                    <div class="code-block">
+where C >= date 'YYYY-MM-DD' 
+and C <= date 'YYYY-MM-DD' 
+and E >= 7 
 order by E desc
                     </div>
-<p><strong>Step 2: Aggregate all data into Array</strong></p>
-<p>Bundle all selected rows into an array for downstream processing.</p>
-<p><strong>Step 3: OpenAI to summarize</strong></p>
-<p>The prompt transforms raw data into actionable insights by identifying patterns, connections, and emerging trends.</p>
-<p><strong>Output Structure:</strong></p>
-<ol>
-<li>Opening Hook (1-2 sentences)</li>
-<li>The Big Picture (2-3 paragraphs)</li>
-<li>Must-Know This Week (3-5 developments)</li>
-<li>Good-to-Know (3-5 developments)</li>
-<li>Pattern Spotlight (2-3 paragraphs)</li>
-<li>Funding &amp; Industry Moves</li>
-<li>Tools Worth Trying</li>
-<li>Newsletter Topic Ideas</li>
-</ol>
-<p><strong>Step 4: Send to Gmail</strong></p>
-<p>Set the whole scenario to run once a week, every Monday morning at 7 AM.</p>
-</div>
-</div>
-<div class="content-right">
-<h2 class="section-title">解析與評論</h2>
-<div class="box-key">
-<div class="box-title">關鍵術語 Key Terms</div>
-<p><strong>SQL-like Query (類 SQL 查詢)</strong>：Google Sheets API 支援類似資料庫查詢的語法。這裡用的 WHERE、AND、ORDER BY 都是標準 SQL 關鍵字。</p>
-<p style="margin-top:10px;"><strong>Array Aggregation (陣列聚合)</strong>：將多筆資料合併成一個陣列，方便一次性傳給下游處理。這樣 OpenAI 可以「看到全貌」再做分析。</p>
-</div>
-<div class="box-analogy">
-<div class="box-title">比喻說明 Analogy</div>
-<p>Scenario 2 就像一位資深編輯在做週報：</p>
-<ol>
-<li><strong>Step 1 (篩選)</strong>：從檔案櫃中拿出本週的文件，只挑選評分 7 分以上的</li>
-<li><strong>Step 2 (整理)</strong>：把所有文件放在桌上，讓編輯可以一次看完</li>
-<li><strong>Step 3 (寫作)</strong>：編輯閱讀所有資料，找出模式，寫成一篇有洞察的報告</li>
-<li><strong>Step 4 (發送)</strong>：把報告寄給老闆</li>
-</ol>
-</div>
-<div class="key-note-box">
-<div class="box-title">重點提示 Key Insight</div>
-<p><strong>為什麼 OpenAI 的 Prompt 如此複雜？</strong></p>
-<p>這個 prompt 的設計目標不是「列出本週新聞」，而是「像資深分析師一樣思考」。它要求 OpenAI：</p>
-<ul>
-<li><strong>Pattern Recognition</strong>：找出多家公司在解決類似問題</li>
-<li><strong>Relationship Mapping</strong>：分析競爭動態、生態系佈局</li>
-<li><strong>Signal vs Noise</strong>：區分真正創新 vs 純粹炒作</li>
-</ul>
-<p style="margin-top:10px;">這就是 Prompt Engineering 的精髓：你不是在「使用 AI」，而是在「訓練一個專家」。</p>
-</div>
-<div class="application-box">
-<div class="box-title">實務應用 Practical Application</div>
-<p><strong>報告結構設計的智慧：</strong></p>
-<ul>
-<li><strong>Opening Hook</strong>：用最吸引人的發現開場，決定讀者會不會繼續讀</li>
-<li><strong>Must-Know vs Good-to-Know</strong>：幫忙讀者判斷優先順序</li>
-<li><strong>Pattern Spotlight</strong>：這是分析師的核心價值——看到別人看不到的連結</li>
-<li><strong>Newsletter Topic Ideas</strong>：如果你是內容創作者，這直接給你內容靈感</li>
-</ul>
-</div>
-</div>
-</div>
-<!-- Section 6: Customization -->
-<div class="grid-row" id="section6">
-<div class="content-left">
-<h2 class="section-title">原文：客製化應用</h2>
-<div class="content-left">
-<p><strong>For Content Creators: Track Your Niche</strong></p>
-<p>Modify the Perplexity queries to focus on your domain:</p>
-<ul>
-<li>"AI marketing tools launched this week"</li>
-<li>"AI productivity apps for knowledge workers"</li>
-<li>"AI automation tools for consultants"</li>
-</ul>
-<p><strong>For Consultants: Monitor Client Industries</strong></p>
-<p>Configure multiple agents to track different industries simultaneously:</p>
-<ul>
-<li>Agent 1: Financial services AI developments</li>
-<li>Agent 2: Healthcare AI applications</li>
-<li>Agent 3: Legal tech AI tools</li>
-<li>Agent 4: AI regulatory changes</li>
-</ul>
-<p><strong>For Investors: Track Funding and Market Movements</strong></p>
-<p>Configure the agent as a deal flow monitor:</p>
-<ul>
-<li>"Startup funding announcements this week"</li>
-<li>"AI company acquisitions and valuations"</li>
-<li>"Notable AI product launches with traction"</li>
-</ul>
-</div>
-</div>
-<div class="content-right">
-<h2 class="section-title">解析與評論</h2>
-<div class="comparison-table">
-<table>
-<tr>
-<th>使用者類型</th>
-<th>客製化方向</th>
-<th>關鍵調整</th>
-</tr>
-<tr>
-<td>內容創作者</td>
-<td>追蹤特定領域</td>
-<td>修改 User Prompt 的查詢主題</td>
-</tr>
-<tr>
-<td>顧問</td>
-<td>多產業平行監控</td>
-<td>複製多個 Scenario 1，各自追蹤不同產業</td>
-</tr>
-<tr>
-<td>投資人</td>
-<td>Deal Flow 監控</td>
-<td>強化 funding 相關的評分邏輯</td>
-</tr>
-</table>
-</div>
-<div class="box-analogy">
-<div class="box-title">比喻說明 Analogy</div>
-<p>這個系統就像一台「可程式化的望遠鏡」：</p>
-<ul>
-<li><strong>基礎架構</strong>（Make.com + Perplexity + OpenAI）= 望遠鏡的光學系統，這是固定的</li>
-<li><strong>Prompt</strong> = 望遠鏡的「瞄準方向」，這是可以調整的</li>
-</ul>
-<p style="margin-top:10px;">一個天文學家可以用同一台望遠鏡觀察月球、木星、銀河。同樣地，你可以用同一套系統追蹤 AI 新聞、醫療科技、金融市場。</p>
-</div>
-<div class="key-note-box">
-<div class="box-title">重點提示 Key Insight</div>
-<p><strong>可擴展性的設計思維</strong></p>
-<p>這個系統的聰明之處在於它分離了「收集」和「分析」：</p>
-<ul>
-<li>多個 Scenario 1 可以平行運作，各自收集不同主題</li>
-<li>所有資料都匯入同一個 Google Sheet</li>
-<li>Scenario 2 可以一次分析所有主題，或分開處理</li>
-</ul>
-<p style="margin-top:10px;">這就像一家媒體公司：可以有多個記者（Scenario 1）各自跑不同線，但最後由同一個編輯部（Scenario 2）整合出刊。</p>
-</div>
-<div class="application-box">
-<div class="box-title">實務應用 Practical Application</div>
-<p><strong>進階應用場景：</strong></p>
-<ol>
-<li><strong>競爭情報</strong>：追蹤特定競爭對手的動態</li>
-<li><strong>技術偵測</strong>：監控特定技術的發展（如「量子運算應用」）</li>
-<li><strong>法規追蹤</strong>：追蹤政策和法規變化</li>
-<li><strong>人才市場</strong>：追蹤特定領域的人才流動</li>
-</ol>
-</div>
-</div>
-</div>
-<!-- Section 7: Practice Questions -->
-<div class="grid-row" id="section7">
-<div class="content-left">
-<h2 class="section-title">學習總結</h2>
-<div class="content-left">
-<p><strong>Expected results after 1 month:</strong></p>
-<ul>
-<li>3-5 hours saved weekly on research and news consumption</li>
-<li>Discovery of sources outside your RSS feeds</li>
-<li>One clean summary email instead of dozens of browser tabs</li>
-<li>No more anxiety about missing important news</li>
-</ul>
-<p><strong>The compound effect:</strong></p>
-<p>Every week it runs, your Google Sheets becomes a more valuable intelligence database. Every pattern it surfaces saves you hours of manual research. Six months from now, you'll have historical data showing how the AI landscape evolved.</p>
-<p><strong>What's next:</strong></p>
-<ul>
-<li>Scheduled multi-topic research running every morning</li>
-<li>Parallel processing with multiple agents</li>
-<li>Priority notifications for high-relevance findings</li>
-</ul>
-</div>
-</div>
-<div class="content-right">
-<h2 class="section-title">練習題與自我評估</h2>
-<div class="practice-box">
-<div class="box-title">練習思考 Practice Questions</div>
-<p><strong>問題 1：系統設計理解</strong></p>
-<p>這個系統使用兩個 Scenario（收集 vs 摘要）而不是合併成一個。請解釋這種設計的優點和可能的缺點？</p>
-<p style="margin-top:10px; color:#666; font-style:italic;">提示：思考資料累積、執行頻率、成本控制、除錯難度</p>
-<hr style="border:none; border-top:1px dashed #85c1e9; margin:15px 0;"/>
-<p><strong>問題 2：Prompt Engineering</strong></p>
-<p>System Prompt 中的「Relevance Score」採用 1-10 分制。如果你要追蹤醫療 AI 領域，你會如何修改評分標準？請舉出 10 分和 5 分的具體範例。</p>
-<p style="margin-top:10px; color:#666; font-style:italic;">提示：考慮 FDA 批准、臨床試驗、實際臨床應用</p>
-<hr style="border:none; border-top:1px dashed #85c1e9; margin:15px 0;"/>
-<p><strong>問題 3：擴展應用</strong></p>
-<p>如果你要將這個系統改造為「競品監控系統」，追蹤 3 家主要競爭對手的動態，你會如何修改架構？需要哪些額外的 module？</p>
-<p style="margin-top:10px; color:#666; font-style:italic;">提示：考慮多個 Perplexity 查詢、資料合併、警報機制</p>
-</div>
-<div class="formula-box">
-<div class="box-title">ROI 計算公式 ROI Calculation</div>
-<p><strong>每月時間節省價值：</strong></p>
-<p style="font-family: monospace; background:#fff; padding:10px; border-radius:5px; margin:10px 0;">
-                        價值 = (每週節省小時 × 4 週) × 時薪<br/>
+                    
+                    <p><strong>Step 2: Aggregate all data into Array</strong></p>
+                    <p>Bundle all selected rows into an array for downstream processing.</p>
+                    
+                    <p><strong>Step 3: OpenAI to summarize</strong></p>
+                    <p>The prompt transforms raw data into actionable insights by identifying patterns, connections, and emerging trends.</p>
+                    
+                    <p><strong>Output Structure:</strong></p>
+                    <ol>
+                        <li>Opening Hook (1-2 sentences)</li>
+                        <li>The Big Picture (2-3 paragraphs)</li>
+                        <li>Must-Know This Week (3-5 developments)</li>
+                        <li>Good-to-Know (3-5 developments)</li>
+                        <li>Pattern Spotlight (2-3 paragraphs)</li>
+                        <li>Funding & Industry Moves</li>
+                        <li>Tools Worth Trying</li>
+                        <li>Newsletter Topic Ideas</li>
+                    </ol>
+                    
+                    <p><strong>Step 4: Send to Gmail</strong></p>
+                    <p>Set the whole scenario to run once a week, every Monday morning at 7 AM.</p>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <h2 class="section-title">解析與評論</h2>
+                
+                <div class="key-term-box">
+                    <div class="box-title">關鍵術語 Key Terms</div>
+                    <p><strong>SQL-like Query (類 SQL 查詢)</strong>：Google Sheets API 支援類似資料庫查詢的語法。這裡用的 WHERE、AND、ORDER BY 都是標準 SQL 關鍵字。</p>
+                    <p style="margin-top:10px;"><strong>Array Aggregation (陣列聚合)</strong>：將多筆資料合併成一個陣列，方便一次性傳給下游處理。這樣 OpenAI 可以「看到全貌」再做分析。</p>
+                </div>
+                
+                <div class="analogy-box">
+                    <div class="box-title">比喻說明 Analogy</div>
+                    <p>Scenario 2 就像一位資深編輯在做週報：</p>
+                    <ol>
+                        <li><strong>Step 1 (篩選)</strong>：從檔案櫃中拿出本週的文件，只挑選評分 7 分以上的</li>
+                        <li><strong>Step 2 (整理)</strong>：把所有文件放在桌上，讓編輯可以一次看完</li>
+                        <li><strong>Step 3 (寫作)</strong>：編輯閱讀所有資料，找出模式，寫成一篇有洞察的報告</li>
+                        <li><strong>Step 4 (發送)</strong>：把報告寄給老闆</li>
+                    </ol>
+                </div>
+                
+                <div class="key-note-box">
+                    <div class="box-title">重點提示 Key Insight</div>
+                    <p><strong>為什麼 OpenAI 的 Prompt 如此複雜？</strong></p>
+                    <p>這個 prompt 的設計目標不是「列出本週新聞」，而是「像資深分析師一樣思考」。它要求 OpenAI：</p>
+                    <ul>
+                        <li><strong>Pattern Recognition</strong>：找出多家公司在解決類似問題</li>
+                        <li><strong>Relationship Mapping</strong>：分析競爭動態、生態系佈局</li>
+                        <li><strong>Signal vs Noise</strong>：區分真正創新 vs 純粹炒作</li>
+                    </ul>
+                    <p style="margin-top:10px;">這就是 Prompt Engineering 的精髓：你不是在「使用 AI」，而是在「訓練一個專家」。</p>
+                </div>
+                
+                <div class="application-box">
+                    <div class="box-title">實務應用 Practical Application</div>
+                    <p><strong>報告結構設計的智慧：</strong></p>
+                    <ul>
+                        <li><strong>Opening Hook</strong>：用最吸引人的發現開場，決定讀者會不會繼續讀</li>
+                        <li><strong>Must-Know vs Good-to-Know</strong>：幫忙讀者判斷優先順序</li>
+                        <li><strong>Pattern Spotlight</strong>：這是分析師的核心價值——看到別人看不到的連結</li>
+                        <li><strong>Newsletter Topic Ideas</strong>：如果你是內容創作者，這直接給你內容靈感</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Customization -->
+        <div id="section6" class="grid-row">
+            <div class="left-column">
+                <h2 class="section-title">原文：客製化應用</h2>
+                <div class="original-content">
+                    <p><strong>For Content Creators: Track Your Niche</strong></p>
+                    <p>Modify the Perplexity queries to focus on your domain:</p>
+                    <ul>
+                        <li>"AI marketing tools launched this week"</li>
+                        <li>"AI productivity apps for knowledge workers"</li>
+                        <li>"AI automation tools for consultants"</li>
+                    </ul>
+                    
+                    <p><strong>For Consultants: Monitor Client Industries</strong></p>
+                    <p>Configure multiple agents to track different industries simultaneously:</p>
+                    <ul>
+                        <li>Agent 1: Financial services AI developments</li>
+                        <li>Agent 2: Healthcare AI applications</li>
+                        <li>Agent 3: Legal tech AI tools</li>
+                        <li>Agent 4: AI regulatory changes</li>
+                    </ul>
+                    
+                    <p><strong>For Investors: Track Funding and Market Movements</strong></p>
+                    <p>Configure the agent as a deal flow monitor:</p>
+                    <ul>
+                        <li>"Startup funding announcements this week"</li>
+                        <li>"AI company acquisitions and valuations"</li>
+                        <li>"Notable AI product launches with traction"</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <h2 class="section-title">解析與評論</h2>
+                
+                <div class="comparison-table">
+                    <table>
+                        <tr>
+                            <th>使用者類型</th>
+                            <th>客製化方向</th>
+                            <th>關鍵調整</th>
+                        </tr>
+                        <tr>
+                            <td>內容創作者</td>
+                            <td>追蹤特定領域</td>
+                            <td>修改 User Prompt 的查詢主題</td>
+                        </tr>
+                        <tr>
+                            <td>顧問</td>
+                            <td>多產業平行監控</td>
+                            <td>複製多個 Scenario 1，各自追蹤不同產業</td>
+                        </tr>
+                        <tr>
+                            <td>投資人</td>
+                            <td>Deal Flow 監控</td>
+                            <td>強化 funding 相關的評分邏輯</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="analogy-box">
+                    <div class="box-title">比喻說明 Analogy</div>
+                    <p>這個系統就像一台「可程式化的望遠鏡」：</p>
+                    <ul>
+                        <li><strong>基礎架構</strong>（Make.com + Perplexity + OpenAI）= 望遠鏡的光學系統，這是固定的</li>
+                        <li><strong>Prompt</strong> = 望遠鏡的「瞄準方向」，這是可以調整的</li>
+                    </ul>
+                    <p style="margin-top:10px;">一個天文學家可以用同一台望遠鏡觀察月球、木星、銀河。同樣地，你可以用同一套系統追蹤 AI 新聞、醫療科技、金融市場。</p>
+                </div>
+                
+                <div class="key-note-box">
+                    <div class="box-title">重點提示 Key Insight</div>
+                    <p><strong>可擴展性的設計思維</strong></p>
+                    <p>這個系統的聰明之處在於它分離了「收集」和「分析」：</p>
+                    <ul>
+                        <li>多個 Scenario 1 可以平行運作，各自收集不同主題</li>
+                        <li>所有資料都匯入同一個 Google Sheet</li>
+                        <li>Scenario 2 可以一次分析所有主題，或分開處理</li>
+                    </ul>
+                    <p style="margin-top:10px;">這就像一家媒體公司：可以有多個記者（Scenario 1）各自跑不同線，但最後由同一個編輯部（Scenario 2）整合出刊。</p>
+                </div>
+                
+                <div class="application-box">
+                    <div class="box-title">實務應用 Practical Application</div>
+                    <p><strong>進階應用場景：</strong></p>
+                    <ol>
+                        <li><strong>競爭情報</strong>：追蹤特定競爭對手的動態</li>
+                        <li><strong>技術偵測</strong>：監控特定技術的發展（如「量子運算應用」）</li>
+                        <li><strong>法規追蹤</strong>：追蹤政策和法規變化</li>
+                        <li><strong>人才市場</strong>：追蹤特定領域的人才流動</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Practice Questions -->
+        <div id="section7" class="grid-row">
+            <div class="left-column">
+                <h2 class="section-title">學習總結</h2>
+                <div class="original-content">
+                    <p><strong>Expected results after 1 month:</strong></p>
+                    <ul>
+                        <li>3-5 hours saved weekly on research and news consumption</li>
+                        <li>Discovery of sources outside your RSS feeds</li>
+                        <li>One clean summary email instead of dozens of browser tabs</li>
+                        <li>No more anxiety about missing important news</li>
+                    </ul>
+                    
+                    <p><strong>The compound effect:</strong></p>
+                    <p>Every week it runs, your Google Sheets becomes a more valuable intelligence database. Every pattern it surfaces saves you hours of manual research. Six months from now, you'll have historical data showing how the AI landscape evolved.</p>
+                    
+                    <p><strong>What's next:</strong></p>
+                    <ul>
+                        <li>Scheduled multi-topic research running every morning</li>
+                        <li>Parallel processing with multiple agents</li>
+                        <li>Priority notifications for high-relevance findings</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-column">
+                <h2 class="section-title">練習題與自我評估</h2>
+                
+                <div class="practice-box">
+                    <div class="box-title">練習思考 Practice Questions</div>
+                    
+                    <p><strong>問題 1：系統設計理解</strong></p>
+                    <p>這個系統使用兩個 Scenario（收集 vs 摘要）而不是合併成一個。請解釋這種設計的優點和可能的缺點？</p>
+                    <p style="margin-top:10px; color:#666; font-style:italic;">提示：思考資料累積、執行頻率、成本控制、除錯難度</p>
+                    
+                    <hr style="border:none; border-top:1px dashed #85c1e9; margin:15px 0;">
+                    
+                    <p><strong>問題 2：Prompt Engineering</strong></p>
+                    <p>System Prompt 中的「Relevance Score」採用 1-10 分制。如果你要追蹤醫療 AI 領域，你會如何修改評分標準？請舉出 10 分和 5 分的具體範例。</p>
+                    <p style="margin-top:10px; color:#666; font-style:italic;">提示：考慮 FDA 批准、臨床試驗、實際臨床應用</p>
+                    
+                    <hr style="border:none; border-top:1px dashed #85c1e9; margin:15px 0;">
+                    
+                    <p><strong>問題 3：擴展應用</strong></p>
+                    <p>如果你要將這個系統改造為「競品監控系統」，追蹤 3 家主要競爭對手的動態，你會如何修改架構？需要哪些額外的 module？</p>
+                    <p style="margin-top:10px; color:#666; font-style:italic;">提示：考慮多個 Perplexity 查詢、資料合併、警報機制</p>
+                </div>
+                
+                <div class="formula-box">
+                    <div class="box-title">ROI 計算公式 ROI Calculation</div>
+                    <p><strong>每月時間節省價值：</strong></p>
+                    <p style="font-family: monospace; background:#fff; padding:10px; border-radius:5px; margin:10px 0;">
+                        價值 = (每週節省小時 × 4 週) × 時薪<br>
                         價值 = (4 小時 × 4) × $50 = $800/月
                     </p>
-<p><strong>每月系統成本：</strong></p>
-<p style="font-family: monospace; background:#fff; padding:10px; border-radius:5px; margin:10px 0;">
-                        成本 = Make.com + Perplexity + OpenAI<br/>
+                    <p><strong>每月系統成本：</strong></p>
+                    <p style="font-family: monospace; background:#fff; padding:10px; border-radius:5px; margin:10px 0;">
+                        成本 = Make.com + Perplexity + OpenAI<br>
                         成本 = $9 + $3 + $2 = $14/月
                     </p>
-<p><strong>ROI = ($800 - $14) / $14 = 5,614%</strong></p>
-</div>
-</div>
-</div>
-<!-- Summary Section -->
-<div class="summary-section">
-<h3>核心概念總結 Key Takeaways</h3>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 15px;">
-<div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-<strong style="color: #ffeaa7;">1. RSS vs AI Agent</strong>
-<p style="margin-top:8px; opacity:0.9;">RSS 監控已知來源，AI Agent 發現未知來源。兩者互補，不是替代關係。</p>
-</div>
-<div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-<strong style="color: #ffeaa7;">2. System vs User Prompt</strong>
-<p style="margin-top:8px; opacity:0.9;">System Prompt 定義「如何思考」，User Prompt 定義「做什麼」。分離兩者讓系統更靈活。</p>
-</div>
-<div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-<strong style="color: #ffeaa7;">3. 收集 vs 分析分離</strong>
-<p style="margin-top:8px; opacity:0.9;">Scenario 1 專注收集，Scenario 2 專注分析。這種架構更容易擴展和維護。</p>
-</div>
-<div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-<strong style="color: #ffeaa7;">4. 複利效應</strong>
-<p style="margin-top:8px; opacity:0.9;">系統運行越久，資料庫越有價值。這不只是省時間，而是在建立情報資產。</p>
-</div>
-</div>
-</div>
-<!-- Architecture Comparison -->
-<div class="grid-row">
-<div class="content-left">
-<h2 class="section-title">技術堆疊總覽</h2>
-<table class="comparison-table">
-<tr>
-<th>組件</th>
-<th>功能</th>
-<th>成本</th>
-</tr>
-<tr>
-<td>Make.com</td>
-<td>自動化協調平台</td>
-<td>$0-9/月</td>
-</tr>
-<tr>
-<td>Perplexity API</td>
-<td>即時網路搜尋與研究</td>
-<td>~$3/月</td>
-</tr>
-<tr>
-<td>OpenAI API</td>
-<td>摘要生成與模式分析</td>
-<td>~$2/月</td>
-</tr>
-<tr>
-<td>Google Sheets</td>
-<td>資料儲存與歷史記錄</td>
-<td>$0</td>
-</tr>
-<tr>
-<td>Gmail</td>
-<td>報告發送</td>
-<td>$0</td>
-</tr>
-</table>
-</div>
-<div class="content-right">
-<h2 class="section-title">學習資源</h2>
-<div class="key-note-box">
-<div class="box-title">延伸學習 Further Reading</div>
-<ul>
-<li><strong>Make.com 官方文檔</strong>：學習更多 module 的使用方式</li>
-<li><strong>Perplexity API 文檔</strong>：了解不同模型的差異（Sonar Pro vs Sonar Reasoning）</li>
-<li><strong>OpenAI Prompt Engineering Guide</strong>：深入學習 prompt 設計技巧</li>
-<li><strong>Google Sheets Query 語法</strong>：掌握更複雜的資料篩選</li>
-</ul>
-</div>
-<div class="application-box">
-<div class="box-title">下一步行動 Next Steps</div>
-<ol>
-<li>註冊 Make.com 帳號並完成基礎教學</li>
-<li>購買 Perplexity API credits ($5 起)</li>
-<li>複製 Google Sheets 模板</li>
-<li>按照文章步驟建立 Scenario 1</li>
-<li>測試並調整 prompt 符合你的需求</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<footer class="footer">
-<p>原文來源：<a href="https://www.aimakerspace.io/p/how-i-built-an-ai-agent-that-scours" style="color:#ffeaa7;">AI Maker Labs - How I Built an AI Agent That Scours the Internet for News I Actually Care About</a></p>
-<p style="margin-top:10px; opacity:0.7;">學習文檔製作：Claude AI | 此為教學用途，原文版權歸作者 Wyndo 所有</p>
-</footer>
+                    <p><strong>ROI = ($800 - $14) / $14 = 5,614%</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h3>核心概念總結 Key Takeaways</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 15px;">
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <strong style="color: #ffeaa7;">1. RSS vs AI Agent</strong>
+                    <p style="margin-top:8px; opacity:0.9;">RSS 監控已知來源，AI Agent 發現未知來源。兩者互補，不是替代關係。</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <strong style="color: #ffeaa7;">2. System vs User Prompt</strong>
+                    <p style="margin-top:8px; opacity:0.9;">System Prompt 定義「如何思考」，User Prompt 定義「做什麼」。分離兩者讓系統更靈活。</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <strong style="color: #ffeaa7;">3. 收集 vs 分析分離</strong>
+                    <p style="margin-top:8px; opacity:0.9;">Scenario 1 專注收集，Scenario 2 專注分析。這種架構更容易擴展和維護。</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                    <strong style="color: #ffeaa7;">4. 複利效應</strong>
+                    <p style="margin-top:8px; opacity:0.9;">系統運行越久，資料庫越有價值。這不只是省時間，而是在建立情報資產。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture Comparison -->
+        <div class="grid-row">
+            <div class="left-column">
+                <h2 class="section-title">技術堆疊總覽</h2>
+                <table class="comparison-table">
+                    <tr>
+                        <th>組件</th>
+                        <th>功能</th>
+                        <th>成本</th>
+                    </tr>
+                    <tr>
+                        <td>Make.com</td>
+                        <td>自動化協調平台</td>
+                        <td>$0-9/月</td>
+                    </tr>
+                    <tr>
+                        <td>Perplexity API</td>
+                        <td>即時網路搜尋與研究</td>
+                        <td>~$3/月</td>
+                    </tr>
+                    <tr>
+                        <td>OpenAI API</td>
+                        <td>摘要生成與模式分析</td>
+                        <td>~$2/月</td>
+                    </tr>
+                    <tr>
+                        <td>Google Sheets</td>
+                        <td>資料儲存與歷史記錄</td>
+                        <td>$0</td>
+                    </tr>
+                    <tr>
+                        <td>Gmail</td>
+                        <td>報告發送</td>
+                        <td>$0</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="right-column">
+                <h2 class="section-title">學習資源</h2>
+                <div class="key-note-box">
+                    <div class="box-title">延伸學習 Further Reading</div>
+                    <ul>
+                        <li><strong>Make.com 官方文檔</strong>：學習更多 module 的使用方式</li>
+                        <li><strong>Perplexity API 文檔</strong>：了解不同模型的差異（Sonar Pro vs Sonar Reasoning）</li>
+                        <li><strong>OpenAI Prompt Engineering Guide</strong>：深入學習 prompt 設計技巧</li>
+                        <li><strong>Google Sheets Query 語法</strong>：掌握更複雜的資料篩選</li>
+                    </ul>
+                </div>
+                
+                <div class="application-box">
+                    <div class="box-title">下一步行動 Next Steps</div>
+                    <ol>
+                        <li>註冊 Make.com 帳號並完成基礎教學</li>
+                        <li>購買 Perplexity API credits ($5 起)</li>
+                        <li>複製 Google Sheets 模板</li>
+                        <li>按照文章步驟建立 Scenario 1</li>
+                        <li>測試並調整 prompt 符合你的需求</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>原文來源：<a href="https://www.aimakerspace.io/p/how-i-built-an-ai-agent-that-scours" style="color:#ffeaa7;">AI Maker Labs - How I Built an AI Agent That Scours the Internet for News I Actually Care About</a></p>
+        <p style="margin-top:10px; opacity:0.7;">學習文檔製作：Claude AI | 此為教學用途，原文版權歸作者 Wyndo 所有</p>
+    </div>
 </body>
 </html>

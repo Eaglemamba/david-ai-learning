@@ -1,413 +1,562 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2026-02-10" name="doc-date"/>
-<meta content="Import AI #444: LLM Societies, ChipBench, Erdos Problems" name="doc-title"/>
-<meta content="Jack Clark / Import AI" name="doc-source"/>
-<meta content="LLM,Research,Tool" name="doc-tags"/>
-<meta content="3.4" name="doc-rating"/>
-<meta content="LLM思維社會、晶片設計基準與AI科學研究瓶頸，生成vs判斷的差距" name="doc-summary"/>
-<meta content="2026-02-10_import-ai-444-societies.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>Import AI 444: LLM Societies, ChipBench, Erdos Problems, Huawei Kernels</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-10">
+    <meta name="doc-title" content="Import AI #444: LLM Societies, ChipBench, Erdos Problems">
+    <meta name="doc-source" content="Jack Clark / Import AI">
+    <meta name="doc-tags" content="LLM,Research,Tool">
+    <meta name="doc-rating" content="3.4">
+    <meta name="doc-summary" content="LLM思維社會、晶片設計基準與AI科學研究瓶頸，生成vs判斷的差距">
+    <meta name="doc-file" content="2026-02-10_import-ai-444-societies.html">
+    <title>Import AI 444: LLM Societies, ChipBench, Erdos Problems, Huawei Kernels</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
 
+        /* Header */
+        .header { text-align: center; margin-bottom: 2rem; padding: 2rem; background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; color: white; }
+        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.4; }
+        .header .subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; }
+        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-api { background: #ddd6fe; color: #4c1d95; }
+        .source-info { font-size: 0.8rem; opacity: 0.8; }
 
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid #3b82f6; }
+        .exec-summary h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 0.75rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
+
+        /* Learning Objectives */
+        .objectives { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .objective-item h3 { font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.3rem; }
+        .objective-item p { font-size: 0.85rem; color: #64748b; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Section Headers */
+        .section-header { display: flex; align-items: center; gap: 0.75rem; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+        .section-number { background: #1e3a8a; color: white; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+        .section-title { font-size: 1.15rem; font-weight: 700; color: #1e293b; }
+
+        /* Content Grid (Two-column) */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .content-left { padding-right: 1rem; border-right: 1px solid #e2e8f0; }
+        .content-right { padding-left: 0.5rem; }
+        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; padding-right: 0; } .content-right { padding-left: 0; } }
+
+        /* Bilingual blocks */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.3rem; }
+        .en-text { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
+
+        /* Highlights */
+        .hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .info-box-content p { margin-bottom: 0.5rem; }
+        .info-box-content p:last-child { margin-bottom: 0; }
+        .info-box-content ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+        .info-box-content li { margin-bottom: 0.3rem; font-size: 0.9rem; }
+        .info-box-content code { font-family: 'Source Code Pro', monospace; background: rgba(0,0,0,0.06); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Data Table */
+        .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+        .data-table th { background: #1e3a8a; color: white; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; }
+        .data-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
+        .data-table tr:nth-child(even) { background: #f8fafc; }
+        .data-table tr:hover { background: #e0f2fe; }
+        .best-score { font-weight: 700; color: #047857; }
+
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0 2rem; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #8b5cf6; }
+        .summary-card:nth-child(4) { border-left-color: #f59e0b; }
+        .summary-card h3 { font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
+        .summary-card p { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+        /* Accordion (Practice Questions) */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; margin-top: 2rem; padding: 1.5rem; background: #f1f5f9; border-radius: 1rem; font-size: 0.8rem; color: #64748b; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+    </style>
 </head>
 <body>
 <div class="container">
-<!-- HEADER -->
-<header class="header">
-<div class="tags">
-<span class="tag tag-llm">LLM</span>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-api">API</span>
-</div>
-<h1>Import AI #444: LLM 思維社會、ChipBench 晶片設計基準、Erdos 問題與 AI、華為核心自動化</h1>
-<div class="subtitle">LLM Societies of Thought; AI Chip Design Benchmarks; Semi-Autonomous Math; Huawei Kernel Automation</div>
-<div class="source-info">Jack Clark | Import AI Newsletter #444 | 2026-02-09</div>
-</header>
-<!-- EXECUTIVE SUMMARY -->
-<div class="exec-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★☆☆</span> 3.4/5</span>
-<span class="rating-high">↑ Timeliness, Learning Curve</span>
-<span class="rating-low">↓ Practical Value, Tool Ecosystem</span>
-</div>
-<h2>Executive Summary</h2>
-<p>本期 Import AI 涵蓋四個主題，全部指向同一個核心趨勢：<span class="highlight-key">AI 系統正在變得更「活」，但離自主運作仍有明顯差距</span>。Google 研究發現推理模型在解決難題時會自發模擬多重人格進行內部辯論；ChipBench 揭示前沿模型在真實晶片設計上表現仍差；Google DeepMind 的 Gemini 嘗試解決 Erdos 數學難題，700 個候選答案最終只有 1 個真正有創意的新解；華為用 LLM 自動生成 Ascend 晶片核心，但成功率尚需提升。共同結論：AI 加速了「生成」但人類在「判斷」上仍是瓶頸。</p>
-</div>
-<!-- LEARNING OBJECTIVES -->
-<div class="objectives">
-<div class="objective-item">
-<div class="objective-icon">🧠</div>
-<h3>理解 LLM「思維社會」</h3>
-<p>掌握推理模型如何透過多重人格模擬和內部辯論來提升問題解決能力</p>
-</div>
-<div class="objective-item">
-<div class="objective-icon">⚙</div>
-<h3>評估 AI 晶片設計能力</h3>
-<p>了解 ChipBench 為何顯示現有 AI 系統尚未準備好進入真實晶片設計流程</p>
-</div>
-<div class="objective-item">
-<div class="objective-icon">🔎</div>
-<h3>辨識 AI 科學研究的瓶頸</h3>
-<p>分析「O-ring 自動化」模式：AI 加速生成但人類判斷仍是關鍵瓶頸</p>
-</div>
-</div>
-<!-- FRAMEWORK VISUAL -->
-<div class="framework-visual">
-<div class="framework-title">AI 自主性光譜：從生成到判斷的差距</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">⚡</div>
-<div class="framework-step-title">AI 大量生成</div>
-<div class="framework-step-desc">候選方案、程式碼、證明</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔍</div>
-<div class="framework-step-title">人類篩選判斷</div>
-<div class="framework-step-desc">正確性、品味、意圖</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">✅</div>
-<div class="framework-step-title">有效產出</div>
-<div class="framework-step-desc">極少數真正有價值</div>
-</div>
-</div>
-</div>
-<!-- ============ PART I ============ -->
-<div class="section-header">
-<div class="section-number">1</div>
-<div class="section-title">LLM 思維社會：推理模型的多重人格模擬</div>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">當思考困難問題時，我常常發現從<span class="highlight-concept">多重視角</span>來看問題會很有幫助，尤其是在檢視自己的假設和偏見時。Google、芝加哥大學和聖塔菲研究所的研究人員發現，<span class="highlight-key">AI 推理模型在解決困難問題時也會做同樣的事</span>。</p>
-<p class="en-text">"When thinking about hard problems, I often find it's helpful to try and view them from multiple perspectives... researchers have concluded they do the same thing, with LLMs seeming to invoke multiple different perspectives in their chains of thought when solving hard problems."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">核心發現：在 DeepSeek-R1 和 QwQ-32B 的測試中，<span class="highlight-key">增強推理不僅來自延長計算，而是來自隱式模擬複雜的多代理互動</span> — 一個「思維社會」— 它使模型能夠在具有不同人格特徵和領域專長的內部認知視角之間進行刻意的多元化和辯論。</p>
-<p class="en-text">"Enhanced reasoning emerges not from extended computation alone, but from the implicit simulation of complex, multi-agent-like interactions — a society of thought — which enables the deliberate diversification and debate among internal cognitive perspectives characterized by distinct personality traits and domain expertise."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">這些人格和討論風格建模<span class="highlight-concept">是透過 RL（強化學習）訓練模型進行推理的結果</span>，在基礎預訓練模型（如 DeepSeek v3）上不會出現。模型展現出多種對話風格，包括問答、視角轉換、調和和視角衝突。</p>
-<p class="en-text">"Different forms of persona and discussion style modeling emerge as a consequence of training models through RL to do reasoning — the results don't show up on base pre-trained models like DeepSeek v3."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">具體案例：在一道需要多步驟 Diels-Alder 合成的有機化學問題中，DeepSeek-R1 展現了視角轉換和衝突，透過社會情感角色如<span class="highlight-concept">不同意、給出意見和給出導向</span>來表達。</p>
-<p class="en-text">"In an organic chemistry problem requiring multistep reaction analysis... DeepSeek-R1 exhibits perspective shifts and conflict, expressed through socio-emotional roles such as disagreement, giving opinion, and giving orientation."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">在一段創意寫作追蹤中，模型改寫「我將我的仇恨投入燃燒的火焰」這句話時，<span class="highlight-key">湧現了七個視角</span>，包括一位創意構思者（最高開放性和外向性）負責生成風格替代方案，以及一位語義保真度檢查者（低親和性、高神經質）負責防止範疇蔓延。</p>
-<p class="en-text">"In a creative writing trace where the model rewrites the sentence 'I flung my hatred into the burning fire,' seven perspectives emerge, including a creative ideator (highest Openness and Extraversion)... and a semantic fidelity checker (low agreeableness, high neuroticism) who prevents scope creep."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">在一個數學謎題中，到了第 40 步，模型還在產生機械式、列舉式的推理鏈；但到第 120 步時，<span class="highlight-concept">兩個明確的模擬人格已經出現</span>，用代名詞「我們」來承認其集體性，表達不確定（「又沒運氣了」）、考慮替代方案（「也許我們可以試試用負數」），並反思問題限制。</p>
-<p class="en-text">"At step 40, the model produces mechanical, enumerative chain-of-thought-style reasoning, whereas by step 120, two distinctive simulated personas have appeared, recognizing their collectivity with the pronoun 'we'— expressing uncertainty ('Again no luck'), considering alternatives ('Maybe we can try using negative numbers')."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">正如作者總結：推理模型如 DeepSeek-R1 <span class="highlight-key">不是簡單地生成更長或更精細的推理鏈，而是展現出類似社會和對話過程的模式</span> — 產生「思維社會」— 提出問題、引入替代視角、產生和解決衝突、協調多樣的社會情感角色。</p>
-<p class="en-text">"Our findings suggest that reasoning models like DeepSeek-R1 do not simply generate longer or more elaborate chains of thought. Rather, they exhibit patterns characteristic of a social and conversational process generating 'societies of thought'—posing questions, introducing alternative perspectives, generating and resolving conflicts."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p>想像你的大腦裡有一場<strong>內部會議</strong>：一位是創意總監（高開放性、高外向性），負責丟出瘋狂的點子；一位是品質主管（低親和性、高神經質），負責質疑每個提案是否偏離原意。推理模型在解題時，自發地「召開」了類似的內部會議。</p>
-<p>在製藥 CDMO 情境中，這就像 deviation investigation 時需要同時扮演 QA、生產、法規三個角色來全面分析根因 — 模型正在自動做這件事。</p>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：Janus 的「模擬器」理論</div>
-<div class="info-box-content">
-<p>早在 2022 年 9 月，janus 在 LessWrong 上提出 LLM 的正確理解方式是<strong>「模擬器」(Simulators)</strong>：為了完成任何任務，LLM 必須模擬某些東西。訓練模型預測多樣化的軌跡，使其內化分布背後的一般規律，允許它模擬從分布語義構建的反事實。</p>
-<p>這篇 Google 論文進一步驗證了這個觀點：<span class="highlight-key">LLM 正在變得「活著」</span>，因為為了解決困難問題，它們必須為自己模擬一個包含不同概念的世界模型，甚至包括對其他視角或其他心智的表徵。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p>有趣的是，Google 研究人員測試的是 DeepSeek-R1 和 QwQ-32B，而<strong>沒有測試 Google 自家模型</strong>。這暗示了什麼？可能是自家模型的推理鏈不夠透明，也可能是研究獨立性的考量。無論如何，這個選擇本身值得關注。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- ============ PART II ============ -->
-<div class="section-header">
-<div class="section-number">2</div>
-<div class="section-title">ChipBench：AI 晶片設計比你想像的更難</div>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">加州大學聖地亞哥分校和哥倫比亞大學的研究人員發布了 ChipBench，旨在測試現代 AI 系統用 Verilog 設計晶片的能力。靈感來自對<span class="highlight-key">現有基準測試過於簡單</span>的不滿。</p>
-<p class="en-text">"Researchers have published ChipBench, a benchmark designed to test out how well modern AI systems can design chips in Verilog. The inspiration for ChipBench is dissatisfaction with current benchmarks, which they claim are too simple."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">現有基準的三大缺陷：(1) 許多 Verilog 基準只包含 10-76 行的簡單模組，但<span class="highlight-concept">真實部署中的 Verilog 模組超過 10,000 行</span>。(2) 對除錯關注不足 — 在實體硬體中，bug 的代價極高。(3) 過度聚焦 Verilog 忽略了參考模型評估 — 在工業流程中，驗證工程師與設計工程師的比例為 1:1 到 5:1。</p>
-<p class="en-text">"Many Verilog benchmarks contain simple functional modules ranging from 10 to 76 lines. In real-world deployments, Verilog modules exceed 10,000 lines."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">ChipBench 測試三項能力：Verilog 編寫（44 個真實硬體模組）、Verilog 除錯（89 個測試案例，涵蓋時序、算術、賦值和狀態機錯誤）、以及參考模型生成（132 個樣本，跨 Python、SystemC、CXXRTL）。</p>
-<p class="en-text">"ChipBench tests out AI systems on three distinct competencies — writing Verilog code, debugging Verilog code, and writing reference models."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">除錯測試分為兩種模式：<span class="highlight-concept">零樣本 (zero-shot) 測試</span>提供模組描述和有缺陷的實作，僅指出存在錯誤但不提供定位細節；<span class="highlight-concept">一樣本 (one-shot) 測試</span>則額外提供模擬波形資料 (.vcd 檔案)。即使在除錯任務上表現較好，仍然沒有模型能在跨任務平均中突破 50% pass@1。</p>
-<p class="en-text">"The zero-shot test provides the model with the module description and buggy implementation, indicating that an error exists without providing localization details. The one-shot test provides identical information but supplements it with simulation waveform data (.vcd files)."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">作者測試了來自 OpenAI（GPT 3.5、4o、5、5.2）、Anthropic（Claude 4.5 Haiku、Sonnet、Opus）、Google（Gemini 2.5 Pro、3 Flash）、Meta（LLaMa3.1 8B 和 80B）和 DeepSeek（V3.2）的前沿模型。結論明確：<span class="highlight-key">開箱即用的 LLM 在通用、真實世界的晶片設計上仍然相當糟糕</span>。</p>
-<p class="en-text">"Despite testing on advanced models, the average pass@1 is relatively low... Current models have significant limitations in AI-aided chip design and remain far from ready for real industrial workflow integration."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ Verilog 生成 Pass@1 成績表</div>
-<div class="info-box-content">
-<table class="data-table">
-<thead>
-<tr><th>任務類型</th><th>最佳模型</th><th>Pass@1</th></tr>
-</thead>
-<tbody>
-<tr><td>CPU IP</td><td>Claude 4.5 Opus / Gemini 3 Flash / GPT 5.2</td><td class="best-score">22.22%</td></tr>
-<tr><td>Non-Self-Contained</td><td>DeepSeek-Coder</td><td class="best-score">50%</td></tr>
-<tr><td>Self-Contained</td><td>Claude 4.5 Opus / Gemini 3 Flash</td><td class="best-score">36.67%</td></tr>
-</tbody>
-</table>
-<table class="data-table" style="margin-top: 0.75rem;">
-<thead>
-<tr><th>Python 參考模型</th><th>最佳模型</th><th>Pass@1</th></tr>
-</thead>
-<tbody>
-<tr><td>CPU IP</td><td>Claude 4.5 Sonnet / Gemini 3 Flash</td><td>11.1%</td></tr>
-<tr><td>Non-Self-Contained</td><td>--</td><td>0%</td></tr>
-<tr><td>Self-Contained</td><td>Claude 4.5 Haiku / Opus / Gemini 2.5 Pro / GPT-5</td><td class="best-score">40%</td></tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p>Jack Clark 提出一個關鍵洞察：<span class="highlight-practical">可能存在一個「擅長 Verilog 的腳手架」(scaffold)</span>，讓當代 AI 系統如果被要求建造的話，可能會大幅提升在此基準上的表現。這個觀點對任何使用 AI 的人都很重要 — <strong>通用 LLM 的裸測成績不代表有良好工具鏈支持時的實際能力</strong>。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- ============ PART III ============ -->
-<div class="section-header">
-<div class="section-number">3</div>
-<div class="section-title">Gemini 解 Erdos 問題：AI 科學研究的「O-Ring」困境</div>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">Google DeepMind 與多所大學（包括台灣的中央研究院和國立台灣大學）合作，使用內部代號 Aletheia 的 Gemini LLM 嘗試解決 Erdos 開放數學猜想。結果展現了<span class="highlight-key">當代 AI 系統可以在科學前沿工作，但評估和篩選其解答是一項重要且困難的人類任務</span>。</p>
-<p class="en-text">"The results demonstrate that contemporary AI systems can work on the frontiers of science, but also show how evaluating and filtering the solutions they come up with may be an important, challenging task for humans."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">關鍵數字：Aletheia 針對約 700 個未解問題，產生了 200 個候選解答。人類評審將其縮減至 63 個正確回答，進一步的專家數學評估又縮減至<span class="highlight-key">僅 13 個「正確且有意義的回答」</span>。其中 50 個「正確」解答在技術上有效但數學上無意義 — 因為模型對問題的詮釋方式未能捕捉到 Erdos 的原始意圖。</p>
-<p class="en-text">"Aletheia was able to surface 200 candidate solutions which humans then needed to grade, slimming down to 63 correct responses, and further expert mathematical evaluation slimmed this down to a further subset of only 13 solves."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">13 個中又再細分：5 個是「文獻識別」（解答已在文獻中）、3 個是「部分 AI 解」、3 個是「獨立重新發現」。最終只剩 <span class="highlight-concept">2 個「自主新穎解」</span>，其中只有 1 個被認為真正有趣且具數學意義。</p>
-<p class="en-text">"This leaves 2 'autonomous novel solution' solves... 1 of the solutions seems genuinely interesting."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">研究團隊暫時認為 Aletheia 對 Erdos-1051 的解答<span class="highlight-key">代表了 AI 系統自主解決一個略微非平凡的開放 Erdos 問題的早期範例</span>，該問題具有一定的更廣泛數學意義。雖然存在密切相關問題的先前文獻，但沒有完全解決 Erdos-1051。</p>
-<p class="en-text">"We tentatively believe Aletheia's solution to Erdős-1051 represents an early example of an AI system autonomously resolving a slightly non-trivial open Erdős problem of somewhat broader (mild) mathematical interest."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">論文的核心警示：<span class="highlight-key">LLM 可以輕鬆生成候選解答，但能判斷解答正確性的專家數量相對很少</span>，即使是專家也需要大量時間進行評估。隨著 AI 生成的數學內容增長，社群必須對「潛意識抄襲」保持警惕 — AI 在訓練中習得文獻知識，卻沒有適當引用就重現出來。</p>
-<p class="en-text">"Large Language Models can easily generate candidate solutions, but the number of experts who can judge the correctness of a solution is relatively small, and even for experts, substantial time is required to carry out such evaluations."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">參與研究的機構除了 Google DeepMind 外，還包括 UC Berkeley、首爾國立大學、史丹佛大學、韓國高等研究院、劍橋大學、布朗大學、延世大學、康考迪亞大學、<span class="highlight-practical">中央研究院和國立台灣大學</span>。台灣學術機構的參與反映了台灣在 AI 與數學交叉研究領域的國際能見度。</p>
-<p class="en-text">"Along with Google DeepMind, the following universities participated in the research: UC Berkeley, Seoul National University, Stanford University, Korea Institute for Advanced Study, University of Cambridge, Brown University, Yonsei University, Concordia University, Academia Sinica, and National Taiwan University."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明：O-Ring 自動化</div>
-<div class="info-box-content">
-<p>「O-Ring 生產」概念來自太空梭挑戰者號事故 — 整個系統的可靠性取決於最薄弱的環節。在 AI 科學研究中：</p>
-<p><strong>AI 大幅加速了「生成證明」的環節</strong>（700 → 200 個候選），但仍然需要人類進行費力、高技能的篩選工作（200 → 13 → 2 → 1）。人類的「專家直覺」是 O-Ring — 整個流程的瓶頸。</p>
-<p>這和 CDMO 產業中的 AI 應用完全一致：AI 可以快速生成 deviation investigation 的可能根因清單，但判斷哪個根因是正確的、是否符合 GMP 邏輯，仍需要資深專家。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：潛意識抄襲風險</div>
-<div class="info-box-content">
-<p>論文特別警告了<strong>「潛意識抄襲」(subconscious plagiarism)</strong> 風險：AI 可能在訓練過程中獲取了文獻知識，並在生成解答時重現這些知識，卻沒有適當引用。<span class="highlight-key">形式驗證 (formal verification) 無法幫助解決這個問題</span>。</p>
-<p>這對任何使用 AI 生成內容的人都是重要警示 — 包括法規文件撰寫和技術報告。</p>
-</div>
-</div>
-<div style="background: white; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #e2e8f0; margin-top: 1rem;">
-<div style="font-weight: 700; font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.75rem; text-align: center;">Erdos 解題漏斗</div>
-<div style="text-align: center; font-size: 0.85rem; line-height: 2.2; color: #475569;">
-<div style="background: #dbeafe; padding: 0.3rem; border-radius: 4px; margin: 0 0rem;">~700 未解問題</div>
-<div>↓</div>
-<div style="background: #bfdbfe; padding: 0.3rem; border-radius: 4px; margin: 0 2rem;">200 候選解答</div>
-<div>↓</div>
-<div style="background: #93c5fd; padding: 0.3rem; border-radius: 4px; margin: 0 4rem; color: white;">63 正確回答</div>
-<div>↓</div>
-<div style="background: #3b82f6; padding: 0.3rem; border-radius: 4px; margin: 0 5rem; color: white;">13 有意義</div>
-<div>↓</div>
-<div style="background: #1e3a8a; padding: 0.3rem; border-radius: 4px; margin: 0 6rem; color: white; font-weight: 700;">1 真正創新</div>
-</div>
-</div>
-</div>
-</div>
-<!-- ============ PART IV ============ -->
-<div class="section-header">
-<div class="section-number">4</div>
-<div class="section-title">華為 AscendCraft：用 LLM 自動設計晶片核心</div>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">南京大學和華為的研究人員使用 LLM 幫助自動化 Huawei Ascend 晶片核心的設計。現代 LLM 能為 NVIDIA GPU 等廣泛使用的晶片生成相當好的核心程式碼，但<span class="highlight-key">對相對冷門的晶片如華為的了解較少</span>，主要因為資料可用性問題。</p>
-<p class="en-text">"Modern LLMs can generate quite good kernel code for widely used chips like NVIDIA GPUs, but relatively obscure chips like Huawei are less well understood by LLMs, mostly due to data availability."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">AscendCraft 採用兩階段管線：第一階段，LLM 建構一個<span class="highlight-concept">高階 DSL（領域特定語言）程式</span>，描述核心的計算、分塊策略和片上資料流。DSL 被設計為「LLM 友好的」— 本質上是一個腳手架 (scaffold)，將 LLM 聚焦在華為硬體的特定需求上。第二階段，透過結構化的 LLM 降級傳遞 (lowering passes)，將 DSL 轉譯為 AscendC 程式碼。</p>
-<p class="en-text">"In stage one, they have an LLM build a high-level DSL program... The DSL is designed to be LLM-friendly, appropriately abstracted, and sufficiently expressive."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">結果：<span class="highlight-practical">98.1% 編譯成功率、90.4% 功能正確性、46.2% 的核心效能達到或超越 PyTorch eager 執行</span>。表現夠好值得繼續研究，但還不足以革命性地改變華為晶片核心的製作方式。</p>
-<p class="en-text">"AscendCraft achieves 98.1% compilation success and 90.4% functional correctness. Moreover, 46.2% of generated kernels match or exceed PyTorch eager execution performance."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">公開可用的 NPU 核心實作遠比 GPU 對應物稀少，<span class="highlight-concept">限制了 LLM 的訓練語料庫</span>。缺乏大規模、高品質的 NPU 程式碼使 LLM 難以生成正確且高效的核心。這正是需要 DSL 腳手架介入的原因。</p>
-<p class="en-text">"Publicly available NPU kernel implementations are far scarcer than GPU counterparts, limiting the training corpus for LLMs. The lack of large-scale, high-quality NPU code makes it difficult for LLMs to generate correct and efficient kernels."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">儘管如此，訊號很明確：<span class="highlight-key">我們可以用 AI 來加速 AI 硬體的最佳化</span>，即使是對於預訓練語料庫中相對新穎或討論不多的系統也是如此。AI 正在學會優化自己的基礎設施。</p>
-<p class="en-text">"The signs are clear: we can use AI to accelerate the optimizing of AI hardware, even for systems which are relatively new and/or underdiscussed in the pre-training corpus LLMs are trained on."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：DSL 作為 LLM 腳手架</div>
-<div class="info-box-content">
-<p>AscendCraft 的設計哲學與 ChipBench 的結論完美呼應：<strong>通用 LLM 直接處理冷門任務效果差，但加上適當的腳手架 (scaffold) 後能力大幅提升</strong>。</p>
-<p>DSL 的角色就像是把一個「什麼都略懂」的通才，透過結構化框架引導成「特定領域專家」。這個模式幾乎適用於所有 AI 應用場景。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ CDMO 產業映射</div>
-<div class="info-box-content">
-<p>AscendCraft 的兩階段策略對 CDMO AI 應用有直接啟示：</p>
-<ul>
-<li><strong>階段一（DSL = 結構化模板）：</strong>為 LLM 提供 GMP 文件模板、deviation categories、CAPA 框架等領域特定結構</li>
-<li><strong>階段二（Transcompilation = 轉化為實際產出）：</strong>將 LLM 的結構化輸出轉換為符合法規格式的實際文件</li>
-</ul>
-<p>關鍵洞察：<span class="highlight-practical">不要期待 LLM 直接輸出完美的 GMP 文件，而是設計中間層 DSL 來引導它</span>。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 未揭露的細節</div>
-<div class="info-box-content">
-<p>奇怪的是，論文<strong>沒有揭露使用的是哪個 LLM</strong>。這可能暗示使用了華為自家模型或有商業敏感性。在評估 AI 研究論文時，方法論透明度是判斷可信度的重要指標。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- KEY TAKEAWAYS -->
-<div class="section-header">
-<div class="section-number">★</div>
-<div class="section-title">Key Takeaways</div>
-</div>
-<div class="takeaways">
-<div class="summary-card">
-<h3>🧠 思維社會 = 內建辯論</h3>
-<p>推理模型透過 RL 訓練後，自發地發展出多重人格模擬能力。它們不是「想更久」，而是「以不同身份思考」，驗證了 LLM 作為「模擬器」的理論。</p>
-</div>
-<div class="summary-card">
-<h3>📈 基準 vs 現實的落差</h3>
-<p>ChipBench 顯示現有晶片設計基準太簡單（10-76 行 vs 真實 10,000+ 行）。通用 LLM 裸測成績差，但加上領域腳手架後可能大幅不同。</p>
-</div>
-<div class="summary-card">
-<h3>🔎 生成易、判斷難</h3>
-<p>Erdos 案例完美展示了 AI 科學的 O-Ring 模式：700 個問題 → 200 候選 → 1 個真正創新。人類的「專家品味」仍是無法自動化的瓶頸。</p>
-</div>
-<div class="summary-card">
-<h3>⚙ DSL 腳手架是關鍵</h3>
-<p>華為的 AscendCraft 用 DSL 中間層將 LLM 成功率從幾乎為零提升到 90%+ 功能正確。不要讓 LLM 直接做冷門任務 — 設計領域框架來引導它。</p>
-</div>
-</div>
-<!-- PRACTICE QUESTIONS -->
-<div class="section-header">
-<div class="section-number">?</div>
-<div class="section-title">Practice Questions</div>
-</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">「思維社會」(Society of Thought) 與單純的「思考更久」(longer chain-of-thought) 有什麼根本差異？為什麼這個差異對理解 AI 推理能力很重要？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>根本差異在於<strong>質 vs 量</strong>。單純延長 chain-of-thought 是線性地增加推理步驟（量的增加），而「思維社會」是在推理過程中引入不同視角、人格特徵和領域專長之間的辯論（質的變化）。</p>
-<p>這很重要，因為它暗示推理能力的提升來自<strong>多樣性</strong>而非<strong>計算量</strong>。如果我們只是讓模型「想更久」，可能會陷入同一個思維框架的死胡同。但如果模型能自發地切換視角、產生衝突並調和分歧，它就更像真正的深度思考。這也解釋了為什麼 RL 訓練後才出現這個能力 — RL 的獎勵機制鼓勵模型發現「有效的推理策略」，而多視角辯論恰好是最有效的策略之一。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要在 CDMO 的 deviation investigation 流程中應用「DSL 腳手架」策略（如 AscendCraft），你會如何設計這個中間層？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>設計思路應該模仿 AscendCraft 的兩階段方法：</p>
-<p><strong>階段一 — DSL 定義：</strong>建立一個結構化的 deviation investigation 模板，包含：(1) deviation 分類代碼對照表、(2) 根因分析框架（如魚骨圖的六大類別）、(3) 影響評估矩陣（產品品質/病患安全/法規合規）、(4) CAPA 類型對照。這個 DSL 就像是告訴 LLM「你只需要填這些格子」。</p>
-<p><strong>階段二 — 轉譯：</strong>將 LLM 的結構化輸出，透過模板引擎轉換為符合 PIC/S 和 21 CFR Part 211 格式的正式 deviation report。關鍵是人類在階段一結束時介入審查（copilot mode），確認根因分析邏輯正確後才進入階段二。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">Erdos 研究中 700 → 1 的轉化率是否代表 AI 在數學研究上「失敗」了？這個框架對你評估其他 AI 應用的 ROI 有什麼啟示？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>表面看 700:1 的比例很糟，但這取決於你的<strong>基準比較對象</strong>。如果沒有 AI，人類數學家解決這 700 個問題的速度是多少？如果 AI 在幾週內找到了 1 個人類可能需要數年才能發現的解答，那 ROI 其實很高。</p>
-<p>更重要的啟示是<strong>評估 AI ROI 時要計算「全流程成本」而非只看「AI 生成成本」</strong>。Erdos 案例中，AI 的計算成本可能很低，但人類專家審查 200 個候選解答的時間成本極高。在 CDMO 場景中，如果 AI 能快速生成 20 個可能的 deviation 根因，但每個都需要 QA 團隊花 30 分鐘驗證，那總成本可能比傳統方法更高。</p>
-<p>正確的評估框架是：AI 生成成本 + 人類篩選成本 &lt; 純人工成本 × 品質提升倍數。只有當這個不等式成立時，AI 應用才有真正的 ROI。</p>
-</div>
-</details>
-<!-- BOTTOM LINE -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">本期四篇文章反覆驗證同一個模式：AI 在「生成」端已經很強，但「判斷」端仍是人類主場。這正好對應我在 CDMO 場景中的定位 — 我的價值不在於能比 AI 更快地產生答案，而是能判斷哪個答案在 GMP 和法規脈絡下是正確的。AscendCraft 的 DSL 腳手架策略特別值得深入研究，它提供了一個可複製的模式來讓通用 LLM 在特定領域發揮最大效用。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">這週開始為一個常見的 deviation 類型（例如：溫度偏差）設計簡化版 DSL 模板，測試 Claude 在有結構化框架引導下 vs 無引導時的 deviation investigation 品質差異。目標：建立第一個「CDMO DSL」的 proof of concept。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">本期文章全是研究導向，缺少實際部署案例和成本數據。「思維社會」概念目前還停留在觀察階段，無法直接應用。需要追蹤後續是否有方法能刻意引導模型使用多視角推理。另外，ChipBench 的結果暗示了「腳手架效果」的重要性，但缺少量化的腳手架前後比較數據。</div>
-</div>
-</div>
-<!-- FOOTER -->
-<footer class="footer">
-<p>Educational Document | Generated: 2026-02-10</p>
-<p>Source: <a href="https://importai.substack.com" target="_blank">Import AI #444 by Jack Clark</a> | 2026-02-09</p>
-<p>Paper Links: Societies of Thought (arXiv) | ChipBench (arXiv) | Erdos Problems (arXiv) | AscendCraft (arXiv)</p>
-<p style="margin-top: 0.5rem; font-weight: 600;">Suggested Chat Title: [LLM] Import AI 444 - Societies of Thought, ChipBench, Erdos</p>
-</footer>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="tags">
+            <span class="tag tag-llm">LLM</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-api">API</span>
+        </div>
+        <h1>Import AI #444: LLM 思維社會、ChipBench 晶片設計基準、Erdos 問題與 AI、華為核心自動化</h1>
+        <div class="subtitle">LLM Societies of Thought; AI Chip Design Benchmarks; Semi-Autonomous Math; Huawei Kernel Automation</div>
+        <div class="source-info">Jack Clark | Import AI Newsletter #444 | 2026-02-09</div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-summary">
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span> 3.4/5</span>
+            <span class="rating-high">&uarr; Timeliness, Learning Curve</span>
+            <span class="rating-low">&darr; Practical Value, Tool Ecosystem</span>
+        </div>
+        <h2>Executive Summary</h2>
+        <p>本期 Import AI 涵蓋四個主題，全部指向同一個核心趨勢：<span class="hl-key">AI 系統正在變得更「活」，但離自主運作仍有明顯差距</span>。Google 研究發現推理模型在解決難題時會自發模擬多重人格進行內部辯論；ChipBench 揭示前沿模型在真實晶片設計上表現仍差；Google DeepMind 的 Gemini 嘗試解決 Erdos 數學難題，700 個候選答案最終只有 1 個真正有創意的新解；華為用 LLM 自動生成 Ascend 晶片核心，但成功率尚需提升。共同結論：AI 加速了「生成」但人類在「判斷」上仍是瓶頸。</p>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="objectives">
+        <div class="objective-item">
+            <div class="objective-icon">&#129504;</div>
+            <h3>理解 LLM「思維社會」</h3>
+            <p>掌握推理模型如何透過多重人格模擬和內部辯論來提升問題解決能力</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#9881;</div>
+            <h3>評估 AI 晶片設計能力</h3>
+            <p>了解 ChipBench 為何顯示現有 AI 系統尚未準備好進入真實晶片設計流程</p>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#128270;</div>
+            <h3>辨識 AI 科學研究的瓶頸</h3>
+            <p>分析「O-ring 自動化」模式：AI 加速生成但人類判斷仍是關鍵瓶頸</p>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">AI 自主性光譜：從生成到判斷的差距</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#9889;</div>
+                <div class="framework-step-title">AI 大量生成</div>
+                <div class="framework-step-desc">候選方案、程式碼、證明</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128269;</div>
+                <div class="framework-step-title">人類篩選判斷</div>
+                <div class="framework-step-desc">正確性、品味、意圖</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#9989;</div>
+                <div class="framework-step-title">有效產出</div>
+                <div class="framework-step-desc">極少數真正有價值</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ PART I ============ -->
+    <div class="section-header">
+        <div class="section-number">1</div>
+        <div class="section-title">LLM 思維社會：推理模型的多重人格模擬</div>
+    </div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">當思考困難問題時，我常常發現從<span class="hl-concept">多重視角</span>來看問題會很有幫助，尤其是在檢視自己的假設和偏見時。Google、芝加哥大學和聖塔菲研究所的研究人員發現，<span class="hl-key">AI 推理模型在解決困難問題時也會做同樣的事</span>。</p>
+                <p class="en-text">"When thinking about hard problems, I often find it's helpful to try and view them from multiple perspectives... researchers have concluded they do the same thing, with LLMs seeming to invoke multiple different perspectives in their chains of thought when solving hard problems."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">核心發現：在 DeepSeek-R1 和 QwQ-32B 的測試中，<span class="hl-key">增強推理不僅來自延長計算，而是來自隱式模擬複雜的多代理互動</span> &mdash; 一個「思維社會」&mdash; 它使模型能夠在具有不同人格特徵和領域專長的內部認知視角之間進行刻意的多元化和辯論。</p>
+                <p class="en-text">"Enhanced reasoning emerges not from extended computation alone, but from the implicit simulation of complex, multi-agent-like interactions &mdash; a society of thought &mdash; which enables the deliberate diversification and debate among internal cognitive perspectives characterized by distinct personality traits and domain expertise."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">這些人格和討論風格建模<span class="hl-concept">是透過 RL（強化學習）訓練模型進行推理的結果</span>，在基礎預訓練模型（如 DeepSeek v3）上不會出現。模型展現出多種對話風格，包括問答、視角轉換、調和和視角衝突。</p>
+                <p class="en-text">"Different forms of persona and discussion style modeling emerge as a consequence of training models through RL to do reasoning &mdash; the results don't show up on base pre-trained models like DeepSeek v3."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">具體案例：在一道需要多步驟 Diels-Alder 合成的有機化學問題中，DeepSeek-R1 展現了視角轉換和衝突，透過社會情感角色如<span class="hl-concept">不同意、給出意見和給出導向</span>來表達。</p>
+                <p class="en-text">"In an organic chemistry problem requiring multistep reaction analysis... DeepSeek-R1 exhibits perspective shifts and conflict, expressed through socio-emotional roles such as disagreement, giving opinion, and giving orientation."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">在一段創意寫作追蹤中，模型改寫「我將我的仇恨投入燃燒的火焰」這句話時，<span class="hl-key">湧現了七個視角</span>，包括一位創意構思者（最高開放性和外向性）負責生成風格替代方案，以及一位語義保真度檢查者（低親和性、高神經質）負責防止範疇蔓延。</p>
+                <p class="en-text">"In a creative writing trace where the model rewrites the sentence 'I flung my hatred into the burning fire,' seven perspectives emerge, including a creative ideator (highest Openness and Extraversion)... and a semantic fidelity checker (low agreeableness, high neuroticism) who prevents scope creep."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">在一個數學謎題中，到了第 40 步，模型還在產生機械式、列舉式的推理鏈；但到第 120 步時，<span class="hl-concept">兩個明確的模擬人格已經出現</span>，用代名詞「我們」來承認其集體性，表達不確定（「又沒運氣了」）、考慮替代方案（「也許我們可以試試用負數」），並反思問題限制。</p>
+                <p class="en-text">"At step 40, the model produces mechanical, enumerative chain-of-thought-style reasoning, whereas by step 120, two distinctive simulated personas have appeared, recognizing their collectivity with the pronoun 'we'&mdash; expressing uncertainty ('Again no luck'), considering alternatives ('Maybe we can try using negative numbers')."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">正如作者總結：推理模型如 DeepSeek-R1 <span class="hl-key">不是簡單地生成更長或更精細的推理鏈，而是展現出類似社會和對話過程的模式</span> &mdash; 產生「思維社會」&mdash; 提出問題、引入替代視角、產生和解決衝突、協調多樣的社會情感角色。</p>
+                <p class="en-text">"Our findings suggest that reasoning models like DeepSeek-R1 do not simply generate longer or more elaborate chains of thought. Rather, they exhibit patterns characteristic of a social and conversational process generating 'societies of thought'&mdash;posing questions, introducing alternative perspectives, generating and resolving conflicts."</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
+                    <p>想像你的大腦裡有一場<strong>內部會議</strong>：一位是創意總監（高開放性、高外向性），負責丟出瘋狂的點子；一位是品質主管（低親和性、高神經質），負責質疑每個提案是否偏離原意。推理模型在解題時，自發地「召開」了類似的內部會議。</p>
+                    <p>在製藥 CDMO 情境中，這就像 deviation investigation 時需要同時扮演 QA、生產、法規三個角色來全面分析根因 &mdash; 模型正在自動做這件事。</p>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念：Janus 的「模擬器」理論</div>
+                <div class="info-box-content">
+                    <p>早在 2022 年 9 月，janus 在 LessWrong 上提出 LLM 的正確理解方式是<strong>「模擬器」(Simulators)</strong>：為了完成任何任務，LLM 必須模擬某些東西。訓練模型預測多樣化的軌跡，使其內化分布背後的一般規律，允許它模擬從分布語義構建的反事實。</p>
+                    <p>這篇 Google 論文進一步驗證了這個觀點：<span class="hl-key">LLM 正在變得「活著」</span>，因為為了解決困難問題，它們必須為自己模擬一個包含不同概念的世界模型，甚至包括對其他視角或其他心智的表徵。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                <div class="info-box-content">
+                    <p>有趣的是，Google 研究人員測試的是 DeepSeek-R1 和 QwQ-32B，而<strong>沒有測試 Google 自家模型</strong>。這暗示了什麼？可能是自家模型的推理鏈不夠透明，也可能是研究獨立性的考量。無論如何，這個選擇本身值得關注。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ PART II ============ -->
+    <div class="section-header">
+        <div class="section-number">2</div>
+        <div class="section-title">ChipBench：AI 晶片設計比你想像的更難</div>
+    </div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">加州大學聖地亞哥分校和哥倫比亞大學的研究人員發布了 ChipBench，旨在測試現代 AI 系統用 Verilog 設計晶片的能力。靈感來自對<span class="hl-key">現有基準測試過於簡單</span>的不滿。</p>
+                <p class="en-text">"Researchers have published ChipBench, a benchmark designed to test out how well modern AI systems can design chips in Verilog. The inspiration for ChipBench is dissatisfaction with current benchmarks, which they claim are too simple."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">現有基準的三大缺陷：(1) 許多 Verilog 基準只包含 10-76 行的簡單模組，但<span class="hl-concept">真實部署中的 Verilog 模組超過 10,000 行</span>。(2) 對除錯關注不足 &mdash; 在實體硬體中，bug 的代價極高。(3) 過度聚焦 Verilog 忽略了參考模型評估 &mdash; 在工業流程中，驗證工程師與設計工程師的比例為 1:1 到 5:1。</p>
+                <p class="en-text">"Many Verilog benchmarks contain simple functional modules ranging from 10 to 76 lines. In real-world deployments, Verilog modules exceed 10,000 lines."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">ChipBench 測試三項能力：Verilog 編寫（44 個真實硬體模組）、Verilog 除錯（89 個測試案例，涵蓋時序、算術、賦值和狀態機錯誤）、以及參考模型生成（132 個樣本，跨 Python、SystemC、CXXRTL）。</p>
+                <p class="en-text">"ChipBench tests out AI systems on three distinct competencies &mdash; writing Verilog code, debugging Verilog code, and writing reference models."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">除錯測試分為兩種模式：<span class="hl-concept">零樣本 (zero-shot) 測試</span>提供模組描述和有缺陷的實作，僅指出存在錯誤但不提供定位細節；<span class="hl-concept">一樣本 (one-shot) 測試</span>則額外提供模擬波形資料 (.vcd 檔案)。即使在除錯任務上表現較好，仍然沒有模型能在跨任務平均中突破 50% pass@1。</p>
+                <p class="en-text">"The zero-shot test provides the model with the module description and buggy implementation, indicating that an error exists without providing localization details. The one-shot test provides identical information but supplements it with simulation waveform data (.vcd files)."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">作者測試了來自 OpenAI（GPT 3.5、4o、5、5.2）、Anthropic（Claude 4.5 Haiku、Sonnet、Opus）、Google（Gemini 2.5 Pro、3 Flash）、Meta（LLaMa3.1 8B 和 80B）和 DeepSeek（V3.2）的前沿模型。結論明確：<span class="hl-key">開箱即用的 LLM 在通用、真實世界的晶片設計上仍然相當糟糕</span>。</p>
+                <p class="en-text">"Despite testing on advanced models, the average pass@1 is relatively low... Current models have significant limitations in AI-aided chip design and remain far from ready for real industrial workflow integration."</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#9878;&#65039; Verilog 生成 Pass@1 成績表</div>
+                <div class="info-box-content">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>任務類型</th><th>最佳模型</th><th>Pass@1</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>CPU IP</td><td>Claude 4.5 Opus / Gemini 3 Flash / GPT 5.2</td><td class="best-score">22.22%</td></tr>
+                            <tr><td>Non-Self-Contained</td><td>DeepSeek-Coder</td><td class="best-score">50%</td></tr>
+                            <tr><td>Self-Contained</td><td>Claude 4.5 Opus / Gemini 3 Flash</td><td class="best-score">36.67%</td></tr>
+                        </tbody>
+                    </table>
+                    <table class="data-table" style="margin-top: 0.75rem;">
+                        <thead>
+                            <tr><th>Python 參考模型</th><th>最佳模型</th><th>Pass@1</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>CPU IP</td><td>Claude 4.5 Sonnet / Gemini 3 Flash</td><td>11.1%</td></tr>
+                            <tr><td>Non-Self-Contained</td><td>--</td><td>0%</td></tr>
+                            <tr><td>Self-Contained</td><td>Claude 4.5 Haiku / Opus / Gemini 2.5 Pro / GPT-5</td><td class="best-score">40%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; 實務應用</div>
+                <div class="info-box-content">
+                    <p>Jack Clark 提出一個關鍵洞察：<span class="hl-practical">可能存在一個「擅長 Verilog 的腳手架」(scaffold)</span>，讓當代 AI 系統如果被要求建造的話，可能會大幅提升在此基準上的表現。這個觀點對任何使用 AI 的人都很重要 &mdash; <strong>通用 LLM 的裸測成績不代表有良好工具鏈支持時的實際能力</strong>。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ PART III ============ -->
+    <div class="section-header">
+        <div class="section-number">3</div>
+        <div class="section-title">Gemini 解 Erdos 問題：AI 科學研究的「O-Ring」困境</div>
+    </div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">Google DeepMind 與多所大學（包括台灣的中央研究院和國立台灣大學）合作，使用內部代號 Aletheia 的 Gemini LLM 嘗試解決 Erdos 開放數學猜想。結果展現了<span class="hl-key">當代 AI 系統可以在科學前沿工作，但評估和篩選其解答是一項重要且困難的人類任務</span>。</p>
+                <p class="en-text">"The results demonstrate that contemporary AI systems can work on the frontiers of science, but also show how evaluating and filtering the solutions they come up with may be an important, challenging task for humans."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">關鍵數字：Aletheia 針對約 700 個未解問題，產生了 200 個候選解答。人類評審將其縮減至 63 個正確回答，進一步的專家數學評估又縮減至<span class="hl-key">僅 13 個「正確且有意義的回答」</span>。其中 50 個「正確」解答在技術上有效但數學上無意義 &mdash; 因為模型對問題的詮釋方式未能捕捉到 Erdos 的原始意圖。</p>
+                <p class="en-text">"Aletheia was able to surface 200 candidate solutions which humans then needed to grade, slimming down to 63 correct responses, and further expert mathematical evaluation slimmed this down to a further subset of only 13 solves."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">13 個中又再細分：5 個是「文獻識別」（解答已在文獻中）、3 個是「部分 AI 解」、3 個是「獨立重新發現」。最終只剩 <span class="hl-concept">2 個「自主新穎解」</span>，其中只有 1 個被認為真正有趣且具數學意義。</p>
+                <p class="en-text">"This leaves 2 'autonomous novel solution' solves... 1 of the solutions seems genuinely interesting."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">研究團隊暫時認為 Aletheia 對 Erdos-1051 的解答<span class="hl-key">代表了 AI 系統自主解決一個略微非平凡的開放 Erdos 問題的早期範例</span>，該問題具有一定的更廣泛數學意義。雖然存在密切相關問題的先前文獻，但沒有完全解決 Erdos-1051。</p>
+                <p class="en-text">"We tentatively believe Aletheia's solution to Erdős-1051 represents an early example of an AI system autonomously resolving a slightly non-trivial open Erdős problem of somewhat broader (mild) mathematical interest."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">論文的核心警示：<span class="hl-key">LLM 可以輕鬆生成候選解答，但能判斷解答正確性的專家數量相對很少</span>，即使是專家也需要大量時間進行評估。隨著 AI 生成的數學內容增長，社群必須對「潛意識抄襲」保持警惕 &mdash; AI 在訓練中習得文獻知識，卻沒有適當引用就重現出來。</p>
+                <p class="en-text">"Large Language Models can easily generate candidate solutions, but the number of experts who can judge the correctness of a solution is relatively small, and even for experts, substantial time is required to carry out such evaluations."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">參與研究的機構除了 Google DeepMind 外，還包括 UC Berkeley、首爾國立大學、史丹佛大學、韓國高等研究院、劍橋大學、布朗大學、延世大學、康考迪亞大學、<span class="hl-practical">中央研究院和國立台灣大學</span>。台灣學術機構的參與反映了台灣在 AI 與數學交叉研究領域的國際能見度。</p>
+                <p class="en-text">"Along with Google DeepMind, the following universities participated in the research: UC Berkeley, Seoul National University, Stanford University, Korea Institute for Advanced Study, University of Cambridge, Brown University, Yonsei University, Concordia University, Academia Sinica, and National Taiwan University."</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明：O-Ring 自動化</div>
+                <div class="info-box-content">
+                    <p>「O-Ring 生產」概念來自太空梭挑戰者號事故 &mdash; 整個系統的可靠性取決於最薄弱的環節。在 AI 科學研究中：</p>
+                    <p><strong>AI 大幅加速了「生成證明」的環節</strong>（700 &rarr; 200 個候選），但仍然需要人類進行費力、高技能的篩選工作（200 &rarr; 13 &rarr; 2 &rarr; 1）。人類的「專家直覺」是 O-Ring &mdash; 整個流程的瓶頸。</p>
+                    <p>這和 CDMO 產業中的 AI 應用完全一致：AI 可以快速生成 deviation investigation 的可能根因清單，但判斷哪個根因是正確的、是否符合 GMP 邏輯，仍需要資深專家。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示：潛意識抄襲風險</div>
+                <div class="info-box-content">
+                    <p>論文特別警告了<strong>「潛意識抄襲」(subconscious plagiarism)</strong> 風險：AI 可能在訓練過程中獲取了文獻知識，並在生成解答時重現這些知識，卻沒有適當引用。<span class="hl-key">形式驗證 (formal verification) 無法幫助解決這個問題</span>。</p>
+                    <p>這對任何使用 AI 生成內容的人都是重要警示 &mdash; 包括法規文件撰寫和技術報告。</p>
+                </div>
+            </div>
+            <div style="background: white; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #e2e8f0; margin-top: 1rem;">
+                <div style="font-weight: 700; font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.75rem; text-align: center;">Erdos 解題漏斗</div>
+                <div style="text-align: center; font-size: 0.85rem; line-height: 2.2; color: #475569;">
+                    <div style="background: #dbeafe; padding: 0.3rem; border-radius: 4px; margin: 0 0rem;">~700 未解問題</div>
+                    <div>&darr;</div>
+                    <div style="background: #bfdbfe; padding: 0.3rem; border-radius: 4px; margin: 0 2rem;">200 候選解答</div>
+                    <div>&darr;</div>
+                    <div style="background: #93c5fd; padding: 0.3rem; border-radius: 4px; margin: 0 4rem; color: white;">63 正確回答</div>
+                    <div>&darr;</div>
+                    <div style="background: #3b82f6; padding: 0.3rem; border-radius: 4px; margin: 0 5rem; color: white;">13 有意義</div>
+                    <div>&darr;</div>
+                    <div style="background: #1e3a8a; padding: 0.3rem; border-radius: 4px; margin: 0 6rem; color: white; font-weight: 700;">1 真正創新</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ PART IV ============ -->
+    <div class="section-header">
+        <div class="section-number">4</div>
+        <div class="section-title">華為 AscendCraft：用 LLM 自動設計晶片核心</div>
+    </div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">南京大學和華為的研究人員使用 LLM 幫助自動化 Huawei Ascend 晶片核心的設計。現代 LLM 能為 NVIDIA GPU 等廣泛使用的晶片生成相當好的核心程式碼，但<span class="hl-key">對相對冷門的晶片如華為的了解較少</span>，主要因為資料可用性問題。</p>
+                <p class="en-text">"Modern LLMs can generate quite good kernel code for widely used chips like NVIDIA GPUs, but relatively obscure chips like Huawei are less well understood by LLMs, mostly due to data availability."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">AscendCraft 採用兩階段管線：第一階段，LLM 建構一個<span class="hl-concept">高階 DSL（領域特定語言）程式</span>，描述核心的計算、分塊策略和片上資料流。DSL 被設計為「LLM 友好的」&mdash; 本質上是一個腳手架 (scaffold)，將 LLM 聚焦在華為硬體的特定需求上。第二階段，透過結構化的 LLM 降級傳遞 (lowering passes)，將 DSL 轉譯為 AscendC 程式碼。</p>
+                <p class="en-text">"In stage one, they have an LLM build a high-level DSL program... The DSL is designed to be LLM-friendly, appropriately abstracted, and sufficiently expressive."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">結果：<span class="hl-practical">98.1% 編譯成功率、90.4% 功能正確性、46.2% 的核心效能達到或超越 PyTorch eager 執行</span>。表現夠好值得繼續研究，但還不足以革命性地改變華為晶片核心的製作方式。</p>
+                <p class="en-text">"AscendCraft achieves 98.1% compilation success and 90.4% functional correctness. Moreover, 46.2% of generated kernels match or exceed PyTorch eager execution performance."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">公開可用的 NPU 核心實作遠比 GPU 對應物稀少，<span class="hl-concept">限制了 LLM 的訓練語料庫</span>。缺乏大規模、高品質的 NPU 程式碼使 LLM 難以生成正確且高效的核心。這正是需要 DSL 腳手架介入的原因。</p>
+                <p class="en-text">"Publicly available NPU kernel implementations are far scarcer than GPU counterparts, limiting the training corpus for LLMs. The lack of large-scale, high-quality NPU code makes it difficult for LLMs to generate correct and efficient kernels."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">儘管如此，訊號很明確：<span class="hl-key">我們可以用 AI 來加速 AI 硬體的最佳化</span>，即使是對於預訓練語料庫中相對新穎或討論不多的系統也是如此。AI 正在學會優化自己的基礎設施。</p>
+                <p class="en-text">"The signs are clear: we can use AI to accelerate the optimizing of AI hardware, even for systems which are relatively new and/or underdiscussed in the pre-training corpus LLMs are trained on."</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念：DSL 作為 LLM 腳手架</div>
+                <div class="info-box-content">
+                    <p>AscendCraft 的設計哲學與 ChipBench 的結論完美呼應：<strong>通用 LLM 直接處理冷門任務效果差，但加上適當的腳手架 (scaffold) 後能力大幅提升</strong>。</p>
+                    <p>DSL 的角色就像是把一個「什麼都略懂」的通才，透過結構化框架引導成「特定領域專家」。這個模式幾乎適用於所有 AI 應用場景。</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; CDMO 產業映射</div>
+                <div class="info-box-content">
+                    <p>AscendCraft 的兩階段策略對 CDMO AI 應用有直接啟示：</p>
+                    <ul>
+                        <li><strong>階段一（DSL = 結構化模板）：</strong>為 LLM 提供 GMP 文件模板、deviation categories、CAPA 框架等領域特定結構</li>
+                        <li><strong>階段二（Transcompilation = 轉化為實際產出）：</strong>將 LLM 的結構化輸出轉換為符合法規格式的實際文件</li>
+                    </ul>
+                    <p>關鍵洞察：<span class="hl-practical">不要期待 LLM 直接輸出完美的 GMP 文件，而是設計中間層 DSL 來引導它</span>。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 未揭露的細節</div>
+                <div class="info-box-content">
+                    <p>奇怪的是，論文<strong>沒有揭露使用的是哪個 LLM</strong>。這可能暗示使用了華為自家模型或有商業敏感性。在評估 AI 研究論文時，方法論透明度是判斷可信度的重要指標。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEY TAKEAWAYS -->
+    <div class="section-header">
+        <div class="section-number">&#9733;</div>
+        <div class="section-title">Key Takeaways</div>
+    </div>
+    <div class="takeaways">
+        <div class="summary-card">
+            <h3>&#129504; 思維社會 = 內建辯論</h3>
+            <p>推理模型透過 RL 訓練後，自發地發展出多重人格模擬能力。它們不是「想更久」，而是「以不同身份思考」，驗證了 LLM 作為「模擬器」的理論。</p>
+        </div>
+        <div class="summary-card">
+            <h3>&#128200; 基準 vs 現實的落差</h3>
+            <p>ChipBench 顯示現有晶片設計基準太簡單（10-76 行 vs 真實 10,000+ 行）。通用 LLM 裸測成績差，但加上領域腳手架後可能大幅不同。</p>
+        </div>
+        <div class="summary-card">
+            <h3>&#128270; 生成易、判斷難</h3>
+            <p>Erdos 案例完美展示了 AI 科學的 O-Ring 模式：700 個問題 &rarr; 200 候選 &rarr; 1 個真正創新。人類的「專家品味」仍是無法自動化的瓶頸。</p>
+        </div>
+        <div class="summary-card">
+            <h3>&#9881; DSL 腳手架是關鍵</h3>
+            <p>華為的 AscendCraft 用 DSL 中間層將 LLM 成功率從幾乎為零提升到 90%+ 功能正確。不要讓 LLM 直接做冷門任務 &mdash; 設計領域框架來引導它。</p>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-header">
+        <div class="section-number">?</div>
+        <div class="section-title">Practice Questions</div>
+    </div>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">「思維社會」(Society of Thought) 與單純的「思考更久」(longer chain-of-thought) 有什麼根本差異？為什麼這個差異對理解 AI 推理能力很重要？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>根本差異在於<strong>質 vs 量</strong>。單純延長 chain-of-thought 是線性地增加推理步驟（量的增加），而「思維社會」是在推理過程中引入不同視角、人格特徵和領域專長之間的辯論（質的變化）。</p>
+            <p>這很重要，因為它暗示推理能力的提升來自<strong>多樣性</strong>而非<strong>計算量</strong>。如果我們只是讓模型「想更久」，可能會陷入同一個思維框架的死胡同。但如果模型能自發地切換視角、產生衝突並調和分歧，它就更像真正的深度思考。這也解釋了為什麼 RL 訓練後才出現這個能力 &mdash; RL 的獎勵機制鼓勵模型發現「有效的推理策略」，而多視角辯論恰好是最有效的策略之一。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">如果你要在 CDMO 的 deviation investigation 流程中應用「DSL 腳手架」策略（如 AscendCraft），你會如何設計這個中間層？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>設計思路應該模仿 AscendCraft 的兩階段方法：</p>
+            <p><strong>階段一 &mdash; DSL 定義：</strong>建立一個結構化的 deviation investigation 模板，包含：(1) deviation 分類代碼對照表、(2) 根因分析框架（如魚骨圖的六大類別）、(3) 影響評估矩陣（產品品質/病患安全/法規合規）、(4) CAPA 類型對照。這個 DSL 就像是告訴 LLM「你只需要填這些格子」。</p>
+            <p><strong>階段二 &mdash; 轉譯：</strong>將 LLM 的結構化輸出，透過模板引擎轉換為符合 PIC/S 和 21 CFR Part 211 格式的正式 deviation report。關鍵是人類在階段一結束時介入審查（copilot mode），確認根因分析邏輯正確後才進入階段二。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">Erdos 研究中 700 &rarr; 1 的轉化率是否代表 AI 在數學研究上「失敗」了？這個框架對你評估其他 AI 應用的 ROI 有什麼啟示？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>表面看 700:1 的比例很糟，但這取決於你的<strong>基準比較對象</strong>。如果沒有 AI，人類數學家解決這 700 個問題的速度是多少？如果 AI 在幾週內找到了 1 個人類可能需要數年才能發現的解答，那 ROI 其實很高。</p>
+            <p>更重要的啟示是<strong>評估 AI ROI 時要計算「全流程成本」而非只看「AI 生成成本」</strong>。Erdos 案例中，AI 的計算成本可能很低，但人類專家審查 200 個候選解答的時間成本極高。在 CDMO 場景中，如果 AI 能快速生成 20 個可能的 deviation 根因，但每個都需要 QA 團隊花 30 分鐘驗證，那總成本可能比傳統方法更高。</p>
+            <p>正確的評估框架是：AI 生成成本 + 人類篩選成本 &lt; 純人工成本 &times; 品質提升倍數。只有當這個不等式成立時，AI 應用才有真正的 ROI。</p>
+        </div>
+    </details>
+
+    <!-- BOTTOM LINE -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#127919; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#10004; 核心洞察</div>
+            <div class="bottom-line-text">本期四篇文章反覆驗證同一個模式：AI 在「生成」端已經很強，但「判斷」端仍是人類主場。這正好對應我在 CDMO 場景中的定位 &mdash; 我的價值不在於能比 AI 更快地產生答案，而是能判斷哪個答案在 GMP 和法規脈絡下是正確的。AscendCraft 的 DSL 腳手架策略特別值得深入研究，它提供了一個可複製的模式來讓通用 LLM 在特定領域發揮最大效用。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#128200; 立即應用</div>
+            <div class="bottom-line-text">這週開始為一個常見的 deviation 類型（例如：溫度偏差）設計簡化版 DSL 模板，測試 Claude 在有結構化框架引導下 vs 無引導時的 deviation investigation 品質差異。目標：建立第一個「CDMO DSL」的 proof of concept。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#9888; 需要補充</div>
+            <div class="bottom-line-text">本期文章全是研究導向，缺少實際部署案例和成本數據。「思維社會」概念目前還停留在觀察階段，無法直接應用。需要追蹤後續是否有方法能刻意引導模型使用多視角推理。另外，ChipBench 的結果暗示了「腳手架效果」的重要性，但缺少量化的腳手架前後比較數據。</div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>Educational Document | Generated: 2026-02-10</p>
+        <p>Source: <a href="https://importai.substack.com" target="_blank">Import AI #444 by Jack Clark</a> | 2026-02-09</p>
+        <p>Paper Links: Societies of Thought (arXiv) | ChipBench (arXiv) | Erdos Problems (arXiv) | AscendCraft (arXiv)</p>
+        <p style="margin-top: 0.5rem; font-weight: 600;">Suggested Chat Title: [LLM] Import AI 444 - Societies of Thought, ChipBench, Erdos</p>
+    </div>
+
 </div>
 </body>
 </html>

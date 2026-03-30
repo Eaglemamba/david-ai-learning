@@ -1,155 +1,309 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2026-02-03" name="doc-date"/>
-<meta content="用 Claude Code 打造世界級產品導師團" name="doc-title"/>
-<meta content="Rich Holmes / Knowledge Series #98" name="doc-source"/>
-<meta content="Agent,Tool,Prompt" name="doc-tags"/>
-<meta content="3.2" name="doc-rating"/>
-<meta content="示範用 Claude Code 建立 AI 產品導師系統，將名人思維轉化為可互動的角色檔" name="doc-summary"/>
-<meta content="2026-02-03_claude-code-product-mentors.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>用 Claude Code 打造世界級產品導師團 | AI Expert Learning</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-03">
+    <meta name="doc-title" content="用 Claude Code 打造世界級產品導師團">
+    <meta name="doc-source" content="Rich Holmes / Knowledge Series #98">
+    <meta name="doc-tags" content="Agent,Tool,Prompt">
+    <meta name="doc-rating" content="3.2">
+    <meta name="doc-summary" content="示範用 Claude Code 建立 AI 產品導師系統，將名人思維轉化為可互動的角色檔">
+    <meta name="doc-file" content="2026-02-03_claude-code-product-mentors.html">
+    <title>用 Claude Code 打造世界級產品導師團 | AI Expert Learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #e0f2fe;
+            --accent: #7c3aed;
+            --accent-light: #e9d5ff;
+            --green: #047857;
+            --green-light: #d1fae5;
+            --orange: #ea580c;
+            --orange-light: #fed7aa;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-700: #334155;
+            --gray-900: #0f172a;
+            --radius: 0.75rem;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--gray-50); color: var(--gray-700); line-height: 1.8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
 
+        /* Header */
+        .header { text-align: center; margin-bottom: 2rem; padding: 2.5rem 2rem; background: linear-gradient(135deg, var(--primary), #3b5998); border-radius: var(--radius); color: white; }
+        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.4; }
+        .header .subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+        .tag { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 0.25rem; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .tag-integration { background: #99f6e4; color: #134e4a; }
+        .source-info { font-size: 0.8rem; opacity: 0.8; }
 
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem; border-left: 4px solid var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .exec-summary h2 { font-size: 1.1rem; color: var(--primary); margin-bottom: 0.75rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; }
+
+        /* Learning Objectives */
+        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: var(--radius); padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 3px solid var(--accent); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 700; font-size: 0.9rem; color: var(--primary); margin-bottom: 0.25rem; }
+        .objective-desc { font-size: 0.85rem; color: var(--gray-500); }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+        /* Section Headings */
+        .section-heading { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--primary-light); }
+        .section-heading .part-num { color: var(--accent); }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-left { padding-right: 1rem; border-right: 1px solid var(--gray-200); }
+        .content-grid.linear .content-left { border-right: none; padding-right: 0; }
+        .content-right { padding-left: 0.5rem; }
+
+        /* Bilingual Block */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh-text { font-size: 0.95rem; line-height: 1.8; color: var(--gray-700); margin-bottom: 0.3rem; }
+        .en-text { font-size: 0.9rem; line-height: 1.7; color: var(--gray-500); font-style: italic; }
+        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.85rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Code blocks */
+        pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; margin: 0.5rem 0; }
+        code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
+        .inline-code { background: #f1f5f9; color: #7c3aed; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
+
+        /* Key Takeaways */
+        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
+        .summary-card { background: white; border-radius: var(--radius); padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card-title { font-weight: 700; font-size: 0.9rem; color: var(--primary); margin-bottom: 0.4rem; }
+        .summary-card-text { font-size: 0.85rem; line-height: 1.7; color: var(--gray-500); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #f59e0b; }
+        .summary-card:nth-child(4) { border-left-color: #8b5cf6; }
+
+        /* Accordion */
+        .question-accordion { background: white; border-radius: var(--radius); margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: var(--gray-500); font-size: 0.8rem; border-top: 1px solid var(--gray-200); margin-top: 2rem; }
+        .footer a { color: var(--accent); text-decoration: none; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; padding-right: 0; border-bottom: 1px solid var(--gray-200); padding-bottom: 1rem; margin-bottom: 1rem; }
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-<!-- HEADER -->
-<header class="header">
-<div class="tags">
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-prompt">Prompt</span>
-<span class="tag tag-integration">Integration</span>
-</div>
-<h1>用 Claude Code 打造世界級產品導師團</h1>
-<div class="subtitle">Build a Board Room of World-Class Product Mentors with Claude Code</div>
-<div class="source-info">Rich Holmes / Knowledge Series #98 / 2026-02-02</div>
-</header>
-<!-- EXECUTIVE SUMMARY -->
-<div class="exec-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★☆☆</span> 3.2/5</span>
-<span class="rating-high">↑ Practical Value, Tool Ecosystem</span>
-<span class="rating-low">↓ Technical Depth, Timeliness</span>
-</div>
-<p>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="tags">
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-prompt">Prompt</span>
+            <span class="tag tag-integration">Integration</span>
+        </div>
+        <h1>用 Claude Code 打造世界級產品導師團</h1>
+        <div class="subtitle">Build a Board Room of World-Class Product Mentors with Claude Code</div>
+        <div class="source-info">Rich Holmes / Knowledge Series #98 / 2026-02-02</div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-summary">
+        <h2>Executive Summary</h2>
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span> 3.2/5</span>
+            <span class="rating-high">&#8593; Practical Value, Tool Ecosystem</span>
+            <span class="rating-low">&#8595; Technical Depth, Timeliness</span>
+        </div>
+        <p>
             本文示範如何使用 Claude Code 建立一套「AI 產品導師系統」，將 Steve Jobs、Ray Dalio、Demis Hassabis 等人的思維模式轉化為可互動的 Markdown 角色檔，並透過 Node.js 前端和 MCP 整合連結真實工作數據。文章的核心價值在於展示 Claude Code 的非工程應用場景，特別是 Agents、Skills 和 MCP 的組合使用模式。技術深度偏淺（主要是檔案結構和 prompt 設計），但對理解 Claude Code 生態系的應用延伸有啟發性。
         </p>
-</div>
-<!-- LEARNING OBJECTIVES -->
-<div class="section-heading">Learning Objectives</div>
-<div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">📁</div>
-<div class="objective-title">Claude Code 專案結構設計</div>
-<div class="objective-desc">理解如何用 Markdown 檔案 + 目錄結構建立可擴充的 AI 角色系統</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">🧠</div>
-<div class="objective-title">Persona Prompt 設計維度</div>
-<div class="objective-desc">掌握角色文件的 10 個關鍵維度：Core Identity、Questioning Style、Red Flags 等</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">🔗</div>
-<div class="objective-title">Agents / Skills / MCP 整合</div>
-<div class="objective-desc">了解 Claude Code 的三種擴充機制如何將靜態角色檔轉化為動態決策工具</div>
-</div>
-</div>
-<!-- FRAMEWORK VISUAL -->
-<div class="framework-visual">
-<div class="framework-title">Product Mentor System - 四階段建構流程</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">🎯</div>
-<div class="framework-step-title">Choose Mentors</div>
-<div class="framework-step-desc">19 維度選人</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📝</div>
-<div class="framework-step-title">Build Personas</div>
-<div class="framework-step-desc">Markdown 角色檔</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">💻</div>
-<div class="framework-step-title">Build Frontend</div>
-<div class="framework-step-desc">Node.js + SSE</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔌</div>
-<div class="framework-step-title">Connect Data</div>
-<div class="framework-step-desc">MCP + Agents</div>
-</div>
-</div>
-</div>
-<!-- ======================== PART I ======================== -->
-<div class="section-heading"><span class="part-num">Part I</span> — 選擇你的產品導師 (Choose Your Product Mentors)</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="section-heading">Learning Objectives</div>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">&#x1F4C1;</div>
+            <div class="objective-title">Claude Code 專案結構設計</div>
+            <div class="objective-desc">理解如何用 Markdown 檔案 + 目錄結構建立可擴充的 AI 角色系統</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#x1F9E0;</div>
+            <div class="objective-title">Persona Prompt 設計維度</div>
+            <div class="objective-desc">掌握角色文件的 10 個關鍵維度：Core Identity、Questioning Style、Red Flags 等</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#x1F517;</div>
+            <div class="objective-title">Agents / Skills / MCP 整合</div>
+            <div class="objective-desc">了解 Claude Code 的三種擴充機制如何將靜態角色檔轉化為動態決策工具</div>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">Product Mentor System - 四階段建構流程</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F3AF;</div>
+                <div class="framework-step-title">Choose Mentors</div>
+                <div class="framework-step-desc">19 維度選人</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4DD;</div>
+                <div class="framework-step-title">Build Personas</div>
+                <div class="framework-step-desc">Markdown 角色檔</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4BB;</div>
+                <div class="framework-step-title">Build Frontend</div>
+                <div class="framework-step-desc">Node.js + SSE</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F50C;</div>
+                <div class="framework-step-title">Connect Data</div>
+                <div class="framework-step-desc">MCP + Agents</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================== PART I ======================== -->
+    <div class="section-heading"><span class="part-num">Part I</span> &mdash; 選擇你的產品導師 (Choose Your Product Mentors)</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text">
                     一位新創公司創辦人透露，她使用<span class="highlight-concept">客製化的 AI 版 Steve Jobs</span> 來協助品牌策略決策。她用產品發表會逐字稿和策略演講訓練這個 GPT，讓它在她卡關時批判她的想法，並協助精煉到「10 分滿分」的概念。
                 </div>
-<div class="en-text">
+                <div class="en-text">
                     A startup founder recently revealed that they use a custom built AI version of Steve Jobs to help guide their decision making... trained it on product launch transcripts and strategy talks.
                 </div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">
-                    作者提出一個更進階的構想：何不建立一整個<span class="highlight-key">世界級產品思考者團隊</span>，跨越策略、設計、決策、AI 等 19 個專業維度，在需要時隨時諮詢？文章將這些維度歸類為 7 大領域：Strategy &amp; Vision、Discovery &amp; Research、Execution &amp; Delivery、Design &amp; Craft、People &amp; Communication、Data &amp; Measurement、AI Product Sense。
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">
+                    作者提出一個更進階的構想：何不建立一整個<span class="highlight-key">世界級產品思考者團隊</span>，跨越策略、設計、決策、AI 等 19 個專業維度，在需要時隨時諮詢？文章將這些維度歸類為 7 大領域：Strategy & Vision、Discovery & Research、Execution & Delivery、Design & Craft、People & Communication、Data & Measurement、AI Product Sense。
                 </div>
-<div class="en-text">
+                <div class="en-text">
                     What if you could build an entire team of world class product thinkers and refer to them to help you to assess your designs, make decisions or craft your strategy?
                 </div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-                    把這個系統想像成你的「私人董事會」 — 企業 CEO 都有外部董事提供不同觀點的挑戰與建議。這套系統就是用 AI 模擬這個概念，只是你的董事成員是根據公開資料重建的「思維模型」，而非真人。關鍵差異：真正的董事會有利益關係和政治動態，AI 版只有思維框架。
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                <div class="info-box-content">
+                    把這個系統想像成你的「私人董事會」 &mdash; 企業 CEO 都有外部董事提供不同觀點的挑戰與建議。這套系統就是用 AI 模擬這個概念，只是你的董事成員是根據公開資料重建的「思維模型」，而非真人。關鍵差異：真正的董事會有利益關係和政治動態，AI 版只有思維框架。
                 </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                <div class="info-box-content">
                     文章的導師選擇框架包含 19 個技能維度，但<strong>真正的價值不在人選本身</strong>，而在「角色文件」(Persona Document) 的設計品質。一個精心設計的 5-6 頁角色文件，涵蓋 10 個維度（Core Identity, Core Principles, Questioning Style, Communication Style, Red Flags, Mentoring Process, Example Interactions, Key Phrases, Success Metrics, Limitations），才是這套系統運作的核心。
                 </div>
-</div>
-</div>
-</div>
-<!-- ======================== PART II ======================== -->
-<div class="section-heading"><span class="part-num">Part II</span> — 在 Claude Code 中建構導師系統 (Build the Mentor System)</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================== PART II ======================== -->
+    <div class="section-heading"><span class="part-num">Part II</span> &mdash; 在 Claude Code 中建構導師系統 (Build the Mentor System)</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text">
                     系統建構的第一步是建立<span class="highlight-practical">清楚的目錄結構</span>。作者設計了四個主要資料夾：<span class="inline-code">mentors/</span>（按專長分類的角色檔）、<span class="inline-code">context/</span>（公司和產品背景資訊）、<span class="inline-code">sessions/</span>（對話紀錄）、<span class="inline-code">decisions/</span>（重要決策存檔）。mentors 資料夾再細分為 strategic-vision、discovery、execution、design、people、data、specialized 等子目錄。
                 </div>
-<div class="en-text">
+                <div class="en-text">
                     The mentors folder is categorized according to each mentor's specialist area, context is where you'll provide Claude some additional information about your product, sessions is where you'll store each decision making session.
                 </div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">
                     接著，將事先用 Claude Web 建立好的角色檔（如 <span class="inline-code">jobs-vision.md</span>）儲存到對應目錄。最後建立 <span class="inline-code">context/company-info.md</span> 和 <span class="inline-code">context/product-roadmap.md</span>，提供公司使命、產品描述、目標客群、團隊規模、當前挑戰等背景資訊，讓導師的建議能<span class="highlight-concept">基於你的實際情境</span>。
                 </div>
-<div class="en-text">
+                <div class="en-text">
                     If you want to give Claude and your mentors some additional context about your company, your product roadmap, strategy or anything else, you can add this into your context folders.
                 </div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-code">
-<div class="info-box-header">💻 目錄結構</div>
-<div class="info-box-content">
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">&#x1F4BB; 目錄結構</div>
+                <div class="info-box-content">
 <pre>product-mentors/
 ├── mentors/
 │   ├── strategic-vision/
@@ -167,41 +321,42 @@
 │   └── product-roadmap.md
 ├── sessions/
 └── decisions/</pre>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：Context Grounding</div>
-<div class="info-box-content">
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：Context Grounding</div>
+                <div class="info-box-content">
                     這套系統的設計模式是 <strong>Persona + Context = Grounded Advice</strong>。角色檔定義「誰在說話」，context 檔定義「說給誰聽」。沒有 context，導師的建議只是通用哲學；有了你的公司資訊和 roadmap，建議才會具體到你的產品和市場。這與 RAG 的概念類似：用外部文件為 LLM 的回應提供基礎。
                 </div>
-</div>
-</div>
-</div>
-<!-- ======================== PART III ======================== -->
-<div class="section-heading"><span class="part-num">Part III</span> — 打造互動前端介面 (Turn Mentors into a Chat App)</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================== PART III ======================== -->
+    <div class="section-heading"><span class="part-num">Part III</span> &mdash; 打造互動前端介面 (Turn Mentors into a Chat App)</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text">
                     為了脫離命令列的限制，作者將導師系統封裝成一個<span class="highlight-practical">本地端 Web 應用程式</span>。技術架構是 Node.js + Express 後端、SSE (Server-Sent Events) 串流、Vanilla JS 前端，並使用 Anthropic Claude API 進行對話。前端包含深色側邊欄（導師卡片 + 歷史 session）和淺色聊天區域。
                 </div>
-<div class="en-text">
+                <div class="en-text">
                     If you wanted to take things a step further, you could turn this into a web application that you can access with a front end to make it easier to switch between mentors.
                 </div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">
                     關鍵設計：System Prompt 由<span class="highlight-key">導師 .md 檔 + 公司 context + 產品 roadmap</span> 三者組合而成。這意味著每次對話都會載入完整的角色設定和你的業務背景，確保回應既符合導師風格又切合你的實際需求。Session 以帶 YAML frontmatter 的 Markdown 格式儲存在 <span class="inline-code">sessions/</span> 目錄。
                 </div>
-<div class="en-text">
+                <div class="en-text">
                     System prompt: mentor .md file + company context + product roadmap. Sessions saved as markdown with YAML frontmatter in ../sessions/
                 </div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-code">
-<div class="info-box-header">💻 前端應用架構</div>
-<div class="info-box-content">
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-code">
+                <div class="info-box-header">&#x1F4BB; 前端應用架構</div>
+                <div class="info-box-content">
 <pre>product-mentors/
 ├── app/
 │   ├── server.js       # Express + SSE
@@ -216,175 +371,184 @@
 ├── context/
 ├── sessions/
 └── decisions/</pre>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明：System Prompt 三明治</div>
-<div class="info-box-content">
-                    想像 System Prompt 就像一個三層三明治：最上層是「導師人格」（他怎麼想），中間層是「你的公司」（他在幫誰），底層是「你的 roadmap」（他在幫什麼決策）。缺少任何一層，對話都會流於空洞。這個模式其實就是 Context Engineering 的實踐 — 不是寫更好的 prompt，而是提供更完整的 context。
                 </div>
-</div>
-</div>
-</div>
-<!-- ======================== PART IV ======================== -->
-<div class="section-heading"><span class="part-num">Part IV</span> — Agents、Skills 與 MCP 整合 (Extending with Real-World Data)</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明：System Prompt 三明治</div>
+                <div class="info-box-content">
+                    想像 System Prompt 就像一個三層三明治：最上層是「導師人格」（他怎麼想），中間層是「你的公司」（他在幫誰），底層是「你的 roadmap」（他在幫什麼決策）。缺少任何一層，對話都會流於空洞。這個模式其實就是 Context Engineering 的實踐 &mdash; 不是寫更好的 prompt，而是提供更完整的 context。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================== PART IV ======================== -->
+    <div class="section-heading"><span class="part-num">Part IV</span> &mdash; Agents、Skills 與 MCP 整合 (Extending with Real-World Data)</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text">
                     作者提出三種擴充機制。<strong>Skills</strong>（自訂斜線指令）：<span class="inline-code">/mentor &lt;name&gt;</span> 快速啟動導師 session，<span class="inline-code">/decide &lt;question&gt;</span> 讓所有導師同時回答同一問題，<span class="inline-code">/prep &lt;topic&gt;</span> 根據 roadmap 和歷史決策做會前準備。
                 </div>
-<div class="en-text">
+                <div class="en-text">
                     Skills let you create custom commands that make interacting with your mentors faster and more intuitive.
                 </div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">
-<strong>Agents</strong>（平行與背景執行）：最強大的用法是<span class="highlight-key">「Panel Discussion」模式</span> — 同時啟動三個 Agent，每個讀取不同的導師檔，獨立回答同一個策略問題，最後合成比較分析。這模擬了真正董事會中不同觀點的碰撞。
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">
+                    <strong>Agents</strong>（平行與背景執行）：最強大的用法是<span class="highlight-key">「Panel Discussion」模式</span> &mdash; 同時啟動三個 Agent，每個讀取不同的導師檔，獨立回答同一個策略問題，最後合成比較分析。這模擬了真正董事會中不同觀點的碰撞。
                 </div>
-<div class="en-text">
+                <div class="en-text">
                     One of the most powerful approaches would be creating a panel discussion where you'd spawn three agents in parallel, one per mentor, all answering the same strategic question.
                 </div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">
-<strong>MCP</strong>（Model Context Protocol）整合是讓系統「接地」的關鍵。連接 Linear/Jira 可以拉入真實的 feature request 和 bug report；連接 Analytics 可以讓導師參考實際使用數據。文章列出了 Linear、Figma、Notion、Jira、Google Analytics 五個<span class="highlight-practical"> MCP 整合文件連結</span>。
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">
+                    <strong>MCP</strong>（Model Context Protocol）整合是讓系統「接地」的關鍵。連接 Linear/Jira 可以拉入真實的 feature request 和 bug report；連接 Analytics 可以讓導師參考實際使用數據。文章列出了 Linear、Figma、Notion、Jira、Google Analytics 五個<span class="highlight-practical"> MCP 整合文件連結</span>。
                 </div>
-<div class="en-text">
+                <div class="en-text">
                     MCP integrations would let you connect your mentor system to real-world data and tools, transforming it from a theoretical exercise into something grounded in your actual product work.
                 </div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 三種擴充機制比較</div>
-<div class="info-box-content">
-<table style="width:100%; font-size:0.85rem; border-collapse:collapse;">
-<tr style="border-bottom:1px solid #a5b4fc;">
-<th style="text-align:left; padding:0.4rem;">機制</th>
-<th style="text-align:left; padding:0.4rem;">用途</th>
-<th style="text-align:left; padding:0.4rem;">觸發方式</th>
-</tr>
-<tr style="border-bottom:1px solid #e2e8f0;">
-<td style="padding:0.4rem; font-weight:600;">Skills</td>
-<td style="padding:0.4rem;">快速指令、可複用流程</td>
-<td style="padding:0.4rem;"><span class="inline-code">/mentor</span> <span class="inline-code">/decide</span></td>
-</tr>
-<tr style="border-bottom:1px solid #e2e8f0;">
-<td style="padding:0.4rem; font-weight:600;">Agents</td>
-<td style="padding:0.4rem;">平行思考、背景處理</td>
-<td style="padding:0.4rem;">Claude Code 自動協調</td>
-</tr>
-<tr>
-<td style="padding:0.4rem; font-weight:600;">MCP</td>
-<td style="padding:0.4rem;">真實數據接入</td>
-<td style="padding:0.4rem;">第三方 API 整合</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：CDMO 場景延伸</div>
-<div class="info-box-content">
-                    這套架構可以直接轉化為<strong>「法規導師系統」</strong>：建立 PIC/S GMP Inspector、FDA Reviewer、EMA Assessor 等角色檔，搭配你的 SOP 和 deviation history 作為 context。用 <span class="inline-code">/decide</span> Skill 讓三個法規觀點同時評估一個 deviation 的分類決策。MCP 連接 LIMS/MES 後，導師的建議就能參考實際批次數據。<br/><br/>
-<strong>注意</strong>：法規情境中，AI 輸出永遠是 copilot 模式（100% 人工審核），而非 agent 模式。
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#x2696;&#xFE0F; 三種擴充機制比較</div>
+                <div class="info-box-content">
+                    <table style="width:100%; font-size:0.85rem; border-collapse:collapse;">
+                        <tr style="border-bottom:1px solid #a5b4fc;">
+                            <th style="text-align:left; padding:0.4rem;">機制</th>
+                            <th style="text-align:left; padding:0.4rem;">用途</th>
+                            <th style="text-align:left; padding:0.4rem;">觸發方式</th>
+                        </tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;">
+                            <td style="padding:0.4rem; font-weight:600;">Skills</td>
+                            <td style="padding:0.4rem;">快速指令、可複用流程</td>
+                            <td style="padding:0.4rem;"><span class="inline-code">/mentor</span> <span class="inline-code">/decide</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;">
+                            <td style="padding:0.4rem; font-weight:600;">Agents</td>
+                            <td style="padding:0.4rem;">平行思考、背景處理</td>
+                            <td style="padding:0.4rem;">Claude Code 自動協調</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.4rem; font-weight:600;">MCP</td>
+                            <td style="padding:0.4rem;">真實數據接入</td>
+                            <td style="padding:0.4rem;">第三方 API 整合</td>
+                        </tr>
+                    </table>
                 </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：MCP 可用連接</div>
-<div class="info-box-content">
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：CDMO 場景延伸</div>
+                <div class="info-box-content">
+                    這套架構可以直接轉化為<strong>「法規導師系統」</strong>：建立 PIC/S GMP Inspector、FDA Reviewer、EMA Assessor 等角色檔，搭配你的 SOP 和 deviation history 作為 context。用 <span class="inline-code">/decide</span> Skill 讓三個法規觀點同時評估一個 deviation 的分類決策。MCP 連接 LIMS/MES 後，導師的建議就能參考實際批次數據。<br><br>
+                    <strong>注意</strong>：法規情境中，AI 輸出永遠是 copilot 模式（100% 人工審核），而非 agent 模式。
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：MCP 可用連接</div>
+                <div class="info-box-content">
                     文章列出的 5 個 MCP 整合文件：Linear (<span class="inline-code">linear.app/docs/mcp</span>)、Figma (<span class="inline-code">developers.figma.com</span>)、Notion (<span class="inline-code">developers.notion.com/docs/mcp</span>)、Jira (<span class="inline-code">support.atlassian.com</span>)、Google Analytics (<span class="inline-code">developers.google.com/analytics/devguides/MCP</span>)。你目前在 Claude.ai 已連接 Asana 和 Notion 的 MCP，可直接嘗試整合。
                 </div>
-</div>
-</div>
-</div>
-<!-- KEY TAKEAWAYS -->
-<div class="section-heading">Key Takeaways</div>
-<div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-title">Persona = Markdown 檔</div>
-<div class="summary-card-text">整套系統的核心是精心設計的 Markdown 角色文件（10 個維度、5-6 頁），而非 Claude Code 本身。工具只是載體，角色檔品質決定輸出品質。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">Context Engineering 實踐</div>
-<div class="summary-card-text">System Prompt = Persona + Company Context + Roadmap 的三層結構，體現了「context 比 prompt 更重要」的原則。小模型 + 完整 context 勝過大模型 + 空白 context。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">Skills / Agents / MCP 三件套</div>
-<div class="summary-card-text">Claude Code 的擴充能力分三層：Skills 做可複用指令、Agents 做平行思考、MCP 做數據接入。Panel Discussion 模式是最實用的 Agent 應用模式之一。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">Non-Engineer 也能用 Claude Code</div>
-<div class="summary-card-text">這篇文章的目標讀者是非工程師的 PM/產品人。核心操作只有：建目錄、存 .md 檔、簡單 prompt。前端可以靠 vibe coding 完成。</div>
-</div>
-</div>
-<!-- PRACTICE QUESTIONS -->
-<div class="section-heading">Practice Questions</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">文章中的 Persona Document 包含 10 個維度。如果你只能保留其中 3 個維度來建立一個有效的 AI 導師，你會選哪 3 個？為什麼？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>建議答案：Core Principles、Questioning Style、Limitations。</strong></p>
-<p>Core Principles 定義了導師「相信什麼」，這是所有建議的價值觀基礎。Questioning Style 決定了導師「如何挑戰你」，這是區分 AI 導師和普通 ChatGPT 對話的關鍵差異 — 好的導師不是給答案，而是問出你沒想到的問題。Limitations 讓 AI 知道何時說「我不知道」，避免過度自信的幻覺。其他維度如 Communication Style 和 Key Phrases 只是語氣裝飾，Example Interactions 可以被好的 few-shot prompt 替代。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要為 CDMO 的 Aseptic Fill-Finish 產線建立一套「法規導師系統」，你會選擇哪 3 位「導師」角色？Context 資料夾應該放什麼文件？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>建議的 3 位導師：</strong></p>
-<p>1. <strong>PIC/S GMP Inspector</strong> — 專注製程驗證、環境監控和數據完整性，用 PIC/S Annex 1 和 PE 009 的邏輯思考。2. <strong>FDA CDER Reviewer</strong> — 專注 21 CFR Part 211/Part 11 合規、Deviation 嚴重性分類和 CAPA 有效性評估。3. <strong>QA Release Director</strong> — 模擬一位有 20 年經驗的品保放行主管，專注批次放行決策的風險平衡。</p>
-<p><strong>Context 資料夾建議內容：</strong><span class="inline-code">context/site-info.md</span>（廠區資訊、設備清單、SA25 Vanrx isolator 規格）、<span class="inline-code">context/product-matrix.md</span>（產品清單、劑型、灌裝量）、<span class="inline-code">context/regulatory-history.md</span>（歷次稽核發現、主要 deviation 趨勢）、<span class="inline-code">context/sop-index.md</span>（關鍵 SOP 的摘要索引）。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">這套「AI 導師系統」最大的風險是什麼？在什麼情況下，它可能造成比沒有它更差的決策品質？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>最大風險：錨定效應 (Anchoring Bias) 和虛假權威感。</strong></p>
-<p>當系統以「Steve Jobs 會這樣想」的方式包裝建議時，使用者很容易被名人光環錨定，降低自己的批判思考。但實際上，這只是基於公開資料的 LLM 角色扮演，不是真正的 Jobs 思維。更危險的場景是：當使用者面對模糊決策時，AI 導師給出看似確信的回答（因為 LLM 本質上傾向產生流暢、自信的文本），使用者可能因此跳過本應進行的深度分析和利害關係人討論。</p>
-<p>在法規環境中風險更高 — 如果一個「FDA Reviewer 導師」告訴你 deviation 不需要升級，但你的 QA 判斷認為應該升級，選擇「聽 AI 的」可能導致合規風險。這就是為什麼法規情境中必須堅持 copilot 模式。</p>
-</div>
-</details>
-<!-- BOTTOM LINE -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">
+            </div>
+        </div>
+    </div>
+
+    <!-- KEY TAKEAWAYS -->
+    <div class="section-heading">Key Takeaways</div>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <div class="summary-card-title">Persona = Markdown 檔</div>
+            <div class="summary-card-text">整套系統的核心是精心設計的 Markdown 角色文件（10 個維度、5-6 頁），而非 Claude Code 本身。工具只是載體，角色檔品質決定輸出品質。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">Context Engineering 實踐</div>
+            <div class="summary-card-text">System Prompt = Persona + Company Context + Roadmap 的三層結構，體現了「context 比 prompt 更重要」的原則。小模型 + 完整 context 勝過大模型 + 空白 context。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">Skills / Agents / MCP 三件套</div>
+            <div class="summary-card-text">Claude Code 的擴充能力分三層：Skills 做可複用指令、Agents 做平行思考、MCP 做數據接入。Panel Discussion 模式是最實用的 Agent 應用模式之一。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">Non-Engineer 也能用 Claude Code</div>
+            <div class="summary-card-text">這篇文章的目標讀者是非工程師的 PM/產品人。核心操作只有：建目錄、存 .md 檔、簡單 prompt。前端可以靠 vibe coding 完成。</div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section-heading">Practice Questions</div>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">文章中的 Persona Document 包含 10 個維度。如果你只能保留其中 3 個維度來建立一個有效的 AI 導師，你會選哪 3 個？為什麼？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>建議答案：Core Principles、Questioning Style、Limitations。</strong></p>
+            <p>Core Principles 定義了導師「相信什麼」，這是所有建議的價值觀基礎。Questioning Style 決定了導師「如何挑戰你」，這是區分 AI 導師和普通 ChatGPT 對話的關鍵差異 &mdash; 好的導師不是給答案，而是問出你沒想到的問題。Limitations 讓 AI 知道何時說「我不知道」，避免過度自信的幻覺。其他維度如 Communication Style 和 Key Phrases 只是語氣裝飾，Example Interactions 可以被好的 few-shot prompt 替代。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">如果你要為 CDMO 的 Aseptic Fill-Finish 產線建立一套「法規導師系統」，你會選擇哪 3 位「導師」角色？Context 資料夾應該放什麼文件？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>建議的 3 位導師：</strong></p>
+            <p>1. <strong>PIC/S GMP Inspector</strong> &mdash; 專注製程驗證、環境監控和數據完整性，用 PIC/S Annex 1 和 PE 009 的邏輯思考。2. <strong>FDA CDER Reviewer</strong> &mdash; 專注 21 CFR Part 211/Part 11 合規、Deviation 嚴重性分類和 CAPA 有效性評估。3. <strong>QA Release Director</strong> &mdash; 模擬一位有 20 年經驗的品保放行主管，專注批次放行決策的風險平衡。</p>
+            <p><strong>Context 資料夾建議內容：</strong><span class="inline-code">context/site-info.md</span>（廠區資訊、設備清單、SA25 Vanrx isolator 規格）、<span class="inline-code">context/product-matrix.md</span>（產品清單、劑型、灌裝量）、<span class="inline-code">context/regulatory-history.md</span>（歷次稽核發現、主要 deviation 趨勢）、<span class="inline-code">context/sop-index.md</span>（關鍵 SOP 的摘要索引）。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">這套「AI 導師系統」最大的風險是什麼？在什麼情況下，它可能造成比沒有它更差的決策品質？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>最大風險：錨定效應 (Anchoring Bias) 和虛假權威感。</strong></p>
+            <p>當系統以「Steve Jobs 會這樣想」的方式包裝建議時，使用者很容易被名人光環錨定，降低自己的批判思考。但實際上，這只是基於公開資料的 LLM 角色扮演，不是真正的 Jobs 思維。更危險的場景是：當使用者面對模糊決策時，AI 導師給出看似確信的回答（因為 LLM 本質上傾向產生流暢、自信的文本），使用者可能因此跳過本應進行的深度分析和利害關係人討論。</p>
+            <p>在法規環境中風險更高 &mdash; 如果一個「FDA Reviewer 導師」告訴你 deviation 不需要升級，但你的 QA 判斷認為應該升級，選擇「聽 AI 的」可能導致合規風險。這就是為什麼法規情境中必須堅持 copilot 模式。</p>
+        </div>
+    </details>
+
+    <!-- BOTTOM LINE -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x2714; 核心洞察</div>
+            <div class="bottom-line-text">
                 這篇文章的技術含量不高，但它展示了一個重要的模式：<strong>Claude Code 的 Markdown 角色檔 + 目錄結構 + MCP</strong> 可以快速建構「情境化的 AI 顧問系統」。對我來說，真正的啟發不是「AI 導師」這個概念，而是 Persona + Context Grounding 的架構設計可以直接遷移到 CDMO 的法規決策支援場景。這與我一直在思考的「copilot vs agent 模式選擇」直接相關。
             </div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+            <div class="bottom-line-text">
                 本週可以做的：在現有的 Claude Project 中建立一個「PIC/S Inspector」角色檔（使用文章的 10 維度框架），搭配我們的 site info 和 deviation trend 作為 context，測試它在最近一個 deviation 分類決策上的表現。不需要 Claude Code，直接用 Claude Project 的 Knowledge 功能就能實驗這個模式。
             </div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">
-                文章完全沒有討論 prompt 品質的驗證方法 — 你怎麼知道你的「Steve Jobs 角色檔」是否真的模擬了有價值的思維模式，而不只是表面的語氣模仿？在 CDMO 場景中，這變成：你怎麼驗證「FDA Reviewer 導師」的建議是否符合最新法規要求？這需要一套 evaluation framework，文章沒有觸及。下次閱讀 Anthropic 的 prompt evaluation 文件時，應該把這個 gap 補上。
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x26A0; 需要補充</div>
+            <div class="bottom-line-text">
+                文章完全沒有討論 prompt 品質的驗證方法 &mdash; 你怎麼知道你的「Steve Jobs 角色檔」是否真的模擬了有價值的思維模式，而不只是表面的語氣模仿？在 CDMO 場景中，這變成：你怎麼驗證「FDA Reviewer 導師」的建議是否符合最新法規要求？這需要一套 evaluation framework，文章沒有觸及。下次閱讀 Anthropic 的 prompt evaluation 文件時，應該把這個 gap 補上。
             </div>
-</div>
-</div>
-<!-- FOOTER -->
-<footer class="footer">
-<p>📅 製作日期：2026-02-03 | 📎 來源：<a href="https://richholmes.substack.com/" target="_blank">Rich Holmes - Knowledge Series #98</a></p>
-<p>💬 建議 Chat Title: <strong>[Agent] Claude Code Product Mentors - Persona + MCP System</strong></p>
-</footer>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>&#x1F4C5; 製作日期：2026-02-03 | &#x1F4CE; 來源：<a href="https://richholmes.substack.com/" target="_blank">Rich Holmes - Knowledge Series #98</a></p>
+        <p>&#x1F4AC; 建議 Chat Title: <strong>[Agent] Claude Code Product Mentors - Persona + MCP System</strong></p>
+    </div>
+
 </div><!-- end container -->
 </body>
 </html>

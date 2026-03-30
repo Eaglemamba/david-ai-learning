@@ -1,492 +1,691 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Claude 終極入門指南 - 100 小時實測一篇講透</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude 終極入門指南 - 100 小時實測一篇講透</title>
+
 <!-- Dashboard Index Meta -->
-<meta content="2026-03-07" name="doc-date"/>
-<meta content="Claude 終極入門指南 - Yanhua 100hr 實測" name="doc-title"/>
-<meta content="Yanhua (@yanhua1010) / X (Twitter)" name="doc-source"/>
-<meta content="" name="doc-source-type"/>
-<meta content="Tool,LLM,Framework,Agent" name="doc-tags"/>
-<meta content="3.6" name="doc-rating"/>
-<meta content="Yanhua 百小時實測 Claude 指南。訂閱方案、Prompt 三段式、模型選擇、Code/Cowork/Skills 進階工具。" name="doc-summary"/>
-<meta content="2026-03-07_yanhua-claude-ultimate-guide.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<meta name="doc-date" content="2026-03-07">
+<meta name="doc-title" content="Claude 終極入門指南 - Yanhua 100hr 實測">
+<meta name="doc-source" content="Yanhua (@yanhua1010) / X (Twitter)">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Tool,LLM,Framework,Agent">
+<meta name="doc-rating" content="3.6">
+<meta name="doc-summary" content="Yanhua 百小時實測 Claude 指南。訂閱方案、Prompt 三段式、模型選擇、Code/Cowork/Skills 進階工具。">
+<meta name="doc-file" content="2026-03-07_yanhua-claude-ultimate-guide.html">
 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
 
+/* Header styles */
+.header-tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; margin: 0.15rem; }
+.header h1 { font-size: 1.8rem; margin: 1rem 0 0.5rem; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; }
+
+/* Tags */
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-llm { background: #bfdbfe; color: #1e3a8a; }
+.tag-framework { background: #e9d5ff; color: #6d28d9; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+
+/* Section titles */
+.section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* Rating bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive summary */
+.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; border: 1px solid #e2e8f0; }
+.executive-summary h2 { font-size: 1.1rem; color: #1e3a5f; margin-bottom: 1rem; }
+.summary-text { font-size: 0.95rem; line-height: 1.8; color: #334155; }
+
+/* Learning objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-text { font-size: 0.9rem; color: #334155; line-height: 1.6; }
+
+/* Framework visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Tab navigation */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.9rem; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Content grid columns */
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.content-left h3 { font-size: 1.05rem; color: #1e3a5f; margin: 0 0 1rem; font-weight: 700; }
+.content-right h3 { font-size: 1.05rem; color: #1e3a5f; margin: 0 0 1rem; font-weight: 700; }
+
+/* Bilingual blocks */
+.bilingual-block { margin-bottom: 1.25rem; }
+.bilingual-zh { color: #1e293b; font-size: 0.95rem; line-height: 1.8; margin-bottom: 0.3rem; }
+.bilingual-en { color: #64748b; font-style: italic; font-size: 0.9rem; line-height: 1.6; }
+
+/* Highlight spans */
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin: 1rem 0; }
+.info-box-header { padding: 0.6rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content p { margin: 0 0 0.5rem; }
+.info-box-content p:last-child { margin: 0; }
+.info-box-content ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+.info-box-content li { margin-bottom: 0.3rem; font-size: 0.9rem; }
+
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+.box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+.box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
+
+/* Comparison table */
+.compare-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+.compare-table th { background: #1e3a5f; color: white; padding: 0.75rem; text-align: left; font-weight: 600; }
+.compare-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
+.compare-table tr:nth-child(even) { background: #f8fafc; }
+.compare-table tr:hover { background: #e0f2fe; }
+
+/* Key takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #1e3a5f; margin-bottom: 0.5rem; font-size: 0.95rem; }
+.summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+/* Accordion practice */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+</style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="header-content">
-<div>
-<span class="header-tag tag-tool">Tool</span>
-<span class="header-tag tag-llm">LLM</span>
-<span class="header-tag tag-framework">Framework</span>
-<span class="header-tag tag-agent">Agent</span>
+<div class="header">
+    <div class="header-content">
+        <div>
+            <span class="header-tag tag-tool">Tool</span>
+            <span class="header-tag tag-llm">LLM</span>
+            <span class="header-tag tag-framework">Framework</span>
+            <span class="header-tag tag-agent">Agent</span>
+        </div>
+        <h1>Claude 終極入門指南：100 小時實測一篇講透</h1>
+        <div class="subtitle">從問答工具到工作流核心 - 訂閱方案、模型選擇、進階工具全面解析</div>
+        <div class="source">Yanhua (@yanhua1010) / X (Twitter) | 2026-03-06</div>
+    </div>
 </div>
-<h1>Claude 終極入門指南：100 小時實測一篇講透</h1>
-<div class="subtitle">從問答工具到工作流核心 - 訂閱方案、模型選擇、進階工具全面解析</div>
-<div class="source">Yanhua (@yanhua1010) / X (Twitter) | 2026-03-06</div>
-</div>
-</header>
+
 <!-- Container -->
 <div class="container">
+
 <!-- Executive Summary -->
 <div class="executive-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
-<span class="rating-high">↑ 實務應用, 工具生態</span>
-<span class="rating-low">↓ 技術深度, 學習曲線</span>
+    <h2>Executive Summary</h2>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
+        <span class="rating-high">&#8593; 實務應用, 工具生態</span>
+        <span class="rating-low">&#8595; 技術深度, 學習曲線</span>
+    </div>
+    <div class="summary-text">
+        <p>Yanhua 以超過一年、100+ 小時的 Claude 使用經驗，寫成一篇針對新手到中階用戶的全面入門指南。文章涵蓋 Claude 與 ChatGPT 的產品設計差異、三級訂閱方案比較、三段式 Prompt 公式、三模型選擇策略（Sonnet/Opus/Haiku）、基礎功能（Connectors、Projects、Research Mode）、以及進階工具鏈（Claude Code、Cowork、Skills）。</p>
+        <p>文章最大價值在於提供了一個<strong>經過實戰驗證的使用框架</strong>：從「問答工具」進化到「工作流核心」。但技術深度偏淺，對有經驗的用戶而言屬於查漏補缺的定位。適合作為推薦給同事或剛接觸 AI 的朋友的「第一篇 Claude 文章」。</p>
+    </div>
 </div>
-<div class="summary-text">
-<p>Yanhua 以超過一年、100+ 小時的 Claude 使用經驗，寫成一篇針對新手到中階用戶的全面入門指南。文章涵蓋 Claude 與 ChatGPT 的產品設計差異、三級訂閱方案比較、三段式 Prompt 公式、三模型選擇策略（Sonnet/Opus/Haiku）、基礎功能（Connectors、Projects、Research Mode）、以及進階工具鏈（Claude Code、Cowork、Skills）。</p>
-<p>文章最大價值在於提供了一個<strong>經過實戰驗證的使用框架</strong>：從「問答工具」進化到「工作流核心」。但技術深度偏淺，對有經驗的用戶而言屬於查漏補缺的定位。適合作為推薦給同事或剛接觸 AI 的朋友的「第一篇 Claude 文章」。</p>
-</div>
-</div>
+
 <!-- Learning Objectives -->
 <div class="section-title">Learning Objectives</div>
 <div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">📊</div>
-<div class="objective-text"><strong>訂閱決策框架</strong><br/>理解 Free / Pro / Max 三級方案差異，根據使用強度做出合理訂閱決策</div>
+    <div class="objective-item">
+        <div class="objective-icon">&#x1F4CA;</div>
+        <div class="objective-text"><strong>訂閱決策框架</strong><br>理解 Free / Pro / Max 三級方案差異，根據使用強度做出合理訂閱決策</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#x1F3AF;</div>
+        <div class="objective-text"><strong>三段式 Prompt 公式</strong><br>掌握 Context + Task + Rules 提示工程框架，提升 90% 的輸出品質</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#x1F527;</div>
+        <div class="objective-text"><strong>進階工具鏈</strong><br>了解 Claude Code、Cowork、Skills 三大進階工具的定位、使用場景與協作方式</div>
+    </div>
 </div>
-<div class="objective-item">
-<div class="objective-icon">🎯</div>
-<div class="objective-text"><strong>三段式 Prompt 公式</strong><br/>掌握 Context + Task + Rules 提示工程框架，提升 90% 的輸出品質</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">🔧</div>
-<div class="objective-text"><strong>進階工具鏈</strong><br/>了解 Claude Code、Cowork、Skills 三大進階工具的定位、使用場景與協作方式</div>
-</div>
-</div>
+
 <!-- Framework Visual -->
 <div class="framework-visual">
-<div class="framework-title">Claude 使用成熟度進化路徑</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">💬</div>
-<div class="framework-step-title">問答階段</div>
-<div class="framework-step-desc">有問題才開 Claude</div>
+    <div class="framework-title">Claude 使用成熟度進化路徑</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F4AC;</div>
+            <div class="framework-step-title">問答階段</div>
+            <div class="framework-step-desc">有問題才開 Claude</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F4C1;</div>
+            <div class="framework-step-title">專案階段</div>
+            <div class="framework-step-desc">Projects + 模型切換</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x2699;</div>
+            <div class="framework-step-title">工作流階段</div>
+            <div class="framework-step-desc">Code + Skills + Cowork</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F680;</div>
+            <div class="framework-step-title">內嵌階段</div>
+            <div class="framework-step-desc">AI 如 IDE 隨時在線</div>
+        </div>
+    </div>
 </div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📁</div>
-<div class="framework-step-title">專案階段</div>
-<div class="framework-step-desc">Projects + 模型切換</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">⚙</div>
-<div class="framework-step-title">工作流階段</div>
-<div class="framework-step-desc">Code + Skills + Cowork</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🚀</div>
-<div class="framework-step-title">內嵌階段</div>
-<div class="framework-step-desc">AI 如 IDE 隨時在線</div>
-</div>
-</div>
-</div>
+
 <!-- Tabbed Content -->
 <div class="section-title">Content</div>
 <div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">Foundation</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-skills')">Core Skills</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-features')">Features</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-practice')">Practice</button>
-</div>
-<!-- TAB 1: Foundation -->
-<div class="tab-content active" id="tab-foundation">
-<!-- Part I: Claude vs ChatGPT -->
-<div class="content-grid">
-<div class="content-left">
-<h3>Part I: Claude 與 ChatGPT 的本質差異</h3>
-<div class="bilingual-block">
-<div class="zh-text">最本質的區別在於：<span class="highlight-concept">ChatGPT 告訴你怎麼做，Claude 直接幫你做</span>。你讓 ChatGPT「幫我搭一個博客網站」，它會給你一份詳細的步驟說明。你讓 Claude Code 做同樣的事，它會直接打開你的專案目錄，建立檔案，寫程式碼，跑起來，遇到報錯自己修復。</div>
-<div class="en-text">"ChatGPT tells you how to do things, Claude actually does them for you... The gap isn't in model intelligence, but in product design philosophy."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">差距不在模型智力，在<span class="highlight-key">產品設計哲學</span>。Anthropic 從第一天就奔著「幫你幹活」去的，回答問題只是順帶的事。</div>
-<div class="en-text">"Anthropic from day one was aiming for 'doing the work for you' — answering questions is just a side effect."</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p>想像你要裝修房子。ChatGPT 像一本很好的裝修指南書，告訴你每一步怎麼做。Claude 更像一個包工頭，你說「我要北歐風」，它直接帶著工人開始施工，遇到問題現場解決。</p>
-</div>
-</div>
-</div>
-<div class="content-right">
-<h3>Analysis &amp; Commentary</h3>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>作者的觀點需要加上脈絡理解。</strong>這裡比較的不是「模型能力」，而是「產品形態」。ChatGPT 最近也推出了 Canvas、GPT-4o with tools 等執行型功能。真正的差異在於 Claude Code 作為 terminal-native agent 的設計，以及 Cowork 的背景執行模式。</p>
-<p><strong>對 CDMO 的啟示：</strong>這種「告訴你 vs 幫你做」的區分，對應到我們的場景就是「AI 給你偏差報告建議」vs「AI 直接幫你起草偏差報告初稿」。在 GMP 環境中，後者需要 100% 人工審查（copilot mode），但初稿自動化的價值已經很大。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part II: Subscription -->
-<div class="content-grid">
-<div class="content-left">
-<h3>Part II: 訂閱方案選擇</h3>
-<div class="bilingual-block">
-<div class="zh-text">直說結論：如果你真的想用 Claude 來做事，<span class="highlight-cost">Pro 版（$20/月）是起步價</span>。</div>
-<div class="en-text">"If you really want to use Claude to get things done, Pro ($20/month) is the starting price."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">免費版的體驗和付費版差距太大，容易讓你誤以為 Claude 不過如此。</div>
-<div class="en-text">"The gap between free and paid is so large that it can make you wrongly conclude Claude is mediocre."</div>
-</div>
-<table class="compare-table">
-<thead>
-<tr><th>方案</th><th>月費</th><th>模型</th><th>用量</th><th>功能</th></tr>
-</thead>
-<tbody>
-<tr><td>Free</td><td>$0</td><td>Haiku only</td><td>嚴格限制</td><td>基礎聊天</td></tr>
-<tr><td>Pro</td><td>$20</td><td>全部模型</td><td>5x Free</td><td>Projects, Memory, Research, Code, Cowork</td></tr>
-<tr><td>Max</td><td>$100</td><td>全部模型</td><td>5x Pro</td><td>Pro 全部 + 優先訪問</td></tr>
-</tbody>
-</table>
-</div>
-<div class="content-right">
-<h3>Analysis &amp; Commentary</h3>
-<div class="info-box box-cost">
-<div class="info-box-header">💰 成本分析</div>
-<div class="info-box-content">
-<p><strong>Pro vs Max 的決策點：</strong>作者建議大多數人選 Pro。但如果你像我一樣每天高強度使用（文件處理 + Claude Code + Cowork），Pro 的用量額度經常在月底吃緊。Max 的 5 倍用量差距在重度使用下非常明顯。</p>
-<p><strong>隱藏成本：</strong>文章沒提到 Claude Code 使用 API 計費（非訂閱用量），以及 Max 方案包含的 Claude Code 額度。這對開發者是重要的成本考量。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>訂閱升級時機判斷：</strong>當你連續 3 天在月中就遇到用量限制，就是該升級的信號。不要等到月底才後悔。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 2: Core Skills -->
-<div class="tab-content" id="tab-skills">
-<!-- Part III: Prompt Engineering -->
-<div class="content-grid">
-<div class="content-left">
-<h3>Part III: 三段式 Prompt 公式</h3>
-<div class="bilingual-block">
-<div class="zh-text">人們用 Claude 不滿意，第一反應是「這個 AI 不行」。但 <span class="highlight-key">90% 的情況下，問題出在提示詞上</span>。垃圾輸入，必然得到垃圾輸出。</div>
-<div class="en-text">"90% of the time, the problem is in the prompt. Garbage in, garbage out."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">每個有效的 Claude 提示包含三部分：<br/><strong>1. 設定場景（Context）</strong>：告訴 Claude 你是誰，背景是什麼。<br/><strong>2. 定義任務（Task）</strong>：你要它具體做什麼？越明確越好。<br/><strong>3. 說明規則（Rules）</strong>：格式、長度、風格、約束條件。</div>
-<div class="en-text">"Every effective Claude prompt contains three parts: Context — who you are, what the background is. Task — what specifically you want done. Rules — format, length, style, constraints."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>進階技巧：上下文管理</strong><br/>Claude 有上下文窗口限制。對話越長，Claude 的「注意力」越分散，輸出品質越差。關鍵習慣包括：<span class="highlight-practical">對話變長就開新聊天</span>、直接上傳檔案而非文字描述、用輸出限制約束回答、一個對話專注一個任務。</div>
-<div class="en-text">"Claude has context window limits. The longer the conversation, the more scattered its 'attention,' and the worse the output quality... Key habits: start new chats when conversations get long, upload files directly, constrain output length, one task per conversation."</div>
-</div>
-</div>
-<div class="content-right">
-<h3>Analysis &amp; Commentary</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<p><strong>Context + Task + Rules 是入門版的 Prompt Engineering。</strong>這個框架有效但過度簡化。更進階的做法是 Anthropic 自己提倡的 Context Engineering（上下文工程），把重點從「寫好提示詞」轉移到「準備好完整的上下文」——包括 System Prompt、Knowledge Files、Examples、Memory 等多層結構。</p>
-<p><strong>作者沒提到的關鍵技巧：</strong></p>
-<p>1. <strong>XML 結構化標籤</strong>：Claude 對 XML 標籤有特別好的理解能力，用 &lt;context&gt;、&lt;task&gt;、&lt;rules&gt; 包裹比純文字更有效。</p>
-<p>2. <strong>Few-shot Examples</strong>：給 1-2 個輸出範例，效果往往比長篇描述更好。</p>
-<p>3. <strong>Projects 的 Custom Instructions</strong>：把常用的 Context 和 Rules 寫進 Project Instructions，每次對話自動注入。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>上下文管理是真正的進階技能。</strong>作者提到「對話變長就開新聊天」，這個建議正確但不完整。更好的做法是：利用 Projects 保持持久上下文、利用 Memory 保持跨對話記憶、利用 Skills 封裝重複性任務。這三層結構才是完整的上下文管理。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part IV: Model Selection -->
-<div class="content-grid">
-<div class="content-left">
-<h3>Part IV: 模型選擇策略</h3>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Sonnet 4.6：你的日常主力。</strong><span class="highlight-practical">80% 的任務應該從 Sonnet 開始</span>。速度快，品質高，消耗的用量額度少。寫作、分析、腦力激盪、程式碼生成、文件整理，全部用 Sonnet 就夠了。</div>
-<div class="en-text">"Sonnet 4.6: Your daily workhorse. 80% of tasks should start with Sonnet. Fast, high quality, low usage cost."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Opus 4.6：深度思考專家。</strong>多步驟的複雜推理、跨領域知識整合、複雜的程式碼架構設計時切換。Opus 的殺手級功能是 <span class="highlight-concept">Extended Thinking（擴展思考）</span>，開啟後 Claude 會先展示完整推理鏈路。</div>
-<div class="en-text">"Opus 4.6: Deep thinking expert... Opus has a killer feature: Extended Thinking. Once enabled, Claude shows its complete reasoning chain before the final answer."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Haiku 4.5：快速小任務。</strong>翻譯一個短句、分類一封郵件、簡單的格式轉換。把它當作「工具箱裡的螺絲刀」。</div>
-<div class="en-text">"Haiku 4.5: Quick small tasks... Think of it as 'the screwdriver in your toolbox' — you don't need a power drill for a single screw."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>作者的選擇原則：先 Sonnet，不夠用換 Opus，小事用 Haiku。</strong></div>
-<div class="en-text">"My model selection principle: Start with Sonnet, switch to Opus when needed, use Haiku for small things."</div>
-</div>
-</div>
-<div class="content-right">
-<h3>Analysis &amp; Commentary</h3>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較</div>
-<div class="info-box-content">
-<p><strong>模型選擇更精確的思考框架：</strong></p>
-<p><strong>Sonnet</strong> = 80% 場景的最佳性價比。寫作、分析、一般程式碼、對話互動。回應速度和品質的最佳平衡點。</p>
-<p><strong>Opus</strong> = 需要「深度推理」或「複雜判斷」時。偏差調查根因分析、多因素決策、長文件綜合分析。Extended Thinking 在需要可追溯推理鏈的場景特別有價值。</p>
-<p><strong>Haiku</strong> = 批次處理、格式轉換、分類任務。在自動化 workflow 中（如 Make.com trigger 後的快速處理），Haiku 的速度和成本優勢最明顯。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>Extended Thinking 的真正價值：</strong>作者說它是「質檢工具」，這個比喻精準。在 CDMO 情境中，當你讓 Claude 分析一個偏差事件的根因時，Extended Thinking 讓你看到它的推理過程——哪些因素被考慮、哪些被排除、結論的邏輯鏈是否成立。這比直接看結論更重要。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 3: Features -->
-<div class="tab-content" id="tab-features">
-<!-- Part V: Basic Features -->
-<div class="content-grid">
-<div class="content-left">
-<h3>Part V: 基礎功能寶藏</h3>
-<div class="bilingual-block">
-<div class="zh-text"><strong>連接器（Connectors）：</strong>Claude 可以直接連接 Notion、Slack、Google 日曆等工具。連接之後，Claude 能直接讀取你的文件、日曆事件、訊息，不用再手動複製貼上。</div>
-<div class="en-text">"Claude can connect directly to Notion, Slack, Google Calendar... After connecting, Claude can read your documents, calendar events, messages directly."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Projects（專案空間）：</strong>這是被嚴重低估的功能。建立一個 Project，上傳參考文件，之後在這個 Project 裡的<span class="highlight-practical">所有對話都能共享這些上下文</span>。</div>
-<div class="en-text">"Projects: This is a severely underrated feature. Create a Project, upload reference files, and all conversations within this Project share that context."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>研究模式（Research Mode）：</strong>不是簡單的「搜尋」。開啟後，Claude 會自主搜尋多個來源，交叉驗證資訊，最終生成一份帶引用的研究報告。產出的報告品質，<span class="highlight-key">接近一個初級分析師花半天做出來的水平</span>。</div>
-<div class="en-text">"Research Mode: This isn't simple 'search.' Claude autonomously searches multiple sources, cross-validates, and generates a cited research report... The quality approaches what a junior analyst would produce in half a day."</div>
-</div>
-</div>
-<div class="content-right">
-<h3>Analysis &amp; Commentary</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<p><strong>Projects 是 Claude 生態系統的核心架構。</strong>作者說「被嚴重低估」完全正確。Projects = 持久上下文 + Custom Instructions + Knowledge Files。我的 Master Prompt 系統就是建立在 Projects 上的。</p>
-<p>關鍵理解：Projects 是<strong>全量上下文注入</strong>（full context injection）。每次對話開始時，Project 裡所有的 Instructions 和 Knowledge Files 都會被載入 context window。這意味著你需要精心管理文件大小和數量。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>Research Mode 的限制：</strong>作者的「初級分析師半天水平」描述有 2-3x discount 的空間。Research Mode 擅長資訊匯整，但在深度分析、因果推論、行業 nuance 方面仍需人工把關。把它當作「初稿生成器」而非「最終報告」更安全。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part VI: Advanced Tools -->
-<div class="content-grid">
-<div class="content-left">
-<h3>Part VI: 進階工具鏈</h3>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Claude Code：目前最強的 AI 程式設計工具。</strong>別把它當程式碼補全工具。它能理解你整個專案，在終端裡直接執行命令，是一個完整的<span class="highlight-concept">程式設計代理（coding agent）</span>。它改變了程式設計的工作模式——以前是你寫程式碼，AI 輔助。現在是你描述需求，AI 寫程式碼，你審查。</div>
-<div class="en-text">"Claude Code: Currently the strongest AI coding tool... It changed the programming workflow. Before: you write code, AI assists. Now: you describe requirements, AI writes code, you review."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Claude Cowork：後台自主執行的 AI。</strong>跟聊天式 AI 完全不一樣。你給它一個任務，它自己去執行。<span class="highlight-key">它在後台自己跑，是一個真正的 AI Agent</span>。更厲害的是它能存取你的檔案系統。</div>
-<div class="en-text">"Claude Cowork: AI that runs autonomously in the background... a true AI Agent. What's more impressive is that it can access your file system."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Claude Skills：可複用的工作流。</strong>把一套完整的指令封裝成一個技能。下次只要一句話調用，Claude 就按照預設的流程執行。而且 Claude 可以幫你建立 Skills。</div>
-<div class="en-text">"Claude Skills: Reusable workflows. Package a complete set of instructions into a skill. Next time just one sentence to invoke, and Claude executes the preset process."</div>
-</div>
-</div>
-<div class="content-right">
-<h3>Analysis &amp; Commentary</h3>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>Claude Code 的工作模式轉變：</strong>作者的「你描述需求，AI 寫程式碼，你審查」精準描述了 Agent Mode。但在 GMP 環境中需要謹慎：AI 生成的任何輸出（程式碼、報告、文件）都必須經過人工審查。這是 Copilot Mode 的核心原則。</p>
-<p><strong>Skills 的真正威力：</strong>我的 Master Prompt v1.5.0 本質上就是一個巨大的 Skill。差別在於 Skills 是 Anthropic 產品層面的封裝，而 Project Instructions 是更底層的上下文注入。兩者可以疊加使用。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p><strong>三大工具的角色定位：</strong></p>
-<p><strong>Claude Code</strong> = 你的專屬程式設計師，坐在你旁邊的終端機前，你說什麼它做什麼。</p>
-<p><strong>Cowork</strong> = 你的遠端助理，你交代任務後去做其他事，它做完通知你。</p>
-<p><strong>Skills</strong> = 你的 SOP 手冊，把重複性工作標準化，誰來都能執行。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 4: Practice -->
-<div class="tab-content" id="tab-practice">
-<!-- Part VII: Usage Tips -->
-<div class="content-grid">
-<div class="content-left">
-<h3>Part VII: 實際使用建議</h3>
-<div class="bilingual-block">
-<div class="zh-text"><strong>1. 先從一個固定場景切入。</strong>不要試圖一下子在所有工作中使用 Claude。選一個你最頻繁的任務，先在這一個場景裡把 Claude 用到極致。</div>
-<div class="en-text">"Start with one fixed scenario. Don't try to use Claude in all your work at once. Pick your most frequent task and master Claude in that one scenario first."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>2. 建立你的 Project 庫。</strong>為每個長期專案建立一個 Project。這是性價比最高的做法。</div>
-<div class="en-text">"Build your Project library. Create a Project for each long-term project. This is the highest ROI practice."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>3. 養成「先 Sonnet 後 Opus」的習慣。</strong></div>
-<div class="en-text">"Build the habit of 'Sonnet first, Opus second.'"</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>4. 不要跟 AI 客氣。</strong>省掉「請你幫我」「如果可以的話」。它不需要禮貌，<span class="highlight-key">它需要精確的指令</span>。</div>
-<div class="en-text">"Don't be polite with AI. Skip 'please help me' and 'if possible.' It doesn't need politeness, it needs precise instructions."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>5. 用 Extended Thinking 來檢驗重要決策。</strong>看的不是思考過程多酷，而是推理鏈路裡有沒有漏洞。</div>
-<div class="en-text">"Use Extended Thinking to verify important decisions. The point isn't how cool the thinking process looks, but whether there are gaps in the reasoning chain."</div>
-</div>
-</div>
-<div class="content-right">
-<h3>Analysis &amp; Commentary</h3>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>「不要跟 AI 客氣」的 nuance：</strong>這個建議的核心是對的——精確比禮貌更重要。但 Anthropic 的研究實際上顯示，適度的「合作語氣」（如「讓我們一起...」）有時能引導更好的輸出。重點不是去掉禮貌用語，而是確保指令的<strong>精確度和完整度</strong>不被禮貌用語稀釋。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>「一個固定場景切入」的 CDMO 版本：</strong></p>
-<p>最適合作為切入點的 CDMO 場景：</p>
-<ul>
-<li><strong>偏差報告初稿</strong>：結構化程度高、模板固定、AI 容易標準化</li>
-<li><strong>文獻回顧摘要</strong>：Research Mode 可直接使用</li>
-<li><strong>SOP 翻譯/在地化</strong>：雙語需求明確、品質容易驗證</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<!-- Part VIII: Assessment Standard -->
-<div class="content-grid">
-<div class="content-left">
-<h3>Part VIII: 判斷標準</h3>
-<div class="bilingual-block">
-<div class="zh-text">怎麼知道你有沒有真正學會用 Claude？看你有沒有把它從「問答工具」變成<span class="highlight-concept">「工作流的一部分」</span>。</div>
-<div class="en-text">"How do you know if you've truly learned to use Claude? See if you've transformed it from a 'Q&amp;A tool' into 'part of your workflow.'"</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">真正的用法是：Claude 內嵌在你的工作流程中。你寫程式碼時 Claude Code 在終端裡隨時待命，你做研究時 Research Mode 自動跑，你做內容時 Skills 和 Cowork 幫你自動化重複工作。<span class="highlight-key">它得像你的 IDE 一樣，隨時在線，隨時能用。</span></div>
-<div class="en-text">"The real usage is: Claude embedded in your workflow... It should be like your IDE — always online, always available."</div>
-</div>
-</div>
-<div class="content-right">
-<h3>Analysis &amp; Commentary</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<p><strong>這是全文最有價值的一段話。</strong>「從問答工具到工作流核心」這個進化框架，精準描述了 AI 使用成熟度的分水嶺。對應到我的學習系統：我的 Master Prompt + Projects + Skills 就是把 Claude 從「每次重新開始」變成「帶著完整記憶和標準化流程持續運作」。</p>
-<p><strong>但缺少關鍵的一環：</strong>作者沒有提到 Memory 功能。Memory 讓 Claude 跨對話記住你的偏好和背景，是「內嵌到工作流」的重要膠水層。沒有 Memory，每個新對話仍然需要重新建立個人化上下文。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">Foundation</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-skills')">Core Skills</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-features')">Features</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-practice')">Practice</button>
+    </div>
+
+    <!-- TAB 1: Foundation -->
+    <div id="tab-foundation" class="tab-content active">
+
+        <!-- Part I: Claude vs ChatGPT -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part I: Claude 與 ChatGPT 的本質差異</h3>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh">最本質的區別在於：<span class="highlight-concept">ChatGPT 告訴你怎麼做，Claude 直接幫你做</span>。你讓 ChatGPT「幫我搭一個博客網站」，它會給你一份詳細的步驟說明。你讓 Claude Code 做同樣的事，它會直接打開你的專案目錄，建立檔案，寫程式碼，跑起來，遇到報錯自己修復。</div>
+                    <div class="bilingual-en">"ChatGPT tells you how to do things, Claude actually does them for you... The gap isn't in model intelligence, but in product design philosophy."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh">差距不在模型智力，在<span class="highlight-key">產品設計哲學</span>。Anthropic 從第一天就奔著「幫你幹活」去的，回答問題只是順帶的事。</div>
+                    <div class="bilingual-en">"Anthropic from day one was aiming for 'doing the work for you' — answering questions is just a side effect."</div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                    <div class="info-box-content">
+                        <p>想像你要裝修房子。ChatGPT 像一本很好的裝修指南書，告訴你每一步怎麼做。Claude 更像一個包工頭，你說「我要北歐風」，它直接帶著工人開始施工，遇到問題現場解決。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis &amp; Commentary</h3>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>作者的觀點需要加上脈絡理解。</strong>這裡比較的不是「模型能力」，而是「產品形態」。ChatGPT 最近也推出了 Canvas、GPT-4o with tools 等執行型功能。真正的差異在於 Claude Code 作為 terminal-native agent 的設計，以及 Cowork 的背景執行模式。</p>
+                        <p><strong>對 CDMO 的啟示：</strong>這種「告訴你 vs 幫你做」的區分，對應到我們的場景就是「AI 給你偏差報告建議」vs「AI 直接幫你起草偏差報告初稿」。在 GMP 環境中，後者需要 100% 人工審查（copilot mode），但初稿自動化的價值已經很大。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part II: Subscription -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part II: 訂閱方案選擇</h3>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh">直說結論：如果你真的想用 Claude 來做事，<span class="highlight-cost">Pro 版（$20/月）是起步價</span>。</div>
+                    <div class="bilingual-en">"If you really want to use Claude to get things done, Pro ($20/month) is the starting price."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh">免費版的體驗和付費版差距太大，容易讓你誤以為 Claude 不過如此。</div>
+                    <div class="bilingual-en">"The gap between free and paid is so large that it can make you wrongly conclude Claude is mediocre."</div>
+                </div>
+                <table class="compare-table">
+                    <thead>
+                        <tr><th>方案</th><th>月費</th><th>模型</th><th>用量</th><th>功能</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Free</td><td>$0</td><td>Haiku only</td><td>嚴格限制</td><td>基礎聊天</td></tr>
+                        <tr><td>Pro</td><td>$20</td><td>全部模型</td><td>5x Free</td><td>Projects, Memory, Research, Code, Cowork</td></tr>
+                        <tr><td>Max</td><td>$100</td><td>全部模型</td><td>5x Pro</td><td>Pro 全部 + 優先訪問</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content-right">
+                <h3>Analysis &amp; Commentary</h3>
+                <div class="info-box box-cost">
+                    <div class="info-box-header">&#x1F4B0; 成本分析</div>
+                    <div class="info-box-content">
+                        <p><strong>Pro vs Max 的決策點：</strong>作者建議大多數人選 Pro。但如果你像我一樣每天高強度使用（文件處理 + Claude Code + Cowork），Pro 的用量額度經常在月底吃緊。Max 的 5 倍用量差距在重度使用下非常明顯。</p>
+                        <p><strong>隱藏成本：</strong>文章沒提到 Claude Code 使用 API 計費（非訂閱用量），以及 Max 方案包含的 Claude Code 額度。這對開發者是重要的成本考量。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>訂閱升級時機判斷：</strong>當你連續 3 天在月中就遇到用量限制，就是該升級的信號。不要等到月底才後悔。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: Core Skills -->
+    <div id="tab-skills" class="tab-content">
+
+        <!-- Part III: Prompt Engineering -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part III: 三段式 Prompt 公式</h3>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh">人們用 Claude 不滿意，第一反應是「這個 AI 不行」。但 <span class="highlight-key">90% 的情況下，問題出在提示詞上</span>。垃圾輸入，必然得到垃圾輸出。</div>
+                    <div class="bilingual-en">"90% of the time, the problem is in the prompt. Garbage in, garbage out."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh">每個有效的 Claude 提示包含三部分：<br><strong>1. 設定場景（Context）</strong>：告訴 Claude 你是誰，背景是什麼。<br><strong>2. 定義任務（Task）</strong>：你要它具體做什麼？越明確越好。<br><strong>3. 說明規則（Rules）</strong>：格式、長度、風格、約束條件。</div>
+                    <div class="bilingual-en">"Every effective Claude prompt contains three parts: Context — who you are, what the background is. Task — what specifically you want done. Rules — format, length, style, constraints."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>進階技巧：上下文管理</strong><br>Claude 有上下文窗口限制。對話越長，Claude 的「注意力」越分散，輸出品質越差。關鍵習慣包括：<span class="highlight-practical">對話變長就開新聊天</span>、直接上傳檔案而非文字描述、用輸出限制約束回答、一個對話專注一個任務。</div>
+                    <div class="bilingual-en">"Claude has context window limits. The longer the conversation, the more scattered its 'attention,' and the worse the output quality... Key habits: start new chats when conversations get long, upload files directly, constrain output length, one task per conversation."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis &amp; Commentary</h3>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>Context + Task + Rules 是入門版的 Prompt Engineering。</strong>這個框架有效但過度簡化。更進階的做法是 Anthropic 自己提倡的 Context Engineering（上下文工程），把重點從「寫好提示詞」轉移到「準備好完整的上下文」——包括 System Prompt、Knowledge Files、Examples、Memory 等多層結構。</p>
+                        <p><strong>作者沒提到的關鍵技巧：</strong></p>
+                        <p>1. <strong>XML 結構化標籤</strong>：Claude 對 XML 標籤有特別好的理解能力，用 &lt;context&gt;、&lt;task&gt;、&lt;rules&gt; 包裹比純文字更有效。</p>
+                        <p>2. <strong>Few-shot Examples</strong>：給 1-2 個輸出範例，效果往往比長篇描述更好。</p>
+                        <p>3. <strong>Projects 的 Custom Instructions</strong>：把常用的 Context 和 Rules 寫進 Project Instructions，每次對話自動注入。</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>上下文管理是真正的進階技能。</strong>作者提到「對話變長就開新聊天」，這個建議正確但不完整。更好的做法是：利用 Projects 保持持久上下文、利用 Memory 保持跨對話記憶、利用 Skills 封裝重複性任務。這三層結構才是完整的上下文管理。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part IV: Model Selection -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part IV: 模型選擇策略</h3>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>Sonnet 4.6：你的日常主力。</strong><span class="highlight-practical">80% 的任務應該從 Sonnet 開始</span>。速度快，品質高，消耗的用量額度少。寫作、分析、腦力激盪、程式碼生成、文件整理，全部用 Sonnet 就夠了。</div>
+                    <div class="bilingual-en">"Sonnet 4.6: Your daily workhorse. 80% of tasks should start with Sonnet. Fast, high quality, low usage cost."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>Opus 4.6：深度思考專家。</strong>多步驟的複雜推理、跨領域知識整合、複雜的程式碼架構設計時切換。Opus 的殺手級功能是 <span class="highlight-concept">Extended Thinking（擴展思考）</span>，開啟後 Claude 會先展示完整推理鏈路。</div>
+                    <div class="bilingual-en">"Opus 4.6: Deep thinking expert... Opus has a killer feature: Extended Thinking. Once enabled, Claude shows its complete reasoning chain before the final answer."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>Haiku 4.5：快速小任務。</strong>翻譯一個短句、分類一封郵件、簡單的格式轉換。把它當作「工具箱裡的螺絲刀」。</div>
+                    <div class="bilingual-en">"Haiku 4.5: Quick small tasks... Think of it as 'the screwdriver in your toolbox' — you don't need a power drill for a single screw."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>作者的選擇原則：先 Sonnet，不夠用換 Opus，小事用 Haiku。</strong></div>
+                    <div class="bilingual-en">"My model selection principle: Start with Sonnet, switch to Opus when needed, use Haiku for small things."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis &amp; Commentary</h3>
+                <div class="info-box box-compare">
+                    <div class="info-box-header">&#x2696;&#xFE0F; 工具比較</div>
+                    <div class="info-box-content">
+                        <p><strong>模型選擇更精確的思考框架：</strong></p>
+                        <p><strong>Sonnet</strong> = 80% 場景的最佳性價比。寫作、分析、一般程式碼、對話互動。回應速度和品質的最佳平衡點。</p>
+                        <p><strong>Opus</strong> = 需要「深度推理」或「複雜判斷」時。偏差調查根因分析、多因素決策、長文件綜合分析。Extended Thinking 在需要可追溯推理鏈的場景特別有價值。</p>
+                        <p><strong>Haiku</strong> = 批次處理、格式轉換、分類任務。在自動化 workflow 中（如 Make.com trigger 後的快速處理），Haiku 的速度和成本優勢最明顯。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>Extended Thinking 的真正價值：</strong>作者說它是「質檢工具」，這個比喻精準。在 CDMO 情境中，當你讓 Claude 分析一個偏差事件的根因時，Extended Thinking 讓你看到它的推理過程——哪些因素被考慮、哪些被排除、結論的邏輯鏈是否成立。這比直接看結論更重要。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: Features -->
+    <div id="tab-features" class="tab-content">
+
+        <!-- Part V: Basic Features -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part V: 基礎功能寶藏</h3>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>連接器（Connectors）：</strong>Claude 可以直接連接 Notion、Slack、Google 日曆等工具。連接之後，Claude 能直接讀取你的文件、日曆事件、訊息，不用再手動複製貼上。</div>
+                    <div class="bilingual-en">"Claude can connect directly to Notion, Slack, Google Calendar... After connecting, Claude can read your documents, calendar events, messages directly."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>Projects（專案空間）：</strong>這是被嚴重低估的功能。建立一個 Project，上傳參考文件，之後在這個 Project 裡的<span class="highlight-practical">所有對話都能共享這些上下文</span>。</div>
+                    <div class="bilingual-en">"Projects: This is a severely underrated feature. Create a Project, upload reference files, and all conversations within this Project share that context."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>研究模式（Research Mode）：</strong>不是簡單的「搜尋」。開啟後，Claude 會自主搜尋多個來源，交叉驗證資訊，最終生成一份帶引用的研究報告。產出的報告品質，<span class="highlight-key">接近一個初級分析師花半天做出來的水平</span>。</div>
+                    <div class="bilingual-en">"Research Mode: This isn't simple 'search.' Claude autonomously searches multiple sources, cross-validates, and generates a cited research report... The quality approaches what a junior analyst would produce in half a day."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis &amp; Commentary</h3>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>Projects 是 Claude 生態系統的核心架構。</strong>作者說「被嚴重低估」完全正確。Projects = 持久上下文 + Custom Instructions + Knowledge Files。我的 Master Prompt 系統就是建立在 Projects 上的。</p>
+                        <p>關鍵理解：Projects 是<strong>全量上下文注入</strong>（full context injection）。每次對話開始時，Project 裡所有的 Instructions 和 Knowledge Files 都會被載入 context window。這意味著你需要精心管理文件大小和數量。</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>Research Mode 的限制：</strong>作者的「初級分析師半天水平」描述有 2-3x discount 的空間。Research Mode 擅長資訊匯整，但在深度分析、因果推論、行業 nuance 方面仍需人工把關。把它當作「初稿生成器」而非「最終報告」更安全。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part VI: Advanced Tools -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part VI: 進階工具鏈</h3>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>Claude Code：目前最強的 AI 程式設計工具。</strong>別把它當程式碼補全工具。它能理解你整個專案，在終端裡直接執行命令，是一個完整的<span class="highlight-concept">程式設計代理（coding agent）</span>。它改變了程式設計的工作模式——以前是你寫程式碼，AI 輔助。現在是你描述需求，AI 寫程式碼，你審查。</div>
+                    <div class="bilingual-en">"Claude Code: Currently the strongest AI coding tool... It changed the programming workflow. Before: you write code, AI assists. Now: you describe requirements, AI writes code, you review."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>Claude Cowork：後台自主執行的 AI。</strong>跟聊天式 AI 完全不一樣。你給它一個任務，它自己去執行。<span class="highlight-key">它在後台自己跑，是一個真正的 AI Agent</span>。更厲害的是它能存取你的檔案系統。</div>
+                    <div class="bilingual-en">"Claude Cowork: AI that runs autonomously in the background... a true AI Agent. What's more impressive is that it can access your file system."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>Claude Skills：可複用的工作流。</strong>把一套完整的指令封裝成一個技能。下次只要一句話調用，Claude 就按照預設的流程執行。而且 Claude 可以幫你建立 Skills。</div>
+                    <div class="bilingual-en">"Claude Skills: Reusable workflows. Package a complete set of instructions into a skill. Next time just one sentence to invoke, and Claude executes the preset process."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis &amp; Commentary</h3>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>Claude Code 的工作模式轉變：</strong>作者的「你描述需求，AI 寫程式碼，你審查」精準描述了 Agent Mode。但在 GMP 環境中需要謹慎：AI 生成的任何輸出（程式碼、報告、文件）都必須經過人工審查。這是 Copilot Mode 的核心原則。</p>
+                        <p><strong>Skills 的真正威力：</strong>我的 Master Prompt v1.5.0 本質上就是一個巨大的 Skill。差別在於 Skills 是 Anthropic 產品層面的封裝，而 Project Instructions 是更底層的上下文注入。兩者可以疊加使用。</p>
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                    <div class="info-box-content">
+                        <p><strong>三大工具的角色定位：</strong></p>
+                        <p><strong>Claude Code</strong> = 你的專屬程式設計師，坐在你旁邊的終端機前，你說什麼它做什麼。</p>
+                        <p><strong>Cowork</strong> = 你的遠端助理，你交代任務後去做其他事，它做完通知你。</p>
+                        <p><strong>Skills</strong> = 你的 SOP 手冊，把重複性工作標準化，誰來都能執行。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: Practice -->
+    <div id="tab-practice" class="tab-content">
+
+        <!-- Part VII: Usage Tips -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part VII: 實際使用建議</h3>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>1. 先從一個固定場景切入。</strong>不要試圖一下子在所有工作中使用 Claude。選一個你最頻繁的任務，先在這一個場景裡把 Claude 用到極致。</div>
+                    <div class="bilingual-en">"Start with one fixed scenario. Don't try to use Claude in all your work at once. Pick your most frequent task and master Claude in that one scenario first."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>2. 建立你的 Project 庫。</strong>為每個長期專案建立一個 Project。這是性價比最高的做法。</div>
+                    <div class="bilingual-en">"Build your Project library. Create a Project for each long-term project. This is the highest ROI practice."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>3. 養成「先 Sonnet 後 Opus」的習慣。</strong></div>
+                    <div class="bilingual-en">"Build the habit of 'Sonnet first, Opus second.'"</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>4. 不要跟 AI 客氣。</strong>省掉「請你幫我」「如果可以的話」。它不需要禮貌，<span class="highlight-key">它需要精確的指令</span>。</div>
+                    <div class="bilingual-en">"Don't be polite with AI. Skip 'please help me' and 'if possible.' It doesn't need politeness, it needs precise instructions."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh"><strong>5. 用 Extended Thinking 來檢驗重要決策。</strong>看的不是思考過程多酷，而是推理鏈路裡有沒有漏洞。</div>
+                    <div class="bilingual-en">"Use Extended Thinking to verify important decisions. The point isn't how cool the thinking process looks, but whether there are gaps in the reasoning chain."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis &amp; Commentary</h3>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>「不要跟 AI 客氣」的 nuance：</strong>這個建議的核心是對的——精確比禮貌更重要。但 Anthropic 的研究實際上顯示，適度的「合作語氣」（如「讓我們一起...」）有時能引導更好的輸出。重點不是去掉禮貌用語，而是確保指令的<strong>精確度和完整度</strong>不被禮貌用語稀釋。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>「一個固定場景切入」的 CDMO 版本：</strong></p>
+                        <p>最適合作為切入點的 CDMO 場景：</p>
+                        <ul>
+                            <li><strong>偏差報告初稿</strong>：結構化程度高、模板固定、AI 容易標準化</li>
+                            <li><strong>文獻回顧摘要</strong>：Research Mode 可直接使用</li>
+                            <li><strong>SOP 翻譯/在地化</strong>：雙語需求明確、品質容易驗證</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part VIII: Assessment Standard -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part VIII: 判斷標準</h3>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh">怎麼知道你有沒有真正學會用 Claude？看你有沒有把它從「問答工具」變成<span class="highlight-concept">「工作流的一部分」</span>。</div>
+                    <div class="bilingual-en">"How do you know if you've truly learned to use Claude? See if you've transformed it from a 'Q&A tool' into 'part of your workflow.'"</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="bilingual-zh">真正的用法是：Claude 內嵌在你的工作流程中。你寫程式碼時 Claude Code 在終端裡隨時待命，你做研究時 Research Mode 自動跑，你做內容時 Skills 和 Cowork 幫你自動化重複工作。<span class="highlight-key">它得像你的 IDE 一樣，隨時在線，隨時能用。</span></div>
+                    <div class="bilingual-en">"The real usage is: Claude embedded in your workflow... It should be like your IDE — always online, always available."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis &amp; Commentary</h3>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>這是全文最有價值的一段話。</strong>「從問答工具到工作流核心」這個進化框架，精準描述了 AI 使用成熟度的分水嶺。對應到我的學習系統：我的 Master Prompt + Projects + Skills 就是把 Claude 從「每次重新開始」變成「帶著完整記憶和標準化流程持續運作」。</p>
+                        <p><strong>但缺少關鍵的一環：</strong>作者沒有提到 Memory 功能。Memory 讓 Claude 跨對話記住你的偏好和背景，是「內嵌到工作流」的重要膠水層。沒有 Memory，每個新對話仍然需要重新建立個人化上下文。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div><!-- end tab-container -->
+
 <!-- Key Takeaways -->
 <div class="section-title">Key Takeaways</div>
 <div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-title">🎯 產品哲學差異定位</div>
-<div class="summary-card-text">Claude 的核心差異不在模型智力，而在產品設計哲學：從「告訴你怎麼做」到「直接幫你做」。理解這一點才能正確設定使用期望。</div>
+    <div class="summary-card">
+        <div class="summary-card-title">&#x1F3AF; 產品哲學差異定位</div>
+        <div class="summary-card-text">Claude 的核心差異不在模型智力，而在產品設計哲學：從「告訴你怎麼做」到「直接幫你做」。理解這一點才能正確設定使用期望。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="summary-card-title">&#x1F4DD; Context + Task + Rules 公式</div>
+        <div class="summary-card-text">三段式 Prompt 是入門的有效框架。進階時加入 XML 結構化、Few-shot Examples、Project Instructions 三層，從 Prompt Engineering 進化到 Context Engineering。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="summary-card-title">&#x2699;&#xFE0F; 三模型切換策略</div>
+        <div class="summary-card-text">Sonnet 80% 日常、Opus 深度推理、Haiku 批次小任務。Extended Thinking 是 Opus 的核心價值——不看結果，看推理鏈路有沒有漏洞。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="summary-card-title">&#x1F680; 從問答到工作流</div>
+        <div class="summary-card-text">真正的使用成熟度判斷標準：Claude 是否已內嵌在你的工作流中。Code + Cowork + Skills 三大工具組合是實現這個轉變的基礎設施。</div>
+    </div>
 </div>
-<div class="summary-card" style="border-left-color: #10b981;">
-<div class="summary-card-title">📝 Context + Task + Rules 公式</div>
-<div class="summary-card-text">三段式 Prompt 是入門的有效框架。進階時加入 XML 結構化、Few-shot Examples、Project Instructions 三層，從 Prompt Engineering 進化到 Context Engineering。</div>
-</div>
-<div class="summary-card" style="border-left-color: #8b5cf6;">
-<div class="summary-card-title">⚙️ 三模型切換策略</div>
-<div class="summary-card-text">Sonnet 80% 日常、Opus 深度推理、Haiku 批次小任務。Extended Thinking 是 Opus 的核心價值——不看結果，看推理鏈路有沒有漏洞。</div>
-</div>
-<div class="summary-card" style="border-left-color: #f59e0b;">
-<div class="summary-card-title">🚀 從問答到工作流</div>
-<div class="summary-card-text">真正的使用成熟度判斷標準：Claude 是否已內嵌在你的工作流中。Code + Cowork + Skills 三大工具組合是實現這個轉變的基礎設施。</div>
-</div>
-</div>
+
 <!-- Practice Questions -->
 <div class="section-title">Practice</div>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">作者說 Claude 和 ChatGPT 的「最本質區別」是產品設計哲學而非模型智力。你認為這個論點在 2026 年 3 月仍然成立嗎？哪些證據支持或反駁？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>部分成立，但邊界在模糊。</strong>支持的證據：Claude Code 作為 terminal-native agent、Cowork 的背景執行模式、Skills 的封裝體系，確實代表了 Anthropic 在「執行型 AI」上的產品投入。反駁的證據：ChatGPT 的 Canvas、GPT-4o with tools、Operator agent 也在向執行型靠攏。</p>
-<p>更精確的說法是：兩家的<strong>產品成熟度</strong>不同。Claude 的執行工具鏈更完整、更原生，而 ChatGPT 仍偏向「對話 + 插件」模式。但這個差距在快速縮小。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">作者說 Claude 和 ChatGPT 的「最本質區別」是產品設計哲學而非模型智力。你認為這個論點在 2026 年 3 月仍然成立嗎？哪些證據支持或反駁？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>部分成立，但邊界在模糊。</strong>支持的證據：Claude Code 作為 terminal-native agent、Cowork 的背景執行模式、Skills 的封裝體系，確實代表了 Anthropic 在「執行型 AI」上的產品投入。反駁的證據：ChatGPT 的 Canvas、GPT-4o with tools、Operator agent 也在向執行型靠攏。</p>
+        <p>更精確的說法是：兩家的<strong>產品成熟度</strong>不同。Claude 的執行工具鏈更完整、更原生，而 ChatGPT 仍偏向「對話 + 插件」模式。但這個差距在快速縮小。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">在你的 CDMO 工作中，作者提出的 Claude 使用成熟度進化路徑（問答 → 專案 → 工作流 → 內嵌）目前停在哪個階段？下一步最可行的進化動作是什麼？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>參考思路：</strong>如果你已經在使用 Projects + Master Prompt 系統，你大概在「專案階段」和「工作流階段」之間。你的教育文件產出系統已經是成熟的工作流，但 CDMO 核心業務（偏差調查、批次紀錄審查、可行性評估）的 AI 整合程度可能還在早期。</p>
-<p><strong>最可行的下一步：</strong>選一個 CDMO 場景建立 Skill，例如 deviation triage skill：輸入偏差描述 → 自動分類嚴重等級 → 建議調查方向 → 生成初步根因假設。這把「問答式使用」轉化為「標準化工作流」。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">在你的 CDMO 工作中，作者提出的 Claude 使用成熟度進化路徑（問答 → 專案 → 工作流 → 內嵌）目前停在哪個階段？下一步最可行的進化動作是什麼？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>參考思路：</strong>如果你已經在使用 Projects + Master Prompt 系統，你大概在「專案階段」和「工作流階段」之間。你的教育文件產出系統已經是成熟的工作流，但 CDMO 核心業務（偏差調查、批次紀錄審查、可行性評估）的 AI 整合程度可能還在早期。</p>
+        <p><strong>最可行的下一步：</strong>選一個 CDMO 場景建立 Skill，例如 deviation triage skill：輸入偏差描述 → 自動分類嚴重等級 → 建議調查方向 → 生成初步根因假設。這把「問答式使用」轉化為「標準化工作流」。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">作者全文以 Claude 的視角寫作，幾乎沒有提到任何缺點或風險。一篇「終極指南」如果要加入風險章節，你認為最重要的 3 個風險是什麼？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>1. 過度依賴風險（Over-reliance）：</strong>當 AI 從「問答」變成「工作流核心」，人的判斷力和核心技能可能退化。Wetware before software 原則在此特別重要。</p>
-<p><strong>2. 資料安全與合規風險：</strong>Connectors 連接 Notion/Slack/Google，意味著企業資料流向第三方。在 GMP 環境中，這涉及 21 CFR Part 11 合規、資料完整性（ALCOA+）、以及客戶保密協議。文章完全沒有觸及這些。</p>
-<p><strong>3. 供應商鎖定（Vendor Lock-in）：</strong>Skills、Projects、Cowork 都是 Claude 獨有的生態系統。深度整合後遷移成本極高。在企業決策中需要評估這個風險。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">作者全文以 Claude 的視角寫作，幾乎沒有提到任何缺點或風險。一篇「終極指南」如果要加入風險章節，你認為最重要的 3 個風險是什麼？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>1. 過度依賴風險（Over-reliance）：</strong>當 AI 從「問答」變成「工作流核心」，人的判斷力和核心技能可能退化。Wetware before software 原則在此特別重要。</p>
+        <p><strong>2. 資料安全與合規風險：</strong>Connectors 連接 Notion/Slack/Google，意味著企業資料流向第三方。在 GMP 環境中，這涉及 21 CFR Part 11 合規、資料完整性（ALCOA+）、以及客戶保密協議。文章完全沒有觸及這些。</p>
+        <p><strong>3. 供應商鎖定（Vendor Lock-in）：</strong>Skills、Projects、Cowork 都是 Claude 獨有的生態系統。深度整合後遷移成本極高。在企業決策中需要評估這個風險。</p>
+    </div>
 </details>
+
 <!-- Bottom Line -->
-<div class="section-title">🎯 我的行動結論</div>
+<div class="section-title">&#x1F3AF; 我的行動結論</div>
 <div class="bottom-line">
-<div class="bottom-line-header">Bottom Line for Me</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">「從問答工具到工作流核心」這個進化框架是真正的 mental model。我的 AI 學習系統（Master Prompt + Projects + Skills）已經在實踐這個模式，但 CDMO 核心業務的 AI 整合仍停留在問答階段。這篇文章提醒我：下一個突破點不是學更多 AI 知識，而是把已經掌握的工具深植到 CDMO 日常作業中。</div>
+    <div class="bottom-line-header">Bottom Line for Me</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x2714; 核心洞察</div>
+        <div class="bottom-line-text">「從問答工具到工作流核心」這個進化框架是真正的 mental model。我的 AI 學習系統（Master Prompt + Projects + Skills）已經在實踐這個模式，但 CDMO 核心業務的 AI 整合仍停留在問答階段。這篇文章提醒我：下一個突破點不是學更多 AI 知識，而是把已經掌握的工具深植到 CDMO 日常作業中。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+        <div class="bottom-line-text">本週行動：為「偏差調查」場景建立一個專用 Project。上傳偏差報告範本、SOP、常見根因資料庫作為 Knowledge Files，寫一份 Custom Instructions 定義輸出格式。先用一個實際案例測試，衡量「有 Project」vs「重新開聊天」的效率差異。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x26A0; 需要補充</div>
+        <div class="bottom-line-text">文章最大的盲點是<strong>完全沒有討論風險和限制</strong>——資料安全、合規、幻覺風險、過度依賴。作為入門指南可以理解，但如果要在 CDMO 這種法規密集環境中落地，需要自行加上 GMP 合規層的思考。此外，文章的「100 小時實測」主要來自個人開發者視角，對企業團隊協作場景的指導有限。</div>
+    </div>
 </div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週行動：為「偏差調查」場景建立一個專用 Project。上傳偏差報告範本、SOP、常見根因資料庫作為 Knowledge Files，寫一份 Custom Instructions 定義輸出格式。先用一個實際案例測試，衡量「有 Project」vs「重新開聊天」的效率差異。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章最大的盲點是<strong>完全沒有討論風險和限制</strong>——資料安全、合規、幻覺風險、過度依賴。作為入門指南可以理解，但如果要在 CDMO 這種法規密集環境中落地，需要自行加上 GMP 合規層的思考。此外，文章的「100 小時實測」主要來自個人開發者視角，對企業團隊協作場景的指導有限。</div>
-</div>
-</div>
+
 <!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-03-07 | AI Expert Learning System v1.5.0</p>
-<p>原文來源：<a href="https://x.com/yanhua1010" target="_blank">Yanhua (@yanhua1010) - Claude 终极入门指南：100 小时实测，一篇讲透</a></p>
-<p>建議 Chat Title：2026-03-07 [Tool] Yanhua - Claude Ultimate Beginner Guide</p>
-<p>建議檔名：2026-03-07_yanhua-claude-ultimate-guide.html</p>
-</footer>
+<div class="footer">
+    <p>製作日期：2026-03-07 | AI Expert Learning System v1.5.0</p>
+    <p>原文來源：<a href="https://x.com/yanhua1010" target="_blank">Yanhua (@yanhua1010) - Claude 终极入门指南：100 小时实测，一篇讲透</a></p>
+    <p>建議 Chat Title：2026-03-07 [Tool] Yanhua - Claude Ultimate Beginner Guide</p>
+    <p>建議檔名：2026-03-07_yanhua-claude-ultimate-guide.html</p>
+</div>
+
 </div><!-- end container -->
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

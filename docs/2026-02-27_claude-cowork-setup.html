@@ -1,232 +1,393 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Claude Cowork 完整設定指南 - 五大功能與實戰策略</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-<!-- Dashboard Index Meta -->
-<meta content="2026-02-27" name="doc-date"/>
-<meta content="Claude Cowork 設定指南 - Nav Toor 五大功能解析" name="doc-title"/>
-<meta content="Nav Toor / @heynavtoor" name="doc-source"/>
-<meta content="Tool,Agent,Automation,Framework" name="doc-tags"/>
-<meta content="3.8" name="doc-rating"/>
-<meta content="Cowork 五大功能完整解析：File System、AskUserQuestion、Plugins、Instructions、Connectors 設定與實戰。" name="doc-summary"/>
-<meta content="2026-02-27_claude-cowork-setup.html" name="doc-file"/><meta content="v1" name="normalized"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Cowork 完整設定指南 - 五大功能與實戰策略</title>
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-02-27">
+    <meta name="doc-title" content="Claude Cowork 設定指南 - Nav Toor 五大功能解析">
+    <meta name="doc-source" content="Nav Toor / @heynavtoor">
+    <meta name="doc-tags" content="Tool,Agent,Automation,Framework">
+    <meta name="doc-rating" content="3.8">
+    <meta name="doc-summary" content="Cowork 五大功能完整解析：File System、AskUserQuestion、Plugins、Instructions、Connectors 設定與實戰。">
+    <meta name="doc-file" content="2026-02-27_claude-cowork-setup.html">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
 
+/* Tags */
+.tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+.tag-framework { background: #ddd6fe; color: #4c1d95; }
+.header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-top: 0.5rem; }
+.source-info { font-size: 0.8rem; opacity: 0.7; margin-top: 1rem; }
 
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #e2e8f0; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.exec-summary h2 { color: #1e3a8a; margin-top: 0; font-size: 1.2rem; }
+.exec-summary p { font-size: 0.95rem; color: #475569; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-item .obj-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-item .obj-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+.objective-item .obj-desc { font-size: 0.85rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Section Headers */
+.section-header { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #bfdbfe; }
+
+/* Content Grid Inner */
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+@media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+.content-left .part-label { font-size: 0.75rem; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+.content-left h3 { color: #1e3a8a; margin-top: 0; font-size: 1.05rem; }
+.bilingual-block { margin-bottom: 1rem; }
+.bilingual-block .zh { font-size: 0.95rem; color: #1e293b; line-height: 1.8; }
+.bilingual-block .en { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; margin-top: 0.25rem; }
+mark.concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+mark.key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+mark.practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box .box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box .box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.box-concept .box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-analogy .box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-key .box-header { background: #fed7aa; color: #9a3412; }
+.box-key .box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-practical .box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-code .box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-compare .box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+
+code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card .card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card .card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+
+/* Practice Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Comparison Table */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+.compare-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+.compare-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #e2e8f0; }
+.compare-table tr:nth-child(even) { background: #f8fafc; }
+.compare-table tr:hover { background: #eff6ff; }
+    </style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="header-content">
-<div class="tags">
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-framework">Framework</span>
+<div class="header">
+    <div class="header-content">
+        <div class="tags">
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-automation">Automation</span>
+            <span class="tag tag-framework">Framework</span>
+        </div>
+        <h1>Claude Cowork 完整設定指南</h1>
+        <div class="subtitle">五大功能解析：File System、AskUserQuestion、Plugins、Instructions、Connectors</div>
+        <div class="source-info">Source: Nav Toor (@heynavtoor) | 2026-02-26 | Analysis: 2026-02-27</div>
+    </div>
 </div>
-<h1>Claude Cowork 完整設定指南</h1>
-<div class="subtitle">五大功能解析：File System、AskUserQuestion、Plugins、Instructions、Connectors</div>
-<div class="source-info">Source: Nav Toor (@heynavtoor) | 2026-02-26 | Analysis: 2026-02-27</div>
-</div>
-</header>
+
 <!-- Container -->
 <div class="container">
+
 <!-- Executive Summary -->
 <div class="exec-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
-<span class="rating-high">↑ Practical Value, Learning Curve</span>
-<span class="rating-low">↓ Technical Depth, Tool Ecosystem</span>
+    <h2>Executive Summary</h2>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 3.8/5</span>
+        <span class="rating-high">&uarr; Practical Value, Learning Curve</span>
+        <span class="rating-low">&darr; Technical Depth, Tool Ecosystem</span>
+    </div>
+    <p>Nav Toor 這篇文章是目前最完整的 Claude Cowork 實戰設定指南。他以三年 AI workflow 建構經驗為基礎，將 Cowork 拆解為五大功能（File System Access、AskUserQuestion、Plugins、Instructions、Connectors），並提供每個功能的設定步驟和第一個 Prompt。文章最有價值的洞察是<mark class="key">「停止想如何寫更好的 Prompt，開始想如何提供更好的 Context」</mark>這個思維轉換。文章偏「how-to 教學」而非深度技術分析，但作為 Cowork 的入門到進階設定指南，實用性極高。</p>
 </div>
-<p>Nav Toor 這篇文章是目前最完整的 Claude Cowork 實戰設定指南。他以三年 AI workflow 建構經驗為基礎，將 Cowork 拆解為五大功能（File System Access、AskUserQuestion、Plugins、Instructions、Connectors），並提供每個功能的設定步驟和第一個 Prompt。文章最有價值的洞察是<mark class="key">「停止想如何寫更好的 Prompt，開始想如何提供更好的 Context」</mark>這個思維轉換。文章偏「how-to 教學」而非深度技術分析，但作為 Cowork 的入門到進階設定指南，實用性極高。</p>
-</div>
+
 <!-- Learning Objectives -->
 <div class="section-header">Learning Objectives</div>
 <div class="objectives-grid">
-<div class="objective-item">
-<div class="obj-icon">📄</div>
-<div class="obj-title">理解 Cowork 五大功能架構</div>
-<div class="obj-desc">區分 File System、AskUserQuestion、Plugins、Instructions、Connectors 的角色與優先順序</div>
+    <div class="objective-item">
+        <div class="obj-icon">&#128196;</div>
+        <div class="obj-title">理解 Cowork 五大功能架構</div>
+        <div class="obj-desc">區分 File System、AskUserQuestion、Plugins、Instructions、Connectors 的角色與優先順序</div>
+    </div>
+    <div class="objective-item">
+        <div class="obj-icon">&#9881;</div>
+        <div class="obj-title">建立 Context Files 系統</div>
+        <div class="obj-desc">設計 about-me.md、brand-voice.md、working-style.md 三檔案策略，讓 AI 輸出品質持續提升</div>
+    </div>
+    <div class="objective-item">
+        <div class="obj-icon">&#128161;</div>
+        <div class="obj-title">從 Prompt 思維轉向 Context 思維</div>
+        <div class="obj-desc">理解「Context compounds, prompts depreciate」的核心論點，建立可累積的 AI 協作系統</div>
+    </div>
 </div>
-<div class="objective-item">
-<div class="obj-icon">⚙</div>
-<div class="obj-title">建立 Context Files 系統</div>
-<div class="obj-desc">設計 about-me.md、brand-voice.md、working-style.md 三檔案策略，讓 AI 輸出品質持續提升</div>
-</div>
-<div class="objective-item">
-<div class="obj-icon">💡</div>
-<div class="obj-title">從 Prompt 思維轉向 Context 思維</div>
-<div class="obj-desc">理解「Context compounds, prompts depreciate」的核心論點，建立可累積的 AI 協作系統</div>
-</div>
-</div>
+
 <!-- Framework Visual -->
 <div class="framework-visual">
-<div class="framework-title">Cowork 五大功能優先級框架 (Feature Priority Framework)</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">📁</div>
-<div class="framework-step-title">File System</div>
-<div class="framework-step-desc">讀寫本地檔案</div>
+    <div class="framework-title">Cowork 五大功能優先級框架 (Feature Priority Framework)</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#128193;</div>
+            <div class="framework-step-title">File System</div>
+            <div class="framework-step-desc">讀寫本地檔案</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#10067;</div>
+            <div class="framework-step-title">AskUser</div>
+            <div class="framework-step-desc">釐清而非猜測</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128268;</div>
+            <div class="framework-step-title">Plugins</div>
+            <div class="framework-step-desc">領域專業化</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128221;</div>
+            <div class="framework-step-title">Instructions</div>
+            <div class="framework-step-desc">持久化記憶</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128279;</div>
+            <div class="framework-step-title">Connectors</div>
+            <div class="framework-step-desc">即時資料整合</div>
+        </div>
+    </div>
 </div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">❓</div>
-<div class="framework-step-title">AskUser</div>
-<div class="framework-step-desc">釐清而非猜測</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔌</div>
-<div class="framework-step-title">Plugins</div>
-<div class="framework-step-desc">領域專業化</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📝</div>
-<div class="framework-step-title">Instructions</div>
-<div class="framework-step-desc">持久化記憶</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔗</div>
-<div class="framework-step-title">Connectors</div>
-<div class="framework-step-desc">即時資料整合</div>
-</div>
-</div>
-</div>
+
 <!-- ===== PART I: Cowork 本質 ===== -->
 <div class="section-header">Part I: Cowork 不是聊天機器人 (Cowork Is Not a Chatbot)</div>
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part I</div>
-<h3>從對話介面到桌面協作者</h3>
-<div class="bilingual-block">
-<div class="zh-text">大多數人以為 Claude 就像 ChatGPT：一個文字框，你輸入，它回應。那是 claude.ai 的瀏覽器版本。<mark class="concept">Cowork 完全不同。它住在你的桌面上，能讀寫你電腦上的資料夾檔案</mark>，建立 Word 文件、帶有公式的試算表，還能安裝針對你特定工作的專業外掛。</div>
-<div class="en-text">"Most people think Claude is like ChatGPT. A text box. You type, it responds. That's claude.ai. Claude Cowork is different. It lives on your desktop. It reads and writes to folders on your actual computer."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Cowork 的誕生背景是 Anthropic 將 <mark class="key">Claude Code</mark>（開發者用的 agentic 工具）重新打造給一般知識工作者使用。不需要終端機、命令列或程式碼。你描述想要的結果，指向你的檔案，然後離開。</div>
-<div class="en-text">"Cowork is what happened when Anthropic took the power of Claude Code — their agentic developer tool — and rebuilt it for the rest of us. No terminal. No command line. No code."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Nav Toor 描述了他的典型工作循環：<mark class="practical">描述需求 → Cowork 問三個問題 → 回答問題 → 20 分鐘後回來看完成的文件</mark>。這個循環現在涵蓋他大約 60% 的知識工作。</div>
-<div class="en-text">"I describe what I need. Cowork asks me three questions. I answer them. I come back 20 minutes later to a finished document. That loop now covers about 60% of my knowledge work."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="box-header">💡 比喻說明</div>
-<div class="box-content">
+    <div class="content-left">
+        <div class="part-label">Part I</div>
+        <h3>從對話介面到桌面協作者</h3>
+        <div class="bilingual-block">
+            <div class="zh">大多數人以為 Claude 就像 ChatGPT：一個文字框，你輸入，它回應。那是 claude.ai 的瀏覽器版本。<mark class="concept">Cowork 完全不同。它住在你的桌面上，能讀寫你電腦上的資料夾檔案</mark>，建立 Word 文件、帶有公式的試算表，還能安裝針對你特定工作的專業外掛。</div>
+            <div class="en">"Most people think Claude is like ChatGPT. A text box. You type, it responds. That's claude.ai. Claude Cowork is different. It lives on your desktop. It reads and writes to folders on your actual computer."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">Cowork 的誕生背景是 Anthropic 將 <mark class="key">Claude Code</mark>（開發者用的 agentic 工具）重新打造給一般知識工作者使用。不需要終端機、命令列或程式碼。你描述想要的結果，指向你的檔案，然後離開。</div>
+            <div class="en">"Cowork is what happened when Anthropic took the power of Claude Code — their agentic developer tool — and rebuilt it for the rest of us. No terminal. No command line. No code."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">Nav Toor 描述了他的典型工作循環：<mark class="practical">描述需求 &rarr; Cowork 問三個問題 &rarr; 回答問題 &rarr; 20 分鐘後回來看完成的文件</mark>。這個循環現在涵蓋他大約 60% 的知識工作。</div>
+            <div class="en">"I describe what I need. Cowork asks me three questions. I answer them. I come back 20 minutes later to a finished document. That loop now covers about 60% of my knowledge work."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-analogy">
+            <div class="box-header">&#128161; 比喻說明</div>
+            <div class="box-content">
                 想像你有一位超級能幹的助理。以前（ChatGPT 模式），你必須把文件列印出來遞給他，等他看完再口述回覆，你再手動記錄。現在（Cowork 模式），這位助理坐在你辦公桌旁邊，可以直接打開你的檔案櫃、直接在你的電腦上建立文件、做完放回原位。差別不是「更聰明」，而是「更無摩擦」。
             </div>
-</div>
-<div class="info-box box-key">
-<div class="box-header">⚠️ 重點提示</div>
-<div class="box-content">
-<strong>Cowork vs claude.ai 的核心差異：</strong><br/>
-                claude.ai = 瀏覽器內的對話介面（上傳/下載循環）<br/>
-                Cowork = 桌面應用程式（直接讀寫本地檔案系統）<br/><br/>
-                這個差異看似微小，但消除了整個「匯出 → 拖入 → 等待 → 下載 → 放回」的循環，從根本上改變了 AI 從「你去找的工具」變成「在你環境中工作的協作者」。
+        </div>
+        <div class="info-box box-key">
+            <div class="box-header">&#9888;&#65039; 重點提示</div>
+            <div class="box-content">
+                <strong>Cowork vs claude.ai 的核心差異：</strong><br>
+                claude.ai = 瀏覽器內的對話介面（上傳/下載循環）<br>
+                Cowork = 桌面應用程式（直接讀寫本地檔案系統）<br><br>
+                這個差異看似微小，但消除了整個「匯出 &rarr; 拖入 &rarr; 等待 &rarr; 下載 &rarr; 放回」的循環，從根本上改變了 AI 從「你去找的工具」變成「在你環境中工作的協作者」。
             </div>
-</div>
-<div class="info-box box-concept">
-<div class="box-header">📚 核心概念</div>
-<div class="box-content">
-<strong>Claude Code → Cowork 的演化路線</strong><br/>
+        </div>
+        <div class="info-box box-concept">
+            <div class="box-header">&#128218; 核心概念</div>
+            <div class="box-content">
+                <strong>Claude Code &rarr; Cowork 的演化路線</strong><br>
                 Claude Code 是面向開發者的命令列 agentic 工具。Cowork 將同樣的「代理式執行」能力包裝成圖形介面，讓非技術使用者也能操作。這代表 Anthropic 的產品策略：<mark class="key">先在開發者市場驗證 agent 架構，再推向更廣泛的知識工作者</mark>。
             </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
 <!-- ===== PART II: File System Access ===== -->
 <div class="section-header">Part II: File System Access - 檔案系統存取</div>
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part II - Feature #1</div>
-<h3>從上傳/下載到直接讀寫</h3>
-<div class="bilingual-block">
-<div class="zh-text">其他所有 AI 工具都靠上傳運作。你匯出檔案、拖進聊天、等待、取得輸出、下載、放回原處。<mark class="concept">Cowork 消除了整個循環</mark>。你選擇電腦上的資料夾，Claude 讀取裡面的所有內容。當它建立東西時，直接存到那個資料夾。</div>
-<div class="en-text">"Every other AI tool runs on uploads. You export a file. You drag it into the chat. You wait. Cowork eliminates that entire loop."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">更重要的是 Cowork 能<mark class="practical">讀取你的舊報告來匹配格式、從上個月的試算表提取資料來建立這個月的、在任務中途參考你的品牌指南</mark>——全部因為你指向了正確的資料夾。</div>
-<div class="en-text">"Cowork can read your old reports to match your formatting. It can pull data from last month's spreadsheet to build this month's. It can reference your brand guidelines mid-task."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Context Files 策略（文章最重要的實務建議）：</strong>建立一個名為「Claude Context」的專用資料夾，裡面放三個檔案：</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">1. <code>about-me.md</code> — 你是誰、做什麼、什麼是工作中的成功<br/>2. <code>brand-voice.md</code> — 你的溝通方式、常用短語、不喜歡的表達<br/>3. <code>working-style.md</code> — 希望 Claude 如何運作：先問問題？長短輸出？檔案格式？</div>
-<div class="en-text">"Create a dedicated folder called 'Claude Context.' Inside it, build three files: about-me.md, brand-voice.md, working-style.md."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><mark class="key">這些檔案會隨時間複利累積。每週你改進它們，Claude 就更擅長你的特定工作。</mark>這是整篇指南中最被低估的設定步驟。</div>
-<div class="en-text">"These files compound over time. Every week you refine them, Claude gets better at your specific work. It's the most underrated setup step."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="box-header">🛠️ 實務應用</div>
-<div class="box-content">
-<strong>設定步驟：</strong><br/>
-                1. 到 claude.com/download 下載桌面應用<br/>
-                2. 需要付費方案：Pro $20/月，Max $100+/月<br/>
-                3. 開啟應用，切換到頂部的 Cowork 標籤<br/>
-                4. 點擊資料夾圖示，選擇本地資料夾<br/>
+    <div class="content-left">
+        <div class="part-label">Part II - Feature #1</div>
+        <h3>從上傳/下載到直接讀寫</h3>
+        <div class="bilingual-block">
+            <div class="zh">其他所有 AI 工具都靠上傳運作。你匯出檔案、拖進聊天、等待、取得輸出、下載、放回原處。<mark class="concept">Cowork 消除了整個循環</mark>。你選擇電腦上的資料夾，Claude 讀取裡面的所有內容。當它建立東西時，直接存到那個資料夾。</div>
+            <div class="en">"Every other AI tool runs on uploads. You export a file. You drag it into the chat. You wait. Cowork eliminates that entire loop."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">更重要的是 Cowork 能<mark class="practical">讀取你的舊報告來匹配格式、從上個月的試算表提取資料來建立這個月的、在任務中途參考你的品牌指南</mark>——全部因為你指向了正確的資料夾。</div>
+            <div class="en">"Cowork can read your old reports to match your formatting. It can pull data from last month's spreadsheet to build this month's. It can reference your brand guidelines mid-task."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh"><strong>Context Files 策略（文章最重要的實務建議）：</strong>建立一個名為「Claude Context」的專用資料夾，裡面放三個檔案：</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">1. <code>about-me.md</code> — 你是誰、做什麼、什麼是工作中的成功<br>2. <code>brand-voice.md</code> — 你的溝通方式、常用短語、不喜歡的表達<br>3. <code>working-style.md</code> — 希望 Claude 如何運作：先問問題？長短輸出？檔案格式？</div>
+            <div class="en">"Create a dedicated folder called 'Claude Context.' Inside it, build three files: about-me.md, brand-voice.md, working-style.md."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh"><mark class="key">這些檔案會隨時間複利累積。每週你改進它們，Claude 就更擅長你的特定工作。</mark>這是整篇指南中最被低估的設定步驟。</div>
+            <div class="en">"These files compound over time. Every week you refine them, Claude gets better at your specific work. It's the most underrated setup step."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-practical">
+            <div class="box-header">&#128736;&#65039; 實務應用</div>
+            <div class="box-content">
+                <strong>設定步驟：</strong><br>
+                1. 到 claude.com/download 下載桌面應用<br>
+                2. 需要付費方案：Pro $20/月，Max $100+/月<br>
+                3. 開啟應用，切換到頂部的 Cowork 標籤<br>
+                4. 點擊資料夾圖示，選擇本地資料夾<br>
                 5. 該資料夾所有檔案在 session 期間可被讀取
             </div>
-</div>
-<div class="info-box box-code">
-<div class="box-header">💻 第一個 Prompt</div>
-<div class="box-content">
-<pre>Read all the files in this folder completely. 
+        </div>
+        <div class="info-box box-code">
+            <div class="box-header">&#128187; 第一個 Prompt</div>
+            <div class="box-content">
+                <pre>Read all the files in this folder completely. 
 Then give me a summary of what you know 
 about me, how I work, and what context 
 you have access to.</pre>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="box-header">⚠️ 思維轉換</div>
-<div class="box-content">
-<strong>核心洞察：</strong><br/>
-                「停止思考如何寫更好的 Prompt，開始思考如何提供更好的 Files。」<br/><br/>
+            </div>
+        </div>
+        <div class="info-box box-key">
+            <div class="box-header">&#9888;&#65039; 思維轉換</div>
+            <div class="box-content">
+                <strong>核心洞察：</strong><br>
+                「停止思考如何寫更好的 Prompt，開始思考如何提供更好的 Files。」<br><br>
                 這與 Context Engineering 的趨勢完全一致。你給 Claude 的 context 檔案品質越高，需要的 prompting 就越少。輸出品質從「通用 AI」提升到「聽起來像我會寫的東西」。
             </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
 <!-- ===== PART III: AskUserQuestion ===== -->
 <div class="section-header">Part III: AskUserQuestion - 釐清而非猜測</div>
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part III - Feature #2</div>
-<h3>讓 AI 問你，而不是替你猜</h3>
-<div class="bilingual-block">
-<div class="zh-text">以下是每個其他 AI 在你給出不清楚任務時會做的事：<mark class="key">它猜。而且很有自信地猜。</mark>它選一個詮釋、全力執行，然後給你一份精美的輸出——回答的卻是錯誤的問題。</div>
-<div class="en-text">"Here's what every other AI does when you give it an unclear task: it guesses. Confidently. It picks an interpretation, runs with it, and gives you a polished output that answers the wrong question."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Cowork 的做法不同。當它需要更多資訊時，它停下來<mark class="concept">產生一個表單：多選題、具體選項、結構化的提示</mark>，幫助你想清楚你真正要什麼。</div>
-<div class="en-text">"When it needs more information, it stops and generates a form. Multiple-choice questions. Specific options. A structured prompt that helps you think through what you actually want."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Nav Toor 現在用這個作為每個非瑣碎任務的起點。他不再試圖寫完美的 Prompt。他讓 Cowork 弄清楚它需要知道什麼。如果第一輪問題不夠，他說出來，Cowork 產生新的一組問題繼續迭代。</div>
-<div class="en-text">"I don't try to write perfect prompts anymore. I let Cowork figure out what it needs to know."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>最重要的思維轉換：</strong><mark class="key">ChatGPT 訓練你寫更好的 Prompt。Cowork 訓練你給更好的 Context。一個是會貶值的技能，另一個會複利增長。</mark></div>
-<div class="en-text">"ChatGPT trained you to write better prompts. Cowork trains you to give better context. One is a skill that deprecates. The other compounds."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-code">
-<div class="box-header">💻 推薦 Prompt 模板</div>
-<div class="box-content">
-<strong>通用任務起手式：</strong>
-<pre>I want to [YOUR TASK] so that 
+    <div class="content-left">
+        <div class="part-label">Part III - Feature #2</div>
+        <h3>讓 AI 問你，而不是替你猜</h3>
+        <div class="bilingual-block">
+            <div class="zh">以下是每個其他 AI 在你給出不清楚任務時會做的事：<mark class="key">它猜。而且很有自信地猜。</mark>它選一個詮釋、全力執行，然後給你一份精美的輸出——回答的卻是錯誤的問題。</div>
+            <div class="en">"Here's what every other AI does when you give it an unclear task: it guesses. Confidently. It picks an interpretation, runs with it, and gives you a polished output that answers the wrong question."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">Cowork 的做法不同。當它需要更多資訊時，它停下來<mark class="concept">產生一個表單：多選題、具體選項、結構化的提示</mark>，幫助你想清楚你真正要什麼。</div>
+            <div class="en">"When it needs more information, it stops and generates a form. Multiple-choice questions. Specific options. A structured prompt that helps you think through what you actually want."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">Nav Toor 現在用這個作為每個非瑣碎任務的起點。他不再試圖寫完美的 Prompt。他讓 Cowork 弄清楚它需要知道什麼。如果第一輪問題不夠，他說出來，Cowork 產生新的一組問題繼續迭代。</div>
+            <div class="en">"I don't try to write perfect prompts anymore. I let Cowork figure out what it needs to know."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh"><strong>最重要的思維轉換：</strong><mark class="key">ChatGPT 訓練你寫更好的 Prompt。Cowork 訓練你給更好的 Context。一個是會貶值的技能，另一個會複利增長。</mark></div>
+            <div class="en">"ChatGPT trained you to write better prompts. Cowork trains you to give better context. One is a skill that deprecates. The other compounds."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="box-header">&#128187; 推薦 Prompt 模板</div>
+            <div class="box-content">
+                <strong>通用任務起手式：</strong>
+                <pre>I want to [YOUR TASK] so that 
 [WHAT GOOD LOOKS LIKE].
 
 First, read all uploaded files completely 
@@ -236,288 +397,300 @@ DO NOT start executing yet. Ask me
 clarifying questions (use AskUserQuestion) 
 to refine the approach. Only begin work 
 once we've aligned.</pre>
-<strong>或在任何 Prompt 結尾加上：</strong>
-<pre>DO NOT start working yet. First, ask me 
+                <strong>或在任何 Prompt 結尾加上：</strong>
+                <pre>DO NOT start working yet. First, ask me 
 clarifying questions so we can define the 
 approach together. Only begin once 
 we've aligned.</pre>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="box-header">💡 比喻說明</div>
-<div class="box-content">
-                想像你請一位新員工幫你寫客戶提案。<strong>差的員工</strong>直接寫一份「看起來不錯」但完全不符合客戶需求的提案。<strong>好的員工</strong>先問你：「這個客戶的預算範圍？他們最在意什麼？過去合作過嗎？要正式還是輕鬆的語氣？」<br/><br/>AskUserQuestion 就是讓 Claude 成為那個好員工。
             </div>
-</div>
-<div class="info-box box-concept">
-<div class="box-header">📚 核心概念</div>
-<div class="box-content">
-<strong>Context Window 的信心效應</strong><br/>
+        </div>
+        <div class="info-box box-analogy">
+            <div class="box-header">&#128161; 比喻說明</div>
+            <div class="box-content">
+                想像你請一位新員工幫你寫客戶提案。<strong>差的員工</strong>直接寫一份「看起來不錯」但完全不符合客戶需求的提案。<strong>好的員工</strong>先問你：「這個客戶的預算範圍？他們最在意什麼？過去合作過嗎？要正式還是輕鬆的語氣？」<br><br>AskUserQuestion 就是讓 Claude 成為那個好員工。
+            </div>
+        </div>
+        <div class="info-box box-concept">
+            <div class="box-header">&#128218; 核心概念</div>
+            <div class="box-content">
+                <strong>Context Window 的信心效應</strong><br>
                 Nav Toor 提到 Cowork 有超過 100 萬 token 的 context window。當 Claude 讀完所有相關檔案並透過問題釐清任務後，輸出一致地基於實際事實。這呼應了一個重要原則：<mark class="concept">Hallucination（幻覺）的根源通常是 context 不足，而非模型能力不足</mark>。
             </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
 <!-- ===== PART IV: Plugins ===== -->
 <div class="section-header">Part IV: Plugins - 專業化外掛系統</div>
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part IV - Feature #3</div>
-<h3>從通才到領域專家</h3>
-<div class="bilingual-block">
-<div class="zh-text">沒有 Plugin 的 Cowork 是一個聰明的通才。但它不知道你的產業術語、團隊工作流程或你的角色需要的特定輸出。<mark class="concept">Plugins 是技能包、斜線命令和子代理的組合</mark>，專為特定工作職能設計。</div>
-<div class="en-text">"Without a plugin, Claude Cowork is a brilliant generalist. Plugins are bundles of skills, slash commands, and sub-agents designed for specific job functions."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Anthropic 在 2026 年 1 月推出了 11 個官方 Plugin：Productivity、Marketing、Sales、Finance、Data Analysis、Legal、Product Management、Customer Support、Enterprise Search、Biology Research 等。</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">影響立竿見影。<mark class="key">Legal plugin 推出後，Thomson Reuters 單日下跌 16%——創下歷史最大單日跌幅。LegalZoom 跌了 20%。</mark>這就是 AI 真正開始做專業工作時的市場反應。</div>
-<div class="en-text">"When the Legal plugin launched, Thomson Reuters dropped 16% in a single trading session — its worst day on record. LegalZoom fell 20%."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">安裝 Sales plugin，Claude 可以研究客戶、準備通話、起草外展序列。安裝 Data plugin，它能探索資料集、寫 SQL、建 dashboard、標記異常。不需要技術背景。</div>
-<div class="en-text">"Install the Sales plugin and Claude can research accounts, prep you for calls. Install the Data plugin and it explores your dataset, writes SQL, builds dashboards."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="box-header">🛠️ 安裝步驟</div>
-<div class="box-content">
-                1. 開啟 Cowork，點擊聊天欄的「+」按鈕<br/>
-                2. 點擊「Plugins」瀏覽資料庫<br/>
-                3. 或到 claude.com/plugins 查看所有可用外掛<br/>
-                4. 選擇適合你角色的 Plugin，點擊 Install<br/>
+    <div class="content-left">
+        <div class="part-label">Part IV - Feature #3</div>
+        <h3>從通才到領域專家</h3>
+        <div class="bilingual-block">
+            <div class="zh">沒有 Plugin 的 Cowork 是一個聰明的通才。但它不知道你的產業術語、團隊工作流程或你的角色需要的特定輸出。<mark class="concept">Plugins 是技能包、斜線命令和子代理的組合</mark>，專為特定工作職能設計。</div>
+            <div class="en">"Without a plugin, Claude Cowork is a brilliant generalist. Plugins are bundles of skills, slash commands, and sub-agents designed for specific job functions."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">Anthropic 在 2026 年 1 月推出了 11 個官方 Plugin：Productivity、Marketing、Sales、Finance、Data Analysis、Legal、Product Management、Customer Support、Enterprise Search、Biology Research 等。</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">影響立竿見影。<mark class="key">Legal plugin 推出後，Thomson Reuters 單日下跌 16%——創下歷史最大單日跌幅。LegalZoom 跌了 20%。</mark>這就是 AI 真正開始做專業工作時的市場反應。</div>
+            <div class="en">"When the Legal plugin launched, Thomson Reuters dropped 16% in a single trading session — its worst day on record. LegalZoom fell 20%."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">安裝 Sales plugin，Claude 可以研究客戶、準備通話、起草外展序列。安裝 Data plugin，它能探索資料集、寫 SQL、建 dashboard、標記異常。不需要技術背景。</div>
+            <div class="en">"Install the Sales plugin and Claude can research accounts, prep you for calls. Install the Data plugin and it explores your dataset, writes SQL, builds dashboards."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-practical">
+            <div class="box-header">&#128736;&#65039; 安裝步驟</div>
+            <div class="box-content">
+                1. 開啟 Cowork，點擊聊天欄的「+」按鈕<br>
+                2. 點擊「Plugins」瀏覽資料庫<br>
+                3. 或到 claude.com/plugins 查看所有可用外掛<br>
+                4. 選擇適合你角色的 Plugin，點擊 Install<br>
                 5. 在任何聊天中輸入「/」查看斜線命令
             </div>
-</div>
-<div class="info-box box-code">
-<div class="box-header">💻 範例 Prompt</div>
-<div class="box-content">
-<strong>Productivity Plugin:</strong>
-<pre>/productivity:start Let's review what I 
+        </div>
+        <div class="info-box box-code">
+            <div class="box-header">&#128187; 範例 Prompt</div>
+            <div class="box-content">
+                <strong>Productivity Plugin:</strong>
+                <pre>/productivity:start Let's review what I 
 need to get done today and set up 
 my task list.</pre>
-<strong>Marketing Plugin:</strong>
-<pre>/marketing:draft-content Write a LinkedIn 
+                <strong>Marketing Plugin:</strong>
+                <pre>/marketing:draft-content Write a LinkedIn 
 post about [topic]. Match the voice 
 from my brand-voice.md file.</pre>
-<strong>Data Plugin:</strong>
-<pre>/data:explore I've uploaded a CSV in 
+                <strong>Data Plugin:</strong>
+                <pre>/data:explore I've uploaded a CSV in 
 this folder. Give me a summary, flag 
 anomalies, suggest three analyses.</pre>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="box-header">⚖️ 工具比較</div>
-<div class="box-content">
-<strong>Plugin vs Generic Prompt 的差異：</strong><br/>
-                Plugin 啟動後的輸出明顯更結構化、更有主見。它知道你的職能需要什麼樣的好輸出。<br/><br/>
+            </div>
+        </div>
+        <div class="info-box box-compare">
+            <div class="box-header">&#9878;&#65039; 工具比較</div>
+            <div class="box-content">
+                <strong>Plugin vs Generic Prompt 的差異：</strong><br>
+                Plugin 啟動後的輸出明顯更結構化、更有主見。它知道你的職能需要什麼樣的好輸出。<br><br>
                 這類似於 Claude Projects 的 Project Knowledge：給模型領域特定的知識和指令，輸出品質就會跳躍式提升。
             </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
 <!-- ===== PART V: Instructions + Connectors ===== -->
 <div class="section-header">Part V: Instructions &amp; Connectors - 持久記憶與即時整合</div>
 <div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part V - Features #4 &amp; #5</div>
-<h3>跨 Session 的記憶與工具串接</h3>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Instructions（指令）：</strong>Cowork 沒有跨 session 記憶。每次你開新對話，Claude 完全重新開始。<mark class="key">Instructions 是你寫一次的常駐指令，在每個 Cowork session 開始時自動載入。</mark>Global Instructions 全域適用，Folder Instructions 在你選擇特定資料夾時適用。</div>
-<div class="en-text">"Instructions are standing orders you write once. They load automatically at the start of every Cowork session. Global instructions apply everywhere. Folder instructions apply when you select a specific local folder."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">設定好 Instructions 後，Claude 在每個 session 開始時就已經知道你的名字、角色、溝通偏好、輸出預設和工作風格。<mark class="practical">你再也不需要重複解釋自己。</mark></div>
-<div class="en-text">"Claude starts every session already knowing your name, your role, your communication preferences, your output defaults, and your working style."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Connectors（連接器）：</strong>典型 AI 工作流程涉及大量複製貼上。你截圖 Slack 對話、複製文件、貼到聊天中。<mark class="concept">Connectors 消除了所有這些。連接一次，Claude 可以在對話中引用來自 Slack、Drive、Notion 等 50+ 工具的即時資料。</mark></div>
-<div class="en-text">"Link your tools once, and Claude can reference live data from them mid-conversation. No copy-pasting. No screenshots."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">這在所有方案中免費。根據 Nav Toor 的經驗，Connectors 是 Cowork 中最被低估的功能。</div>
-<div class="en-text">"This is free on all plans. It's the most underused feature in Cowork, in my experience."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="box-header">🛠️ Instructions 設定</div>
-<div class="box-content">
-<strong>Global Instructions 建議內容：</strong><br/>
-                - 你的名字、角色和工作內容<br/>
-                - 溝通偏好（簡潔直接？不要填充？）<br/>
-                - 輸出預設（預設 .docx？.md？）<br/>
-                - 工作風格（先問問題再開始？）<br/>
-                - 避免事項（不用列點？不要太正式？）<br/><br/>
-<strong>路徑：</strong>Settings &gt; Cowork &gt; Edit Global Instructions
+    <div class="content-left">
+        <div class="part-label">Part V - Features #4 &amp; #5</div>
+        <h3>跨 Session 的記憶與工具串接</h3>
+        <div class="bilingual-block">
+            <div class="zh"><strong>Instructions（指令）：</strong>Cowork 沒有跨 session 記憶。每次你開新對話，Claude 完全重新開始。<mark class="key">Instructions 是你寫一次的常駐指令，在每個 Cowork session 開始時自動載入。</mark>Global Instructions 全域適用，Folder Instructions 在你選擇特定資料夾時適用。</div>
+            <div class="en">"Instructions are standing orders you write once. They load automatically at the start of every Cowork session. Global instructions apply everywhere. Folder instructions apply when you select a specific local folder."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">設定好 Instructions 後，Claude 在每個 session 開始時就已經知道你的名字、角色、溝通偏好、輸出預設和工作風格。<mark class="practical">你再也不需要重複解釋自己。</mark></div>
+            <div class="en">"Claude starts every session already knowing your name, your role, your communication preferences, your output defaults, and your working style."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh"><strong>Connectors（連接器）：</strong>典型 AI 工作流程涉及大量複製貼上。你截圖 Slack 對話、複製文件、貼到聊天中。<mark class="concept">Connectors 消除了所有這些。連接一次，Claude 可以在對話中引用來自 Slack、Drive、Notion 等 50+ 工具的即時資料。</mark></div>
+            <div class="en">"Link your tools once, and Claude can reference live data from them mid-conversation. No copy-pasting. No screenshots."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh">這在所有方案中免費。根據 Nav Toor 的經驗，Connectors 是 Cowork 中最被低估的功能。</div>
+            <div class="en">"This is free on all plans. It's the most underused feature in Cowork, in my experience."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-practical">
+            <div class="box-header">&#128736;&#65039; Instructions 設定</div>
+            <div class="box-content">
+                <strong>Global Instructions 建議內容：</strong><br>
+                - 你的名字、角色和工作內容<br>
+                - 溝通偏好（簡潔直接？不要填充？）<br>
+                - 輸出預設（預設 .docx？.md？）<br>
+                - 工作風格（先問問題再開始？）<br>
+                - 避免事項（不用列點？不要太正式？）<br><br>
+                <strong>路徑：</strong>Settings &gt; Cowork &gt; Edit Global Instructions
             </div>
-</div>
-<div class="info-box box-code">
-<div class="box-header">💻 Connectors 範例 Prompt</div>
-<div class="box-content">
-<strong>連接 Slack 後：</strong>
-<pre>Search my Slack messages from the last 
+        </div>
+        <div class="info-box box-code">
+            <div class="box-header">&#128187; Connectors 範例 Prompt</div>
+            <div class="box-content">
+                <strong>連接 Slack 後：</strong>
+                <pre>Search my Slack messages from the last 
 7 days and give me a summary of anything 
 I need to follow up on. 
 Organize by urgency.</pre>
-<strong>連接 Google Drive 後：</strong>
-<pre>Find the most recent document about 
+                <strong>連接 Google Drive 後：</strong>
+                <pre>Find the most recent document about 
 [project name] in my Drive. Read it 
 and tell me the three most important 
 things I need to know.</pre>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="box-header">💡 比喻說明</div>
-<div class="box-content">
-<strong>Instructions = 員工手冊</strong><br/>
-                想像你雇了一位新助理。每天早上他上班時都會自動閱讀你留的「員工手冊」，知道你的偏好和規則。你不需要每天重新培訓他。<br/><br/>
-<strong>Connectors = 辦公室門禁卡</strong><br/>
+            </div>
+        </div>
+        <div class="info-box box-analogy">
+            <div class="box-header">&#128161; 比喻說明</div>
+            <div class="box-content">
+                <strong>Instructions = 員工手冊</strong><br>
+                想像你雇了一位新助理。每天早上他上班時都會自動閱讀你留的「員工手冊」，知道你的偏好和規則。你不需要每天重新培訓他。<br><br>
+                <strong>Connectors = 辦公室門禁卡</strong><br>
                 這位助理有了門禁卡，可以進入 Slack 聊天室、Google Drive 檔案庫、Notion 資料庫。不用你幫他複製資料。
             </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
 <!-- ===== PART VI: Limitations ===== -->
 <div class="section-header">Part VI: Cowork 的限制（誠實版）</div>
 <div class="content-grid" style="grid-template-columns: 1fr;">
-<div class="content-left" style="border-right: none;">
-<div class="part-label">Part VI - Honest Assessment</div>
-<h3>六個你需要知道的限制</h3>
-<table class="compare-table">
-<thead>
-<tr>
-<th style="width:25%;">限制</th>
-<th style="width:40%;">說明</th>
-<th style="width:35%;">因應策略</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>無跨 Session 記憶</strong></td>
-<td>每次新對話完全從零開始，是最大摩擦點</td>
-<td>用 Context Files + Global Instructions 彌補</td>
-</tr>
-<tr>
-<td><strong>關閉 App 任務中斷</strong></td>
-<td>Cowork 在桌面 App 中運行，關閉即停止</td>
-<td>用睡眠模式代替關閉視窗；session 可存活睡眠</td>
-</tr>
-<tr>
-<td><strong>用量消耗快</strong></td>
-<td>複雜任務比普通聊天消耗更多配額</td>
-<td>監控 Settings &gt; Usage；重度使用者考慮 Max 方案</td>
-</tr>
-<tr>
-<td><strong>僅限桌面</strong></td>
-<td>無手機版、無瀏覽器版、無跨裝置同步</td>
-<td>Context files 放在 iCloud/Dropbox 等雲端同步資料夾</td>
-</tr>
-<tr>
-<td><strong>不能生成圖片</strong></td>
-<td>文件、試算表、簡報可以，圖片不行</td>
-<td>圖片用 Gemini Imagen，文件用 Cowork</td>
-</tr>
-<tr>
-<td><strong>Research Preview</strong></td>
-<td>Agent 安全性仍在開發中</td>
-<td>開啟刪除保護；敏感檔案讓 Claude 先確認再執行</td>
-</tr>
-</tbody>
-</table>
+    <div class="content-left" style="border-right: none;">
+        <div class="part-label">Part VI - Honest Assessment</div>
+        <h3>六個你需要知道的限制</h3>
+
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th style="width:25%;">限制</th>
+                    <th style="width:40%;">說明</th>
+                    <th style="width:35%;">因應策略</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>無跨 Session 記憶</strong></td>
+                    <td>每次新對話完全從零開始，是最大摩擦點</td>
+                    <td>用 Context Files + Global Instructions 彌補</td>
+                </tr>
+                <tr>
+                    <td><strong>關閉 App 任務中斷</strong></td>
+                    <td>Cowork 在桌面 App 中運行，關閉即停止</td>
+                    <td>用睡眠模式代替關閉視窗；session 可存活睡眠</td>
+                </tr>
+                <tr>
+                    <td><strong>用量消耗快</strong></td>
+                    <td>複雜任務比普通聊天消耗更多配額</td>
+                    <td>監控 Settings &gt; Usage；重度使用者考慮 Max 方案</td>
+                </tr>
+                <tr>
+                    <td><strong>僅限桌面</strong></td>
+                    <td>無手機版、無瀏覽器版、無跨裝置同步</td>
+                    <td>Context files 放在 iCloud/Dropbox 等雲端同步資料夾</td>
+                </tr>
+                <tr>
+                    <td><strong>不能生成圖片</strong></td>
+                    <td>文件、試算表、簡報可以，圖片不行</td>
+                    <td>圖片用 Gemini Imagen，文件用 Cowork</td>
+                </tr>
+                <tr>
+                    <td><strong>Research Preview</strong></td>
+                    <td>Agent 安全性仍在開發中</td>
+                    <td>開啟刪除保護；敏感檔案讓 Claude 先確認再執行</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-</div>
+
 <!-- Key Takeaways -->
 <div class="section-header">Key Takeaways</div>
 <div class="takeaways-grid">
-<div class="summary-card">
-<div class="card-title">Context &gt; Prompts</div>
-<div class="card-text">最核心的思維轉換：停止優化 Prompt，開始投資 Context Files。三個 .md 檔案（about-me、brand-voice、working-style）就是你的 AI 協作基礎。這些檔案會隨時間複利累積。</div>
+    <div class="summary-card">
+        <div class="card-title">Context &gt; Prompts</div>
+        <div class="card-text">最核心的思維轉換：停止優化 Prompt，開始投資 Context Files。三個 .md 檔案（about-me、brand-voice、working-style）就是你的 AI 協作基礎。這些檔案會隨時間複利累積。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="card-title">五大功能的優先順序</div>
+        <div class="card-text">File System Access 是基礎中的基礎（消除上傳/下載循環），AskUserQuestion 改變互動模式（從猜測到釐清），Plugins 實現專業化，Instructions 建立持久記憶，Connectors 串接即時資料。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="card-title">30 分鐘設定投資</div>
+        <div class="card-text">文章提供了明確的 30 分鐘設定流程：安裝（5min）&rarr; Context Files（5min）&rarr; Global Instructions（5min）&rarr; 第一個任務（5min）&rarr; Plugin（5min）&rarr; Connector（5min）。一次性投資，每個 session 回報。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="card-title">誠實的限制認知</div>
+        <div class="card-text">無跨 session 記憶是最大痛點（用 Context Files 彌補）。桌面限定、用量消耗快、仍是 Research Preview。知道限制才能在對的地方用對的工具。</div>
+    </div>
 </div>
-<div class="summary-card" style="border-left-color: #10b981;">
-<div class="card-title">五大功能的優先順序</div>
-<div class="card-text">File System Access 是基礎中的基礎（消除上傳/下載循環），AskUserQuestion 改變互動模式（從猜測到釐清），Plugins 實現專業化，Instructions 建立持久記憶，Connectors 串接即時資料。</div>
-</div>
-<div class="summary-card" style="border-left-color: #8b5cf6;">
-<div class="card-title">30 分鐘設定投資</div>
-<div class="card-text">文章提供了明確的 30 分鐘設定流程：安裝（5min）→ Context Files（5min）→ Global Instructions（5min）→ 第一個任務（5min）→ Plugin（5min）→ Connector（5min）。一次性投資，每個 session 回報。</div>
-</div>
-<div class="summary-card" style="border-left-color: #f59e0b;">
-<div class="card-title">誠實的限制認知</div>
-<div class="card-text">無跨 session 記憶是最大痛點（用 Context Files 彌補）。桌面限定、用量消耗快、仍是 Research Preview。知道限制才能在對的地方用對的工具。</div>
-</div>
-</div>
+
 <!-- Practice Questions -->
 <div class="section-header">Practice Questions</div>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">Nav Toor 說「ChatGPT trained you to write better prompts, Cowork trains you to build better context」。這兩種思維模式在實際工作中的差異是什麼？為什麼 Context 會「compound」而 Prompts 會「depreciate」？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>Prompt 思維</strong>：每次任務都從零開始設計指令。你花 10 分鐘寫一個精巧的 Prompt，用完就丟。下次類似任務，你又重新寫。技能本身也會隨著模型進化而貶值——今天需要精心設計的 Chain-of-Thought，明天模型可能自動就做到了。</p>
-<p><strong>Context 思維</strong>：你一次投資建立 Context Files（個人資料、品牌聲音、工作風格），每個 session 自動載入。每週迭代改進這些檔案，Claude 的輸出品質就持續提升。這些資產不會因為模型升級而失效——相反，更好的模型能更好地利用你的 Context。</p>
-<p>用製藥類比：Prompt 像是每批產品重新調配的手動參數；Context Files 像是經過驗證的 Master Batch Record，持續使用、持續改善、跨批次有效。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">Nav Toor 說「ChatGPT trained you to write better prompts, Cowork trains you to build better context」。這兩種思維模式在實際工作中的差異是什麼？為什麼 Context 會「compound」而 Prompts 會「depreciate」？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>Prompt 思維</strong>：每次任務都從零開始設計指令。你花 10 分鐘寫一個精巧的 Prompt，用完就丟。下次類似任務，你又重新寫。技能本身也會隨著模型進化而貶值——今天需要精心設計的 Chain-of-Thought，明天模型可能自動就做到了。</p>
+        <p><strong>Context 思維</strong>：你一次投資建立 Context Files（個人資料、品牌聲音、工作風格），每個 session 自動載入。每週迭代改進這些檔案，Claude 的輸出品質就持續提升。這些資產不會因為模型升級而失效——相反，更好的模型能更好地利用你的 Context。</p>
+        <p>用製藥類比：Prompt 像是每批產品重新調配的手動參數；Context Files 像是經過驗證的 Master Batch Record，持續使用、持續改善、跨批次有效。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要在 CDMO 環境中導入 Cowork，File System Access 和 AskUserQuestion 分別對應哪些 GMP 合規需求？哪些場景適合「copilot mode」vs 哪些需要完全人工審查？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>File System Access 在 CDMO 中的對應：</strong>Cowork 直接讀寫本地檔案的能力，在 GMP 環境下需要謹慎處理。21 CFR Part 11 要求所有電子紀錄有 audit trail。Cowork 目前沒有內建 audit trail，所以它適合<strong>非 GMP 文件</strong>（草稿、分析、培訓材料）但不適合直接操作受控文件（Batch Records、SOPs）。</p>
-<p><strong>AskUserQuestion 的合規價值：</strong>在受管制環境中，「AI 猜測後給出自信但錯誤的答案」是巨大風險。AskUserQuestion 的「先問再做」模式天然符合 ALCOA+ 的 Attributable 原則——每個決策都有明確的人類輸入。這是 copilot mode 的具體實現。</p>
-<p><strong>適用場景分級：</strong>Campaign Report 草稿、訓練材料 → Cowork 可直接產出（copilot）。CoA、Batch Record 摘要 → Cowork 草稿 + 人工逐行審查。偏差調查、CAPA → 人工主導，Cowork 僅做資料搜集。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">如果你要在 CDMO 環境中導入 Cowork，File System Access 和 AskUserQuestion 分別對應哪些 GMP 合規需求？哪些場景適合「copilot mode」vs 哪些需要完全人工審查？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>File System Access 在 CDMO 中的對應：</strong>Cowork 直接讀寫本地檔案的能力，在 GMP 環境下需要謹慎處理。21 CFR Part 11 要求所有電子紀錄有 audit trail。Cowork 目前沒有內建 audit trail，所以它適合<strong>非 GMP 文件</strong>（草稿、分析、培訓材料）但不適合直接操作受控文件（Batch Records、SOPs）。</p>
+        <p><strong>AskUserQuestion 的合規價值：</strong>在受管制環境中，「AI 猜測後給出自信但錯誤的答案」是巨大風險。AskUserQuestion 的「先問再做」模式天然符合 ALCOA+ 的 Attributable 原則——每個決策都有明確的人類輸入。這是 copilot mode 的具體實現。</p>
+        <p><strong>適用場景分級：</strong>Campaign Report 草稿、訓練材料 &rarr; Cowork 可直接產出（copilot）。CoA、Batch Record 摘要 &rarr; Cowork 草稿 + 人工逐行審查。偏差調查、CAPA &rarr; 人工主導，Cowork 僅做資料搜集。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">Nav Toor 將 Cowork 定位為「知識工作者的 Claude Code」。但他的文章缺少了什麼重要視角？你會如何用你的「2-3x discount principle」和「Removal Test」評估這篇文章的宣稱？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>文章缺少的視角：</strong></p>
-<p>1. <strong>成本效益量化</strong>：Nav Toor 說「60% 的知識工作」由 Cowork 完成，但沒有具體數據。每月 $20-200 的成本對應多少小時的節省？ROI 是多少？</p>
-<p>2. <strong>安全性深度</strong>：文章輕描淡寫「Research Preview」，但 Cowork 能讀寫你的本地檔案系統，這在企業環境中是重大資安考量。</p>
-<p>3. <strong>競品比較</strong>：完全沒提到 ChatGPT Desktop、Gemini、Copilot 等競品的對應功能。</p>
-<p><strong>2-3x Discount 應用：</strong>Nav Toor 說 Cowork「改變了他的工作方式」——打 2-3 折後，合理預期是「顯著改善了特定任務的效率」。Thomson Reuters 下跌 16% 的數據需要驗證——市場波動可能有其他因素。</p>
-<p><strong>Removal Test：</strong>如果明天 Cowork 消失，Context Files 策略仍然有效（可以用在 Claude Projects、ChatGPT Custom Instructions 等）。AskUserQuestion 的「先問再做」思維也是可移植的。Plugins 則高度綁定 Anthropic 生態系。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">Nav Toor 將 Cowork 定位為「知識工作者的 Claude Code」。但他的文章缺少了什麼重要視角？你會如何用你的「2-3x discount principle」和「Removal Test」評估這篇文章的宣稱？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>文章缺少的視角：</strong></p>
+        <p>1. <strong>成本效益量化</strong>：Nav Toor 說「60% 的知識工作」由 Cowork 完成，但沒有具體數據。每月 $20-200 的成本對應多少小時的節省？ROI 是多少？</p>
+        <p>2. <strong>安全性深度</strong>：文章輕描淡寫「Research Preview」，但 Cowork 能讀寫你的本地檔案系統，這在企業環境中是重大資安考量。</p>
+        <p>3. <strong>競品比較</strong>：完全沒提到 ChatGPT Desktop、Gemini、Copilot 等競品的對應功能。</p>
+        <p><strong>2-3x Discount 應用：</strong>Nav Toor 說 Cowork「改變了他的工作方式」——打 2-3 折後，合理預期是「顯著改善了特定任務的效率」。Thomson Reuters 下跌 16% 的數據需要驗證——市場波動可能有其他因素。</p>
+        <p><strong>Removal Test：</strong>如果明天 Cowork 消失，Context Files 策略仍然有效（可以用在 Claude Projects、ChatGPT Custom Instructions 等）。AskUserQuestion 的「先問再做」思維也是可移植的。Plugins 則高度綁定 Anthropic 生態系。</p>
+    </div>
 </details>
+
 <!-- Bottom Line -->
 <div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Cowork 的核心價值不在任何單一功能，而在「Context Files + Instructions + AskUserQuestion」這三者組合形成的<strong>可累積系統</strong>。這與我一直強調的 Context Engineering 趨勢完全一致。我目前在 Claude Projects 中已經建立了類似的 Project Knowledge 系統——Cowork 的 File System Access 是這個系統的本地端延伸。最值得注意的思維轉換：從「寫更好的 Prompt」到「建立更好的 Context」，這不是 Cowork 獨有的洞察，而是整個 AI 使用方式進化的方向。</div>
+    <div class="bottom-line-header">&#127919; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#10004; 核心洞察</div>
+        <div class="bottom-line-text">Cowork 的核心價值不在任何單一功能，而在「Context Files + Instructions + AskUserQuestion」這三者組合形成的<strong>可累積系統</strong>。這與我一直強調的 Context Engineering 趨勢完全一致。我目前在 Claude Projects 中已經建立了類似的 Project Knowledge 系統——Cowork 的 File System Access 是這個系統的本地端延伸。最值得注意的思維轉換：從「寫更好的 Prompt」到「建立更好的 Context」，這不是 Cowork 獨有的洞察，而是整個 AI 使用方式進化的方向。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#128200; 立即應用</div>
+        <div class="bottom-line-text">1. 這週建立三個 Context Files（about-me.md、brand-voice.md、working-style.md），即使暫時不用 Cowork，這些檔案也可以直接作為 Claude Projects 的 Project Knowledge 補充。2. 測試 AskUserQuestion 模式：在下一個複雜任務中，先加上「DO NOT start yet, ask clarifying questions first」，觀察輸出品質的差異。3. 評估 Cowork 在 CDMO 非 GMP 文件（培訓材料、Campaign Report 草稿）的適用性。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#9888; 需要補充</div>
+        <div class="bottom-line-text">文章是典型的「功能介紹 + 設定教學」，缺少對以下面向的深入分析：(1) 企業資安——Cowork 的 File System Access 在受管制環境中的風險評估；(2) 與 Claude Code 的功能重疊和差異化定位；(3) 競品比較（特別是 ChatGPT Desktop 和 Microsoft Copilot）。此外，Plugins 的生態系統仍在早期，實際功能深度需要親自測試才能判斷。建議三個月後 Plugins 生態更成熟時重新評估。</div>
+    </div>
 </div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">1. 這週建立三個 Context Files（about-me.md、brand-voice.md、working-style.md），即使暫時不用 Cowork，這些檔案也可以直接作為 Claude Projects 的 Project Knowledge 補充。2. 測試 AskUserQuestion 模式：在下一個複雜任務中，先加上「DO NOT start yet, ask clarifying questions first」，觀察輸出品質的差異。3. 評估 Cowork 在 CDMO 非 GMP 文件（培訓材料、Campaign Report 草稿）的適用性。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章是典型的「功能介紹 + 設定教學」，缺少對以下面向的深入分析：(1) 企業資安——Cowork 的 File System Access 在受管制環境中的風險評估；(2) 與 Claude Code 的功能重疊和差異化定位；(3) 競品比較（特別是 ChatGPT Desktop 和 Microsoft Copilot）。此外，Plugins 的生態系統仍在早期，實際功能深度需要親自測試才能判斷。建議三個月後 Plugins 生態更成熟時重新評估。</div>
-</div>
-</div>
+
 <!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-02-27 | AI Expert Learning System v1.4.3</p>
-<p>Source: Nav Toor (@heynavtoor) - <a href="https://x.com/heynavtoor" target="_blank">Original Thread</a></p>
-<p>Suggested Chat Title: <strong>2026-02-27 [Tool] Cowork - Setup Guide Nav Toor</strong></p>
-<p>Suggested File: <strong>2026-02-27_claude-cowork-setup.html</strong></p>
-</footer>
+<div class="footer">
+    <p>製作日期：2026-02-27 | AI Expert Learning System v1.4.3</p>
+    <p>Source: Nav Toor (@heynavtoor) - <a href="https://x.com/heynavtoor" target="_blank">Original Thread</a></p>
+    <p>Suggested Chat Title: <strong>2026-02-27 [Tool] Cowork - Setup Guide Nav Toor</strong></p>
+    <p>Suggested File: <strong>2026-02-27_claude-cowork-setup.html</strong></p>
+</div>
+
 </div><!-- end container -->
 </body>
 </html>
-
-
+</body>
+</html>

@@ -1,203 +1,544 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2026-02-11" name="doc-date"/>
-<meta content="OpenClaw 安全強化完整指南 - 三層防護實作" name="doc-title"/>
-<meta content="Wyndo &amp; Fernando Lucktemberg / Next Kick Labs" name="doc-source"/>
-<meta content="Security,Agent,Tool" name="doc-tags"/>
-<meta content="4.2" name="doc-rating"/>
-<meta content="OpenClaw安全強化三層防護實作指南，涵蓋MCP Server權限控制、API Key分級管理與Allowlist思維" name="doc-summary"/>
-<meta content="2026-02-11_openclaw-security-hardening.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>OpenClaw 安全強化完整指南 - 三層防護實作</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-11">
+    <meta name="doc-title" content="OpenClaw 安全強化完整指南 - 三層防護實作">
+    <meta name="doc-source" content="Wyndo & Fernando Lucktemberg / Next Kick Labs">
+    <meta name="doc-tags" content="Security,Agent,Tool">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="OpenClaw安全強化三層防護實作指南，涵蓋MCP Server權限控制、API Key分級管理與Allowlist思維">
+    <meta name="doc-file" content="2026-02-11_openclaw-security-hardening.html">
+    <title>OpenClaw 安全強化完整指南 - 三層防護實作</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
+            --green: #047857;
+            --green-light: #10b981;
+            --orange: #f59e0b;
+            --red: #dc2626;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-500: #64748b;
+            --gray-700: #334155;
+            --gray-900: #0f172a;
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-700);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d1b69 50%, #1e3a5f 100%);
+            color: white;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.4; }
+        .header .subtitle { font-size: 0.95rem; opacity: 0.85; margin-bottom: 1rem; }
+        .tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.2rem 0.7rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; }
+        .tag-security { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-api { background: #ddd6fe; color: #4c1d95; }
+        .source-info { font-size: 0.8rem; opacity: 0.7; }
+        .source-info a { color: #93c5fd; text-decoration: none; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .exec-summary h2 { font-size: 1.15rem; color: var(--primary); margin-bottom: 1rem; }
+        .exec-summary p { margin-bottom: 0.75rem; line-height: 1.8; }
+
+        /* Learning Objectives */
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .objective-item {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary-light);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .objective-item h3 { font-size: 0.9rem; color: var(--primary); margin-bottom: 0.3rem; }
+        .objective-item p { font-size: 0.85rem; color: var(--gray-500); }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 0 0 2rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 140px; flex: 1; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; display: flex; align-items: center; padding-top: 0.5rem; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        /* Tab Navigation */
+        .tab-container { margin: 1.5rem 0; }
+        .tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tab-btn { flex: 1; padding: 0.75rem 0.75rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; min-width: 120px; }
+        .tab-btn:hover { color: #334155; }
+        .tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .content-left {
+            padding: 1.5rem;
+            border-right: 1px solid var(--gray-200);
+        }
+        .content-right {
+            padding: 1.5rem;
+            background: var(--gray-50);
+        }
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-grid.linear .content-left { border-right: none; }
+
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; border-bottom: 1px solid var(--gray-200); }
+        }
+
+        /* Part Header */
+        .part-header {
+            background: linear-gradient(135deg, #1e3a5f, #2d4a7c);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            font-weight: 700;
+            font-size: 1rem;
+            grid-column: 1 / -1;
+        }
+
+        /* Bilingual Block */
+        .bilingual-block { margin-bottom: 1rem; }
+        .bilingual-block .zh { color: var(--gray-900); line-height: 1.8; margin-bottom: 0.3rem; }
+        .bilingual-block .en { color: var(--gray-500); font-style: italic; font-size: 0.9rem; line-height: 1.6; }
+
+        /* Highlights */
+        .hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .hl-warning { background: #fecaca; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.5rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 0.75rem; font-size: 0.88rem; line-height: 1.7; }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+        .box-warning .info-box-header { background: #fecaca; color: #991b1b; }
+        .box-warning .info-box-content { background: #fef2f2; border: 1px solid #fca5a5; border-top: none; }
+
+        /* Code Blocks */
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Source Code Pro', monospace;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            margin: 0.5rem 0;
+        }
+        code {
+            font-family: 'Source Code Pro', monospace;
+            background: #e2e8f0;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+        pre code { background: none; padding: 0; color: #e2e8f0; }
+        .code-comment { color: #94a3b8; }
+        .code-keyword { color: #93c5fd; }
+        .code-string { color: #86efac; }
+        .code-important { color: #fca5a5; }
+
+        /* Key Takeaways */
+        .takeaways-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .summary-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary-light);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: var(--green-light); }
+        .summary-card:nth-child(3) { border-left-color: var(--accent); }
+        .summary-card:nth-child(4) { border-left-color: var(--orange); }
+        .summary-card h4 { font-size: 0.9rem; color: var(--gray-900); margin-bottom: 0.4rem; }
+        .summary-card p { font-size: 0.85rem; color: var(--gray-500); line-height: 1.6; }
+
+        /* Accordion (Practice) */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin: 2rem 0; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--gray-500);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--gray-200);
+            margin-top: 2rem;
+        }
+        .footer a { color: var(--primary-light); text-decoration: none; }
+
+        /* Comparison Table */
+        .compare-table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 0.85rem; }
+        .compare-table th { background: var(--primary); color: white; padding: 0.5rem; text-align: left; font-size: 0.8rem; }
+        .compare-table td { padding: 0.5rem; border-bottom: 1px solid var(--gray-200); }
+        .compare-table tr:nth-child(even) { background: var(--gray-50); }
+
+        /* NEVER list */
+        .never-list { background: #fef2f2; border: 2px solid #fca5a5; border-radius: 0.75rem; padding: 1.25rem; margin: 1rem 0; }
+        .never-list h4 { color: #991b1b; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .never-list p { font-size: 0.88rem; color: #7f1d1d; line-height: 1.7; }
+
+        /* Tier Badge */
+        .tier-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+        }
+        .tier-1 { background: #10b981; }
+        .tier-2 { background: #3b82f6; }
+        .tier-3 { background: #7c3aed; }
+
+        /* Step Badge */
+        .step-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.8rem;
+            height: 1.8rem;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .step-title {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.95rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        /* Utility */
+        ul.clean { list-style: none; padding: 0; }
+        ul.clean li { padding: 0.25rem 0; font-size: 0.88rem; }
+        ul.clean li::before { content: ""; display: inline-block; width: 6px; height: 6px; background: var(--primary-light); border-radius: 50%; margin-right: 0.5rem; vertical-align: middle; }
+    </style>
 </head>
 <body>
 <div class="container">
-<!-- HEADER -->
-<header class="header">
-<div class="tags">
-<span class="tag tag-security">Security</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-automation">Automation</span>
-</div>
-<h1>How to Harden OpenClaw Security:<br/>Complete 3-Tier Implementation Guide</h1>
-<p class="subtitle">OpenClaw 安全強化完整指南：從基本隔離到深度防禦的漸進式實作</p>
-<p class="source-info">Source: Wyndo &amp; Fernando Lucktemberg | Feb 10, 2026 | <a href="#">Next Kick Labs</a></p>
-</header>
-<!-- EXECUTIVE SUMMARY -->
-<div class="exec-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
-<span class="rating-high">↑ 實務應用, 技術深度</span>
-<span class="rating-low">↓ 工具生態, 學習曲線</span>
-</div>
-<p>這篇文章是 OpenClaw（前身 ClawdBot）安全強化的完整實作指南，由 AI 安全專家 Fernando Lucktemberg 撰寫。文章的核心前提是<span class="highlight-key">「警告無法阻止採用」</span>（Harm Reduction，危害減少策略）：既然人們已經在使用 OpenClaw，與其說「不要用」，不如教他們如何安全地用。</p>
-<p>指南採用<span class="highlight-concept">三層漸進式防護架構</span>：Tier 1（基本隔離，3-4 小時）、Tier 2（主動監控，+2 小時）、Tier 3（深度防禦，+2-3 小時），涵蓋 32 個步驟，從 VPS 隔離、Tailscale VPN、防火牆、認證加密、到 Docker/Podman 容器化、LiteLLM 代理、Squid 網路出口過濾等。每個步驟都附有可複製的指令和驗證程序。</p>
-<p>文章同時提供手動部署和 <span class="highlight-practical">Ansible Playbook 自動化部署</span>兩條路徑（手動 7-9 小時 vs 自動 15-30 分鐘），並坦承即使 Tier 3 也無法防禦 Prompt Injection 和供應鏈攻擊這兩個<span class="hl-warning">根本性弱點</span>。</p>
-</div>
-<!-- LEARNING OBJECTIVES -->
-<h2 class="section-header">Learning Objectives</h2>
-<div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">🛡</div>
-<h3>三層安全架構</h3>
-<p>理解 Tier 1/2/3 的漸進式防護邏輯，以及每層的成本效益比</p>
-</div>
-<div class="objective-item" style="border-left-color: #10b981;">
-<div class="objective-icon">📦</div>
-<h3>容器化隔離模式</h3>
-<p>掌握 Docker/Podman + LiteLLM + Squid 的三容器網路隔離架構</p>
-</div>
-<div class="objective-item" style="border-left-color: #7c3aed;">
-<div class="objective-icon">🔒</div>
-<h3>Allowlist vs Denylist 思維</h3>
-<p>從根本理解「預設拒絕」的安全原則如何應用於命令、網域、工具</p>
-</div>
-<div class="objective-item" style="border-left-color: #f59e0b;">
-<div class="objective-icon">🔧</div>
-<h3>Harm Reduction 框架</h3>
-<p>學習「危害減少」策略在 AI Agent 安全中的實際應用思維</p>
-</div>
-</div>
-<!-- FRAMEWORK VISUAL -->
-<div class="framework-visual">
-<div class="framework-title">OpenClaw 三層漸進式安全強化架構</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">🛡</div>
-<div class="framework-step-title">Tier 1: Basic</div>
-<div class="framework-step-desc">VPS 隔離 + 防火牆 + Tailscale + 認證加密<br/><small>Steps 1-14 | 3-4 hrs</small></div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔍</div>
-<div class="framework-step-title">Tier 2: Standard</div>
-<div class="framework-step-desc">Allowlisting + MCP 安全 + 監控腳本 + 月維護<br/><small>Steps 15-19 | +2 hrs</small></div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🏰</div>
-<div class="framework-step-title">Tier 3: Advanced</div>
-<div class="framework-step-desc">容器沙箱 + LiteLLM + Squid + 事件回應<br/><small>Steps 20-32 | +2-3 hrs</small></div>
-</div>
-</div>
-</div>
-<!-- CONTENT SECTIONS (Tabbed) -->
-<h2 class="section-header">Content</h2>
-<div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-context')">Context &amp; NEVER List</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-tier1')">Tier 1: Basic</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-tier2')">Tier 2: Standard</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-tier3')">Tier 3: Advanced</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-arch')">Architecture &amp; Response</button>
-</div>
-<!-- TAB: CONTEXT -->
-<div class="tab-content active" id="tab-context">
-<div class="content-grid">
-<div class="part-header">Part I: 為什麼需要這篇指南</div>
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">Wyndo 在前一篇文章介紹了 OpenClaw 的爆紅現象和基本安全建議，但他坦承<span class="highlight-key">沒有展示如何真正做到端對端的安全強化</span>。他自己每天都在使用 OpenClaw 的三個 Agent（Morty、Goggins、Pepper Potts），其中 Pepper Potts 已經改變了他的工作方式——早上委派任務，Agent 自主運行，晚上回顧成果。</p>
-<p class="en-text">"Pepper Potts especially has changed how I work. I delegate tasks to it in the morning. It runs its own workflow while I run mine. I review its work at the end of the day and move projects forward."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">正因為 OpenClaw 如此強大——它能存取你的 API Key、應用程式、檔案——<span class="hl-warning">安全問題才如此重要</span>。預設情況下，這些敏感資訊以明文儲存在伺服器上。</p>
-<p class="en-text">"OpenClaw is powerful precisely because it has access to a lot. Your API keys. Your apps. Your files. And by default, some of that sits in plain text on whatever server you're running it on."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p>想像你請了一位超級能幹的助理，但給了他你家的所有鑰匙、銀行密碼、和公司門禁卡。這位助理確實能幫你做很多事，但如果他被騙了（Prompt Injection），或者有人偷了他的通行證（Credential Leak），後果就不只是「助理出錯」，而是「你的整個數位生活被攤開」。這篇指南就是在教你：既然決定請這位助理，至少要分配不同的鑰匙給不同的任務，而且絕對不能給他銀行密碼。</p>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 Harm Reduction 危害減少策略</div>
-<div class="info-box-content">
-<p>Fernando 用了一個精準的比喻：<strong>「我知道這像在教人更安全地玩電鋸雜耍，而正確答案是『不要玩電鋸雜耍』。但他們已經在玩了。至少現在他們可能會戴手套。」</strong></p>
-<p>這反映了一個重要的安全現實：<span class="highlight-concept">理想安全建議 vs 實際採用行為</span>之間的落差。純粹的「不要用」建議在技術社群中往往無效。</p>
-</div>
-</div>
-</div>
-</div>
-<div class="content-grid">
-<div class="part-header">Part II: NEVER 清單與可接受連線</div>
-<div class="content-left">
-<div class="never-list">
-<h4>⛔ 絕對不可連接 OpenClaw 的服務</h4>
-<p>無論安全做得多好，以下帳號<strong>永遠不應連接</strong>：主要電子郵件、銀行/金融服務、密碼管理器（1Password/Bitwarden）、工作帳號（Slack、Google Workspace）、不可替代歷史的社群媒體、加密貨幣錢包、政府/醫療入口、主要 GitHub 帳號。</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">判斷規則很簡單：<span class="highlight-key">連接到 OpenClaw 的每個帳號，都應該是你失去了也不會有重大影響的帳號。</span></p>
-<p class="en-text">"The rule: Every account connected to OpenClaw should be one you could lose without significant impact."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 可接受的連線（僅限專用 Burner 帳號）</div>
-<div class="info-box-content">
-<ul class="clean">
-<li>專為 OpenClaw 通知建立的 Gmail</li>
-<li>Telegram Bot 帳號（非個人 Telegram）</li>
-<li>專用於 AI 排程的行事曆</li>
-<li>RSS 和新聞聚合器</li>
-<li>僅用於測試倉庫的 GitHub 帳號</li>
-<li>任何你能在一小時內重建的低風險服務</li>
-</ul>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 不可修復的限制</div>
-<div class="info-box-content">
-<p><strong>Prompt Injection</strong>：惡意電子郵件或文件可以操控 OpenClaw 執行指令。研究者 Matvey Kukuy 用一封精心設計的郵件在五分鐘內攻破了一個實例。</p>
-<p><strong>Supply Chain Attack</strong>：ClawdHub（技能註冊表）聲明「所有下載的程式碼都被視為受信任的程式碼——目前沒有審核流程。」</p>
-</div>
-</div>
-</div>
-</div>
-</div><!-- end tab-context -->
-<!-- TAB: TIER 1 -->
-<div class="tab-content" id="tab-tier1">
-<div class="content-grid">
-<div class="part-header"><span class="tier-badge tier-1">Tier 1</span>  Part III: 基本防護 — 最低可行安全（Steps 1-14）</div>
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">Tier 1 是<span class="highlight-key">每個人的必修</span>。沒有「跳過基礎直接學進階」的選項。Tier 1 建立了所有後續步驟依賴的基礎隔離和設定。如果你跳過 Tier 1 的步驟，你運行的不是「強化過的 OpenClaw」，而是「有額外功能的暴露 OpenClaw」。</p>
-<p class="en-text">"Everyone must complete Tier 1. There is no 'I'll skip the basics and jump to advanced' option."</p>
-</div>
-<div class="step-title"><span class="step-badge">1</span>設置隔離 VPS</div>
-<div class="bilingual-block">
-<p class="zh-text"><span class="highlight-concept">物理隔離</span>確保即使被攻破也不會蔓延到你的主機。建立專用的非 root 使用者、啟用 SSH 金鑰認證、關閉 root 登入和密碼認證。推薦 Hetzner CX23（月費 $3.49）。</p>
-<p class="en-text">"Physical isolation ensures compromise doesn't spread to your primary computer."</p>
-</div>
-<div class="step-title"><span class="step-badge">2</span>設定防火牆</div>
-<div class="bilingual-block">
-<p class="zh-text">預設拒絕所有入站流量。<span class="hl-warning">絕對不要</span>開放 port 18789 給公網。只允許 SSH（port 22）。</p>
-<p class="en-text">"Deny all incoming by default. Never open port 18789 publicly."</p>
-</div>
-<div class="step-title"><span class="step-badge">3</span>安裝 Tailscale</div>
-<div class="bilingual-block">
-<p class="zh-text">安全、加密的遠端存取，不需要暴露任何埠。所有存取都透過 Tailscale VPN 的 100.x.x.x 地址。</p>
-<p class="en-text">"Secure, encrypted access without exposing ports to the internet."</p>
-</div>
-<div class="step-title"><span class="step-badge">7</span>設定 Gateway（關鍵安全設定）</div>
-<div class="bilingual-block">
-<p class="zh-text">三個絕對規則：<span class="highlight-key">host 永遠是 127.0.0.1</span>（不是 0.0.0.0）、<span class="highlight-key">dangerouslyDisableDeviceAuth 永遠是 false</span>、<span class="highlight-key">mDNS 永遠關閉</span>。trustedProxies 必須包含 Tailscale 的 100.64.0.0/10 範圍。</p>
-<p class="en-text">"host: '127.0.0.1': Only accept connections from localhost. 0.0.0.0 would expose to all interfaces including public internet."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-code">
-<div class="info-box-header">💻 Gateway 設定（gateway.yaml）</div>
-<div class="info-box-content">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="tags">
+            <span class="tag tag-security">Security</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-automation">Automation</span>
+        </div>
+        <h1>How to Harden OpenClaw Security:<br>Complete 3-Tier Implementation Guide</h1>
+        <p class="subtitle">OpenClaw 安全強化完整指南：從基本隔離到深度防禦的漸進式實作</p>
+        <p class="source-info">Source: Wyndo & Fernando Lucktemberg | Feb 10, 2026 | <a href="#">Next Kick Labs</a></p>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-summary">
+        <h2>Executive Summary</h2>
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.2/5</span>
+            <span class="rating-high">&uarr; 實務應用, 技術深度</span>
+            <span class="rating-low">&darr; 工具生態, 學習曲線</span>
+        </div>
+        <p>這篇文章是 OpenClaw（前身 ClawdBot）安全強化的完整實作指南，由 AI 安全專家 Fernando Lucktemberg 撰寫。文章的核心前提是<span class="hl-key">「警告無法阻止採用」</span>（Harm Reduction，危害減少策略）：既然人們已經在使用 OpenClaw，與其說「不要用」，不如教他們如何安全地用。</p>
+        <p>指南採用<span class="hl-concept">三層漸進式防護架構</span>：Tier 1（基本隔離，3-4 小時）、Tier 2（主動監控，+2 小時）、Tier 3（深度防禦，+2-3 小時），涵蓋 32 個步驟，從 VPS 隔離、Tailscale VPN、防火牆、認證加密、到 Docker/Podman 容器化、LiteLLM 代理、Squid 網路出口過濾等。每個步驟都附有可複製的指令和驗證程序。</p>
+        <p>文章同時提供手動部署和 <span class="hl-practical">Ansible Playbook 自動化部署</span>兩條路徑（手動 7-9 小時 vs 自動 15-30 分鐘），並坦承即使 Tier 3 也無法防禦 Prompt Injection 和供應鏈攻擊這兩個<span class="hl-warning">根本性弱點</span>。</p>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <h2 class="section-header">Learning Objectives</h2>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">&#x1F6E1;</div>
+            <h3>三層安全架構</h3>
+            <p>理解 Tier 1/2/3 的漸進式防護邏輯，以及每層的成本效益比</p>
+        </div>
+        <div class="objective-item" style="border-left-color: #10b981;">
+            <div class="objective-icon">&#x1F4E6;</div>
+            <h3>容器化隔離模式</h3>
+            <p>掌握 Docker/Podman + LiteLLM + Squid 的三容器網路隔離架構</p>
+        </div>
+        <div class="objective-item" style="border-left-color: #7c3aed;">
+            <div class="objective-icon">&#x1F512;</div>
+            <h3>Allowlist vs Denylist 思維</h3>
+            <p>從根本理解「預設拒絕」的安全原則如何應用於命令、網域、工具</p>
+        </div>
+        <div class="objective-item" style="border-left-color: #f59e0b;">
+            <div class="objective-icon">&#x1F527;</div>
+            <h3>Harm Reduction 框架</h3>
+            <p>學習「危害減少」策略在 AI Agent 安全中的實際應用思維</p>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">OpenClaw 三層漸進式安全強化架構</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F6E1;</div>
+                <div class="framework-step-title">Tier 1: Basic</div>
+                <div class="framework-step-desc">VPS 隔離 + 防火牆 + Tailscale + 認證加密<br><small>Steps 1-14 | 3-4 hrs</small></div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F50D;</div>
+                <div class="framework-step-title">Tier 2: Standard</div>
+                <div class="framework-step-desc">Allowlisting + MCP 安全 + 監控腳本 + 月維護<br><small>Steps 15-19 | +2 hrs</small></div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F3F0;</div>
+                <div class="framework-step-title">Tier 3: Advanced</div>
+                <div class="framework-step-desc">容器沙箱 + LiteLLM + Squid + 事件回應<br><small>Steps 20-32 | +2-3 hrs</small></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENT SECTIONS (Tabbed) -->
+    <h2 class="section-header">Content</h2>
+
+    <div class="tab-container">
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-context')">Context & NEVER List</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-tier1')">Tier 1: Basic</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-tier2')">Tier 2: Standard</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-tier3')">Tier 3: Advanced</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-arch')">Architecture & Response</button>
+        </div>
+
+        <!-- TAB: CONTEXT -->
+        <div id="tab-context" class="tab-content active">
+
+            <div class="content-grid">
+                <div class="part-header">Part I: 為什麼需要這篇指南</div>
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh">Wyndo 在前一篇文章介紹了 OpenClaw 的爆紅現象和基本安全建議，但他坦承<span class="hl-key">沒有展示如何真正做到端對端的安全強化</span>。他自己每天都在使用 OpenClaw 的三個 Agent（Morty、Goggins、Pepper Potts），其中 Pepper Potts 已經改變了他的工作方式——早上委派任務，Agent 自主運行，晚上回顧成果。</p>
+                        <p class="en">"Pepper Potts especially has changed how I work. I delegate tasks to it in the morning. It runs its own workflow while I run mine. I review its work at the end of the day and move projects forward."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="zh">正因為 OpenClaw 如此強大——它能存取你的 API Key、應用程式、檔案——<span class="hl-warning">安全問題才如此重要</span>。預設情況下，這些敏感資訊以明文儲存在伺服器上。</p>
+                        <p class="en">"OpenClaw is powerful precisely because it has access to a lot. Your API keys. Your apps. Your files. And by default, some of that sits in plain text on whatever server you're running it on."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                        <div class="info-box-content">
+                            <p>想像你請了一位超級能幹的助理，但給了他你家的所有鑰匙、銀行密碼、和公司門禁卡。這位助理確實能幫你做很多事，但如果他被騙了（Prompt Injection），或者有人偷了他的通行證（Credential Leak），後果就不只是「助理出錯」，而是「你的整個數位生活被攤開」。這篇指南就是在教你：既然決定請這位助理，至少要分配不同的鑰匙給不同的任務，而且絕對不能給他銀行密碼。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">&#x1F4DA; Harm Reduction 危害減少策略</div>
+                        <div class="info-box-content">
+                            <p>Fernando 用了一個精準的比喻：<strong>「我知道這像在教人更安全地玩電鋸雜耍，而正確答案是『不要玩電鋸雜耍』。但他們已經在玩了。至少現在他們可能會戴手套。」</strong></p>
+                            <p>這反映了一個重要的安全現實：<span class="hl-concept">理想安全建議 vs 實際採用行為</span>之間的落差。純粹的「不要用」建議在技術社群中往往無效。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="part-header">Part II: NEVER 清單與可接受連線</div>
+                <div class="content-left">
+                    <div class="never-list">
+                        <h4>&#x26D4; 絕對不可連接 OpenClaw 的服務</h4>
+                        <p>無論安全做得多好，以下帳號<strong>永遠不應連接</strong>：主要電子郵件、銀行/金融服務、密碼管理器（1Password/Bitwarden）、工作帳號（Slack、Google Workspace）、不可替代歷史的社群媒體、加密貨幣錢包、政府/醫療入口、主要 GitHub 帳號。</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="zh">判斷規則很簡單：<span class="hl-key">連接到 OpenClaw 的每個帳號，都應該是你失去了也不會有重大影響的帳號。</span></p>
+                        <p class="en">"The rule: Every account connected to OpenClaw should be one you could lose without significant impact."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">&#x1F6E0;&#xFE0F; 可接受的連線（僅限專用 Burner 帳號）</div>
+                        <div class="info-box-content">
+                            <ul class="clean">
+                                <li>專為 OpenClaw 通知建立的 Gmail</li>
+                                <li>Telegram Bot 帳號（非個人 Telegram）</li>
+                                <li>專用於 AI 排程的行事曆</li>
+                                <li>RSS 和新聞聚合器</li>
+                                <li>僅用於測試倉庫的 GitHub 帳號</li>
+                                <li>任何你能在一小時內重建的低風險服務</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">&#x26A0;&#xFE0F; 不可修復的限制</div>
+                        <div class="info-box-content">
+                            <p><strong>Prompt Injection</strong>：惡意電子郵件或文件可以操控 OpenClaw 執行指令。研究者 Matvey Kukuy 用一封精心設計的郵件在五分鐘內攻破了一個實例。</p>
+                            <p><strong>Supply Chain Attack</strong>：ClawdHub（技能註冊表）聲明「所有下載的程式碼都被視為受信任的程式碼——目前沒有審核流程。」</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end tab-context -->
+
+        <!-- TAB: TIER 1 -->
+        <div id="tab-tier1" class="tab-content">
+
+            <div class="content-grid">
+                <div class="part-header"><span class="tier-badge tier-1">Tier 1</span>&nbsp; Part III: 基本防護 — 最低可行安全（Steps 1-14）</div>
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh">Tier 1 是<span class="hl-key">每個人的必修</span>。沒有「跳過基礎直接學進階」的選項。Tier 1 建立了所有後續步驟依賴的基礎隔離和設定。如果你跳過 Tier 1 的步驟，你運行的不是「強化過的 OpenClaw」，而是「有額外功能的暴露 OpenClaw」。</p>
+                        <p class="en">"Everyone must complete Tier 1. There is no 'I'll skip the basics and jump to advanced' option."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">1</span>設置隔離 VPS</div>
+                    <div class="bilingual-block">
+                        <p class="zh"><span class="hl-concept">物理隔離</span>確保即使被攻破也不會蔓延到你的主機。建立專用的非 root 使用者、啟用 SSH 金鑰認證、關閉 root 登入和密碼認證。推薦 Hetzner CX23（月費 $3.49）。</p>
+                        <p class="en">"Physical isolation ensures compromise doesn't spread to your primary computer."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">2</span>設定防火牆</div>
+                    <div class="bilingual-block">
+                        <p class="zh">預設拒絕所有入站流量。<span class="hl-warning">絕對不要</span>開放 port 18789 給公網。只允許 SSH（port 22）。</p>
+                        <p class="en">"Deny all incoming by default. Never open port 18789 publicly."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">3</span>安裝 Tailscale</div>
+                    <div class="bilingual-block">
+                        <p class="zh">安全、加密的遠端存取，不需要暴露任何埠。所有存取都透過 Tailscale VPN 的 100.x.x.x 地址。</p>
+                        <p class="en">"Secure, encrypted access without exposing ports to the internet."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">7</span>設定 Gateway（關鍵安全設定）</div>
+                    <div class="bilingual-block">
+                        <p class="zh">三個絕對規則：<span class="hl-key">host 永遠是 127.0.0.1</span>（不是 0.0.0.0）、<span class="hl-key">dangerouslyDisableDeviceAuth 永遠是 false</span>、<span class="hl-key">mDNS 永遠關閉</span>。trustedProxies 必須包含 Tailscale 的 100.64.0.0/10 範圍。</p>
+                        <p class="en">"host: '127.0.0.1': Only accept connections from localhost. 0.0.0.0 would expose to all interfaces including public internet."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-code">
+                        <div class="info-box-header">&#x1F4BB; Gateway 設定（gateway.yaml）</div>
+                        <div class="info-box-content">
 <pre><code>gateway:
   host: "127.0.0.1"  <span class="code-comment"># NEVER 0.0.0.0</span>
   port: 18789
@@ -211,11 +552,12 @@
 
 mdns:
   enabled: false</code></pre>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 檔案系統限制（tools.yaml）</div>
-<div class="info-box-content">
+                        </div>
+                    </div>
+
+                    <div class="info-box box-code">
+                        <div class="info-box-header">&#x1F4BB; 檔案系統限制（tools.yaml）</div>
+                        <div class="info-box-content">
 <pre><code>tools:
   filesystem:
     enabled: true
@@ -227,65 +569,74 @@ mdns:
       - "/home/OpenClaw/.clawdbot/credentials"
       - "/etc"
       - "/root"</code></pre>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ Step 9: 認證加密</div>
-<div class="info-box-content">
-<p>預設的明文儲存讓認證資訊容易成為竊密軟體的目標。提供兩個加密方案：<code>age</code>（輕量級）或 <code>pass</code>（GPG-based）。核心是啟動時解密、使用後清除明文。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ Tier 1 驗證</div>
-<div class="info-box-content">
+                        </div>
+                    </div>
+
+                    <div class="info-box box-key">
+                        <div class="info-box-header">&#x26A0;&#xFE0F; Step 9: 認證加密</div>
+                        <div class="info-box-content">
+                            <p>預設的明文儲存讓認證資訊容易成為竊密軟體的目標。提供兩個加密方案：<code>age</code>（輕量級）或 <code>pass</code>（GPG-based）。核心是啟動時解密、使用後清除明文。</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">&#x1F6E0;&#xFE0F; Tier 1 驗證</div>
+                        <div class="info-box-content">
 <pre><code><span class="code-comment"># 驗證只綁定 localhost</span>
 ss -tlnp | grep 18789
 <span class="code-comment"># 應顯示: 127.0.0.1:18789</span>
 <span class="code-comment"># 不應顯示: 0.0.0.0:18789</span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div><!-- end tab-tier1 -->
-<!-- TAB: TIER 2 -->
-<div class="tab-content" id="tab-tier2">
-<div class="content-grid">
-<div class="part-header"><span class="tier-badge tier-2">Tier 2</span>  Part IV: 標準防護 — 主動監控（Steps 15-19）</div>
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">Tier 2 是<span class="highlight-concept">大多數業餘使用者的甜蜜點</span>——在不需要成為安全工程師的前提下，提供堅實的安全防護。核心轉變是從 Denylist（黑名單）思維切換到 <span class="highlight-key">Allowlist（白名單）思維</span>。</p>
-<p class="en-text">"This is the sweet spot for most hobbyists."</p>
-</div>
-<div class="step-title"><span class="step-badge">15</span>工具白名單</div>
-<div class="bilingual-block">
-<p class="zh-text">黑名單失敗是因為攻擊者總能找到替代方案。白名單是窮舉的——<span class="highlight-key">如果沒有列出，就不能執行</span>。只允許 <code>ls</code>、<code>cat</code>、<code>grep</code> 等安全的唯讀命令。</p>
-<p class="en-text">"Denylists fail because attackers find alternatives. Allowlists are exhaustive."</p>
-</div>
-<div class="step-title"><span class="step-badge">16</span>MCP Server 安全設定</div>
-<div class="bilingual-block">
-<p class="zh-text">每個 MCP Server 都是以你 Agent 權限運行的程式碼。三條鐵律：<span class="hl-warning">絕不啟用 enableAllProjectMcpServers: true</span>、永遠版本鎖定（不用 "latest"）、永遠關閉 autoUpdate。禁用高風險 Server：filesystem、shell、ssh、docker。</p>
-<p class="en-text">"Each MCP server is code running with your agent's permissions. Never use 'enableAllProjectMcpServers: true'. Always version pin. Always set 'autoUpdate: false'. Only enable servers you explicitly need."</p>
-</div>
-<div class="step-title"><span class="step-badge">17</span>最小化 OAuth 範圍</div>
-<div class="bilingual-block">
-<p class="zh-text"><span class="highlight-practical">最小權限原則</span>：Gmail 用 readonly（不是 full）、GitHub 用 public_repo（不是 repo）。每月在 Google 和 GitHub 的權限頁面審查已連接的 OAuth 工作階段。</p>
-<p class="en-text">"Principle of least privilege. Only grant necessary permissions. Review connected OAuth sessions monthly."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ Denylist vs Allowlist</div>
-<div class="info-box-content">
-<table class="compare-table">
-<tr><th>方法</th><th>邏輯</th><th>弱點</th></tr>
-<tr><td><strong>Denylist</strong></td><td>封鎖已知危險</td><td>攻擊者用 wget, nc, python -c 繞過</td></tr>
-<tr><td><strong>Allowlist</strong></td><td>只允許已知安全</td><td>需要明確列出每個需要的命令</td></tr>
-</table>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 Allowlist 設定範例</div>
-<div class="info-box-content">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end tab-tier1 -->
+
+        <!-- TAB: TIER 2 -->
+        <div id="tab-tier2" class="tab-content">
+
+            <div class="content-grid">
+                <div class="part-header"><span class="tier-badge tier-2">Tier 2</span>&nbsp; Part IV: 標準防護 — 主動監控（Steps 15-19）</div>
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh">Tier 2 是<span class="hl-concept">大多數業餘使用者的甜蜜點</span>——在不需要成為安全工程師的前提下，提供堅實的安全防護。核心轉變是從 Denylist（黑名單）思維切換到 <span class="hl-key">Allowlist（白名單）思維</span>。</p>
+                        <p class="en">"This is the sweet spot for most hobbyists."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">15</span>工具白名單</div>
+                    <div class="bilingual-block">
+                        <p class="zh">黑名單失敗是因為攻擊者總能找到替代方案。白名單是窮舉的——<span class="hl-key">如果沒有列出，就不能執行</span>。只允許 <code>ls</code>、<code>cat</code>、<code>grep</code> 等安全的唯讀命令。</p>
+                        <p class="en">"Denylists fail because attackers find alternatives. Allowlists are exhaustive."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">16</span>MCP Server 安全設定</div>
+                    <div class="bilingual-block">
+                        <p class="zh">每個 MCP Server 都是以你 Agent 權限運行的程式碼。三條鐵律：<span class="hl-warning">絕不啟用 enableAllProjectMcpServers: true</span>、永遠版本鎖定（不用 "latest"）、永遠關閉 autoUpdate。禁用高風險 Server：filesystem、shell、ssh、docker。</p>
+                        <p class="en">"Each MCP server is code running with your agent's permissions. Never use 'enableAllProjectMcpServers: true'. Always version pin. Always set 'autoUpdate: false'. Only enable servers you explicitly need."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">17</span>最小化 OAuth 範圍</div>
+                    <div class="bilingual-block">
+                        <p class="zh"><span class="hl-practical">最小權限原則</span>：Gmail 用 readonly（不是 full）、GitHub 用 public_repo（不是 repo）。每月在 Google 和 GitHub 的權限頁面審查已連接的 OAuth 工作階段。</p>
+                        <p class="en">"Principle of least privilege. Only grant necessary permissions. Review connected OAuth sessions monthly."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-compare">
+                        <div class="info-box-header">&#x2696;&#xFE0F; Denylist vs Allowlist</div>
+                        <div class="info-box-content">
+                            <table class="compare-table">
+                                <tr><th>方法</th><th>邏輯</th><th>弱點</th></tr>
+                                <tr><td><strong>Denylist</strong></td><td>封鎖已知危險</td><td>攻擊者用 wget, nc, python -c 繞過</td></tr>
+                                <tr><td><strong>Allowlist</strong></td><td>只允許已知安全</td><td>需要明確列出每個需要的命令</td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-code">
+                        <div class="info-box-header">&#x1F4BB; Allowlist 設定範例</div>
+                        <div class="info-box-content">
 <pre><code>tools:
   shell:
     enabled: true
@@ -299,76 +650,86 @@ ss -tlnp | grep 18789
       - "find"
       - "wc"
       - "sort"</code></pre>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ Step 18: 自動化監控腳本</div>
-<div class="info-box-content">
-<p>建立 <code>check-OpenClaw-security.sh</code> 每週自動執行，檢查：</p>
-<ul class="clean">
-<li>Port 18789 是否暴露到公網</li>
-<li>Device Auth 是否被停用</li>
-<li>Session 日誌中是否有 Prompt Injection 模式（"IGNORE PREVIOUS", "NEW INSTRUCTIONS"）</li>
-<li>是否有危險命令被執行（rm -rf, curl, wget）</li>
-<li>Node.js 版本是否過舊</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div><!-- end tab-tier2 -->
-<!-- TAB: TIER 3 -->
-<div class="tab-content" id="tab-tier3">
-<div class="content-grid">
-<div class="part-header"><span class="tier-badge tier-3">Tier 3</span>  Part V: 深度防禦 — 容器沙箱架構（Steps 20-32）</div>
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">Tier 3 的核心是<span class="highlight-concept">容器級隔離</span>（Container-level Isolation）。Step 20 是整篇指南最重要的技術步驟：部署 OpenClaw + LiteLLM 在 Docker/Podman 沙箱中。</p>
-<p class="en-text">"Container-level isolation with LiteLLM as gateway. OpenClaw never talks directly to model providers."</p>
-</div>
-<div class="step-title"><span class="step-badge">20</span>Docker/Podman 沙箱部署</div>
-<div class="bilingual-block">
-<p class="zh-text">架構的精妙之處在於<span class="highlight-key">網路隔離設計</span>：OpenClaw 容器「完全沒有外部網路存取」，只能透過內部網路和 LiteLLM 通訊。LiteLLM 容器是唯一有外部 API 存取權的容器，負責注入真正的 API Key、速率限制和成本控制。OpenClaw 永遠看不到真正的 Anthropic API Key。</p>
-<p class="en-text">"OpenClaw container has no direct internet access. LiteLLM container is the only one with external API access. OpenClaw never sees real API keys."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>Podman (rootless) vs Docker</strong>：如果容器逃逸（Container Escape），Podman 下攻擊者只是一個非特權使用者；Docker 下攻擊者直接是 root。<span class="highlight-key">推薦使用 Podman（rootless）</span>。</p>
-<p class="en-text">"Podman (rootless) runs without a daemon and without root privileges. If an attacker escapes the container, they land as an unprivileged user."</p>
-</div>
-<div class="step-title"><span class="step-badge">29</span>Squid Proxy 網域白名單</div>
-<div class="bilingual-block">
-<p class="zh-text">即使 OpenClaw 被攻破，它也只能連接到明確允許的網域。Squid Proxy 容器介於 OpenClaw 和網際網路之間，執行<span class="highlight-concept">預設拒絕（deny-by-default）</span>的出口過濾。白名單只包含必要的服務（github.com、npmjs.org 等）。</p>
-<p class="en-text">"Network egress filtering prevents data exfiltration. Even if OpenClaw is compromised, it can only reach explicitly allowed domains."</p>
-</div>
-<div class="step-title"><span class="step-badge">30</span>細粒度 Exec Approvals</div>
-<div class="bilingual-block">
-<p class="zh-text">超越基本工具白名單，實現<span class="highlight-practical">每個 Agent 獨立的命令政策</span>。dev Agent 只能讀取檔案、files Agent 每個命令都需要手動核准、research Agent 可以 curl 但受 Squid 過濾。</p>
-<p class="en-text">"Goes beyond basic tool allowlisting with per-agent, per-command policies and approval workflows."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ Container Runtime 比較</div>
-<div class="info-box-content">
-<table class="compare-table">
-<tr><th>特性</th><th>Podman (rootless)</th><th>Docker (standard)</th></tr>
-<tr><td>容器逃逸後果</td><td>非特權使用者</td><td><span class="hl-warning">Root 權限</span></td></tr>
-<tr><td>守護程式</td><td>無</td><td>root 守護程式</td></tr>
-<tr><td>User Namespace</td><td>預設啟用</td><td>需手動配置</td></tr>
-<tr><td>攻擊面</td><td>較小</td><td>較大</td></tr>
-<tr><td>生態系統</td><td>較小</td><td>較大</td></tr>
-</table>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 LiteLLM Credential Brokering</div>
-<div class="info-box-content">
-<p>LiteLLM 作為<strong>認證代理</strong>的設計模式：OpenClaw 只知道 LiteLLM 的 Master Key（內部金鑰），LiteLLM 負責注入真正的 Anthropic API Key 後轉發請求。即使 OpenClaw 被攻破，真正的 API Key 不在其容器中，無法被竊取。這就是<span class="highlight-concept">Credential Brokering（認證代理）</span>模式。</p>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 三容器網路設計</div>
-<div class="info-box-content">
+                        </div>
+                    </div>
+
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">&#x1F6E0;&#xFE0F; Step 18: 自動化監控腳本</div>
+                        <div class="info-box-content">
+                            <p>建立 <code>check-OpenClaw-security.sh</code> 每週自動執行，檢查：</p>
+                            <ul class="clean">
+                                <li>Port 18789 是否暴露到公網</li>
+                                <li>Device Auth 是否被停用</li>
+                                <li>Session 日誌中是否有 Prompt Injection 模式（"IGNORE PREVIOUS", "NEW INSTRUCTIONS"）</li>
+                                <li>是否有危險命令被執行（rm -rf, curl, wget）</li>
+                                <li>Node.js 版本是否過舊</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end tab-tier2 -->
+
+        <!-- TAB: TIER 3 -->
+        <div id="tab-tier3" class="tab-content">
+
+            <div class="content-grid">
+                <div class="part-header"><span class="tier-badge tier-3">Tier 3</span>&nbsp; Part V: 深度防禦 — 容器沙箱架構（Steps 20-32）</div>
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh">Tier 3 的核心是<span class="hl-concept">容器級隔離</span>（Container-level Isolation）。Step 20 是整篇指南最重要的技術步驟：部署 OpenClaw + LiteLLM 在 Docker/Podman 沙箱中。</p>
+                        <p class="en">"Container-level isolation with LiteLLM as gateway. OpenClaw never talks directly to model providers."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">20</span>Docker/Podman 沙箱部署</div>
+                    <div class="bilingual-block">
+                        <p class="zh">架構的精妙之處在於<span class="hl-key">網路隔離設計</span>：OpenClaw 容器「完全沒有外部網路存取」，只能透過內部網路和 LiteLLM 通訊。LiteLLM 容器是唯一有外部 API 存取權的容器，負責注入真正的 API Key、速率限制和成本控制。OpenClaw 永遠看不到真正的 Anthropic API Key。</p>
+                        <p class="en">"OpenClaw container has no direct internet access. LiteLLM container is the only one with external API access. OpenClaw never sees real API keys."</p>
+                    </div>
+
+                    <div class="bilingual-block">
+                        <p class="zh"><strong>Podman (rootless) vs Docker</strong>：如果容器逃逸（Container Escape），Podman 下攻擊者只是一個非特權使用者；Docker 下攻擊者直接是 root。<span class="hl-key">推薦使用 Podman（rootless）</span>。</p>
+                        <p class="en">"Podman (rootless) runs without a daemon and without root privileges. If an attacker escapes the container, they land as an unprivileged user."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">29</span>Squid Proxy 網域白名單</div>
+                    <div class="bilingual-block">
+                        <p class="zh">即使 OpenClaw 被攻破，它也只能連接到明確允許的網域。Squid Proxy 容器介於 OpenClaw 和網際網路之間，執行<span class="hl-concept">預設拒絕（deny-by-default）</span>的出口過濾。白名單只包含必要的服務（github.com、npmjs.org 等）。</p>
+                        <p class="en">"Network egress filtering prevents data exfiltration. Even if OpenClaw is compromised, it can only reach explicitly allowed domains."</p>
+                    </div>
+
+                    <div class="step-title"><span class="step-badge">30</span>細粒度 Exec Approvals</div>
+                    <div class="bilingual-block">
+                        <p class="zh">超越基本工具白名單，實現<span class="hl-practical">每個 Agent 獨立的命令政策</span>。dev Agent 只能讀取檔案、files Agent 每個命令都需要手動核准、research Agent 可以 curl 但受 Squid 過濾。</p>
+                        <p class="en">"Goes beyond basic tool allowlisting with per-agent, per-command policies and approval workflows."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-compare">
+                        <div class="info-box-header">&#x2696;&#xFE0F; Container Runtime 比較</div>
+                        <div class="info-box-content">
+                            <table class="compare-table">
+                                <tr><th>特性</th><th>Podman (rootless)</th><th>Docker (standard)</th></tr>
+                                <tr><td>容器逃逸後果</td><td>非特權使用者</td><td><span class="hl-warning">Root 權限</span></td></tr>
+                                <tr><td>守護程式</td><td>無</td><td>root 守護程式</td></tr>
+                                <tr><td>User Namespace</td><td>預設啟用</td><td>需手動配置</td></tr>
+                                <tr><td>攻擊面</td><td>較小</td><td>較大</td></tr>
+                                <tr><td>生態系統</td><td>較小</td><td>較大</td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">&#x1F4DA; LiteLLM Credential Brokering</div>
+                        <div class="info-box-content">
+                            <p>LiteLLM 作為<strong>認證代理</strong>的設計模式：OpenClaw 只知道 LiteLLM 的 Master Key（內部金鑰），LiteLLM 負責注入真正的 Anthropic API Key 後轉發請求。即使 OpenClaw 被攻破，真正的 API Key 不在其容器中，無法被竊取。這就是<span class="hl-concept">Credential Brokering（認證代理）</span>模式。</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-code">
+                        <div class="info-box-header">&#x1F4BB; 三容器網路設計</div>
+                        <div class="info-box-content">
 <pre><code><span class="code-comment"># OpenClaw: 只在內部網路</span>
 networks:
   - OpenClaw-internal  <span class="code-comment"># NO external</span>
@@ -382,159 +743,176 @@ networks:
 networks:
   - OpenClaw-internal
   - OpenClaw-external  <span class="code-comment"># filtered</span></code></pre>
+                        </div>
+                    </div>
+
+                    <div class="info-box box-cost">
+                        <div class="info-box-header">&#x1F4B0; 部署時間比較</div>
+                        <div class="info-box-content">
+                            <table class="compare-table">
+                                <tr><th>方法</th><th>初始設置</th><th>月維護</th><th>年度總計</th></tr>
+                                <tr><td>手動 (Tier 1-3)</td><td>7-9 小時</td><td>60 分鐘</td><td>18-22 小時</td></tr>
+                                <tr><td>Ansible 自動化</td><td>15-30 分鐘</td><td>60 分鐘</td><td>12-15 小時</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end tab-tier3 -->
+
+        <!-- TAB: ARCHITECTURE & RESPONSE -->
+        <div id="tab-arch" class="tab-content">
+
+            <div class="content-grid">
+                <div class="part-header">Part VI: Tier 3 網路架構 + 事件回應</div>
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="zh">Tier 3 的完整架構有<span class="hl-concept">四層防禦</span>：(1) Loopback 綁定 + Tailscale/SSH Tunnel（Gateway 永不暴露）、(2) 容器網路隔離（內部網路無外部存取）、(3) Squid 網域白名單（出口過濾）、(4) LiteLLM 認證代理（API Key 隔離 + 速率限制）。</p>
+                        <p class="en">"Defense layers: Loopback binding + Tailscale/SSH tunnel - Gateway never exposed to public internet. Network segmentation - Internal network isolation. Squid domain allowlist - Egress filtering. LiteLLM credential brokering - API key isolation, rate limiting."</p>
+                    </div>
+
+                    <div class="bilingual-block">
+                        <p class="zh"><strong>紅旗訊號（立即關閉）</strong>：Port 18789 突然在 0.0.0.0、dangerouslyDisableDeviceAuth 變成 true、Session 日誌中出現你沒發出的指令、安裝了你不認識的 MCP Server、Squid 日誌顯示被封鎖的網域突然被允許。</p>
+                        <p class="en">"Red Flags (Shut Down Immediately): Port 18789 suddenly on 0.0.0.0. dangerouslyDisableDeviceAuth: true appeared. Commands you didn't issue in session logs. New MCP servers you didn't install. Squid logs showing blocked domains suddenly allowed."</p>
+                    </div>
+
+                    <div class="bilingual-block">
+                        <p class="zh"><strong>緊急處置三步驟</strong>：(1) 停止所有服務 + 封鎖所有網路流量、(2) 保存證據（Session 日誌、Squid 日誌、連線狀態）、(3) 假設所有認證已被洩露，在不同裝置上撤銷所有 API Key 和 OAuth 工作階段、重設密碼。</p>
+                        <p class="en">"Immediate Containment: Stop all services. Block all network traffic. Preserve evidence. Credential Rotation (Assume All Compromised): Revoke API keys. Revoke OAuth. Reset passwords (from different device)."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-warning">
+                        <div class="info-box-header">&#x1F6A8; 即使 Tier 3 也無法防禦</div>
+                        <div class="info-box-content">
+                            <ul class="clean">
+                                <li><strong>Prompt Injection</strong>：Bot 處理的任何內容都可能操控它</li>
+                                <li><strong>Zero-day</strong>：OpenClaw 核心的未知漏洞</li>
+                                <li><strong>供應鏈攻擊</strong>：26% 的 Agent Skills 含有漏洞（Cisco Talos）</li>
+                                <li><strong>社交工程</strong>：針對使用者本人的攻擊</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">&#x1F4DA; 專家異議</div>
+                        <div class="info-box-content">
+                            <p><strong>Heather Adkins</strong>（Google Cloud VP Security）：「不要運行 Clawdbot。」</p>
+                            <p><strong>Jamieson O'Reilly</strong>（Dvuln）：「AI Agent 在設計上就會拆除我們花了幾十年建立的安全邊界。」</p>
+                            <p><strong>Palo Alto Networks</strong>：攻擊面「不可管理且不可預測」。</p>
+                            <p>安全社群對業餘使用者是否應該運行 Agentic AI 工具尚未達成共識。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-cost">
+                        <div class="info-box-header">&#x1F4B0; 每月成本分析</div>
+                        <div class="info-box-content">
+                            <table class="compare-table">
+                                <tr><th>項目</th><th>成本</th></tr>
+                                <tr><td>VPS</td><td>$4-20/月</td></tr>
+                                <tr><td>API 使用（Anthropic/OpenAI）</td><td>$10-30/月 或 $0（Ollama）</td></tr>
+                                <tr><td><strong>總計</strong></td><td><strong>$4-50/月</strong></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end tab-arch -->
+
+    </div><!-- end tab-container -->
+
+    <!-- KEY TAKEAWAYS -->
+    <h2 class="section-header">Key Takeaways</h2>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <h4>Allowlist > Denylist</h4>
+            <p>安全的核心思維轉換：從「封鎖已知危險」到「只允許已知安全」。這個原則貫穿命令、MCP Server、OAuth 範圍、網域出口的每一層。</p>
+        </div>
+        <div class="summary-card">
+            <h4>隔離是基礎，不是保險</h4>
+            <p>VPS 隔離 + 容器隔離 + 網路隔離是三層同心圓。每一層都限制爆破半徑（Blast Radius），但沒有任何一層能完全消除風險。</p>
+        </div>
+        <div class="summary-card">
+            <h4>Credential Brokering 是關鍵模式</h4>
+            <p>LiteLLM 作為認證代理的設計，讓 OpenClaw 永遠不接觸真正的 API Key。這是企業級 API Gateway 模式的簡化版。</p>
+        </div>
+        <div class="summary-card">
+            <h4>坦承不可修復的弱點</h4>
+            <p>文章最有價值的部分是它坦承 Prompt Injection 和供應鏈攻擊「不可修復」。這種誠實比假安全感更有用。</p>
+        </div>
+    </div>
+
+    <!-- PRACTICE -->
+    <h2 class="section-header">Practice Questions</h2>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">為什麼文章強調 Allowlist 比 Denylist 更安全？在什麼情況下 Allowlist 反而會造成問題？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>Allowlist 更安全的原因</strong>：Denylist 只封鎖已知的危險命令（如 <code>rm -rf</code>），但攻擊者可以用 <code>wget</code>、<code>nc</code>、<code>python -c</code> 等替代方案繞過。Allowlist 則相反——只有明確列出的命令才能執行，未列出的全部被拒絕。這就是「預設拒絕」（deny-by-default）原則。</p>
+            <p><strong>Allowlist 的潛在問題</strong>：(1) 維護成本高——每次 Agent 需要新功能都要手動更新白名單；(2) 過度限制可能降低 Agent 的實用性，導致使用者為了方便而放寬設定；(3) 在快速迭代的開發環境中，嚴格的白名單可能成為瓶頸。關鍵是找到安全和實用性的平衡。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">如果你要在 CDMO 環境中部署類似 OpenClaw 的 AI Agent，Tier 3 的哪些安全原則可以直接對應到 GMP 的哪些法規要求？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>幾個直接對應：</p>
+            <p>(1) <strong>Credential Brokering / 認證代理</strong> &rarr; <strong>21 CFR Part 11 的電子簽章和存取控制</strong>：API Key 隔離的概念直接對應到系統間認證的分離原則，確保每個系統只有最小必要的存取權限。</p>
+            <p>(2) <strong>Audit Log / 監控腳本</strong> &rarr; <strong>ALCOA+ 的 Attributable 和 Contemporaneous</strong>：Step 18 的自動化安全檢查腳本等同於 GMP 的 Audit Trail，需要即時記錄、不可篡改、可追溯。</p>
+            <p>(3) <strong>Allowlist 思維</strong> &rarr; <strong>Validated Systems 的 Change Control</strong>：GMP 環境中，任何系統變更都需要經過審核——這就是白名單的本質。不在 Change Control 清單上的修改不應該發生。</p>
+            <p>(4) <strong>Incident Response Plan（Step 28）</strong> &rarr; <strong>Deviation Investigation + CAPA</strong>：書面程序、定期測試、根本原因分析——CDMO 的偏差調查流程和這篇指南的事件回應計畫在結構上幾乎一致。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">文章的「Harm Reduction」策略是否在無意中正當化了使用有根本安全缺陷的工具？這個框架的邊界在哪裡？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>這是文章最值得深思的張力。<strong>支持 Harm Reduction 的論點</strong>：安全社群的「不要用」建議在實際上已經失敗（OpenClaw 已經爆紅），提供具體的安全指南比道德勸說更能減少實際傷害。這和公共衛生領域的危害減少策略（如針具交換計畫）有相似的邏輯。</p>
+            <p><strong>反對的論點</strong>：(1) 詳細的安全指南可能製造一種「做了這些就安全了」的虛假安全感，但文章自己承認 Prompt Injection 不可修復；(2) 指南的存在本身可能鼓勵更多人嘗試（「既然有安全指南，那應該沒問題」），形成反效果；(3) Google VP 等專家的直接建議是「不要用」，這篇指南是否在挑戰比自己更有資格的判斷？</p>
+            <p><strong>邊界判斷</strong>：Harm Reduction 的邊界應該在「風險可以被合理量化且使用者能理解剩餘風險」的地方。文章做得好的是坦承 NEVER 清單和不可修復的限制；做得不夠的是可能低估了「大多數使用者會跳過步驟」的現實。</p>
+        </div>
+    </details>
+
+    <!-- BOTTOM LINE -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x2714; 核心洞察</div>
+            <div class="bottom-line-text">這篇指南最有價值的不是具體的 Linux 命令，而是它展示的<strong>安全架構思維模式</strong>：Allowlist > Denylist、Credential Brokering、Blast Radius 控制、漸進式分層防禦。這些原則同樣適用於 CDMO 環境中部署任何 AI Copilot 工具的安全規劃——從 API 存取控制到 MES/LIMS 整合的權限設計。我在評估 AI 工具導入 GMP 環境時，可以直接借用這個三層框架來設計安全等級。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+            <div class="bottom-line-text">本週行動：(1) 用文章的 NEVER 清單思維，盤點目前在 Make.com 和 Claude Projects 中連接的所有帳號和 API Key，建立自己的分級清單；(2) 將 Allowlist vs Denylist 的概念寫成一篇 Substack 短文，連結到 CDMO 的 Change Control 和 Validated Systems 框架，這是「Pharma x AI」定位的好素材。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x26A0; 需要補充</div>
+            <div class="bottom-line-text">文章假設讀者有 Linux 命令列基礎，對非技術背景的人門檻偏高。它完全聚焦在 OpenClaw 這個特定工具，但底層的安全原則（容器化、認證代理、出口過濾）其實適用於所有 AI Agent 部署。需要調適的是：將這些原則抽象化，形成一個「AI Agent 安全部署框架」，可以在未來 COO 角色中推動 AI 導入時作為決策參考。此外，文章沒有討論合規面向（SOC 2、ISO 27001）——在 CDMO 場景中，這些會是部署前的必要條件。</div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>Document generated: Feb 11, 2026 | Source: <a href="https://wyndo.substack.com" target="_blank">Wyndo & Fernando Lucktemberg (Next Kick Labs)</a></p>
+        <p>Suggested Chat Title: <strong>[Security] OpenClaw 三層安全強化 - Allowlist, Container, Credential Brokering</strong></p>
+    </div>
+
 </div>
-</div>
-<div class="info-box box-cost">
-<div class="info-box-header">💰 部署時間比較</div>
-<div class="info-box-content">
-<table class="compare-table">
-<tr><th>方法</th><th>初始設置</th><th>月維護</th><th>年度總計</th></tr>
-<tr><td>手動 (Tier 1-3)</td><td>7-9 小時</td><td>60 分鐘</td><td>18-22 小時</td></tr>
-<tr><td>Ansible 自動化</td><td>15-30 分鐘</td><td>60 分鐘</td><td>12-15 小時</td></tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div><!-- end tab-tier3 -->
-<!-- TAB: ARCHITECTURE & RESPONSE -->
-<div class="tab-content" id="tab-arch">
-<div class="content-grid">
-<div class="part-header">Part VI: Tier 3 網路架構 + 事件回應</div>
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">Tier 3 的完整架構有<span class="highlight-concept">四層防禦</span>：(1) Loopback 綁定 + Tailscale/SSH Tunnel（Gateway 永不暴露）、(2) 容器網路隔離（內部網路無外部存取）、(3) Squid 網域白名單（出口過濾）、(4) LiteLLM 認證代理（API Key 隔離 + 速率限制）。</p>
-<p class="en-text">"Defense layers: Loopback binding + Tailscale/SSH tunnel - Gateway never exposed to public internet. Network segmentation - Internal network isolation. Squid domain allowlist - Egress filtering. LiteLLM credential brokering - API key isolation, rate limiting."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>紅旗訊號（立即關閉）</strong>：Port 18789 突然在 0.0.0.0、dangerouslyDisableDeviceAuth 變成 true、Session 日誌中出現你沒發出的指令、安裝了你不認識的 MCP Server、Squid 日誌顯示被封鎖的網域突然被允許。</p>
-<p class="en-text">"Red Flags (Shut Down Immediately): Port 18789 suddenly on 0.0.0.0. dangerouslyDisableDeviceAuth: true appeared. Commands you didn't issue in session logs. New MCP servers you didn't install. Squid logs showing blocked domains suddenly allowed."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>緊急處置三步驟</strong>：(1) 停止所有服務 + 封鎖所有網路流量、(2) 保存證據（Session 日誌、Squid 日誌、連線狀態）、(3) 假設所有認證已被洩露，在不同裝置上撤銷所有 API Key 和 OAuth 工作階段、重設密碼。</p>
-<p class="en-text">"Immediate Containment: Stop all services. Block all network traffic. Preserve evidence. Credential Rotation (Assume All Compromised): Revoke API keys. Revoke OAuth. Reset passwords (from different device)."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-warning">
-<div class="info-box-header">🚨 即使 Tier 3 也無法防禦</div>
-<div class="info-box-content">
-<ul class="clean">
-<li><strong>Prompt Injection</strong>：Bot 處理的任何內容都可能操控它</li>
-<li><strong>Zero-day</strong>：OpenClaw 核心的未知漏洞</li>
-<li><strong>供應鏈攻擊</strong>：26% 的 Agent Skills 含有漏洞（Cisco Talos）</li>
-<li><strong>社交工程</strong>：針對使用者本人的攻擊</li>
-</ul>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 專家異議</div>
-<div class="info-box-content">
-<p><strong>Heather Adkins</strong>（Google Cloud VP Security）：「不要運行 Clawdbot。」</p>
-<p><strong>Jamieson O'Reilly</strong>（Dvuln）：「AI Agent 在設計上就會拆除我們花了幾十年建立的安全邊界。」</p>
-<p><strong>Palo Alto Networks</strong>：攻擊面「不可管理且不可預測」。</p>
-<p>安全社群對業餘使用者是否應該運行 Agentic AI 工具尚未達成共識。</p>
-</div>
-</div>
-<div class="info-box box-cost">
-<div class="info-box-header">💰 每月成本分析</div>
-<div class="info-box-content">
-<table class="compare-table">
-<tr><th>項目</th><th>成本</th></tr>
-<tr><td>VPS</td><td>$4-20/月</td></tr>
-<tr><td>API 使用（Anthropic/OpenAI）</td><td>$10-30/月 或 $0（Ollama）</td></tr>
-<tr><td><strong>總計</strong></td><td><strong>$4-50/月</strong></td></tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div><!-- end tab-arch -->
-</div><!-- end tab-container -->
-<!-- KEY TAKEAWAYS -->
-<h2 class="section-header">Key Takeaways</h2>
-<div class="takeaways-grid">
-<div class="summary-card">
-<h4>Allowlist &gt; Denylist</h4>
-<p>安全的核心思維轉換：從「封鎖已知危險」到「只允許已知安全」。這個原則貫穿命令、MCP Server、OAuth 範圍、網域出口的每一層。</p>
-</div>
-<div class="summary-card">
-<h4>隔離是基礎，不是保險</h4>
-<p>VPS 隔離 + 容器隔離 + 網路隔離是三層同心圓。每一層都限制爆破半徑（Blast Radius），但沒有任何一層能完全消除風險。</p>
-</div>
-<div class="summary-card">
-<h4>Credential Brokering 是關鍵模式</h4>
-<p>LiteLLM 作為認證代理的設計，讓 OpenClaw 永遠不接觸真正的 API Key。這是企業級 API Gateway 模式的簡化版。</p>
-</div>
-<div class="summary-card">
-<h4>坦承不可修復的弱點</h4>
-<p>文章最有價值的部分是它坦承 Prompt Injection 和供應鏈攻擊「不可修復」。這種誠實比假安全感更有用。</p>
-</div>
-</div>
-<!-- PRACTICE -->
-<h2 class="section-header">Practice Questions</h2>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">為什麼文章強調 Allowlist 比 Denylist 更安全？在什麼情況下 Allowlist 反而會造成問題？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>Allowlist 更安全的原因</strong>：Denylist 只封鎖已知的危險命令（如 <code>rm -rf</code>），但攻擊者可以用 <code>wget</code>、<code>nc</code>、<code>python -c</code> 等替代方案繞過。Allowlist 則相反——只有明確列出的命令才能執行，未列出的全部被拒絕。這就是「預設拒絕」（deny-by-default）原則。</p>
-<p><strong>Allowlist 的潛在問題</strong>：(1) 維護成本高——每次 Agent 需要新功能都要手動更新白名單；(2) 過度限制可能降低 Agent 的實用性，導致使用者為了方便而放寬設定；(3) 在快速迭代的開發環境中，嚴格的白名單可能成為瓶頸。關鍵是找到安全和實用性的平衡。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要在 CDMO 環境中部署類似 OpenClaw 的 AI Agent，Tier 3 的哪些安全原則可以直接對應到 GMP 的哪些法規要求？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>幾個直接對應：</p>
-<p>(1) <strong>Credential Brokering / 認證代理</strong> → <strong>21 CFR Part 11 的電子簽章和存取控制</strong>：API Key 隔離的概念直接對應到系統間認證的分離原則，確保每個系統只有最小必要的存取權限。</p>
-<p>(2) <strong>Audit Log / 監控腳本</strong> → <strong>ALCOA+ 的 Attributable 和 Contemporaneous</strong>：Step 18 的自動化安全檢查腳本等同於 GMP 的 Audit Trail，需要即時記錄、不可篡改、可追溯。</p>
-<p>(3) <strong>Allowlist 思維</strong> → <strong>Validated Systems 的 Change Control</strong>：GMP 環境中，任何系統變更都需要經過審核——這就是白名單的本質。不在 Change Control 清單上的修改不應該發生。</p>
-<p>(4) <strong>Incident Response Plan（Step 28）</strong> → <strong>Deviation Investigation + CAPA</strong>：書面程序、定期測試、根本原因分析——CDMO 的偏差調查流程和這篇指南的事件回應計畫在結構上幾乎一致。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">文章的「Harm Reduction」策略是否在無意中正當化了使用有根本安全缺陷的工具？這個框架的邊界在哪裡？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>這是文章最值得深思的張力。<strong>支持 Harm Reduction 的論點</strong>：安全社群的「不要用」建議在實際上已經失敗（OpenClaw 已經爆紅），提供具體的安全指南比道德勸說更能減少實際傷害。這和公共衛生領域的危害減少策略（如針具交換計畫）有相似的邏輯。</p>
-<p><strong>反對的論點</strong>：(1) 詳細的安全指南可能製造一種「做了這些就安全了」的虛假安全感，但文章自己承認 Prompt Injection 不可修復；(2) 指南的存在本身可能鼓勵更多人嘗試（「既然有安全指南，那應該沒問題」），形成反效果；(3) Google VP 等專家的直接建議是「不要用」，這篇指南是否在挑戰比自己更有資格的判斷？</p>
-<p><strong>邊界判斷</strong>：Harm Reduction 的邊界應該在「風險可以被合理量化且使用者能理解剩餘風險」的地方。文章做得好的是坦承 NEVER 清單和不可修復的限制；做得不夠的是可能低估了「大多數使用者會跳過步驟」的現實。</p>
-</div>
-</details>
-<!-- BOTTOM LINE -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">這篇指南最有價值的不是具體的 Linux 命令，而是它展示的<strong>安全架構思維模式</strong>：Allowlist &gt; Denylist、Credential Brokering、Blast Radius 控制、漸進式分層防禦。這些原則同樣適用於 CDMO 環境中部署任何 AI Copilot 工具的安全規劃——從 API 存取控制到 MES/LIMS 整合的權限設計。我在評估 AI 工具導入 GMP 環境時，可以直接借用這個三層框架來設計安全等級。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週行動：(1) 用文章的 NEVER 清單思維，盤點目前在 Make.com 和 Claude Projects 中連接的所有帳號和 API Key，建立自己的分級清單；(2) 將 Allowlist vs Denylist 的概念寫成一篇 Substack 短文，連結到 CDMO 的 Change Control 和 Validated Systems 框架，這是「Pharma x AI」定位的好素材。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章假設讀者有 Linux 命令列基礎，對非技術背景的人門檻偏高。它完全聚焦在 OpenClaw 這個特定工具，但底層的安全原則（容器化、認證代理、出口過濾）其實適用於所有 AI Agent 部署。需要調適的是：將這些原則抽象化，形成一個「AI Agent 安全部署框架」，可以在未來 COO 角色中推動 AI 導入時作為決策參考。此外，文章沒有討論合規面向（SOC 2、ISO 27001）——在 CDMO 場景中，這些會是部署前的必要條件。</div>
-</div>
-</div>
-<!-- FOOTER -->
-<footer class="footer">
-<p>Document generated: Feb 11, 2026 | Source: <a href="https://wyndo.substack.com" target="_blank">Wyndo &amp; Fernando Lucktemberg (Next Kick Labs)</a></p>
-<p>Suggested Chat Title: <strong>[Security] OpenClaw 三層安全強化 - Allowlist, Container, Credential Brokering</strong></p>
-</footer>
-</div>
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

@@ -1,150 +1,636 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2025-12-02" name="doc-date"/>
-<meta content="The 3-Prompt Pipeline 三提示詞管道系統" name="doc-title"/>
-<meta content="Wyndo &amp; Benjamin Hies / The AI Maker" name="doc-source"/>
-<meta content="Prompt,Automation,Content" name="doc-tags"/>
-<meta content="3.6" name="doc-rating"/>
-<meta content="三提示詞管道系統，從 Substack 文章到 LinkedIn 自動轉換。" name="doc-summary"/>
-<meta content="2025-12-02_prompt-pipeline.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>學習指南：The 3-Prompt Pipeline 三提示詞管道系統</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-12-02">
+    <meta name="doc-title" content="The 3-Prompt Pipeline 三提示詞管道系統">
+    <meta name="doc-source" content="Wyndo & Benjamin Hies / The AI Maker">
+    <meta name="doc-tags" content="Prompt,Automation,Content">
+    <meta name="doc-rating" content="3.6">
+    <meta name="doc-summary" content="三提示詞管道系統，從 Substack 文章到 LinkedIn 自動轉換。">
+    <meta name="doc-file" content="2025-12-02_prompt-pipeline.html">
+    <title>學習指南：The 3-Prompt Pipeline 三提示詞管道系統</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Sans+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #1a5f7a;
+            --accent-orange: #e85d04;
+            --light-gray: #fafafa;
+            --light-blue: #f0f7ff;
+            --yellow-light: #fff8e1;
+            --yellow-border: #ffc107;
+            --green-light: #e8f5e9;
+            --green-border: #4caf50;
+            --orange-light: #fff3e0;
+            --orange-border: #ff9800;
+            --purple-light: #f3e5f5;
+            --purple-border: #9c27b0;
+            --text-dark: #2c3e50;
+            --text-medium: #546e7a;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Noto Sans TC', 'Source Sans Pro', sans-serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background: #f5f5f5;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #2d8cb8 50%, var(--accent-orange) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .header .meta {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Two Column Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Left Column - Original Content */
+        .original-content {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .original-content h2 {
+            color: var(--primary-blue);
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary-blue);
+        }
+
+        .original-content h3 {
+            color: var(--text-dark);
+            font-size: 1.15rem;
+            margin: 1.5rem 0 1rem;
+            font-weight: 600;
+        }
+
+        .original-content p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .highlight-term {
+            background: linear-gradient(180deg, transparent 60%, #ffeb3b 60%);
+            padding: 0 2px;
+            font-weight: 500;
+        }
+
+        .quote-box {
+            background: white;
+            border-left: 4px solid var(--accent-orange);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .prompt-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .prompt-block .comment {
+            color: #6a9955;
+        }
+
+        .prompt-block .keyword {
+            color: #569cd6;
+        }
+
+        .prompt-block .string {
+            color: #ce9178;
+        }
+
+        /* Right Column - Commentary */
+        .commentary {
+            background: var(--light-blue);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #c5dff8;
+        }
+
+        .commentary h2 {
+            color: var(--primary-blue);
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent-orange);
+        }
+
+        /* Commentary Boxes */
+        .concept-box {
+            background: var(--green-light);
+            border: 1px solid var(--green-border);
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .concept-box h4 {
+            color: #2e7d32;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .concept-box h4::before {
+            content: "📚";
+        }
+
+        .analogy-box {
+            background: linear-gradient(135deg, var(--yellow-light) 0%, #fffde7 100%);
+            border: 1px solid var(--yellow-border);
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .analogy-box h4 {
+            color: #f57f17;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analogy-box h4::before {
+            content: "💡";
+        }
+
+        .note-box {
+            background: var(--orange-light);
+            border: 1px solid var(--orange-border);
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .note-box h4 {
+            color: #e65100;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .note-box h4::before {
+            content: "⚡";
+        }
+
+        .formula-box {
+            background: var(--purple-light);
+            border: 1px solid var(--purple-border);
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .formula-box h4 {
+            color: #7b1fa2;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .formula-box h4::before {
+            content: "📐";
+        }
+
+        .practice-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px solid #1976d2;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .practice-box h4 {
+            color: #1565c0;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .practice-box h4::before {
+            content: "✏️";
+        }
+
+        .practice-box ol {
+            margin-left: 1.5rem;
+        }
+
+        .practice-box li {
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        /* Section Divider */
+        .section-divider {
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-orange));
+            height: 4px;
+            border-radius: 2px;
+            margin: 3rem 0;
+        }
+
+        /* Pipeline Overview */
+        .pipeline-visual {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .pipeline-visual h3 {
+            text-align: center;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .pipeline-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .pipeline-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .pipeline-step .step-number {
+            background: var(--primary-blue);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.8rem;
+            font-weight: 700;
+        }
+
+        .pipeline-step h4 {
+            color: var(--primary-blue);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pipeline-step p {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--accent-orange);
+            flex-shrink: 0;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: linear-gradient(135deg, #1a5f7a 0%, #2d8cb8 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+
+        .summary-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .summary-section ul {
+            list-style: none;
+        }
+
+        .summary-section li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .summary-section li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+            font-weight: bold;
+        }
+
+        .summary-section li:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pipeline-steps {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .original-content,
+            .commentary {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+
 <header class="header">
-<h1>The 3-Prompt Pipeline 三提示詞管道系統</h1>
-<div class="subtitle">From Substack Article to LinkedIn Post (Without Losing Your Voice)</div>
-<div class="subtitle">從 Substack 文章到 LinkedIn 貼文（保持你的獨特聲音）</div>
-<div class="meta">作者：Wyndo &amp; Benjamin Hies | The AI Maker | 2025年12月2日</div>
+    <h1>The 3-Prompt Pipeline 三提示詞管道系統</h1>
+    <div class="subtitle">From Substack Article to LinkedIn Post (Without Losing Your Voice)</div>
+    <div class="subtitle">從 Substack 文章到 LinkedIn 貼文（保持你的獨特聲音）</div>
+    <div class="meta">作者：Wyndo & Benjamin Hies | The AI Maker | 2025年12月2日</div>
 </header>
+
 <div class="container">
-<!-- Section 1: Introduction -->
-<div class="content-grid">
-<div class="content-left">
-<h2>Introduction 引言</h2>
-<p>I've built a fully automated content repurposing system that turns my newsletters into <span class="highlight-term">15+ social posts</span> without me touching a single platform.</p>
-<p>It saves me <span class="highlight-term">5+ hours every week</span>.</p>
-<p>But here's what I've realized: there are <span class="highlight-term">multiple valid paths</span> to solving the same problem.</p>
-<p>My approach leverages AI automation - AI runs in the background, processes everything automatically, and delivers platform-optimized content ready to edit and publish.</p>
-<p>Benjamin Hies uses a different framework: "<span class="highlight-term">AI at the edges, you in the middle.</span>"</p>
-<p>Same problem (content repurposing is exhausting), different solution.</p>
-<div class="quote-box">
+
+    <!-- Section 1: Introduction -->
+    <div class="content-grid">
+        <div class="original-content">
+            <h2>Introduction 引言</h2>
+            
+            <p>I've built a fully automated content repurposing system that turns my newsletters into <span class="highlight-term">15+ social posts</span> without me touching a single platform.</p>
+            
+            <p>It saves me <span class="highlight-term">5+ hours every week</span>.</p>
+            
+            <p>But here's what I've realized: there are <span class="highlight-term">multiple valid paths</span> to solving the same problem.</p>
+            
+            <p>My approach leverages AI automation - AI runs in the background, processes everything automatically, and delivers platform-optimized content ready to edit and publish.</p>
+            
+            <p>Benjamin Hies uses a different framework: "<span class="highlight-term">AI at the edges, you in the middle.</span>"</p>
+            
+            <p>Same problem (content repurposing is exhausting), different solution.</p>
+
+            <div class="quote-box">
                 "Where I automate the entire pipeline, Ben uses AI strategically at three specific decision points."
             </div>
-<h3>Ben's Three Decision Points:</h3>
-<p><strong>Before writing</strong> - AI validates if an idea is worth pursuing</p>
-<p><strong>After writing</strong> - AI catches blind spots and tightens prose</p>
-<p><strong>During repurposing</strong> - AI extracts angles for LinkedIn adaptation</p>
-<p>Then he writes everything himself.</p>
-<p>Both approaches work. Both save significant time. Both preserve your voice.</p>
-<p>The difference is <span class="highlight-term">control versus automation</span>.</p>
-</div>
-<div class="content-right">
-<h2>解析與評註</h2>
-<div class="box-concept">
-<h4>核心概念：Content Repurposing（內容再利用）</h4>
-<p><strong>Content Repurposing（內容再利用）</strong>指的是將一份內容（如長文章）轉化為多種格式，以適應不同平台的需求。</p>
-<p>這不是簡單的「複製貼上」，而是根據每個平台的特性（字數限制、受眾習慣、互動方式）重新調整內容的呈現方式。</p>
-</div>
-<div class="box-analogy">
-<h4>比喻說明：廚師與食材的關係</h4>
-<p>想像你是一位廚師，有一塊上等牛肉（你的原創文章）。你可以：</p>
-<p><strong>全自動化方法（Wyndo）</strong>：像是擁有一台智能料理機，把牛肉放進去，自動切成牛排、做成牛肉麵、製作牛肉乾——你只需要最後試味。</p>
-<p><strong>邊緣AI方法（Ben）</strong>：你自己掌廚，但在關鍵時刻請AI助手幫忙：「這塊肉適合做什麼？」「調味夠嗎？」「怎麼擺盤最好看？」</p>
-<p>兩種方法都能做出美味料理，差別在於你想要多少「親手參與」的感覺。</p>
-</div>
-<div class="box-key">
-<h4>重點提示：兩種方法論的核心差異</h4>
-<table class="comparison-table">
-<tr>
-<th>面向</th>
-<th>Full Automation（全自動化）</th>
-<th>AI at the Edges（邊緣AI）</th>
-</tr>
-<tr>
-<td>控制程度</td>
-<td>低（規則預設後自動運行）</td>
-<td>高（每個決策點你都參與）</td>
-</tr>
-<tr>
-<td>時間節省</td>
-<td>最大化（5+小時/週）</td>
-<td>中等（減少但需要手動介入）</td>
-</tr>
-<tr>
-<td>聲音保留</td>
-<td>依賴預設規則品質</td>
-<td>你直接寫，天然保留</td>
-</tr>
-<tr>
-<td>適合對象</td>
-<td>產量優先的創作者</td>
-<td>品質/風格優先的創作者</td>
-</tr>
-</table>
-</div>
-<div class="formula-box">
-<h4>效益計算框架</h4>
-<p><strong>時間投資報酬率 = 節省時間 ÷ 設置時間</strong></p>
-<p>全自動化：設置需要 10-20 小時，但之後每週省 5 小時</p>
-<p>→ 4 週後開始淨獲益</p>
-<p>邊緣 AI：幾乎無設置時間，每次使用省 30-60 分鐘</p>
-<p>→ 立即獲益，但上限較低</p>
-</div>
-</div>
-</div>
-<!-- Pipeline Visual -->
-<div class="pipeline-visual">
-<h3>The 3-Prompt Pipeline 系統架構圖</h3>
-<div class="pipeline-steps">
-<div class="pipeline-step">
-<div class="step-number">1</div>
-<h4>Audience Validator</h4>
-<h4>受眾驗證器</h4>
-<p>寫作前：驗證想法是否值得投入</p>
-</div>
-<div class="arrow">→</div>
-<div class="pipeline-step">
-<div class="step-number">2</div>
-<h4>Pencil Sharpener</h4>
-<h4>鉛筆削尖器</h4>
-<p>寫作後：捕捉盲點、精簡文字</p>
-</div>
-<div class="arrow">→</div>
-<div class="pipeline-step">
-<div class="step-number">3</div>
-<h4>Angle Extractor</h4>
-<h4>角度萃取器</h4>
-<p>轉發時：找到適合平台的切入點</p>
-</div>
-</div>
-</div>
-<div class="section-divider"></div>
-<!-- Section 2: The Audience Validator -->
-<div class="content-grid">
-<div class="content-left">
-<h2>1. The Audience Validator 受眾驗證器</h2>
-<h3>The problem it solves</h3>
-<p>I have a running list of 50+ article ideas. Every week I used to pick one based on <span class="highlight-term">gut feeling</span>. Sometimes it worked, sometimes it didn't.</p>
-<p>But, I was just guessing and needed a way to validate.</p>
-<h3>The concept: "Segment Matching"</h3>
-<p>Not every idea fits every reader.</p>
-<p>My audience has different life situations. Working adults exploring options. Retirees planning their exit. Digital nomads already on the move.</p>
-<div class="quote-box">
+
+            <h3>Ben's Three Decision Points:</h3>
+            <p><strong>Before writing</strong> - AI validates if an idea is worth pursuing</p>
+            <p><strong>After writing</strong> - AI catches blind spots and tightens prose</p>
+            <p><strong>During repurposing</strong> - AI extracts angles for LinkedIn adaptation</p>
+            <p>Then he writes everything himself.</p>
+
+            <p>Both approaches work. Both save significant time. Both preserve your voice.</p>
+            <p>The difference is <span class="highlight-term">control versus automation</span>.</p>
+        </div>
+
+        <div class="commentary">
+            <h2>解析與評註</h2>
+
+            <div class="concept-box">
+                <h4>核心概念：Content Repurposing（內容再利用）</h4>
+                <p><strong>Content Repurposing（內容再利用）</strong>指的是將一份內容（如長文章）轉化為多種格式，以適應不同平台的需求。</p>
+                <p>這不是簡單的「複製貼上」，而是根據每個平台的特性（字數限制、受眾習慣、互動方式）重新調整內容的呈現方式。</p>
+            </div>
+
+            <div class="analogy-box">
+                <h4>比喻說明：廚師與食材的關係</h4>
+                <p>想像你是一位廚師，有一塊上等牛肉（你的原創文章）。你可以：</p>
+                <p><strong>全自動化方法（Wyndo）</strong>：像是擁有一台智能料理機，把牛肉放進去，自動切成牛排、做成牛肉麵、製作牛肉乾——你只需要最後試味。</p>
+                <p><strong>邊緣AI方法（Ben）</strong>：你自己掌廚，但在關鍵時刻請AI助手幫忙：「這塊肉適合做什麼？」「調味夠嗎？」「怎麼擺盤最好看？」</p>
+                <p>兩種方法都能做出美味料理，差別在於你想要多少「親手參與」的感覺。</p>
+            </div>
+
+            <div class="note-box">
+                <h4>重點提示：兩種方法論的核心差異</h4>
+                <table class="comparison-table">
+                    <tr>
+                        <th>面向</th>
+                        <th>Full Automation（全自動化）</th>
+                        <th>AI at the Edges（邊緣AI）</th>
+                    </tr>
+                    <tr>
+                        <td>控制程度</td>
+                        <td>低（規則預設後自動運行）</td>
+                        <td>高（每個決策點你都參與）</td>
+                    </tr>
+                    <tr>
+                        <td>時間節省</td>
+                        <td>最大化（5+小時/週）</td>
+                        <td>中等（減少但需要手動介入）</td>
+                    </tr>
+                    <tr>
+                        <td>聲音保留</td>
+                        <td>依賴預設規則品質</td>
+                        <td>你直接寫，天然保留</td>
+                    </tr>
+                    <tr>
+                        <td>適合對象</td>
+                        <td>產量優先的創作者</td>
+                        <td>品質/風格優先的創作者</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="formula-box">
+                <h4>效益計算框架</h4>
+                <p><strong>時間投資報酬率 = 節省時間 ÷ 設置時間</strong></p>
+                <p>全自動化：設置需要 10-20 小時，但之後每週省 5 小時</p>
+                <p>→ 4 週後開始淨獲益</p>
+                <p>邊緣 AI：幾乎無設置時間，每次使用省 30-60 分鐘</p>
+                <p>→ 立即獲益，但上限較低</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pipeline Visual -->
+    <div class="pipeline-visual">
+        <h3>The 3-Prompt Pipeline 系統架構圖</h3>
+        <div class="pipeline-steps">
+            <div class="pipeline-step">
+                <div class="step-number">1</div>
+                <h4>Audience Validator</h4>
+                <h4>受眾驗證器</h4>
+                <p>寫作前：驗證想法是否值得投入</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="pipeline-step">
+                <div class="step-number">2</div>
+                <h4>Pencil Sharpener</h4>
+                <h4>鉛筆削尖器</h4>
+                <p>寫作後：捕捉盲點、精簡文字</p>
+            </div>
+            <div class="arrow">→</div>
+            <div class="pipeline-step">
+                <div class="step-number">3</div>
+                <h4>Angle Extractor</h4>
+                <h4>角度萃取器</h4>
+                <p>轉發時：找到適合平台的切入點</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 2: The Audience Validator -->
+    <div class="content-grid">
+        <div class="original-content">
+            <h2>1. The Audience Validator 受眾驗證器</h2>
+            
+            <h3>The problem it solves</h3>
+            <p>I have a running list of 50+ article ideas. Every week I used to pick one based on <span class="highlight-term">gut feeling</span>. Sometimes it worked, sometimes it didn't.</p>
+            <p>But, I was just guessing and needed a way to validate.</p>
+
+            <h3>The concept: "Segment Matching"</h3>
+            <p>Not every idea fits every reader.</p>
+            <p>My audience has different life situations. Working adults exploring options. Retirees planning their exit. Digital nomads already on the move.</p>
+
+            <div class="quote-box">
                 "If no segment scores above 40%, the idea is too broad. If a segment scores 70%+, I'm onto something. If all segments score 50%+, I can create an evergreen post."
             </div>
-<h3>The Prompt</h3>
-<div class="prompt-block"><span class="keyword">THE AUDIENCE VALIDATOR</span>
+
+            <h3>The Prompt</h3>
+            <div class="prompt-block"><span class="keyword">THE AUDIENCE VALIDATOR</span>
+
 <span class="comment">#Role:</span> You are a Content Strategist who validates topic ideas before writers waste hours on articles that won't resonate.
 
 <span class="comment">#Context:</span> Before I commit 3-5 hours to an article, I need to know if it's worth pursuing and what angle to take.
 
 <span class="comment">#Task:</span>
+
 <span class="keyword">1. VALIDATION CHECK</span>
    - What are people actually asking about this topic? (Reddit, forums, common questions)
    - What's already been written? What's missing?
@@ -183,278 +669,327 @@
 
 <span class="comment">#My Topic:</span>
 [PASTE TOPIC]</div>
-</div>
-<div class="content-right">
-<h2>解析與評註</h2>
-<div class="box-concept">
-<h4>核心概念：Segment Matching（受眾分群配對）</h4>
-<p><strong>Audience Segmentation（受眾分群）</strong>是市場行銷的基礎概念：將你的讀者/客戶分成不同群體，每個群體有獨特的需求、痛點和興趣。</p>
-<p><strong>Segment Matching</strong>則是進一步：評估某個內容主題對每個分群的「相關性分數」，幫你判斷這個主題是否值得寫。</p>
-</div>
-<div class="box-analogy">
-<h4>比喻說明：餐廳菜單設計</h4>
-<p>想像你經營一家餐廳，客人有三種：</p>
-<p>🥗 <strong>健康派</strong>：追求低卡、有機食材</p>
-<p>🍖 <strong>享樂派</strong>：要大份量、重口味</p>
-<p>👶 <strong>家庭派</strong>：需要兒童友善選項</p>
-<p>你想推出新菜「松露牛排」——健康派可能興趣 30%、享樂派 85%、家庭派 45%。</p>
-<p>這道菜值得推嗎？要看你的核心客群是誰。如果享樂派是主力，85% 說明這是好選擇！</p>
-</div>
-<div class="box-key">
-<h4>重點提示：Prompt 結構解析</h4>
-<p>這個 Prompt 使用了經典的 <strong>RCTF 框架</strong>：</p>
-<p><strong>R</strong>ole（角色）：定義 AI 扮演「內容策略師」</p>
-<p><strong>C</strong>ontext（情境）：說明你面臨的決策困境</p>
-<p><strong>T</strong>ask（任務）：具體的分析步驟</p>
-<p><strong>F</strong>ormat（格式）：明確的輸出結構</p>
-<p>這種結構讓 AI 能給出一致、可操作的回答。</p>
-</div>
-<div class="formula-box">
-<h4>決策閾值參考</h4>
-<p><strong>判讀規則：</strong></p>
-<p>• 任一分群 ≥70%：<span style="color:#2e7d32;">✓ 強烈信號，值得寫</span></p>
-<p>• 多分群 50-60%：<span style="color:#1976d2;">✓ 常青內容，長期價值</span></p>
-<p>• 所有分群 &lt;40%：<span style="color:#c62828;">✗ 主題太廣或不適合</span></p>
-<p>• 僅一分群 40-60%：<span style="color:#f57c00;">？需要調整角度</span></p>
-</div>
-<div class="practice-box">
-<h4>練習思考 Practice Questions</h4>
-<ol>
-<li>假設你的讀者分群是「新手工程師」「資深技術主管」「非技術創業者」，你想寫「如何用 ChatGPT 寫程式」這個主題。請估計每個分群的相關性分數，並解釋你的判斷依據。</li>
-<li>為什麼 Ben 強調「需要知道你的受眾」才能讓這個 Prompt 發揮最大效果？如果你不清楚受眾，會發生什麼問題？</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="section-divider"></div>
-<!-- Section 3: The Pencil Sharpener -->
-<div class="content-grid">
-<div class="content-left">
-<h2>2. The Pencil Sharpener 鉛筆削尖器</h2>
-<p>I could not see my own blind spots.</p>
-<p>After my LinkedIn coaching, it became obvious to me, that I'm <span class="highlight-term">over-explaining</span> in my articles.</p>
-<p>Also, as a non-native speaker, I tend to use <span class="highlight-term">filler words</span>.</p>
-<h3>The Checklist (10 Techniques)</h3>
-<p>1. <strong>End Weight</strong> - Put important words at the end of sentences</p>
-<p>2. <strong>No Function Word Clusters</strong> - Don't stack small words (of the, in the, for the)</p>
-<p>3. <strong>Active Voice</strong> - Make clear who's doing what</p>
-<p>4. <strong>Specific Beats Vague</strong> - Concrete details over generic statements</p>
-<p>5. <strong>One Idea Per Sentence</strong> - Break up complex thoughts</p>
-<p>6. <strong>Show, Don't Tell</strong> - Evidence over claims</p>
-<p>7. <strong>Cut Intensifiers</strong> - Remove "very, really, extremely"</p>
-<p>8. <strong>Strong Verbs</strong> - Choose verbs over nominalizations</p>
-<p>9. <strong>Cut Unnecessary Words</strong> - Every word earns its place</p>
-<p>10. <strong>Lead with Action</strong> - Start sentences with the doer performing action</p>
-<h3>Example Result</h3>
-<div class="quote-box">
-<strong>❌ ORIGINAL:</strong> "Without legal agreements in place, you could end up paying tax twice on the same earnings, once where you live, and again where the money was made."
-                <br/><br/>
-<strong>🔧 TECHNIQUE:</strong> Cut Unnecessary Words + One Idea Per Sentence
-                <br/><br/>
-<strong>✅ REVISED:</strong> "Without a tax treaty, you pay twice. Once where you live. Once where the money came from."
+        </div>
+
+        <div class="commentary">
+            <h2>解析與評註</h2>
+
+            <div class="concept-box">
+                <h4>核心概念：Segment Matching（受眾分群配對）</h4>
+                <p><strong>Audience Segmentation（受眾分群）</strong>是市場行銷的基礎概念：將你的讀者/客戶分成不同群體，每個群體有獨特的需求、痛點和興趣。</p>
+                <p><strong>Segment Matching</strong>則是進一步：評估某個內容主題對每個分群的「相關性分數」，幫你判斷這個主題是否值得寫。</p>
             </div>
-</div>
-<div class="content-right">
-<h2>解析與評註</h2>
-<div class="box-concept">
-<h4>核心概念：End Weight Principle（尾重原則）</h4>
-<p>英文句子中，讀者的注意力會自然落在句尾。因此，<strong>最重要的詞彙應該放在句子末端</strong>。</p>
-<p><strong>弱：</strong>"There are many important factors in this decision."</p>
-<p><strong>強：</strong>"This decision depends on many important factors."</p>
-<p>→ 「重要因素」被推到句尾，獲得更大的強調效果。</p>
-</div>
-<div class="box-analogy">
-<h4>比喻說明：音樂的漸強與落點</h4>
-<p>想像一首交響樂的結尾——樂團會在最後幾個音符「漸強」（crescendo），讓結束的那一刻最有力量。</p>
-<p>寫作也一樣：句子的「最後幾個字」就是你的落點。如果你把重要訊息埋在中間，就像交響樂在高潮時突然變弱——讀者會感到「洩氣」。</p>
-<p><strong>❌</strong> "The project, which was incredibly important, was completed by the team."</p>
-<p><strong>✓</strong> "The team completed this incredibly important project."</p>
-</div>
-<div class="box-key">
-<h4>重點提示：Nominalization（名詞化）的陷阱</h4>
-<p><strong>Nominalization</strong>是指把動詞變成名詞的現象，會讓句子變得臃腫。</p>
-<table class="comparison-table">
-<tr>
-<th>名詞化（弱）</th>
-<th>動詞（強）</th>
-</tr>
-<tr>
-<td>made a decision</td>
-<td>decided</td>
-</tr>
-<tr>
-<td>gave an explanation</td>
-<td>explained</td>
-</tr>
-<tr>
-<td>conducted an investigation</td>
-<td>investigated</td>
-</tr>
-<tr>
-<td>reached an agreement</td>
-<td>agreed</td>
-</tr>
-</table>
-</div>
-<div class="formula-box">
-<h4>自我檢查清單</h4>
-<p>寫完文章後，快速掃描這些「警訊詞」：</p>
-<p>🚩 <strong>Intensifiers（強化詞）</strong>：very, really, extremely, incredibly</p>
-<p>🚩 <strong>Function Word Clusters（功能詞堆疊）</strong>：in order to, for the purpose of, in terms of</p>
-<p>🚩 <strong>Nominalization 結尾</strong>：-tion, -ment, -ance, -ence</p>
-<p>發現這些詞時，問自己：「能不能用更短、更直接的方式說？」</p>
-</div>
-<div class="practice-box">
-<h4>練習思考 Practice Questions</h4>
-<ol>
-<li>請將這句話應用「尾重原則」和「去除名詞化」技巧重寫：
-                    <br/>"The implementation of the new strategy by the marketing team was a significant achievement for the company."</li>
-<li>為什麼 Ben 說「簡單理解，卻難以在自己的寫作中看到」？這反映了什麼認知偏誤？</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="section-divider"></div>
-<!-- Section 4: The Angle Extractor -->
-<div class="content-grid">
-<div class="content-left">
-<h2>3. The Angle Extractor 角度萃取器</h2>
-<p>Once I published my article on Substack, the next challenge was LinkedIn.</p>
-<p>I would stare at LinkedIn and think: "<span class="highlight-term">Do I just... summarize it?</span>"</p>
-<p>That's what I used to do. 1,380 impressions. 7 reactions.</p>
-<p>For an article that got over 25,000 views on Substack.</p>
-<div class="quote-box">
+
+            <div class="analogy-box">
+                <h4>比喻說明：餐廳菜單設計</h4>
+                <p>想像你經營一家餐廳，客人有三種：</p>
+                <p>🥗 <strong>健康派</strong>：追求低卡、有機食材</p>
+                <p>🍖 <strong>享樂派</strong>：要大份量、重口味</p>
+                <p>👶 <strong>家庭派</strong>：需要兒童友善選項</p>
+                <p>你想推出新菜「松露牛排」——健康派可能興趣 30%、享樂派 85%、家庭派 45%。</p>
+                <p>這道菜值得推嗎？要看你的核心客群是誰。如果享樂派是主力，85% 說明這是好選擇！</p>
+            </div>
+
+            <div class="note-box">
+                <h4>重點提示：Prompt 結構解析</h4>
+                <p>這個 Prompt 使用了經典的 <strong>RCTF 框架</strong>：</p>
+                <p><strong>R</strong>ole（角色）：定義 AI 扮演「內容策略師」</p>
+                <p><strong>C</strong>ontext（情境）：說明你面臨的決策困境</p>
+                <p><strong>T</strong>ask（任務）：具體的分析步驟</p>
+                <p><strong>F</strong>ormat（格式）：明確的輸出結構</p>
+                <p>這種結構讓 AI 能給出一致、可操作的回答。</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>決策閾值參考</h4>
+                <p><strong>判讀規則：</strong></p>
+                <p>• 任一分群 ≥70%：<span style="color:#2e7d32;">✓ 強烈信號，值得寫</span></p>
+                <p>• 多分群 50-60%：<span style="color:#1976d2;">✓ 常青內容，長期價值</span></p>
+                <p>• 所有分群 &lt;40%：<span style="color:#c62828;">✗ 主題太廣或不適合</span></p>
+                <p>• 僅一分群 40-60%：<span style="color:#f57c00;">？需要調整角度</span></p>
+            </div>
+
+            <div class="practice-box">
+                <h4>練習思考 Practice Questions</h4>
+                <ol>
+                    <li>假設你的讀者分群是「新手工程師」「資深技術主管」「非技術創業者」，你想寫「如何用 ChatGPT 寫程式」這個主題。請估計每個分群的相關性分數，並解釋你的判斷依據。</li>
+                    <li>為什麼 Ben 強調「需要知道你的受眾」才能讓這個 Prompt 發揮最大效果？如果你不清楚受眾，會發生什麼問題？</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 3: The Pencil Sharpener -->
+    <div class="content-grid">
+        <div class="original-content">
+            <h2>2. The Pencil Sharpener 鉛筆削尖器</h2>
+            
+            <p>I could not see my own blind spots.</p>
+            
+            <p>After my LinkedIn coaching, it became obvious to me, that I'm <span class="highlight-term">over-explaining</span> in my articles.</p>
+            
+            <p>Also, as a non-native speaker, I tend to use <span class="highlight-term">filler words</span>.</p>
+
+            <h3>The Checklist (10 Techniques)</h3>
+            <p>1. <strong>End Weight</strong> - Put important words at the end of sentences</p>
+            <p>2. <strong>No Function Word Clusters</strong> - Don't stack small words (of the, in the, for the)</p>
+            <p>3. <strong>Active Voice</strong> - Make clear who's doing what</p>
+            <p>4. <strong>Specific Beats Vague</strong> - Concrete details over generic statements</p>
+            <p>5. <strong>One Idea Per Sentence</strong> - Break up complex thoughts</p>
+            <p>6. <strong>Show, Don't Tell</strong> - Evidence over claims</p>
+            <p>7. <strong>Cut Intensifiers</strong> - Remove "very, really, extremely"</p>
+            <p>8. <strong>Strong Verbs</strong> - Choose verbs over nominalizations</p>
+            <p>9. <strong>Cut Unnecessary Words</strong> - Every word earns its place</p>
+            <p>10. <strong>Lead with Action</strong> - Start sentences with the doer performing action</p>
+
+            <h3>Example Result</h3>
+            <div class="quote-box">
+                <strong>❌ ORIGINAL:</strong> "Without legal agreements in place, you could end up paying tax twice on the same earnings, once where you live, and again where the money was made."
+                <br><br>
+                <strong>🔧 TECHNIQUE:</strong> Cut Unnecessary Words + One Idea Per Sentence
+                <br><br>
+                <strong>✅ REVISED:</strong> "Without a tax treaty, you pay twice. Once where you live. Once where the money came from."
+            </div>
+        </div>
+
+        <div class="commentary">
+            <h2>解析與評註</h2>
+
+            <div class="concept-box">
+                <h4>核心概念：End Weight Principle（尾重原則）</h4>
+                <p>英文句子中，讀者的注意力會自然落在句尾。因此，<strong>最重要的詞彙應該放在句子末端</strong>。</p>
+                <p><strong>弱：</strong>"There are many important factors in this decision."</p>
+                <p><strong>強：</strong>"This decision depends on many important factors."</p>
+                <p>→ 「重要因素」被推到句尾，獲得更大的強調效果。</p>
+            </div>
+
+            <div class="analogy-box">
+                <h4>比喻說明：音樂的漸強與落點</h4>
+                <p>想像一首交響樂的結尾——樂團會在最後幾個音符「漸強」（crescendo），讓結束的那一刻最有力量。</p>
+                <p>寫作也一樣：句子的「最後幾個字」就是你的落點。如果你把重要訊息埋在中間，就像交響樂在高潮時突然變弱——讀者會感到「洩氣」。</p>
+                <p><strong>❌</strong> "The project, which was incredibly important, was completed by the team."</p>
+                <p><strong>✓</strong> "The team completed this incredibly important project."</p>
+            </div>
+
+            <div class="note-box">
+                <h4>重點提示：Nominalization（名詞化）的陷阱</h4>
+                <p><strong>Nominalization</strong>是指把動詞變成名詞的現象，會讓句子變得臃腫。</p>
+                <table class="comparison-table">
+                    <tr>
+                        <th>名詞化（弱）</th>
+                        <th>動詞（強）</th>
+                    </tr>
+                    <tr>
+                        <td>made a decision</td>
+                        <td>decided</td>
+                    </tr>
+                    <tr>
+                        <td>gave an explanation</td>
+                        <td>explained</td>
+                    </tr>
+                    <tr>
+                        <td>conducted an investigation</td>
+                        <td>investigated</td>
+                    </tr>
+                    <tr>
+                        <td>reached an agreement</td>
+                        <td>agreed</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="formula-box">
+                <h4>自我檢查清單</h4>
+                <p>寫完文章後，快速掃描這些「警訊詞」：</p>
+                <p>🚩 <strong>Intensifiers（強化詞）</strong>：very, really, extremely, incredibly</p>
+                <p>🚩 <strong>Function Word Clusters（功能詞堆疊）</strong>：in order to, for the purpose of, in terms of</p>
+                <p>🚩 <strong>Nominalization 結尾</strong>：-tion, -ment, -ance, -ence</p>
+                <p>發現這些詞時，問自己：「能不能用更短、更直接的方式說？」</p>
+            </div>
+
+            <div class="practice-box">
+                <h4>練習思考 Practice Questions</h4>
+                <ol>
+                    <li>請將這句話應用「尾重原則」和「去除名詞化」技巧重寫：
+                    <br>"The implementation of the new strategy by the marketing team was a significant achievement for the company."</li>
+                    <li>為什麼 Ben 說「簡單理解，卻難以在自己的寫作中看到」？這反映了什麼認知偏誤？</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Section 4: The Angle Extractor -->
+    <div class="content-grid">
+        <div class="original-content">
+            <h2>3. The Angle Extractor 角度萃取器</h2>
+            
+            <p>Once I published my article on Substack, the next challenge was LinkedIn.</p>
+            
+            <p>I would stare at LinkedIn and think: "<span class="highlight-term">Do I just... summarize it?</span>"</p>
+            
+            <p>That's what I used to do. 1,380 impressions. 7 reactions.</p>
+            <p>For an article that got over 25,000 views on Substack.</p>
+
+            <div class="quote-box">
                 "LinkedIn posts need to be standalone. There can't be an intro like 'Here is XYZ, and now please click this link'"
             </div>
-<h3>The concept: "Buckets"</h3>
-<p>Not every angle works the same way on LinkedIn.</p>
-<p><strong>Life</strong> - Who you are (personal transformation)</p>
-<p><strong>Expertise</strong> - What you know (professional domain)</p>
-<p><strong>Business</strong> - What you're building (entrepreneurship lessons)</p>
-<h3>Hook Options Output Example</h3>
-<p><strong>Contrarian:</strong> "Too many people overcomplicate residencies."</p>
-<p><strong>Specific:</strong> "5 residencies. 3 steps. That's it."</p>
-<p><strong>Personal:</strong> "I used to overthink residencies. Then I got 5 of them."</p>
-<h3>The Result</h3>
-<p>From 1,300 impressions to 6,000 impressions, without any new content.</p>
-<p>The contrarian hook was chosen because "LinkedIn loves those."</p>
+
+            <h3>The concept: "Buckets"</h3>
+            <p>Not every angle works the same way on LinkedIn.</p>
+            <p><strong>Life</strong> - Who you are (personal transformation)</p>
+            <p><strong>Expertise</strong> - What you know (professional domain)</p>
+            <p><strong>Business</strong> - What you're building (entrepreneurship lessons)</p>
+
+            <h3>Hook Options Output Example</h3>
+            <p><strong>Contrarian:</strong> "Too many people overcomplicate residencies."</p>
+            <p><strong>Specific:</strong> "5 residencies. 3 steps. That's it."</p>
+            <p><strong>Personal:</strong> "I used to overthink residencies. Then I got 5 of them."</p>
+
+            <h3>The Result</h3>
+            <p>From 1,300 impressions to 6,000 impressions, without any new content.</p>
+            <p>The contrarian hook was chosen because "LinkedIn loves those."</p>
+        </div>
+
+        <div class="commentary">
+            <h2>解析與評註</h2>
+
+            <div class="concept-box">
+                <h4>核心概念：Standalone Content（獨立內容）</h4>
+                <p>在社群媒體上，每一則貼文都必須是<strong>自給自足</strong>的——讀者不會因為你說「請看我的文章」就點進去。</p>
+                <p>貼文本身必須提供足夠的價值或好奇心，讓人願意繼續閱讀或互動。</p>
+                <p><strong>失敗模式</strong>：「我寫了一篇關於 AI 的文章，點這裡看」→ 沒有 hook，沒有價值預覽</p>
+                <p><strong>成功模式</strong>：提出一個觀點、分享一個洞察，文章連結是「bonus」而非主體</p>
+            </div>
+
+            <div class="analogy-box">
+                <h4>比喻說明：電影預告片 vs 完整電影</h4>
+                <p>你的長文章是「完整電影」，LinkedIn 貼文是「預告片」。</p>
+                <p>好的預告片不會說：「這是一部很棒的電影，請去電影院看。」</p>
+                <p>好的預告片會：展示最精彩的片段、製造懸念、讓觀眾「必須」知道後續。</p>
+                <p>同樣地，LinkedIn 貼文應該是你文章中<strong>最有衝擊力的一個觀點</strong>，而不是整篇文章的摘要。</p>
+            </div>
+
+            <div class="note-box">
+                <h4>重點提示：三種 Hook 類型解析</h4>
+                <p><strong>Contrarian Hook（反直覺鉤子）</strong></p>
+                <p>挑戰普遍認知，製造認知衝突。LinkedIn 演算法偏愛能引發討論的內容。</p>
+                <p>例：「大多數人把生產力搞反了。」</p>
+                
+                <p><strong>Specific Hook（具體數字鉤子）</strong></p>
+                <p>用精確數字建立可信度，暗示「這人有實戰經驗」。</p>
+                <p>例：「3 年，147 次拒絕，1 個 offer。」</p>
+                
+                <p><strong>Personal Hook（個人故事鉤子）</strong></p>
+                <p>以「我」開頭，創造人性連結和脆弱感。</p>
+                <p>例：「我曾經害怕公開發言，直到...」</p>
+            </div>
+
+            <div class="formula-box">
+                <h4>內容桶（Content Buckets）框架</h4>
+                <p>Ben 使用三個「桶」來分類貼文角度，這幫助他選擇正確的語氣：</p>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Bucket</th>
+                        <th>核心問題</th>
+                        <th>語氣傾向</th>
+                    </tr>
+                    <tr>
+                        <td>Life（生活）</td>
+                        <td>我是誰？</td>
+                        <td>脆弱、真誠、故事性</td>
+                    </tr>
+                    <tr>
+                        <td>Expertise（專業）</td>
+                        <td>我知道什麼？</td>
+                        <td>權威、教學、結構化</td>
+                    </tr>
+                    <tr>
+                        <td>Business（事業）</td>
+                        <td>我在建造什麼？</td>
+                        <td>創業精神、過程分享</td>
+                    </tr>
+                </table>
+                <p>選擇「桶」可以幫助你決定貼文的基調和結構。</p>
+            </div>
+
+            <div class="practice-box">
+                <h4>練習思考 Practice Questions</h4>
+                <ol>
+                    <li>假設你剛寫了一篇關於「遠端工作的五個隱藏挑戰」的文章，請為這篇文章設計三種不同類型的 LinkedIn hook（Contrarian、Specific、Personal）。</li>
+                    <li>為什麼 Ben 選擇 Contrarian hook？在什麼情況下，Personal hook 可能比 Contrarian hook 更有效？</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Summary Section -->
+    <div class="summary-section">
+        <h2>🎯 核心概念總結 Key Takeaways</h2>
+        <ul>
+            <li><strong>AI at the Edges, You in the Middle（邊緣 AI，你在中間）</strong>：AI 負責「決策前」和「完成後」的輔助，你負責核心創作。這種方法保留你的聲音，同時減輕認知負擔。</li>
+            <li><strong>Segment Matching（分群配對）</strong>：在投入時間寫作前，先評估主題對各受眾分群的相關性分數。70%+ 表示強烈信號；所有分群 &lt;40% 表示需要調整方向。</li>
+            <li><strong>Ten Writing Techniques（十個寫作技巧）</strong>：End Weight、Active Voice、One Idea Per Sentence 等技巧可以讓文章更清晰有力。AI 可以幫你發現盲點，但改寫仍需你的判斷。</li>
+            <li><strong>Standalone Content（獨立內容）</strong>：社群貼文必須自給自足，不是長文章的「摘要+連結」，而是獨立的有價值觀點。</li>
+            <li><strong>Hook Types（鉤子類型）</strong>：Contrarian（反直覺）、Specific（具體數字）、Personal（個人故事）三種類型各有適用場景，選擇時考慮平台特性和目標受眾。</li>
+            <li><strong>Control vs Automation（控制 vs 自動化）</strong>：兩種方法都有效，選擇取決於你對策略決策的信任程度和工作流程偏好。沒有絕對的對錯。</li>
+        </ul>
+    </div>
+
+    <!-- Implementation Framework -->
+    <div class="content-grid" style="margin-top: 2rem;">
+        <div class="original-content">
+            <h2>實務應用框架</h2>
+            
+            <h3>Step 1: 建立你的受眾分群</h3>
+            <p>在使用 Audience Validator 之前，你需要明確定義 3-5 個受眾分群。問自己：</p>
+            <p>• 誰在讀我的內容？他們的人生階段是什麼？</p>
+            <p>• 他們最大的痛點是什麼？</p>
+            <p>• 他們希望達成什麼目標？</p>
+
+            <h3>Step 2: 建立你的寫作檢查清單</h3>
+            <p>Ben 的 10 個技巧是基於他的弱點（over-explaining、filler words）。你需要識別自己的弱點，建立個人化的檢查清單。</p>
+
+            <h3>Step 3: 定義你的內容桶</h3>
+            <p>Life、Expertise、Business 是 Ben 的分類。你的可能不同。例如：</p>
+            <p>• 技術部落客：Tutorial / Opinion / Behind-the-scenes</p>
+            <p>• 職涯教練：Mindset / Tactics / Success Stories</p>
+        </div>
+
+        <div class="commentary">
+            <h2>常見錯誤與解決方案</h2>
+
+            <div class="note-box">
+                <h4>❌ 錯誤 1：不了解受眾就使用工具</h4>
+                <p>如果你無法清楚描述你的受眾分群，Audience Validator 的輸出會很模糊。</p>
+                <p><strong>解決方案</strong>：先花時間做受眾研究——查看留言、做問卷、分析誰在互動。</p>
+            </div>
+
+            <div class="note-box">
+                <h4>❌ 錯誤 2：把 AI 修改建議照單全收</h4>
+                <p>Pencil Sharpener 會給你修改建議，但不是每個建議都適合你的風格。</p>
+                <p><strong>解決方案</strong>：把它當作「第二雙眼睛」而非「最終權威」。你保留否決權。</p>
+            </div>
+
+            <div class="note-box">
+                <h4>❌ 錯誤 3：LinkedIn 貼文只是「文章摘要」</h4>
+                <p>這是最常見的錯誤——把長文章壓縮成 5 句話，然後放一個連結。</p>
+                <p><strong>解決方案</strong>：選擇文章中的<strong>一個</strong>洞察，把它變成獨立的觀點。連結是 optional。</p>
+            </div>
+        </div>
+    </div>
+
 </div>
-<div class="content-right">
-<h2>解析與評註</h2>
-<div class="box-concept">
-<h4>核心概念：Standalone Content（獨立內容）</h4>
-<p>在社群媒體上，每一則貼文都必須是<strong>自給自足</strong>的——讀者不會因為你說「請看我的文章」就點進去。</p>
-<p>貼文本身必須提供足夠的價值或好奇心，讓人願意繼續閱讀或互動。</p>
-<p><strong>失敗模式</strong>：「我寫了一篇關於 AI 的文章，點這裡看」→ 沒有 hook，沒有價值預覽</p>
-<p><strong>成功模式</strong>：提出一個觀點、分享一個洞察，文章連結是「bonus」而非主體</p>
-</div>
-<div class="box-analogy">
-<h4>比喻說明：電影預告片 vs 完整電影</h4>
-<p>你的長文章是「完整電影」，LinkedIn 貼文是「預告片」。</p>
-<p>好的預告片不會說：「這是一部很棒的電影，請去電影院看。」</p>
-<p>好的預告片會：展示最精彩的片段、製造懸念、讓觀眾「必須」知道後續。</p>
-<p>同樣地，LinkedIn 貼文應該是你文章中<strong>最有衝擊力的一個觀點</strong>，而不是整篇文章的摘要。</p>
-</div>
-<div class="box-key">
-<h4>重點提示：三種 Hook 類型解析</h4>
-<p><strong>Contrarian Hook（反直覺鉤子）</strong></p>
-<p>挑戰普遍認知，製造認知衝突。LinkedIn 演算法偏愛能引發討論的內容。</p>
-<p>例：「大多數人把生產力搞反了。」</p>
-<p><strong>Specific Hook（具體數字鉤子）</strong></p>
-<p>用精確數字建立可信度，暗示「這人有實戰經驗」。</p>
-<p>例：「3 年，147 次拒絕，1 個 offer。」</p>
-<p><strong>Personal Hook（個人故事鉤子）</strong></p>
-<p>以「我」開頭，創造人性連結和脆弱感。</p>
-<p>例：「我曾經害怕公開發言，直到...」</p>
-</div>
-<div class="formula-box">
-<h4>內容桶（Content Buckets）框架</h4>
-<p>Ben 使用三個「桶」來分類貼文角度，這幫助他選擇正確的語氣：</p>
-<table class="comparison-table">
-<tr>
-<th>Bucket</th>
-<th>核心問題</th>
-<th>語氣傾向</th>
-</tr>
-<tr>
-<td>Life（生活）</td>
-<td>我是誰？</td>
-<td>脆弱、真誠、故事性</td>
-</tr>
-<tr>
-<td>Expertise（專業）</td>
-<td>我知道什麼？</td>
-<td>權威、教學、結構化</td>
-</tr>
-<tr>
-<td>Business（事業）</td>
-<td>我在建造什麼？</td>
-<td>創業精神、過程分享</td>
-</tr>
-</table>
-<p>選擇「桶」可以幫助你決定貼文的基調和結構。</p>
-</div>
-<div class="practice-box">
-<h4>練習思考 Practice Questions</h4>
-<ol>
-<li>假設你剛寫了一篇關於「遠端工作的五個隱藏挑戰」的文章，請為這篇文章設計三種不同類型的 LinkedIn hook（Contrarian、Specific、Personal）。</li>
-<li>為什麼 Ben 選擇 Contrarian hook？在什麼情況下，Personal hook 可能比 Contrarian hook 更有效？</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="section-divider"></div>
-<!-- Summary Section -->
-<div class="summary-section">
-<h2>🎯 核心概念總結 Key Takeaways</h2>
-<ul>
-<li><strong>AI at the Edges, You in the Middle（邊緣 AI，你在中間）</strong>：AI 負責「決策前」和「完成後」的輔助，你負責核心創作。這種方法保留你的聲音，同時減輕認知負擔。</li>
-<li><strong>Segment Matching（分群配對）</strong>：在投入時間寫作前，先評估主題對各受眾分群的相關性分數。70%+ 表示強烈信號；所有分群 &lt;40% 表示需要調整方向。</li>
-<li><strong>Ten Writing Techniques（十個寫作技巧）</strong>：End Weight、Active Voice、One Idea Per Sentence 等技巧可以讓文章更清晰有力。AI 可以幫你發現盲點，但改寫仍需你的判斷。</li>
-<li><strong>Standalone Content（獨立內容）</strong>：社群貼文必須自給自足，不是長文章的「摘要+連結」，而是獨立的有價值觀點。</li>
-<li><strong>Hook Types（鉤子類型）</strong>：Contrarian（反直覺）、Specific（具體數字）、Personal（個人故事）三種類型各有適用場景，選擇時考慮平台特性和目標受眾。</li>
-<li><strong>Control vs Automation（控制 vs 自動化）</strong>：兩種方法都有效，選擇取決於你對策略決策的信任程度和工作流程偏好。沒有絕對的對錯。</li>
-</ul>
-</div>
-<!-- Implementation Framework -->
-<div class="content-grid" style="margin-top: 2rem;">
-<div class="content-left">
-<h2>實務應用框架</h2>
-<h3>Step 1: 建立你的受眾分群</h3>
-<p>在使用 Audience Validator 之前，你需要明確定義 3-5 個受眾分群。問自己：</p>
-<p>• 誰在讀我的內容？他們的人生階段是什麼？</p>
-<p>• 他們最大的痛點是什麼？</p>
-<p>• 他們希望達成什麼目標？</p>
-<h3>Step 2: 建立你的寫作檢查清單</h3>
-<p>Ben 的 10 個技巧是基於他的弱點（over-explaining、filler words）。你需要識別自己的弱點，建立個人化的檢查清單。</p>
-<h3>Step 3: 定義你的內容桶</h3>
-<p>Life、Expertise、Business 是 Ben 的分類。你的可能不同。例如：</p>
-<p>• 技術部落客：Tutorial / Opinion / Behind-the-scenes</p>
-<p>• 職涯教練：Mindset / Tactics / Success Stories</p>
-</div>
-<div class="content-right">
-<h2>常見錯誤與解決方案</h2>
-<div class="box-key">
-<h4>❌ 錯誤 1：不了解受眾就使用工具</h4>
-<p>如果你無法清楚描述你的受眾分群，Audience Validator 的輸出會很模糊。</p>
-<p><strong>解決方案</strong>：先花時間做受眾研究——查看留言、做問卷、分析誰在互動。</p>
-</div>
-<div class="box-key">
-<h4>❌ 錯誤 2：把 AI 修改建議照單全收</h4>
-<p>Pencil Sharpener 會給你修改建議，但不是每個建議都適合你的風格。</p>
-<p><strong>解決方案</strong>：把它當作「第二雙眼睛」而非「最終權威」。你保留否決權。</p>
-</div>
-<div class="box-key">
-<h4>❌ 錯誤 3：LinkedIn 貼文只是「文章摘要」</h4>
-<p>這是最常見的錯誤——把長文章壓縮成 5 句話，然後放一個連結。</p>
-<p><strong>解決方案</strong>：選擇文章中的<strong>一個</strong>洞察，把它變成獨立的觀點。連結是 optional。</p>
-</div>
-</div>
-</div>
-</div>
+
 <footer class="footer">
-<p>原文連結：<a href="https://theaimaker.substack.com/p/the-3-prompt-pipeline-from-substack" target="_blank">The AI Maker - The 3-Prompt Pipeline</a></p>
-<p>學習指南製作日期：2025年12月3日</p>
+    <p>原文連結：<a href="https://theaimaker.substack.com/p/the-3-prompt-pipeline-from-substack" target="_blank">The AI Maker - The 3-Prompt Pipeline</a></p>
+    <p>學習指南製作日期：2025年12月3日</p>
 </footer>
+
 </body>
 </html>

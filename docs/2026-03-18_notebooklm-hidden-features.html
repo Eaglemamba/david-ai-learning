@@ -1,381 +1,548 @@
 <!DOCTYPE html>
-
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>NotebookLM 三大隱藏連接 - 從研究工具到 AI 指揮中心</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-<!-- Dashboard Index Meta -->
-<meta content="2026-03-18" name="doc-date"/>
-<meta content="NotebookLM 三大隱藏連接 - Gemini Canvas, Gems, Antigravity" name="doc-title"/>
-<meta content="Wyndo (AI Maker Labs) / Gencay (LearnAIWithMe)" name="doc-source"/>
-<meta content="" name="doc-source-type"/>
-<meta content="Tool,Agent,Automation,API" name="doc-tags"/>
-<meta content="3.4" name="doc-rating"/>
-<meta content="NotebookLM 連接 Gemini Canvas 建 App、Gems 建永久助手、Antigravity MCP 自動化研究。實用但多為 Google 生態圈限定。" name="doc-summary"/>
-<meta content="2026-03-18_notebooklm-hidden-features.html" name="doc-file"/><meta content="v1" name="normalized"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotebookLM 三大隱藏連接 - 從研究工具到 AI 指揮中心</title>
 
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-03-18">
+    <meta name="doc-title" content="NotebookLM 三大隱藏連接 - Gemini Canvas, Gems, Antigravity">
+    <meta name="doc-source" content="Wyndo (AI Maker Labs) / Gencay (LearnAIWithMe)">
+    <meta name="doc-source-type" content="">
+    <meta name="doc-tags" content="Tool,Agent,Automation,API">
+    <meta name="doc-rating" content="3.4">
+    <meta name="doc-summary" content="NotebookLM 連接 Gemini Canvas 建 App、Gems 建永久助手、Antigravity MCP 自動化研究。實用但多為 Google 生態圈限定。">
+    <meta name="doc-file" content="2026-03-18_notebooklm-hidden-features.html">
 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* === v1.4.3 MANDATORY PAGE LAYOUT === */
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+            color: white;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Tags */
+        .tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin: 0.15rem; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-api { background: #ddd6fe; color: #4c1d95; }
+
+        .header-content h1 { font-size: 1.8rem; margin: 0.75rem 0 0.5rem; font-weight: 700; }
+        .header-content .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+        .header-content .source { font-size: 0.85rem; opacity: 0.75; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+        .exec-summary h2 { font-size: 1.1rem; color: #1e3a8a; margin-top: 0; }
+        .exec-summary p { font-size: 0.95rem; color: #475569; }
+
+        /* Learning Objectives */
+        .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-item .obj-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-item .obj-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .objective-item .obj-desc { font-size: 0.8rem; color: #64748b; }
+
+        /* Section Headers */
+        .section-header { font-size: 1.25rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+        /* Content Grid Inner */
+        .content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        @media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+
+        /* Bilingual Content */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh-text { color: #1e293b; font-size: 0.95rem; line-height: 1.8; }
+        .en-text { color: #64748b; font-style: italic; font-size: 0.9rem; line-height: 1.6; margin-top: 0.25rem; }
+        .highlight-concept { background: #a5d6a7; padding: 0 3px; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0 3px; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0 3px; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; }
+        .info-box-content { padding: 0.75rem; font-size: 0.85rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Key Takeaways */
+        .takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card .card-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .summary-card .card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .summary-card .card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+        /* Accordion Practice */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+    </style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="header-content">
-<div>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-api">API</span>
+<div class="header">
+    <div class="header-content">
+        <div>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-automation">Automation</span>
+            <span class="tag tag-api">API</span>
+        </div>
+        <h1>NotebookLM 三大隱藏連接</h1>
+        <div class="subtitle">從研究工具到 AI 指揮中心：Gemini Canvas、Gems、Antigravity</div>
+        <div class="source">Wyndo (AI Maker Labs) / Gencay (LearnAIWithMe) | 2026-03-17</div>
+    </div>
 </div>
-<h1>NotebookLM 三大隱藏連接</h1>
-<div class="subtitle">從研究工具到 AI 指揮中心：Gemini Canvas、Gems、Antigravity</div>
-<div class="source">Wyndo (AI Maker Labs) / Gencay (LearnAIWithMe) | 2026-03-17</div>
-</div>
-</header>
+
 <!-- Container -->
 <div class="container">
-<!-- Executive Summary -->
-<div class="exec-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★☆☆</span> 3.4/5</span>
-<span class="rating-high">↑ Practical Value, Tool Ecosystem</span>
-<span class="rating-low">↓ Technical Depth, Timeliness</span>
-</div>
-<p>Google NotebookLM 除了基本的上傳文件 + 聊天功能外，還能透過三條「隱藏連接」擴展能力：(1) Gemini Canvas 把筆記本內容直接轉成互動 App，(2) Gems 建立具有永久記憶的專屬 AI 助手，(3) Antigravity IDE + MCP 實現 32 種 NotebookLM 功能的程式化自動控制。文章以 Prompt Advisor 為貫穿範例，演示三種連接的操作流程。屬於 Google 生態系整合教學，對非 Google 生態的使用者直接價值有限。</p>
-</div>
-<!-- Learning Objectives -->
-<div class="section-header">Learning Objectives</div>
-<div class="objectives-grid">
-<div class="objective-item">
-<div class="obj-icon">🏗</div>
-<div class="obj-title">NotebookLM + Gemini Canvas</div>
-<div class="obj-desc">理解如何將 NotebookLM 資料轉為互動 Web App，及其能力邊界</div>
-</div>
-<div class="objective-item">
-<div class="obj-icon">🧠</div>
-<div class="obj-title">Gems 永久記憶助手</div>
-<div class="obj-desc">比較 Gems vs Claude Projects vs CustomGPT 的知識持久化架構差異</div>
-</div>
-<div class="objective-item">
-<div class="obj-icon">⚙</div>
-<div class="obj-title">MCP 自動化研究</div>
-<div class="obj-desc">評估 NotebookLM MCP 的 32 個函數在自動化研究工作流中的實際價值</div>
-</div>
-</div>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">NotebookLM 三層連接架構</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">📚</div>
-<div class="framework-step-title">NotebookLM</div>
-<div class="framework-step-desc">上傳來源 + 訓練</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🎨</div>
-<div class="framework-step-title">Gemini Canvas</div>
-<div class="framework-step-desc">即時建 App</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">💎</div>
-<div class="framework-step-title">Gems</div>
-<div class="framework-step-desc">永久記憶助手</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🚀</div>
-<div class="framework-step-title">Antigravity MCP</div>
-<div class="framework-step-desc">32 函數自動化</div>
-</div>
-</div>
-</div>
-<!-- Part I: NotebookLM Basics + Training -->
-<div class="section-header">Part I: NotebookLM 基礎與訓練方法</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">NotebookLM 是 Google 的 AI 學習工具，能從<span class="highlight-concept">任何來源</span>進行學習和研究。你可以上傳 YouTube 影片、PDF、Google Docs、網站、文字，甚至 Gemini 深度研究報告。它會讀取所有內容並儲存到記憶體中。</div>
-<div class="en-text">"NotebookLM is Google's AI tool for learning from any source. Or doing research. You can upload sources like: YT Videos, PDFs, Google Docs, Websites, Text, Deep research (done by Gemini). It reads everything and saves it to memory."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">兩個核心優勢讓它值得使用：<span class="highlight-key">更少幻覺</span>（它只根據你的來源回答，不會憑空捏造）以及<span class="highlight-key">完全免費</span>（無需信用卡，無使用限制）。</div>
-<div class="en-text">"Two reasons make it worth your time: Less hallucination: It sticks to your sources. No making things up. It's free: Full access. No credit card. No usage limits."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">訓練方式很簡單：建立新的 Notebook，加入來源，它會自動開始訓練。文章以 Anthropic 官方 Prompt Engineering 影片作為範例來源，訓練一個<span class="highlight-practical">Prompt Advisor</span>。設定 Custom Instructions：「Act as a prompt advisor and optimize the given prompts based on your sources.」</div>
-<div class="en-text">"In this scenario, we'll use Anthropic's official prompt engineering video as our source... Click on 'Configure Notebook'... Then insert this prompt: 'Act as a prompt advisor and optimize the given prompts based on your sources.'"</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">訓練後的 NotebookLM 能分析你分享的任何 prompt：診斷問題（模糊指令、缺少上下文、不明確目標）、建議替代策略、執行 prompt 最佳化。</div>
-<div class="en-text">"Your NotebookLM will analyze any prompt you share, and it will: Diagnose what's wrong... Suggest an alternative strategy. Execute prompt optimization."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：Grounded Generation</div>
-<div class="info-box-content">NotebookLM 的「更少幻覺」來自 <strong>Grounded Generation</strong> 架構：模型回答時只引用你上傳的來源，不靠自身訓練資料發揮。這跟 RAG (Retrieval Augmented Generation) 的原理類似，但整合在 Google 的消費端產品中，降低了使用門檻。</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明：圖書館 vs 百科全書</div>
-<div class="info-box-content">一般 LLM 像是一本包羅萬象的百科全書（什麼都知道一點，但可能記錯）。NotebookLM 更像是一個<strong>只讀你指定書籍</strong>的圖書館員 — 回答範圍受限，但出錯率低。缺點是：你的來源品質直接決定回答品質。</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：「免費」的隱含成本</div>
-<div class="info-box-content">文章強調「完全免費、無使用限制」，但實際上 NotebookLM 有來源數量上限（每個 Notebook 最多 50 個來源）、單一來源大小限制、以及 audio overview 的生成頻率限制。「免費」也意味著 Google 可能使用你的資料來改進模型。在 CDMO 情境中，上傳 GMP 相關文件前務必確認資料隱私政策。</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較：NotebookLM vs Claude Projects</div>
-<div class="info-box-content">
-<strong>NotebookLM</strong>：免費、來源型回答、Audio Overview podcast 功能獨特、深度整合 Google 生態<br/>
-<strong>Claude Projects</strong>：付費、System Prompt + Knowledge 更靈活、支援 Artifacts 生成、Code Execution<br/>
+
+    <!-- Executive Summary -->
+    <div class="exec-summary">
+        <h2>Executive Summary</h2>
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span> 3.4/5</span>
+            <span class="rating-high">&uarr; Practical Value, Tool Ecosystem</span>
+            <span class="rating-low">&darr; Technical Depth, Timeliness</span>
+        </div>
+        <p>Google NotebookLM 除了基本的上傳文件 + 聊天功能外，還能透過三條「隱藏連接」擴展能力：(1) Gemini Canvas 把筆記本內容直接轉成互動 App，(2) Gems 建立具有永久記憶的專屬 AI 助手，(3) Antigravity IDE + MCP 實現 32 種 NotebookLM 功能的程式化自動控制。文章以 Prompt Advisor 為貫穿範例，演示三種連接的操作流程。屬於 Google 生態系整合教學，對非 Google 生態的使用者直接價值有限。</p>
+    </div>
+
+    <!-- Learning Objectives -->
+    <div class="section-header">Learning Objectives</div>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="obj-icon">&#x1F3D7;</div>
+            <div class="obj-title">NotebookLM + Gemini Canvas</div>
+            <div class="obj-desc">理解如何將 NotebookLM 資料轉為互動 Web App，及其能力邊界</div>
+        </div>
+        <div class="objective-item">
+            <div class="obj-icon">&#x1F9E0;</div>
+            <div class="obj-title">Gems 永久記憶助手</div>
+            <div class="obj-desc">比較 Gems vs Claude Projects vs CustomGPT 的知識持久化架構差異</div>
+        </div>
+        <div class="objective-item">
+            <div class="obj-icon">&#x2699;</div>
+            <div class="obj-title">MCP 自動化研究</div>
+            <div class="obj-desc">評估 NotebookLM MCP 的 32 個函數在自動化研究工作流中的實際價值</div>
+        </div>
+    </div>
+
+    <!-- Framework Visual -->
+    <div class="framework-visual">
+        <div class="framework-title">NotebookLM 三層連接架構</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4DA;</div>
+                <div class="framework-step-title">NotebookLM</div>
+                <div class="framework-step-desc">上傳來源 + 訓練</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F3A8;</div>
+                <div class="framework-step-title">Gemini Canvas</div>
+                <div class="framework-step-desc">即時建 App</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F48E;</div>
+                <div class="framework-step-title">Gems</div>
+                <div class="framework-step-desc">永久記憶助手</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F680;</div>
+                <div class="framework-step-title">Antigravity MCP</div>
+                <div class="framework-step-desc">32 函數自動化</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part I: NotebookLM Basics + Training -->
+    <div class="section-header">Part I: NotebookLM 基礎與訓練方法</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text">NotebookLM 是 Google 的 AI 學習工具，能從<span class="highlight-concept">任何來源</span>進行學習和研究。你可以上傳 YouTube 影片、PDF、Google Docs、網站、文字，甚至 Gemini 深度研究報告。它會讀取所有內容並儲存到記憶體中。</div>
+                <div class="en-text">"NotebookLM is Google's AI tool for learning from any source. Or doing research. You can upload sources like: YT Videos, PDFs, Google Docs, Websites, Text, Deep research (done by Gemini). It reads everything and saves it to memory."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">兩個核心優勢讓它值得使用：<span class="highlight-key">更少幻覺</span>（它只根據你的來源回答，不會憑空捏造）以及<span class="highlight-key">完全免費</span>（無需信用卡，無使用限制）。</div>
+                <div class="en-text">"Two reasons make it worth your time: Less hallucination: It sticks to your sources. No making things up. It's free: Full access. No credit card. No usage limits."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">訓練方式很簡單：建立新的 Notebook，加入來源，它會自動開始訓練。文章以 Anthropic 官方 Prompt Engineering 影片作為範例來源，訓練一個<span class="highlight-practical">Prompt Advisor</span>。設定 Custom Instructions：「Act as a prompt advisor and optimize the given prompts based on your sources.」</div>
+                <div class="en-text">"In this scenario, we'll use Anthropic's official prompt engineering video as our source... Click on 'Configure Notebook'... Then insert this prompt: 'Act as a prompt advisor and optimize the given prompts based on your sources.'"</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">訓練後的 NotebookLM 能分析你分享的任何 prompt：診斷問題（模糊指令、缺少上下文、不明確目標）、建議替代策略、執行 prompt 最佳化。</div>
+                <div class="en-text">"Your NotebookLM will analyze any prompt you share, and it will: Diagnose what's wrong... Suggest an alternative strategy. Execute prompt optimization."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：Grounded Generation</div>
+                <div class="info-box-content">NotebookLM 的「更少幻覺」來自 <strong>Grounded Generation</strong> 架構：模型回答時只引用你上傳的來源，不靠自身訓練資料發揮。這跟 RAG (Retrieval Augmented Generation) 的原理類似，但整合在 Google 的消費端產品中，降低了使用門檻。</div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明：圖書館 vs 百科全書</div>
+                <div class="info-box-content">一般 LLM 像是一本包羅萬象的百科全書（什麼都知道一點，但可能記錯）。NotebookLM 更像是一個<strong>只讀你指定書籍</strong>的圖書館員 — 回答範圍受限，但出錯率低。缺點是：你的來源品質直接決定回答品質。</div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：「免費」的隱含成本</div>
+                <div class="info-box-content">文章強調「完全免費、無使用限制」，但實際上 NotebookLM 有來源數量上限（每個 Notebook 最多 50 個來源）、單一來源大小限制、以及 audio overview 的生成頻率限制。「免費」也意味著 Google 可能使用你的資料來改進模型。在 CDMO 情境中，上傳 GMP 相關文件前務必確認資料隱私政策。</div>
+            </div>
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#x2696;&#xFE0F; 工具比較：NotebookLM vs Claude Projects</div>
+                <div class="info-box-content">
+                    <strong>NotebookLM</strong>：免費、來源型回答、Audio Overview podcast 功能獨特、深度整合 Google 生態<br>
+                    <strong>Claude Projects</strong>：付費、System Prompt + Knowledge 更靈活、支援 Artifacts 生成、Code Execution<br>
                     關鍵差異：NotebookLM 擅長「消化既有資料」，Claude Projects 擅長「基於資料創造新內容」。兩者定位不同，互補而非互斥。
                 </div>
-</div>
-</div>
-</div>
-<!-- Part II: NotebookLM + Gemini Canvas -->
-<div class="section-header">Part II: NotebookLM + Gemini Canvas = App Builder</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">第一個隱藏連接是把 NotebookLM 變成<span class="highlight-concept">可運作的 App 建構器</span>。步驟：建立帶有來源的 NotebookLM → 開啟 Gemini → 點擊「+」按鈕 → 選擇 NotebookLM 作為來源 → 選擇你的 Notebook → 輸入 Prompt：「Develop app from attached Notebook.」</div>
-<div class="en-text">"Turn your NotebookLM into a working app builder in minutes... Create your NotebookLM with sources. Open Gemini. Click the '+' button. Select NotebookLM as a source. Choose your notebook. Prompt: 'Develop app from attached Notebook.'"</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Gemini Canvas 在不到 2 分鐘內將 NotebookLM 來源轉成了可運作的 Web App。這個 App 使用了 Anthropic 課程中的<span class="highlight-practical">「Externalize Your Brain」方法</span>：左側添加上下文、描述任務、加入範例和期望輸出；右側點擊「Test」生成最佳化的 prompt。</div>
-<div class="en-text">"Gemini Canvas turned your NotebookLM sources into a working web app in under 2 minutes. The app uses 'The Externalize Your Brain' method from Anthropic's course."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">同樣的流程適用於任何 NotebookLM 來源：上傳烹飪影片 → 建立食譜最佳化 App；上傳健身研究 → 建立訓練計畫生成器；上傳產品文件 → 建立客服聊天機器人。</div>
-<div class="en-text">"Upload cooking videos → Build a recipe optimizer app. Upload fitness research → Create a workout plan generator. Upload product docs → Build a customer support chatbot."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：App 品質的現實檢驗</div>
-<div class="info-box-content">文章展示的「2 分鐘建 App」很吸引人，但需要現實期望管理。Gemini Canvas 生成的是<strong>原型等級</strong>的 HTML/JS App，適合快速驗證概念（proof-of-concept），不適合直接用於生產環境。生成品質高度依賴來源的結構化程度 — 一個組織良好的教學影片 vs 一堆雜亂的筆記，產出差異巨大。</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明：搭積木 vs 蓋房子</div>
-<div class="info-box-content">把 Gemini Canvas 建 App 想成用樂高搭房子 — 很快、很有成就感、結構完整。但你不會真的住進去。要住進去（production use），你需要建築師（真正的開發者）來做地基、水電、消防。文章省略了這個從「demo → 可用」的巨大鴻溝。</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：Claude Artifacts 的類似能力</div>
-<div class="info-box-content">Claude 的 Artifacts 功能同樣可以從對話中直接生成互動 Web App（React/HTML）。差異在於：Gemini Canvas 的輸入是 NotebookLM（結構化來源），Claude Artifacts 的輸入是對話上下文和 Project Knowledge。對你來說，Claude Artifacts 已經是日常工具，Gemini Canvas 的增量價值在於它能直接吃 YouTube 影片作為建 App 的素材。</div>
-</div>
-</div>
-</div>
-<!-- Part III: NotebookLM + Gems -->
-<div class="section-header">Part III: NotebookLM + Gems = 永久記憶 AI 助手</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">Gems 是 Gemini 版本的 CustomGPT 或 Claude Projects。你可以建立一個具有<span class="highlight-concept">自訂指令、特定知識來源、跨所有對話的永久記憶</span>的專用聊天機器人。關鍵操作：將 NotebookLM 連接為知識來源，使其成為一個能永遠記住所有內容的可重複使用 AI 助手。</div>
-<div class="en-text">"Gems is Gemini's version of CustomGPT or Claude Projects. You create a specialized chatbot with: Custom instructions, Specific knowledge sources, Permanent memory across all chats."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">建立步驟：開啟 Gemini 選單中的 Gems → 添加名稱和描述 → 在指令欄放入 prompt → 選擇預設工具（Deep Research、影片生成、Canvas 等）→ 在 Knowledge 區塊加入 NotebookLM 作為來源。</div>
-<div class="en-text">"Open Gems inside the Gemini menu. Add 'Name' and 'Description' to it. In the instructions, put the prompt you want... Knowledge: What's new here is that you can add NotebookLM as a source."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">與一般聊天的關鍵差異：普通聊天<span class="highlight-key">關閉分頁就忘記一切</span>，但 Gem 能跨所有對話記憶。文章範例中的 Prompt Advisor Gem 在收到模糊 prompt（如「Write me an article」）時，會先提出釐清問題而不是猜測，這是因為 Anthropic 課程中的「Interview Method」被永久保存在記憶中。</div>
-<div class="en-text">"Unlike regular chats that forget everything when you close the tab, this Gem remembers across all conversations... When your prompt is vague (like 'write me an article'), it asks the right questions instead of guessing."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較：Gems vs Claude Projects vs CustomGPT</div>
-<div class="info-box-content">
-<strong>Gems</strong>：免費、可用 NotebookLM 作為知識源、整合 Google 生態工具（Veo、Canvas）<br/>
-<strong>Claude Projects</strong>：付費（Pro/Max）、System Prompt 更靈活、支援 Artifacts + Code Execution、MCP 整合<br/>
-<strong>CustomGPT</strong>：付費（Plus）、GPT Store 生態、支援 Actions（API 連接）、Code Interpreter<br/>
-<strong>關鍵差異</strong>：Gems 的「永久記憶」其實是把 NotebookLM 的知識庫掛載為持久上下文，概念上等同於 Claude Projects 的 Knowledge 區塊。文章用「永久記憶」的措辭有些誇大 — 它不是真的「記住對話歷史」，而是「每次對話都能存取同一批來源」。
+            </div>
+        </div>
+    </div>
+
+    <!-- Part II: NotebookLM + Gemini Canvas -->
+    <div class="section-header">Part II: NotebookLM + Gemini Canvas = App Builder</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text">第一個隱藏連接是把 NotebookLM 變成<span class="highlight-concept">可運作的 App 建構器</span>。步驟：建立帶有來源的 NotebookLM → 開啟 Gemini → 點擊「+」按鈕 → 選擇 NotebookLM 作為來源 → 選擇你的 Notebook → 輸入 Prompt：「Develop app from attached Notebook.」</div>
+                <div class="en-text">"Turn your NotebookLM into a working app builder in minutes... Create your NotebookLM with sources. Open Gemini. Click the '+' button. Select NotebookLM as a source. Choose your notebook. Prompt: 'Develop app from attached Notebook.'"</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">Gemini Canvas 在不到 2 分鐘內將 NotebookLM 來源轉成了可運作的 Web App。這個 App 使用了 Anthropic 課程中的<span class="highlight-practical">「Externalize Your Brain」方法</span>：左側添加上下文、描述任務、加入範例和期望輸出；右側點擊「Test」生成最佳化的 prompt。</div>
+                <div class="en-text">"Gemini Canvas turned your NotebookLM sources into a working web app in under 2 minutes. The app uses 'The Externalize Your Brain' method from Anthropic's course."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">同樣的流程適用於任何 NotebookLM 來源：上傳烹飪影片 → 建立食譜最佳化 App；上傳健身研究 → 建立訓練計畫生成器；上傳產品文件 → 建立客服聊天機器人。</div>
+                <div class="en-text">"Upload cooking videos → Build a recipe optimizer app. Upload fitness research → Create a workout plan generator. Upload product docs → Build a customer support chatbot."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：App 品質的現實檢驗</div>
+                <div class="info-box-content">文章展示的「2 分鐘建 App」很吸引人，但需要現實期望管理。Gemini Canvas 生成的是<strong>原型等級</strong>的 HTML/JS App，適合快速驗證概念（proof-of-concept），不適合直接用於生產環境。生成品質高度依賴來源的結構化程度 — 一個組織良好的教學影片 vs 一堆雜亂的筆記，產出差異巨大。</div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明：搭積木 vs 蓋房子</div>
+                <div class="info-box-content">把 Gemini Canvas 建 App 想成用樂高搭房子 — 很快、很有成就感、結構完整。但你不會真的住進去。要住進去（production use），你需要建築師（真正的開發者）來做地基、水電、消防。文章省略了這個從「demo → 可用」的巨大鴻溝。</div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：Claude Artifacts 的類似能力</div>
+                <div class="info-box-content">Claude 的 Artifacts 功能同樣可以從對話中直接生成互動 Web App（React/HTML）。差異在於：Gemini Canvas 的輸入是 NotebookLM（結構化來源），Claude Artifacts 的輸入是對話上下文和 Project Knowledge。對你來說，Claude Artifacts 已經是日常工具，Gemini Canvas 的增量價值在於它能直接吃 YouTube 影片作為建 App 的素材。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part III: NotebookLM + Gems -->
+    <div class="section-header">Part III: NotebookLM + Gems = 永久記憶 AI 助手</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text">Gems 是 Gemini 版本的 CustomGPT 或 Claude Projects。你可以建立一個具有<span class="highlight-concept">自訂指令、特定知識來源、跨所有對話的永久記憶</span>的專用聊天機器人。關鍵操作：將 NotebookLM 連接為知識來源，使其成為一個能永遠記住所有內容的可重複使用 AI 助手。</div>
+                <div class="en-text">"Gems is Gemini's version of CustomGPT or Claude Projects. You create a specialized chatbot with: Custom instructions, Specific knowledge sources, Permanent memory across all chats."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">建立步驟：開啟 Gemini 選單中的 Gems → 添加名稱和描述 → 在指令欄放入 prompt → 選擇預設工具（Deep Research、影片生成、Canvas 等）→ 在 Knowledge 區塊加入 NotebookLM 作為來源。</div>
+                <div class="en-text">"Open Gems inside the Gemini menu. Add 'Name' and 'Description' to it. In the instructions, put the prompt you want... Knowledge: What's new here is that you can add NotebookLM as a source."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">與一般聊天的關鍵差異：普通聊天<span class="highlight-key">關閉分頁就忘記一切</span>，但 Gem 能跨所有對話記憶。文章範例中的 Prompt Advisor Gem 在收到模糊 prompt（如「Write me an article」）時，會先提出釐清問題而不是猜測，這是因為 Anthropic 課程中的「Interview Method」被永久保存在記憶中。</div>
+                <div class="en-text">"Unlike regular chats that forget everything when you close the tab, this Gem remembers across all conversations... When your prompt is vague (like 'write me an article'), it asks the right questions instead of guessing."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#x2696;&#xFE0F; 工具比較：Gems vs Claude Projects vs CustomGPT</div>
+                <div class="info-box-content">
+                    <strong>Gems</strong>：免費、可用 NotebookLM 作為知識源、整合 Google 生態工具（Veo、Canvas）<br>
+                    <strong>Claude Projects</strong>：付費（Pro/Max）、System Prompt 更靈活、支援 Artifacts + Code Execution、MCP 整合<br>
+                    <strong>CustomGPT</strong>：付費（Plus）、GPT Store 生態、支援 Actions（API 連接）、Code Interpreter<br>
+                    <strong>關鍵差異</strong>：Gems 的「永久記憶」其實是把 NotebookLM 的知識庫掛載為持久上下文，概念上等同於 Claude Projects 的 Knowledge 區塊。文章用「永久記憶」的措辭有些誇大 — 它不是真的「記住對話歷史」，而是「每次對話都能存取同一批來源」。
                 </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：「永久記憶」的精確定義</div>
-<div class="info-box-content">文章宣稱 Gem「永遠記住一切」，需要區分兩種記憶：<br/>
-<strong>(1) 知識記憶</strong>：來自 NotebookLM 的來源資料 — 是的，這是持久的<br/>
-<strong>(2) 對話記憶</strong>：跨對話記住你之前問了什麼 — 這取決於 Gemini 的 memory 功能，不是 Gem 本身保證的<br/>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：「永久記憶」的精確定義</div>
+                <div class="info-box-content">文章宣稱 Gem「永遠記住一切」，需要區分兩種記憶：<br>
+                <strong>(1) 知識記憶</strong>：來自 NotebookLM 的來源資料 — 是的，這是持久的<br>
+                <strong>(2) 對話記憶</strong>：跨對話記住你之前問了什麼 — 這取決於 Gemini 的 memory 功能，不是 Gem 本身保證的<br>
                 不要把「每次都能存取知識庫」等同於「記住我們所有互動」。Claude Projects 也有同樣的限制。</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：何時選 Gems vs Claude Projects</div>
-<div class="info-box-content">如果你的工作流已深度使用 Google 生態（Google Docs、Drive、YouTube），Gems 的整合優勢明顯。如果你需要精確控制 System Prompt、生成程式碼 Artifacts、或使用 MCP 連接外部工具，Claude Projects 仍然是更強的選擇。對你的 COO Track 學習系統來說，Claude Projects 的 Knowledge + Artifacts + Code Execution 三合一能力是 Gems 目前無法匹敵的。</div>
-</div>
-</div>
-</div>
-<!-- Part IV: NotebookLM + Antigravity MCP -->
-<div class="section-header">Part IV: NotebookLM + Antigravity MCP = 自動化研究系統</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">Antigravity</span> 是一個為 AI Agent 工作流設計的 AI 驅動 IDE。可以把它想成 VS Code，但專為 AI 原生開發設計。支援多模型（Claude、Gemini、GPT）、多 Agent 同時運作、即時預覽。有相當不錯的免費額度。</div>
-<div class="en-text">"Antigravity is an AI-powered IDE built for working with AI agents. Think VS Code, but designed for AI-native development. Key features: It supports multi-agent workflows... Claude, Gemini, and GPT models all work."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">透過安裝 NotebookLM MCP，你可以在 Antigravity 中<span class="highlight-practical">程式化控制 NotebookLM 的 32 種功能</span>：建立 Notebook、檢索內容、生成 Audio Overview / 影片 / 資訊圖表、建立投影片 / 報告 / 心智圖、提取資料表等。</div>
-<div class="en-text">"The NotebookLM MCP we're about to build gives us access to 32 different actions. Things like creating a notebook, retrieving notebook content, and much more."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">安裝 MCP 的方式很簡單 — 不需要手動設定 JSON 檔案，只需在 Antigravity 中貼上一段安裝指令 prompt，它會自動安裝 <code>notebooklm-mcp-server</code>、設定 MCP 組態檔、執行瀏覽器認證。</div>
-<div class="en-text">"No need to configure complex JSON files to install an MCP. We'll do it with one prompt... Install the notebooklm-mcp-server package using uv... Run the authentication command... Verify the installation is working."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">文章範例：用一句 prompt 自動建立一個關於新生兒照護的 NotebookLM，讓 MCP 自動執行深度研究並填充來源，幾分鐘後 Notebook 就建好了。一個 MCP 連接就能存取 NotebookLM 所有功能。</div>
-<div class="en-text">"Create a NotebookLM through MCP for me about how to take care of my upcoming baby girl... After a couple of minutes, our notebook is ready."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：MCP 在此的角色</div>
-<div class="info-box-content">MCP (Model Context Protocol) 在這裡扮演的角色是讓 LLM 能透過<strong>預定義函數</strong>操作外部應用程式。NotebookLM MCP 提供 32 個函數，本質上就是 NotebookLM API 的 MCP 封裝。這跟你之前學的 Claude MCP 整合是同一個概念，只是方向相反 — Wyndo 之前的文章是把 NotebookLM 連到 Claude，這篇是把 NotebookLM 連到 Antigravity（可以選用任何 LLM）。</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：Antigravity 的成熟度問題</div>
-<div class="info-box-content">Antigravity 是相對新的產品，雖然文章提到「不錯的免費額度」，但以下幾點值得注意：<br/>
-                (1) <strong>穩定性</strong>：新 IDE 的 MCP 整合可能有 edge case 未處理<br/>
-                (2) <strong>鎖定風險</strong>：如果 Antigravity 停止維護，你的工作流就斷了<br/>
-                (3) <strong>替代方案</strong>：同樣的 NotebookLM MCP 也可以安裝在 Claude Code CLI 中<br/>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：何時選 Gems vs Claude Projects</div>
+                <div class="info-box-content">如果你的工作流已深度使用 Google 生態（Google Docs、Drive、YouTube），Gems 的整合優勢明顯。如果你需要精確控制 System Prompt、生成程式碼 Artifacts、或使用 MCP 連接外部工具，Claude Projects 仍然是更強的選擇。對你的 COO Track 學習系統來說，Claude Projects 的 Knowledge + Artifacts + Code Execution 三合一能力是 Gems 目前無法匹敵的。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part IV: NotebookLM + Antigravity MCP -->
+    <div class="section-header">Part IV: NotebookLM + Antigravity MCP = 自動化研究系統</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh-text"><span class="highlight-concept">Antigravity</span> 是一個為 AI Agent 工作流設計的 AI 驅動 IDE。可以把它想成 VS Code，但專為 AI 原生開發設計。支援多模型（Claude、Gemini、GPT）、多 Agent 同時運作、即時預覽。有相當不錯的免費額度。</div>
+                <div class="en-text">"Antigravity is an AI-powered IDE built for working with AI agents. Think VS Code, but designed for AI-native development. Key features: It supports multi-agent workflows... Claude, Gemini, and GPT models all work."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">透過安裝 NotebookLM MCP，你可以在 Antigravity 中<span class="highlight-practical">程式化控制 NotebookLM 的 32 種功能</span>：建立 Notebook、檢索內容、生成 Audio Overview / 影片 / 資訊圖表、建立投影片 / 報告 / 心智圖、提取資料表等。</div>
+                <div class="en-text">"The NotebookLM MCP we're about to build gives us access to 32 different actions. Things like creating a notebook, retrieving notebook content, and much more."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">安裝 MCP 的方式很簡單 — 不需要手動設定 JSON 檔案，只需在 Antigravity 中貼上一段安裝指令 prompt，它會自動安裝 <code>notebooklm-mcp-server</code>、設定 MCP 組態檔、執行瀏覽器認證。</div>
+                <div class="en-text">"No need to configure complex JSON files to install an MCP. We'll do it with one prompt... Install the notebooklm-mcp-server package using uv... Run the authentication command... Verify the installation is working."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh-text">文章範例：用一句 prompt 自動建立一個關於新生兒照護的 NotebookLM，讓 MCP 自動執行深度研究並填充來源，幾分鐘後 Notebook 就建好了。一個 MCP 連接就能存取 NotebookLM 所有功能。</div>
+                <div class="en-text">"Create a NotebookLM through MCP for me about how to take care of my upcoming baby girl... After a couple of minutes, our notebook is ready."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：MCP 在此的角色</div>
+                <div class="info-box-content">MCP (Model Context Protocol) 在這裡扮演的角色是讓 LLM 能透過<strong>預定義函數</strong>操作外部應用程式。NotebookLM MCP 提供 32 個函數，本質上就是 NotebookLM API 的 MCP 封裝。這跟你之前學的 Claude MCP 整合是同一個概念，只是方向相反 — Wyndo 之前的文章是把 NotebookLM 連到 Claude，這篇是把 NotebookLM 連到 Antigravity（可以選用任何 LLM）。</div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：Antigravity 的成熟度問題</div>
+                <div class="info-box-content">Antigravity 是相對新的產品，雖然文章提到「不錯的免費額度」，但以下幾點值得注意：<br>
+                (1) <strong>穩定性</strong>：新 IDE 的 MCP 整合可能有 edge case 未處理<br>
+                (2) <strong>鎖定風險</strong>：如果 Antigravity 停止維護，你的工作流就斷了<br>
+                (3) <strong>替代方案</strong>：同樣的 NotebookLM MCP 也可以安裝在 Claude Code CLI 中<br>
                 文章沒有提到任何這些風險，典型的「新工具推廣文」模式。</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：CDMO 情境可能性</div>
-<div class="info-box-content">想像一個工作流：把 GMP 訓練教材、SOP 更新、法規變更通知上傳到 NotebookLM → 透過 MCP 自動生成訓練素材（podcast、投影片）→ 定期自動更新來源。聽起來很美，但注意：<strong>GMP 敏感文件不應上傳到 Google 的消費者產品</strong>。這個工作流只適用於公開或非機密的訓練素材。</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較：NotebookLM MCP vs Claude Code + MCP</div>
-<div class="info-box-content">
-<strong>NotebookLM MCP via Antigravity</strong>：存取 NotebookLM 32 個函數、可用多種模型驅動、需要額外 IDE<br/>
-<strong>Claude Code + MCP</strong>：直接在終端操作、原生整合 Claude 能力、Hook 系統自訂工作流<br/>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：CDMO 情境可能性</div>
+                <div class="info-box-content">想像一個工作流：把 GMP 訓練教材、SOP 更新、法規變更通知上傳到 NotebookLM → 透過 MCP 自動生成訓練素材（podcast、投影片）→ 定期自動更新來源。聽起來很美，但注意：<strong>GMP 敏感文件不應上傳到 Google 的消費者產品</strong>。這個工作流只適用於公開或非機密的訓練素材。</div>
+            </div>
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#x2696;&#xFE0F; 工具比較：NotebookLM MCP vs Claude Code + MCP</div>
+                <div class="info-box-content">
+                    <strong>NotebookLM MCP via Antigravity</strong>：存取 NotebookLM 32 個函數、可用多種模型驅動、需要額外 IDE<br>
+                    <strong>Claude Code + MCP</strong>：直接在終端操作、原生整合 Claude 能力、Hook 系統自訂工作流<br>
                     如果你已經有 Claude Code CLI 的工作流，安裝 NotebookLM MCP 到 Claude Code 中可能比另外裝 Antigravity 更有效率。
                 </div>
-</div>
-</div>
-</div>
-<!-- Part V: When to Use Each -->
-<div class="section-header">Part V: 何時使用哪個連接</div>
-<div class="content-grid" style="grid-template-columns: 1fr;">
-<div style="padding: 1.5rem;">
-<div class="bilingual-block">
-<div class="zh-text">文章最後提供了一個簡單的決策框架：Gemini Canvas 適合從內容快速建立 App；Gems 適合建立具有永久記憶的 AI 助手；Antigravity 適合自動化研究和 Notebook 建立。</div>
-<div class="en-text">"Gemini - Quick apps from content. Gems - AI assistant with permanent memory. Antigravity - Automate research &amp; notebook creation &amp; apps from your NotebookLM."</div>
-</div>
-<table style="width:100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem;">
-<thead>
-<tr style="background: #1e3a5f; color: white;">
-<th style="padding: 0.75rem; text-align: left;">連接方式</th>
-<th style="padding: 0.75rem; text-align: left;">最佳用途</th>
-<th style="padding: 0.75rem; text-align: left;">需要</th>
-<th style="padding: 0.75rem; text-align: left;">限制</th>
-</tr>
-</thead>
-<tbody>
-<tr style="background: white; border-bottom: 1px solid #e2e8f0;">
-<td style="padding: 0.75rem; font-weight: 600;">Gemini Canvas</td>
-<td style="padding: 0.75rem;">快速原型 App</td>
-<td style="padding: 0.75rem;">Gemini 帳號</td>
-<td style="padding: 0.75rem;">僅原型等級；App 品質受來源影響</td>
-</tr>
-<tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
-<td style="padding: 0.75rem; font-weight: 600;">Gems</td>
-<td style="padding: 0.75rem;">持久知識庫助手</td>
-<td style="padding: 0.75rem;">Gemini 帳號</td>
-<td style="padding: 0.75rem;">「永久記憶」僅限知識來源，非對話記憶</td>
-</tr>
-<tr style="background: white;">
-<td style="padding: 0.75rem; font-weight: 600;">Antigravity MCP</td>
-<td style="padding: 0.75rem;">批次自動化研究</td>
-<td style="padding: 0.75rem;">Antigravity IDE + MCP 設定</td>
-<td style="padding: 0.75rem;">工具成熟度低、鎖定風險、可用 Claude Code 替代</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- Key Takeaways -->
-<div class="section-header">Key Takeaways</div>
-<div class="takeaways-grid">
-<div class="summary-card">
-<div class="card-icon">🔗</div>
-<div class="card-title">三條連接，三種定位</div>
-<div class="card-text">NotebookLM 透過 Gemini Canvas（建 App）、Gems（永久助手）、Antigravity MCP（自動化）擴展為 Google 生態的 AI 指揮中心。核心價值在 Google 生態整合。</div>
-</div>
-<div class="summary-card">
-<div class="card-icon">🔍</div>
-<div class="card-title">「永久記憶」需打折理解</div>
-<div class="card-text">Gems 的「永久記憶」實際上是持久知識庫存取，不等於記住跨對話的互動歷史。概念上等同於 Claude Projects 的 Knowledge，不是突破性功能。</div>
-</div>
-<div class="summary-card">
-<div class="card-icon">🛠</div>
-<div class="card-title">MCP 是真正的彈性所在</div>
-<div class="card-text">32 個 NotebookLM 函數的 MCP 封裝是最有技術價值的部分 — 但不需要 Antigravity 才能用，Claude Code CLI 同樣可以安裝此 MCP。</div>
-</div>
-<div class="summary-card">
-<div class="card-icon">⚠</div>
-<div class="card-title">Google 生態鎖定的雙面刃</div>
-<div class="card-text">所有三條連接都深度依賴 Google 生態。如果你的主力工具鏈是 Claude + Make.com，這些連接的直接價值有限，但了解競爭生態的整合思路有戰略意義。</div>
-</div>
-</div>
-<!-- Practice Questions -->
-<div class="section-header">Practice Questions</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">文章聲稱 Gems 提供「永久記憶」，這跟 Claude Projects 的 Knowledge 功能本質上有什麼不同？如果沒有本質不同，為什麼文章要用更誇張的措辭？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>本質上沒有根本性差異。兩者都是「每次對話自動載入預設的知識庫」，而非「記住跨對話的互動歷史」。文章使用「永久記憶 (permanent memory)」的措辭有行銷放大的成分 — 對不熟悉 Claude Projects 或 CustomGPT 的讀者來說，這聽起來像是突破性功能。差異在於來源格式：Gems 可以直接掛載 NotebookLM（多媒體來源），Claude Projects 使用文字檔。但核心機制（持久上下文注入）是相同的。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">假設你的 CDMO 想用 NotebookLM 建立一個偏差調查知識庫，讓品管人員快速查詢歷史偏差案例和調查方法。這個方案最大的阻礙是什麼？你會如何修改方案？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>最大阻礙是 GMP 資料隱私。偏差調查記錄包含產品名稱、批號、客戶資訊 — 這些是高度機密的 GMP 資料，不能上傳到 Google 的消費者產品（即使 Google 聲稱不使用資料訓練模型，這在 GMP 稽核中可能不被接受）。修改方案：(1) 只上傳公開的法規指引（如 PIC/S 偏差調查指南、FDA Warning Letters 公開案例），不上傳內部記錄。(2) 使用組織的 Google Workspace Enterprise + DLP 政策，確保資料留在組織控制範圍內。(3) 考慮用 Claude Projects（有明確的資料使用政策）搭配脫敏後的案例模板。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">這篇文章稱 NotebookLM 的三大連接是「隱藏功能 (hidden features)」。以你的 2-3x Discount Principle 來評估，這個說法的實際折扣率是多少？為什麼？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>折扣率約 2x-2.5x。原因：(1)「隱藏」的措辭有標題黨成分 — Gemini Canvas 和 Gems 是 Google 公開發布的功能，只是沒有在 NotebookLM 介面中直接顯示入口，不算「隱藏」。(2) Antigravity + MCP 確實是較少人知道的整合方式，這點接近真正的「隱藏」。(3) 文章省略的重要資訊：Gemini Canvas 建的 App 品質限制、「永久記憶」的精確含義、Antigravity 的成熟度風險、資料隱私考量。文章以最樂觀的方式呈現每個功能，是典型的 AI 工具推廣文模式 — 很好的入門導覽，但不能直接當成採用決策的依據。</p>
-</div>
-</details>
-<!-- Bottom Line -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Google 正在把 NotebookLM 從單一研究工具打造成生態系中心節點（Canvas 建 App、Gems 持久助手、MCP 自動化）。這跟 Anthropic 把 Claude 從聊天機器人擴展到 Projects + Code + MCP 的策略異曲同工。理解競爭對手的整合策略，能幫我更好地評估自己的工具鏈選擇。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">這週可以嘗試一件事：安裝 <code>notebooklm-mcp-server</code> 到 Claude Code CLI，測試能否在 Claude Code 中直接操作 NotebookLM 的 32 個函數。如果可行，就能在不離開 Claude 工作流的前提下，利用 NotebookLM 的 Audio Overview 功能把教學文件轉成 podcast。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章完全沒有涉及資料隱私和企業合規考量 — 這在 CDMO 情境中是 kill filter。需要另外研究 Google Workspace Enterprise 對 NotebookLM 的資料隔離政策。另外，32 個 MCP 函數的完整清單和各函數的穩定性需要實測驗證，文章只列了函數名稱截圖但沒有深入說明。</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-03-18 | 原文：<a href="https://open.substack.com/pub/wyndo/p/3-hidden-notebooklm-features-most" target="_blank">3 Hidden NotebookLM Features Most People Don't Use</a> — Wyndo (AI Maker Labs) / Gencay (LearnAIWithMe)</p>
-<p>Suggested Chat Title: 2026-03-18 [Tool] Wyndo/Gencay - NotebookLM Hidden Connections</p>
-</footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part V: When to Use Each -->
+    <div class="section-header">Part V: 何時使用哪個連接</div>
+    <div class="content-grid" style="grid-template-columns: 1fr;">
+        <div style="padding: 1.5rem;">
+            <div class="bilingual-block">
+                <div class="zh-text">文章最後提供了一個簡單的決策框架：Gemini Canvas 適合從內容快速建立 App；Gems 適合建立具有永久記憶的 AI 助手；Antigravity 適合自動化研究和 Notebook 建立。</div>
+                <div class="en-text">"Gemini - Quick apps from content. Gems - AI assistant with permanent memory. Antigravity - Automate research &amp; notebook creation &amp; apps from your NotebookLM."</div>
+            </div>
+            <table style="width:100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem;">
+                <thead>
+                    <tr style="background: #1e3a5f; color: white;">
+                        <th style="padding: 0.75rem; text-align: left;">連接方式</th>
+                        <th style="padding: 0.75rem; text-align: left;">最佳用途</th>
+                        <th style="padding: 0.75rem; text-align: left;">需要</th>
+                        <th style="padding: 0.75rem; text-align: left;">限制</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: white; border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 0.75rem; font-weight: 600;">Gemini Canvas</td>
+                        <td style="padding: 0.75rem;">快速原型 App</td>
+                        <td style="padding: 0.75rem;">Gemini 帳號</td>
+                        <td style="padding: 0.75rem;">僅原型等級；App 品質受來源影響</td>
+                    </tr>
+                    <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 0.75rem; font-weight: 600;">Gems</td>
+                        <td style="padding: 0.75rem;">持久知識庫助手</td>
+                        <td style="padding: 0.75rem;">Gemini 帳號</td>
+                        <td style="padding: 0.75rem;">「永久記憶」僅限知識來源，非對話記憶</td>
+                    </tr>
+                    <tr style="background: white;">
+                        <td style="padding: 0.75rem; font-weight: 600;">Antigravity MCP</td>
+                        <td style="padding: 0.75rem;">批次自動化研究</td>
+                        <td style="padding: 0.75rem;">Antigravity IDE + MCP 設定</td>
+                        <td style="padding: 0.75rem;">工具成熟度低、鎖定風險、可用 Claude Code 替代</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Key Takeaways -->
+    <div class="section-header">Key Takeaways</div>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <div class="card-icon">&#x1F517;</div>
+            <div class="card-title">三條連接，三種定位</div>
+            <div class="card-text">NotebookLM 透過 Gemini Canvas（建 App）、Gems（永久助手）、Antigravity MCP（自動化）擴展為 Google 生態的 AI 指揮中心。核心價值在 Google 生態整合。</div>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">&#x1F50D;</div>
+            <div class="card-title">「永久記憶」需打折理解</div>
+            <div class="card-text">Gems 的「永久記憶」實際上是持久知識庫存取，不等於記住跨對話的互動歷史。概念上等同於 Claude Projects 的 Knowledge，不是突破性功能。</div>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">&#x1F6E0;</div>
+            <div class="card-title">MCP 是真正的彈性所在</div>
+            <div class="card-text">32 個 NotebookLM 函數的 MCP 封裝是最有技術價值的部分 — 但不需要 Antigravity 才能用，Claude Code CLI 同樣可以安裝此 MCP。</div>
+        </div>
+        <div class="summary-card">
+            <div class="card-icon">&#x26A0;</div>
+            <div class="card-title">Google 生態鎖定的雙面刃</div>
+            <div class="card-text">所有三條連接都深度依賴 Google 生態。如果你的主力工具鏈是 Claude + Make.com，這些連接的直接價值有限，但了解競爭生態的整合思路有戰略意義。</div>
+        </div>
+    </div>
+
+    <!-- Practice Questions -->
+    <div class="section-header">Practice Questions</div>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">文章聲稱 Gems 提供「永久記憶」，這跟 Claude Projects 的 Knowledge 功能本質上有什麼不同？如果沒有本質不同，為什麼文章要用更誇張的措辭？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>本質上沒有根本性差異。兩者都是「每次對話自動載入預設的知識庫」，而非「記住跨對話的互動歷史」。文章使用「永久記憶 (permanent memory)」的措辭有行銷放大的成分 — 對不熟悉 Claude Projects 或 CustomGPT 的讀者來說，這聽起來像是突破性功能。差異在於來源格式：Gems 可以直接掛載 NotebookLM（多媒體來源），Claude Projects 使用文字檔。但核心機制（持久上下文注入）是相同的。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">假設你的 CDMO 想用 NotebookLM 建立一個偏差調查知識庫，讓品管人員快速查詢歷史偏差案例和調查方法。這個方案最大的阻礙是什麼？你會如何修改方案？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>最大阻礙是 GMP 資料隱私。偏差調查記錄包含產品名稱、批號、客戶資訊 — 這些是高度機密的 GMP 資料，不能上傳到 Google 的消費者產品（即使 Google 聲稱不使用資料訓練模型，這在 GMP 稽核中可能不被接受）。修改方案：(1) 只上傳公開的法規指引（如 PIC/S 偏差調查指南、FDA Warning Letters 公開案例），不上傳內部記錄。(2) 使用組織的 Google Workspace Enterprise + DLP 政策，確保資料留在組織控制範圍內。(3) 考慮用 Claude Projects（有明確的資料使用政策）搭配脫敏後的案例模板。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">這篇文章稱 NotebookLM 的三大連接是「隱藏功能 (hidden features)」。以你的 2-3x Discount Principle 來評估，這個說法的實際折扣率是多少？為什麼？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>折扣率約 2x-2.5x。原因：(1)「隱藏」的措辭有標題黨成分 — Gemini Canvas 和 Gems 是 Google 公開發布的功能，只是沒有在 NotebookLM 介面中直接顯示入口，不算「隱藏」。(2) Antigravity + MCP 確實是較少人知道的整合方式，這點接近真正的「隱藏」。(3) 文章省略的重要資訊：Gemini Canvas 建的 App 品質限制、「永久記憶」的精確含義、Antigravity 的成熟度風險、資料隱私考量。文章以最樂觀的方式呈現每個功能，是典型的 AI 工具推廣文模式 — 很好的入門導覽，但不能直接當成採用決策的依據。</p>
+        </div>
+    </details>
+
+    <!-- Bottom Line -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x2714; 核心洞察</div>
+            <div class="bottom-line-text">Google 正在把 NotebookLM 從單一研究工具打造成生態系中心節點（Canvas 建 App、Gems 持久助手、MCP 自動化）。這跟 Anthropic 把 Claude 從聊天機器人擴展到 Projects + Code + MCP 的策略異曲同工。理解競爭對手的整合策略，能幫我更好地評估自己的工具鏈選擇。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+            <div class="bottom-line-text">這週可以嘗試一件事：安裝 <code>notebooklm-mcp-server</code> 到 Claude Code CLI，測試能否在 Claude Code 中直接操作 NotebookLM 的 32 個函數。如果可行，就能在不離開 Claude 工作流的前提下，利用 NotebookLM 的 Audio Overview 功能把教學文件轉成 podcast。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x26A0; 需要補充</div>
+            <div class="bottom-line-text">文章完全沒有涉及資料隱私和企業合規考量 — 這在 CDMO 情境中是 kill filter。需要另外研究 Google Workspace Enterprise 對 NotebookLM 的資料隔離政策。另外，32 個 MCP 函數的完整清單和各函數的穩定性需要實測驗證，文章只列了函數名稱截圖但沒有深入說明。</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>製作日期：2026-03-18 | 原文：<a href="https://open.substack.com/pub/wyndo/p/3-hidden-notebooklm-features-most" target="_blank">3 Hidden NotebookLM Features Most People Don't Use</a> — Wyndo (AI Maker Labs) / Gencay (LearnAIWithMe)</p>
+        <p>Suggested Chat Title: 2026-03-18 [Tool] Wyndo/Gencay - NotebookLM Hidden Connections</p>
+    </div>
+
 </div><!-- end container -->
+
 </body>
 </html>
