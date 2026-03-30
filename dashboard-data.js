@@ -11,7 +11,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "中國 AI KOL 的 2026-2030 大膽預測。編排者經濟、技能蒸發、薄殼公司、教育重構。觀點鮮明但缺乏數據來源。",
-    "lines": 589,
+    "lines": 765,
     "file": "2026-03-28_ai-2030-prediction.html"
   },
   {
@@ -26,7 +26,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "10 個可重複使用的 Claude prompt workflow，涵蓋研究、內容、程式碼審查、數據分析。實測追蹤每週省 13 小時。",
-    "lines": 608,
+    "lines": 807,
     "file": "2026-03-28_claude-10-workflows.html"
   },
   {
@@ -41,7 +41,7 @@ const documents = [
     ],
     "rating": 4.3,
     "summary": "Harness Engineering 系統解析：從馬具比喻到三層架構，LangChain/OpenAI/Anthropic 實證，含 CDMO 合規類比。",
-    "lines": 527,
+    "lines": 752,
     "file": "2026-03-28_harness-engineering.html"
   },
   {
@@ -56,7 +56,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Claude Code 近 10 版 (v2.1.74–v2.1.84) 完整更新紀錄，涵蓋新功能、改進、錯誤修復三大類",
-    "lines": 476,
+    "lines": 663,
     "file": "2026-03-27_claude-code-version-changelog.html"
   },
   {
@@ -70,7 +70,7 @@ const documents = [
     ],
     "rating": 3.4,
     "summary": "7 個健身 Claude Prompt 的結構解析。模板化 placeholder、角色設定、輸出規格三層架構的跨領域應用。",
-    "lines": 448,
+    "lines": 615,
     "file": "2026-03-27_fitness-prompt-engineering.html"
   },
   {
@@ -86,7 +86,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "Claude Code auto mode 以分類器取代人工審批，在自主性與安全性間取得平衡。雙階段架構、威脅模型、17% FNR 的誠實數據。",
-    "lines": 427,
+    "lines": 617,
     "file": "2026-03-26_claude-code-auto-mode.html"
   },
   {
@@ -100,7 +100,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "Koe 創意枯竭回歸框架：三大思維窄化因素、七日協議、有意義專案作為創意透鏡。",
-    "lines": 379,
+    "lines": 537,
     "file": "2026-03-26_koe-creativity-protocol.html"
   },
   {
@@ -113,7 +113,7 @@ const documents = [
     ],
     "rating": 0,
     "summary": "6種有臨床證據的補劑 vs 7種智商稅。證據等級排序、作用機制、選購要點完整整理。",
-    "lines": 595,
+    "lines": 800,
     "file": "2026-03-26_trader-supplement-guide.html"
   },
   {
@@ -129,7 +129,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "GAN 啟發的 Generator-Evaluator-Planner 三代理人架構，解決長時間自主編碼的品質控制與自我評估偏差。",
-    "lines": 461,
+    "lines": 635,
     "file": "2026-03-25_harness-design-long-running-apps.html"
   },
   {
@@ -144,7 +144,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Claude Code .claude/ 資料夾完整解析：CLAUDE.md、commands、skills、agents、permissions 設定指南",
-    "lines": 655,
+    "lines": 900,
     "file": "2026-03-24_claude-code-dot-claude-folder.html"
   },
   {
@@ -159,7 +159,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "Van Horn 全套 Claude Code 工作流：plan.md 驅動、語音輸入、六路並行、設定調校、研究循環。",
-    "lines": 554,
+    "lines": 746,
     "file": "2026-03-24_claude-code-power-user.html"
   },
   {
@@ -174,7 +174,7 @@ const documents = [
     ],
     "rating": 3.2,
     "summary": "Obsidian 本地知識庫 + Claude Code CLI 打造個人化 AI 助手。概念清晰但缺技術深度。",
-    "lines": 349,
+    "lines": 525,
     "file": "2026-03-23_obsidian-claude-code-stack.html"
   },
   {
@@ -188,7 +188,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Roche與Nvidia合建製藥業最大AI工廠，解析AI基礎建設軍備競賽對CDMO的影響與機會",
-    "lines": 307,
+    "lines": 488,
     "file": "2026-03-23_roche-nvidia-ai-factory-pharma.html"
   },
   {
@@ -203,7 +203,7 @@ const documents = [
     ],
     "rating": 4.6,
     "summary": "Tw93 六個月 Agent 實戰總結。涵蓋 Agent Loop、Context Engineering、Tool ACI、Memory、Multi-Agent、Eval 與 OpenClaw 實作。",
-    "lines": 529,
+    "lines": 727,
     "file": "2026-03-23_tw93-agent-engineering.html"
   },
   {
@@ -218,7 +218,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Browser Use CLI 完整指南：daemon 架構、三種瀏覽器模式、命令體系、Cloud API 整合與 MCP 應用。",
-    "lines": 495,
+    "lines": 713,
     "file": "2026-03-21_browser-use-cli.html"
   },
   {
@@ -233,7 +233,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "OpenClaw 三天踩坑經驗 vs Claude Code Channels 一鍵接入。Telegram/Discord 設定教學、安全模型比較。",
-    "lines": 471,
+    "lines": 681,
     "file": "2026-03-21_claude-code-channels-vs-openclaw.html"
   },
   {
@@ -247,7 +247,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Claude Code 四層配置架構：CLAUDE.md 入職手冊、rules 模組拆分、Context over Instruction 原則。",
-    "lines": 401,
+    "lines": 572,
     "file": "2026-03-21_claude-code-config-files.html"
   },
   {
@@ -262,7 +262,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "拆解 YC CEO Garry Tan 的 gstack plan-ceo-review skill，分析為什麼領域無關的 meta-prompt 能跨領域生效。",
-    "lines": 440,
+    "lines": 645,
     "file": "2026-03-20_garry-tan-gstack-skill-anatomy.html"
   },
   {
@@ -277,7 +277,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "Claude Dispatch + Cowork + Plugins + Skills + Scheduled Tasks 五層架構全解析。",
-    "lines": 413,
+    "lines": 593,
     "file": "2026-03-19_claude-dispatch-ecosystem.html"
   },
   {
@@ -292,7 +292,7 @@ const documents = [
     ],
     "rating": 4.4,
     "summary": "Anthropic 內部 Skills 實戰經驗：9 大類型、撰寫技巧、分發策略。",
-    "lines": 629,
+    "lines": 829,
     "file": "2026-03-18_claude-code-skills-lessons.html"
   },
   {
@@ -307,7 +307,7 @@ const documents = [
     ],
     "rating": 3.4,
     "summary": "NotebookLM 連接 Gemini Canvas 建 App、Gems 建永久助手、Antigravity MCP 自動化研究。實用但多為 Google 生態圈限定。",
-    "lines": 382,
+    "lines": 549,
     "file": "2026-03-18_notebooklm-hidden-features.html"
   },
   {
@@ -322,7 +322,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "三種 context rot 失敗模式、Compaction API 設定、CLAUDE.md 記憶層級架構，實戰操作清單。",
-    "lines": 572,
+    "lines": 772,
     "file": "2026-03-16_1m-context-compaction.html"
   },
   {
@@ -336,7 +336,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "長上下文退化時的 Agent 交接 Prompt 模板，含 v2.0 結構化七段交接格式與 Prompt 自舉技巧。",
-    "lines": 372,
+    "lines": 549,
     "file": "2026-03-16_agent-handoff-successor-prompt.html"
   },
   {
@@ -351,7 +351,7 @@ const documents = [
     ],
     "rating": 4.3,
     "summary": "拆解 Claude Certified Architect 考試五大 Domain，含反模式、建構練習、學習資源。",
-    "lines": 691,
+    "lines": 906,
     "file": "2026-03-16_claude-architect-certification.html"
   },
   {
@@ -367,7 +367,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "28 個版本釋出分析：Multi-Agent 架構、記憶體工程、Plugin 生態、MCP Elicitation、Remote Control 演進",
-    "lines": 773,
+    "lines": 1033,
     "file": "2026-03-16_claude-code-release-evolution.html"
   },
   {
@@ -382,7 +382,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "Karpathy autoresearch 拆解：三檔案極簡架構、program.md 核心設計、Shopify 53% 效能提升實證、CDMO 閉環應用",
-    "lines": 583,
+    "lines": 760,
     "file": "2026-03-16_karpathy-autoresearch.html"
   },
   {
@@ -396,7 +396,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "YC 創辦人用四層提問策略將 Claude 變成戰略思考夥伴，3小時完成市場研究。",
-    "lines": 363,
+    "lines": 571,
     "file": "2026-03-16_yc-founder-strategic-prompting.html"
   },
   {
@@ -410,7 +410,7 @@ const documents = [
     ],
     "rating": 3.4,
     "summary": "蘋果用 iPhone 17e 與 MacBook Neo 搶平價市場，真正目的是讓 Apple Intelligence 成為最懂你的 AI。",
-    "lines": 433,
+    "lines": 609,
     "file": "2026-03-14_apple-ai-affordable-strategy.html"
   },
   {
@@ -425,7 +425,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "Tw93 半年 Claude Code 深度使用經驗。六層架構、上下文治理、Skills/Hooks/Subagents 設計、Prompt Caching 與 CLAUDE.md 最佳實踐。",
-    "lines": 836,
+    "lines": 1047,
     "file": "2026-03-13_claude-code-architecture-governance.html"
   },
   {
@@ -439,7 +439,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "成大教授蘇文鈺十年偏鄉程式教育，填補弱勢孩子的想像力斷層，建立自循環師資系統。",
-    "lines": 384,
+    "lines": 556,
     "file": "2026-03-12_su-program-the-world.html"
   },
   {
@@ -454,7 +454,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Claude Code 鍵盤快捷鍵、Vim 模式、內建指令、背景任務完整參考手冊。",
-    "lines": 575,
+    "lines": 812,
     "file": "2026-03-11_claude-code-interactive-mode.html"
   },
   {
@@ -469,7 +469,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Anthropic Skills 生態基石更新：評估系統、基準測試、多代理並行、描述調優四大能力全面解析。",
-    "lines": 473,
+    "lines": 650,
     "file": "2026-03-11_skill-creator-epic-update.html"
   },
   {
@@ -484,7 +484,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "量化交易員轉創業者的 AI 未來推理框架。四大護城河、不對稱下注、行動即資訊。",
-    "lines": 484,
+    "lines": 674,
     "file": "2026-03-10_reasoning-messy-future.html"
   },
   {
@@ -500,7 +500,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Anthropic 官方 Skill 建構指南。涵蓋設計原則、YAML 規格、5 大 Pattern、MCP 整合與測試迭代。",
-    "lines": 664,
+    "lines": 924,
     "file": "2026-03-09_building-skills-guide.html"
   },
   {
@@ -515,13 +515,13 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "Yanhua 百小時實測 Claude 指南。訂閱方案、Prompt 三段式、模型選擇、Code/Cowork/Skills 進階工具。",
-    "lines": 501,
+    "lines": 700,
     "file": "2026-03-07_yanhua-claude-ultimate-guide.html"
   },
   {
     "date": "2026-03-06",
     "title": "AI 勞動市場影響 - Observed Exposure 新指標",
-    "source": "Massenkoff &amp; McCrory / Anthropic Research",
+    "source": "Massenkoff & McCrory / Anthropic Research",
     "tags": [
       "Anthropic-Eng",
       "Research",
@@ -531,7 +531,7 @@ const documents = [
     ],
     "rating": 4.4,
     "summary": "Anthropic 提出 Observed Exposure 新指標，結合理論能力與實際使用數據衡量 AI 對就業市場影響。",
-    "lines": 407,
+    "lines": 588,
     "file": "2026-03-06_labor-market-ai-impact.html"
   },
   {
@@ -544,7 +544,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "Morris 天賦發現三方法：注意力觀察、過度特質轉化、停不下來的事。認知優勢 × 持續投入 = 複利。",
-    "lines": 366,
+    "lines": 535,
     "file": "2026-03-06_morris-discovering-talent.html"
   },
   {
@@ -559,7 +559,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "五位 AI 高管對子女的職涯建議：彈性、能力組合、元認知、責任、同理心。",
-    "lines": 382,
+    "lines": 564,
     "file": "2026-03-05_ai-execs-kids-career.html"
   },
   {
@@ -574,7 +574,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Claude Code 爬取資料完整指南：9 種方法從直接爬取到 Agent Browser 認證登入。",
-    "lines": 552,
+    "lines": 724,
     "file": "2026-03-05_claude-code-scraping-nine-ways.html"
   },
   {
@@ -589,7 +589,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "",
-    "lines": 702,
+    "lines": 1003,
     "file": "2026-03-02_claude-code-complete-docs.html"
   },
   {
@@ -604,7 +604,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "首個 Agent Skills 基準測試。Curated Skills +16.2pp，Self-generated 無效，2-3 Skills 最佳。",
-    "lines": 422,
+    "lines": 601,
     "file": "2026-03-01_skillsbench-agent-skills.html"
   },
   {
@@ -620,7 +620,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "小型律所用 Claude Skills 擊敗大型事務所。Skill vs Prompt、判斷力不可取代、訂閱制商業模式。",
-    "lines": 395,
+    "lines": 560,
     "file": "2026-02-28_ai-legal-practice-skills.html"
   },
   {
@@ -636,7 +636,7 @@ const documents = [
     ],
     "rating": 4.6,
     "summary": "Anthropic 拒絕 Pentagon 全面授權要求，被列為供應鏈風險。AI 產業紅線、法律爭議與企業啟示。",
-    "lines": 453,
+    "lines": 647,
     "file": "2026-02-28_anthropic-pentagon-supply-chain.html"
   },
   {
@@ -652,7 +652,7 @@ const documents = [
     ],
     "rating": 4.4,
     "summary": "Claude Code 團隊分享 Agent 工具設計哲學：Action Space、Progressive Disclosure、工具演化。",
-    "lines": 407,
+    "lines": 617,
     "file": "2026-02-28_claude-code-agent-tools.html"
   },
   {
@@ -668,7 +668,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Claude Agent Skills 三層漸進式載入架構、跨平台部署、自訂 Skill 建構指南。",
-    "lines": 398,
+    "lines": 589,
     "file": "2026-02-27_agent-skills-architecture.html"
   },
   {
@@ -684,13 +684,13 @@ const documents = [
     ],
     "rating": 4.3,
     "summary": "Anthropic 十個內部團隊使用 Claude Code 的實戰模式、影響評估與最佳實踐。",
-    "lines": 594,
+    "lines": 820,
     "file": "2026-02-27_anthropic-claude-code-internal.html"
   },
   {
     "date": "2026-02-27",
     "title": "Block 裁員 40% - AI 驅動組織重構",
-    "source": "Jack Dorsey / Block Inc. Shareholder Letter &amp; X Post",
+    "source": "Jack Dorsey / Block Inc. Shareholder Letter & X Post",
     "tags": [
       "Analysis",
       "Agent",
@@ -699,7 +699,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Block 裁員 4000 人，Dorsey 宣稱 AI 工具讓小團隊更高效。分析 AI 裁員敘事 vs 現實、領導決策框架、製藥業啟示。",
-    "lines": 383,
+    "lines": 567,
     "file": "2026-02-27_block-ai-layoffs.html"
   },
   {
@@ -714,7 +714,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Cowork 五大功能完整解析：File System、AskUserQuestion、Plugins、Instructions、Connectors 設定與實戰。",
-    "lines": 524,
+    "lines": 697,
     "file": "2026-02-27_claude-cowork-setup.html"
   },
   {
@@ -729,13 +729,13 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Skills 架構解析：Progressive Disclosure、模組化結構、資源整合三大優勢。",
-    "lines": 354,
+    "lines": 523,
     "file": "2026-02-26_skills-markdown-folders.html"
   },
   {
     "date": "2026-02-25",
     "title": "AI Ethics - Fintech Psychological Profiling",
-    "source": "Joel Salinas &amp; Mila Agius / Substack",
+    "source": "Joel Salinas & Mila Agius / Substack",
     "tags": [
       "Agent",
       "Tool",
@@ -745,7 +745,7 @@ const documents = [
     ],
     "rating": 4.3,
     "summary": "Fintech psychological profiling case study. PCL framework for ethical personalization without exploitation.",
-    "lines": 377,
+    "lines": 548,
     "file": "2026-02-25_ai-ethics-fintech-profiling.html"
   },
   {
@@ -760,7 +760,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Cursor 非工程師指南：視覺化架構、Browser 測試、Plugin Pipeline、Claude Code + Figma MCP 整合。",
-    "lines": 319,
+    "lines": 485,
     "file": "2026-02-25_cursor-non-engineering.html"
   },
   {
@@ -775,13 +775,13 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "GEO 框架：Entity Recognition、Semantic Consistency、Cross-Platform 三信號讓 AI 推薦你。",
-    "lines": 465,
+    "lines": 633,
     "file": "2026-02-25_geo-ai-visibility.html"
   },
   {
     "date": "2026-02-25",
     "title": "Shared AI Context Files - 團隊共享上下文",
-    "source": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "source": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "tags": [
       "Tool",
       "Agent",
@@ -790,7 +790,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "CLAUDE.md 共享上下文檔案如何將個人 AI 使用轉化為團隊級知識複利效應。",
-    "lines": 426,
+    "lines": 622,
     "file": "2026-02-25_shared-ai-context-files.html"
   },
   {
@@ -805,7 +805,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "Kobeissi 反駁 AI 末日論。Abundance GDP 框架、價格崩跌非裁員才是核心、生產力擴張論。",
-    "lines": 382,
+    "lines": 565,
     "file": "2026-02-24_kobeissi-ai-abundance.html"
   },
   {
@@ -820,7 +820,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "以 2028 回顧體裁推演 AI 導致白領失業、消費萎縮、房貸危機的負反饋螺旋。",
-    "lines": 452,
+    "lines": 640,
     "file": "2026-02-23_global-intelligence-crisis.html"
   },
   {
@@ -835,7 +835,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "用 Git repo + 80 個檔案打造 AI Agent 個人 OS，實現 Progressive Disclosure 與 Context Engineering。",
-    "lines": 431,
+    "lines": 626,
     "file": "2026-02-23_personal-brain-os.html"
   },
   {
@@ -850,7 +850,7 @@ const documents = [
     ],
     "rating": 4.4,
     "summary": "Boris Tane 九個月 Claude Code 工作流：Research → Plan → Annotate → Implement 四階段紀律。",
-    "lines": 417,
+    "lines": 566,
     "file": "2026-02-22_boris-tane-claude-code-workflow.html"
   },
   {
@@ -866,7 +866,7 @@ const documents = [
     ],
     "rating": 4.3,
     "summary": "Claude Code 完整最佳實踐：驗證迴路、Context 管理、CLAUDE.md、平行工作流。",
-    "lines": 459,
+    "lines": 630,
     "file": "2026-02-22_claude-code-best-practices.html"
   },
   {
@@ -881,7 +881,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "Boris Cherny 談 Claude Code 從終端原型到 10 億美元產品的旅程。潛在需求、為未來模型構建、永遠不要跟模型對賭。",
-    "lines": 414,
+    "lines": 560,
     "file": "2026-02-22_claude-code-product-philosophy.html"
   },
   {
@@ -896,7 +896,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Cowork 桌面 Agent 完整指南：Skills/Plugins、MCP 連接、跨 Session 記憶、與 Chat/Code 比較。",
-    "lines": 408,
+    "lines": 576,
     "file": "2026-02-22_claude-cowork-guide.html"
   },
   {
@@ -911,7 +911,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "投研 KOL 拆解個人業務 Agent 化：知識庫→Skills→CRON 三層架構，從時間槓桿到算法槓桿。",
-    "lines": 421,
+    "lines": 579,
     "file": "2026-02-22_personal-business-agent.html"
   },
   {
@@ -925,7 +925,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "7 個進階 Agentic AI 工作流程教學，從基礎到高階的 Claude Cowork 應用指南",
-    "lines": 496,
+    "lines": 694,
     "file": "2026-02-20_claude-cowork-agentic-workflows.html"
   },
   {
@@ -940,7 +940,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Anthropic官方Prompt Caching工程實戰指南，涵蓋快取機制原理、工具穩定性設計與成本優化策略",
-    "lines": 415,
+    "lines": 668,
     "file": "2026-02-20_prompt-caching-claude.html"
   },
   {
@@ -955,7 +955,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "AI Amplification概念：用AI壓力測試策略假設，五個問題揭露跨領域決策盲點的四步驟框架",
-    "lines": 435,
+    "lines": 572,
     "file": "2026-02-19_ai-amplification-strategy.html"
   },
   {
@@ -969,7 +969,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "從聊天機器人升級到桌面代理人的完整攻略，搭配 Sonnet + Opus 的使用指南",
-    "lines": 498,
+    "lines": 696,
     "file": "2026-02-19_claude-cowork-desktop-agent.html"
   },
   {
@@ -984,7 +984,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "Anthropic發布Claude Sonnet 4.6，Computer Use能力16個月提升近五倍",
-    "lines": 358,
+    "lines": 520,
     "file": "2026-02-19_claude-sonnet46-computer-use.html"
   },
   {
@@ -999,7 +999,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Sonnet 4.6的Dynamic Filtering功能讓AI Agent準確率提升11%、Token消耗降低24%，直接影響成本計算",
-    "lines": 345,
+    "lines": 492,
     "file": "2026-02-19_sonnet46-dynamic-filtering.html"
   },
   {
@@ -1013,7 +1013,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Ethan Mollick的AI使用指南第八版：從聊天機器人到代理時代的三層框架（Models/Apps/Harnesses）",
-    "lines": 390,
+    "lines": 631,
     "file": "2026-02-18_ai-guide-agentic-era.html"
   },
   {
@@ -1026,7 +1026,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "歸納研究初學者常犯的九大錯誤，從問題定義到方法論選擇，強調AI時代研究基本功的重要性",
-    "lines": 290,
+    "lines": 491,
     "file": "2026-02-18_research-beginner-sins.html"
   },
   {
@@ -1040,7 +1040,7 @@ const documents = [
     ],
     "rating": 2.2,
     "summary": "用Gemini圖片生成功能將素材轉化為結構化圖表的6步驟流程及可複用Prompt模板",
-    "lines": 254,
+    "lines": 366,
     "file": "2026-02-17_ai-diagram-creation.html"
   },
   {
@@ -1056,7 +1056,7 @@ const documents = [
     ],
     "rating": 3.2,
     "summary": "AI時代PM角色重定義：從協調者到建造者，Anthropic招募Research PM揭示的產業訊號",
-    "lines": 432,
+    "lines": 589,
     "file": "2026-02-17_ai-pm-builder-culture.html"
   },
   {
@@ -1070,20 +1070,20 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "用提問取代答案的5步驟系統：從基礎提問到問題轉化實驗，重塑AI使用心智模型",
-    "lines": 453,
+    "lines": 595,
     "file": "2026-02-17_ai-questions-system.html"
   },
   {
     "date": "2026-02-12",
     "title": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
-    "source": "Joel Salinas &amp; JHong / Substack",
+    "source": "Joel Salinas & JHong / Substack",
     "tags": [
       "Agent",
       "API"
     ],
     "rating": 3.8,
     "summary": "Agent-to-Agent Commerce 協議與基礎設施。",
-    "lines": 399,
+    "lines": 563,
     "file": "2026-02-12_a2a-commerce.html"
   },
   {
@@ -1098,13 +1098,13 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "AI產業劇變從業者第一手警告：Matt Shumer對AI產業快速變化的分析與行動指南",
-    "lines": 451,
+    "lines": 715,
     "file": "2026-02-11_ai-disruption-shumer.html"
   },
   {
     "date": "2026-02-11",
     "title": "OpenClaw 安全強化完整指南 - 三層防護實作",
-    "source": "Wyndo &amp; Fernando Lucktemberg / Next Kick Labs",
+    "source": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
     "tags": [
       "Security",
       "Agent",
@@ -1112,7 +1112,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "OpenClaw安全強化三層防護實作指南，涵蓋MCP Server權限控制、API Key分級管理與Allowlist思維",
-    "lines": 549,
+    "lines": 927,
     "file": "2026-02-11_openclaw-security-hardening.html"
   },
   {
@@ -1126,7 +1126,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "Claude Skills功能實戰入門，5個自訂Skill自動化提案簡報等文件",
-    "lines": 388,
+    "lines": 537,
     "file": "2026-02-10_claude-skills-automation.html"
   },
   {
@@ -1140,7 +1140,7 @@ const documents = [
     ],
     "rating": 3.4,
     "summary": "LLM思維社會、晶片設計基準與AI科學研究瓶頸，生成vs判斷的差距",
-    "lines": 414,
+    "lines": 563,
     "file": "2026-02-10_import-ai-444-societies.html"
   },
   {
@@ -1155,7 +1155,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Stripe設計主管開發Protodash工具，讓設計師用真實元件即時原型設計，展示建構民主化的組織轉變",
-    "lines": 358,
+    "lines": 508,
     "file": "2026-02-10_vibe-coding-protodash.html"
   },
   {
@@ -1169,7 +1169,7 @@ const documents = [
     ],
     "rating": 3,
     "summary": "AI驅動變革的8大差異：Prosci調查1107位專業人士發現AI導入障礙主要是人員熟練度而非技術",
-    "lines": 454,
+    "lines": 622,
     "file": "2026-02-09_ai-change-management.html"
   },
   {
@@ -1183,13 +1183,13 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "OpenClaw開源AI Agent框架完整評測，涵蓋架構解析、安全風險評估、五大VPS託管平台比較及實際使用案例",
-    "lines": 462,
+    "lines": 636,
     "file": "2026-02-06_openclaw-agent-review.html"
   },
   {
     "date": "2026-02-05",
     "title": "AI 時代的隱私深度解析",
-    "source": "Joel Salinas &amp; Mohib Ur Rehman / SK NEXUS",
+    "source": "Joel Salinas & Mohib Ur Rehman / SK NEXUS",
     "tags": [
       "LLM",
       "Tool",
@@ -1197,7 +1197,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "AI時代隱私深度解析：AI系統從資料中學習改變了安全定義，提出四項風險降低策略",
-    "lines": 373,
+    "lines": 518,
     "file": "2026-02-05_ai-privacy-deep-dive.html"
   },
   {
@@ -1212,7 +1212,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "記錄從 ChatGPT 轉到 Claude Cowork 的完整體驗，解決指令遵循與長對話穩定性問題",
-    "lines": 396,
+    "lines": 548,
     "file": "2026-02-05_claude-cowork-practical-guide.html"
   },
   {
@@ -1226,12 +1226,12 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Claude全面入門指南，涵蓋工具資源與最佳實踐攻略",
-    "lines": 503,
+    "lines": 938,
     "file": "2026-02-05_claude-starter-pack.html"
   },
   {
     "date": "2026-02-03",
-    "title": "Import AI 443: Agent Ecologies, AI R&amp;D Automation, and the Internet in Transition",
+    "title": "Import AI 443: Agent Ecologies, AI R&D Automation, and the Internet in Transition",
     "source": "Jack Clark / Import AI Newsletter",
     "tags": [
       "Agent",
@@ -1241,7 +1241,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "AI Agent生態系、AI研發自動化的國安意涵、O-ring自動化概念，涵蓋多個AI重塑人機邊界的前沿趨勢",
-    "lines": 538,
+    "lines": 697,
     "file": "2026-02-03_agent-ecology-automation.html"
   },
   {
@@ -1255,7 +1255,7 @@ const documents = [
     ],
     "rating": 3.2,
     "summary": "分享 8 個負面約束提示技巧，透過告訴 AI 不該做什麼來精煉輸出品質",
-    "lines": 307,
+    "lines": 448,
     "file": "2026-02-03_anti-prompts-constraints.html"
   },
   {
@@ -1270,7 +1270,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Claude Code 互動模式完整操作手冊：鍵盤快捷鍵、Vim 模式、背景指令與 Bash 模式",
-    "lines": 405,
+    "lines": 550,
     "file": "2026-02-03_claude-code-interactive-mode.html"
   },
   {
@@ -1284,7 +1284,7 @@ const documents = [
     ],
     "rating": 3.2,
     "summary": "示範用 Claude Code 建立 AI 產品導師系統，將名人思維轉化為可互動的角色檔",
-    "lines": 391,
+    "lines": 555,
     "file": "2026-02-03_claude-code-product-mentors.html"
   },
   {
@@ -1298,7 +1298,7 @@ const documents = [
     ],
     "rating": 3.2,
     "summary": "介紹Google NotebookLM的Source Control核心功能，強制從上傳文件擷取資訊並附引用，消除AI幻覺",
-    "lines": 510,
+    "lines": 694,
     "file": "2026-02-03_notebooklm-source-control.html"
   },
   {
@@ -1313,7 +1313,7 @@ const documents = [
     ],
     "rating": 4.6,
     "summary": "Boris Cherny 分享 Claude Code 進階生產力技巧，提升 AI 輔助開發工作流效率",
-    "lines": 452,
+    "lines": 836,
     "file": "2026-02-01_claude-code-power-tips.html"
   },
   {
@@ -1328,7 +1328,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "CLAUDE.md 的 PDCA 持續改善方法論，教你如何系統性優化 Claude Code 的行為設定",
-    "lines": 488,
+    "lines": 763,
     "file": "2026-02-01_claude-md-pdca-optimization.html"
   },
   {
@@ -1343,7 +1343,7 @@ const documents = [
     ],
     "rating": 4.8,
     "summary": "Anthropic CEO Amodei 的 AI 風險與應對策略全面解析，拆解五大風險類別與防禦方案",
-    "lines": 513,
+    "lines": 724,
     "file": "2026-01-31_amodei-technology-adolescence.html"
   },
   {
@@ -1358,7 +1358,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "本期The Batch涵蓋主權AI趨勢、Google UCP購物協議、GLM-Image文字渲染、AI評測更新與對齊風險",
-    "lines": 478,
+    "lines": 622,
     "file": "2026-01-30_batch-sovereign-ai.html"
   },
   {
@@ -1372,7 +1372,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Anthropic官方提示工程指南轉化為10步驟即插即用Prompt Template框架",
-    "lines": 428,
+    "lines": 566,
     "file": "2026-01-30_claude-prompt-engineering.html"
   },
   {
@@ -1386,7 +1386,7 @@ const documents = [
     ],
     "rating": 3.2,
     "summary": "日本企業導入AI本部長實戰案例：KDDI、三井住友、大東建託的AI管理者設計邏輯與組織影響",
-    "lines": 420,
+    "lines": 572,
     "file": "2026-01-29_ai-boss-japan-enterprise.html"
   },
   {
@@ -1399,7 +1399,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "13年加密貨幣老兵分享週期生存智慧，區分假復甦與真正Regime Shift",
-    "lines": 585,
+    "lines": 737,
     "file": "2026-01-28_crypto-survival-mindset.html"
   },
   {
@@ -1413,7 +1413,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "打破 Claude Code 只給工程師用的迷思，展示非技術主管如何用 AI 解決商業問題",
-    "lines": 380,
+    "lines": 549,
     "file": "2026-01-23_claude-code-nontechnical-guide.html"
   },
   {
@@ -1426,7 +1426,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "CLAUDE.md、Plan Mode、MCP 等 50 個被低估的 Claude 實戰技巧。",
-    "lines": 477,
+    "lines": 630,
     "file": "2026-01-22_50-claude-tips.html"
   },
   {
@@ -1441,7 +1441,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "用Claude打造習慣追蹤器的Vibe Coding教學，展示非工程師如何用AI建構實用工具",
-    "lines": 451,
+    "lines": 1039,
     "file": "2026-01-22_ai-habit-tracker-vibe-coding.html"
   },
   {
@@ -1454,7 +1454,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "AI自動化時代人類創作者的最後防線是觀點，從意義危機到內在生成",
-    "lines": 598,
+    "lines": 916,
     "file": "2026-01-22_future-of-work.html"
   },
   {
@@ -1468,7 +1468,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "用Claude Skill系統在5分鐘內生成LinkedIn Carousel，記錄三次迭代失敗經驗，展示摩擦點驅動的自動化思維",
-    "lines": 383,
+    "lines": 960,
     "file": "2026-01-22_linkedin-carousel-skills.html"
   },
   {
@@ -1481,7 +1481,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "從35粉絲成長到82000的完整策略，核心心法先互動後原創，借力打力的階段性社群成長方法論",
-    "lines": 313,
+    "lines": 442,
     "file": "2026-01-22_x-platform-growth.html"
   },
   {
@@ -1498,7 +1498,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Anthropic發布的Agentic Coding趨勢報告，識別八大趨勢，開發者60%工作已使用AI但完全委派僅0-20%",
-    "lines": 455,
+    "lines": 632,
     "file": "2026-01-21_agentic-coding-trends.html"
   },
   {
@@ -1512,7 +1512,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "用 Claude Code + n8n + Synta MCP 三工具組合將 7 人團隊縮減到 5 人、產能提升 3 倍",
-    "lines": 471,
+    "lines": 679,
     "file": "2026-01-21_claude-n8n-synta-stack.html"
   },
   {
@@ -1525,7 +1525,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Google A2UI Agent 驅動使用者介面框架解析。",
-    "lines": 518,
+    "lines": 1036,
     "file": "2026-01-20_a2ui-framework.html"
   },
   {
@@ -1540,7 +1540,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "示範用 AI 從 SEC 文件擷取數據並產出標準化生技投資分析圖表的完整流程",
-    "lines": 429,
+    "lines": 762,
     "file": "2026-01-20_biotech-compass-walkthrough.html"
   },
   {
@@ -1553,7 +1553,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "每天一小時深度工作協議，結合認知科學與實務框架的行動指南",
-    "lines": 475,
+    "lines": 650,
     "file": "2026-01-20_one-hour-focus.html"
   },
   {
@@ -1568,7 +1568,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "一次設定永久提升90% AI回應品質的Context Setup指南，適合AI進階使用者",
-    "lines": 457,
+    "lines": 719,
     "file": "2026-01-19_ai-context-setup.html"
   },
   {
@@ -1583,7 +1583,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "分析 Apple 與 Google 合作用 Gemini 驅動 Siri 的戰略意義及企業 AI 工具選擇啟示",
-    "lines": 419,
+    "lines": 571,
     "file": "2026-01-17_apple-gemini-strategy.html"
   },
   {
@@ -1597,13 +1597,13 @@ const documents = [
     ],
     "rating": 4,
     "summary": "從產品管理角度分析 Claude Cowork 的策略決策，提供現代產品管理的實戰教材",
-    "lines": 490,
+    "lines": 723,
     "file": "2026-01-17_claude-cowork-product-lessons.html"
   },
   {
     "date": "2026-01-15",
     "title": "AI 工具排毒指南 - 2026 開年必讀",
-    "source": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "source": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "tags": [
       "Tool",
       "Automation",
@@ -1611,7 +1611,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "AI工具排毒指南：四步驟決策樹評估新工具，從工具收集者轉變為系統建構者",
-    "lines": 495,
+    "lines": 664,
     "file": "2026-01-15_ai-tool-detox.html"
   },
   {
@@ -1626,7 +1626,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "2026六大AI趨勢：模型商品化、工作流程勝過Agent、Context勝過Prompting等預測分析",
-    "lines": 442,
+    "lines": 603,
     "file": "2026-01-15_ai-trends-2026.html"
   },
   {
@@ -1640,7 +1640,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Dan Koe 的三層表達框架，教你如何將模糊想法轉化為 AI 可執行的清晰指令",
-    "lines": 302,
+    "lines": 806,
     "file": "2026-01-15_articulation-intelligence.html"
   },
   {
@@ -1654,7 +1654,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "主動式Email Triage Agent實作教學，Make.com結合Gmail與OpenAI",
-    "lines": 455,
+    "lines": 603,
     "file": "2026-01-15_email-triage-agent.html"
   },
   {
@@ -1666,7 +1666,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "深入分析交易者常見的比較陷阱心理，提供框架化思維工具避免情緒決策對交易績效的負面影響",
-    "lines": 750,
+    "lines": 1311,
     "file": "2026-01-15_trading-comparison-trap.html"
   },
   {
@@ -1680,20 +1680,20 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "全面解析 Claude Cowork 如何實現 AI 工具民主化，讓非技術用戶也能運用 AI 代理功能",
-    "lines": 536,
+    "lines": 1189,
     "file": "2026-01-14_claude-cowork-guide.html"
   },
   {
     "date": "2026-01-13",
     "title": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
-    "source": "Wyndo &amp; Judy Ossello",
+    "source": "Wyndo & Judy Ossello",
     "tags": [
       "Agent",
       "Framework"
     ],
     "rating": 4.2,
     "summary": "ACT + BASE 框架：高壓溝通的行為穩定性設計。",
-    "lines": 482,
+    "lines": 1180,
     "file": "2026-01-13_act-base-framework.html"
   },
   {
@@ -1706,7 +1706,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Dan Koe提出改變身份而非行為的一日協議，結合心理學與自我發展框架",
-    "lines": 530,
+    "lines": 713,
     "file": "2026-01-13_dan-koe-fix-your-life.html"
   },
   {
@@ -1719,7 +1719,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "多元興趣作為AI時代競爭優勢，從Idea Museum到系統化產品的變現路徑",
-    "lines": 353,
+    "lines": 529,
     "file": "2026-01-12_dan-koe-multiple-interests.html"
   },
   {
@@ -1732,7 +1732,7 @@ const documents = [
     ],
     "rating": 3.4,
     "summary": "金錢是工作的副產品，非對稱風險策略與長期複利思維的職涯框架",
-    "lines": 465,
+    "lines": 627,
     "file": "2026-01-12_forget-about-money.html"
   },
   {
@@ -1745,7 +1745,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Typeless語音轉文字工具評測，AI語意最佳化、去贅詞、結構化輸出，解決語音輸入後端的編輯地獄",
-    "lines": 363,
+    "lines": 504,
     "file": "2026-01-10_typeless-voice-review.html"
   },
   {
@@ -1760,7 +1760,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "Claude Code 2.1.0 版 110+ 項改進解析，涵蓋 Skills 熱重載、安全性修復、效能優化",
-    "lines": 899,
+    "lines": 1068,
     "file": "2026-01-09_claude-code-210-update.html"
   },
   {
@@ -1774,7 +1774,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "AI產品競爭進入嵌入式階段，Gmail AI Inbox與Agent商業協議分析",
-    "lines": 384,
+    "lines": 541,
     "file": "2026-01-09_gmail-gemini-ai-agents.html"
   },
   {
@@ -1790,13 +1790,13 @@ const documents = [
     ],
     "rating": 4.6,
     "summary": "Context Engineering從Prompt到Context的範式轉移，解決Agent上下文腐敗問題",
-    "lines": 428,
+    "lines": 621,
     "file": "2026-01-08_context-engineering-agents.html"
   },
   {
     "date": "2026-01-08",
     "title": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
-    "source": "Is It Propaganda &amp; Joel Salinas",
+    "source": "Is It Propaganda & Joel Salinas",
     "tags": [
       "Agent",
       "Automation",
@@ -1804,7 +1804,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "HUMINT在AI時代的不可取代性，Human Authority Audit三問框架",
-    "lines": 337,
+    "lines": 489,
     "file": "2026-01-08_humint-intelligence-ai.html"
   },
   {
@@ -1818,7 +1818,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Elon Musk預測AGI將於2026-2027實現，描繪AI、人形機器人和乾淨能源帶來的豐盛時代藍圖",
-    "lines": 441,
+    "lines": 626,
     "file": "2026-01-08_musk-agi-abundance.html"
   },
   {
@@ -1834,7 +1834,7 @@ const documents = [
     ],
     "rating": 4.4,
     "summary": "NVIDIA CES 2026 主題演講解析：Vera Rubin 晶片、Cosmos 世界基礎模型、Physical AI 產業藍圖",
-    "lines": 773,
+    "lines": 966,
     "file": "2026-01-07_ces-jensen-huang-keynote.html"
   },
   {
@@ -1849,7 +1849,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "用 Claude Projects 搭配 Skills 打造可重複使用的產品健康監測系統，涵蓋五大維度追蹤",
-    "lines": 419,
+    "lines": 600,
     "file": "2026-01-06_claude-projects-product-health.html"
   },
   {
@@ -1863,7 +1863,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "產品內搜尋從找東西演變成AI命令中心，20+實際案例分析混合搜尋、輪播探索與自然語言搜尋設計",
-    "lines": 411,
+    "lines": 571,
     "file": "2025-12-31_ux-search-explored.html"
   },
   {
@@ -1878,7 +1878,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Capability Overhang概念，AI實際能力遠超可引出程度，Scaffold框架提升表現",
-    "lines": 376,
+    "lines": 533,
     "file": "2025-12-22_import-ai-438-guide.html"
   },
   {
@@ -1892,7 +1892,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "Claude Skills建構實戰教學，診斷常見失敗原因與修復方法",
-    "lines": 200,
+    "lines": 514,
     "file": "2025-12-20_claude-skills-deep-dive.html"
   },
   {
@@ -1906,7 +1906,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "提出Skill Graph概念，用Markdown+Wikilinks+YAML frontmatter建構AI Agent可自主導航的結構化知識網路",
-    "lines": 439,
+    "lines": 598,
     "file": "2025-12-20_skill-graphs-knowledge.html"
   },
   {
@@ -1921,13 +1921,13 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "五本AI領導力書籍精選指南，為非技術背景企業領導者設計，涵蓋AI策略入門到組織設計",
-    "lines": 601,
+    "lines": 817,
     "file": "2025-12-18_ai-books-leaders-guide.html"
   },
   {
     "date": "2025-12-16",
     "title": "Data Literacy Loop 學習指南",
-    "source": "Wyndo &amp; Hodman Murad / AI Maker",
+    "source": "Wyndo & Hodman Murad / AI Maker",
     "tags": [
       "Prompt",
       "LLM",
@@ -1935,7 +1935,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "打造具數據素養的AI夥伴，超越提示詞的商業分析協作方法",
-    "lines": 779,
+    "lines": 1457,
     "file": "2025-12-16_data-literacy-loop.html"
   },
   {
@@ -1949,7 +1949,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "Claude Code作為個人AI Agent作業系統的完整操作指南",
-    "lines": 794,
+    "lines": 1427,
     "file": "2025-12-15_claude-code-agent-os.html"
   },
   {
@@ -1963,7 +1963,7 @@ const documents = [
     ],
     "rating": 4.1,
     "summary": "AI Skill架構五層設計：持久記憶、評分式context載入、schema契約、學習回饋迴圈、共用協定層",
-    "lines": 435,
+    "lines": 578,
     "file": "2025-12-15_skill-architecture-layers.html"
   },
   {
@@ -1977,7 +1977,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "The Batch第331期深度學習指南，涵蓋AI產業最新動態、技術突破與實務應用案例分析",
-    "lines": 784,
+    "lines": 1241,
     "file": "2025-12-10_batch-331-study-guide.html"
   },
   {
@@ -1991,7 +1991,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "Claude Projects記憶系統完整指南，提升AI輸出一致性與品質",
-    "lines": 437,
+    "lines": 857,
     "file": "2025-12-10_claude-project-memory.html"
   },
   {
@@ -2006,7 +2006,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "Anthropic 主張企業應建立單一通用代理搭配技能庫，而非部署多個獨立 AI 代理",
-    "lines": 400,
+    "lines": 797,
     "file": "2025-12-09_anthropic-skills-agents.html"
   },
   {
@@ -2020,13 +2020,13 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "AI新聞代理系統學習指南：用Perplexity建構自動化新聞蒐集與整理系統",
-    "lines": 613,
+    "lines": 1038,
     "file": "2025-12-04_ai-news-agent-perplexity.html"
   },
   {
     "date": "2025-12-02",
     "title": "The 3-Prompt Pipeline 三提示詞管道系統",
-    "source": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "source": "Wyndo & Benjamin Hies / The AI Maker",
     "tags": [
       "Prompt",
       "Automation",
@@ -2034,7 +2034,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "三提示詞管道系統，從 Substack 文章到 LinkedIn 自動轉換。",
-    "lines": 461,
+    "lines": 996,
     "file": "2025-12-02_prompt-pipeline.html"
   },
   {
@@ -2049,7 +2049,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "用語音備忘錄自動產出Substack Notes和商業點子的AI Second Brain系統",
-    "lines": 759,
+    "lines": 1479,
     "file": "2025-11-30_ai-second-brain-voice.html"
   },
   {
@@ -2063,7 +2063,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "AI生產力悖論：30秒決策框架判斷何時不該使用AI，避免工具過度使用的隱藏成本",
-    "lines": 267,
+    "lines": 605,
     "file": "2025-11-20_ai-productivity-paradox.html"
   },
   {
@@ -2077,7 +2077,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "AI內容再利用自動化系統：從一篇電子報產出18篇平台優化內容的完整教學",
-    "lines": 305,
+    "lines": 674,
     "file": "2025-11-15_ai-content-repurposing.html"
   },
   {
@@ -2090,7 +2090,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "電子報稽核完整指南，從100到4500訂閱者的成長策略，涵蓋內容審計、受眾分析與變現模式",
-    "lines": 758,
+    "lines": 1371,
     "file": "2025-11-15_newsletter-audit-playbook.html"
   },
   {
@@ -2104,7 +2104,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "AI領導力三角：區分成功與掙扎領導者的三項技能，包含領導力策略與框架分析",
-    "lines": 456,
+    "lines": 1304,
     "file": "2025-11-10_ai-leadership-triad.html"
   },
   {
@@ -2117,13 +2117,13 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Substack Notes三層演算法分發機制，透過每日3-5則互動策略持續觸及新受眾，一年累積2000訂閱者",
-    "lines": 391,
+    "lines": 539,
     "file": "2025-11-10_substack-notes-growth.html"
   },
   {
     "date": "2025-11-04",
     "title": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
-    "source": "Wyndo &amp; Eva Keiffenheim MSc",
+    "source": "Wyndo & Eva Keiffenheim MSc",
     "tags": [
       "Prompt",
       "LLM",
@@ -2131,7 +2131,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "四個AI Prompts將你從資訊收集者轉變為洞見創造者，解決第二大腦資訊囤積問題",
-    "lines": 378,
+    "lines": 804,
     "file": "2025-11-04_ai-prompts-insight-creator.html"
   },
   {
@@ -2144,7 +2144,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "整合AQAL框架與螺旋動力學的人類發展模型，四象限全方位發展導航",
-    "lines": 456,
+    "lines": 621,
     "file": "2025-08-26_human30-life-map.html"
   },
   {
@@ -2159,7 +2159,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "Agentic AI 重洗創業門檻。OpenClaw 本地代理、傳統產業補洞模式、流程拆解優先於工具炫技。",
-    "lines": 390,
+    "lines": 586,
     "file": "2025-03-28_ai-wealth-redistribution.html"
   },
   {
@@ -2174,7 +2174,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Claude Code 實戰經驗總結。CLAUDE.md 寫法、Plan Mode、子 Agent、上下文管理、權限控制等 14 項核心技巧。",
-    "lines": 850,
+    "lines": 1126,
     "file": "2025-03-25_claude-code-best-practices.html"
   },
   {
@@ -2188,7 +2188,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "Markdown 起源、AI 協作優勢、10分鐘高頻語法速成、工具推薦。",
-    "lines": 344,
+    "lines": 516,
     "file": "2025-03-25_markdown-ai-era.html"
   },
   {
@@ -2203,7 +2203,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Markdown 在 AI 時代的戰略定位。90/10 核心語法、AI 友善文件格式、結構決定理解精度。",
-    "lines": 766,
+    "lines": 1068,
     "file": "2025-02-13_markdown_ai_guide.html"
   }
 ];
