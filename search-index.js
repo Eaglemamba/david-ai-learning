@@ -17678,5 +17678,149 @@ const searchIndex = [
     "sectionId": "practice-questions",
     "sectionTitle": "Practice Questions",
     "content": "Q1 概念理解 Context Engineering 和 Harness Engineering 的邊界在哪裡？你的 Master Prompt 屬於哪一層？ Context Engineering 管「給模型看什麼資訊」，Harness Engineering 則包含 context + 約束 + 反饋迴圈 + 品質檢查。 Master Prompt 本身是 context（告訴模型文件該怎麼生成），但它搭配的 present_files 流程、meta tag 驗證、Dashboard 索引重建等機制，整體構成了一個 harness。單獨的 prompt 是 context，prompt + 檢查機制 + 自動化流程 = harness。 HumanLayer 的定義更精確：Harness Engineering 是 Context Engineering 的子集，專注於 harness 配置點管理。但在實踐中，兩者的邊界是模糊的 — 重要的是整套系統一起運作。 Q2 產業應用 如果你要為 CDMO 的偏差調查流程設計一個 AI Harness，Generator-Evaluat"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "GitLab 共同創辦人 Sid Sijbrandij 在 2022 年確診骨肉瘤（Osteosarcoma），經歷標準治療失敗後，於 2024 年被醫療系統「放棄」。他隨即將科技創業的 Founder Mode 思維應用到自己的癌症治療——組建專屬醫療 SWAT 團隊、用 ChatGPT 分析 RNA 測序數據、飛往中國做 B7H3 實驗性掃描、赴德國做放射配體治療（Radioligand Therapy）。截至 2026 年初，他的體內已經 檢測不到癌細胞（NED, No Evidence of Disease） 。同時，他還創辦了開源 AI 編程平台 Kilo Code，提出「2026 是 Parallel Agents 元年」的判斷。這篇教學文件從工程思維、AI 應用、創業哲學三個維度拆解他的故事，萃取可遷移到 CDMO 營運和個人 AI 學習的方法論。 2-3x Discount 提醒 來源偏差聲明 ：本文的核心素材來自推特線索（二手轉述，含戲劇化修辭）、Sid 本人的 Substack（第一人稱，有自我呈現偏差）、以及 OpenAI Forum 演講（由 OpenAI 主辦"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "Founder Mode 方法論 理解如何將軟體工程的系統化思維（Maximal Diagnostics、Parallel Treatments、Therapeutic Ladder）應用到非軟體領域 AI 作為 Polymath 助手 理解 LLM 在跨學科知識整合中的 Copilot 角色：分析 RNA 測序、建立研究迴圈、與醫療團隊協作 Parallel Agents 未來觀 掌握 Sid 對 AI 編程未來的預測：從單一 Agent 到並行多 Agent、從 IDE 到 Slack、從 Vibe Coding 到工程效率百倍提升 Sid 的「Founder Mode 抗癌堆疊」(Care Stack) Maximal Docs 1,000+ 頁健康筆記 GitLab Handbook 式記錄 Maximal Diagnostics RNA 測序 / 單細胞分析 B7H3 掃描 / 類器官建模 Therapeutic Ladder 30+ 備選藥物梯隊 並行而非串行治療 AI + Team ChatGPT 分析基因通路 跨學科 SWAT 團隊"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-i-從確診到標準治療失敗",
+    "sectionTitle": "Part I: 從確診到標準治療失敗",
+    "content": "2022 年 11 月，Sid Sijbrandij 在例行健身時感到胸口劇痛。經急診檢查後，發現一顆 六公分的腫瘤 從他的 T5 脊椎長出。確診為 骨肉瘤（Osteosarcoma） ——一種極為罕見的骨癌，在美國每年影響不到 1,000 人，且如果標準治療後復發，存活率通常以月計算。 \"He had a six centimeter mass extending from his T5 vertebrae... diagnosed with osteosarcoma, a form of bone cancer that is rare for an otherwise healthy 45 year old.\" 第一階段治療極為慘烈：外科手術切除含腫瘤的脊椎，以鈦合金框架融合脊柱；接受放射治療和多輪高強度化療，化療副作用嚴重到需要 四次輸血 才能保命。Sid 形容：「它摧毀了我。」更長期的後果包括心臟柔韌性下降、貧血，以及化療對大腦的毒性影響。 \"The chemotherapy was so intense that he needed four separate blood "
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-ii-founder-mode-啟動-從-ceo-到自己身體的-cto",
+    "sectionTitle": "Part II: Founder Mode 啟動 — 從 CEO 到自己身體的 CTO",
+    "content": "面對標準治療用盡的困境，Sid 做了兩個關鍵決定：第一，正式卸任 GitLab CEO（轉任執行主席），把 100% 的 Founder 能量投入抗癌；第二，從第一性原理出發，建立自己的 「治療堆疊」（Care Stack） 。 \"Sid was leading GitLab in founder mode and his cancer care in manager mode. It was time to flip that before it was too late.\" 他的 Care Stack 有三層： 第一層：Maximal Documentation ——在一份名為 \"Sid Health Notes\" 的 Google Doc 中，他和團隊記錄每一次醫療互動、每一場與癌症研究者的會議。光是 2025 年，這份文件就超過了 1,000 頁 。 第二層：Maximal Diagnostics ——做所有能做的診斷，盡可能頻繁地做。包括單細胞 RNA 測序、bulk RNA 測序、高解析度顯微鏡影像、類器官建模（Organoid）、微殘留疾病檢測（MRD）。 第三層：The"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-iii-ai-作為超級軍師-chatgpt-分析-rna-測序的真實用法",
+    "sectionTitle": "Part III: AI 作為超級軍師 — ChatGPT 分析 RNA 測序的真實用法",
+    "content": "在 Sid 的抗癌流程中，AI 扮演了 「跨學科整合者」 的角色。他將癌細胞的 RNA 測序數據（電子表格格式）直接輸入 ChatGPT，讓模型分析 MDM2 等複雜的基因通路（Gene Pathway）。AI 的價值不是取代醫生的判斷，而是把極度碎片化的醫學文獻、基因組學數據、和藥物資訊快速整合起來。 \"Sid used ChatGPT to help track and understand his cancer and health data. He inputted scans, blood tests, and tissue samples to build a personal research and development loop.\" Sid 指出一個關鍵痛點：你想湊齊八個頂尖人類醫學專家同時開會幾乎是不可能的——他們分屬不同醫院、不同時區、不同專科。但 AI 就像一個終極 「博學家」（Polymath） ，能瞬間跨學科把知識串聯起來，幫助患者「更快行動、提出更尖銳的問題、並在複雜的醫療環境中協調照護」。 \"The result helped him move fas"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-iv-全球治療網絡-從中國到德國的效率套利",
+    "sectionTitle": "Part IV: 全球治療網絡 — 從中國到德國的效率套利",
+    "content": "Sid 把全球當成了他的測試網絡。他飛往中國做前沿的 B7H3 蛋白掃描 ，因為在中國從登記、配藥到出結果的效率遠高於美國的醫療體系。他也前往德國做實驗性的 放射配體治療（Radioligand Therapy） ——將 Lutetium-177 綁定到特定蛋白質上，精準攻擊表達該蛋白的癌細胞。 \"These scans combine a protein binder, for example, for B7H3, but also IFAR-2 FAP with a scan.\" 這背後反映了一個深層趨勢：中國已經對測試實驗性藥物採取了截然不同的立場，這 威脅到美國生技產業的未來競爭力 。在美國，FDA 的嚴格監管意味著新藥審批成本高達 10 億美元；但在中國和其他地區，政策窗口正在快速打開。Sid 的全球治療旅程本質上是在做「醫療監管套利」——在不同國家的監管框架下獲取不同的治療選項。 \"China has adopted a dramatically different posture towards testing experimental medicines that no"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-v-kilo-code-與-parallel-agents-抗癌創業家的-ai-編程哲學",
+    "sectionTitle": "Part V: Kilo Code 與 Parallel Agents — 抗癌創業家的 AI 編程哲學",
+    "content": "在瘋狂抗癌的同時，Sid 與 Scott Breitenother 共同創辦了 Kilo Code ——一個開源的 AI 編程平台，支援 500+ AI 模型、零加價定價、跨平台（VS Code、JetBrains、CLI、Slack）。2025 年 12 月完成 800 萬美元種子輪融資，投資方包括 General Catalyst、Cota Capital 等。截至 2026 年初，已有約 150 萬用戶，每月處理超過 6 兆個 Token。 \"The company was co-founded by Sid Sijbrandij and Scott Breitenother... raised $8 million in seed funding.\" Sid 斷言： 「2026 年是並行智能體（Parallel Agents）的元年。」 目前大多數開發者一次只能讓一個 Agent 保持忙碌，但 Kilo 的 Orchestrator 模式允許將任務分派到多個 Agent 在不同工作流中並發執行。這本質上就是他「並行治療」思維的軟體版本。 \"I think 2026 is goi"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Founder Mode 是一種可遷移的方法論 Sid 證明了「Maximal Documentation → Maximal Diagnostics → Therapeutic Ladder」的三層堆疊不僅適用於癌症，更是一個通用的複雜問題解決框架。在 CDMO 中，這映射為「完整記錄 → 全面調查 → 多路線 CAPA」的偏差處理升級版。 AI 是 Polymath Copilot，不是 Agent AI 在性命攸關場景中的最佳角色是跨學科知識整合者：加速文獻搜索、連結碎片化數據、提出假設供人類驗證。不是取代專家判斷，而是讓專家的判斷覆蓋面更廣、反應速度更快。 並行思維是下一個效率邊疆 無論是並行治療方案還是並行 AI Agent，核心邏輯一致：在時間緊迫且資源允許的情況下，同時推進多條路線比逐一測試更有效。但在 GMP 環境中，並行的每條路線仍需獨立驗證。 資源門檻不可忽視 Sid 的成功高度依賴億級富翁的經濟資源、全球頂尖醫療人脈、和他作為科技創業者的系統化能力。這不是任何人都能複製的路徑。故事的價值在於方法論啟發，而非治療方案的直接複製。"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Sid 的 Care Stack 三層架構（Documentation / Diagnostics / Therapeutic Ladder）如何對映到 CDMO 的品質系統？ Documentation → Batch Record + Deviation Log ：完整記錄每一個事件和決策，但 Sid 的記錄是前瞻性的（尋找下一步），而 GMP 記錄偏向回顧性（證明合規）。升級方向：讓偏差調查記錄也包含「探索性假設」欄位。 Diagnostics → OOS/OOT 調查 + 環境監控 ：做所有能做的檢測，盡可能頻繁。在 CDMO 中，這等於提高環境監控頻率、增加過程分析技術（PAT）的部署密度、對異常趨勢做更深層的根因分析。 Therapeutic Ladder → CAPA 多路線驗證 ：不只有一條修正路線，而是準備多條備選方案並排序優先級。這對「反覆偏差」類問題特別有價值——當第一輪 CAPA 失效時，第二輪已經準備好了。 Q2 產業應用 如果你要在 CDMO 偏差調查中引入 AI Copilot（類似 Sid 用 ChatGPT 分析 RNA 數據），你會如"
   }
 ];

@@ -1,5 +1,20 @@
 const documents = [
   {
+    "date": "2026-04-01",
+    "title": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "source": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "tags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "rating": 4.5,
+    "summary": "GitLab 創辦人 Sid Sijbrandij 以工程思維+AI 對抗骨癌晚期，Founder Mode 抗癌全記錄與 Kilo Code 創業。",
+    "lines": 653,
+    "file": "2026-04-01_sid-founder-mode-cancer.html"
+  },
+  {
     "date": "2026-03-28",
     "title": "2030 大預言 - AI 新貴族與數位農奴",
     "source": "@dashen_wang / AI最嚴厲的父親",
