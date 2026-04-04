@@ -12147,7 +12147,7 @@ const searchIndex = [
     ],
     "sectionId": "指令範例",
     "sectionTitle": "指令範例",
-    "content": "# Explore (Plan Mode) read /src/auth and understand how we handle sessions and login. # Plan (Plan Mode) I want to add Google OAuth. What files need to change? Create a plan. # Implement (Normal Mode) implement the OAuth flow from your plan. write tests, run suite, fix failures. # Commit (Normal Mode) commit with a descriptive message and open a PR 比喻說明 這就像裝修房子：你不會拿到鐵鎚就開始敲牆。先看圖紙（Explore）、做施工計畫（Plan）、然後按計畫施工（Implement）。小修補可以直接動手，大工程一定要先規劃。"
+    "content": "比喻說明 這就像裝修房子：你不會拿到鐵鎚就開始敲牆。先看圖紙（Explore）、做施工計畫（Plan）、然後按計畫施工（Implement）。小修補可以直接動手，大工程一定要先規劃。 # Explore (Plan Mode) read /src/auth and understand how we handle sessions and login. # Plan (Plan Mode) I want to add Google OAuth. What files need to change? Create a plan. # Implement (Normal Mode) implement the OAuth flow from your plan. write tests, run suite, fix failures. # Commit (Normal Mode) commit with a descriptive message and open a PR"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12181,7 +12181,7 @@ const searchIndex = [
     ],
     "sectionId": "claudemd-該放什麼",
     "sectionTitle": "CLAUDE.md 該放什麼",
-    "content": "Include Exclude Claude 猜不到的 Bash 指令 Claude 看程式碼就能推斷的事 偏離預設的程式碼風格 標準語言慣例 測試指令與偏好的 test runner 詳細 API 文件（改放連結） Repo 規範（branch 命名、PR 慣例） 經常變動的資訊 架構決策、常見陷阱 逐檔案的 codebase 描述 CLAUDE.md 範例 # Code style - Use ES modules (import/export), not CommonJS - Destructure imports when possible # Workflow - Typecheck after code changes - Prefer single tests over full suite Skills vs Hooks 的區別 Skills = 「建議」（Claude 視情況參考）。Hooks = 「規定」（每次都必須執行，零例外）。需要 100% 遵守的規則用 Hooks；需要領域知識的用 Skills。"
+    "content": "Include Exclude Claude 猜不到的 Bash 指令 Claude 看程式碼就能推斷的事 偏離預設的程式碼風格 標準語言慣例 測試指令與偏好的 test runner 詳細 API 文件（改放連結） Repo 規範（branch 命名、PR 慣例） 經常變動的資訊 架構決策、常見陷阱 逐檔案的 codebase 描述 CLAUDE.md 範例 Skills vs Hooks 的區別 Skills = 「建議」（Claude 視情況參考）。Hooks = 「規定」（每次都必須執行，零例外）。需要 100% 遵守的規則用 Hooks；需要領域知識的用 Skills。 # Code style - Use ES modules (import/export), not CommonJS - Destructure imports when possible # Workflow - Typecheck after code changes - Prefer single tests over full suite"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12249,7 +12249,7 @@ const searchIndex = [
     ],
     "sectionId": "headless-mode-範例",
     "sectionTitle": "Headless Mode 範例",
-    "content": "# 一次性查詢 claude -p \"Explain what this project does\" # 結構化輸出（供腳本處理） claude -p \"List all API endpoints\" \\ --output-format json # Fan-out 模式 for file in $(cat files.txt); do claude -p \"Migrate $file from React \\ to Vue. Return OK or FAIL.\" \\ --allowedTools \"Edit,Bash(git commit *)\" done Writer/Reviewer 模式 Session A (Writer)： \"Implement a rate limiter for our API endpoints\" Session B (Reviewer)： \"Review the rate limiter in @src/middleware/rateLimiter.ts. Look for edge cases, race conditions.\" Session"
+    "content": "Writer/Reviewer 模式 Session A (Writer)： \"Implement a rate limiter for our API endpoints\" Session B (Reviewer)： \"Review the rate limiter in @src/middleware/rateLimiter.ts. Look for edge cases, race conditions.\" Session A： \"Here's the feedback: [B output]. Address these issues.\" # 一次性查詢 claude -p \"Explain what this project does\" # 結構化輸出（供腳本處理） claude -p \"List all API endpoints\" \\ --output-format json # Fan-out 模式 for file in $(cat files.txt); do claude -p \"Migrate $file from React \\ to Vue. Return "
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -14903,7 +14903,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details-code",
     "sectionTitle": "Technical Details & Code",
-    "content": "Agent 隔離模型演進 # v2.1.49: Worktree 啟動 claude --worktree # Agent 定義 (YAML frontmatter) --- name: code-reviewer isolation: worktree background: true --- # v2.1.50: 列出所有 agents claude agents # v2.1.72: ExitWorktree 工具 # Agent 可主動離開 worktree # v2.1.76: Sparse worktree # settings.json { \"worktree\": { \"sparsePaths\": [\"packages/core\", \"libs/shared\"] } } Agent 記憶體修復清單 v2.1.50 : Completed teammate tasks 未被 GC v2.1.50 : Completed task state 未從 AppState 移除 v2.1.59 : Completed subagent task state 未釋放 v2.1.63 "
+    "content": "Agent 隔離模型演進 Agent 記憶體修復清單 v2.1.50 : Completed teammate tasks 未被 GC v2.1.50 : Completed task state 未從 AppState 移除 v2.1.59 : Completed subagent task state 未釋放 v2.1.63 : Long-running teammates 保留所有 messages v2.1.69 : Long-running SDK/CCR sessions 洩漏 v2.1.72 : Team agents 不繼承 leader 的 model v2.1.76 : Killing background agent 現保留部分結果 CDMO 應用情境 Deviation Investigation Agent Team ：主 Agent 負責逸差分類，Background Agent 1 同步搜尋歷史逸差資料庫，Background Agent 2 檢查相關 SOP 版本。各自在獨立 worktree 中操作，避免檔案衝突。最終由主 Agent 整合報告。 # "
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -14937,7 +14937,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "效能改善量化 # 記憶體管理策略演進 v2.1.49: Tree-sitter parser 定期重置 v2.1.50: File history snapshots 加上上限 v2.1.50: Tool results > 50K 持久化到磁碟 (v2.1.51 降低至 50K, 原為 100K) v2.1.63: Compaction 後清理內部快取 v2.1.63: Heavy progress payloads 被剝離 v2.1.69: React memoCache 舊版本清理 v2.1.76: Auto-compaction 斷路器 (連續失敗 3 次後停止) # 啟動效能改善 v2.1.49: MCP auth 失敗快取 v2.1.49: Analytics token counting 減少 v2.1.49: MCP tool counting 批量化 v2.1.50: Yoga WASM 延遲匯入 v2.1.70: 啟動記憶體 -426KB v2.1.72: Bundle size -510KB Compaction 改進 v2.1.70 : Compaction 現"
+    "content": "效能改善量化 Compaction 改進 v2.1.70 : Compaction 現在保留圖片 v2.1.72 : Prompt cache invalidation 修復，input token 成本最高降低 12x v2.1.76 : Auto-compaction 加入斷路器，連續 3 次失敗後停止重試 v2.1.76 : Deferred tools 不再在 compaction 後遺失 input schemas # 記憶體管理策略演進 v2.1.49: Tree-sitter parser 定期重置 v2.1.50: File history snapshots 加上上限 v2.1.50: Tool results > 50K 持久化到磁碟 (v2.1.51 降低至 50K, 原為 100K) v2.1.63: Compaction 後清理內部快取 v2.1.63: Heavy progress payloads 被剝離 v2.1.69: React memoCache 舊版本清理 v2.1.76: Auto-compaction 斷路器 (連續失敗 3 次後停止) # "
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -14971,7 +14971,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details-code",
     "sectionTitle": "Technical Details & Code",
-    "content": "Hook Events 完整清單 # 生命週期 Hooks（截至 v2.1.76） SessionStart # 工作階段啟動 SessionEnd # 工作階段結束（可設 timeout） ConfigChange # 設定檔變更 InstructionsLoaded # CLAUDE.md / rules 載入 PostCompact # Compaction 完成後 # Agent Hooks WorktreeCreate # Worktree 建立 WorktreeRemove # Worktree 移除 TeammateIdle # 隊友閒置 TaskCompleted # 任務完成 # MCP Hooks (v2.1.76 NEW) Elicitation # MCP 請求使用者輸入 ElicitationResult # 使用者回應 # Hook 類型 Shell Hook: 執行本機指令 HTTP Hook: POST JSON 到 URL (v2.1.63+) # Hook 事件欄位 (v2.1.69+) agent_id, agent_type, worktree "
+    "content": "Hook Events 完整清單 Plugin 安全修復 v2.1.51 : statusLine/fileSuggestion hook 可在未接受工作區信任前執行（已修復） v2.1.69 : 巢狀 skill 探索可從 gitignored 目錄載入 skills（已修復） v2.1.69 : Trust dialog 首次執行時默默啟用所有 .mcp.json servers（已修復） # 生命週期 Hooks（截至 v2.1.76） SessionStart # 工作階段啟動 SessionEnd # 工作階段結束（可設 timeout） ConfigChange # 設定檔變更 InstructionsLoaded # CLAUDE.md / rules 載入 PostCompact # Compaction 完成後 # Agent Hooks WorktreeCreate # Worktree 建立 WorktreeRemove # Worktree 移除 TeammateIdle # 隊友閒置 TaskCompleted # 任務完成 # MCP Hooks (v2.1"
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15005,7 +15005,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "MCP 改善時間線 # OAuth 與連線穩定性 v2.1.49: Auth failure caching v2.1.59: Multi-instance OAuth 競爭修復 v2.1.63: Manual URL paste fallback v2.1.69: macOS keychain 損壞修復 v2.1.69: oauth.authServerMetadataUrl 選項 v2.1.74: OAuth refresh token 過期處理 v2.1.74: Callback port 佔用處理 # 記憶體與效能 v2.1.63: Tool/resource cache leak 修復 v2.1.63: Server fetch cache 斷開清理 v2.1.70: Prompt-cache bust 修復 # 功能擴展 v2.1.63: HTTP hooks (POST JSON) v2.1.69: Binary content (PDF, Office, Audio) v2.1.76: Elicitation (結構化互動對話) v2.1.76: Elicitation"
+    "content": "MCP 改善時間線 Elicitation + CDMO 情境 想像一個「批次記錄審查 MCP Server」。Claude 執行審查時，Server 發現某個溫度偏移紀錄，透過 Elicitation 跳出對話框：「偵測到 Vial #2847 充填溫度 26.3 C（規格 20-25 C）。請選擇：(A) 標記為逸差 (B) 備註為環境因素 (C) 需要更多資訊」。人類做出判斷後，Server 繼續執行。 # OAuth 與連線穩定性 v2.1.49: Auth failure caching v2.1.59: Multi-instance OAuth 競爭修復 v2.1.63: Manual URL paste fallback v2.1.69: macOS keychain 損壞修復 v2.1.69: oauth.authServerMetadataUrl 選項 v2.1.74: OAuth refresh token 過期處理 v2.1.74: Callback port 佔用處理 # 記憶體與效能 v2.1.63: Tool/resource cache leak 修復 v"
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15039,7 +15039,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "Remote Control 演進 # Remote Control 使用 claude remote-control # 基本啟動 claude remote-control --name \"batch-review\" # v2.1.76 修復項目 - Sessions 靜默死亡 - 快速訊息排隊為逐一處理 - JWT refresh 後 stale work items - WebSocket 長時間斷線恢復 - 圖片經 Remote Control 傳送時 media_type 錯誤 # Voice Mode 語言支援 (v2.1.69+) # 新增：RU, PL, TR, NL, UK, EL, CS, DA, SV, NO # 合計 20 種語言 # Push-to-talk 自訂 (v2.1.71) # keybindings.json { \"voice:pushToTalk\": \"ctrl+shift+v\" } CDMO 應用情境 移動辦公場景 ：在工廠巡檢時，用手機 Claude App 透過 Remote Control 連接家中 MacBook Air 上的 Cla"
+    "content": "Remote Control 演進 CDMO 應用情境 移動辦公場景 ：在工廠巡檢時，用手機 Claude App 透過 Remote Control 連接家中 MacBook Air 上的 Claude Code。語音口述「查看上週 Line 3 的偏差報告」，Claude Code 在本機執行搜尋和分析，結果透過 bridge 回傳到手機。整個流程不需要攜帶筆電進入生產區域。 # Remote Control 使用 claude remote-control # 基本啟動 claude remote-control --name \"batch-review\" # v2.1.76 修復項目 - Sessions 靜默死亡 - 快速訊息排隊為逐一處理 - JWT refresh 後 stale work items - WebSocket 長時間斷線恢復 - 圖片經 Remote Control 傳送時 media_type 錯誤 # Voice Mode 語言支援 (v2.1.69+) # 新增：RU, PL, TR, NL, UK, EL, CS, DA, SV, NO # 合計 "
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15073,7 +15073,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "新指令速查表 # 記憶體管理 /memory # 管理 auto-memory /context # 檢視 context 使用狀況 # v2.1.74: 識別 context-heavy # tools、memory bloat # 排程與迴圈 /loop # 定期執行 prompt (v2.1.71) CLAUDE_CODE_DISABLE_CRON=true # 停用 cron # 檔案與輸出 /copy # 互動式選取 code blocks /copy # 'w' 鍵直接寫入檔案 (v2.1.72) /export # 匯出完整路徑 (v2.1.76 修復) # 模型與效能 /effort # 設定 effort level (v2.1.76) /model # 含 human-readable labels /color # 設定 prompt-bar 顏色 (v2.1.75) # 其他 /plan [desc] # 可選描述 (v2.1.72) /rename # prompt bar 顯示名稱 /simplify # 簡化模式 (v2.1.63) /batch # 批次"
+    "content": "新指令速查表 Effort Level 演進 v2.1.68 : Opus 4.6 預設 medium effort v2.1.68 : \"ultrathink\" 關鍵字觸發 high effort v2.1.72 : 簡化為 low / medium / high v2.1.72 : 移除 max level v2.1.73 : /effort 可在 Claude 回應中切換 v2.1.76 : /effort 成為正式 slash command # 記憶體管理 /memory # 管理 auto-memory /context # 檢視 context 使用狀況 # v2.1.74: 識別 context-heavy # tools、memory bloat # 排程與迴圈 /loop # 定期執行 prompt (v2.1.71) CLAUDE_CODE_DISABLE_CRON=true # 停用 cron # 檔案與輸出 /copy # 互動式選取 code blocks /copy # 'w' 鍵直接寫入檔案 (v2.1.72) /export # 匯出完整路徑 (v2."
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15107,7 +15107,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "模型遷移時間線 # Sonnet 系列 v2.1.49: Sonnet 4.5 (1M) removed -> Sonnet 4.6 (1M) replaced v2.1.69: Sonnet 4.5 Pro/Max/Team -> auto-migrated to 4.6 # Opus 系列 v2.1.49: Opus 4.6 available v2.1.50: Opus 4.6 fast mode (1M) v2.1.68: Opus 4/4.1 removed -> auto-migrated to 4.6 v2.1.68: Default effort = medium v2.1.73: Bedrock/Vertex/Foundry default Opus -> 4.6 v2.1.75: Opus 4.6 1M context (Max/Team/Enterprise) 跨平台修復亮點 Windows : panic 修復、大量 spawn crash、RTL 文字渲染、CMD 2>nul 處理、WSL clipboard Linux : glibc 2.26+ 相容（Am"
+    "content": "模型遷移時間線 跨平台修復亮點 Windows : panic 修復、大量 spawn crash、RTL 文字渲染、CMD 2>nul 處理、WSL clipboard Linux : glibc 2.26+ 相容（Amazon Linux 2）、sandbox ripgrep、native modules macOS : keychain 損壞、voice entitlement、MDM startup 效能 VSCode : extension crash、proxy HTTP 400、scroll 效能、RTL 渲染、compaction 顯示 企業部署建議 如果你的 CDMO 考慮導入 Claude Code：(1) 使用 Managed Settings via macOS plist 鎖定允許的工具和網域 (2) 啟用 feedbackSurveyRate 收集使用品質資料 (3) 使用 allowManagedDomainsOnly 限制網路存取 (4) 監控 Hook events 建立審計軌跡。v2.1.74 的 managed policy 修復是升級的最低版本門"
   },
   {
     "docFile": "2026-03-16_karpathy-autoresearch.html",
@@ -15698,7 +15698,7 @@ const searchIndex = [
     ],
     "sectionId": "模式切換範例",
     "sectionTitle": "模式切換範例",
-    "content": "# 預設：headless Chromium browser-use open https://example.com # 帶視窗的瀏覽器（除錯用） browser-use --headed open https://example.com # 用你的 Chrome Default profile（保留登入狀態） browser-use --profile \"Default\" open https://gmail.com # 用特定 Chrome profile browser-use --profile \"Profile 1\" open https://gmail.com # 自動偵測已運行的 Chrome browser-use --connect open https://example.com # 透過 CDP URL 連接 browser-use --cdp-url http://localhost:9222 open https://example.com 比喻說明：Profile 模式 Profile 模式就像借用同事已經刷好門禁卡的電腦——你不用重新登入，所有 sess"
+    "content": "比喻說明：Profile 模式 Profile 模式就像借用同事已經刷好門禁卡的電腦——你不用重新登入，所有 session 和 cookies 都已經在那裡。這對需要登入才能存取的內部系統特別實用，但安全性考量下， 不建議在共享環境使用 。 # 預設：headless Chromium browser-use open https://example.com # 帶視窗的瀏覽器（除錯用） browser-use --headed open https://example.com # 用你的 Chrome Default profile（保留登入狀態） browser-use --profile \"Default\" open https://gmail.com # 用特定 Chrome profile browser-use --profile \"Profile 1\" open https://gmail.com # 自動偵測已運行的 Chrome browser-use --connect open https://example.com # 透過 CDP URL 連接 browse"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15746,7 +15746,7 @@ const searchIndex = [
     ],
     "sectionId": "session-與-profile-管理",
     "sectionTitle": "Session 與 Profile 管理",
-    "content": "Session 管理 讓你同時運行多個獨立的瀏覽器 session。每個 session 有自己的 daemon，互不干擾。 Each --session gets its own daemon, socket, and PID file. # 預設 session browser-use open https://example.com # 命名 session browser-use --session work open https://app.example.com browser-use --session work state # 列出所有活躍 session browser-use sessions # 關閉特定 session browser-use --session work close # 關閉全部 browser-use close --all Profile 管理 使用 profile-use Go binary 將本地瀏覽器 cookies 同步到 Browser Use Cloud。首次使用時自動下載。 The profile subcommand del"
+    "content": "Session 管理 讓你同時運行多個獨立的瀏覽器 session。每個 session 有自己的 daemon，互不干擾。 Each --session gets its own daemon, socket, and PID file. Profile 管理 使用 profile-use Go binary 將本地瀏覽器 cookies 同步到 Browser Use Cloud。首次使用時自動下載。 The profile subcommand delegates to the profile-use Go binary, which syncs local browser cookies to Browser-Use cloud. Command Description profile list 列出偵測到的瀏覽器及 profiles profile sync --all 同步所有 profiles 到 cloud profile inspect ... 在本地檢查 cookies 重點提示：MCP 模式 加上 --mcp flag 可以將 CLI 作為 MCP server "
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -17453,7 +17453,7 @@ const searchIndex = [
     ],
     "sectionId": "wf2-content-research-多來源整合",
     "sectionTitle": "WF2: Content Research (多來源整合)",
-    "content": "內容創作最耗時的不是寫作本身，而是 處理資訊的前置作業 ——閱讀 5-10 個來源（GitHub README、文件、Twitter 討論串、部落格、更新日誌），手動閱讀、標記重點、交叉比對、萃取關鍵資訊，每篇要花超過一小時。 \"reading 5-10 sources: GitHub READMEs, docs, Twitter threads, blog posts, changelog entries\" Prompt 設計的亮點是 受眾定義 （builders, not consumers）和 差異化視角 （contradicts common narrative / angle nobody else is covering）。這不只是摘要工具，而是內容策略分析工具。 \"If two sources disagree, show me both sides. Don't summarize fluff. Only signal.\" Prompt Template Here are my sources on [TOPIC]: [PASTE ALL RAW MATERIAL] E"
+    "content": "內容創作最耗時的不是寫作本身，而是 處理資訊的前置作業 ——閱讀 5-10 個來源（GitHub README、文件、Twitter 討論串、部落格、更新日誌），手動閱讀、標記重點、交叉比對、萃取關鍵資訊，每篇要花超過一小時。 \"reading 5-10 sources: GitHub READMEs, docs, Twitter threads, blog posts, changelog entries\" Prompt 設計的亮點是 受眾定義 （builders, not consumers）和 差異化視角 （contradicts common narrative / angle nobody else is covering）。這不只是摘要工具，而是內容策略分析工具。 \"If two sources disagree, show me both sides. Don't summarize fluff. Only signal.\" Prompt Template 實務應用 此模式可直接套用到 CDMO 的 Tech Transfer 文件審查：將多份來源文件（藥品規格書、製程開"
   },
   {
     "docFile": "2026-03-28_claude-10-workflows.html",
@@ -17501,7 +17501,7 @@ const searchIndex = [
     ],
     "sectionId": "wf5-competitor-analysis",
     "sectionTitle": "WF5: Competitor Analysis",
-    "content": "競爭者分析的關鍵設計是 在 Prompt 中加入「關於我」的上下文 。沒有這個上下文，AI 只能產出通用的 SWOT 分析。有了它，AI 能針對你的定位給出差異化建議。 \"The key is giving Claude context about YOU, not just the competitor. Otherwise you get a generic SWOT analysis that could apply to anyone.\" 反向指令 「Don't say 'they have a strong brand.' Tell me WHY and what specifically makes it work」 ——強制 AI 從表面描述進入因果分析。 Prompt Template I'm analyzing [COMPETITOR/ACCOUNT]. Based on what you know + the data I'm providing: 1. Top 3 things they're doing well (be specific) 2. Gaps or"
+    "content": "競爭者分析的關鍵設計是 在 Prompt 中加入「關於我」的上下文 。沒有這個上下文，AI 只能產出通用的 SWOT 分析。有了它，AI 能針對你的定位給出差異化建議。 \"The key is giving Claude context about YOU, not just the competitor. Otherwise you get a generic SWOT analysis that could apply to anyone.\" 反向指令 「Don't say 'they have a strong brand.' Tell me WHY and what specifically makes it work」 ——強制 AI 從表面描述進入因果分析。 Prompt Template 實務應用 CDMO 競標場景：將競爭對手的公開資訊（產能、技術平台、客戶案例）輸入 Claude，加上自己的「About me」上下文（SA25 isolator 技術、QS-21 經驗），要求分析差異化定位。 I'm analyzing [COMPETITOR/ACCOUNT]. Ba"
   },
   {
     "docFile": "2026-03-28_claude-10-workflows.html",
@@ -17549,7 +17549,7 @@ const searchIndex = [
     ],
     "sectionId": "wf8-email-drafting",
     "sectionTitle": "WF8: Email Drafting",
-    "content": "寫 email 的痛點是 語氣拿捏的認知負荷 ：太正式像機器人，太隨意不專業。作者的解法是在 Prompt 中明確定義「不要像什麼」。 \"Too formal and you sound like a robot. Too casual and you sound unprofessional.\" 「Does not sound like: a cold pitch template, corporate speak, or something ChatGPT would write. No 'I hope this email finds you well.'」 ——這是反向指令的經典應用。透過排除不想要的風格，比正面描述想要的風格更有效。 Prompt Template Draft an email. To: [NAME + how I know them] Goal: [WHAT I WANT THEM TO DO] Tone: professional but sounds like a real person Max: 5 sentences Context: [THE SI"
+    "content": "寫 email 的痛點是 語氣拿捏的認知負荷 ：太正式像機器人，太隨意不專業。作者的解法是在 Prompt 中明確定義「不要像什麼」。 \"Too formal and you sound like a robot. Too casual and you sound unprofessional.\" 「Does not sound like: a cold pitch template, corporate speak, or something ChatGPT would write. No 'I hope this email finds you well.'」 ——這是反向指令的經典應用。透過排除不想要的風格，比正面描述想要的風格更有效。 Prompt Template 實務應用 在 CDMO 情境中，這個模板可用於客戶溝通的初稿——特別是需要拿捏語氣的情況（如通知客戶偏差調查結果、請求延長時程）。但最終版本必須經過人類審閱，確保技術準確性和法規合規性。 Draft an email. To: [NAME + how I know them] Goal: [WHAT I WANT "
   },
   {
     "docFile": "2026-03-28_claude-10-workflows.html",
@@ -17565,7 +17565,7 @@ const searchIndex = [
     ],
     "sectionId": "wf9-morning-briefing",
     "sectionTitle": "WF9: Morning Briefing",
-    "content": "用 Claude 取代每天早上 45 分鐘的社群媒體滑動。核心價值是 訊號與噪音分離 ——社群媒體把新聞混雜著戲劇性內容、meme、釣魚式參與誘餌和 20 分鐘的兔子洞。 \"Claude gives you signal without noise.\" 作者誠實承認限制： 準確率約 80%，特別容易漏掉最近一小時的突發新聞 。剩下 20% 靠群組聊天和通知自然補上。這個「80% 自動化 + 20% 人類補完」的比例很有參考價值。 \"Is it perfect? No. It misses things sometimes, especially breaking news from the last hour. But it catches maybe 80% of what matters.\" Prompt Template 3-minute briefing: 1. Top 3 AI news from last 24 hours (one sentence each) 2. Crypto: major moves, liquidations, new narratives 3. "
+    "content": "用 Claude 取代每天早上 45 分鐘的社群媒體滑動。核心價值是 訊號與噪音分離 ——社群媒體把新聞混雜著戲劇性內容、meme、釣魚式參與誘餌和 20 分鐘的兔子洞。 \"Claude gives you signal without noise.\" 作者誠實承認限制： 準確率約 80%，特別容易漏掉最近一小時的突發新聞 。剩下 20% 靠群組聊天和通知自然補上。這個「80% 自動化 + 20% 人類補完」的比例很有參考價值。 \"Is it perfect? No. It misses things sometimes, especially breaking news from the last hour. But it catches maybe 80% of what matters.\" Prompt Template 重點提示 限制注意 ：Claude 的 web search 有延遲和涵蓋範圍限制，不適合作為即時新聞來源。此 Workflow 更適合作為「背景知識更新」而非「即時警報系統」。在 CDMO 場景中，法規更新追蹤需要更可靠的來源（如 PDA/ISPE Newsl"
   },
   {
     "docFile": "2026-03-28_claude-10-workflows.html",
@@ -17581,7 +17581,7 @@ const searchIndex = [
     ],
     "sectionId": "wf10-weekly-review-最高-roi",
     "sectionTitle": "WF10: Weekly Review (最高 ROI)",
-    "content": "每週日晚上將整週的筆記、書籤、半成形的想法全部倒入 Claude。作者認為這是 AI 從工具轉變為思考夥伴 的轉折點——它能看到你自己因為太靠近而錯過的想法之間的連結。 \"This is where Claude stops being a tool and starts being a thinking partner. It sees connections across your own ideas that you miss because you're too close to your own work.\" 品質錨定： 「Be honest. If an idea is weak, say so. Don't tell me everything is great.」 ——再次覆蓋 AI 的預設禮貌偏差。 Prompt Template Here are my notes and ideas from this week: [PASTE EVERYTHING] Help me: 1. Find patterns: what topics am I gravitating t"
+    "content": "每週日晚上將整週的筆記、書籤、半成形的想法全部倒入 Claude。作者認為這是 AI 從工具轉變為思考夥伴 的轉折點——它能看到你自己因為太靠近而錯過的想法之間的連結。 \"This is where Claude stops being a tool and starts being a thinking partner. It sees connections across your own ideas that you miss because you're too close to your own work.\" 品質錨定： 「Be honest. If an idea is weak, say so. Don't tell me everything is great.」 ——再次覆蓋 AI 的預設禮貌偏差。 Prompt Template 實務應用 這個模式可套用到個人學習系統：每週日將本週讀的文章、做的筆記、產出的教育文件全部列出，請 Claude 找出「我正在忽略哪個學習維度」和「下週最應該深入的 2 個主題」。 Here are my notes and ideas f"
   },
   {
     "docFile": "2026-03-28_claude-10-workflows.html",
