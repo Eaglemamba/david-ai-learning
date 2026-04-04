@@ -201,6 +201,7 @@ const topicClusters = [
           { title: 'Claude Code Power User Van Horn ★4.5', file: '2026-03-24_claude-code-power-user.html' },
           { title: 'Claude Code Auto Mode ★4.5', file: '2026-03-26_claude-code-auto-mode.html' },
           { title: '10 Claude Workflows 省 10+ 小時 ★3.6', file: '2026-03-28_claude-10-workflows.html' },
+          { title: 'Claw Code 開源 CLI 架構深度解析 ★4.2', file: '2026-04-04_claw-code-open-source-cli.html' },
         ]
       },
       {

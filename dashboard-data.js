@@ -1,5 +1,20 @@
 const documents = [
   {
+    "date": "2026-04-04",
+    "title": "Claw Code - 開源 AI CLI 架構深度解析",
+    "source": "ultraworkers/claw-code GitHub Repository",
+    "tags": [
+      "Tool",
+      "Agent",
+      "Framework",
+      "Architecture"
+    ],
+    "rating": 4.2,
+    "summary": "Claw Code 開源 Rust CLI 架構拆解：SystemPromptBuilder、ConfigLoader、MCP 多傳輸協議、權限分級與 Hooks 系統，對照 Claude Code 理解 AI Agent CLI 設計模式。",
+    "lines": 699,
+    "file": "2026-04-04_claw-code-open-source-cli.html"
+  },
+  {
     "date": "2026-04-01",
     "title": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
     "source": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",

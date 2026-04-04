@@ -17822,5 +17822,21 @@ const searchIndex = [
     "sectionId": "practice-questions",
     "sectionTitle": "Practice Questions",
     "content": "Q1 概念理解 Sid 的 Care Stack 三層架構（Documentation / Diagnostics / Therapeutic Ladder）如何對映到 CDMO 的品質系統？ Documentation → Batch Record + Deviation Log ：完整記錄每一個事件和決策，但 Sid 的記錄是前瞻性的（尋找下一步），而 GMP 記錄偏向回顧性（證明合規）。升級方向：讓偏差調查記錄也包含「探索性假設」欄位。 Diagnostics → OOS/OOT 調查 + 環境監控 ：做所有能做的檢測，盡可能頻繁。在 CDMO 中，這等於提高環境監控頻率、增加過程分析技術（PAT）的部署密度、對異常趨勢做更深層的根因分析。 Therapeutic Ladder → CAPA 多路線驗證 ：不只有一條修正路線，而是準備多條備選方案並排序優先級。這對「反覆偏差」類問題特別有價值——當第一輪 CAPA 失效時，第二輪已經準備好了。 Q2 產業應用 如果你要在 CDMO 偏差調查中引入 AI Copilot（類似 Sid 用 ChatGPT 分析 RNA 數據），你會如"
+  },
+  {
+    "docFile": "2026-04-04_claw-code-open-source-cli.html",
+    "docTitle": "Claw Code - 開源 AI CLI 架構深度解析",
+    "docDate": "2026-04-04",
+    "docSource": "ultraworkers/claw-code GitHub Repository",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Framework",
+      "Architecture"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Claw Code Rust AI CLI Claude Code AI Agent CLI SystemPromptBuilder ConfigLoader MCP Claude Code 理解模組架構 SystemPromptBuilder、ConfigLoader、ProjectContext 三大核心模組的職責與協作方式 掌握 MCP 協議 Model Context Protocol 的六種傳輸模式（Stdio/SSE/HTTP/WS/SDK/ManagedProxy）與適用場景 權限與安全設計 ReadOnly → WorkspaceWrite → DangerFullAccess 三級權限模型與 Hooks 攔截機制 Claw Code 核心架構流程 ProjectContext 探索工作目錄 Git 狀態 + CLAW.md ConfigLoader 多層配置合併 User → Project → Local PromptBuilder 組裝系統提示詞 靜態 + 動態段落 Agent Runtime MCP 工具執行 權限檢查 + Hooks Part I ProjectContext — 專案環境探索引擎 Claw Code 啟動時做的第一件事就是 探索專案環境 。 ProjectContext 結構體負責收集四類關鍵資訊：工作目錄路徑、當前日期、Git 狀態（status + diff）、以及指令檔案（instruction files）。 On startup, Claw Code discovers project context: working directory, date, git state, and instruction files — all fed into the system prompt. 指令檔案的探索邏輯特別精巧： 從當前目錄向上遍歷所有祖先目錄 ，尋找 CLAW.md 、 CLAW.local.md 和 .claw/instructions.md 。找到後以內容雜湊去重，避免 symlink 或重複掛載導致同一份指令被載入兩次。 discover_instruction_files() traverses ancestor directories for CLAW.md, CLAW.local.md, and .claw/instructions.md, deduplicating by stable content hash. 每個指令檔案有 字元預算：單檔 4,000 字元、總計 12,000 字元 。超過就截斷。這是一個務實的設計 — 避免用戶放了一本百科全書進 CLAW.md 就把上下文窗口塞爆。 Character budgets: 4,000 per file, 12,000 total — preventing context window overflow from oversized instruction files. 核心概念 — Instruction File 層級 三種指令檔案，三種用途： 1. CLAW.md — 團隊共享的專案規則，應提交到 Git（等同 Claude Code 的 CLAUDE.md ） 2. CLAW.local.md — 個人偏好，不提交到 Git（等同 CLAUDE.local.md ） 3. .claw/instructions.md — 目錄層級的指令，適合 monorepo 中不同子專案有不同規則 類比 — 對照 Claude Co"
   }
 ];
