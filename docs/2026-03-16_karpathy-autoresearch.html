@@ -96,6 +96,7 @@
         .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
         .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
         .content-right { padding: 1.5rem; background: #f8fafc; }
+        .col-full { padding: 1.5rem; background: #f8fafc; grid-column: 1 / -1; }
 
         /* Bilingual */
         .bilingual-block { margin-bottom: 1.25rem; }
@@ -337,12 +338,7 @@
             <div class="info-box box-code">
                 <div class="info-box-header">&#128187; 專案結構</div>
                 <div class="info-box-content">
-                    <div class="code-block">
-<span class="file">prepare.py</span>  <span class="comment"># 固定：資料準備 + runtime 工具（不可改）</span>
-<span class="file">train.py</span>    <span class="comment"># Agent 修改：模型、optimizer、訓練 loop</span>
-<span class="file">program.md</span>  <span class="comment"># Human 修改：Agent 的研究指令</span>
-<span class="file">pyproject.toml</span> <span class="comment"># 依賴管理</span>
-                    </div>
+                    
                 </div>
             </div>
             <div class="info-box box-key">
@@ -358,6 +354,14 @@
                     這個「只准改一個檔案」的約束，跟 GMP 環境的變更控制邏輯高度相似。你不會讓一個新進人員同時改 SOP、設備參數和原料規格——你會把<strong>可變範圍限縮到最小</strong>，其他東西都鎖住。autoresearch 對 Agent 做的事完全一樣。
                 </div>
             </div>
+        </div>
+        <div class="col-full">
+          <div class="code-block">
+<span class="file">prepare.py</span>  <span class="comment"># 固定：資料準備 + runtime 工具（不可改）</span>
+<span class="file">train.py</span>    <span class="comment"># Agent 修改：模型、optimizer、訓練 loop</span>
+<span class="file">program.md</span>  <span class="comment"># Human 修改：Agent 的研究指令</span>
+<span class="file">pyproject.toml</span> <span class="comment"># 依賴管理</span>
+                    </div>
         </div>
     </div>
 
@@ -403,7 +407,26 @@
             <div class="info-box box-code">
                 <div class="info-box-header">&#128187; program.md 核心流程</div>
                 <div class="info-box-content">
-                    <div class="code-block">
+                    
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念</div>
+                <div class="info-box-content">
+                    <strong>program.md = Agent Skill</strong><br>
+                    Karpathy 自己說 program.md 本質上就是一個超輕量的「skill」。這跟 Anthropic 的 Agent Skills 架構異曲同工——都是用結構化文字定義 Agent 的行為邊界、工作流程和品質標準。差別在於 autoresearch 的 skill 只需要一份 40 行 Markdown，而 Anthropic 的 SKILL.md 有更完整的 YAML frontmatter 和生命週期管理。
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
+                    <strong>把 Agent 的 log 重導，不灌進 context</strong><br>
+                    這個設計細節非常值得學習。想像你請一位助手做實驗，如果他每次實驗都把所有原始數據唸給你聽，你的注意力很快就會被耗盡。正確做法是：<strong>實驗結果存檔，只報告關鍵指標</strong>。<code>> run.log 2>&1</code> 就是在保護 Agent 的 context window 不被無關輸出污染。
+                </div>
+            </div>
+        </div>
+        <div class="col-full">
+          <div class="code-block">
 <span class="comment"># 1. Setup</span>
 <span class="keyword">git checkout -b</span> autoresearch/&lt;tag&gt;
 <span class="comment"># 讀取 README.md, prepare.py, train.py</span>
@@ -421,22 +444,6 @@
   <span class="keyword">else</span>:
     <span class="keyword">git reset</span>   <span class="comment"># discard</span>
                     </div>
-                </div>
-            </div>
-            <div class="info-box box-concept">
-                <div class="info-box-header">&#128218; 核心概念</div>
-                <div class="info-box-content">
-                    <strong>program.md = Agent Skill</strong><br>
-                    Karpathy 自己說 program.md 本質上就是一個超輕量的「skill」。這跟 Anthropic 的 Agent Skills 架構異曲同工——都是用結構化文字定義 Agent 的行為邊界、工作流程和品質標準。差別在於 autoresearch 的 skill 只需要一份 40 行 Markdown，而 Anthropic 的 SKILL.md 有更完整的 YAML frontmatter 和生命週期管理。
-                </div>
-            </div>
-            <div class="info-box box-analogy">
-                <div class="info-box-header">&#128161; 比喻說明</div>
-                <div class="info-box-content">
-                    <strong>把 Agent 的 log 重導，不灌進 context</strong><br>
-                    這個設計細節非常值得學習。想像你請一位助手做實驗，如果他每次實驗都把所有原始數據唸給你聽，你的注意力很快就會被耗盡。正確做法是：<strong>實驗結果存檔，只報告關鍵指標</strong>。<code>> run.log 2>&1</code> 就是在保護 Agent 的 context window 不被無關輸出污染。
-                </div>
-            </div>
         </div>
     </div>
 
