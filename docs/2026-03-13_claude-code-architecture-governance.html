@@ -218,11 +218,21 @@
 </div>
 </div>
 <div class="content-right">
-<div class="content-label">Context Cost Breakdown</div>
+  <div class="content-label">Context Cost Breakdown</div>
 <div class="info-box box-code">
 <div class="info-box-header">💻 200K 上下文實際分配</div>
 <div class="info-box-content">
-<pre class="code-block">200K Total Context
+  </div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 壓縮機制的陷阱</div>
+<div class="info-box-content">
+                        預設壓縮演算法按「可重新讀取」判斷，早期的 Tool Output 和檔案內容會被優先刪掉，連帶把架構決策和約束理由也丟了。解法：在 CLAUDE.md 裡寫 <code>Compact Instructions</code>，明確指定壓縮時必須保留的優先順序。另一個更主動的方案：讓 Claude 寫一份 <code>HANDOFF.md</code>，記錄當前進度和決策，開新會話時直接讀這個檔案。
+                    </div>
+</div>
+</div>
+<div class="col-full">
+  <pre class="code-block">200K Total Context
 ├── Fixed Overhead (~15-20K)
 │   ├── System Instructions: ~2K
 │   ├── Skill Descriptors: ~1-5K
@@ -237,14 +247,6 @@
     ├── Conversation History
     ├── File Contents
     └── Tool Call Results</pre>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 壓縮機制的陷阱</div>
-<div class="info-box-content">
-                        預設壓縮演算法按「可重新讀取」判斷，早期的 Tool Output 和檔案內容會被優先刪掉，連帶把架構決策和約束理由也丟了。解法：在 CLAUDE.md 裡寫 <code>Compact Instructions</code>，明確指定壓縮時必須保留的優先順序。另一個更主動的方案：讓 Claude 寫一份 <code>HANDOFF.md</code>，記錄當前進度和決策，開新會話時直接讀這個檔案。
-                    </div>
-</div>
 </div>
 </div>
 </div><!-- end tab1 -->
@@ -368,7 +370,7 @@
 </div>
 </div>
 <div class="content-right">
-<div class="content-label">Hook Points &amp; Examples</div>
+  <div class="content-label">Hook Points &amp; Examples</div>
 <div class="info-box box-concept">
 <div class="info-box-header">📚 支援的 Hook 點</div>
 <div class="info-box-content">
@@ -381,7 +383,12 @@
 <div class="info-box box-code">
 <div class="info-box-header">💻 PostToolUse Hook 範例</div>
 <div class="info-box-content">
-<pre class="code-block">{
+  <strong>Note:</strong> 限制輸出長度（<code>| head -30</code>），避免 Hook 輸出反而污染上下文。
+                    </div>
+</div>
+</div>
+<div class="col-full">
+  <pre class="code-block">{
   "hooks": {
     "PostToolUse": [{
       "matcher": "Edit",
@@ -398,9 +405,6 @@
     }]
   }
 }</pre>
-<strong>Note:</strong> 限制輸出長度（<code>| head -30</code>），避免 Hook 輸出反而污染上下文。
-                    </div>
-</div>
 </div>
 </div>
 <!-- Part 7: Subagents -->
@@ -468,23 +472,11 @@
 </div>
 </div>
 <div class="content-right">
-<div class="content-label">Caching Architecture Details</div>
+  <div class="content-label">Caching Architecture Details</div>
 <div class="info-box box-code">
 <div class="info-box-header">💻 Prompt Layout for Caching</div>
 <div class="info-box-content">
-<pre class="code-block"><span class="comment">// Claude Code Prompt Order (cache-optimized)</span>
-1. System Prompt     <span class="keyword">→ Static, locked</span>
-2. Tool Definitions  <span class="keyword">→ Static, locked</span>
-3. Chat History      <span class="keyword">→ Dynamic, appended</span>
-4. Current Input     <span class="keyword">→ Last position</span>
-
-<span class="comment">// Dynamic info goes in user message,</span>
-<span class="comment">// NOT in system prompt:</span>
-&lt;system-reminder&gt;
-  Current time: 2026-03-13T10:00:00Z
-  Branch: feature/new-ui
-&lt;/system-reminder&gt;</pre>
-</div>
+  </div>
 </div>
 <div class="info-box box-concept">
 <div class="info-box-header">📚 Compaction 實際流程</div>
@@ -496,6 +488,20 @@
 <strong>defer_loading 機制：</strong>數十個 MCP 工具不全量包含，發送輕量級 stub（只有工具名 + <code>defer_loading: true</code>），模型通過 ToolSearch 工具「發現」它們，完整 schema 只在選擇後才載入。快取前綴保持穩定。
                     </div>
 </div>
+</div>
+<div class="col-full">
+  <pre class="code-block"><span class="comment">// Claude Code Prompt Order (cache-optimized)</span>
+1. System Prompt     <span class="keyword">→ Static, locked</span>
+2. Tool Definitions  <span class="keyword">→ Static, locked</span>
+3. Chat History      <span class="keyword">→ Dynamic, appended</span>
+4. Current Input     <span class="keyword">→ Last position</span>
+
+<span class="comment">// Dynamic info goes in user message,</span>
+<span class="comment">// NOT in system prompt:</span>
+&lt;system-reminder&gt;
+  Current time: 2026-03-13T10:00:00Z
+  Branch: feature/new-ui
+&lt;/system-reminder&gt;</pre>
 </div>
 </div>
 <!-- Part 9: Verification -->
@@ -515,7 +521,7 @@
 </div>
 </div>
 <div class="content-right">
-<div class="content-label">Verification Hierarchy</div>
+  <div class="content-label">Verification Hierarchy</div>
 <div class="info-box box-concept">
 <div class="info-box-header">📚 三層驗證層級</div>
 <div class="info-box-content">
@@ -527,7 +533,11 @@
 <div class="info-box box-code">
 <div class="info-box-header">💻 驗證定義範例</div>
 <div class="info-box-content">
-<pre class="code-block"><span class="comment">## Verification (in CLAUDE.md)</span>
+  </div>
+</div>
+</div>
+<div class="col-full">
+  <pre class="code-block"><span class="comment">## Verification (in CLAUDE.md)</span>
 
 For backend changes:
 - Run `make test` and `make lint`
@@ -540,8 +550,6 @@ Definition of done:
 - All tests pass
 - Lint passes
 - No TODO left behind</pre>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -607,11 +615,25 @@ Definition of done:
 </div>
 </div>
 <div class="content-right">
-<div class="content-label">CLAUDE.md Template</div>
+  <div class="content-label">CLAUDE.md Template</div>
 <div class="info-box box-code">
 <div class="info-box-header">💻 高品質模板結構</div>
 <div class="info-box-content">
-<pre class="code-block"><span class="comment"># Project Contract</span>
+  </div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ 不該放的內容</div>
+<div class="info-box-content">
+                        • 大段背景介紹<br/>
+                        • 完整 API 文件<br/>
+                        • 空泛原則如「寫高品質程式碼」<br/>
+                        • Claude 讀 repo 即可推斷的資訊<br/>
+                        • 大量背景資料和低頻任務知識（放 Skills）
+                    </div>
+</div>
+</div>
+<div class="col-full">
+  <pre class="code-block"><span class="comment"># Project Contract</span>
 
 <span class="keyword">## Build And Test</span>
 - Install: `pnpm install`
@@ -636,18 +658,6 @@ modified files, verification status,
 open TODOs, rollback notes</pre>
 </div>
 </div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 不該放的內容</div>
-<div class="info-box-content">
-                        • 大段背景介紹<br/>
-                        • 完整 API 文件<br/>
-                        • 空泛原則如「寫高品質程式碼」<br/>
-                        • Claude 讀 repo 即可推斷的資訊<br/>
-                        • 大量背景資料和低頻任務知識（放 Skills）
-                    </div>
-</div>
-</div>
-</div>
 </div>
 <!-- TAB 6: Practice & Patterns -->
 <div class="tab-content" id="tab6">
@@ -666,11 +676,15 @@ open TODOs, rollback notes</pre>
 </div>
 </div>
 <div class="content-right">
-<div class="content-label">Project Layout Reference</div>
+  <div class="content-label">Project Layout Reference</div>
 <div class="info-box box-code">
 <div class="info-box-header">💻 完整工程化佈局</div>
 <div class="info-box-content">
-<pre class="code-block">Project/
+  </div>
+</div>
+</div>
+<div class="col-full">
+  <pre class="code-block">Project/
 ├── CLAUDE.md
 ├── .claude/
 │   ├── rules/
@@ -685,8 +699,6 @@ open TODOs, rollback notes</pre>
 │   ├── agents/
 │   └── settings.json
 └── docs/ai/</pre>
-</div>
-</div>
 </div>
 </div>
 <!-- Part 13-14: Anti-patterns & Health Check -->

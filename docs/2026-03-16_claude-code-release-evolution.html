@@ -168,11 +168,33 @@
 </div>
 </div>
 <div class="content-right">
-<h3>Technical Details &amp; Code</h3>
+  <h3>Technical Details &amp; Code</h3>
 <div class="info-box box-code">
 <div class="info-box-header">💻 Agent 隔離模型演進</div>
 <div class="info-box-content">
-<pre># v2.1.49: Worktree 啟動
+  </div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Agent 記憶體修復清單</div>
+<div class="info-box-content">
+<strong>v2.1.50</strong>: Completed teammate tasks 未被 GC<br/>
+<strong>v2.1.50</strong>: Completed task state 未從 AppState 移除<br/>
+<strong>v2.1.59</strong>: Completed subagent task state 未釋放<br/>
+<strong>v2.1.63</strong>: Long-running teammates 保留所有 messages<br/>
+<strong>v2.1.69</strong>: Long-running SDK/CCR sessions 洩漏<br/>
+<strong>v2.1.72</strong>: Team agents 不繼承 leader 的 model<br/>
+<strong>v2.1.76</strong>: Killing background agent 現保留部分結果
+                    </div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 應用情境</div>
+<div class="info-box-content">
+<strong>Deviation Investigation Agent Team</strong>：主 Agent 負責逸差分類，Background Agent 1 同步搜尋歷史逸差資料庫，Background Agent 2 檢查相關 SOP 版本。各自在獨立 worktree 中操作，避免檔案衝突。最終由主 Agent 整合報告。
+                    </div>
+</div>
+</div>
+<div class="col-full">
+  <pre># v2.1.49: Worktree 啟動
 claude --worktree
 
 # Agent 定義 (YAML frontmatter)
@@ -195,26 +217,6 @@ claude agents
     "sparsePaths": ["packages/core", "libs/shared"]
   }
 }</pre>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ Agent 記憶體修復清單</div>
-<div class="info-box-content">
-<strong>v2.1.50</strong>: Completed teammate tasks 未被 GC<br/>
-<strong>v2.1.50</strong>: Completed task state 未從 AppState 移除<br/>
-<strong>v2.1.59</strong>: Completed subagent task state 未釋放<br/>
-<strong>v2.1.63</strong>: Long-running teammates 保留所有 messages<br/>
-<strong>v2.1.69</strong>: Long-running SDK/CCR sessions 洩漏<br/>
-<strong>v2.1.72</strong>: Team agents 不繼承 leader 的 model<br/>
-<strong>v2.1.76</strong>: Killing background agent 現保留部分結果
-                    </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ CDMO 應用情境</div>
-<div class="info-box-content">
-<strong>Deviation Investigation Agent Team</strong>：主 Agent 負責逸差分類，Background Agent 1 同步搜尋歷史逸差資料庫，Background Agent 2 檢查相關 SOP 版本。各自在獨立 worktree 中操作，避免檔案衝突。最終由主 Agent 整合報告。
-                    </div>
-</div>
 </div>
 </div>
 <!-- Part II: Memory & Performance -->
@@ -255,11 +257,24 @@ claude agents
 </div>
 </div>
 <div class="content-right">
-<h3>Technical Details</h3>
+  <h3>Technical Details</h3>
 <div class="info-box box-code">
 <div class="info-box-header">💻 效能改善量化</div>
 <div class="info-box-content">
-<pre># 記憶體管理策略演進
+  </div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Compaction 改進</div>
+<div class="info-box-content">
+<strong>v2.1.70</strong>: Compaction 現在保留圖片<br/>
+<strong>v2.1.72</strong>: Prompt cache invalidation 修復，input token 成本最高降低 12x<br/>
+<strong>v2.1.76</strong>: Auto-compaction 加入斷路器，連續 3 次失敗後停止重試<br/>
+<strong>v2.1.76</strong>: Deferred tools 不再在 compaction 後遺失 input schemas
+                    </div>
+</div>
+</div>
+<div class="col-full">
+  <pre># 記憶體管理策略演進
 v2.1.49: Tree-sitter parser 定期重置
 v2.1.50: File history snapshots 加上上限
 v2.1.50: Tool results &gt; 50K 持久化到磁碟
@@ -277,17 +292,6 @@ v2.1.49: MCP tool counting 批量化
 v2.1.50: Yoga WASM 延遲匯入
 v2.1.70: 啟動記憶體 -426KB
 v2.1.72: Bundle size -510KB</pre>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ Compaction 改進</div>
-<div class="info-box-content">
-<strong>v2.1.70</strong>: Compaction 現在保留圖片<br/>
-<strong>v2.1.72</strong>: Prompt cache invalidation 修復，input token 成本最高降低 12x<br/>
-<strong>v2.1.76</strong>: Auto-compaction 加入斷路器，連續 3 次失敗後停止重試<br/>
-<strong>v2.1.76</strong>: Deferred tools 不再在 compaction 後遺失 input schemas
-                    </div>
-</div>
 </div>
 </div>
 </div>
@@ -331,11 +335,23 @@ v2.1.72: Bundle size -510KB</pre>
 </div>
 </div>
 <div class="content-right">
-<h3>Technical Details &amp; Code</h3>
+  <h3>Technical Details &amp; Code</h3>
 <div class="info-box box-code">
 <div class="info-box-header">💻 Hook Events 完整清單</div>
 <div class="info-box-content">
-<pre># 生命週期 Hooks（截至 v2.1.76）
+  </div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Plugin 安全修復</div>
+<div class="info-box-content">
+<strong>v2.1.51</strong>: statusLine/fileSuggestion hook 可在未接受工作區信任前執行（已修復）<br/>
+<strong>v2.1.69</strong>: 巢狀 skill 探索可從 gitignored 目錄載入 skills（已修復）<br/>
+<strong>v2.1.69</strong>: Trust dialog 首次執行時默默啟用所有 .mcp.json servers（已修復）
+                    </div>
+</div>
+</div>
+<div class="col-full">
+  <pre># 生命週期 Hooks（截至 v2.1.76）
 SessionStart      # 工作階段啟動
 SessionEnd        # 工作階段結束（可設 timeout）
 ConfigChange      # 設定檔變更
@@ -358,16 +374,6 @@ HTTP Hook:  POST JSON 到 URL (v2.1.63+)
 
 # Hook 事件欄位 (v2.1.69+)
 agent_id, agent_type, worktree</pre>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ Plugin 安全修復</div>
-<div class="info-box-content">
-<strong>v2.1.51</strong>: statusLine/fileSuggestion hook 可在未接受工作區信任前執行（已修復）<br/>
-<strong>v2.1.69</strong>: 巢狀 skill 探索可從 gitignored 目錄載入 skills（已修復）<br/>
-<strong>v2.1.69</strong>: Trust dialog 首次執行時默默啟用所有 .mcp.json servers（已修復）
-                    </div>
-</div>
 </div>
 </div>
 <!-- Part IV: MCP Evolution -->
@@ -400,11 +406,21 @@ agent_id, agent_type, worktree</pre>
 </div>
 </div>
 <div class="content-right">
-<h3>Technical Details</h3>
+  <h3>Technical Details</h3>
 <div class="info-box box-code">
 <div class="info-box-header">💻 MCP 改善時間線</div>
 <div class="info-box-content">
-<pre># OAuth 與連線穩定性
+  </div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Elicitation + CDMO 情境</div>
+<div class="info-box-content">
+                        想像一個「批次記錄審查 MCP Server」。Claude 執行審查時，Server 發現某個溫度偏移紀錄，透過 Elicitation 跳出對話框：「偵測到 Vial #2847 充填溫度 26.3°C（規格 20-25°C）。請選擇：(A) 標記為逸差 (B) 備註為環境因素 (C) 需要更多資訊」。人類做出判斷後，Server 繼續執行。
+                    </div>
+</div>
+</div>
+<div class="col-full">
+  <pre># OAuth 與連線穩定性
 v2.1.49: Auth failure caching
 v2.1.59: Multi-instance OAuth 競爭修復
 v2.1.63: Manual URL paste fallback
@@ -423,14 +439,6 @@ v2.1.63: HTTP hooks (POST JSON)
 v2.1.69: Binary content (PDF, Office, Audio)
 v2.1.76: Elicitation (結構化互動對話)
 v2.1.76: Elicitation + ElicitationResult hooks</pre>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ Elicitation + CDMO 情境</div>
-<div class="info-box-content">
-                        想像一個「批次記錄審查 MCP Server」。Claude 執行審查時，Server 發現某個溫度偏移紀錄，透過 Elicitation 跳出對話框：「偵測到 Vial #2847 充填溫度 26.3°C（規格 20-25°C）。請選擇：(A) 標記為逸差 (B) 備註為環境因素 (C) 需要更多資訊」。人類做出判斷後，Server 繼續執行。
-                    </div>
-</div>
 </div>
 </div>
 </div>
@@ -466,11 +474,21 @@ v2.1.76: Elicitation + ElicitationResult hooks</pre>
 </div>
 </div>
 <div class="content-right">
-<h3>Technical Details</h3>
+  <h3>Technical Details</h3>
 <div class="info-box box-code">
 <div class="info-box-header">💻 Remote Control 演進</div>
 <div class="info-box-content">
-<pre># Remote Control 使用
+  </div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ CDMO 應用情境</div>
+<div class="info-box-content">
+<strong>移動辦公場景</strong>：在工廠巡檢時，用手機 Claude App 透過 Remote Control 連接家中 MacBook Air 上的 Claude Code。語音口述「查看上週 Line 3 的偏差報告」，Claude Code 在本機執行搜尋和分析，結果透過 bridge 回傳到手機。整個流程不需要攜帶筆電進入生產區域。
+                    </div>
+</div>
+</div>
+<div class="col-full">
+  <pre># Remote Control 使用
 claude remote-control          # 基本啟動
 claude remote-control --name "batch-review"
 
@@ -490,14 +508,6 @@ claude remote-control --name "batch-review"
 {
   "voice:pushToTalk": "ctrl+shift+v"
 }</pre>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ CDMO 應用情境</div>
-<div class="info-box-content">
-<strong>移動辦公場景</strong>：在工廠巡檢時，用手機 Claude App 透過 Remote Control 連接家中 MacBook Air 上的 Claude Code。語音口述「查看上週 Line 3 的偏差報告」，Claude Code 在本機執行搜尋和分析，結果透過 bridge 回傳到手機。整個流程不需要攜帶筆電進入生產區域。
-                    </div>
-</div>
 </div>
 </div>
 <!-- Part VI: Developer Experience -->
@@ -532,11 +542,26 @@ claude remote-control --name "batch-review"
 </div>
 </div>
 <div class="content-right">
-<h3>Technical Details</h3>
+  <h3>Technical Details</h3>
 <div class="info-box box-code">
 <div class="info-box-header">💻 新指令速查表</div>
 <div class="info-box-content">
-<pre># 記憶體管理
+  </div>
+</div>
+<div class="info-box box-compare">
+<div class="info-box-header">⚖️ Effort Level 演進</div>
+<div class="info-box-content">
+<strong>v2.1.68</strong>: Opus 4.6 預設 medium effort<br/>
+<strong>v2.1.68</strong>: "ultrathink" 關鍵字觸發 high effort<br/>
+<strong>v2.1.72</strong>: 簡化為 ○ low / ◐ medium / ● high<br/>
+<strong>v2.1.72</strong>: 移除 max level<br/>
+<strong>v2.1.73</strong>: /effort 可在 Claude 回應中切換<br/>
+<strong>v2.1.76</strong>: /effort 成為正式 slash command
+                    </div>
+</div>
+</div>
+<div class="col-full">
+  <pre># 記憶體管理
 /memory            # 管理 auto-memory
 /context           # 檢視 context 使用狀況
                    # v2.1.74: 識別 context-heavy
@@ -563,19 +588,6 @@ CLAUDE_CODE_DISABLE_CRON=true  # 停用 cron
 /batch             # 批次模式 (v2.1.63)
 /reload-plugins    # 重新載入 plugins (v2.1.69)
 /debug             # 中途切換 debug log (v2.1.71)</pre>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ Effort Level 演進</div>
-<div class="info-box-content">
-<strong>v2.1.68</strong>: Opus 4.6 預設 medium effort<br/>
-<strong>v2.1.68</strong>: "ultrathink" 關鍵字觸發 high effort<br/>
-<strong>v2.1.72</strong>: 簡化為 ○ low / ◐ medium / ● high<br/>
-<strong>v2.1.72</strong>: 移除 max level<br/>
-<strong>v2.1.73</strong>: /effort 可在 Claude 回應中切換<br/>
-<strong>v2.1.76</strong>: /effort 成為正式 slash command
-                    </div>
-</div>
 </div>
 </div>
 </div>
@@ -623,27 +635,11 @@ CLAUDE_CODE_DISABLE_CRON=true  # 停用 cron
 </div>
 </div>
 <div class="content-right">
-<h3>Technical Details</h3>
+  <h3>Technical Details</h3>
 <div class="info-box box-code">
 <div class="info-box-header">💻 模型遷移時間線</div>
 <div class="info-box-content">
-<pre># Sonnet 系列
-v2.1.49: Sonnet 4.5 (1M) removed
-         -&gt; Sonnet 4.6 (1M) replaced
-v2.1.69: Sonnet 4.5 Pro/Max/Team
-         -&gt; auto-migrated to 4.6
-
-# Opus 系列
-v2.1.49: Opus 4.6 available
-v2.1.50: Opus 4.6 fast mode (1M)
-v2.1.68: Opus 4/4.1 removed
-         -&gt; auto-migrated to 4.6
-v2.1.68: Default effort = medium
-v2.1.73: Bedrock/Vertex/Foundry
-         default Opus -&gt; 4.6
-v2.1.75: Opus 4.6 1M context
-         (Max/Team/Enterprise)</pre>
-</div>
+  </div>
 </div>
 <div class="info-box box-key">
 <div class="info-box-header">⚠️ 跨平台修復亮點</div>
@@ -660,6 +656,24 @@ v2.1.75: Opus 4.6 1M context
                         如果你的 CDMO 考慮導入 Claude Code：(1) 使用 Managed Settings via macOS plist 鎖定允許的工具和網域 (2) 啟用 <code class="inline-code">feedbackSurveyRate</code> 收集使用品質資料 (3) 使用 <code class="inline-code">allowManagedDomainsOnly</code> 限制網路存取 (4) 監控 Hook events 建立審計軌跡。v2.1.74 的 managed policy 修復是升級的最低版本門檻。
                     </div>
 </div>
+</div>
+<div class="col-full">
+  <pre># Sonnet 系列
+v2.1.49: Sonnet 4.5 (1M) removed
+         -&gt; Sonnet 4.6 (1M) replaced
+v2.1.69: Sonnet 4.5 Pro/Max/Team
+         -&gt; auto-migrated to 4.6
+
+# Opus 系列
+v2.1.49: Opus 4.6 available
+v2.1.50: Opus 4.6 fast mode (1M)
+v2.1.68: Opus 4/4.1 removed
+         -&gt; auto-migrated to 4.6
+v2.1.68: Default effort = medium
+v2.1.73: Bedrock/Vertex/Foundry
+         default Opus -&gt; 4.6
+v2.1.75: Opus 4.6 1M context
+         (Max/Team/Enterprise)</pre>
 </div>
 </div>
 </div>

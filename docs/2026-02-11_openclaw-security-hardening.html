@@ -195,10 +195,30 @@
 </div>
 </div>
 <div class="content-right">
-<div class="info-box box-code">
+  <div class="info-box box-code">
 <div class="info-box-header">💻 Gateway 設定（gateway.yaml）</div>
 <div class="info-box-content">
-<pre><code>gateway:
+  </div>
+</div>
+<div class="info-box box-code">
+<div class="info-box-header">💻 檔案系統限制（tools.yaml）</div>
+<div class="info-box-content">
+  </div>
+</div>
+<div class="info-box box-key">
+<div class="info-box-header">⚠️ Step 9: 認證加密</div>
+<div class="info-box-content">
+<p>預設的明文儲存讓認證資訊容易成為竊密軟體的目標。提供兩個加密方案：<code>age</code>（輕量級）或 <code>pass</code>（GPG-based）。核心是啟動時解密、使用後清除明文。</p>
+</div>
+</div>
+<div class="info-box box-practical">
+<div class="info-box-header">🛠️ Tier 1 驗證</div>
+<div class="info-box-content">
+  </div>
+</div>
+</div>
+<div class="col-full">
+  <pre><code>gateway:
   host: "127.0.0.1"  <span class="code-comment"># NEVER 0.0.0.0</span>
   port: 18789
   trustedProxies:
@@ -212,11 +232,8 @@
 mdns:
   enabled: false</code></pre>
 </div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 檔案系統限制（tools.yaml）</div>
-<div class="info-box-content">
-<pre><code>tools:
+<div class="col-full">
+  <pre><code>tools:
   filesystem:
     enabled: true
     allowedPaths:
@@ -228,22 +245,11 @@ mdns:
       - "/etc"
       - "/root"</code></pre>
 </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ Step 9: 認證加密</div>
-<div class="info-box-content">
-<p>預設的明文儲存讓認證資訊容易成為竊密軟體的目標。提供兩個加密方案：<code>age</code>（輕量級）或 <code>pass</code>（GPG-based）。核心是啟動時解密、使用後清除明文。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ Tier 1 驗證</div>
-<div class="info-box-content">
-<pre><code><span class="code-comment"># 驗證只綁定 localhost</span>
+<div class="col-full">
+  <pre><code><span class="code-comment"># 驗證只綁定 localhost</span>
 ss -tlnp | grep 18789
 <span class="code-comment"># 應顯示: 127.0.0.1:18789</span>
 <span class="code-comment"># 不應顯示: 0.0.0.0:18789</span></code></pre>
-</div>
-</div>
 </div>
 </div>
 </div><!-- end tab-tier1 -->
@@ -273,7 +279,7 @@ ss -tlnp | grep 18789
 </div>
 </div>
 <div class="content-right">
-<div class="info-box box-compare">
+  <div class="info-box box-compare">
 <div class="info-box-header">⚖️ Denylist vs Allowlist</div>
 <div class="info-box-content">
 <table class="compare-table">
@@ -286,20 +292,7 @@ ss -tlnp | grep 18789
 <div class="info-box box-code">
 <div class="info-box-header">💻 Allowlist 設定範例</div>
 <div class="info-box-content">
-<pre><code>tools:
-  shell:
-    enabled: true
-    <span class="code-comment"># ONLY these commands can execute</span>
-    allowlist:
-      - "ls"
-      - "cat"
-      - "grep"
-      - "head"
-      - "tail"
-      - "find"
-      - "wc"
-      - "sort"</code></pre>
-</div>
+  </div>
 </div>
 <div class="info-box box-practical">
 <div class="info-box-header">🛠️ Step 18: 自動化監控腳本</div>
@@ -314,6 +307,21 @@ ss -tlnp | grep 18789
 </ul>
 </div>
 </div>
+</div>
+<div class="col-full">
+  <pre><code>tools:
+  shell:
+    enabled: true
+    <span class="code-comment"># ONLY these commands can execute</span>
+    allowlist:
+      - "ls"
+      - "cat"
+      - "grep"
+      - "head"
+      - "tail"
+      - "find"
+      - "wc"
+      - "sort"</code></pre>
 </div>
 </div>
 </div><!-- end tab-tier2 -->
@@ -347,7 +355,7 @@ ss -tlnp | grep 18789
 </div>
 </div>
 <div class="content-right">
-<div class="info-box box-compare">
+  <div class="info-box box-compare">
 <div class="info-box-header">⚖️ Container Runtime 比較</div>
 <div class="info-box-content">
 <table class="compare-table">
@@ -369,7 +377,21 @@ ss -tlnp | grep 18789
 <div class="info-box box-code">
 <div class="info-box-header">💻 三容器網路設計</div>
 <div class="info-box-content">
-<pre><code><span class="code-comment"># OpenClaw: 只在內部網路</span>
+  </div>
+</div>
+<div class="info-box box-cost">
+<div class="info-box-header">💰 部署時間比較</div>
+<div class="info-box-content">
+<table class="compare-table">
+<tr><th>方法</th><th>初始設置</th><th>月維護</th><th>年度總計</th></tr>
+<tr><td>手動 (Tier 1-3)</td><td>7-9 小時</td><td>60 分鐘</td><td>18-22 小時</td></tr>
+<tr><td>Ansible 自動化</td><td>15-30 分鐘</td><td>60 分鐘</td><td>12-15 小時</td></tr>
+</table>
+</div>
+</div>
+</div>
+<div class="col-full">
+  <pre><code><span class="code-comment"># OpenClaw: 只在內部網路</span>
 networks:
   - OpenClaw-internal  <span class="code-comment"># NO external</span>
 
@@ -382,18 +404,6 @@ networks:
 networks:
   - OpenClaw-internal
   - OpenClaw-external  <span class="code-comment"># filtered</span></code></pre>
-</div>
-</div>
-<div class="info-box box-cost">
-<div class="info-box-header">💰 部署時間比較</div>
-<div class="info-box-content">
-<table class="compare-table">
-<tr><th>方法</th><th>初始設置</th><th>月維護</th><th>年度總計</th></tr>
-<tr><td>手動 (Tier 1-3)</td><td>7-9 小時</td><td>60 分鐘</td><td>18-22 小時</td></tr>
-<tr><td>Ansible 自動化</td><td>15-30 分鐘</td><td>60 分鐘</td><td>12-15 小時</td></tr>
-</table>
-</div>
-</div>
 </div>
 </div>
 </div><!-- end tab-tier3 -->

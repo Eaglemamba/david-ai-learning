@@ -190,11 +190,27 @@
 </div>
 </div>
 <div class="content-right">
-<div class="info-box box-code">
+  <div class="info-box box-code">
 <div class="info-box-header">💻 Compaction API 基礎設定</div>
 <div class="info-box-content">
 <span class="code-label">Python — 啟用 Compaction（beta header 必須）</span>
-<pre>import anthropic
+  </div>
+</div>
+<div class="info-box box-code">
+<div class="info-box-header">💻 自訂 Compaction Instructions</div>
+<div class="info-box-content">
+<span class="code-label">YAML-style 壓縮指令範本（放入 instructions 參數）</span>
+  </div>
+</div>
+<div class="critical-box">
+<div class="critical-box-title">🔍 需要驗證</div>
+<div class="critical-box-text">
+                作者聲稱自訂壓縮指令讓 post-compaction failure rate 降低約一半（相較預設摘要），但未提供 A/B 測試方法論。Anthropic 官方文件目前僅記載 <code>instructions</code> 參數的存在，尚未發布最佳實踐指南。這個 YAML 格式是作者個人實踐，非官方推薦格式。
+            </div>
+</div>
+</div>
+<div class="col-full">
+  <pre>import anthropic
 
 client = anthropic.Anthropic()
 
@@ -215,12 +231,8 @@ response = client.beta.messages.create(
   },
 )</pre>
 </div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 自訂 Compaction Instructions</div>
-<div class="info-box-content">
-<span class="code-label">YAML-style 壓縮指令範本（放入 instructions 參數）</span>
-<pre>preserve:
+<div class="col-full">
+  <pre>preserve:
   - current task objective and acceptance criteria
   - file paths of all files being modified
   - most recent test output (pass/fail, errors)
@@ -240,14 +252,6 @@ format the summary as:
 [last test output + last tool result]
 ## Active Constraints
 [CLAUDE.md rules still in effect]</pre>
-</div>
-</div>
-<div class="critical-box">
-<div class="critical-box-title">🔍 需要驗證</div>
-<div class="critical-box-text">
-                作者聲稱自訂壓縮指令讓 post-compaction failure rate 降低約一半（相較預設摘要），但未提供 A/B 測試方法論。Anthropic 官方文件目前僅記載 <code>instructions</code> 參數的存在，尚未發布最佳實踐指南。這個 YAML 格式是作者個人實踐，非官方推薦格式。
-            </div>
-</div>
 </div>
 </div>
 <!-- ==================== PART 3: Claude Code /compact ==================== -->
@@ -352,7 +356,7 @@ format the summary as:
 </div>
 </div>
 <div class="content-right">
-<div class="info-box box-code">
+  <div class="info-box box-code">
 <div class="info-box-header">💻 記憶層級結構</div>
 <div class="info-box-content">
 <pre>~/.claude/CLAUDE.md          # Global: 工具、風格、不可違反規則
@@ -366,16 +370,7 @@ format the summary as:
 <div class="info-box-header">💻 Scoped Rule 範例（含 paths frontmatter）</div>
 <div class="info-box-content">
 <span class="code-label">.claude/rules/api-design.md</span>
-<pre>paths:
-  - "src/api/**/*.ts"
-
-# API Rules
-
-- all endpoints include input validation
-- use standard error response format
-  from src/api/errors.ts
-- include OpenAPI documentation comments</pre>
-</div>
+  </div>
 </div>
 <div class="info-box box-practical">
 <div class="info-box-header">🛠️ CDMO 應用：CLAUDE.md 設計</div>
@@ -391,6 +386,17 @@ format the summary as:
                 Scoped rules 的 <code>paths</code> frontmatter 功能在 Anthropic 官方文件中有記載，但作者描述的自動按需載入行為的具體機制細節有限。「前 200 行載入」和「30% 冗餘」是作者觀察，非 Anthropic 官方數據。實際行為可能隨 Claude Code 版本更新而變化。
             </div>
 </div>
+</div>
+<div class="col-full">
+  <pre>paths:
+  - "src/api/**/*.ts"
+
+# API Rules
+
+- all endpoints include input validation
+- use standard error response format
+  from src/api/errors.ts
+- include OpenAPI documentation comments</pre>
 </div>
 </div>
 <!-- ==================== PART 5: Adaptive Thinking + Checklist ==================== -->
@@ -429,18 +435,11 @@ format the summary as:
 </div>
 </div>
 <div class="content-right">
-<div class="info-box box-code">
+  <div class="info-box box-code">
 <div class="info-box-header">💻 Adaptive Thinking 設定</div>
 <div class="info-box-content">
 <span class="code-label">Python — 取代舊的 budget_tokens 設定</span>
-<pre>response = client.messages.create(
-  model="claude-opus-4-6",
-  max_tokens=16000,
-  thinking={"type": "adaptive"},
-  # effort 可設為: low, medium, high, max
-  messages=messages,
-)</pre>
-<span class="code-label" style="margin-top:0.5rem;">注意：thinking: {"type": "enabled"} 和 budget_tokens 在 Opus 4.6 上已 deprecated</span>
+  <span class="code-label" style="margin-top:0.5rem;">注意：thinking: {"type": "enabled"} 和 budget_tokens 在 Opus 4.6 上已 deprecated</span>
 </div>
 </div>
 <div class="info-box box-compare">
@@ -479,6 +478,15 @@ format the summary as:
 <strong>4）「40% → 3%」未驗證：</strong>核心數據缺乏方法論、樣本量、任務類型說明。
             </div>
 </div>
+</div>
+<div class="col-full">
+  <pre>response = client.messages.create(
+  model="claude-opus-4-6",
+  max_tokens=16000,
+  thinking={"type": "adaptive"},
+  # effort 可設為: low, medium, high, max
+  messages=messages,
+)</pre>
 </div>
 </div>
 <!-- ==================== Key Takeaways ==================== -->
