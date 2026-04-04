@@ -1,175 +1,331 @@
 <!DOCTYPE html>
-
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Claude Code 配置文件體系 - 讓 CC 真正懂你的入職手冊</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 配置文件體系 - 讓 CC 真正懂你的入職手冊</title>
+
 <!-- Dashboard Index Meta -->
-<meta content="2026-03-21" name="doc-date"/>
-<meta content="Claude Code 配置文件 - 四層架構與規則拆分" name="doc-title"/>
-<meta content="玖年 (jiunian) / X Thread" name="doc-source"/>
-<meta content="" name="doc-source-type"/>
-<meta content="Tool,Prompt,Framework" name="doc-tags"/>
-<meta content="3.8" name="doc-rating"/>
-<meta content="Claude Code 四層配置架構：CLAUDE.md 入職手冊、rules 模組拆分、Context over Instruction 原則。" name="doc-summary"/>
-<meta content="2026-03-21_claude-code-config-files.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<meta name="doc-date" content="2026-03-21">
+<meta name="doc-title" content="Claude Code 配置文件 - 四層架構與規則拆分">
+<meta name="doc-source" content="玖年 (jiunian) / X Thread">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Tool,Prompt,Framework">
+<meta name="doc-rating" content="3.8">
+<meta name="doc-summary" content="Claude Code 四層配置架構：CLAUDE.md 入職手冊、rules 模組拆分、Context over Instruction 原則。">
+<meta name="doc-file" content="2026-03-21_claude-code-config-files.html">
 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
 
+/* Tags */
+.tag-container { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-prompt { background: #fde68a; color: #92400e; }
+.tag-framework { background: #bfdbfe; color: #1e3a8a; }
+
+.header h1 { font-size: 1.6rem; margin: 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-top: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; margin-top: 0.75rem; }
+.header .source a { color: white; text-decoration: underline; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.exec-summary h2 { font-size: 1.1rem; color: #1e3a5f; margin-top: 0; margin-bottom: 1rem; }
+.exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.75rem; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 6px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+.objective-desc { font-size: 0.8rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Section Headers */
+.section-header { display: flex; align-items: center; gap: 0.75rem; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+.section-number { background: #1e3a5f; color: white; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+.section-title { font-size: 1.15rem; font-weight: 700; color: #1e3a5f; }
+
+/* Content Grid Inner */
+.content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+@media (max-width: 768px) {
+    .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+}
+.bilingual-block { margin-bottom: 1.25rem; }
+.zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+
+/* Code blocks */
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; margin: 0.75rem 0; }
+code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
+.inline-code { background: #f1f5f9; color: #6d28d9; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.85rem; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+
+/* Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #64748b; text-decoration: underline; }
+</style>
 </head>
 <body>
+
 <!-- HEADER -->
-<header class="header">
-<div class="tag-container">
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-prompt">Prompt</span>
-<span class="tag tag-framework">Framework</span>
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-prompt">Prompt</span>
+        <span class="tag tag-framework">Framework</span>
+    </div>
+    <h1>Claude Code 配置文件體系</h1>
+    <div class="subtitle">幾個基礎配置文件讓 Claude Code 真正懂你</div>
+    <div class="source">來源：玖年 (jiunian) / X Thread ・ Day 9 系列</div>
 </div>
-<h1>Claude Code 配置文件體系</h1>
-<div class="subtitle">幾個基礎配置文件讓 Claude Code 真正懂你</div>
-<div class="source">來源：玖年 (jiunian) / X Thread ・ Day 9 系列</div>
-</header>
+
 <!-- CONTAINER -->
 <div class="container">
+
 <!-- EXECUTIVE SUMMARY -->
 <div class="exec-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
-<span class="rating-high">↑ 實務應用, 學習曲線</span>
-<span class="rating-low">↓ 技術深度, 工具生態</span>
+    <h2>Executive Summary</h2>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 3.8/5</span>
+        <span class="rating-high">&uarr; 實務應用, 學習曲線</span>
+        <span class="rating-low">&darr; 技術深度, 工具生態</span>
+    </div>
+    <p>本文介紹 Claude Code (CC) 的四層配置文件體系，重點說明如何透過 <span class="inline-code">CLAUDE.md</span> 和 <span class="inline-code">.claude/rules/</span> 目錄建立「入職手冊」，讓 CC 每次 session 都帶著完整上下文啟動。核心原則是 <strong>Context over Instruction</strong>——規則不只寫「做什麼」，更要寫「為什麼」。文章結構清晰、入門友善，但缺乏進階配置範例和多工具比較。</p>
 </div>
-<p>本文介紹 Claude Code (CC) 的四層配置文件體系，重點說明如何透過 <span class="inline-code">CLAUDE.md</span> 和 <span class="inline-code">.claude/rules/</span> 目錄建立「入職手冊」，讓 CC 每次 session 都帶著完整上下文啟動。核心原則是 <strong>Context over Instruction</strong>——規則不只寫「做什麼」，更要寫「為什麼」。文章結構清晰、入門友善，但缺乏進階配置範例和多工具比較。</p>
-</div>
+
 <!-- LEARNING OBJECTIVES -->
 <div class="section-header">
-<div class="section-number">0</div>
-<div class="section-title">Learning Objectives</div>
+    <div class="section-number">0</div>
+    <div class="section-title">Learning Objectives</div>
 </div>
 <div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">📚</div>
-<div class="objective-title">理解四層配置架構</div>
-<div class="objective-desc">全域、專案、本地、模組四層的用途與優先順序</div>
+    <div class="objective-item">
+        <div class="objective-icon">&#x1F4DA;</div>
+        <div class="objective-title">理解四層配置架構</div>
+        <div class="objective-desc">全域、專案、本地、模組四層的用途與優先順序</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #10b981;">
+        <div class="objective-icon">&#x1F9E9;</div>
+        <div class="objective-title">掌握 Rules 拆分策略</div>
+        <div class="objective-desc">identity / principles / user / regression 四檔分工</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #8b5cf6;">
+        <div class="objective-icon">&#x1F4A1;</div>
+        <div class="objective-title">應用 Context over Instruction</div>
+        <div class="objective-desc">為規則加上「為什麼」，提升泛化遵守率</div>
+    </div>
 </div>
-<div class="objective-item" style="border-left-color: #10b981;">
-<div class="objective-icon">🧩</div>
-<div class="objective-title">掌握 Rules 拆分策略</div>
-<div class="objective-desc">identity / principles / user / regression 四檔分工</div>
-</div>
-<div class="objective-item" style="border-left-color: #8b5cf6;">
-<div class="objective-icon">💡</div>
-<div class="objective-title">應用 Context over Instruction</div>
-<div class="objective-desc">為規則加上「為什麼」，提升泛化遵守率</div>
-</div>
-</div>
+
 <!-- FRAMEWORK VISUAL -->
 <div class="framework-visual">
-<div class="framework-title">Claude Code 配置四層架構</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">🌐</div>
-<div class="framework-step-title">Global</div>
-<div class="framework-step-desc">~/.claude/CLAUDE.md<br/>跨所有專案</div>
+    <div class="framework-title">Claude Code 配置四層架構</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#127760;</div>
+            <div class="framework-step-title">Global</div>
+            <div class="framework-step-desc">~/.claude/CLAUDE.md<br>跨所有專案</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128193;</div>
+            <div class="framework-step-title">Project</div>
+            <div class="framework-step-desc">根目錄/CLAUDE.md<br>專案級設定</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128187;</div>
+            <div class="framework-step-title">Local</div>
+            <div class="framework-step-desc">.claude/local.CLAUDE.md<br>個人本地覆寫</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#128221;</div>
+            <div class="framework-step-title">Module</div>
+            <div class="framework-step-desc">.claude/rules/*.md<br>關注點拆分</div>
+        </div>
+    </div>
 </div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📁</div>
-<div class="framework-step-title">Project</div>
-<div class="framework-step-desc">根目錄/CLAUDE.md<br/>專案級設定</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">💻</div>
-<div class="framework-step-title">Local</div>
-<div class="framework-step-desc">.claude/local.CLAUDE.md<br/>個人本地覆寫</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📝</div>
-<div class="framework-step-title">Module</div>
-<div class="framework-step-desc">.claude/rules/*.md<br/>關注點拆分</div>
-</div>
-</div>
-</div>
+
 <!-- PART I -->
 <div class="section-header">
-<div class="section-number">1</div>
-<div class="section-title">配置文件全貌：四層體系</div>
+    <div class="section-number">1</div>
+    <div class="section-title">配置文件全貌：四層體系</div>
 </div>
 <div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">Claude Code 的配置文件有<span class="highlight-concept">四層結構</span>，各自的作用範圍不同。理解這個層次關係，才能把正確的內容放在正確的位置。</div>
-<div class="en-text">CC has four configuration layers, each with a different scope: global, project, local, and module rules.</div>
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text">Claude Code 的配置文件有<span class="highlight-concept">四層結構</span>，各自的作用範圍不同。理解這個層次關係，才能把正確的內容放在正確的位置。</div>
+            <div class="en-text">CC has four configuration layers, each with a different scope: global, project, local, and module rules.</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>全域層</strong> <span class="inline-code">~/.claude/CLAUDE.md</span> 跨所有專案生效，適合放你的通用偏好。<strong>專案層</strong>放在專案根目錄，是<span class="highlight-key">最核心的配置</span>。<strong>本地層</strong>僅在你的電腦上生效，不會提交到 Git。<strong>模組層</strong>是 <span class="inline-code">.claude/rules/</span> 裡的獨立檔案，用來拆分關注點。</div>
+            <div class="en-text">Global layer (~/.claude/CLAUDE.md) applies across all projects. Project layer sits at root. Local layer is machine-specific (not committed). Module rules split concerns into separate files.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">&#x1F4DA; 核心概念：優先順序</div>
+            <div class="info-box-content">
+                <p>四層是<strong>疊加式</strong>的，不是覆蓋式。CC 啟動時會把四層內容合併注入 context window。如果有衝突，越具體的層級優先（Module &gt; Local &gt; Project &gt; Global）。</p>
+            </div>
+        </div>
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+            <div class="info-box-content">
+                <p>想像你在公司工作：<strong>全域</strong>是公司員工手冊（對所有人適用）、<strong>專案</strong>是部門 SOP（只對這個團隊）、<strong>本地</strong>是你桌上的便利貼（只有你看得到）、<strong>模組</strong>是每個職能各自的 checklist。</p>
+            </div>
+        </div>
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：CDMO 映射</div>
+            <div class="info-box-content">
+                <p>CDMO 情境中，Global 相當於 GMP 通則（全廠適用），Project 相當於產品特定的批次紀錄（Batch Record），Local 是你個人的執行筆記，Module 則是各工站的 SOP 集合。這種分層治理邏輯完全一致。</p>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>全域層</strong> <span class="inline-code">~/.claude/CLAUDE.md</span> 跨所有專案生效，適合放你的通用偏好。<strong>專案層</strong>放在專案根目錄，是<span class="highlight-key">最核心的配置</span>。<strong>本地層</strong>僅在你的電腦上生效，不會提交到 Git。<strong>模組層</strong>是 <span class="inline-code">.claude/rules/</span> 裡的獨立檔案，用來拆分關注點。</div>
-<div class="en-text">Global layer (~/.claude/CLAUDE.md) applies across all projects. Project layer sits at root. Local layer is machine-specific (not committed). Module rules split concerns into separate files.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：優先順序</div>
-<div class="info-box-content">
-<p>四層是<strong>疊加式</strong>的，不是覆蓋式。CC 啟動時會把四層內容合併注入 context window。如果有衝突，越具體的層級優先（Module &gt; Local &gt; Project &gt; Global）。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p>想像你在公司工作：<strong>全域</strong>是公司員工手冊（對所有人適用）、<strong>專案</strong>是部門 SOP（只對這個團隊）、<strong>本地</strong>是你桌上的便利貼（只有你看得到）、<strong>模組</strong>是每個職能各自的 checklist。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：CDMO 映射</div>
-<div class="info-box-content">
-<p>CDMO 情境中，Global 相當於 GMP 通則（全廠適用），Project 相當於產品特定的批次紀錄（Batch Record），Local 是你個人的執行筆記，Module 則是各工站的 SOP 集合。這種分層治理邏輯完全一致。</p>
-</div>
-</div>
-</div>
-</div>
+
 <!-- PART II -->
 <div class="section-header">
-<div class="section-number">2</div>
-<div class="section-title">CLAUDE.md：專案的入職手冊</div>
+    <div class="section-number">2</div>
+    <div class="section-title">CLAUDE.md：專案的入職手冊</div>
 </div>
 <div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text"><span class="inline-code">CLAUDE.md</span> 是最核心的配置文件，放在專案根目錄。CC 每次啟動都會讀它。它要回答一個簡單的問題：<span class="highlight-key">這個專案是什麼，你在這裡應該怎麼幹活</span>。</div>
-<div class="en-text">CLAUDE.md is the core config file at project root. CC reads it on every startup. It answers: what is this project, and how should you work here.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">建議內容包括：專案概述與整體結構、子目錄各自的職責、工作流約定（什麼要先確認、什麼可以直接做）、程式碼/內容規範、Git 規則和隱私紅線、Skills 管理方式。</div>
-<div class="en-text">Recommended contents: project overview and structure, subdirectory responsibilities, workflow conventions, code/content standards, Git rules and privacy boundaries, Skills management.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">一個<span class="highlight-key">關鍵限制：控制在 200 行以內</span>。超過之後 CC 對指令的遵守率會明顯下降。內容太多就用 <span class="inline-code">.claude/rules/</span> 來拆分。</div>
-<div class="en-text">Key limit: keep it under 200 lines. Beyond that, CC's instruction adherence drops noticeably. Overflow goes into .claude/rules/.</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：/init 快速起步</div>
-<div class="info-box-content">
-<p>如果不知道該寫什麼，CC 有快捷命令 <span class="inline-code">/init</span>。它會自動掃描專案檔案，生成基礎版 CLAUDE.md。不完美，但至少有個起點可以修改。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：200 行限制的策略</div>
-<div class="info-box-content">
-<p>200 行的限制本質上是 <strong>context window 的注意力分配問題</strong>。就像你不會把整本 SOP 塞進一頁——重點太多等於沒有重點。CLAUDE.md 只放「全域必須知道」的資訊，細節交給 rules 模組。</p>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 CLAUDE.md 基本骨架</div>
-<div class="info-box-content">
-  </div>
-</div>
-</div>
-<div class="col-full">
-  <pre>
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="inline-code">CLAUDE.md</span> 是最核心的配置文件，放在專案根目錄。CC 每次啟動都會讀它。它要回答一個簡單的問題：<span class="highlight-key">這個專案是什麼，你在這裡應該怎麼幹活</span>。</div>
+            <div class="en-text">CLAUDE.md is the core config file at project root. CC reads it on every startup. It answers: what is this project, and how should you work here.</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh-text">建議內容包括：專案概述與整體結構、子目錄各自的職責、工作流約定（什麼要先確認、什麼可以直接做）、程式碼/內容規範、Git 規則和隱私紅線、Skills 管理方式。</div>
+            <div class="en-text">Recommended contents: project overview and structure, subdirectory responsibilities, workflow conventions, code/content standards, Git rules and privacy boundaries, Skills management.</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh-text">一個<span class="highlight-key">關鍵限制：控制在 200 行以內</span>。超過之後 CC 對指令的遵守率會明顯下降。內容太多就用 <span class="inline-code">.claude/rules/</span> 來拆分。</div>
+            <div class="en-text">Key limit: keep it under 200 lines. Beyond that, CC's instruction adherence drops noticeably. Overflow goes into .claude/rules/.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：/init 快速起步</div>
+            <div class="info-box-content">
+                <p>如果不知道該寫什麼，CC 有快捷命令 <span class="inline-code">/init</span>。它會自動掃描專案檔案，生成基礎版 CLAUDE.md。不完美，但至少有個起點可以修改。</p>
+            </div>
+        </div>
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：200 行限制的策略</div>
+            <div class="info-box-content">
+                <p>200 行的限制本質上是 <strong>context window 的注意力分配問題</strong>。就像你不會把整本 SOP 塞進一頁——重點太多等於沒有重點。CLAUDE.md 只放「全域必須知道」的資訊，細節交給 rules 模組。</p>
+            </div>
+        </div>
+        <div class="info-box box-code">
+            <div class="info-box-header">&#x1F4BB; CLAUDE.md 基本骨架</div>
+            <div class="info-box-content">
+<pre>
 # Project: My-App
 
 ## Overview
@@ -189,95 +345,87 @@ This is a Next.js SaaS application...
 - Never use `git add -A`
 - Never commit API keys or secrets
 </pre>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 <!-- PART III -->
 <div class="section-header">
-<div class="section-number">3</div>
-<div class="section-title">.claude/rules/：模組化關注點拆分</div>
+    <div class="section-number">3</div>
+    <div class="section-title">.claude/rules/：模組化關注點拆分</div>
 </div>
 <div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text"><span class="inline-code">CLAUDE.md</span> 負責大方向，但有些東西塞進去會讓它太長——比如個人畫像、Agent 人格設定、決策原則。官方的解法是 <span class="inline-code">.claude/rules/</span> 目錄。裡面放 <span class="inline-code">.md</span> 檔案，<span class="highlight-concept">沒有 paths 前綴的會自動全域載入</span>。</div>
-<div class="en-text">CLAUDE.md handles the big picture, but some content makes it too long. The official solution is .claude/rules/ directory. Files without path prefixes auto-load globally alongside CLAUDE.md.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">作者建議的拆分方式：<br/>
-<strong>identity.md</strong> — Agent 是誰：語氣、態度、底線<br/>
-<strong>principles.md</strong> — 決策原則：模糊時怎麼判斷<br/>
-<strong>user.md</strong> — 使用者畫像：我是誰、在做什麼、偏好<br/>
-<strong>regression.md</strong> — 回歸紀錄：踩過的坑、修正的規則</div>
-<div class="en-text">Recommended split: identity.md (agent persona), principles.md (decision heuristics), user.md (user profile), regression.md (past mistakes and corrections).</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">💻 目錄結構</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較：四個檔案的分工</div>
-<div class="info-box-content">
-<p><strong>identity.md</strong>：讓輸出風格穩定。定義語氣、關係（助手/同事/朋友）、主動程度。沒有這個檔案，CC 就是通用客氣的助手。</p>
-<p><strong>principles.md</strong>：處理邊界情況。要快還是要穩？改一個檔案還是三個？不確定時是猜還是問？寫清楚這些，行為就可預期。</p>
-<p><strong>user.md</strong>：校準回應層級。你的背景、領域、工作風格。CC 就不會在你問進階問題時從零科普。</p>
-<p><strong>regression.md</strong>：形成閉環。每次 CC 犯錯，記一條進去。定期把教訓回饋到 principles.md。但<span class="highlight-key">記得設定觸發條件</span>，否則 CC 可能根本不會去讀這個檔案。</p>
-</div>
-</div>
-</div>
-<div class="col-full">
-  <pre>
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="inline-code">CLAUDE.md</span> 負責大方向，但有些東西塞進去會讓它太長——比如個人畫像、Agent 人格設定、決策原則。官方的解法是 <span class="inline-code">.claude/rules/</span> 目錄。裡面放 <span class="inline-code">.md</span> 檔案，<span class="highlight-concept">沒有 paths 前綴的會自動全域載入</span>。</div>
+            <div class="en-text">CLAUDE.md handles the big picture, but some content makes it too long. The official solution is .claude/rules/ directory. Files without path prefixes auto-load globally alongside CLAUDE.md.</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh-text">作者建議的拆分方式：<br>
+            <strong>identity.md</strong> — Agent 是誰：語氣、態度、底線<br>
+            <strong>principles.md</strong> — 決策原則：模糊時怎麼判斷<br>
+            <strong>user.md</strong> — 使用者畫像：我是誰、在做什麼、偏好<br>
+            <strong>regression.md</strong> — 回歸紀錄：踩過的坑、修正的規則</div>
+            <div class="en-text">Recommended split: identity.md (agent persona), principles.md (decision heuristics), user.md (user profile), regression.md (past mistakes and corrections).</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">&#x1F4BB; 目錄結構</div>
+            <div class="info-box-content">
+<pre>
 .claude/rules/
 ├── identity.md      &lt;- Agent persona &amp; tone
 ├── principles.md    &lt;- Decision heuristics
 ├── user.md          &lt;- Who I am &amp; preferences
 └── regression.md    &lt;- Lessons from past errors
 </pre>
+            </div>
+        </div>
+        <div class="info-box box-compare">
+            <div class="info-box-header">&#x2696;&#xFE0F; 工具比較：四個檔案的分工</div>
+            <div class="info-box-content">
+                <p><strong>identity.md</strong>：讓輸出風格穩定。定義語氣、關係（助手/同事/朋友）、主動程度。沒有這個檔案，CC 就是通用客氣的助手。</p>
+                <p><strong>principles.md</strong>：處理邊界情況。要快還是要穩？改一個檔案還是三個？不確定時是猜還是問？寫清楚這些，行為就可預期。</p>
+                <p><strong>user.md</strong>：校準回應層級。你的背景、領域、工作風格。CC 就不會在你問進階問題時從零科普。</p>
+                <p><strong>regression.md</strong>：形成閉環。每次 CC 犯錯，記一條進去。定期把教訓回饋到 principles.md。但<span class="highlight-key">記得設定觸發條件</span>，否則 CC 可能根本不會去讀這個檔案。</p>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 <!-- PART IV -->
 <div class="section-header">
-<div class="section-number">4</div>
-<div class="section-title">Context over Instruction：讓規則效果翻倍</div>
+    <div class="section-number">4</div>
+    <div class="section-title">Context over Instruction：讓規則效果翻倍</div>
 </div>
 <div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">大部分人寫規則只寫<span class="highlight-key">「做什麼」</span>，不寫<span class="highlight-key">「為什麼」</span>。比如「不要用 <span class="inline-code">git add -A</span>」——CC 會照做，但不理解原因，換個類似場景可能就不遵守了。</div>
-<div class="en-text">Most people write rules with only "what to do", not "why." CC follows them literally but without understanding, compliance breaks in analogous situations.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">如果你寫「不要用 <span class="inline-code">git add -A</span>——API keys 和 .env 檔案會被靜默掃進去」，效果完全不同。CC 理解了原因之後，在<span class="highlight-concept">所有相關場景都會自動規避</span>，不只是你寫的那一條。</div>
-<div class="en-text">If you write "Don't use git add -A — API keys and .env files get silently staged," the effect is transformative. CC generalizes the principle across related scenarios.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">社群裡的說法是：<strong>Context over Instruction</strong>（為什麼比怎麼做更重要）。不需要每條規則都加 Why，只給那些原因不夠直覺的加就行。方法很簡單：規則後面用破折號接上原因，一句話搞定。</div>
-<div class="en-text">The community calls this "Context over Instruction." Not every rule needs a why — just the non-obvious ones. Simply append a dash and the reason.</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明：SOP 寫法的既視感</div>
-<div class="info-box-content">
-<p>這跟寫 GMP SOP 完全一樣的邏輯。好的 SOP 不只說「做 X」，還會加上 Rationale：「做 X，因為不做會導致交叉污染」。操作員理解了原因，遇到 SOP 沒覆蓋的邊界情況也能做出正確判斷。CC 的行為模式跟受過訓練的操作員一模一樣。</p>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 範例對照</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：這是 Prompt Engineering 的通用原則</div>
-<div class="info-box-content">
-<p>Context over Instruction 不只適用於 Claude Code 配置——它是所有 system prompt 設計的核心原則。與其列出 100 條「不要做 X」，不如解釋 5 個「因為 Y 所以避免 Z」。LLM 的泛化能力強，給出原因比給出指令更有效率。</p>
-</div>
-</div>
-</div>
-<div class="col-full">
-  <pre>
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text">大部分人寫規則只寫<span class="highlight-key">「做什麼」</span>，不寫<span class="highlight-key">「為什麼」</span>。比如「不要用 <span class="inline-code">git add -A</span>」——CC 會照做，但不理解原因，換個類似場景可能就不遵守了。</div>
+            <div class="en-text">Most people write rules with only "what to do", not "why." CC follows them literally but without understanding, compliance breaks in analogous situations.</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh-text">如果你寫「不要用 <span class="inline-code">git add -A</span>——API keys 和 .env 檔案會被靜默掃進去」，效果完全不同。CC 理解了原因之後，在<span class="highlight-concept">所有相關場景都會自動規避</span>，不只是你寫的那一條。</div>
+            <div class="en-text">If you write "Don't use git add -A — API keys and .env files get silently staged," the effect is transformative. CC generalizes the principle across related scenarios.</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh-text">社群裡的說法是：<strong>Context over Instruction</strong>（為什麼比怎麼做更重要）。不需要每條規則都加 Why，只給那些原因不夠直覺的加就行。方法很簡單：規則後面用破折號接上原因，一句話搞定。</div>
+            <div class="en-text">The community calls this "Context over Instruction." Not every rule needs a why — just the non-obvious ones. Simply append a dash and the reason.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#x1F4A1; 比喻說明：SOP 寫法的既視感</div>
+            <div class="info-box-content">
+                <p>這跟寫 GMP SOP 完全一樣的邏輯。好的 SOP 不只說「做 X」，還會加上 Rationale：「做 X，因為不做會導致交叉污染」。操作員理解了原因，遇到 SOP 沒覆蓋的邊界情況也能做出正確判斷。CC 的行為模式跟受過訓練的操作員一模一樣。</p>
+            </div>
+        </div>
+        <div class="info-box box-code">
+            <div class="info-box-header">&#x1F4BB; 範例對照</div>
+            <div class="info-box-content">
+<pre>
 # Bad: instruction only
 - Never use git add -A
 - Always create a branch
@@ -288,119 +436,136 @@ This is a Next.js SaaS application...
 - Always create a branch
   — main is protected; direct push will fail
 </pre>
+            </div>
+        </div>
+        <div class="info-box box-key">
+            <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：這是 Prompt Engineering 的通用原則</div>
+            <div class="info-box-content">
+                <p>Context over Instruction 不只適用於 Claude Code 配置——它是所有 system prompt 設計的核心原則。與其列出 100 條「不要做 X」，不如解釋 5 個「因為 Y 所以避免 Z」。LLM 的泛化能力強，給出原因比給出指令更有效率。</p>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 <!-- PART V -->
 <div class="section-header">
-<div class="section-number">5</div>
-<div class="section-title">配置完成後的效果與批判分析</div>
+    <div class="section-number">5</div>
+    <div class="section-title">配置完成後的效果與批判分析</div>
 </div>
 <div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">配好這套文件後，CC 每次 session 的起點不再是零。它知道專案結構、你是誰、應該用什麼語氣、哪些操作要先問你、上次踩過什麼坑。作者形容這是<span class="highlight-key">「質變級別」的體感差距</span>。</div>
-<div class="en-text">After configuration, CC starts every session with full context — project structure, user identity, tone, approval gates, and past lessons. The author describes this as a "qualitative leap."</div>
+    <div class="content-left">
+        <div class="bilingual-block">
+            <div class="zh-text">配好這套文件後，CC 每次 session 的起點不再是零。它知道專案結構、你是誰、應該用什麼語氣、哪些操作要先問你、上次踩過什麼坑。作者形容這是<span class="highlight-key">「質變級別」的體感差距</span>。</div>
+            <div class="en-text">After configuration, CC starts every session with full context — project structure, user identity, tone, approval gates, and past lessons. The author describes this as a "qualitative leap."</div>
+        </div>
+        <div class="bilingual-block">
+            <div class="zh-text">但需要注意的是：這篇文章是入門級介紹，缺乏進階用法。例如 <span class="inline-code">paths</span> 前綴的條件式載入（只在特定目錄觸發的規則）、多人協作時的 local vs project 衝突處理、配置文件的版本控制策略等都沒有涵蓋。</div>
+            <div class="en-text">However, this is an introductory guide lacking advanced topics: conditional path-based loading, multi-user local vs project conflicts, and config versioning strategies are all omitted.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">&#x26A0;&#xFE0F; 批判分析：2-3x Discount</div>
+            <div class="info-box-content">
+                <p><strong>「質變」宣稱需要打折</strong>：作者沒有提供 A/B 比較數據或具體案例。配置文件確實有用，但「質變」可能更準確地描述為「減少每次 session 的冷啟動成本」。實際效果取決於你的專案複雜度和 session 頻率。</p>
+                <p><strong>200 行限制的來源不明</strong>：這是社群經驗值還是官方建議？具體的遵守率下降曲線是什麼？沒有引用來源。</p>
+                <p><strong>regression.md 的觸發問題</strong>：作者自己也承認「記得設定觸發條件」，這暗示預設情況下 CC 不一定會主動讀取所有 rules 檔案，降低了這套體系的「自動化」程度。</p>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text">但需要注意的是：這篇文章是入門級介紹，缺乏進階用法。例如 <span class="inline-code">paths</span> 前綴的條件式載入（只在特定目錄觸發的規則）、多人協作時的 local vs project 衝突處理、配置文件的版本控制策略等都沒有涵蓋。</div>
-<div class="en-text">However, this is an introductory guide lacking advanced topics: conditional path-based loading, multi-user local vs project conflicts, and config versioning strategies are all omitted.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 批判分析：2-3x Discount</div>
-<div class="info-box-content">
-<p><strong>「質變」宣稱需要打折</strong>：作者沒有提供 A/B 比較數據或具體案例。配置文件確實有用，但「質變」可能更準確地描述為「減少每次 session 的冷啟動成本」。實際效果取決於你的專案複雜度和 session 頻率。</p>
-<p><strong>200 行限制的來源不明</strong>：這是社群經驗值還是官方建議？具體的遵守率下降曲線是什麼？沒有引用來源。</p>
-<p><strong>regression.md 的觸發問題</strong>：作者自己也承認「記得設定觸發條件」，這暗示預設情況下 CC 不一定會主動讀取所有 rules 檔案，降低了這套體系的「自動化」程度。</p>
-</div>
-</div>
-</div>
-</div>
+
 <!-- KEY TAKEAWAYS -->
 <div class="section-header">
-<div class="section-number">★</div>
-<div class="section-title">Key Takeaways</div>
+    <div class="section-number">&#9733;</div>
+    <div class="section-title">Key Takeaways</div>
 </div>
 <div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-title">四層配置 = 分層治理</div>
-<div class="summary-card-text">Global → Project → Local → Module，跟 GMP 的全廠規範 → 產品 SOP → 個人筆記 → 工站 checklist 完全對應。把正確內容放在正確層級。</div>
+    <div class="summary-card">
+        <div class="summary-card-title">四層配置 = 分層治理</div>
+        <div class="summary-card-text">Global &rarr; Project &rarr; Local &rarr; Module，跟 GMP 的全廠規範 &rarr; 產品 SOP &rarr; 個人筆記 &rarr; 工站 checklist 完全對應。把正確內容放在正確層級。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="summary-card-title">CLAUDE.md &le; 200 行</div>
+        <div class="summary-card-text">專案入職手冊控制在 200 行以內。超出部分拆分到 .claude/rules/ 模組。用 /init 命令可以快速生成基礎版。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="summary-card-title">Rules 四檔分工</div>
+        <div class="summary-card-text">identity（人格）、principles（決策）、user（使用者畫像）、regression（錯誤紀錄）。各司其職，保持 CLAUDE.md 精簡。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="summary-card-title">Context over Instruction</div>
+        <div class="summary-card-text">規則加上「為什麼」，CC 就能泛化到相關場景。跟 GMP SOP 的 Rationale 設計完全相同的邏輯。</div>
+    </div>
 </div>
-<div class="summary-card" style="border-left-color: #10b981;">
-<div class="summary-card-title">CLAUDE.md ≤ 200 行</div>
-<div class="summary-card-text">專案入職手冊控制在 200 行以內。超出部分拆分到 .claude/rules/ 模組。用 /init 命令可以快速生成基礎版。</div>
-</div>
-<div class="summary-card" style="border-left-color: #8b5cf6;">
-<div class="summary-card-title">Rules 四檔分工</div>
-<div class="summary-card-text">identity（人格）、principles（決策）、user（使用者畫像）、regression（錯誤紀錄）。各司其職，保持 CLAUDE.md 精簡。</div>
-</div>
-<div class="summary-card" style="border-left-color: #f59e0b;">
-<div class="summary-card-title">Context over Instruction</div>
-<div class="summary-card-text">規則加上「為什麼」，CC 就能泛化到相關場景。跟 GMP SOP 的 Rationale 設計完全相同的邏輯。</div>
-</div>
-</div>
+
 <!-- PRACTICE -->
 <div class="section-header">
-<div class="section-number">?</div>
-<div class="section-title">Practice Questions</div>
+    <div class="section-number">?</div>
+    <div class="section-title">Practice Questions</div>
 </div>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">CLAUDE.md 和 .claude/rules/ 的分工邏輯是什麼？為什麼不把所有內容都放在 CLAUDE.md 裡？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>CLAUDE.md 負責專案級的「大方向」：結構、工作流、基本規範。rules/ 負責跨專案或關注點獨立的內容：人格設定、決策原則、使用者畫像。分開的原因有二：(1) 200 行限制——超出後遵守率下降；(2) 關注點分離——人格設定不應該跟 Git 規則混在一起，各自獨立更新更方便。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">CLAUDE.md 和 .claude/rules/ 的分工邏輯是什麼？為什麼不把所有內容都放在 CLAUDE.md 裡？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>CLAUDE.md 負責專案級的「大方向」：結構、工作流、基本規範。rules/ 負責跨專案或關注點獨立的內容：人格設定、決策原則、使用者畫像。分開的原因有二：(1) 200 行限制——超出後遵守率下降；(2) 關注點分離——人格設定不應該跟 Git 規則混在一起，各自獨立更新更方便。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要為 CDMO 的自動化文件生成管線建立 Claude Code 配置，CLAUDE.md 和 rules/ 各放什麼？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>CLAUDE.md</strong>：專案概述（這是一個教育文件生成 pipeline）、目錄結構（docs/、templates/、scripts/）、工作流規則（先讀 SKILL.md、兩階段建檔策略、必須 verify）、Git 規則（不提交含個人資訊的文件）。</p>
-<p><strong>rules/identity.md</strong>：AI Expert 角色設定、繁體中文為主、溫暖 Socratic 語氣。<strong>rules/user.md</strong>：CDMO 背景、COO 目標、雙語需求。<strong>rules/principles.md</strong>：完整性優先於速度、meta tag 一致性必須確保、不確定時問而不猜。<strong>rules/regression.md</strong>：過去遇到的截斷問題、雙欄不平衡問題等修正紀錄。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">如果你要為 CDMO 的自動化文件生成管線建立 Claude Code 配置，CLAUDE.md 和 rules/ 各放什麼？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>CLAUDE.md</strong>：專案概述（這是一個教育文件生成 pipeline）、目錄結構（docs/、templates/、scripts/）、工作流規則（先讀 SKILL.md、兩階段建檔策略、必須 verify）、Git 規則（不提交含個人資訊的文件）。</p>
+        <p><strong>rules/identity.md</strong>：AI Expert 角色設定、繁體中文為主、溫暖 Socratic 語氣。<strong>rules/user.md</strong>：CDMO 背景、COO 目標、雙語需求。<strong>rules/principles.md</strong>：完整性優先於速度、meta tag 一致性必須確保、不確定時問而不猜。<strong>rules/regression.md</strong>：過去遇到的截斷問題、雙欄不平衡問題等修正紀錄。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">「Context over Instruction」原則有沒有適用邊界？什麼情況下純指令反而更好？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>Context over Instruction 的前提是 LLM 能正確理解因果關係並泛化。但有些情況純指令更安全：(1) <strong>安全關鍵操作</strong>——「永遠不要刪除 production 資料庫」不需要解釋為什麼，LLM 理解了「為什麼」反而可能在某些邊界情況自行判斷可以刪；(2) <strong>精確格式要求</strong>——「commit message 用 conventional commits 格式」給格式範例比解釋為什麼更有效；(3) <strong>token 預算有限時</strong>——加上 why 會增加配置文件長度，可能觸碰 200 行限制。最佳策略是：安全紅線用純指令（不留解讀空間），非直覺的偏好用 context。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">「Context over Instruction」原則有沒有適用邊界？什麼情況下純指令反而更好？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>Context over Instruction 的前提是 LLM 能正確理解因果關係並泛化。但有些情況純指令更安全：(1) <strong>安全關鍵操作</strong>——「永遠不要刪除 production 資料庫」不需要解釋為什麼，LLM 理解了「為什麼」反而可能在某些邊界情況自行判斷可以刪；(2) <strong>精確格式要求</strong>——「commit message 用 conventional commits 格式」給格式範例比解釋為什麼更有效；(3) <strong>token 預算有限時</strong>——加上 why 會增加配置文件長度，可能觸碰 200 行限制。最佳策略是：安全紅線用純指令（不留解讀空間），非直覺的偏好用 context。</p>
+    </div>
 </details>
+
 <!-- BOTTOM LINE -->
 <div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">配置文件本質上就是「context engineering for CLI agents」——跟我在 claude.ai Projects 裡做的 system prompt 設計是同一件事，只是載體從對話介面變成了檔案系統。四層架構的分層治理邏輯跟 GMP 文件體系完全對應，這個思維可以直接遷移。</div>
+    <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x2714; 核心洞察</div>
+        <div class="bottom-line-text">配置文件本質上就是「context engineering for CLI agents」——跟我在 claude.ai Projects 裡做的 system prompt 設計是同一件事，只是載體從對話介面變成了檔案系統。四層架構的分層治理邏輯跟 GMP 文件體系完全對應，這個思維可以直接遷移。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+        <div class="bottom-line-text">本週在 MacBook 的 Claude Code 專案中建立 .claude/rules/ 目錄，先寫 user.md（CDMO 背景、COO 目標、雙語偏好）和 principles.md（完整性 &gt; 速度、不確定時問不猜）。用現有的 Master Prompt 內容作為素材來源，但重新精簡到配置文件適合的長度。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x26A0; 需要補充</div>
+        <div class="bottom-line-text">文章缺少 paths 前綴的條件式載入說明（這對多 repo pipeline 很重要）、regression.md 的具體觸發條件設定方式、以及配置文件在 headless mode 下的行為差異。需要查閱 Anthropic 官方 Claude Code 文件補齊這些細節。下次使用 Claude Code 進行 pipeline 工作時重新檢視。</div>
+    </div>
 </div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週在 MacBook 的 Claude Code 專案中建立 .claude/rules/ 目錄，先寫 user.md（CDMO 背景、COO 目標、雙語偏好）和 principles.md（完整性 &gt; 速度、不確定時問不猜）。用現有的 Master Prompt 內容作為素材來源，但重新精簡到配置文件適合的長度。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章缺少 paths 前綴的條件式載入說明（這對多 repo pipeline 很重要）、regression.md 的具體觸發條件設定方式、以及配置文件在 headless mode 下的行為差異。需要查閱 Anthropic 官方 Claude Code 文件補齊這些細節。下次使用 Claude Code 進行 pipeline 工作時重新檢視。</div>
-</div>
-</div>
+
 <!-- FOOTER -->
-<footer class="footer">
-<p>製作日期：2026-03-21 ｜ 來源：玖年 (jiunian) X Thread - Day 9 系列</p>
-<p>建議 Chat Title：<strong>2026-03-21 [Tool] CC Config Files - Rules Architecture</strong></p>
-<p>建議檔名：<strong>2026-03-21_claude-code-config-files.html</strong></p>
-</footer>
+<div class="footer">
+    <p>製作日期：2026-03-21 ｜ 來源：玖年 (jiunian) X Thread - Day 9 系列</p>
+    <p>建議 Chat Title：<strong>2026-03-21 [Tool] CC Config Files - Rules Architecture</strong></p>
+    <p>建議檔名：<strong>2026-03-21_claude-code-config-files.html</strong></p>
+</div>
+
 </div><!-- end container -->
 </body>
 </html>

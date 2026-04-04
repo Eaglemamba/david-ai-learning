@@ -1,784 +1,1241 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2025-12-10" name="doc-date"/>
-<meta content="The Batch Issue 331 學習指南 | AI 教學文件" name="doc-title"/>
-<meta content="The Batch / DeepLearning.AI" name="doc-source"/>
-<meta content="LLM,Agent,Tool" name="doc-tags"/>
-<meta content="4.2" name="doc-rating"/>
-<meta content="The Batch第331期深度學習指南，涵蓋AI產業最新動態、技術突破與實務應用案例分析" name="doc-summary"/>
-<meta content="2025-12-10_batch-331-study-guide.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>The Batch Issue 331 學習指南 | AI 教學文件</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-12-10">
+    <meta name="doc-title" content="The Batch Issue 331 學習指南 | AI 教學文件">
+    <meta name="doc-source" content="The Batch / DeepLearning.AI">
+    <meta name="doc-tags" content="LLM,Agent,Tool">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="The Batch第331期深度學習指南，涵蓋AI產業最新動態、技術突破與實務應用案例分析">
+    <meta name="doc-file" content="2025-12-10_batch-331-study-guide.html">
+    <title>The Batch Issue 331 學習指南 | AI 教學文件</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+            line-height: 1.7; 
+            color: #1e293b; 
+            background: #f8fafc; 
+        }
+        code { 
+            font-family: 'Source Code Pro', monospace; 
+            background: #f1f5f9; 
+            padding: 0.2em 0.4em; 
+            border-radius: 4px; 
+            font-size: 0.9em; 
+        }
+        pre { 
+            background: #1e293b; 
+            color: #e2e8f0; 
+            padding: 1rem; 
+            border-radius: 8px; 
+            overflow-x: auto; 
+            font-size: 0.85rem; 
+            line-height: 1.5; 
+            margin: 1rem 0;
+        }
+        pre code { background: transparent; padding: 0; }
 
+        /* Header */
+        .header { 
+            background: linear-gradient(135deg, #1e3a5f, #3b5998, #4c6cb3); 
+            color: white; 
+            text-align: center; 
+            padding: 2.5rem 2rem 2rem; 
+            position: relative; 
+        }
+        .header::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            height: 6px; 
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899); 
+        }
+        .header h1 { font-weight: 700; font-size: 1.75rem; margin-bottom: 0.75rem; }
+        .header-meta { font-size: 0.85rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+        .tag { font-size: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 9999px; font-weight: 500; }
+        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-api { background: #ddd6fe; color: #4c1d95; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
 
+        /* Executive Summary */
+        .executive-summary { 
+            background: #f0f9ff; 
+            margin: 0; 
+            padding: 1.5rem 2rem; 
+            border-bottom: 1px solid #bae6fd; 
+        }
+        .summary-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+            margin-bottom: 1.25rem; 
+            padding-bottom: 0.75rem; 
+            border-bottom: 1px solid #bae6fd; 
+        }
+        .summary-icon { font-size: 1.25rem; }
+        .summary-title { font-weight: 700; font-size: 1.1rem; color: #0c4a6e; }
+        .read-time { 
+            margin-left: auto; 
+            font-size: 0.75rem; 
+            color: #0369a1; 
+            background: #e0f2fe; 
+            padding: 0.25rem 0.6rem; 
+            border-radius: 4px; 
+        }
+        .summary-content { display: flex; flex-direction: column; gap: 1rem; }
+        .summary-item { display: flex; flex-direction: column; gap: 0.3rem; }
+        .item-label { 
+            font-size: 0.7rem; 
+            font-weight: 600; 
+            color: #0284c7; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+        }
+        .item-content { font-size: 0.95rem; line-height: 1.6; color: #334155; }
+
+        /* Learning Objectives */
+        .learning-objectives { 
+            background: #f8fafc; 
+            padding: 1.5rem 2rem; 
+            border-bottom: 1px solid #e2e8f0; 
+        }
+        .learning-objectives-title { 
+            font-size: 1rem; 
+            font-weight: 600; 
+            color: #334155; 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+            margin: 0 0 1rem 0; 
+        }
+        .learning-objectives-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 0.6rem; 
+        }
+        @media (max-width: 900px) { .learning-objectives-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { .learning-objectives-grid { grid-template-columns: 1fr; } }
+        .objective-item { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start; 
+            gap: 0.4rem; 
+            background: white; 
+            padding: 0.65rem 0.9rem; 
+            border-radius: 6px; 
+            border: 1px solid #e5e7eb; 
+        }
+        .objective-tag { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .objective-text { font-size: 0.95rem; color: #334155; line-height: 1.45; margin: 0; }
+
+        /* Content Start */
+        .content-start { 
+            background: #1e293b; 
+            color: white; 
+            padding: 0.75rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .content-start .section-number { font-weight: 600; }
+        .content-start .reading-time { font-size: 0.85rem; opacity: 0.8; }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+        .left-column { background: #fafafa; padding: 2rem; border-right: 1px solid #e2e8f0; }
+        .right-column { background: #f0f7ff; padding: 2rem; }
+        .section-title { 
+            font-size: 1.15rem; 
+            font-weight: 700; 
+            color: #1e3a8a; 
+            margin-bottom: 1rem; 
+            padding-bottom: 0.5rem; 
+            border-bottom: 2px solid #3b82f6; 
+        }
+        .content-text { font-size: 0.95rem; line-height: 1.8; color: #374151; margin-bottom: 1rem; }
+
+        /* Highlights */
+        .highlight-concept { background: linear-gradient(to bottom, transparent 60%, #a5d6a7 60%); padding: 0 2px; }
+        .highlight-analogy { background: linear-gradient(to bottom, transparent 60%, #fcd34d 60%); padding: 0 2px; }
+        .highlight-key { background: linear-gradient(to bottom, transparent 60%, #ffcc80 60%); padding: 0 2px; }
+        .highlight-code { background: linear-gradient(to bottom, transparent 60%, #ce93d8 60%); padding: 0 2px; }
+        .highlight-practical { background: linear-gradient(to bottom, transparent 60%, #6ee7b7 60%); padding: 0 2px; }
+        .highlight-cost { background: linear-gradient(to bottom, transparent 60%, #5eead4 60%); padding: 0 2px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; border: 1px solid; }
+        .info-box-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+            padding: 0.6rem 1rem; 
+            font-weight: 600; 
+            font-size: 0.95rem; 
+        }
+        .info-box-header .icon { flex-shrink: 0; font-size: 1rem; }
+        .info-box-content { padding: 1rem; }
+        .info-box-content p { font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.5rem; color: #374151; }
+        .info-box-content p:last-child { margin-bottom: 0; }
+        .info-box-content ul, .info-box-content ol { margin-left: 1.2rem; margin-bottom: 0.5rem; }
+        .info-box-content li { margin-bottom: 0.3rem; font-size: 0.95rem; }
+
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; }
+        .box-concept { border-color: #86efac; }
+
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; }
+        .box-analogy { border-color: #fcd34d; }
+
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; }
+        .box-key { border-color: #fdba74; }
+
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; }
+        .box-code { border-color: #c4b5fd; }
+
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; }
+        .box-practical { border-color: #6ee7b7; }
+
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; }
+        .box-cost { border-color: #5eead4; }
+
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; }
+        .box-compare { border-color: #a5b4fc; }
+
+        .box-practice .info-box-header { background: #fecdd3; color: #9f1239; }
+        .box-practice .info-box-content { background: #fff1f2; }
+        .box-practice { border-color: #fda4af; }
+
+        /* Comparison Table */
+        .comparison-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+        .comparison-table th { background: #3b5998; color: white; padding: 0.75rem; text-align: left; font-weight: 600; }
+        .comparison-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
+        .comparison-table tr:nth-child(even) { background: #f8fafc; }
+        .comparison-table tr:hover { background: #f0f9ff; }
+        .tool-name { font-weight: 600; color: #1e3a8a; }
+
+        /* Cost Analysis */
+        .cost-analysis { 
+            background: #f0fdfa; 
+            border: 1px solid #5eead4; 
+            border-radius: 8px; 
+            padding: 1.25rem; 
+            margin: 1rem 0; 
+        }
+        .cost-analysis h4 { color: #134e4a; margin-bottom: 1rem; font-size: 1rem; }
+        .cost-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        @media (max-width: 768px) { .cost-grid { grid-template-columns: repeat(2, 1fr); } }
+        .cost-item { text-align: center; background: white; padding: 1rem; border-radius: 6px; }
+        .cost-label { font-size: 0.8rem; color: #64748b; margin-bottom: 0.25rem; }
+        .cost-value { font-size: 1.1rem; font-weight: 700; color: #134e4a; }
+
+        /* Key Takeaways */
+        .summary-section { background: #f8fafc; padding: 2rem; border-top: 1px solid #e2e8f0; }
+        .summary-title-main { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; color: #1e293b; }
+        .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        @media (max-width: 900px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .summary-grid { grid-template-columns: 1fr; } }
+        .summary-card { 
+            background: white; 
+            padding: 1.25rem; 
+            border-radius: 8px; 
+            border: 1px solid #e2e8f0; 
+            border-top: 3px solid; 
+        }
+        .summary-card h4 { font-size: 0.9rem; color: #334155; margin-bottom: 0.5rem; }
+        .summary-card p { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+
+        /* Practice Section */
+        .practice-section { padding: 0; }
+        .practice-header { 
+            background: #f5f3ff; 
+            color: #6d28d9; 
+            padding: 1rem 2rem; 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            border-top: 1px solid #e2e8f0; 
+            border-bottom: 1px solid #ddd6fe; 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+        }
+        .practice-content { background: #faf5ff; padding: 2rem; }
+        .question { 
+            background: white; 
+            padding: 1.5rem; 
+            border-radius: 8px; 
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+            border: 1px solid #f3e8ff; 
+        }
+        .question-number { font-weight: 700; color: #6d28d9; margin-bottom: 0.5rem; }
+        .question-text { font-size: 0.95rem; line-height: 1.7; color: #374151; margin-bottom: 1rem; }
+        .answer-toggle { 
+            background: #7c3aed; 
+            color: white; 
+            border: none; 
+            padding: 0.5rem 1rem; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 0.85rem; 
+        }
+        .answer-toggle:hover { background: #6d28d9; }
+        .answer-content { 
+            display: none; 
+            margin-top: 1rem; 
+            padding: 1rem; 
+            background: #faf5ff; 
+            border-radius: 6px; 
+            border-left: 3px solid #7c3aed; 
+        }
+        .answer-content.show { display: block; }
+
+        /* Article Rating */
+        .article-rating { 
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%); 
+            border-radius: 12px; 
+            padding: 1.5rem 2rem; 
+            margin: 2rem; 
+            color: white; 
+        }
+        .rating-header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            margin-bottom: 1.25rem; 
+            padding-bottom: 0.75rem; 
+            border-bottom: 1px solid rgba(255,255,255,0.2); 
+        }
+        .rating-title { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .rating-title-icon { font-size: 1.25rem; }
+        .overall-score { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+            background: rgba(255,255,255,0.1); 
+            padding: 0.5rem 1rem; 
+            border-radius: 8px; 
+        }
+        .overall-label { font-size: 0.8rem; color: #94a3b8; }
+        .overall-value { font-size: 1.5rem; font-weight: 700; color: #fbbf24; }
+        .rating-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+        @media (max-width: 768px) { .rating-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .rating-grid { grid-template-columns: 1fr; } }
+        .rating-item { 
+            background: rgba(255,255,255,0.05); 
+            border-radius: 8px; 
+            padding: 1rem; 
+            text-align: center; 
+            border: 1px solid rgba(255,255,255,0.1); 
+        }
+        .rating-label { 
+            font-size: 0.75rem; 
+            color: #94a3b8; 
+            margin-bottom: 0.5rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+        }
+        .rating-stars { font-size: 1rem; letter-spacing: 2px; margin-bottom: 0.25rem; height: 1.25rem; }
+        .star-filled { color: #fbbf24; }
+        .star-empty { color: #475569; }
+        .rating-score { font-size: 0.85rem; font-weight: 600; color: #e2e8f0; }
+        .rating-item[data-dimension="technical"] { border-top: 3px solid #3b82f6; }
+        .rating-item[data-dimension="practical"] { border-top: 3px solid #10b981; }
+        .rating-item[data-dimension="ecosystem"] { border-top: 3px solid #8b5cf6; }
+        .rating-item[data-dimension="timeliness"] { border-top: 3px solid #f59e0b; }
+        .rating-item[data-dimension="learning"] { border-top: 3px solid #ec4899; }
+
+        /* Footer */
+        .footer { 
+            background: #1e293b; 
+            color: #94a3b8; 
+            padding: 1.5rem 2rem; 
+            text-align: center; 
+            font-size: 0.85rem; 
+        }
+        .footer-title { color: #e2e8f0; font-weight: 600; margin-bottom: 0.5rem; }
+        .footer a { color: #60a5fa; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Utility */
+        .key-quote {
+            background: linear-gradient(135deg, #e8f4fd 0%, #d4e9f7 100%);
+            border-left: 4px solid #3b82f6;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+    </style>
 </head>
 <body>
-<!-- Header -->
-<header class="header">
-<h1>The Batch Issue 331 學習指南</h1>
-<p class="header-meta">DeepLearning.AI Weekly Newsletter | 2025年12月10日發布</p>
-<div class="tag-container">
-<span class="tag tag-llm">LLM</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-api">API</span>
-<span class="tag tag-automation">Automation</span>
-</div>
-</header>
-<!-- Executive Summary -->
-<section class="executive-summary">
-<div class="summary-header">
-<span class="summary-icon">📚</span>
-<span class="summary-title">Executive Summary 快速摘要</span>
-<span class="read-time">🕑 閱讀時間：約 45 分鐘</span>
-</div>
-<div class="summary-content">
-<div class="summary-item">
-<span class="item-label">Core Concepts 核心概念</span>
-<span class="item-content">本期涵蓋 Agent 工作流程實作（aisuite + MCP）、Claude Opus 4.5 的 Token 效率革新、美國 Genesis Mission 科學 AI 國家戰略、Amazon Nova 2 多模態模型家族，以及 Tiny Recursive Model 證明「小而專」可勝「大而全」。</span>
-</div>
-<div class="summary-item">
-<span class="item-label">Practical Value 實務價值</span>
-<span class="item-content">Andrew Ng 提供可立即執行的 Agent 建構程式碼；Token 效率 vs 總成本的商業決策框架；Browser Automation (Nova Act) 的供應鏈應用；專用小模型 vs 通用大模型的選擇策略。</span>
-</div>
-<div class="summary-item">
-<span class="item-label">Key Insights 關鍵洞察</span>
-<span class="item-content">Frontier Model 性能差距已縮小至 5.4%，選模型因素應轉向成本/延遲/生態系；商業 Agent 需要大量 Scaffolding；Genesis Mission 雖宏大但面臨數據收集縮減的矛盾。</span>
-</div>
-<div class="summary-item">
-<span class="item-label">Action Items 行動建議</span>
-<span class="item-content">用 aisuite 建立 LLM 評估框架；建立 Token 總成本追蹤機制；評估 Nova Act 做供應商資料自動收集；研究類似 TRM 的專用模型處理配方優化問題。</span>
-</div>
-</div>
-</section>
-<!-- Learning Objectives -->
-<section class="learning-objectives">
-<h2 class="learning-objectives-title">🎯 Learning Objectives 學習目標</h2>
-<div class="learning-objectives-grid">
-<div class="objective-item">
-<span class="objective-tag tag-agent">Agent</span>
-<p class="objective-text">理解 Agentic Workflow 的基本架構與 Scaffolding 的必要性</p>
-</div>
-<div class="objective-item">
-<span class="objective-tag tag-llm">LLM</span>
-<p class="objective-text">掌握 Token 效率與總成本的關係，建立模型選擇決策框架</p>
-</div>
-<div class="objective-item">
-<span class="objective-tag tag-tool">Tool</span>
-<p class="objective-text">認識 MCP、Nova Act、Nova Forge 等新工具的應用場景</p>
-</div>
-</div>
-</section>
-<!-- Section 1: Andrew's Letter -->
-<div class="content-start">
-<span class="section-number">Section 1 of 5</span>
-<span class="reading-time">🕑 8 分鐘</span>
-</div>
-<section class="content-grid">
-<div class="content-left">
-<h3 class="section-title">Andrew Ng 的信：建構你的第一個 Agent</h3>
-<p class="content-text">Dear friends,</p>
-<p class="content-text">If you have not yet built an <span class="highlight-concept">agentic workflow</span>, I encourage you to try doing so, using the simple recipe I'll share here! With a few lines of code, you can now build a <span class="highlight-key">highly autonomous, moderately capable, and highly unreliable agent</span>.</p>
-<p class="content-text">The ability of frontier LLMs to carry out multiple steps autonomously makes this possible. Specifically, you can give an LLM a tool such as disk access (or web search), instruct it via a prompt to perform a high-level task such as creating a game and saving it as an HTML file (or carrying out deep research on a topic), and let it loose and see what it does.</p>
-<div class="key-quote">
+    <!-- Header -->
+    <header class="header">
+        <h1>The Batch Issue 331 學習指南</h1>
+        <p class="header-meta">DeepLearning.AI Weekly Newsletter | 2025年12月10日發布</p>
+        <div class="tag-container">
+            <span class="tag tag-llm">LLM</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-api">API</span>
+            <span class="tag tag-automation">Automation</span>
+        </div>
+    </header>
+
+    <!-- Executive Summary -->
+    <section class="executive-summary">
+        <div class="summary-header">
+            <span class="summary-icon">&#128218;</span>
+            <span class="summary-title">Executive Summary 快速摘要</span>
+            <span class="read-time">&#128337; 閱讀時間：約 45 分鐘</span>
+        </div>
+        <div class="summary-content">
+            <div class="summary-item">
+                <span class="item-label">Core Concepts 核心概念</span>
+                <span class="item-content">本期涵蓋 Agent 工作流程實作（aisuite + MCP）、Claude Opus 4.5 的 Token 效率革新、美國 Genesis Mission 科學 AI 國家戰略、Amazon Nova 2 多模態模型家族，以及 Tiny Recursive Model 證明「小而專」可勝「大而全」。</span>
+            </div>
+            <div class="summary-item">
+                <span class="item-label">Practical Value 實務價值</span>
+                <span class="item-content">Andrew Ng 提供可立即執行的 Agent 建構程式碼；Token 效率 vs 總成本的商業決策框架；Browser Automation (Nova Act) 的供應鏈應用；專用小模型 vs 通用大模型的選擇策略。</span>
+            </div>
+            <div class="summary-item">
+                <span class="item-label">Key Insights 關鍵洞察</span>
+                <span class="item-content">Frontier Model 性能差距已縮小至 5.4%，選模型因素應轉向成本/延遲/生態系；商業 Agent 需要大量 Scaffolding；Genesis Mission 雖宏大但面臨數據收集縮減的矛盾。</span>
+            </div>
+            <div class="summary-item">
+                <span class="item-label">Action Items 行動建議</span>
+                <span class="item-content">用 aisuite 建立 LLM 評估框架；建立 Token 總成本追蹤機制；評估 Nova Act 做供應商資料自動收集；研究類似 TRM 的專用模型處理配方優化問題。</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Objectives -->
+    <section class="learning-objectives">
+        <h2 class="learning-objectives-title">&#127919; Learning Objectives 學習目標</h2>
+        <div class="learning-objectives-grid">
+            <div class="objective-item">
+                <span class="objective-tag tag-agent">Agent</span>
+                <p class="objective-text">理解 Agentic Workflow 的基本架構與 Scaffolding 的必要性</p>
+            </div>
+            <div class="objective-item">
+                <span class="objective-tag tag-llm">LLM</span>
+                <p class="objective-text">掌握 Token 效率與總成本的關係，建立模型選擇決策框架</p>
+            </div>
+            <div class="objective-item">
+                <span class="objective-tag tag-tool">Tool</span>
+                <p class="objective-text">認識 MCP、Nova Act、Nova Forge 等新工具的應用場景</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: Andrew's Letter -->
+    <div class="content-start">
+        <span class="section-number">Section 1 of 5</span>
+        <span class="reading-time">&#128337; 8 分鐘</span>
+    </div>
+    <section class="content-grid">
+        <div class="left-column">
+            <h3 class="section-title">Andrew Ng 的信：建構你的第一個 Agent</h3>
+            <p class="content-text">Dear friends,</p>
+            <p class="content-text">If you have not yet built an <span class="highlight-concept">agentic workflow</span>, I encourage you to try doing so, using the simple recipe I'll share here! With a few lines of code, you can now build a <span class="highlight-key">highly autonomous, moderately capable, and highly unreliable agent</span>.</p>
+            
+            <p class="content-text">The ability of frontier LLMs to carry out multiple steps autonomously makes this possible. Specifically, you can give an LLM a tool such as disk access (or web search), instruct it via a prompt to perform a high-level task such as creating a game and saving it as an HTML file (or carrying out deep research on a topic), and let it loose and see what it does.</p>
+
+            <div class="key-quote">
                 Important caveat: Hardly any of today's many practical, commercially valuable agentic workflows were built using this simple approach. Today's agents need much more <span class="highlight-concept">scaffolding</span> — that is, code that guides its step-by-step actions — rather than just letting an LLM have access to some tools and fully autonomously decide what to do.
             </div>
-<p class="content-text">A quick way to implement this recipe is to use the open source <span class="highlight-code">aisuite package</span> (pip install "aisuite[all]") that Rohit Prasad and I have been working on. This package makes it easy to switch LLM providers and also to get an LLM to use tools (function calls) without needing to write a massive amount of code.</p>
-<p class="content-text">Many members of the open-source community have been contributing to this, and Rohit recently added <span class="highlight-concept">MCP support</span>, which makes it easy to build basic agentic workflows.</p>
-<p class="content-text">The two steps to generate a snake game are:</p>
-<ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
-<li>Initialize the MCP-based file-system tool to let it write files.</li>
-<li>Let loose a frontier model (such as GPT-5.1, Claude Sonnet 4.5, or Gemini 3).</li>
-</ol>
-<p class="content-text">This (usually) results in the LLM creating a snake game and using the MCP server to save a file snake_game.html, which you can open in a web browser. (The parameter <code>max_turns=5</code> means that it will alternate between calling the LLM and letting the LLM execute a tool up to 5 times before exiting.)</p>
-</div>
-<div class="content-right">
-<h3 class="section-title">教學解析 Commentary</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">
-<span class="icon">📖</span>
+
+            <p class="content-text">A quick way to implement this recipe is to use the open source <span class="highlight-code">aisuite package</span> (pip install "aisuite[all]") that Rohit Prasad and I have been working on. This package makes it easy to switch LLM providers and also to get an LLM to use tools (function calls) without needing to write a massive amount of code.</p>
+
+            <p class="content-text">Many members of the open-source community have been contributing to this, and Rohit recently added <span class="highlight-concept">MCP support</span>, which makes it easy to build basic agentic workflows.</p>
+
+            <p class="content-text">The two steps to generate a snake game are:</p>
+            <ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Initialize the MCP-based file-system tool to let it write files.</li>
+                <li>Let loose a frontier model (such as GPT-5.1, Claude Sonnet 4.5, or Gemini 3).</li>
+            </ol>
+
+            <p class="content-text">This (usually) results in the LLM creating a snake game and using the MCP server to save a file snake_game.html, which you can open in a web browser. (The parameter <code>max_turns=5</code> means that it will alternate between calling the LLM and letting the LLM execute a tool up to 5 times before exiting.)</p>
+        </div>
+        <div class="right-column">
+            <h3 class="section-title">教學解析 Commentary</h3>
+            
+            <div class="info-box box-concept">
+                <div class="info-box-header">
+                    <span class="icon">&#128214;</span>
                     核心概念 Key Concepts
                 </div>
-<div class="info-box-content">
-<p><strong>Agentic Workflow（代理工作流程）</strong>：讓 AI 模型能夠自主執行多步驟任務的工作流程。不同於單次問答，Agent 可以自己決定下一步該做什麼。</p>
-<p><strong>Scaffolding（腳手架/框架程式碼）</strong>：引導 Agent 行為的輔助程式碼。就像蓋房子需要鷹架支撐，目前的 Agent 也需要大量程式碼來確保穩定運作。</p>
-<p><strong>MCP (Model Context Protocol)</strong>：Anthropic 推出的協定，讓 LLM 能夠標準化地使用外部工具，如檔案系統、網頁搜尋等。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">
-<span class="icon">💡</span>
+                <div class="info-box-content">
+                    <p><strong>Agentic Workflow（代理工作流程）</strong>：讓 AI 模型能夠自主執行多步驟任務的工作流程。不同於單次問答，Agent 可以自己決定下一步該做什麼。</p>
+                    <p><strong>Scaffolding（腳手架/框架程式碼）</strong>：引導 Agent 行為的輔助程式碼。就像蓋房子需要鷹架支撐，目前的 Agent 也需要大量程式碼來確保穩定運作。</p>
+                    <p><strong>MCP (Model Context Protocol)</strong>：Anthropic 推出的協定，讓 LLM 能夠標準化地使用外部工具，如檔案系統、網頁搜尋等。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-analogy">
+                <div class="info-box-header">
+                    <span class="icon">&#128161;</span>
                     比喻說明 Analogy
                 </div>
-<div class="info-box-content">
-<p><strong>Agent 就像新手員工：</strong></p>
-<p>想像你僱用了一位聰明但沒經驗的新員工：</p>
-<ul>
-<li><strong>方法A（無 Scaffolding）</strong>：給他辦公室鑰匙和電腦，說「把這份報告完成」，然後離開。結果可能很有創意，但也可能完全偏離方向。</li>
-<li><strong>方法B（有 Scaffolding）</strong>：給他詳細的 SOP、每個步驟的檢查清單、完成每階段要回報。結果更可預測、更可靠。</li>
-</ul>
-<p>Andrew 這封信教的是方法 A——快速體驗 Agent 的可能性，但實際商業應用需要方法 B。</p>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">
-<span class="icon">💻</span>
+                <div class="info-box-content">
+                    <p><strong>Agent 就像新手員工：</strong></p>
+                    <p>想像你僱用了一位聰明但沒經驗的新員工：</p>
+                    <ul>
+                        <li><strong>方法A（無 Scaffolding）</strong>：給他辦公室鑰匙和電腦，說「把這份報告完成」，然後離開。結果可能很有創意，但也可能完全偏離方向。</li>
+                        <li><strong>方法B（有 Scaffolding）</strong>：給他詳細的 SOP、每個步驟的檢查清單、完成每階段要回報。結果更可預測、更可靠。</li>
+                    </ul>
+                    <p>Andrew 這封信教的是方法 A——快速體驗 Agent 的可能性，但實際商業應用需要方法 B。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-code">
+                <div class="info-box-header">
+                    <span class="icon">&#128187;</span>
                     程式碼/API Code/API
                 </div>
-<div class="info-box-content">
-<p><strong>aisuite 套件的價值：</strong></p>
-<pre><code># 一行指令安裝
+                <div class="info-box-content">
+                    <p><strong>aisuite 套件的價值：</strong></p>
+                    <pre><code># 一行指令安裝
 pip install "aisuite[all]"
 
 # 核心優勢：統一 API 切換不同 LLM
 # OpenAI → Claude → Gemini 
 # 只需改一個參數，不用重寫程式碼</code></pre>
-<p><strong>max_turns 參數</strong>：控制 Agent 與工具互動的最大次數。設為 5 表示最多執行 5 個「思考→行動」循環。這是防止無限迴圈的安全機制。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">
-<span class="icon">⚠️</span>
+                    <p><strong>max_turns 參數</strong>：控制 Agent 與工具互動的最大次數。設為 5 表示最多執行 5 個「思考→行動」循環。這是防止無限迴圈的安全機制。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-key">
+                <div class="info-box-header">
+                    <span class="icon">&#9888;&#65039;</span>
                     重點提示 Key Point
                 </div>
-<div class="info-box-content">
-<p><strong>Andrew 的坦白非常重要：</strong></p>
-<p>「highly autonomous, moderately capable, and <u>highly unreliable</u>」——這不是謙虛，而是事實。目前的 Agent：</p>
-<ul>
-<li>成功率可能只有 60-80%</li>
-<li>同樣的任務，每次結果可能不同</li>
-<li>可能在中途「迷失方向」</li>
-</ul>
-<p>這就是為什麼商業 Agent 需要大量 Scaffolding。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">
-<span class="icon">🛠️</span>
+                <div class="info-box-content">
+                    <p><strong>Andrew 的坦白非常重要：</strong></p>
+                    <p>「highly autonomous, moderately capable, and <u>highly unreliable</u>」——這不是謙虛，而是事實。目前的 Agent：</p>
+                    <ul>
+                        <li>成功率可能只有 60-80%</li>
+                        <li>同樣的任務，每次結果可能不同</li>
+                        <li>可能在中途「迷失方向」</li>
+                    </ul>
+                    <p>這就是為什麼商業 Agent 需要大量 Scaffolding。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-practical">
+                <div class="info-box-header">
+                    <span class="icon">&#128736;&#65039;</span>
                     實務應用 Practical Application
                 </div>
-<div class="info-box-content">
-<p><strong>對 CDMO 營運的啟示：</strong></p>
-<p>在製藥環境中，「unreliable」是不可接受的。但 aisuite 的架構概念可以應用於：</p>
-<ul>
-<li><strong>文件草稿生成</strong>：讓 Agent 產生初稿，人工審核確認</li>
-<li><strong>資料整理</strong>：從多個來源彙整資訊，但設置嚴格的驗證步驟</li>
-<li><strong>LLM 供應商評估</strong>：用 aisuite 快速比較不同模型對同一任務的表現</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 2: Claude Opus 4.5 -->
-<div class="content-start">
-<span class="section-number">Section 2 of 5</span>
-<span class="reading-time">🕑 10 分鐘</span>
-</div>
-<section class="content-grid">
-<div class="content-left">
-<h3 class="section-title">Claude Opus 4.5：更少 Token 做更多事</h3>
-<p class="content-text"><span class="highlight-concept">Claude Opus 4.5</span>, the latest version of Anthropic's flagship model, extends the earlier version's strengths in coding, computer use, and agentic workflows while generating fewer tokens.</p>
-<p class="content-text"><strong>What's new:</strong> Claude Opus 4.5 outperforms its immediate predecessor at <span class="highlight-cost">one-third the price per token</span>.</p>
-<p class="content-text"><strong>Input/output:</strong> Text and images in (up to 200,000 tokens), text out (up to 64,000 tokens)</p>
-<p class="content-text"><strong>Features:</strong></p>
-<ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-<li>Adjustable effort (low, medium, high) that governs token generation</li>
-<li>Extended thinking that raises the budget for reasoning tokens</li>
-<li>Tool use including web search and computer use</li>
-</ul>
-<p class="content-text"><strong>Availability/price:</strong> API $5.00/$0.50/$25.00 per million input/cached/output tokens via Anthropic, Amazon Bedrock, Google Cloud Vertex AI, Microsoft Foundry</p>
-<div class="key-quote">
+                <div class="info-box-content">
+                    <p><strong>對 CDMO 營運的啟示：</strong></p>
+                    <p>在製藥環境中，「unreliable」是不可接受的。但 aisuite 的架構概念可以應用於：</p>
+                    <ul>
+                        <li><strong>文件草稿生成</strong>：讓 Agent 產生初稿，人工審核確認</li>
+                        <li><strong>資料整理</strong>：從多個來源彙整資訊，但設置嚴格的驗證步驟</li>
+                        <li><strong>LLM 供應商評估</strong>：用 aisuite 快速比較不同模型對同一任務的表現</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Claude Opus 4.5 -->
+    <div class="content-start">
+        <span class="section-number">Section 2 of 5</span>
+        <span class="reading-time">&#128337; 10 分鐘</span>
+    </div>
+    <section class="content-grid">
+        <div class="left-column">
+            <h3 class="section-title">Claude Opus 4.5：更少 Token 做更多事</h3>
+            <p class="content-text"><span class="highlight-concept">Claude Opus 4.5</span>, the latest version of Anthropic's flagship model, extends the earlier version's strengths in coding, computer use, and agentic workflows while generating fewer tokens.</p>
+
+            <p class="content-text"><strong>What's new:</strong> Claude Opus 4.5 outperforms its immediate predecessor at <span class="highlight-cost">one-third the price per token</span>.</p>
+
+            <p class="content-text"><strong>Input/output:</strong> Text and images in (up to 200,000 tokens), text out (up to 64,000 tokens)</p>
+            
+            <p class="content-text"><strong>Features:</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Adjustable effort (low, medium, high) that governs token generation</li>
+                <li>Extended thinking that raises the budget for reasoning tokens</li>
+                <li>Tool use including web search and computer use</li>
+            </ul>
+
+            <p class="content-text"><strong>Availability/price:</strong> API $5.00/$0.50/$25.00 per million input/cached/output tokens via Anthropic, Amazon Bedrock, Google Cloud Vertex AI, Microsoft Foundry</p>
+
+            <div class="key-quote">
                 Anthropic trained the model on public data scraped from the web and non-public data from third parties, paid contractors, Anthropic users who didn't opt out, and Anthropic's internal operations.
             </div>
-<p class="content-text"><strong>Performance highlights:</strong></p>
-<ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-<li>On the Artificial Analysis Intelligence Index, Claude Opus 4.5 (70) achieved second-place, matching OpenAI GPT-5.1 and trailing Google Gemini 3 Pro (73)</li>
-<li>On Terminal-Bench Hard (command-line tasks), Claude Opus 4.5 (44%) outperformed all other models tested</li>
-<li>Set to medium effort, matched Sonnet 4.5's SWE-bench while using <span class="highlight-cost">76% fewer output tokens</span></li>
-</ul>
-<p class="content-text"><strong>Behind the news:</strong> Testing Claude Opus 4.5 cost $1,498, Gemini 3 Pro $1,201, and GPT-5.1 $859. Claude used roughly half as many tokens (48M) compared to Gemini (92M) and GPT (81M), but its higher per-token price amounts to higher overall costs.</p>
-<div class="key-quote">
+
+            <p class="content-text"><strong>Performance highlights:</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>On the Artificial Analysis Intelligence Index, Claude Opus 4.5 (70) achieved second-place, matching OpenAI GPT-5.1 and trailing Google Gemini 3 Pro (73)</li>
+                <li>On Terminal-Bench Hard (command-line tasks), Claude Opus 4.5 (44%) outperformed all other models tested</li>
+                <li>Set to medium effort, matched Sonnet 4.5's SWE-bench while using <span class="highlight-cost">76% fewer output tokens</span></li>
+            </ul>
+
+            <p class="content-text"><strong>Behind the news:</strong> Testing Claude Opus 4.5 cost $1,498, Gemini 3 Pro $1,201, and GPT-5.1 $859. Claude used roughly half as many tokens (48M) compared to Gemini (92M) and GPT (81M), but its higher per-token price amounts to higher overall costs.</p>
+
+            <div class="key-quote">
                 We're thinking: The difference in performance between various frontier models is shrinking. According to Stanford's latest AI Index, the gap between top-ranked and 10th-ranked models fell from 11.9% to 5.4% between 2024 and 2025. The gap between the top two shrank to 0.7%.
             </div>
-</div>
-<div class="content-right">
-<h3 class="section-title">教學解析 Commentary</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">
-<span class="icon">📖</span>
+        </div>
+        <div class="right-column">
+            <h3 class="section-title">教學解析 Commentary</h3>
+
+            <div class="info-box box-concept">
+                <div class="info-box-header">
+                    <span class="icon">&#128214;</span>
                     核心概念 Key Concepts
                 </div>
-<div class="info-box-content">
-<p><strong>Token（代幣/標記）</strong>：LLM 處理文字的基本單位。英文約 1 token = 0.75 字；中文約 1 字 = 1.5-2 tokens。Token 數量直接影響 API 成本。</p>
-<p><strong>Extended Thinking（延伸思考）</strong>：讓模型「思考更久」的功能。模型會先產生內部推理過程（消耗更多 token），再給出最終答案。</p>
-<p><strong>Hybrid Reasoning Model（混合推理模型）</strong>：可以在「快速回應」與「深度思考」兩種模式間切換的模型。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">
-<span class="icon">💡</span>
+                <div class="info-box-content">
+                    <p><strong>Token（代幣/標記）</strong>：LLM 處理文字的基本單位。英文約 1 token = 0.75 字；中文約 1 字 = 1.5-2 tokens。Token 數量直接影響 API 成本。</p>
+                    <p><strong>Extended Thinking（延伸思考）</strong>：讓模型「思考更久」的功能。模型會先產生內部推理過程（消耗更多 token），再給出最終答案。</p>
+                    <p><strong>Hybrid Reasoning Model（混合推理模型）</strong>：可以在「快速回應」與「深度思考」兩種模式間切換的模型。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-analogy">
+                <div class="info-box-header">
+                    <span class="icon">&#128161;</span>
                     比喻說明 Analogy
                 </div>
-<div class="info-box-content">
-<p><strong>Effort Level 就像汽車檔位：</strong></p>
-<ul>
-<li><strong>Low（低檔）</strong>：省油但動力弱，適合簡單任務如閒聊、簡單問答</li>
-<li><strong>Medium（中檔）</strong>：平衡模式，適合大多數工作任務</li>
-<li><strong>High（高檔）</strong>：全力輸出但耗油，適合複雜程式碼、深度分析</li>
-</ul>
-<p>選對檔位 = 用最少 token 完成任務 = 省錢。</p>
-</div>
-</div>
-<div class="info-box box-cost">
-<div class="info-box-header">
-<span class="icon">💰</span>
+                <div class="info-box-content">
+                    <p><strong>Effort Level 就像汽車檔位：</strong></p>
+                    <ul>
+                        <li><strong>Low（低檔）</strong>：省油但動力弱，適合簡單任務如閒聊、簡單問答</li>
+                        <li><strong>Medium（中檔）</strong>：平衡模式，適合大多數工作任務</li>
+                        <li><strong>High（高檔）</strong>：全力輸出但耗油，適合複雜程式碼、深度分析</li>
+                    </ul>
+                    <p>選對檔位 = 用最少 token 完成任務 = 省錢。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-cost">
+                <div class="info-box-header">
+                    <span class="icon">&#128176;</span>
                     成本分析 Cost Analysis
                 </div>
-<div class="info-box-content">
-<p><strong>Token 效率 ≠ 總成本低</strong></p>
-<p>這是本文最重要的商業洞察：</p>
-<table class="comparison-table">
-<tr>
-<th>模型</th>
-<th>使用 Token</th>
-<th>測試總成本</th>
-</tr>
-<tr>
-<td class="tool-name">Claude Opus 4.5</td>
-<td>48M</td>
-<td>$1,498</td>
-</tr>
-<tr>
-<td class="tool-name">Gemini 3 Pro</td>
-<td>92M</td>
-<td>$1,201</td>
-</tr>
-<tr>
-<td class="tool-name">GPT-5.1</td>
-<td>81M</td>
-<td>$859</td>
-</tr>
-</table>
-<p>Claude 用最少 token，但單價最高，所以總成本最貴。選模型時要看<strong>總成本</strong>，不只看效率。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">
-<span class="icon">⚠️</span>
+                <div class="info-box-content">
+                    <p><strong>Token 效率 ≠ 總成本低</strong></p>
+                    <p>這是本文最重要的商業洞察：</p>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>模型</th>
+                            <th>使用 Token</th>
+                            <th>測試總成本</th>
+                        </tr>
+                        <tr>
+                            <td class="tool-name">Claude Opus 4.5</td>
+                            <td>48M</td>
+                            <td>$1,498</td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name">Gemini 3 Pro</td>
+                            <td>92M</td>
+                            <td>$1,201</td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name">GPT-5.1</td>
+                            <td>81M</td>
+                            <td>$859</td>
+                        </tr>
+                    </table>
+                    <p>Claude 用最少 token，但單價最高，所以總成本最貴。選模型時要看<strong>總成本</strong>，不只看效率。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-key">
+                <div class="info-box-header">
+                    <span class="icon">&#9888;&#65039;</span>
                     重點提示 Key Point
                 </div>
-<div class="info-box-content">
-<p><strong>Frontier Model 差異收斂</strong></p>
-<p>Stanford AI Index 的數據非常重要：</p>
-<ul>
-<li>2024年：第1名與第10名差距 11.9%</li>
-<li>2025年：差距縮小到 5.4%</li>
-<li>前兩名差距只有 0.7%</li>
-</ul>
-<p><strong>實務意義</strong>：「哪個模型最強」越來越不重要。選模型應該看：價格、延遲、特定任務表現、API 穩定度、資料隱私政策。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">
-<span class="icon">🛠️</span>
+                <div class="info-box-content">
+                    <p><strong>Frontier Model 差異收斂</strong></p>
+                    <p>Stanford AI Index 的數據非常重要：</p>
+                    <ul>
+                        <li>2024年：第1名與第10名差距 11.9%</li>
+                        <li>2025年：差距縮小到 5.4%</li>
+                        <li>前兩名差距只有 0.7%</li>
+                    </ul>
+                    <p><strong>實務意義</strong>：「哪個模型最強」越來越不重要。選模型應該看：價格、延遲、特定任務表現、API 穩定度、資料隱私政策。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-practical">
+                <div class="info-box-header">
+                    <span class="icon">&#128736;&#65039;</span>
                     實務應用 Practical Application
                 </div>
-<div class="info-box-content">
-<p><strong>CDMO 場景的模型選擇策略：</strong></p>
-<ul>
-<li><strong>文件審核/複雜分析</strong>：考慮 Claude Opus 4.5（最強命令列能力）</li>
-<li><strong>大量日常任務</strong>：用 Sonnet 級別模型控制成本</li>
-<li><strong>內部敏感資料</strong>：注意訓練資料來源——「Anthropic users who didn't opt out」代表你的對話可能被用於訓練</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 3: Genesis Mission -->
-<div class="content-start">
-<span class="section-number">Section 3 of 5</span>
-<span class="reading-time">🕑 10 分鐘</span>
-</div>
-<section class="content-grid">
-<div class="content-left">
-<h3 class="section-title">Genesis Mission：美國 AI 科學大計畫</h3>
-<p class="content-text">President Trump launched a United States effort to use AI to speed up scientific breakthroughs.</p>
-<p class="content-text"><strong>What's new:</strong> The <span class="highlight-concept">Genesis Mission</span>, established by an executive order, directs the Department of Energy to integrate its 17 national labs and some of the country's most powerful supercomputers to tackle research on areas that range from energy to medicine.</p>
-<p class="content-text">Government researchers will work with private-sector partners, including <span class="highlight-key">Anthropic, Nvidia, and OpenAI</span>, to train models on proprietary federal datasets and use AI to generate and run experiments.</p>
-<div class="key-quote">
+                <div class="info-box-content">
+                    <p><strong>CDMO 場景的模型選擇策略：</strong></p>
+                    <ul>
+                        <li><strong>文件審核/複雜分析</strong>：考慮 Claude Opus 4.5（最強命令列能力）</li>
+                        <li><strong>大量日常任務</strong>：用 Sonnet 級別模型控制成本</li>
+                        <li><strong>內部敏感資料</strong>：注意訓練資料來源——「Anthropic users who didn't opt out」代表你的對話可能被用於訓練</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Genesis Mission -->
+    <div class="content-start">
+        <span class="section-number">Section 3 of 5</span>
+        <span class="reading-time">&#128337; 10 分鐘</span>
+    </div>
+    <section class="content-grid">
+        <div class="left-column">
+            <h3 class="section-title">Genesis Mission：美國 AI 科學大計畫</h3>
+            <p class="content-text">President Trump launched a United States effort to use AI to speed up scientific breakthroughs.</p>
+
+            <p class="content-text"><strong>What's new:</strong> The <span class="highlight-concept">Genesis Mission</span>, established by an executive order, directs the Department of Energy to integrate its 17 national labs and some of the country's most powerful supercomputers to tackle research on areas that range from energy to medicine.</p>
+
+            <p class="content-text">Government researchers will work with private-sector partners, including <span class="highlight-key">Anthropic, Nvidia, and OpenAI</span>, to train models on proprietary federal datasets and use AI to generate and run experiments.</p>
+
+            <div class="key-quote">
                 The project is the "largest marshaling of federal scientific resources since the Apollo program," Michael Kratsios, head of the White House Office of Science and Technology Policy, told Bloomberg.
             </div>
-<p class="content-text"><strong>Focus areas:</strong></p>
-<ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-<li>Biotechnology</li>
-<li>Manufacturing</li>
-<li>Materials</li>
-<li>Nuclear fission</li>
-<li>Quantum information science</li>
-<li>Semiconductors</li>
-</ul>
-<p class="content-text"><strong>Automation:</strong> The goal is to train AI models to conceive and conduct scientific research using <span class="highlight-concept">robotic labs</span> that allow for varying degrees of human involvement.</p>
-<p class="content-text"><strong>Behind the news:</strong> In scientific research, AI is evolving from a passive tool into an active collaborator. Google's AI co-scientist identified drug candidates for leukemia and liver fibrosis. RoboChem outperformed human chemists in optimizing chemical synthesis.</p>
-<div class="key-quote">
+
+            <p class="content-text"><strong>Focus areas:</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Biotechnology</li>
+                <li>Manufacturing</li>
+                <li>Materials</li>
+                <li>Nuclear fission</li>
+                <li>Quantum information science</li>
+                <li>Semiconductors</li>
+            </ul>
+
+            <p class="content-text"><strong>Automation:</strong> The goal is to train AI models to conceive and conduct scientific research using <span class="highlight-concept">robotic labs</span> that allow for varying degrees of human involvement.</p>
+
+            <p class="content-text"><strong>Behind the news:</strong> In scientific research, AI is evolving from a passive tool into an active collaborator. Google's AI co-scientist identified drug candidates for leukemia and liver fibrosis. RoboChem outperformed human chemists in optimizing chemical synthesis.</p>
+
+            <div class="key-quote">
                 Yes, but: The Genesis Mission depends on data, yet the federal government has systematically degraded its capacity to collect it. The White House has cut funding for weather data collection by NOAA, suspended collection of health data by CDC, and shut down several facilities responsible for gathering and curating government data.
             </div>
-</div>
-<div class="content-right">
-<h3 class="section-title">教學解析 Commentary</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">
-<span class="icon">📖</span>
+        </div>
+        <div class="right-column">
+            <h3 class="section-title">教學解析 Commentary</h3>
+
+            <div class="info-box box-concept">
+                <div class="info-box-header">
+                    <span class="icon">&#128214;</span>
                     核心概念 Key Concepts
                 </div>
-<div class="info-box-content">
-<p><strong>Scientific Foundation Model（科學基礎模型）</strong>：專門針對科學領域訓練的大型 AI 模型。不同於通用 LLM，這類模型深度理解科學文獻、實驗數據、化學結構等。</p>
-<p><strong>Robotic Lab（機器人實驗室）</strong>：由機器人自動執行實驗的實驗室。AI 設計實驗 → 機器人執行 → AI 分析結果 → 設計下一個實驗，形成閉環。</p>
-<p><strong>AI Co-Scientist（AI 共同科學家）</strong>：不只是工具，而是能夠提出假設、設計實驗、解讀結果的 AI 系統。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">
-<span class="icon">💡</span>
+                <div class="info-box-content">
+                    <p><strong>Scientific Foundation Model（科學基礎模型）</strong>：專門針對科學領域訓練的大型 AI 模型。不同於通用 LLM，這類模型深度理解科學文獻、實驗數據、化學結構等。</p>
+                    <p><strong>Robotic Lab（機器人實驗室）</strong>：由機器人自動執行實驗的實驗室。AI 設計實驗 → 機器人執行 → AI 分析結果 → 設計下一個實驗，形成閉環。</p>
+                    <p><strong>AI Co-Scientist（AI 共同科學家）</strong>：不只是工具，而是能夠提出假設、設計實驗、解讀結果的 AI 系統。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-analogy">
+                <div class="info-box-header">
+                    <span class="icon">&#128161;</span>
                     比喻說明 Analogy
                 </div>
-<div class="info-box-content">
-<p><strong>Genesis Mission 就像「科學版曼哈頓計畫」：</strong></p>
-<p>二戰時，美國集中最優秀科學家、最多資源在洛斯阿拉莫斯國家實驗室開發原子彈。Genesis Mission 的規模與意圖類似：</p>
-<ul>
-<li>整合 17 個國家實驗室</li>
-<li>政府 + 頂尖 AI 公司合作</li>
-<li>開放政府機密數據集</li>
-<li>目標：在 AI 科學應用領域領先中國</li>
-</ul>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">
-<span class="icon">⚖️</span>
+                <div class="info-box-content">
+                    <p><strong>Genesis Mission 就像「科學版曼哈頓計畫」：</strong></p>
+                    <p>二戰時，美國集中最優秀科學家、最多資源在洛斯阿拉莫斯國家實驗室開發原子彈。Genesis Mission 的規模與意圖類似：</p>
+                    <ul>
+                        <li>整合 17 個國家實驗室</li>
+                        <li>政府 + 頂尖 AI 公司合作</li>
+                        <li>開放政府機密數據集</li>
+                        <li>目標：在 AI 科學應用領域領先中國</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box box-compare">
+                <div class="info-box-header">
+                    <span class="icon">&#9878;&#65039;</span>
                     工具比較 Tool Comparison
                 </div>
-<div class="info-box-content">
-<p><strong>六大焦點領域分析：</strong></p>
-<table class="comparison-table">
-<tr>
-<th>領域</th>
-<th>為何重要</th>
-</tr>
-<tr>
-<td class="tool-name">Biotechnology</td>
-<td>藥物開發、疫苗、基因療法</td>
-</tr>
-<tr>
-<td class="tool-name">Manufacturing</td>
-<td>供應鏈自主、工業 4.0</td>
-</tr>
-<tr>
-<td class="tool-name">Materials</td>
-<td>電池、超導體、輕量材料</td>
-</tr>
-<tr>
-<td class="tool-name">Nuclear Fission</td>
-<td>清潔能源、核能復興</td>
-</tr>
-<tr>
-<td class="tool-name">Quantum</td>
-<td>量子電腦、加密安全</td>
-</tr>
-<tr>
-<td class="tool-name">Semiconductors</td>
-<td>晶片自主、AI 硬體</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">
-<span class="icon">⚠️</span>
+                <div class="info-box-content">
+                    <p><strong>六大焦點領域分析：</strong></p>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>領域</th>
+                            <th>為何重要</th>
+                        </tr>
+                        <tr>
+                            <td class="tool-name">Biotechnology</td>
+                            <td>藥物開發、疫苗、基因療法</td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name">Manufacturing</td>
+                            <td>供應鏈自主、工業 4.0</td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name">Materials</td>
+                            <td>電池、超導體、輕量材料</td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name">Nuclear Fission</td>
+                            <td>清潔能源、核能復興</td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name">Quantum</td>
+                            <td>量子電腦、加密安全</td>
+                        </tr>
+                        <tr>
+                            <td class="tool-name">Semiconductors</td>
+                            <td>晶片自主、AI 硬體</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="info-box box-key">
+                <div class="info-box-header">
+                    <span class="icon">&#9888;&#65039;</span>
                     重點提示 Key Point
                 </div>
-<div class="info-box-content">
-<p><strong>「Yes, but」段落是本文最重要的批判：</strong></p>
-<p>AI 需要數據，但同一屆政府正在：</p>
-<ul>
-<li>削減 NOAA 氣象數據收集預算</li>
-<li>暫停 CDC 健康數據收集</li>
-<li>關閉多個數據整理機構</li>
-</ul>
-<p>這就像宣布要建世界最快的車，同時拆除加油站。<strong>資料是 AI 的燃料</strong>，沒有資料，再強的模型也沒用。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">
-<span class="icon">🛠️</span>
+                <div class="info-box-content">
+                    <p><strong>「Yes, but」段落是本文最重要的批判：</strong></p>
+                    <p>AI 需要數據，但同一屆政府正在：</p>
+                    <ul>
+                        <li>削減 NOAA 氣象數據收集預算</li>
+                        <li>暫停 CDC 健康數據收集</li>
+                        <li>關閉多個數據整理機構</li>
+                    </ul>
+                    <p>這就像宣布要建世界最快的車，同時拆除加油站。<strong>資料是 AI 的燃料</strong>，沒有資料，再強的模型也沒用。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-practical">
+                <div class="info-box-header">
+                    <span class="icon">&#128736;&#65039;</span>
                     實務應用 Practical Application
                 </div>
-<div class="info-box-content">
-<p><strong>對製藥產業的影響：</strong></p>
-<ul>
-<li><strong>藥物發現加速</strong>：Google AI co-scientist 已驗證可找到白血病、肝纖維化的候選藥物</li>
-<li><strong>合成優化</strong>：RoboChem 證明機器人實驗室可超越人類化學家</li>
-<li><strong>CDMO 機會</strong>：隨著 AI 加速藥物開發，CMC 服務需求可能大增</li>
-<li><strong>監管準備</strong>：FDA 會需要新框架來審核 AI 設計的藥物</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 4: Amazon Nova 2 -->
-<div class="content-start">
-<span class="section-number">Section 4 of 5</span>
-<span class="reading-time">🕑 10 分鐘</span>
-</div>
-<section class="content-grid">
-<div class="content-left">
-<h3 class="section-title">Amazon Nova 2：AWS 的新模型家族</h3>
-<p class="content-text">Amazon raised the competitive profile of its foundation models and added services for custom model training and an agent platform for browser automation.</p>
-<p class="content-text"><strong>What's new:</strong> The <span class="highlight-concept">Nova 2 family</span> of models covers multimodal reasoning, multimodal generation, and speech to speech.</p>
-<p class="content-text"><strong>New services:</strong></p>
-<ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-<li><span class="highlight-key">Nova Forge</span> ($100,000 annually): offers pre-trained, mid-trained, and post-trained Nova checkpoints for custom training</li>
-<li><span class="highlight-key">Nova Act</span>: browser-automation agents that can navigate websites, fill out forms, extract data via natural language or Python</li>
-</ul>
-<p class="content-text"><strong>Nova 2 Pro Preview (flagship):</strong></p>
-<ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-<li>Input: Text, images, video, speech (up to 1 million tokens)</li>
-<li>Output: Text</li>
-<li>Features: Adjustable reasoning levels, code interpreter, web grounding with citations</li>
-<li>Price: $1.25/$0.31/$10 per million input/cached/output tokens</li>
-</ul>
-<p class="content-text"><strong>Performance:</strong> In Amazon's tests, Nova 2 Pro Preview performed equal to or better than Claude Sonnet 4.5 on 10 of 16 benchmarks, Gemini 3 Pro on 8 of 16, GPT-5.1 on 8 of 18.</p>
-<p class="content-text"><strong>Nova 2 Omni Preview:</strong> The only widely available reasoning model that natively takes in text, images, video, and speech and generates <span class="highlight-concept">text and images</span>. Up to 1 million tokens, text in over 200 languages.</p>
-<p class="content-text"><strong>Nova 2 Sonic:</strong> Speech-to-speech model, multilingual in 7 languages. Users preferred it to GPT Realtime and Gemini 2.5 Flash. Integrates with Amazon Connect and third-party telephony.</p>
-<div class="key-quote">
+                <div class="info-box-content">
+                    <p><strong>對製藥產業的影響：</strong></p>
+                    <ul>
+                        <li><strong>藥物發現加速</strong>：Google AI co-scientist 已驗證可找到白血病、肝纖維化的候選藥物</li>
+                        <li><strong>合成優化</strong>：RoboChem 證明機器人實驗室可超越人類化學家</li>
+                        <li><strong>CDMO 機會</strong>：隨著 AI 加速藥物開發，CMC 服務需求可能大增</li>
+                        <li><strong>監管準備</strong>：FDA 會需要新框架來審核 AI 設計的藥物</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Amazon Nova 2 -->
+    <div class="content-start">
+        <span class="section-number">Section 4 of 5</span>
+        <span class="reading-time">&#128337; 10 分鐘</span>
+    </div>
+    <section class="content-grid">
+        <div class="left-column">
+            <h3 class="section-title">Amazon Nova 2：AWS 的新模型家族</h3>
+            <p class="content-text">Amazon raised the competitive profile of its foundation models and added services for custom model training and an agent platform for browser automation.</p>
+
+            <p class="content-text"><strong>What's new:</strong> The <span class="highlight-concept">Nova 2 family</span> of models covers multimodal reasoning, multimodal generation, and speech to speech.</p>
+
+            <p class="content-text"><strong>New services:</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li><span class="highlight-key">Nova Forge</span> ($100,000 annually): offers pre-trained, mid-trained, and post-trained Nova checkpoints for custom training</li>
+                <li><span class="highlight-key">Nova Act</span>: browser-automation agents that can navigate websites, fill out forms, extract data via natural language or Python</li>
+            </ul>
+
+            <p class="content-text"><strong>Nova 2 Pro Preview (flagship):</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Input: Text, images, video, speech (up to 1 million tokens)</li>
+                <li>Output: Text</li>
+                <li>Features: Adjustable reasoning levels, code interpreter, web grounding with citations</li>
+                <li>Price: $1.25/$0.31/$10 per million input/cached/output tokens</li>
+            </ul>
+
+            <p class="content-text"><strong>Performance:</strong> In Amazon's tests, Nova 2 Pro Preview performed equal to or better than Claude Sonnet 4.5 on 10 of 16 benchmarks, Gemini 3 Pro on 8 of 16, GPT-5.1 on 8 of 18.</p>
+
+            <p class="content-text"><strong>Nova 2 Omni Preview:</strong> The only widely available reasoning model that natively takes in text, images, video, and speech and generates <span class="highlight-concept">text and images</span>. Up to 1 million tokens, text in over 200 languages.</p>
+
+            <p class="content-text"><strong>Nova 2 Sonic:</strong> Speech-to-speech model, multilingual in 7 languages. Users preferred it to GPT Realtime and Gemini 2.5 Flash. Integrates with Amazon Connect and third-party telephony.</p>
+
+            <div class="key-quote">
                 We're thinking: Amazon's foundation models have lagged behind those of competitors. Nova 2's higher performance relative to its predecessors suggests that Amazon is serious about closing the gap.
             </div>
-</div>
-<div class="content-right">
-<h3 class="section-title">教學解析 Commentary</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">
-<span class="icon">📖</span>
+        </div>
+        <div class="right-column">
+            <h3 class="section-title">教學解析 Commentary</h3>
+
+            <div class="info-box box-concept">
+                <div class="info-box-header">
+                    <span class="icon">&#128214;</span>
                     核心概念 Key Concepts
                 </div>
-<div class="info-box-content">
-<p><strong>Nova Forge</strong>：企業級客製化服務。提供模型的「半成品」(checkpoints)，讓企業用自己的數據進一步訓練。年費 $100,000 是企業級定價。</p>
-<p><strong>Nova Act（Browser Automation）</strong>：瀏覽器自動化 Agent。可以用自然語言指示 AI 操作網頁，類似 RPA 但更智能。</p>
-<p><strong>Web Grounding（網頁根據）</strong>：模型能搜尋網路並附上引用來源，減少 Hallucination，提高可信度。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">
-<span class="icon">💡</span>
+                <div class="info-box-content">
+                    <p><strong>Nova Forge</strong>：企業級客製化服務。提供模型的「半成品」(checkpoints)，讓企業用自己的數據進一步訓練。年費 $100,000 是企業級定價。</p>
+                    <p><strong>Nova Act（Browser Automation）</strong>：瀏覽器自動化 Agent。可以用自然語言指示 AI 操作網頁，類似 RPA 但更智能。</p>
+                    <p><strong>Web Grounding（網頁根據）</strong>：模型能搜尋網路並附上引用來源，減少 Hallucination，提高可信度。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-analogy">
+                <div class="info-box-header">
+                    <span class="icon">&#128161;</span>
                     比喻說明 Analogy
                 </div>
-<div class="info-box-content">
-<p><strong>Nova 2 家族就像汽車產品線：</strong></p>
-<ul>
-<li><strong>Nova 2 Pro</strong>：旗艦轎車，全功能最強</li>
-<li><strong>Nova 2 Lite</strong>：經濟小車，省錢代步</li>
-<li><strong>Nova 2 Omni</strong>：多功能休旅，什麼輸入都吃、什麼都能輸出</li>
-<li><strong>Nova 2 Sonic</strong>：語音專車，專門處理電話/語音</li>
-</ul>
-<p>Amazon 的策略是「全產品線覆蓋」，不跟單一模型硬拚，而是提供完整解決方案。</p>
-</div>
-</div>
-<div class="info-box box-cost">
-<div class="info-box-header">
-<span class="icon">💰</span>
+                <div class="info-box-content">
+                    <p><strong>Nova 2 家族就像汽車產品線：</strong></p>
+                    <ul>
+                        <li><strong>Nova 2 Pro</strong>：旗艦轎車，全功能最強</li>
+                        <li><strong>Nova 2 Lite</strong>：經濟小車，省錢代步</li>
+                        <li><strong>Nova 2 Omni</strong>：多功能休旅，什麼輸入都吃、什麼都能輸出</li>
+                        <li><strong>Nova 2 Sonic</strong>：語音專車，專門處理電話/語音</li>
+                    </ul>
+                    <p>Amazon 的策略是「全產品線覆蓋」，不跟單一模型硬拚，而是提供完整解決方案。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-cost">
+                <div class="info-box-header">
+                    <span class="icon">&#128176;</span>
                     成本分析 Cost Analysis
                 </div>
-<div class="info-box-content">
-<p><strong>Nova 2 Pro vs Claude Opus 4.5 價格比較：</strong></p>
-<table class="comparison-table">
-<tr>
-<th>項目</th>
-<th>Nova 2 Pro</th>
-<th>Claude Opus 4.5</th>
-</tr>
-<tr>
-<td>輸出 Token 價格</td>
-<td>$10/M</td>
-<td>$25/M</td>
-</tr>
-<tr>
-<td>Context Window</td>
-<td>1M tokens</td>
-<td>200K tokens</td>
-</tr>
-<tr>
-<td>Intelligence Index</td>
-<td>62</td>
-<td>70</td>
-</tr>
-</table>
-<p>Nova 便宜 60%，但性能也低約 11%。適合成本敏感的大量任務。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">
-<span class="icon">⚠️</span>
+                <div class="info-box-content">
+                    <p><strong>Nova 2 Pro vs Claude Opus 4.5 價格比較：</strong></p>
+                    <table class="comparison-table">
+                        <tr>
+                            <th>項目</th>
+                            <th>Nova 2 Pro</th>
+                            <th>Claude Opus 4.5</th>
+                        </tr>
+                        <tr>
+                            <td>輸出 Token 價格</td>
+                            <td>$10/M</td>
+                            <td>$25/M</td>
+                        </tr>
+                        <tr>
+                            <td>Context Window</td>
+                            <td>1M tokens</td>
+                            <td>200K tokens</td>
+                        </tr>
+                        <tr>
+                            <td>Intelligence Index</td>
+                            <td>62</td>
+                            <td>70</td>
+                        </tr>
+                    </table>
+                    <p>Nova 便宜 60%，但性能也低約 11%。適合成本敏感的大量任務。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-key">
+                <div class="info-box-header">
+                    <span class="icon">&#9888;&#65039;</span>
                     重點提示 Key Point
                 </div>
-<div class="info-box-content">
-<p><strong>Amazon 的真正優勢不是模型本身：</strong></p>
-<ul>
-<li><strong>整合優勢</strong>：與 AWS 生態系無縫整合（S3、Lambda、SageMaker）</li>
-<li><strong>企業客製化</strong>：Nova Forge 讓企業能用自己數據訓練</li>
-<li><strong>基礎設施</strong>：Bedrock 同時提供 Claude、Llama 等競品，不怕比較</li>
-<li><strong>電話整合</strong>：Nova Sonic + Amazon Connect = 企業客服 AI 一站解決</li>
-</ul>
-<p>Amazon 賣的不是「最強模型」，是「最完整平台」。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">
-<span class="icon">🛠️</span>
+                <div class="info-box-content">
+                    <p><strong>Amazon 的真正優勢不是模型本身：</strong></p>
+                    <ul>
+                        <li><strong>整合優勢</strong>：與 AWS 生態系無縫整合（S3、Lambda、SageMaker）</li>
+                        <li><strong>企業客製化</strong>：Nova Forge 讓企業能用自己數據訓練</li>
+                        <li><strong>基礎設施</strong>：Bedrock 同時提供 Claude、Llama 等競品，不怕比較</li>
+                        <li><strong>電話整合</strong>：Nova Sonic + Amazon Connect = 企業客服 AI 一站解決</li>
+                    </ul>
+                    <p>Amazon 賣的不是「最強模型」，是「最完整平台」。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-practical">
+                <div class="info-box-header">
+                    <span class="icon">&#128736;&#65039;</span>
                     實務應用 Practical Application
                 </div>
-<div class="info-box-content">
-<p><strong>CDMO 可評估的使用場景：</strong></p>
-<ul>
-<li><strong>Nova 2 Omni</strong>：處理技術文件（PDF）+ 實驗影片 + 語音會議紀錄，整合多模態資訊</li>
-<li><strong>Nova 2 Sonic</strong>：客戶電話自動記錄、多語言支援（亞太客戶）</li>
-<li><strong>Nova Act</strong>：自動化法規資料庫查詢、競品追蹤</li>
-<li><strong>Nova Forge</strong>：用內部 SOP、偏差報告訓練專屬模型（需評估合規性）</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 5: Tiny Recursive Model -->
-<div class="content-start">
-<span class="section-number">Section 5 of 5</span>
-<span class="reading-time">🕑 8 分鐘</span>
-</div>
-<section class="content-grid">
-<div class="content-left">
-<h3 class="section-title">Tiny Recursive Model：小模型的大智慧</h3>
-<p class="content-text">Large language models often fail at puzzles like Sudoku, for which a solution includes multiple elements and a single mistake invalidates all of them. Researchers showed that a <span class="highlight-concept">tiny network, by repeatedly refining its solution</span>, can solve this sort of puzzle well.</p>
-<p class="content-text"><strong>What's new:</strong> Alexia Jolicoeur-Martineau at Samsung developed <span class="highlight-concept">Tiny Recursive Model (TRM)</span>. This approach outperforms large, pretrained LLMs, including DeepSeek-R1 and Gemini 2.5 Pro, on visual puzzles requiring grid-filling by inferring abstract rules.</p>
-<p class="content-text"><strong>Key insight:</strong> Training a neural network to refine iteratively involves: (1) Give it a random solution, (2) Feed back output and compute new solution repeatedly, (3) Backpropagate through recursion to learn improvement.</p>
-<div class="key-quote">
+                <div class="info-box-content">
+                    <p><strong>CDMO 可評估的使用場景：</strong></p>
+                    <ul>
+                        <li><strong>Nova 2 Omni</strong>：處理技術文件（PDF）+ 實驗影片 + 語音會議紀錄，整合多模態資訊</li>
+                        <li><strong>Nova 2 Sonic</strong>：客戶電話自動記錄、多語言支援（亞太客戶）</li>
+                        <li><strong>Nova Act</strong>：自動化法規資料庫查詢、競品追蹤</li>
+                        <li><strong>Nova Forge</strong>：用內部 SOP、偏差報告訓練專屬模型（需評估合規性）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Tiny Recursive Model -->
+    <div class="content-start">
+        <span class="section-number">Section 5 of 5</span>
+        <span class="reading-time">&#128337; 8 分鐘</span>
+    </div>
+    <section class="content-grid">
+        <div class="left-column">
+            <h3 class="section-title">Tiny Recursive Model：小模型的大智慧</h3>
+            <p class="content-text">Large language models often fail at puzzles like Sudoku, for which a solution includes multiple elements and a single mistake invalidates all of them. Researchers showed that a <span class="highlight-concept">tiny network, by repeatedly refining its solution</span>, can solve this sort of puzzle well.</p>
+
+            <p class="content-text"><strong>What's new:</strong> Alexia Jolicoeur-Martineau at Samsung developed <span class="highlight-concept">Tiny Recursive Model (TRM)</span>. This approach outperforms large, pretrained LLMs, including DeepSeek-R1 and Gemini 2.5 Pro, on visual puzzles requiring grid-filling by inferring abstract rules.</p>
+
+            <p class="content-text"><strong>Key insight:</strong> Training a neural network to refine iteratively involves: (1) Give it a random solution, (2) Feed back output and compute new solution repeatedly, (3) Backpropagate through recursion to learn improvement.</p>
+
+            <div class="key-quote">
                 However, this approach has a key flaw: The network doesn't keep track of the changes it has made, so during inference, it may undo improvements. To counteract this, the network produces a separate <span class="highlight-concept">context embedding</span> that feeds back with each iteration.
             </div>
-<p class="content-text"><strong>How it works:</strong> TRM is a 2-layer network:</p>
-<ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-<li>5 million-parameter vanilla neural network for Sudoku-Extreme (9x9 matrices)</li>
-<li>7 million-parameter transformers for Maze-Hard and ARC-AGI (30x30 matrices)</li>
-<li>Up to 16 cycles, each with 18 recursive context embedding updates</li>
-</ul>
-<p class="content-text"><strong>Results:</strong></p>
-<ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
-<li>Sudoku-Extreme: TRM 87.4% vs Claude/DeepSeek/o3-mini 0%</li>
-<li>Maze-Hard: TRM 85.3% vs Claude/DeepSeek/o3-mini 0%</li>
-<li>ARC-AGI-1: TRM 44.6% vs Grok 4 66.7%</li>
-<li>ARC-AGI-2: TRM 7.8% vs Grok 4 16.0%</li>
-</ul>
-<div class="key-quote">
+
+            <p class="content-text"><strong>How it works:</strong> TRM is a 2-layer network:</p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>5 million-parameter vanilla neural network for Sudoku-Extreme (9x9 matrices)</li>
+                <li>7 million-parameter transformers for Maze-Hard and ARC-AGI (30x30 matrices)</li>
+                <li>Up to 16 cycles, each with 18 recursive context embedding updates</li>
+            </ul>
+
+            <p class="content-text"><strong>Results:</strong></p>
+            <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                <li>Sudoku-Extreme: TRM 87.4% vs Claude/DeepSeek/o3-mini 0%</li>
+                <li>Maze-Hard: TRM 85.3% vs Claude/DeepSeek/o3-mini 0%</li>
+                <li>ARC-AGI-1: TRM 44.6% vs Grok 4 66.7%</li>
+                <li>ARC-AGI-2: TRM 7.8% vs Grok 4 16.0%</li>
+            </ul>
+
+            <div class="key-quote">
                 We're thinking: LLMs reason by generating a chain of thought, one model execution at a time. TRM reasons by recursively updating its context embedding, one model execution at a time. A tiny model excels at solving puzzles requiring multifaceted solutions to be perfectly correct.
             </div>
-</div>
-<div class="content-right">
-<h3 class="section-title">教學解析 Commentary</h3>
-<div class="info-box box-concept">
-<div class="info-box-header">
-<span class="icon">📖</span>
+        </div>
+        <div class="right-column">
+            <h3 class="section-title">教學解析 Commentary</h3>
+
+            <div class="info-box box-concept">
+                <div class="info-box-header">
+                    <span class="icon">&#128214;</span>
                     核心概念 Key Concepts
                 </div>
-<div class="info-box-content">
-<p><strong>Recursive（遞迴）</strong>：函數呼叫自己的過程。TRM 的核心是讓模型「看自己的輸出，再改進，再看，再改」不斷循環。</p>
-<p><strong>Context Embedding（上下文嵌入）</strong>：一個記錄「我改過什麼」的向量。解決了「改了又改回去」的問題，就像在草稿紙上記筆記。</p>
-<p><strong>ARC-AGI</strong>：Abstraction and Reasoning Corpus，測試 AI 抽象推理能力的基準，被認為是測試「真正智能」的指標之一。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">
-<span class="icon">💡</span>
+                <div class="info-box-content">
+                    <p><strong>Recursive（遞迴）</strong>：函數呼叫自己的過程。TRM 的核心是讓模型「看自己的輸出，再改進，再看，再改」不斷循環。</p>
+                    <p><strong>Context Embedding（上下文嵌入）</strong>：一個記錄「我改過什麼」的向量。解決了「改了又改回去」的問題，就像在草稿紙上記筆記。</p>
+                    <p><strong>ARC-AGI</strong>：Abstraction and Reasoning Corpus，測試 AI 抽象推理能力的基準，被認為是測試「真正智能」的指標之一。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-analogy">
+                <div class="info-box-header">
+                    <span class="icon">&#128161;</span>
                     比喻說明 Analogy
                 </div>
-<div class="info-box-content">
-<p><strong>TRM 就像「有筆記本的數獨高手」：</strong></p>
-<ul>
-<li><strong>LLM 方式（Chain of Thought）</strong>：一邊思考一邊說出來「這格應該是3，因為...」，說完就給答案。說錯了也不能回頭改。</li>
-<li><strong>TRM 方式（Recursive）</strong>：先猜一個答案，檢查哪裡不對，在筆記本上記錄「第3行改過」，改了再檢查，重複16次。最後給出最好的版本。</li>
-</ul>
-<p>筆記本 = Context Embedding。</p>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">
-<span class="icon">⚖️</span>
+                <div class="info-box-content">
+                    <p><strong>TRM 就像「有筆記本的數獨高手」：</strong></p>
+                    <ul>
+                        <li><strong>LLM 方式（Chain of Thought）</strong>：一邊思考一邊說出來「這格應該是3，因為...」，說完就給答案。說錯了也不能回頭改。</li>
+                        <li><strong>TRM 方式（Recursive）</strong>：先猜一個答案，檢查哪裡不對，在筆記本上記錄「第3行改過」，改了再檢查，重複16次。最後給出最好的版本。</li>
+                    </ul>
+                    <p>筆記本 = Context Embedding。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-compare">
+                <div class="info-box-header">
+                    <span class="icon">&#9878;&#65039;</span>
                     工具比較 Tool Comparison
                 </div>
-<div class="info-box-content">
-<table class="comparison-table">
-<tr>
-<th>比較項目</th>
-<th>TRM</th>
-<th>GPT-4 級 LLM</th>
-</tr>
-<tr>
-<td>參數量</td>
-<td>5-7M</td>
-<td>~1.8T</td>
-</tr>
-<tr>
-<td>Sudoku 準確率</td>
-<td>87%</td>
-<td>0%</td>
-</tr>
-<tr>
-<td>ARC-AGI-2</td>
-<td>7.8%</td>
-<td>16% (Grok)</td>
-</tr>
-<tr>
-<td>推理方式</td>
-<td>遞迴優化</td>
-<td>Chain of Thought</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">
-<span class="icon">⚠️</span>
+                <div class="info-box-content">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>比較項目</th>
+                            <th>TRM</th>
+                            <th>GPT-4 級 LLM</th>
+                        </tr>
+                        <tr>
+                            <td>參數量</td>
+                            <td>5-7M</td>
+                            <td>~1.8T</td>
+                        </tr>
+                        <tr>
+                            <td>Sudoku 準確率</td>
+                            <td>87%</td>
+                            <td>0%</td>
+                        </tr>
+                        <tr>
+                            <td>ARC-AGI-2</td>
+                            <td>7.8%</td>
+                            <td>16% (Grok)</td>
+                        </tr>
+                        <tr>
+                            <td>推理方式</td>
+                            <td>遞迴優化</td>
+                            <td>Chain of Thought</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="info-box box-key">
+                <div class="info-box-header">
+                    <span class="icon">&#9888;&#65039;</span>
                     重點提示 Key Point
                 </div>
-<div class="info-box-content">
-<p><strong>為什麼 LLM 解不了數獨？</strong></p>
-<p><strong>數獨的特性：</strong> 81 個格子必須「同時」正確；錯一個 = 全錯；需要「全域一致性」驗證</p>
-<p><strong>LLM 的限制：</strong> 一次只生成一個 token；生成後不能修改；沒有「檢查全域一致性」的機制</p>
-<p>這就是為什麼 Claude、GPT 在數獨上是 0% 準確率——不是因為「笨」，而是<strong>架構不適合</strong>。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">
-<span class="icon">🛠️</span>
+                <div class="info-box-content">
+                    <p><strong>為什麼 LLM 解不了數獨？</strong></p>
+                    <p><strong>數獨的特性：</strong> 81 個格子必須「同時」正確；錯一個 = 全錯；需要「全域一致性」驗證</p>
+                    <p><strong>LLM 的限制：</strong> 一次只生成一個 token；生成後不能修改；沒有「檢查全域一致性」的機制</p>
+                    <p>這就是為什麼 Claude、GPT 在數獨上是 0% 準確率——不是因為「笨」，而是<strong>架構不適合</strong>。</p>
+                </div>
+            </div>
+
+            <div class="info-box box-practical">
+                <div class="info-box-header">
+                    <span class="icon">&#128736;&#65039;</span>
                     實務應用 Practical Application
                 </div>
-<div class="info-box-content">
-<p><strong>製藥領域的類似問題：</strong></p>
-<p>哪些任務有「全域一致性」需求？</p>
-<ul>
-<li><strong>批次配方計算</strong>：所有成分必須同時平衡</li>
-<li><strong>排程優化</strong>：設備、人員、物料必須同時可用</li>
-<li><strong>法規交叉驗證</strong>：FDA + EMA + PMDA 要求必須同時滿足</li>
-</ul>
-<p>這些問題可能適合類似 TRM 的「遞迴優化」架構，而非直接用 LLM。</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Key Takeaways -->
-<section class="summary-section">
-<h3 class="summary-title-main">📚 Key Takeaways 重點整理</h3>
-<div class="summary-grid">
-<div class="summary-card" style="border-top-color: #3b82f6;">
-<h4>Agent 仍需 Scaffolding</h4>
-<p>aisuite 讓任何人都能快速建構 Agent，但「highly unreliable」是現實。商業應用需要大量框架程式碼引導。</p>
-</div>
-<div class="summary-card" style="border-top-color: #10b981;">
-<h4>Token 效率 ≠ 成本效率</h4>
-<p>Claude Opus 4.5 用最少 Token 但總成本最高。選模型要看「任務總成本」，不只看效率指標。</p>
-</div>
-<div class="summary-card" style="border-top-color: #8b5cf6;">
-<h4>Frontier Model 差異收斂</h4>
-<p>前十名差距只剩 5.4%。選模型的決策因素應轉向價格、延遲、生態系整合、資料政策。</p>
-</div>
-<div class="summary-card" style="border-top-color: #f59e0b;">
-<h4>小而專勝過大而全</h4>
-<p>TRM 用 500 萬參數打敗兆參數 LLM（數獨 87% vs 0%）。正確的架構設計比暴力堆參數更重要。</p>
-</div>
-</div>
-</section>
-<!-- Practice Section -->
-<section class="practice-section">
-<h2 class="">
-            🎯 Practice Questions 練習題
-        </h2>
-<div class="practice-content">
-<details class="question-accordion"><summary class="question-header"><span class="question-number">Q1</span><span class="question-type">理解應用</span><span class="question-text">Andrew Ng 說目前的 Agent 是「highly autonomous, moderately capable, and highly unreliable」。請解釋為什麼「autonomous」和「reliable」目前是衝突的，以及 Scaffolding 如何緩解這個問題？</span><span class="accordion-icon"></span></summary><div class="question-answer">
-<p><strong>衝突原因：</strong>「Autonomous」意味著 Agent 自己決定下一步做什麼，但 LLM 的輸出有隨機性（temperature &gt; 0），且缺乏對任務全局的理解。每一步的小誤差會累積，導致最終結果不可預測。</p>
-<p><strong>Scaffolding 的作用：</strong>通過預先定義的步驟、檢查點、錯誤處理邏輯來限制 Agent 的自由度。例如：強制在每個步驟後驗證輸出格式、限制可用的工具、設定明確的成功/失敗條件。這犧牲了部分自主性，換取可靠性。</p>
-</div></details>
-<details class="question-accordion"><summary class="question-header"><span class="question-number">Q1</span><span class="question-type">理解應用</span><span class="question-text">根據文中數據，Claude Opus 4.5 的 Token 效率比 GPT-5.1 高約 40%，但測試總成本高出約 74%。假設你的公司每月有 100 萬美元的 AI API 預算，你會如何配置這兩個模型的使用？請說明理由。</span><span class="accordion-icon"></span></summary><div class="question-answer">
-<p><strong>建議配置策略：</strong></p>
-<p>1. <strong>任務分層</strong>：將任務分為「需要最高品質」（如技術文件審核、複雜分析）和「大量日常處理」（如資料整理、初稿生成）</p>
-<p>2. <strong>預算分配</strong>：約 20-30% 預算用於 Claude Opus（高價值任務），70-80% 用於 GPT-5.1 或更經濟的模型（大量任務）</p>
-<p>3. <strong>評估指標</strong>：不只看 API 成本，還要考慮人工審核時間。如果 Claude 的輸出需要更少的人工修正，實際 TCO 可能更低。</p>
-</div></details>
-<details class="question-accordion"><summary class="question-header"><span class="question-number">Q1</span><span class="question-type">理解應用</span><span class="question-text">TRM 在數獨任務上達到 87% 準確率，而所有主流 LLM 都是 0%。請設計一個製藥產業的任務，說明為什麼它可能適合類似 TRM 的遞迴優化架構，而不適合直接用 LLM。</span><span class="accordion-icon"></span></summary><div class="question-answer">
-<p><strong>建議任務：生產排程優化</strong></p>
-<p><strong>為什麼類似數獨：</strong></p>
-<ul>
-<li>多個約束必須同時滿足（設備可用性、人員排班、物料到貨、清潔驗證週期）</li>
-<li>任何一個衝突都會使整個排程無效</li>
-<li>需要「全域一致性」檢查</li>
-</ul>
-<p><strong>為什麼 LLM 不適合：</strong>LLM 會一次生成整個排程，但無法「回頭修改」已生成的部分。如果在生成第三天排程時發現與第一天衝突，它無法修正第一天。</p>
-<p><strong>遞迴優化的優勢：</strong>可以先生成初始排程，檢查衝突，針對性修正，再檢查，重複直到所有約束滿足。Context Embedding 可以記錄「哪些調整有效」，避免重複無效嘗試。</p>
-</div></details>
-</div>
-</section>
-<!-- Article Rating -->
-<div class="article-rating">
-<div class="rating-header">
-<div class="rating-title">
-<span class="rating-title-icon">📊</span>
+                <div class="info-box-content">
+                    <p><strong>製藥領域的類似問題：</strong></p>
+                    <p>哪些任務有「全域一致性」需求？</p>
+                    <ul>
+                        <li><strong>批次配方計算</strong>：所有成分必須同時平衡</li>
+                        <li><strong>排程優化</strong>：設備、人員、物料必須同時可用</li>
+                        <li><strong>法規交叉驗證</strong>：FDA + EMA + PMDA 要求必須同時滿足</li>
+                    </ul>
+                    <p>這些問題可能適合類似 TRM 的「遞迴優化」架構，而非直接用 LLM。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Takeaways -->
+    <section class="summary-section">
+        <h3 class="summary-title-main">&#128218; Key Takeaways 重點整理</h3>
+        <div class="summary-grid">
+            <div class="summary-card" style="border-top-color: #3b82f6;">
+                <h4>Agent 仍需 Scaffolding</h4>
+                <p>aisuite 讓任何人都能快速建構 Agent，但「highly unreliable」是現實。商業應用需要大量框架程式碼引導。</p>
+            </div>
+            <div class="summary-card" style="border-top-color: #10b981;">
+                <h4>Token 效率 ≠ 成本效率</h4>
+                <p>Claude Opus 4.5 用最少 Token 但總成本最高。選模型要看「任務總成本」，不只看效率指標。</p>
+            </div>
+            <div class="summary-card" style="border-top-color: #8b5cf6;">
+                <h4>Frontier Model 差異收斂</h4>
+                <p>前十名差距只剩 5.4%。選模型的決策因素應轉向價格、延遲、生態系整合、資料政策。</p>
+            </div>
+            <div class="summary-card" style="border-top-color: #f59e0b;">
+                <h4>小而專勝過大而全</h4>
+                <p>TRM 用 500 萬參數打敗兆參數 LLM（數獨 87% vs 0%）。正確的架構設計比暴力堆參數更重要。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practice Section -->
+    <section class="practice-section">
+        <div class="practice-header">
+            &#127919; Practice Questions 練習題
+        </div>
+        <div class="practice-content">
+            <div class="question">
+                <div class="question-number">Question 1 | Agent Architecture</div>
+                <p class="question-text">Andrew Ng 說目前的 Agent 是「highly autonomous, moderately capable, and highly unreliable」。請解釋為什麼「autonomous」和「reliable」目前是衝突的，以及 Scaffolding 如何緩解這個問題？</p>
+                <button class="answer-toggle" onclick="this.nextElementSibling.classList.toggle('show')">顯示參考答案</button>
+                <div class="answer-content">
+                    <p><strong>衝突原因：</strong>「Autonomous」意味著 Agent 自己決定下一步做什麼，但 LLM 的輸出有隨機性（temperature > 0），且缺乏對任務全局的理解。每一步的小誤差會累積，導致最終結果不可預測。</p>
+                    <p><strong>Scaffolding 的作用：</strong>通過預先定義的步驟、檢查點、錯誤處理邏輯來限制 Agent 的自由度。例如：強制在每個步驟後驗證輸出格式、限制可用的工具、設定明確的成功/失敗條件。這犧牲了部分自主性，換取可靠性。</p>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Question 2 | Cost Analysis</div>
+                <p class="question-text">根據文中數據，Claude Opus 4.5 的 Token 效率比 GPT-5.1 高約 40%，但測試總成本高出約 74%。假設你的公司每月有 100 萬美元的 AI API 預算，你會如何配置這兩個模型的使用？請說明理由。</p>
+                <button class="answer-toggle" onclick="this.nextElementSibling.classList.toggle('show')">顯示參考答案</button>
+                <div class="answer-content">
+                    <p><strong>建議配置策略：</strong></p>
+                    <p>1. <strong>任務分層</strong>：將任務分為「需要最高品質」（如技術文件審核、複雜分析）和「大量日常處理」（如資料整理、初稿生成）</p>
+                    <p>2. <strong>預算分配</strong>：約 20-30% 預算用於 Claude Opus（高價值任務），70-80% 用於 GPT-5.1 或更經濟的模型（大量任務）</p>
+                    <p>3. <strong>評估指標</strong>：不只看 API 成本，還要考慮人工審核時間。如果 Claude 的輸出需要更少的人工修正，實際 TCO 可能更低。</p>
+                </div>
+            </div>
+
+            <div class="question">
+                <div class="question-number">Question 3 | Practical Implementation</div>
+                <p class="question-text">TRM 在數獨任務上達到 87% 準確率，而所有主流 LLM 都是 0%。請設計一個製藥產業的任務，說明為什麼它可能適合類似 TRM 的遞迴優化架構，而不適合直接用 LLM。</p>
+                <button class="answer-toggle" onclick="this.nextElementSibling.classList.toggle('show')">顯示參考答案</button>
+                <div class="answer-content">
+                    <p><strong>建議任務：生產排程優化</strong></p>
+                    <p><strong>為什麼類似數獨：</strong></p>
+                    <ul>
+                        <li>多個約束必須同時滿足（設備可用性、人員排班、物料到貨、清潔驗證週期）</li>
+                        <li>任何一個衝突都會使整個排程無效</li>
+                        <li>需要「全域一致性」檢查</li>
+                    </ul>
+                    <p><strong>為什麼 LLM 不適合：</strong>LLM 會一次生成整個排程，但無法「回頭修改」已生成的部分。如果在生成第三天排程時發現與第一天衝突，它無法修正第一天。</p>
+                    <p><strong>遞迴優化的優勢：</strong>可以先生成初始排程，檢查衝突，針對性修正，再檢查，重複直到所有約束滿足。Context Embedding 可以記錄「哪些調整有效」，避免重複無效嘗試。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Rating -->
+    <div class="article-rating">
+        <div class="rating-header">
+            <div class="rating-title">
+                <span class="rating-title-icon">&#128202;</span>
                 Article Rating 文章評分
             </div>
-<div class="overall-score">
-<span class="overall-label">Overall 綜合</span>
-<span class="overall-value">4.2</span>
-</div>
-</div>
-<div class="rating-grid">
-<div class="rating-item" data-dimension="technical">
-<div class="rating-label">技術深度</div>
-<div class="rating-stars">
-<span class="star-filled">★★★★</span><span class="star-empty">☆</span>
-</div>
-<div class="rating-score">4/5</div>
-</div>
-<div class="rating-item" data-dimension="practical">
-<div class="rating-label">實務應用</div>
-<div class="rating-stars">
-<span class="star-filled">★★★★★</span><span class="star-empty"></span>
-</div>
-<div class="rating-score">5/5</div>
-</div>
-<div class="rating-item" data-dimension="ecosystem">
-<div class="rating-label">工具生態</div>
-<div class="rating-stars">
-<span class="star-filled">★★★★★</span><span class="star-empty"></span>
-</div>
-<div class="rating-score">5/5</div>
-</div>
-<div class="rating-item" data-dimension="timeliness">
-<div class="rating-label">時效性</div>
-<div class="rating-stars">
-<span class="star-filled">★★★★★</span><span class="star-empty"></span>
-</div>
-<div class="rating-score">5/5</div>
-</div>
-<div class="rating-item" data-dimension="learning">
-<div class="rating-label">學習曲線</div>
-<div class="rating-stars">
-<span class="star-filled">★★★★</span><span class="star-empty">☆</span>
-</div>
-<div class="rating-score">4/5</div>
-</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p class="footer-title">Suggested Chat Title: [LLM] The Batch 331 - Agent建構、Claude Opus 4.5、Genesis Mission</p>
-<p>製作日期：2026年1月4日 | 原文來源：<a href="https://www.deeplearning.ai/the-batch/" target="_blank">The Batch Issue 331</a> (2025/12/10)</p>
-<p>DeepLearning.AI Weekly Newsletter by Andrew Ng</p>
-</footer>
+            <div class="overall-score">
+                <span class="overall-label">Overall 綜合</span>
+                <span class="overall-value">4.2</span>
+            </div>
+        </div>
+        <div class="rating-grid">
+            <div class="rating-item" data-dimension="technical">
+                <div class="rating-label">技術深度</div>
+                <div class="rating-stars">
+                    <span class="star-filled">&#9733;&#9733;&#9733;&#9733;</span><span class="star-empty">&#9734;</span>
+                </div>
+                <div class="rating-score">4/5</div>
+            </div>
+            <div class="rating-item" data-dimension="practical">
+                <div class="rating-label">實務應用</div>
+                <div class="rating-stars">
+                    <span class="star-filled">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="star-empty"></span>
+                </div>
+                <div class="rating-score">5/5</div>
+            </div>
+            <div class="rating-item" data-dimension="ecosystem">
+                <div class="rating-label">工具生態</div>
+                <div class="rating-stars">
+                    <span class="star-filled">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="star-empty"></span>
+                </div>
+                <div class="rating-score">5/5</div>
+            </div>
+            <div class="rating-item" data-dimension="timeliness">
+                <div class="rating-label">時效性</div>
+                <div class="rating-stars">
+                    <span class="star-filled">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="star-empty"></span>
+                </div>
+                <div class="rating-score">5/5</div>
+            </div>
+            <div class="rating-item" data-dimension="learning">
+                <div class="rating-label">學習曲線</div>
+                <div class="rating-stars">
+                    <span class="star-filled">&#9733;&#9733;&#9733;&#9733;</span><span class="star-empty">&#9734;</span>
+                </div>
+                <div class="rating-score">4/5</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-title">Suggested Chat Title: [LLM] The Batch 331 - Agent建構、Claude Opus 4.5、Genesis Mission</p>
+        <p>製作日期：2026年1月4日 | 原文來源：<a href="https://www.deeplearning.ai/the-batch/" target="_blank">The Batch Issue 331</a> (2025/12/10)</p>
+        <p>DeepLearning.AI Weekly Newsletter by Andrew Ng</p>
+    </footer>
 </body>
 </html>

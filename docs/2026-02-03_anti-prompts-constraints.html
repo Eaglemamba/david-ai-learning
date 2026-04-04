@@ -1,306 +1,447 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2026-02-03" name="doc-date"/>
-<meta content="Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略" name="doc-title"/>
-<meta content="@godofprompt (X/Twitter)" name="doc-source"/>
-<meta content="Prompt,LLM,Tool" name="doc-tags"/>
-<meta content="3.2" name="doc-rating"/>
-<meta content="分享 8 個負面約束提示技巧，透過告訴 AI 不該做什麼來精煉輸出品質" name="doc-summary"/>
-<meta content="2026-02-03_anti-prompts-constraints.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-03">
+    <meta name="doc-title" content="Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略">
+    <meta name="doc-source" content="@godofprompt (X/Twitter)">
+    <meta name="doc-tags" content="Prompt,LLM,Tool">
+    <meta name="doc-rating" content="3.2">
+    <meta name="doc-summary" content="分享 8 個負面約束提示技巧，透過告訴 AI 不該做什麼來精煉輸出品質">
+    <meta name="doc-file" content="2026-02-03_anti-prompts-constraints.html">
+    <title>Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 1rem; }
 
+        /* Header */
+        .header { text-align: center; padding: 2.5rem 2rem; background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fc7 100%); color: white; border-radius: 1rem; margin-bottom: 1.5rem; }
+        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.4; }
+        .header .subtitle { font-size: 0.95rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .tag-llm { background: #bfdbfe; color: #1e3a8a; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .source-info { font-size: 0.8rem; opacity: 0.7; }
 
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 1rem; padding: 1.5rem 2rem; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; }
+        .exec-summary h2 { font-size: 1.15rem; color: #1e3a8a; margin-bottom: 0.75rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
+
+        /* Learning Objectives */
+        .objectives { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-number { font-size: 0.75rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.25rem; }
+        .objective-text { font-size: 0.9rem; color: #334155; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Content Grid */
+        .part-header { background: linear-gradient(135deg, #1e3a5f, #2d5a8e); color: white; padding: 1rem 1.5rem; border-radius: 0.75rem 0.75rem 0 0; margin-top: 1.5rem; }
+        .part-header h2 { font-size: 1.1rem; font-weight: 700; }
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; background: white; border-radius: 0 0 0.75rem 0.75rem; border: 1px solid #e2e8f0; border-top: none; margin-bottom: 1.5rem; }
+        .content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; }
+        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+
+        /* Bilingual Block */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.3rem; }
+        .en-text { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.5rem; margin-bottom: 1rem; overflow: hidden; }
+        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 700; font-size: 0.85rem; }
+        .info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Highlights */
+        .hl-concept { background: #a5d6a7; padding: 0 3px; border-radius: 3px; }
+        .hl-key { background: #ffcc80; padding: 0 3px; border-radius: 3px; }
+        .hl-practical { background: #6ee7b7; padding: 0 3px; border-radius: 3px; }
+
+        /* Code Block */
+        .code-block { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; overflow-x: auto; margin: 0.5rem 0; }
+        .code-block .comment { color: #94a3b8; }
+        .code-block .keyword { color: #7dd3fc; }
+        .code-block .string { color: #86efac; }
+
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #f59e0b; }
+        .summary-card:nth-child(4) { border-left-color: #8b5cf6; }
+        .summary-card-title { font-weight: 700; font-size: 0.9rem; color: #1e3a8a; margin-bottom: 0.5rem; }
+        .summary-card-text { font-size: 0.85rem; line-height: 1.7; color: #475569; }
+
+        /* Practice Accordion */
+        .practice-section { margin: 1.5rem 0; }
+        .practice-section h2 { font-size: 1.15rem; color: #5b21b6; margin-bottom: 1rem; }
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 1.5rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; margin-top: 1rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+
+        /* Section Label */
+        .section-label { font-size: 1.15rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #bfdbfe; }
+    </style>
 </head>
 <body>
 <div class="container">
-<!-- HEADER -->
-<header class="header">
-<div class="tags">
-<span class="tag tag-prompt">Prompt</span>
-<span class="tag tag-llm">LLM</span>
-<span class="tag tag-tool">Tool</span>
-</div>
-<h1>Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略</h1>
-<div class="subtitle">Constraints &gt; Instructions — 頂尖使用者如何透過「負面指令」雕刻高品質輸出</div>
-<div class="source-info">Source: @godofprompt (X/Twitter Thread) | 2026-02-02</div>
-</header>
-<!-- EXECUTIVE SUMMARY -->
-<div class="exec-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★☆☆</span> 3.2/5</span>
-<span class="rating-high">↑ Practical Value, Learning Curve</span>
-<span class="rating-low">↓ Technical Depth, Tool Ecosystem</span>
-</div>
-<p>
-            這篇 Twitter thread 提出一個核心觀點：<span class="highlight-key">告訴 AI「不要做什麼」比告訴它「要做什麼」更有效</span>。作者分享了 8 個「Anti-Prompt (反向提示)」技巧，涵蓋消除廢話、跳過套話、強迫決策、控制格式等面向。概念本身不新——這是 Prompt Engineering 中 Negative Constraints（負面約束）的應用——但作者將它們打包成易於記憶的操作清單，對於想快速改善 AI 互動的使用者有即時參考價值。需注意數據（如「67% shorter」）缺乏驗證基礎，整體偏向社群媒體行銷內容。
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="tags">
+            <span class="tag tag-prompt">Prompt</span>
+            <span class="tag tag-llm">LLM</span>
+            <span class="tag tag-tool">Tool</span>
+        </div>
+        <h1>Anti-Prompts：用「不要做什麼」提升 AI 輸出品質的 8 個約束策略</h1>
+        <div class="subtitle">Constraints > Instructions — 頂尖使用者如何透過「負面指令」雕刻高品質輸出</div>
+        <div class="source-info">Source: @godofprompt (X/Twitter Thread) | 2026-02-02</div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-summary">
+        <h2>Executive Summary</h2>
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span> 3.2/5</span>
+            <span class="rating-high">&uarr; Practical Value, Learning Curve</span>
+            <span class="rating-low">&darr; Technical Depth, Tool Ecosystem</span>
+        </div>
+        <p>
+            這篇 Twitter thread 提出一個核心觀點：<span class="hl-key">告訴 AI「不要做什麼」比告訴它「要做什麼」更有效</span>。作者分享了 8 個「Anti-Prompt (反向提示)」技巧，涵蓋消除廢話、跳過套話、強迫決策、控制格式等面向。概念本身不新——這是 Prompt Engineering 中 Negative Constraints（負面約束）的應用——但作者將它們打包成易於記憶的操作清單，對於想快速改善 AI 互動的使用者有即時參考價值。需注意數據（如「67% shorter」）缺乏驗證基礎，整體偏向社群媒體行銷內容。
         </p>
-</div>
-<!-- LEARNING OBJECTIVES -->
-<div class="section-label">Learning Objectives</div>
-<div class="objectives">
-<div class="objective-item">
-<div class="objective-number">OBJECTIVE 01</div>
-<div class="objective-text">理解 Negative Constraints（負面約束）在 Prompt Engineering 中的心理模型與運作原理</div>
-</div>
-<div class="objective-item">
-<div class="objective-number">OBJECTIVE 02</div>
-<div class="objective-text">掌握 8 個 Anti-Prompt 的使用情境與限制，避免盲目套用</div>
-</div>
-<div class="objective-item">
-<div class="objective-number">OBJECTIVE 03</div>
-<div class="objective-text">建立自己的 Constraint Library（約束庫），根據任務類型動態組合使用</div>
-</div>
-</div>
-<!-- FRAMEWORK VISUAL -->
-<div class="framework-visual">
-<div class="framework-title">Anti-Prompt 心智模型：雕刻式 Prompting</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">📦</div>
-<div class="framework-step-title">預設輸出</div>
-<div class="framework-step-desc">AI 的「安全模式」<br/>冗長、客套、通用</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">✂</div>
-<div class="framework-step-title">施加約束</div>
-<div class="framework-step-desc">DON'T 指令<br/>切除不要的部分</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">💎</div>
-<div class="framework-step-title">精煉輸出</div>
-<div class="framework-step-desc">剩下的就是<br/>你真正需要的</div>
-</div>
-</div>
-</div>
-<!-- PART I: 消除廢話與套話 (Anti-Prompts 1-3) -->
-<div class="part-header"><h2>Part I — 消除廢話與套話 (Anti-Prompts #1-#3)</h2></div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">作者的第一組約束聚焦在一個共同問題：<span class="highlight-key">AI 預設會產出大量填充詞、前言、和客套話</span>。這不是 AI 的「錯」——而是它被訓練成「安全且禮貌」的結果。</p>
-<p class="en-text">"No fluff. No 'delve into'. No 'landscape'. No 'it's important to note'. Get straight to the point."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>#1 不用填充詞：</strong>明確列出你不要的詞彙（如 delve into、landscape、it's important to note），強迫 AI 直接切入重點。<strong>#2 不解釋已知內容：</strong>加入「跳過介紹、跳過結論、跳過我已知的背景」。<strong>#3 不用企業腔：</strong>禁止 buzzwords 如 leverage、robust、utilize。</p>
-<p class="en-text">"Skip introductions. Skip conclusions. Skip context I already know." / "No buzzwords. No jargon. No corporate speak. Write like you're texting a smart friend."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">作者聲稱這能讓輸出<span class="highlight-concept">縮短 67%、節省 40% 閱讀時間</span>。雖然具體數字缺乏驗證，但方向是正確的——移除冗餘確實能大幅提高信號比。</p>
-<p class="en-text">"Result: 67% shorter outputs with 2x more substance." / "Saves 40% of my reading time."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">想像你請一位顧問做簡報。如果你只說「做一份好的簡報」，你會得到 30 頁充滿 buzzwords 的投影片。但如果你說「不要超過 10 頁、不要用 synergy 這個字、不要放感謝頁」——你反而會得到精準的內容。<strong>約束定義了品質的邊界</strong>。</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：為什麼 DON'T 比 DO 更有效？</div>
-<div class="info-box-content">LLM 生成文字時是在一個巨大的「可能性空間」中取樣。正面指令（DO）給的是方向，但可能性仍然很廣。負面約束（DON'T）則是直接<span class="highlight-concept">剪掉不要的路徑</span>，縮小取樣範圍。在數學上，這類似於「正則化」(Regularization)——限制模型的自由度來得到更好的結果。</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">在實際使用中，最有效的做法是 <span class="highlight-key">DO + DON'T 搭配使用</span>。光用 DON'T 而不給方向，AI 可能會陷入「不知道你到底要什麼」的困境。最佳配方：先給明確任務 → 再加約束邊界。</div>
-</div>
-</div>
-</div>
-<!-- PART II: 控制決策與格式 (Anti-Prompts 4-5) -->
-<div class="part-header"><h2>Part II — 控制決策與格式 (Anti-Prompts #4-#5)</h2></div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text"><strong>#4 不給選項：</strong>作者主張不要讓 AI 給你 5 個選項，而是<span class="highlight-key">強迫它做出一個最佳決策</span>。這迫使模型進行內部排序，而不是把決策推回給你。</p>
-<p class="en-text">"Give me your single best idea. Don't give me options. Make the decision." / "Forcing the AI to commit instead of hedging = 10x better recommendations."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>#5 不用列表格式：</strong>當你需要散文、信件、文章時，明確禁止項目符號和編號列表。作者建議這是一個<span class="highlight-practical">根據內容類型動態切換的開關</span>——需要掃描式閱讀就開列表，需要流暢閱讀就關掉。</p>
-<p class="en-text">"No bullet points. No numbered lists. Write in paragraphs." / "I toggle this on/off depending on content type."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：何時強迫決策 vs 保留選項</div>
-<div class="info-box-content">
-<strong>適合強迫決策：</strong>選餐廳、選標題、選技術方案——當你需要 AI 幫你「過濾」時。<br/>
-<strong>適合保留選項：</strong>Creative brainstorming（創意發想）、風險評估、探索未知領域——當你需要 AI 幫你「擴展」時。<br/><br/>
-<span class="highlight-key">判斷準則：你是在收斂還是發散？收斂用 DON'T give options，發散用 DO give me 10 wild ideas。</span>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">想像你問一位經驗豐富的主廚「今天吃什麼」。一位好主廚不會給你 5 道菜的菜單要你選——他會說「今天的鮮魚剛到，我幫你做鹽烤」。<strong>專家做決策，新手給選項</strong>。強迫 AI 像專家一樣回答，你就能得到專家等級的輸出。</div>
-</div>
-</div>
-</div>
-<!-- PART III: 優化互動效率 (Anti-Prompts 6-7) -->
-<div class="part-header"><h2>Part III — 優化互動效率 (Anti-Prompts #6-#7)</h2></div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text"><strong>#6 不要客套：</strong>去除 AI 的「禮貌稅」——certainly、I'd be happy to、great question 這類開場白。作者指出每次回應被這些套話佔用了 20-30 個字。</p>
-<p class="en-text">"No 'certainly'. No 'I'd be happy to'. No 'great question'. Just answer." / "Your time &gt; the AI's manners."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>#7 不要假設我是初學者：</strong>告訴 AI 你的專業等級，讓它跳過基礎解釋。作者用 RAG 系統為例——他不需要 AI 重新解釋什麼是 Embedding（嵌入向量）。</p>
-<p class="en-text">"Don't explain basic concepts. I'm [expert level/familiar with X]. Skip the 101 explanations." / "This unlocks the AI's full technical depth."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">這兩個技巧本質上是在做同一件事：<span class="highlight-concept">降低 Signal-to-Noise Ratio（信噪比）中的 Noise</span>。把 AI 的「頻寬」留給真正有價值的內容。</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：Context Window 經濟學</div>
-<div class="info-box-content">每個 LLM 都有 Context Window（上下文窗口）限制。當 AI 用 30 個 Token 來說「Certainly! I'd be happy to help you with that. That's a great question!」——這些 Token 原本可以用來生成更有深度的分析。在高頻使用場景下（如 API 呼叫），<span class="highlight-concept">這也直接轉化為成本節省</span>。少 30 Token 的輸出 x 1000 次呼叫 = 可觀的 API 費用差異。</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content"><strong>Claude 使用者注意：</strong>Claude 本身已經被設計為較少使用客套開場白（這是 Anthropic 的設計哲學之一）。所以 Anti-Prompt #6 對 ChatGPT 使用者效果最顯著，對 Claude 使用者的邊際效益較小。但 #7（設定專業等級）對所有模型都非常有效。</div>
-</div>
-</div>
-</div>
-<!-- PART IV: 跳脫訓練數據 (Anti-Prompt 8) + 元原則 -->
-<div class="part-header"><h2>Part IV — 跳脫訓練數據 + 約束的元原則 (Anti-Prompt #8)</h2></div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text"><strong>#8 不用老套範例：</strong>最後一個技巧要求 AI 避免使用常見的教學範例（如檸檬水攤位比喻），改用新穎、具體的情境。這迫使模型跳出最高頻率的訓練數據路徑。</p>
-<p class="en-text">"No clichéd examples. No 'imagine you're running a lemonade stand'. Give me novel, specific scenarios."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">作者最後提出了 Anti-Prompt 的元原則：<span class="highlight-key">大多數人告訴 AI「要做什麼」，頂尖使用者告訴 AI「不要做什麼」</span>。他用「雕刻」做比喻——你移除不想要的部分，剩下的就是作品。</p>
-<p class="en-text">"Most people tell the AI what TO do. Top 1% tell it what NOT to do." / "Think of it as sculpting. You remove what you don't want."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">作者坦承他花了 6 個月不斷增加 Prompt 複雜度，最後才發現<span class="highlight-concept">「減法」比「加法」更有效</span>。這與 Prompt Engineering 社群的普遍經驗一致——最好的 Prompt 往往不是最長的。</p>
-<p class="en-text">"I spent 6 months adding complexity to my prompts. Then I started removing what I didn't want. Output quality tripled overnight."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">米開朗基羅被問到如何雕出大衛像時據說回答：「我只是移除了不屬於大衛的部分。」Anti-Prompting 用的是同一個心智模型——你心中已經知道好的輸出長什麼樣，現在要做的是告訴 AI 哪些東西不屬於那個畫面。</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 批判性觀點</div>
-<div class="info-box-content">
-<strong>文章未提及的重要限制：</strong><br/>
-                    1. <strong>模型差異：</strong>Anti-Prompt 在 ChatGPT、Claude、Gemini 上的效果不同。Claude 通常更遵守約束，ChatGPT 有時會「忘記」長對話中的約束。<br/>
-                    2. <strong>過度約束風險：</strong>同時使用太多 DON'T 可能讓 AI 不知道「還能做什麼」，導致過度簡短或拒絕回答。<br/>
-                    3. <strong>System Prompt vs User Prompt：</strong>在 API 中，把約束放在 System Prompt 效果通常比放在 User Prompt 更穩定。<br/>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="section-label">Learning Objectives</div>
+    <div class="objectives">
+        <div class="objective-item">
+            <div class="objective-number">OBJECTIVE 01</div>
+            <div class="objective-text">理解 Negative Constraints（負面約束）在 Prompt Engineering 中的心理模型與運作原理</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-number">OBJECTIVE 02</div>
+            <div class="objective-text">掌握 8 個 Anti-Prompt 的使用情境與限制，避免盲目套用</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-number">OBJECTIVE 03</div>
+            <div class="objective-text">建立自己的 Constraint Library（約束庫），根據任務類型動態組合使用</div>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">Anti-Prompt 心智模型：雕刻式 Prompting</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F4E6;</div>
+                <div class="framework-step-title">預設輸出</div>
+                <div class="framework-step-desc">AI 的「安全模式」<br>冗長、客套、通用</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x2702;</div>
+                <div class="framework-step-title">施加約束</div>
+                <div class="framework-step-desc">DON'T 指令<br>切除不要的部分</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F48E;</div>
+                <div class="framework-step-title">精煉輸出</div>
+                <div class="framework-step-desc">剩下的就是<br>你真正需要的</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART I: 消除廢話與套話 (Anti-Prompts 1-3) -->
+    <div class="part-header"><h2>Part I — 消除廢話與套話 (Anti-Prompts #1-#3)</h2></div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text">作者的第一組約束聚焦在一個共同問題：<span class="hl-key">AI 預設會產出大量填充詞、前言、和客套話</span>。這不是 AI 的「錯」——而是它被訓練成「安全且禮貌」的結果。</p>
+                <p class="en-text">"No fluff. No 'delve into'. No 'landscape'. No 'it's important to note'. Get straight to the point."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text"><strong>#1 不用填充詞：</strong>明確列出你不要的詞彙（如 delve into、landscape、it's important to note），強迫 AI 直接切入重點。<strong>#2 不解釋已知內容：</strong>加入「跳過介紹、跳過結論、跳過我已知的背景」。<strong>#3 不用企業腔：</strong>禁止 buzzwords 如 leverage、robust、utilize。</p>
+                <p class="en-text">"Skip introductions. Skip conclusions. Skip context I already know." / "No buzzwords. No jargon. No corporate speak. Write like you're texting a smart friend."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">作者聲稱這能讓輸出<span class="hl-concept">縮短 67%、節省 40% 閱讀時間</span>。雖然具體數字缺乏驗證，但方向是正確的——移除冗餘確實能大幅提高信號比。</p>
+                <p class="en-text">"Result: 67% shorter outputs with 2x more substance." / "Saves 40% of my reading time."</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                <div class="info-box-content">想像你請一位顧問做簡報。如果你只說「做一份好的簡報」，你會得到 30 頁充滿 buzzwords 的投影片。但如果你說「不要超過 10 頁、不要用 synergy 這個字、不要放感謝頁」——你反而會得到精準的內容。<strong>約束定義了品質的邊界</strong>。</div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：為什麼 DON'T 比 DO 更有效？</div>
+                <div class="info-box-content">LLM 生成文字時是在一個巨大的「可能性空間」中取樣。正面指令（DO）給的是方向，但可能性仍然很廣。負面約束（DON'T）則是直接<span class="hl-concept">剪掉不要的路徑</span>，縮小取樣範圍。在數學上，這類似於「正則化」(Regularization)——限制模型的自由度來得到更好的結果。</div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                <div class="info-box-content">在實際使用中，最有效的做法是 <span class="hl-key">DO + DON'T 搭配使用</span>。光用 DON'T 而不給方向，AI 可能會陷入「不知道你到底要什麼」的困境。最佳配方：先給明確任務 → 再加約束邊界。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART II: 控制決策與格式 (Anti-Prompts 4-5) -->
+    <div class="part-header"><h2>Part II — 控制決策與格式 (Anti-Prompts #4-#5)</h2></div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text"><strong>#4 不給選項：</strong>作者主張不要讓 AI 給你 5 個選項，而是<span class="hl-key">強迫它做出一個最佳決策</span>。這迫使模型進行內部排序，而不是把決策推回給你。</p>
+                <p class="en-text">"Give me your single best idea. Don't give me options. Make the decision." / "Forcing the AI to commit instead of hedging = 10x better recommendations."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text"><strong>#5 不用列表格式：</strong>當你需要散文、信件、文章時，明確禁止項目符號和編號列表。作者建議這是一個<span class="hl-practical">根據內容類型動態切換的開關</span>——需要掃描式閱讀就開列表，需要流暢閱讀就關掉。</p>
+                <p class="en-text">"No bullet points. No numbered lists. Write in paragraphs." / "I toggle this on/off depending on content type."</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：何時強迫決策 vs 保留選項</div>
+                <div class="info-box-content">
+                    <strong>適合強迫決策：</strong>選餐廳、選標題、選技術方案——當你需要 AI 幫你「過濾」時。<br>
+                    <strong>適合保留選項：</strong>Creative brainstorming（創意發想）、風險評估、探索未知領域——當你需要 AI 幫你「擴展」時。<br><br>
+                    <span class="hl-key">判斷準則：你是在收斂還是發散？收斂用 DON'T give options，發散用 DO give me 10 wild ideas。</span>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                <div class="info-box-content">想像你問一位經驗豐富的主廚「今天吃什麼」。一位好主廚不會給你 5 道菜的菜單要你選——他會說「今天的鮮魚剛到，我幫你做鹽烤」。<strong>專家做決策，新手給選項</strong>。強迫 AI 像專家一樣回答，你就能得到專家等級的輸出。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART III: 優化互動效率 (Anti-Prompts 6-7) -->
+    <div class="part-header"><h2>Part III — 優化互動效率 (Anti-Prompts #6-#7)</h2></div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text"><strong>#6 不要客套：</strong>去除 AI 的「禮貌稅」——certainly、I'd be happy to、great question 這類開場白。作者指出每次回應被這些套話佔用了 20-30 個字。</p>
+                <p class="en-text">"No 'certainly'. No 'I'd be happy to'. No 'great question'. Just answer." / "Your time > the AI's manners."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text"><strong>#7 不要假設我是初學者：</strong>告訴 AI 你的專業等級，讓它跳過基礎解釋。作者用 RAG 系統為例——他不需要 AI 重新解釋什麼是 Embedding（嵌入向量）。</p>
+                <p class="en-text">"Don't explain basic concepts. I'm [expert level/familiar with X]. Skip the 101 explanations." / "This unlocks the AI's full technical depth."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">這兩個技巧本質上是在做同一件事：<span class="hl-concept">降低 Signal-to-Noise Ratio（信噪比）中的 Noise</span>。把 AI 的「頻寬」留給真正有價值的內容。</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#x1F4DA; 核心概念：Context Window 經濟學</div>
+                <div class="info-box-content">每個 LLM 都有 Context Window（上下文窗口）限制。當 AI 用 30 個 Token 來說「Certainly! I'd be happy to help you with that. That's a great question!」——這些 Token 原本可以用來生成更有深度的分析。在高頻使用場景下（如 API 呼叫），<span class="hl-concept">這也直接轉化為成本節省</span>。少 30 Token 的輸出 x 1000 次呼叫 = 可觀的 API 費用差異。</div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                <div class="info-box-content"><strong>Claude 使用者注意：</strong>Claude 本身已經被設計為較少使用客套開場白（這是 Anthropic 的設計哲學之一）。所以 Anti-Prompt #6 對 ChatGPT 使用者效果最顯著，對 Claude 使用者的邊際效益較小。但 #7（設定專業等級）對所有模型都非常有效。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PART IV: 跳脫訓練數據 (Anti-Prompt 8) + 元原則 -->
+    <div class="part-header"><h2>Part IV — 跳脫訓練數據 + 約束的元原則 (Anti-Prompt #8)</h2></div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <p class="zh-text"><strong>#8 不用老套範例：</strong>最後一個技巧要求 AI 避免使用常見的教學範例（如檸檬水攤位比喻），改用新穎、具體的情境。這迫使模型跳出最高頻率的訓練數據路徑。</p>
+                <p class="en-text">"No clich&eacute;d examples. No 'imagine you're running a lemonade stand'. Give me novel, specific scenarios."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">作者最後提出了 Anti-Prompt 的元原則：<span class="hl-key">大多數人告訴 AI「要做什麼」，頂尖使用者告訴 AI「不要做什麼」</span>。他用「雕刻」做比喻——你移除不想要的部分，剩下的就是作品。</p>
+                <p class="en-text">"Most people tell the AI what TO do. Top 1% tell it what NOT to do." / "Think of it as sculpting. You remove what you don't want."</p>
+            </div>
+            <div class="bilingual-block">
+                <p class="zh-text">作者坦承他花了 6 個月不斷增加 Prompt 複雜度，最後才發現<span class="hl-concept">「減法」比「加法」更有效</span>。這與 Prompt Engineering 社群的普遍經驗一致——最好的 Prompt 往往不是最長的。</p>
+                <p class="en-text">"I spent 6 months adding complexity to my prompts. Then I started removing what I didn't want. Output quality tripled overnight."</p>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                <div class="info-box-content">米開朗基羅被問到如何雕出大衛像時據說回答：「我只是移除了不屬於大衛的部分。」Anti-Prompting 用的是同一個心智模型——你心中已經知道好的輸出長什麼樣，現在要做的是告訴 AI 哪些東西不屬於那個畫面。</div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#x26A0;&#xFE0F; 批判性觀點</div>
+                <div class="info-box-content">
+                    <strong>文章未提及的重要限制：</strong><br>
+                    1. <strong>模型差異：</strong>Anti-Prompt 在 ChatGPT、Claude、Gemini 上的效果不同。Claude 通常更遵守約束，ChatGPT 有時會「忘記」長對話中的約束。<br>
+                    2. <strong>過度約束風險：</strong>同時使用太多 DON'T 可能讓 AI 不知道「還能做什麼」，導致過度簡短或拒絕回答。<br>
+                    3. <strong>System Prompt vs User Prompt：</strong>在 API 中，把約束放在 System Prompt 效果通常比放在 User Prompt 更穩定。<br>
                     4. <strong>缺乏數據驗證：</strong>「67% shorter」「10x better」這類數字是修辭而非實測數據。
                 </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：建立你的 Constraint Library</div>
-<div class="info-box-content">
-                    與其每次從零開始寫約束，不如建一個「約束模板庫」，按用途分類：<br/>
-<strong>寫作類：</strong>No fluff, no corporate speak, write in paragraphs<br/>
-<strong>技術類：</strong>Skip 101, assume I know [X], no boilerplate explanations<br/>
-<strong>決策類：</strong>Give me one best answer, commit to a recommendation<br/>
-<strong>效率類：</strong>No pleasantries, no preamble, just answer<br/>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：建立你的 Constraint Library</div>
+                <div class="info-box-content">
+                    與其每次從零開始寫約束，不如建一個「約束模板庫」，按用途分類：<br>
+                    <strong>寫作類：</strong>No fluff, no corporate speak, write in paragraphs<br>
+                    <strong>技術類：</strong>Skip 101, assume I know [X], no boilerplate explanations<br>
+                    <strong>決策類：</strong>Give me one best answer, commit to a recommendation<br>
+                    <strong>效率類：</strong>No pleasantries, no preamble, just answer<br>
                     然後根據每次任務動態組合 2-3 條即可。
                 </div>
-</div>
-</div>
-</div>
-<!-- KEY TAKEAWAYS -->
-<div class="section-label">Key Takeaways</div>
-<div class="takeaways">
-<div class="summary-card">
-<div class="summary-card-title">Constraints &gt; Instructions</div>
-<div class="summary-card-text">負面約束（DON'T）透過縮小 AI 的輸出可能性空間來提升品質。正面指令給方向，負面約束劃邊界。兩者搭配使用效果最佳。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">雕刻式 Prompting</div>
-<div class="summary-card-text">最好的 Prompt 不一定最長。6 個月加複雜度不如一次有效的減法。先寫出需求，再用約束「雕掉」不要的部分。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">情境切換而非全局套用</div>
-<div class="summary-card-text">每個 Anti-Prompt 都有適用場景。「不給選項」適合收斂決策但不適合發散探索；「不用列表」適合寫作但不適合技術文件。動態組合才是關鍵。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">信噪比是終極指標</div>
-<div class="summary-card-text">所有 Anti-Prompt 的共同目標：降低 Noise、提升 Signal。每個被消除的廢話字元都是為有價值內容騰出的空間和 Token 預算。</div>
-</div>
-</div>
-<!-- PRACTICE QUESTIONS -->
-<div class="practice-section">
-<h2>Practice Questions</h2>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">為什麼作者認為「告訴 AI 不要做什麼」比「告訴 AI 要做什麼」更有效？請用 LLM 的生成機制來解釋。</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>LLM 生成文字時是在一個龐大的機率分布空間中進行 Token-by-Token 的取樣。正面指令（DO）像是設定一個大方向——「寫一篇好文章」——但「好」的可能性太多，模型仍然會走向機率最高的路徑（通常是充滿套話的「安全」輸出）。</p>
-<p>負面約束（DON'T）則是直接剪掉特定的高機率路徑。當你說「不要用 delve into」，模型在生成時就會抑制這些 Token 序列的機率，被迫選擇其他（通常更新穎、更具體）的表達方式。這類似機器學習中的 Regularization（正則化）——限制模型自由度來避免「過擬合」到最常見的回答模式。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">在 CDMO 藥廠的 GMP 環境中，如果你用 AI 來協助撰寫 Deviation Report（偏差報告），你會套用哪些 Anti-Prompt？有哪些你「不會」使用？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>適合使用的：</strong></p>
-<p>#2 不解釋已知內容：「Skip GMP basics. I know 21 CFR Part 211. Focus on root cause analysis only.」—— 節省大量篇幅，讓 AI 直接切入偏差調查核心。</p>
-<p>#7 不假設是初學者：「Assume I'm a QA Director with 10+ years of aseptic manufacturing experience.」—— 這能讓 AI 的分析深度匹配你的專業水平。</p>
-<p>#1 不用填充詞：精簡的偏差報告在稽核時更有效。</p>
-<p><strong>不適合使用的：</strong></p>
-<p>#4 不給選項：在偏差調查中，你反而需要 AI 列出多個可能的 Root Cause（根本原因）供你評估，不應該強迫 AI 只給一個答案。法規環境要求全面調查，不是快速決策。</p>
-<p>#6 不要客套：在 GMP 文件中，某些正式用語和結構化表達是必要的合規要求，不能為了效率而省略。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">作者聲稱「Output quality tripled overnight」。如果你要驗證這個說法，你會設計什麼實驗？Anti-Prompt 方法論有哪些結構性限制？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>驗證實驗設計：</strong>使用同一個基礎 Prompt，分別測試「無約束版」vs「加 Anti-Prompt 版」，以相同任務重複 50 次以上（控制 temperature 和 random seed），讓 3 位不知道哪組是哪版的評審對輸出品質盲評。品質指標可以包括：資訊密度（有效資訊字數/總字數）、任務完成度、可讀性評分。</p>
-<p><strong>結構性限制：</strong></p>
-<p>1. <strong>約束衝突：</strong>多個 DON'T 指令可能互相矛盾或過度限制，導致 AI 輸出品質反而下降。</p>
-<p>2. <strong>模型更新影響：</strong>隨著模型版本迭代，某些 Anti-Prompt 可能變得不必要（如 Claude 已自主減少客套話）。</p>
-<p>3. <strong>任務依賴性：</strong>「tripled」對於簡單任務（如翻譯）可能成立，但對複雜任務（如策略分析）改善幅度可能遠低於此。</p>
-<p>4. <strong>負面約束的極限：</strong>你可以告訴 AI 不要做什麼，但你無法透過 DON'T 來「教會」AI 新的能力。約束只能優化已有能力的輸出，不能擴展能力邊界。</p>
-</div>
-</details>
-</div>
-<!-- BOTTOM LINE -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Anti-Prompt 的本質是「信噪比管理」——這跟我在 CDMO 做的事是同一個邏輯。GMP 文件管理的核心也是消除雜訊、留下合規所需的精確資訊。我已經在 Master Prompt 中使用了大量約束（如指定格式、禁止特定行為），但缺乏一個系統化的「約束庫」概念。把約束當作可重複使用的模組，而不是每次臨時想——這是我可以強化的方向。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">這週在 Claude Projects 中建立一個「Constraint Library」文件，按四大類別（寫作/技術/決策/效率）整理我常用的 DON'T 指令。先從現有 Master Prompt 中提取已隱含的約束，再補充這篇文章的實用約束。特別測試 #7（設定專業等級）對 Deviation Report 和 Feasibility Assessment 生成品質的影響。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">這篇文章是社群媒體內容，缺乏嚴謹的效果驗證和跨模型比較。特別是 Claude 和 ChatGPT 對約束的反應機制不同——我需要自己實測才能確認哪些約束在 Claude 上真正有效。另外，文章完全沒提到 System Prompt 層級的約束 vs User Prompt 層級的差異，這在 API 使用情境中非常重要。日後若研究 Prompt 最佳化框架時可回顧此文。</div>
-</div>
-</div>
-<!-- FOOTER -->
-<footer class="footer">
-<p>Document generated: 2026-02-03 | Source: <a href="https://x.com/godofprompt/status/2018262685792821269" target="_blank">@godofprompt Twitter Thread (2026-02-02)</a></p>
-<p>Suggested Chat Title: <strong>[Prompt] Anti-Prompts - Constraint-Based Prompt Engineering</strong></p>
-</footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEY TAKEAWAYS -->
+    <div class="section-label">Key Takeaways</div>
+    <div class="takeaways">
+        <div class="summary-card">
+            <div class="summary-card-title">Constraints > Instructions</div>
+            <div class="summary-card-text">負面約束（DON'T）透過縮小 AI 的輸出可能性空間來提升品質。正面指令給方向，負面約束劃邊界。兩者搭配使用效果最佳。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">雕刻式 Prompting</div>
+            <div class="summary-card-text">最好的 Prompt 不一定最長。6 個月加複雜度不如一次有效的減法。先寫出需求，再用約束「雕掉」不要的部分。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">情境切換而非全局套用</div>
+            <div class="summary-card-text">每個 Anti-Prompt 都有適用場景。「不給選項」適合收斂決策但不適合發散探索；「不用列表」適合寫作但不適合技術文件。動態組合才是關鍵。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">信噪比是終極指標</div>
+            <div class="summary-card-text">所有 Anti-Prompt 的共同目標：降低 Noise、提升 Signal。每個被消除的廢話字元都是為有價值內容騰出的空間和 Token 預算。</div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="practice-section">
+        <h2>Practice Questions</h2>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q1</span>
+                <span class="question-type">概念理解</span>
+                <span class="question-text">為什麼作者認為「告訴 AI 不要做什麼」比「告訴 AI 要做什麼」更有效？請用 LLM 的生成機制來解釋。</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p>LLM 生成文字時是在一個龐大的機率分布空間中進行 Token-by-Token 的取樣。正面指令（DO）像是設定一個大方向——「寫一篇好文章」——但「好」的可能性太多，模型仍然會走向機率最高的路徑（通常是充滿套話的「安全」輸出）。</p>
+                <p>負面約束（DON'T）則是直接剪掉特定的高機率路徑。當你說「不要用 delve into」，模型在生成時就會抑制這些 Token 序列的機率，被迫選擇其他（通常更新穎、更具體）的表達方式。這類似機器學習中的 Regularization（正則化）——限制模型自由度來避免「過擬合」到最常見的回答模式。</p>
+            </div>
+        </details>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q2</span>
+                <span class="question-type">產業應用</span>
+                <span class="question-text">在 CDMO 藥廠的 GMP 環境中，如果你用 AI 來協助撰寫 Deviation Report（偏差報告），你會套用哪些 Anti-Prompt？有哪些你「不會」使用？</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p><strong>適合使用的：</strong></p>
+                <p>#2 不解釋已知內容：「Skip GMP basics. I know 21 CFR Part 211. Focus on root cause analysis only.」—— 節省大量篇幅，讓 AI 直接切入偏差調查核心。</p>
+                <p>#7 不假設是初學者：「Assume I'm a QA Director with 10+ years of aseptic manufacturing experience.」—— 這能讓 AI 的分析深度匹配你的專業水平。</p>
+                <p>#1 不用填充詞：精簡的偏差報告在稽核時更有效。</p>
+                <p><strong>不適合使用的：</strong></p>
+                <p>#4 不給選項：在偏差調查中，你反而需要 AI 列出多個可能的 Root Cause（根本原因）供你評估，不應該強迫 AI 只給一個答案。法規環境要求全面調查，不是快速決策。</p>
+                <p>#6 不要客套：在 GMP 文件中，某些正式用語和結構化表達是必要的合規要求，不能為了效率而省略。</p>
+            </div>
+        </details>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q3</span>
+                <span class="question-type">批判思考</span>
+                <span class="question-text">作者聲稱「Output quality tripled overnight」。如果你要驗證這個說法，你會設計什麼實驗？Anti-Prompt 方法論有哪些結構性限制？</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p><strong>驗證實驗設計：</strong>使用同一個基礎 Prompt，分別測試「無約束版」vs「加 Anti-Prompt 版」，以相同任務重複 50 次以上（控制 temperature 和 random seed），讓 3 位不知道哪組是哪版的評審對輸出品質盲評。品質指標可以包括：資訊密度（有效資訊字數/總字數）、任務完成度、可讀性評分。</p>
+                <p><strong>結構性限制：</strong></p>
+                <p>1. <strong>約束衝突：</strong>多個 DON'T 指令可能互相矛盾或過度限制，導致 AI 輸出品質反而下降。</p>
+                <p>2. <strong>模型更新影響：</strong>隨著模型版本迭代，某些 Anti-Prompt 可能變得不必要（如 Claude 已自主減少客套話）。</p>
+                <p>3. <strong>任務依賴性：</strong>「tripled」對於簡單任務（如翻譯）可能成立，但對複雜任務（如策略分析）改善幅度可能遠低於此。</p>
+                <p>4. <strong>負面約束的極限：</strong>你可以告訴 AI 不要做什麼，但你無法透過 DON'T 來「教會」AI 新的能力。約束只能優化已有能力的輸出，不能擴展能力邊界。</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- BOTTOM LINE -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x2714; 核心洞察</div>
+            <div class="bottom-line-text">Anti-Prompt 的本質是「信噪比管理」——這跟我在 CDMO 做的事是同一個邏輯。GMP 文件管理的核心也是消除雜訊、留下合規所需的精確資訊。我已經在 Master Prompt 中使用了大量約束（如指定格式、禁止特定行為），但缺乏一個系統化的「約束庫」概念。把約束當作可重複使用的模組，而不是每次臨時想——這是我可以強化的方向。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+            <div class="bottom-line-text">這週在 Claude Projects 中建立一個「Constraint Library」文件，按四大類別（寫作/技術/決策/效率）整理我常用的 DON'T 指令。先從現有 Master Prompt 中提取已隱含的約束，再補充這篇文章的實用約束。特別測試 #7（設定專業等級）對 Deviation Report 和 Feasibility Assessment 生成品質的影響。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x26A0; 需要補充</div>
+            <div class="bottom-line-text">這篇文章是社群媒體內容，缺乏嚴謹的效果驗證和跨模型比較。特別是 Claude 和 ChatGPT 對約束的反應機制不同——我需要自己實測才能確認哪些約束在 Claude 上真正有效。另外，文章完全沒提到 System Prompt 層級的約束 vs User Prompt 層級的差異，這在 API 使用情境中非常重要。日後若研究 Prompt 最佳化框架時可回顧此文。</div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>Document generated: 2026-02-03 | Source: <a href="https://x.com/godofprompt/status/2018262685792821269" target="_blank">@godofprompt Twitter Thread (2026-02-02)</a></p>
+        <p>Suggested Chat Title: <strong>[Prompt] Anti-Prompts - Constraint-Based Prompt Engineering</strong></p>
+    </div>
+
 </div>
 </body>
 </html>

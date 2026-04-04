@@ -1,292 +1,494 @@
 <!DOCTYPE html>
-
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Claude Code 最佳實踐：從「能用」到「真的好用」</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-<!-- Dashboard Index Meta -->
-<meta content="2025-03-25" name="doc-date"/>
-<meta content="Claude Code 最佳實踐 - 從能用到好用的完整指南" name="doc-title"/>
-<meta content="Mr Panda (@PandaTalk8) / X" name="doc-source"/>
-<meta content="" name="doc-source-type"/>
-<meta content="Tool,Agent,Framework,Prompt" name="doc-tags"/>
-<meta content="4.2" name="doc-rating"/>
-<meta content="Claude Code 實戰經驗總結。CLAUDE.md 寫法、Plan Mode、子 Agent、上下文管理、權限控制等 14 項核心技巧。" name="doc-summary"/>
-<meta content="2025-03-25_claude-code-best-practices.html" name="doc-file"/><meta content="v1" name="normalized"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code 最佳實踐：從「能用」到「真的好用」</title>
 
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2025-03-25">
+    <meta name="doc-title" content="Claude Code 最佳實踐 - 從能用到好用的完整指南">
+    <meta name="doc-source" content="Mr Panda (@PandaTalk8) / X">
+    <meta name="doc-source-type" content="">
+    <meta name="doc-tags" content="Tool,Agent,Framework,Prompt">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="Claude Code 實戰經驗總結。CLAUDE.md 寫法、Plan Mode、子 Agent、上下文管理、權限控制等 14 項核心技巧。">
+    <meta name="doc-file" content="2025-03-25_claude-code-best-practices.html">
 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* === v1.4.3 MANDATORY PAGE LAYOUT === */
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+            color: white;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Tags */
+        .tags { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-framework { background: #ddd6fe; color: #4c1d95; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+
+        .header h1 { font-size: 1.8rem; margin: 0 0 0.5rem; font-weight: 700; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
+        .header .source { font-size: 0.85rem; opacity: 0.7; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .exec-summary h2 { font-size: 1.2rem; color: #1e3a8a; margin: 0 0 1rem; }
+        .exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.75rem; }
+        .exec-summary p:last-child { margin-bottom: 0; }
+
+        /* Learning Objectives */
+        .objectives { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .objective-desc { font-size: 0.8rem; color: #64748b; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+        .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        .part-title { font-size: 1.1rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .part-number { background: #1e3a8a; color: white; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
+
+        /* Linear layout override */
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-grid.linear .content-left { border-right: none; }
+
+        /* Bilingual blocks */
+        .bilingual-block { margin-bottom: 1rem; }
+        .zh-text { color: #1e293b; font-size: 0.95rem; line-height: 1.8; }
+        .en-text { color: #64748b; font-style: italic; font-size: 0.9rem; line-height: 1.6; margin-top: 0.25rem; }
+        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.5rem 0.75rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 0.75rem; font-size: 0.85rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+
+        /* Code blocks */
+        code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; color: #7c3aed; }
+        pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; line-height: 1.6; margin: 0.75rem 0; }
+        pre code { background: none; color: inherit; padding: 0; }
+
+        /* Tables */
+        .info-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.75rem 0; }
+        .info-table th { background: #f1f5f9; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; color: #334155; border: 1px solid #e2e8f0; }
+        .info-table td { padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; color: #475569; }
+
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #f59e0b; }
+        .summary-card:nth-child(4) { border-left-color: #8b5cf6; }
+        .summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+        /* Accordion */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Tabs */
+        .tab-container { margin: 1.5rem 0; }
+        .tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+        .tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.9rem; }
+        .tab-btn:hover { color: #334155; }
+        .tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Section title */
+        .section-title { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .content-grid { grid-template-columns: 1fr; }
+            .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+            .objectives { grid-template-columns: 1fr; }
+            .takeaways { grid-template-columns: 1fr; }
+            .framework-arrow { display: none; }
+            .framework-steps { gap: 1.5rem; }
+            .header h1 { font-size: 1.4rem; }
+            .tab-nav { flex-wrap: wrap; }
+        }
+    </style>
 </head>
 <body>
-<header class="header">
-<div class="tags">
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-framework">Framework</span>
-<span class="tag tag-prompt">Prompt</span>
+
+<div class="header">
+    <div class="tags">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-framework">Framework</span>
+        <span class="tag tag-prompt">Prompt</span>
+    </div>
+    <h1>Claude Code 最佳實踐：從「能用」到「真的好用」</h1>
+    <div class="subtitle">半年實戰經驗 + 官方文件精華，14 項核心使用技巧完整解析</div>
+    <div class="source">Mr Panda (@PandaTalk8) / X | 2025-03-23</div>
 </div>
-<h1>Claude Code 最佳實踐：從「能用」到「真的好用」</h1>
-<div class="subtitle">半年實戰經驗 + 官方文件精華，14 項核心使用技巧完整解析</div>
-<div class="source">Mr Panda (@PandaTalk8) / X | 2025-03-23</div>
-</header>
+
 <div class="container">
-<!-- Executive Summary -->
-<div class="exec-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
-<span class="rating-high">↑ 實務應用, 工具生態</span>
-<span class="rating-low">↓ 技術深度, 時效性</span>
-</div>
-<h2>Executive Summary</h2>
-<p>這篇文章是一位使用 Claude Code 半年以上的開發者的實戰經驗總結，涵蓋從 CLAUDE.md 配置、提示詞撰寫、Plan Mode 工作流、子 Agent 機制、上下文管理、權限控制、Hooks 自動化、Git Worktree 安全網，到 MCP 整合與 IDE 使用的 14 個面向。核心主張明確：<strong>Claude Code 是極其能幹的協作者，但方向盤始終在你手裡</strong>。文章結合官方文件與個人踩坑經驗，對每個功能都給出了「該做/不該做」的具體建議，實務參考價值高。但技術深度偏向操作指南而非底層機制，且部分功能描述需要對照最新官方文件驗證。</p>
-</div>
-<!-- Learning Objectives -->
-<div class="section-title">Learning Objectives</div>
-<div class="objectives">
-<div class="objective-item">
-<div class="objective-icon">📜</div>
-<div class="objective-title">CLAUDE.md 配置策略</div>
-<div class="objective-desc">掌握四級 CLAUDE.md 架構與 .claude/rules/ 進階規則管理</div>
-</div>
-<div class="objective-item" style="border-left-color: #10b981;">
-<div class="objective-icon">⚙️</div>
-<div class="objective-title">工作流最佳化</div>
-<div class="objective-desc">學會 Plan Mode、子 Agent、上下文管理的組合運用</div>
-</div>
-<div class="objective-item" style="border-left-color: #f59e0b;">
-<div class="objective-icon">🔒</div>
-<div class="objective-title">安全與控制</div>
-<div class="objective-desc">理解權限管理、Hooks 鐵律、Git Worktree 隔離的防護體系</div>
-</div>
-</div>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">Claude Code 使用哲學：四步工作流</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">🔍</div>
-<div class="framework-step-title">Explore</div>
-<div class="framework-step-desc">閱讀相關程式碼</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📝</div>
-<div class="framework-step-title">Plan</div>
-<div class="framework-step-desc">制定實作方案</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">💻</div>
-<div class="framework-step-title">Implement</div>
-<div class="framework-step-desc">按計畫執行</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">✅</div>
-<div class="framework-step-title">Verify</div>
-<div class="framework-step-desc">跑測試自我驗證</div>
-</div>
-</div>
-</div>
-<!-- TABBED CONTENT: 14 Parts grouped into 4 tabs -->
-<div class="section-title">Content</div>
-<div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">基礎配置</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-workflow')">工作流</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-control')">控制與安全</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-advanced')">進階整合</button>
-</div>
-<!-- TAB 1: Foundation (Parts I-II) -->
-<div class="tab-content active" id="tab-foundation">
+
+    <!-- Executive Summary -->
+    <div class="exec-summary">
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.2/5</span>
+            <span class="rating-high">&uarr; 實務應用, 工具生態</span>
+            <span class="rating-low">&darr; 技術深度, 時效性</span>
+        </div>
+        <h2>Executive Summary</h2>
+        <p>這篇文章是一位使用 Claude Code 半年以上的開發者的實戰經驗總結，涵蓋從 CLAUDE.md 配置、提示詞撰寫、Plan Mode 工作流、子 Agent 機制、上下文管理、權限控制、Hooks 自動化、Git Worktree 安全網，到 MCP 整合與 IDE 使用的 14 個面向。核心主張明確：<strong>Claude Code 是極其能幹的協作者，但方向盤始終在你手裡</strong>。文章結合官方文件與個人踩坑經驗，對每個功能都給出了「該做/不該做」的具體建議，實務參考價值高。但技術深度偏向操作指南而非底層機制，且部分功能描述需要對照最新官方文件驗證。</p>
+    </div>
+
+    <!-- Learning Objectives -->
+    <div class="section-title">Learning Objectives</div>
+    <div class="objectives">
+        <div class="objective-item">
+            <div class="objective-icon">&#128220;</div>
+            <div class="objective-title">CLAUDE.md 配置策略</div>
+            <div class="objective-desc">掌握四級 CLAUDE.md 架構與 .claude/rules/ 進階規則管理</div>
+        </div>
+        <div class="objective-item" style="border-left-color: #10b981;">
+            <div class="objective-icon">&#9881;&#65039;</div>
+            <div class="objective-title">工作流最佳化</div>
+            <div class="objective-desc">學會 Plan Mode、子 Agent、上下文管理的組合運用</div>
+        </div>
+        <div class="objective-item" style="border-left-color: #f59e0b;">
+            <div class="objective-icon">&#128274;</div>
+            <div class="objective-title">安全與控制</div>
+            <div class="objective-desc">理解權限管理、Hooks 鐵律、Git Worktree 隔離的防護體系</div>
+        </div>
+    </div>
+
+    <!-- Framework Visual -->
+    <div class="framework-visual">
+        <div class="framework-title">Claude Code 使用哲學：四步工作流</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#128269;</div>
+                <div class="framework-step-title">Explore</div>
+                <div class="framework-step-desc">閱讀相關程式碼</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128221;</div>
+                <div class="framework-step-title">Plan</div>
+                <div class="framework-step-desc">制定實作方案</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128187;</div>
+                <div class="framework-step-title">Implement</div>
+                <div class="framework-step-desc">按計畫執行</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#9989;</div>
+                <div class="framework-step-title">Verify</div>
+                <div class="framework-step-desc">跑測試自我驗證</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABBED CONTENT: 14 Parts grouped into 4 tabs -->
+    <div class="section-title">Content</div>
+    <div class="tab-container">
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">基礎配置</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-workflow')">工作流</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-control')">控制與安全</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-advanced')">進階整合</button>
+        </div>
+
+        <!-- TAB 1: Foundation (Parts I-II) -->
+        <div id="tab-foundation" class="tab-content active">
+
 <!-- PART I: CLAUDE.md -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">I</span> CLAUDE.md：最被低估的功能</div>
-<div class="bilingual-block">
-<div class="zh-text">如果你只記住這篇文章的一件事，就記這個：<span class="highlight-key">寫好你的 CLAUDE.md</span>。CLAUDE.md 是 Claude Code 在每次對話開始時自動讀取的指令檔案。它就像你給新同事寫的 onboarding doc — 你希望他知道什麼，你就寫什麼。</div>
-<div class="en-text">"If you only remember one thing from this article, remember this: write a good CLAUDE.md. CLAUDE.md is the instruction file that Claude Code automatically reads at the start of every conversation."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">很多人不寫 CLAUDE.md，或者隨便寫兩行。結果就是每次對話都要從頭解釋專案結構、編碼規範、技術棧選擇。<span class="highlight-concept">這就像每天早上都要重新給同事介紹一遍公司</span>。</div>
-<div class="en-text">"Many people don't write a CLAUDE.md, or just write a couple of lines. The result is having to explain the project structure, coding standards, and tech stack from scratch every conversation."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">一個好的 CLAUDE.md 有幾個關鍵原則：</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>第一，寫 Claude 從程式碼裡讀不出來的東西。</strong>專案的「為什麼」比「是什麼」更重要。你不需要解釋 React 怎麼用，但你需要告訴它「我們選 Tailwind 是因為團隊統一了這個規範」。</div>
-<div class="en-text">"Write things Claude can't read from the code. The 'why' of a project matters more than the 'what'."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>第二，<span class="highlight-key">控制在 200 行以內</span>。</strong>官方文件明確提到，CLAUDE.md 太長會導致 Claude 忽略規則。用 markdown 標題和列表，保持可掃描性。</div>
-<div class="en-text">"Keep it under 200 lines. Official docs explicitly mention that too-long CLAUDE.md causes Claude to ignore rules."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>第三，不要放頻繁變化的內容。</strong>詳細的 API 文件、逐檔案描述這些東西不適合放在 CLAUDE.md 裡。放連結就好。</div>
-<div class="en-text">"Don't put frequently changing content. Detailed API docs and per-file descriptions don't belong in CLAUDE.md. Just put links."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">CLAUDE.md = 新同事的 Onboarding Doc。你不會每天重新介紹公司，同理也不應該每次對話都重新解釋專案。一次寫好，每次對話自動生效。</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 CLAUDE.md 四級層級</div>
-<div class="info-box-content">
-<table class="info-table">
-<tr><th>層級</th><th>位置</th><th>用途</th></tr>
-<tr><td>企業策略</td><td>管理員設定</td><td>全組織強制規則</td></tr>
-<tr><td>全域</td><td><code>~/.claude/CLAUDE.md</code></td><td>個人通用偏好</td></tr>
-<tr><td>專案</td><td>專案根目錄 <code>CLAUDE.md</code></td><td>專案規範（Git 追蹤）</td></tr>
-<tr><td>功能</td><td>子目錄 <code>CLAUDE.md</code></td><td>特定模組規則</td></tr>
-</table>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 全域 CLAUDE.md 推薦四行</div>
-<div class="info-box-content">
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">I</span> CLAUDE.md：最被低估的功能</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">如果你只記住這篇文章的一件事，就記這個：<span class="highlight-key">寫好你的 CLAUDE.md</span>。CLAUDE.md 是 Claude Code 在每次對話開始時自動讀取的指令檔案。它就像你給新同事寫的 onboarding doc — 你希望他知道什麼，你就寫什麼。</div>
+            <div class="en-text">"If you only remember one thing from this article, remember this: write a good CLAUDE.md. CLAUDE.md is the instruction file that Claude Code automatically reads at the start of every conversation."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">很多人不寫 CLAUDE.md，或者隨便寫兩行。結果就是每次對話都要從頭解釋專案結構、編碼規範、技術棧選擇。<span class="highlight-concept">這就像每天早上都要重新給同事介紹一遍公司</span>。</div>
+            <div class="en-text">"Many people don't write a CLAUDE.md, or just write a couple of lines. The result is having to explain the project structure, coding standards, and tech stack from scratch every conversation."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">一個好的 CLAUDE.md 有幾個關鍵原則：</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>第一，寫 Claude 從程式碼裡讀不出來的東西。</strong>專案的「為什麼」比「是什麼」更重要。你不需要解釋 React 怎麼用，但你需要告訴它「我們選 Tailwind 是因為團隊統一了這個規範」。</div>
+            <div class="en-text">"Write things Claude can't read from the code. The 'why' of a project matters more than the 'what'."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>第二，<span class="highlight-key">控制在 200 行以內</span>。</strong>官方文件明確提到，CLAUDE.md 太長會導致 Claude 忽略規則。用 markdown 標題和列表，保持可掃描性。</div>
+            <div class="en-text">"Keep it under 200 lines. Official docs explicitly mention that too-long CLAUDE.md causes Claude to ignore rules."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>第三，不要放頻繁變化的內容。</strong>詳細的 API 文件、逐檔案描述這些東西不適合放在 CLAUDE.md 裡。放連結就好。</div>
+            <div class="en-text">"Don't put frequently changing content. Detailed API docs and per-file descriptions don't belong in CLAUDE.md. Just put links."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#128161; 比喻說明</div>
+            <div class="info-box-content">CLAUDE.md = 新同事的 Onboarding Doc。你不會每天重新介紹公司，同理也不應該每次對話都重新解釋專案。一次寫好，每次對話自動生效。</div>
+        </div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">&#128218; CLAUDE.md 四級層級</div>
+            <div class="info-box-content">
+                <table class="info-table">
+                    <tr><th>層級</th><th>位置</th><th>用途</th></tr>
+                    <tr><td>企業策略</td><td>管理員設定</td><td>全組織強制規則</td></tr>
+                    <tr><td>全域</td><td><code>~/.claude/CLAUDE.md</code></td><td>個人通用偏好</td></tr>
+                    <tr><td>專案</td><td>專案根目錄 <code>CLAUDE.md</code></td><td>專案規範（Git 追蹤）</td></tr>
+                    <tr><td>功能</td><td>子目錄 <code>CLAUDE.md</code></td><td>特定模組規則</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 全域 CLAUDE.md 推薦四行</div>
+            <div class="info-box-content">
 <pre><code>- 我是一名全端工程師，不需要過度解釋基礎概念
 - 回覆盡量簡潔，不要加無關的客套話
 - 程式碼改動後不要總結你做了什麼，我會看 diff
 - 優先用簡單方案，不要過度工程</code></pre>
-<p>作者表示：這四行，能省掉你幾百次重複糾正的時間。</p>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 進階：.claude/rules/ 目錄</div>
-<div class="info-box-content">
-<p>專案變大後，可將規則拆分到 <code>.claude/rules/</code> 目錄下，並用 YAML frontmatter 限定到特定檔案路徑：</p>
+                <p>作者表示：這四行，能省掉你幾百次重複糾正的時間。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; 進階：.claude/rules/ 目錄</div>
+            <div class="info-box-content">
+                <p>專案變大後，可將規則拆分到 <code>.claude/rules/</code> 目錄下，並用 YAML frontmatter 限定到特定檔案路徑：</p>
 <pre><code>---
 paths: ["src/api/**/*.ts", "src/routes/**/*.ts"]
 ---
 API 路由必須包含輸入驗證和錯誤處理。</code></pre>
-<p>這樣規則只在 Claude 存取匹配檔案時才載入，<span class="highlight-practical">節省上下文空間</span>。</p>
+                <p>這樣規則只在 Claude 存取匹配檔案時才載入，<span class="highlight-practical">節省上下文空間</span>。</p>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-</div>
+
 <!-- PART II: Prompt Quality -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">II</span> 提示詞的品質決定產出的品質</div>
-<div class="bilingual-block">
-<div class="zh-text">好的指令應該包含三個要素：<span class="highlight-key">目標、約束、上下文</span>。</div>
-<div class="en-text">"Good instructions should contain three elements: goal, constraints, context."</div>
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">II</span> 提示詞的品質決定產出的品質</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">好的指令應該包含三個要素：<span class="highlight-key">目標、約束、上下文</span>。</div>
+            <div class="en-text">"Good instructions should contain three elements: goal, constraints, context."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>差的指令：</strong>「給使用者列表加個搜尋功能」</div>
+            <div class="zh-text"><strong>好的指令：</strong>「在 <code>@src/pages/UserList.tsx</code> 的表格上方加一個搜尋框。搜尋走後端 API <code>/api/users?search=xxx</code>，不要前端過濾。用 debounce 300ms，樣式和現有的 Filter 元件保持一致。」</div>
+            <div class="en-text">"The difference? Good instructions reduce ambiguity. Claude Code doesn't need to guess frontend vs backend search, debounce time, or style conventions."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>用 @ 引用具體檔案</strong> — 比起說「那個認證相關的程式碼」，直接寫 <code>@src/auth/login.ts</code> 精確得多。你甚至可以指定行號範圍：<code>@src/auth/login.ts#5-30</code>。</div>
+            <div class="en-text">"Use @ to reference specific files. You can even specify line number ranges."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>給驗證標準</strong> — 不要只說「幫我修這個 bug」，而是給 Claude 一個可以自我驗證的標準：測試用例、截圖、預期輸出。這樣它能自己檢查工作品質，<span class="highlight-practical">減少來回修改</span>。</div>
+            <div class="en-text">"Give verification criteria — test cases, screenshots, expected output — so Claude can self-check work quality."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>明確「不要做」的事</strong> — Claude Code 有時候會過度熱心。你讓它修一個 bug，它順手把周圍的程式碼也重構了。明確說「只改這個函式，不要動其他程式碼」。</div>
+            <div class="en-text">"Claude Code sometimes gets over-enthusiastic — you ask it to fix a bug, it refactors surrounding code too."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>模糊指令也有用武之地</strong> — 探索性任務用模糊指令反而更好：「這個檔案有什麼可以改進的地方？」「幫我理解一下這個模組的架構」。但到了實作階段，切回精確模式。</div>
+            <div class="en-text">"Vague instructions have their place — for exploratory tasks. But switch back to precise mode during implementation."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+            <div class="info-box-content">
+                <p>好指令三要素：</p>
+                <p><strong>1. 目標</strong>：做什麼（加搜尋框）<br>
+                <strong>2. 約束</strong>：怎麼做（後端 API、debounce 300ms）<br>
+                <strong>3. 上下文</strong>：在哪裡做（@具體檔案路徑）</p>
+                <p>多一分鐘寫清楚指令，省十分鐘來回修改。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 四個官方推薦技巧</div>
+            <div class="info-box-content">
+                <p><strong>@ 引用</strong>：<code>@src/auth/login.ts#5-30</code> 精確定位程式碼</p>
+                <p><strong>貼截圖</strong>：<code>Ctrl+V</code> 直接貼圖，UI 除錯效果是文字描述的十倍</p>
+                <p><strong>驗證標準</strong>：「修完後跑 <code>@tests/auth.test.ts</code> 確認通過」</p>
+                <p><strong>負面約束</strong>：「只改這個函式，不要動其他程式碼」</p>
+            </div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">&#9878;&#65039; 精確 vs 模糊指令使用時機</div>
+            <div class="info-box-content">
+                <table class="info-table">
+                    <tr><th>模式</th><th>適用場景</th></tr>
+                    <tr><td>精確指令</td><td>實作功能、修 bug、程式碼變更</td></tr>
+                    <tr><td>模糊指令</td><td>探索架構、Code Review、找改進點</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>差的指令：</strong>「給使用者列表加個搜尋功能」</div>
-<div class="zh-text"><strong>好的指令：</strong>「在 <code>@src/pages/UserList.tsx</code> 的表格上方加一個搜尋框。搜尋走後端 API <code>/api/users?search=xxx</code>，不要前端過濾。用 debounce 300ms，樣式和現有的 Filter 元件保持一致。」</div>
-<div class="en-text">"The difference? Good instructions reduce ambiguity. Claude Code doesn't need to guess frontend vs backend search, debounce time, or style conventions."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>用 @ 引用具體檔案</strong> — 比起說「那個認證相關的程式碼」，直接寫 <code>@src/auth/login.ts</code> 精確得多。你甚至可以指定行號範圍：<code>@src/auth/login.ts#5-30</code>。</div>
-<div class="en-text">"Use @ to reference specific files. You can even specify line number ranges."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>給驗證標準</strong> — 不要只說「幫我修這個 bug」，而是給 Claude 一個可以自我驗證的標準：測試用例、截圖、預期輸出。這樣它能自己檢查工作品質，<span class="highlight-practical">減少來回修改</span>。</div>
-<div class="en-text">"Give verification criteria — test cases, screenshots, expected output — so Claude can self-check work quality."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>明確「不要做」的事</strong> — Claude Code 有時候會過度熱心。你讓它修一個 bug，它順手把周圍的程式碼也重構了。明確說「只改這個函式，不要動其他程式碼」。</div>
-<div class="en-text">"Claude Code sometimes gets over-enthusiastic — you ask it to fix a bug, it refactors surrounding code too."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>模糊指令也有用武之地</strong> — 探索性任務用模糊指令反而更好：「這個檔案有什麼可以改進的地方？」「幫我理解一下這個模組的架構」。但到了實作階段，切回精確模式。</div>
-<div class="en-text">"Vague instructions have their place — for exploratory tasks. But switch back to precise mode during implementation."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p>好指令三要素：</p>
-<p><strong>1. 目標</strong>：做什麼（加搜尋框）<br/>
-<strong>2. 約束</strong>：怎麼做（後端 API、debounce 300ms）<br/>
-<strong>3. 上下文</strong>：在哪裡做（@具體檔案路徑）</p>
-<p>多一分鐘寫清楚指令，省十分鐘來回修改。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 四個官方推薦技巧</div>
-<div class="info-box-content">
-<p><strong>@ 引用</strong>：<code>@src/auth/login.ts#5-30</code> 精確定位程式碼</p>
-<p><strong>貼截圖</strong>：<code>Ctrl+V</code> 直接貼圖，UI 除錯效果是文字描述的十倍</p>
-<p><strong>驗證標準</strong>：「修完後跑 <code>@tests/auth.test.ts</code> 確認通過」</p>
-<p><strong>負面約束</strong>：「只改這個函式，不要動其他程式碼」</p>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 精確 vs 模糊指令使用時機</div>
-<div class="info-box-content">
-<table class="info-table">
-<tr><th>模式</th><th>適用場景</th></tr>
-<tr><td>精確指令</td><td>實作功能、修 bug、程式碼變更</td></tr>
-<tr><td>模糊指令</td><td>探索架構、Code Review、找改進點</td></tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div><!-- end tab-foundation -->
-<!-- TAB 2: Workflow (Parts III-V) -->
-<div class="tab-content" id="tab-workflow">
+
+        </div><!-- end tab-foundation -->
+
+        <!-- TAB 2: Workflow (Parts III-V) -->
+        <div id="tab-workflow" class="tab-content">
+
 <!-- PART III: Plan Mode -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">III</span> Plan Mode：先想清楚，再動手</div>
-<div class="bilingual-block">
-<div class="zh-text">Claude Code 有一個 Plan Mode，這是作者認為<span class="highlight-key">最被低估的工作流</span>。在 Plan Mode 下，Claude Code 只能讀取檔案、搜尋程式碼，不能做任何修改。它會探索程式碼庫，分析你的需求，然後給出一個詳細的實作計畫。</div>
-<div class="en-text">"Claude Code has a Plan Mode — the most underrated workflow. In Plan Mode, Claude Code can only read files and search code, it cannot make any changes."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">進入方式有三種：啟動時用 <code>claude --permission-mode plan</code>；對話中按兩次 <code>Shift+Tab</code>；或在提示詞裡直接說「先不要改程式碼，幫我做個計畫」。</div>
-<div class="en-text">"Three ways to enter: start with --permission-mode plan; press Shift+Tab twice in conversation; or say 'don't change code yet, make a plan'."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">關鍵操作：按 <code>Ctrl+G</code> 可以在你的編輯器裡打開並編輯計畫。你可以讓 Claude 生成初始計畫，然後在編輯器中刪掉不同意的部分、補充自己的想法，再切回正常模式讓 Claude 按修改後的計畫執行。</div>
-<div class="en-text">"Press Ctrl+G to open and edit the plan in your editor. Delete parts you disagree with, add your own ideas, then switch back to normal mode."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">改一個計畫只需要一句話，改已經寫好的程式碼要花十倍的時間。</span></div>
-<div class="en-text">"Changing a plan takes one sentence; changing already-written code takes ten times longer."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>什麼時候不需要 Plan Mode？</strong>改一個變數名、修一個明顯的 typo、加一行日誌。判斷標準很簡單：如果這個任務的實作方式只有一種，直接做。如果有多種選擇，先規劃。</div>
-<div class="en-text">"When not to use Plan Mode? Renaming a variable, fixing an obvious typo. If there's only one way to implement, just do it. Multiple choices? Plan first."</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>Plan Mode 決策標準：</strong></p>
-<p>實作方式只有一種 → 直接做<br/>
-                有多種選擇 → 先規劃</p>
-<p>複雜任務的時間分配應該是：<strong>30% 規劃 + 70% 實作</strong>，而非 0% 規劃 + 100% 重做。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 推薦的複雜任務工作流</div>
-<div class="info-box-content">
-<p><strong>Step 1</strong>：進入 Plan Mode</p>
-<p><strong>Step 2</strong>：讓 Claude 閱讀相關程式碼</p>
-<p><strong>Step 3</strong>：請求計畫（如「制定 OAuth2 遷移方案」）</p>
-<p><strong>Step 4</strong>：<code>Ctrl+G</code> 審查和編輯計畫</p>
-<p><strong>Step 5</strong>：切回正常模式</p>
-<p><strong>Step 6</strong>：「按照計畫實作，寫完跑測試」</p>
-<p><strong>Step 7</strong>：讓 Claude 對照需求自查</p>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 三種進入方式</div>
-<div class="info-box-content">
-  </div>
-</div>
-</div>
-<div class="col-full">
-  <pre><code># 啟動時直接進入
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">III</span> Plan Mode：先想清楚，再動手</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">Claude Code 有一個 Plan Mode，這是作者認為<span class="highlight-key">最被低估的工作流</span>。在 Plan Mode 下，Claude Code 只能讀取檔案、搜尋程式碼，不能做任何修改。它會探索程式碼庫，分析你的需求，然後給出一個詳細的實作計畫。</div>
+            <div class="en-text">"Claude Code has a Plan Mode — the most underrated workflow. In Plan Mode, Claude Code can only read files and search code, it cannot make any changes."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">進入方式有三種：啟動時用 <code>claude --permission-mode plan</code>；對話中按兩次 <code>Shift+Tab</code>；或在提示詞裡直接說「先不要改程式碼，幫我做個計畫」。</div>
+            <div class="en-text">"Three ways to enter: start with --permission-mode plan; press Shift+Tab twice in conversation; or say 'don't change code yet, make a plan'."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">關鍵操作：按 <code>Ctrl+G</code> 可以在你的編輯器裡打開並編輯計畫。你可以讓 Claude 生成初始計畫，然後在編輯器中刪掉不同意的部分、補充自己的想法，再切回正常模式讓 Claude 按修改後的計畫執行。</div>
+            <div class="en-text">"Press Ctrl+G to open and edit the plan in your editor. Delete parts you disagree with, add your own ideas, then switch back to normal mode."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="highlight-concept">改一個計畫只需要一句話，改已經寫好的程式碼要花十倍的時間。</span></div>
+            <div class="en-text">"Changing a plan takes one sentence; changing already-written code takes ten times longer."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>什麼時候不需要 Plan Mode？</strong>改一個變數名、修一個明顯的 typo、加一行日誌。判斷標準很簡單：如果這個任務的實作方式只有一種，直接做。如果有多種選擇，先規劃。</div>
+            <div class="en-text">"When not to use Plan Mode? Renaming a variable, fixing an obvious typo. If there's only one way to implement, just do it. Multiple choices? Plan first."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+            <div class="info-box-content">
+                <p><strong>Plan Mode 決策標準：</strong></p>
+                <p>實作方式只有一種 &rarr; 直接做<br>
+                有多種選擇 &rarr; 先規劃</p>
+                <p>複雜任務的時間分配應該是：<strong>30% 規劃 + 70% 實作</strong>，而非 0% 規劃 + 100% 重做。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 推薦的複雜任務工作流</div>
+            <div class="info-box-content">
+                <p><strong>Step 1</strong>：進入 Plan Mode</p>
+                <p><strong>Step 2</strong>：讓 Claude 閱讀相關程式碼</p>
+                <p><strong>Step 3</strong>：請求計畫（如「制定 OAuth2 遷移方案」）</p>
+                <p><strong>Step 4</strong>：<code>Ctrl+G</code> 審查和編輯計畫</p>
+                <p><strong>Step 5</strong>：切回正常模式</p>
+                <p><strong>Step 6</strong>：「按照計畫實作，寫完跑測試」</p>
+                <p><strong>Step 7</strong>：讓 Claude 對照需求自查</p>
+            </div>
+        </div>
+
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; 三種進入方式</div>
+            <div class="info-box-content">
+<pre><code># 啟動時直接進入
 claude --permission-mode plan
 
 # 對話中切換
@@ -294,61 +496,66 @@ Shift+Tab Shift+Tab
 
 # 在提示詞裡說
 「先不要改程式碼，幫我做個計畫」</code></pre>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 <!-- PART IV: Sub Agents -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">IV</span> 子 Agent：Claude Code 的分身術</div>
-<div class="bilingual-block">
-<div class="zh-text">子 Agent (Sub Agent) 是 Claude Code 的一個強大機制 — 它可以啟動獨立的 AI 進程來並行處理任務，每個子 Agent 有自己的上下文視窗，<span class="highlight-key">不會汙染你的主對話</span>。</div>
-<div class="en-text">"Sub Agents can launch independent AI processes for parallel tasks, each with its own context window, without polluting your main conversation."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>子 Agent 最大的價值：隔離上下文。</strong>當你讓 Claude 跑測試、分析日誌、搜尋大量檔案時，這些操作會產生海量輸出，塞滿你的上下文視窗。用子 Agent 來做這些事，輸出留在子 Agent 的上下文裡，<span class="highlight-practical">只有摘要返回給你</span>。</div>
-<div class="en-text">"The biggest value: context isolation. Testing, log analysis, and file searches produce massive output. Sub Agents keep that in their own context, returning only summaries."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">按 <code>Ctrl+B</code> 可以把子 Agent 放到背景執行。你可以繼續和 Claude 聊其他事，等背景任務完成後會自動通知你。</div>
-<div class="en-text">"Press Ctrl+B to put a Sub Agent in the background. Continue chatting while it runs, and get notified when done."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">你還可以在 <code>.claude/agents/</code> 目錄下建立自訂 Agent，例如一個專門做 Code Review 的 Agent，然後用 <code>@"code-reviewer (agent)"</code> 隨時呼叫。</div>
-<div class="en-text">"Create custom agents in .claude/agents/ directory, like a dedicated code reviewer, callable with @'code-reviewer (agent)'."</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-concept">
-<div class="info-box-header">📚 內建子 Agent 類型</div>
-<div class="info-box-content">
-<table class="info-table">
-<tr><th>類型</th><th>能力</th><th>用途</th></tr>
-<tr><td>Explore</td><td>唯讀，快速搜尋</td><td>探索、找檔案、找定義</td></tr>
-<tr><td>Plan</td><td>唯讀，研究分析</td><td>Plan Mode 下的程式碼分析</td></tr>
-<tr><td>General</td><td>完整能力</td><td>複雜的多步驟任務</td></tr>
-</table>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 子 Agent 適用場景</div>
-<div class="info-box-content">
-<p><strong>適合背景執行（Ctrl+B）：</strong></p>
-<p>• 跑測試套件（通常需要幾分鐘）<br/>
-                • 大範圍程式碼搜尋<br/>
-                • 不緊急的 Code Review</p>
-<p><strong>適合前台呼叫：</strong></p>
-<p>• 「用子 Agent 跑全量測試，列出失敗用例」<br/>
-                • 「搜尋所有使用 deprecated API 的檔案」</p>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 自訂 Agent 範例</div>
-<div class="info-box-content">
-  </div>
-</div>
-</div>
-<div class="col-full">
-  <pre><code># .claude/agents/code-reviewer.md
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">IV</span> 子 Agent：Claude Code 的分身術</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">子 Agent (Sub Agent) 是 Claude Code 的一個強大機制 — 它可以啟動獨立的 AI 進程來並行處理任務，每個子 Agent 有自己的上下文視窗，<span class="highlight-key">不會汙染你的主對話</span>。</div>
+            <div class="en-text">"Sub Agents can launch independent AI processes for parallel tasks, each with its own context window, without polluting your main conversation."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>子 Agent 最大的價值：隔離上下文。</strong>當你讓 Claude 跑測試、分析日誌、搜尋大量檔案時，這些操作會產生海量輸出，塞滿你的上下文視窗。用子 Agent 來做這些事，輸出留在子 Agent 的上下文裡，<span class="highlight-practical">只有摘要返回給你</span>。</div>
+            <div class="en-text">"The biggest value: context isolation. Testing, log analysis, and file searches produce massive output. Sub Agents keep that in their own context, returning only summaries."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">按 <code>Ctrl+B</code> 可以把子 Agent 放到背景執行。你可以繼續和 Claude 聊其他事，等背景任務完成後會自動通知你。</div>
+            <div class="en-text">"Press Ctrl+B to put a Sub Agent in the background. Continue chatting while it runs, and get notified when done."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">你還可以在 <code>.claude/agents/</code> 目錄下建立自訂 Agent，例如一個專門做 Code Review 的 Agent，然後用 <code>@"code-reviewer (agent)"</code> 隨時呼叫。</div>
+            <div class="en-text">"Create custom agents in .claude/agents/ directory, like a dedicated code reviewer, callable with @'code-reviewer (agent)'."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">&#128218; 內建子 Agent 類型</div>
+            <div class="info-box-content">
+                <table class="info-table">
+                    <tr><th>類型</th><th>能力</th><th>用途</th></tr>
+                    <tr><td>Explore</td><td>唯讀，快速搜尋</td><td>探索、找檔案、找定義</td></tr>
+                    <tr><td>Plan</td><td>唯讀，研究分析</td><td>Plan Mode 下的程式碼分析</td></tr>
+                    <tr><td>General</td><td>完整能力</td><td>複雜的多步驟任務</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 子 Agent 適用場景</div>
+            <div class="info-box-content">
+                <p><strong>適合背景執行（Ctrl+B）：</strong></p>
+                <p>&bull; 跑測試套件（通常需要幾分鐘）<br>
+                &bull; 大範圍程式碼搜尋<br>
+                &bull; 不緊急的 Code Review</p>
+                <p><strong>適合前台呼叫：</strong></p>
+                <p>&bull; 「用子 Agent 跑全量測試，列出失敗用例」<br>
+                &bull; 「搜尋所有使用 deprecated API 的檔案」</p>
+            </div>
+        </div>
+
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; 自訂 Agent 範例</div>
+            <div class="info-box-content">
+<pre><code># .claude/agents/code-reviewer.md
 ---
 name: code-reviewer
 description: 代碼審查專家
@@ -360,97 +567,99 @@ model: sonnet
 - 錯誤處理是否完整
 - 有沒有暴露敏感資訊
 - 輸入驗證 / 效能隱患</code></pre>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 <!-- PART V: Context Management -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">V</span> 上下文管理：最容易被忽視的關鍵</div>
-<div class="bilingual-block">
-<div class="zh-text">Claude Code 的上下文視窗雖然大（最多 1M token），但它不是無限的，而且<span class="highlight-key">上下文管理直接決定了輸出品質</span>。</div>
-<div class="en-text">"Claude Code's context window is large (up to 1M tokens), but not infinite, and context management directly determines output quality."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">上下文裡裝了什麼：你的對話歷史、Claude 讀取的所有檔案內容、命令執行的輸出、CLAUDE.md 檔案（每次都載入）、Memory 檔案（前 200 行）、載入的 Skill 和 MCP 工具定義。</div>
-<div class="en-text">"What's in context: conversation history, all read file contents, command outputs, CLAUDE.md (loaded every time), Memory (first 200 lines), loaded Skill and MCP tool definitions."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">作者給出五個實用策略：<code>/clear</code> 一件事做完就清；<code>/compact</code> 手動壓縮上下文（可加焦點如「專注於 API 改動和測試結果」）；<code>/context</code> 查看上下文使用情況；用子 Agent 隔離噪音；在 CLAUDE.md 裡寫壓縮保留指令。</div>
-<div class="en-text">"Five practical strategies: /clear when done; /compact to compress (with focus); /context to inspect usage; Sub Agents for isolation; compression retention instructions in CLAUDE.md."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 五個上下文管理策略</div>
-<div class="info-box-content">
-<p><strong>/clear</strong>：一件事做完就清，不要混用對話</p>
-<p><strong>/compact [焦點]</strong>：壓縮時指定保留重點</p>
-<p><strong>/context</strong>：找出哪些檔案/MCP 吃掉了 token</p>
-<p><strong>子 Agent</strong>：隔離測試/日誌等大量輸出</p>
-<p><strong>CLAUDE.md 保留指令</strong>：壓縮後自動保留關鍵資訊</p>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ Memory vs CLAUDE.md</div>
-<div class="info-box-content">
-<table class="info-table">
-<tr><th>面向</th><th>Memory</th><th>CLAUDE.md</th></tr>
-<tr><td>適合存</td><td>個人偏好、歷史決策</td><td>專案規範、編碼標準</td></tr>
-<tr><td>不適合存</td><td>程式碼細節、Git 歷史</td><td>頻繁變化的 API 文件</td></tr>
-<tr><td>持久性</td><td>跨專案、跨對話</td><td>僅限該專案</td></tr>
-<tr><td>管理</td><td><code>/memory</code></td><td>直接編輯檔案</td></tr>
-</table>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 CLAUDE.md 壓縮保留指令</div>
-<div class="info-box-content">
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">V</span> 上下文管理：最容易被忽視的關鍵</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">Claude Code 的上下文視窗雖然大（最多 1M token），但它不是無限的，而且<span class="highlight-key">上下文管理直接決定了輸出品質</span>。</div>
+            <div class="en-text">"Claude Code's context window is large (up to 1M tokens), but not infinite, and context management directly determines output quality."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">上下文裡裝了什麼：你的對話歷史、Claude 讀取的所有檔案內容、命令執行的輸出、CLAUDE.md 檔案（每次都載入）、Memory 檔案（前 200 行）、載入的 Skill 和 MCP 工具定義。</div>
+            <div class="en-text">"What's in context: conversation history, all read file contents, command outputs, CLAUDE.md (loaded every time), Memory (first 200 lines), loaded Skill and MCP tool definitions."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">作者給出五個實用策略：<code>/clear</code> 一件事做完就清；<code>/compact</code> 手動壓縮上下文（可加焦點如「專注於 API 改動和測試結果」）；<code>/context</code> 查看上下文使用情況；用子 Agent 隔離噪音；在 CLAUDE.md 裡寫壓縮保留指令。</div>
+            <div class="en-text">"Five practical strategies: /clear when done; /compact to compress (with focus); /context to inspect usage; Sub Agents for isolation; compression retention instructions in CLAUDE.md."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 五個上下文管理策略</div>
+            <div class="info-box-content">
+                <p><strong>/clear</strong>：一件事做完就清，不要混用對話</p>
+                <p><strong>/compact [焦點]</strong>：壓縮時指定保留重點</p>
+                <p><strong>/context</strong>：找出哪些檔案/MCP 吃掉了 token</p>
+                <p><strong>子 Agent</strong>：隔離測試/日誌等大量輸出</p>
+                <p><strong>CLAUDE.md 保留指令</strong>：壓縮後自動保留關鍵資訊</p>
+            </div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">&#9878;&#65039; Memory vs CLAUDE.md</div>
+            <div class="info-box-content">
+                <table class="info-table">
+                    <tr><th>面向</th><th>Memory</th><th>CLAUDE.md</th></tr>
+                    <tr><td>適合存</td><td>個人偏好、歷史決策</td><td>專案規範、編碼標準</td></tr>
+                    <tr><td>不適合存</td><td>程式碼細節、Git 歷史</td><td>頻繁變化的 API 文件</td></tr>
+                    <tr><td>持久性</td><td>跨專案、跨對話</td><td>僅限該專案</td></tr>
+                    <tr><td>管理</td><td><code>/memory</code></td><td>直接編輯檔案</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; CLAUDE.md 壓縮保留指令</div>
+            <div class="info-box-content">
 <pre><code># 壓縮指令
 壓縮上下文時，始終保留：
 - 已修改檔案的完整列表
 - 測試命令和結果
 - 關鍵的架構決策</code></pre>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 3: Control & Safety (Parts VI-VIII) -->
-<div class="tab-content" id="tab-control">
+
+        </div>
+
+        <!-- TAB 3: Control & Safety (Parts VI-VIII) -->
+        <div id="tab-control" class="tab-content">
+
 <!-- PART VI: Permission Management -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">VI</span> 權限管理：安全和效率的平衡</div>
-<div class="bilingual-block">
-<div class="zh-text">Claude Code 提供了五種權限模式，用 <code>Shift+Tab</code> 在對話中循環切換：Plan（唯讀）、Auto Edit（自動編輯）、Full Auto（完全自動）等。</div>
-<div class="en-text">"Claude Code provides five permission modes, cycled with Shift+Tab: Plan (read-only), Auto Edit, Full Auto, etc."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">在 <code>.claude/settings.json</code> 裡，你可以精細控制每種工具的權限。<span class="highlight-key">規則優先級：deny → ask → allow（deny 最優先）</span>。這意味著你可以大膽地 allow 常用命令，同時用 deny 保護敏感檔案。</div>
-<div class="en-text">"Rule priority: deny → ask → allow (deny has highest priority). You can boldly allow common commands while using deny to protect sensitive files."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Settings 也有多級層級：組織策略（最高優先級）→ CLI 參數 → <code>.claude/settings.local.json</code>（本地，不提交到 Git）→ <code>.claude/settings.json</code>（專案級，團隊共享）→ <code>~/.claude/settings.json</code>（全域）→ 預設值。</div>
-<div class="en-text">"Settings have multiple levels: organization policy → CLI params → settings.local.json → settings.json → global → defaults."</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">💻 權限設定範例</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ Settings 分層建議</div>
-<div class="info-box-content">
-<p><strong>.claude/settings.json</strong>：團隊共享規則（提交到 Git）</p>
-<p><strong>~/.claude/settings.json</strong>：個人偏好（全域）</p>
-<p><strong>.claude/settings.local.json</strong>：敏感配置（加入 .gitignore）</p>
-</div>
-</div>
-</div>
-<div class="col-full">
-  <pre><code>{
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">VI</span> 權限管理：安全和效率的平衡</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">Claude Code 提供了五種權限模式，用 <code>Shift+Tab</code> 在對話中循環切換：Plan（唯讀）、Auto Edit（自動編輯）、Full Auto（完全自動）等。</div>
+            <div class="en-text">"Claude Code provides five permission modes, cycled with Shift+Tab: Plan (read-only), Auto Edit, Full Auto, etc."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">在 <code>.claude/settings.json</code> 裡，你可以精細控制每種工具的權限。<span class="highlight-key">規則優先級：deny &rarr; ask &rarr; allow（deny 最優先）</span>。這意味著你可以大膽地 allow 常用命令，同時用 deny 保護敏感檔案。</div>
+            <div class="en-text">"Rule priority: deny → ask → allow (deny has highest priority). You can boldly allow common commands while using deny to protect sensitive files."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">Settings 也有多級層級：組織策略（最高優先級）&rarr; CLI 參數 &rarr; <code>.claude/settings.local.json</code>（本地，不提交到 Git）&rarr; <code>.claude/settings.json</code>（專案級，團隊共享）&rarr; <code>~/.claude/settings.json</code>（全域）&rarr; 預設值。</div>
+            <div class="en-text">"Settings have multiple levels: organization policy → CLI params → settings.local.json → settings.json → global → defaults."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; 權限設定範例</div>
+            <div class="info-box-content">
+<pre><code>{
   "permissions": {
     "allow": [
       "Bash(npm run *)",
@@ -464,52 +673,57 @@ model: sonnet
     ]
   }
 }</code></pre>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; Settings 分層建議</div>
+            <div class="info-box-content">
+                <p><strong>.claude/settings.json</strong>：團隊共享規則（提交到 Git）</p>
+                <p><strong>~/.claude/settings.json</strong>：個人偏好（全域）</p>
+                <p><strong>.claude/settings.local.json</strong>：敏感配置（加入 .gitignore）</p>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 <!-- PART VII: Hooks -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">VII</span> Hooks：讓規則變成鐵律</div>
-<div class="bilingual-block">
-<div class="zh-text">CLAUDE.md 裡的指令是「建議」— Claude 大部分時候會遵守，但偶爾會忘。<span class="highlight-key">Hooks 是「鐵律」— 無論如何都會執行</span>。</div>
-<div class="en-text">"CLAUDE.md instructions are 'suggestions' — Claude mostly follows but occasionally forgets. Hooks are 'iron rules' — executed no matter what."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Hooks 是在特定生命週期事件上自動觸發的 shell 命令，配置在 settings.json 裡。關鍵事件類型包括：<code>PreToolUse</code>（工具執行前）、<code>PostToolUse</code>（工具執行後）、<code>SessionStart</code>（會話開始）等。</div>
-<div class="en-text">"Hooks are shell commands triggered on lifecycle events: PreToolUse, PostToolUse, SessionStart, etc."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Hook 命令返回 <code>exit code 0</code> 表示允許，<code>exit code 2</code> 表示阻止。這意味著你可以寫任意複雜的判斷邏輯。Hook 有四種類型：command（shell 命令）、http（POST 請求）、prompt（LLM 判斷）、agent（子 Agent 驗證）。</div>
-<div class="en-text">"Exit code 0 = allow, exit code 2 = block. Four hook types: command, http, prompt, agent."</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-concept">
-<div class="info-box-header">📚 CLAUDE.md vs Hooks</div>
-<div class="info-box-content">
-<table class="info-table">
-<tr><th>面向</th><th>CLAUDE.md</th><th>Hooks</th></tr>
-<tr><td>性質</td><td>建議（偶爾忘記）</td><td>鐵律（必定執行）</td></tr>
-<tr><td>執行方式</td><td>LLM 解讀</td><td>Shell 命令自動觸發</td></tr>
-<tr><td>適合</td><td>編碼風格、偏好</td><td>格式化、保護檔案</td></tr>
-</table>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 自動格式化 Hook</div>
-<div class="info-box-content">
-  <p>每次編輯後自動跑 Prettier，確保格式一致。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 壓縮後重新注入關鍵資訊</div>
-<div class="info-box-content">
-  <p>解決常見痛點：對話壓縮後重要指令丟失。</p>
-</div>
-</div>
-</div>
-<div class="col-full">
-  <pre><code>{
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">VII</span> Hooks：讓規則變成鐵律</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">CLAUDE.md 裡的指令是「建議」— Claude 大部分時候會遵守，但偶爾會忘。<span class="highlight-key">Hooks 是「鐵律」— 無論如何都會執行</span>。</div>
+            <div class="en-text">"CLAUDE.md instructions are 'suggestions' — Claude mostly follows but occasionally forgets. Hooks are 'iron rules' — executed no matter what."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">Hooks 是在特定生命週期事件上自動觸發的 shell 命令，配置在 settings.json 裡。關鍵事件類型包括：<code>PreToolUse</code>（工具執行前）、<code>PostToolUse</code>（工具執行後）、<code>SessionStart</code>（會話開始）等。</div>
+            <div class="en-text">"Hooks are shell commands triggered on lifecycle events: PreToolUse, PostToolUse, SessionStart, etc."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">Hook 命令返回 <code>exit code 0</code> 表示允許，<code>exit code 2</code> 表示阻止。這意味著你可以寫任意複雜的判斷邏輯。Hook 有四種類型：command（shell 命令）、http（POST 請求）、prompt（LLM 判斷）、agent（子 Agent 驗證）。</div>
+            <div class="en-text">"Exit code 0 = allow, exit code 2 = block. Four hook types: command, http, prompt, agent."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">&#128218; CLAUDE.md vs Hooks</div>
+            <div class="info-box-content">
+                <table class="info-table">
+                    <tr><th>面向</th><th>CLAUDE.md</th><th>Hooks</th></tr>
+                    <tr><td>性質</td><td>建議（偶爾忘記）</td><td>鐵律（必定執行）</td></tr>
+                    <tr><td>執行方式</td><td>LLM 解讀</td><td>Shell 命令自動觸發</td></tr>
+                    <tr><td>適合</td><td>編碼風格、偏好</td><td>格式化、保護檔案</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; 自動格式化 Hook</div>
+            <div class="info-box-content">
+<pre><code>{
   "hooks": {
     "PostToolUse": [{
       "matcher": "Edit|Write",
@@ -520,52 +734,51 @@ model: sonnet
     }]
   }
 }</code></pre>
-</div>
-<div class="col-full">
-  <pre><code>"SessionStart": [{
+                <p>每次編輯後自動跑 Prettier，確保格式一致。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 壓縮後重新注入關鍵資訊</div>
+            <div class="info-box-content">
+<pre><code>"SessionStart": [{
   "matcher": "compact",
   "hooks": [{
     "type": "command",
     "command": "echo '用 Bun 不用 npm。提交前跑 bun test。'"
   }]
 }]</code></pre>
+                <p>解決常見痛點：對話壓縮後重要指令丟失。</p>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 <!-- PART VIII: Git Workflow -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">VIII</span> Git 工作流：用好 Worktree</div>
-<div class="bilingual-block">
-<div class="zh-text">Git Worktree 會在 <code>.claude/worktrees/</code> 下建立一個獨立的 Git 分支副本。Claude 在裡面怎麼折騰都不影響你的主分支。退出時：沒有改動就自動清理，有改動就提示你保留或刪除。</div>
-<div class="en-text">"Git Worktree creates an independent branch copy. Claude can do anything inside without affecting your main branch."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-practical">這對於探索性任務特別有用</span>。不確定某個重構方案能不能行？開個 worktree 試試，不行就扔掉，零風險。</div>
-<div class="en-text">"Especially useful for exploratory tasks. Not sure if a refactoring approach works? Try in a worktree — zero risk."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">作者列出幾個 Git 鐵律：永遠不要讓 Claude Code 自動 push；頻繁 commit（用 <code>/rewind</code> 回退）；警惕 <code>git reset --hard</code>、<code>git push --force</code>、<code>rm -rf</code> 等破壞性操作。</div>
-<div class="en-text">"Git iron rules: never let Claude auto-push; commit frequently; beware destructive operations like git reset --hard."</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">💻 Worktree 使用方式</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ Git 四條鐵律</div>
-<div class="info-box-content">
-<p><strong>1.</strong> 永遠不要讓 Claude 自動 push（commit 可以，push 要你確認）</p>
-<p><strong>2.</strong> 頻繁 commit — 保留 <code>/rewind</code> 回退能力</p>
-<p><strong>3.</strong> 警惕 <code>--hard</code>、<code>--force</code>、<code>rm -rf</code></p>
-<p><strong>4.</strong> 可以在權限規則裡直接 deny 這些危險命令</p>
-</div>
-</div>
-</div>
-<div class="col-full">
-  <pre><code># 指定名稱的隔離工作空間
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">VIII</span> Git 工作流：用好 Worktree</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">Git Worktree 會在 <code>.claude/worktrees/</code> 下建立一個獨立的 Git 分支副本。Claude 在裡面怎麼折騰都不影響你的主分支。退出時：沒有改動就自動清理，有改動就提示你保留或刪除。</div>
+            <div class="en-text">"Git Worktree creates an independent branch copy. Claude can do anything inside without affecting your main branch."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="highlight-practical">這對於探索性任務特別有用</span>。不確定某個重構方案能不能行？開個 worktree 試試，不行就扔掉，零風險。</div>
+            <div class="en-text">"Especially useful for exploratory tasks. Not sure if a refactoring approach works? Try in a worktree — zero risk."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">作者列出幾個 Git 鐵律：永遠不要讓 Claude Code 自動 push；頻繁 commit（用 <code>/rewind</code> 回退）；警惕 <code>git reset --hard</code>、<code>git push --force</code>、<code>rm -rf</code> 等破壞性操作。</div>
+            <div class="en-text">"Git iron rules: never let Claude auto-push; commit frequently; beware destructive operations like git reset --hard."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; Worktree 使用方式</div>
+            <div class="info-box-content">
+<pre><code># 指定名稱的隔離工作空間
 claude --worktree feature-auth
 claude --worktree bugfix-123
 
@@ -574,280 +787,330 @@ claude --worktree
 
 # 從 PR 恢復上下文
 claude --from-pr 123</code></pre>
+            </div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; Git 四條鐵律</div>
+            <div class="info-box-content">
+                <p><strong>1.</strong> 永遠不要讓 Claude 自動 push（commit 可以，push 要你確認）</p>
+                <p><strong>2.</strong> 頻繁 commit — 保留 <code>/rewind</code> 回退能力</p>
+                <p><strong>3.</strong> 警惕 <code>--hard</code>、<code>--force</code>、<code>rm -rf</code></p>
+                <p><strong>4.</strong> 可以在權限規則裡直接 deny 這些危險命令</p>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-<!-- TAB 4: Advanced (Parts IX-XIV) -->
-<div class="tab-content" id="tab-advanced">
+
+        </div>
+
+        <!-- TAB 4: Advanced (Parts IX-XIV) -->
+        <div id="tab-advanced" class="tab-content">
+
 <!-- PART IX: Shortcuts & Commands -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">IX</span> 快捷鍵和命令速查</div>
-<div class="bilingual-block">
-<div class="zh-text">作者列出每天都在用的快捷鍵和斜線命令。<span class="highlight-practical">記住這些快捷鍵可以大幅提升操作效率</span>。</div>
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">IX</span> 快捷鍵和命令速查</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">作者列出每天都在用的快捷鍵和斜線命令。<span class="highlight-practical">記住這些快捷鍵可以大幅提升操作效率</span>。</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">特別值得一提的是 <code>/init</code> 命令 — 它會自動分析你的程式碼庫，幫你生成 CLAUDE.md 的初稿。雖然通常需要手動調整，但比從零開始快得多。</div>
+            <div class="en-text">"The /init command automatically analyzes your codebase and generates a CLAUDE.md draft. Usually needs manual adjustment, but much faster than starting from scratch."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">&#128218; 常用快捷鍵</div>
+            <div class="info-box-content">
+                <table class="info-table">
+                    <tr><th>快捷鍵</th><th>功能</th></tr>
+                    <tr><td><code>Shift+Tab</code></td><td>切換權限模式</td></tr>
+                    <tr><td><code>Ctrl+G</code></td><td>在編輯器中編輯計畫</td></tr>
+                    <tr><td><code>Ctrl+B</code></td><td>背景執行子 Agent</td></tr>
+                    <tr><td><code>Ctrl+V</code></td><td>貼上圖片</td></tr>
+                    <tr><td><code>Option+T</code></td><td>切換 Extended Thinking</td></tr>
+                    <tr><td><code>Escape</code></td><td>中斷目前操作</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 常用斜線命令</div>
+            <div class="info-box-content">
+                <table class="info-table">
+                    <tr><th>命令</th><th>用途</th></tr>
+                    <tr><td><code>/compact [焦點]</code></td><td>壓縮上下文</td></tr>
+                    <tr><td><code>/clear</code></td><td>清空對話重新開始</td></tr>
+                    <tr><td><code>/context</code></td><td>查看上下文使用情況</td></tr>
+                    <tr><td><code>/rewind</code></td><td>回退到某個 checkpoint</td></tr>
+                    <tr><td><code>/effort [級別]</code></td><td>設定推理深度</td></tr>
+                    <tr><td><code>/init</code></td><td>自動生成 CLAUDE.md</td></tr>
+                    <tr><td><code>/cost</code></td><td>查看 token 消耗</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text">特別值得一提的是 <code>/init</code> 命令 — 它會自動分析你的程式碼庫，幫你生成 CLAUDE.md 的初稿。雖然通常需要手動調整，但比從零開始快得多。</div>
-<div class="en-text">"The /init command automatically analyzes your codebase and generates a CLAUDE.md draft. Usually needs manual adjustment, but much faster than starting from scratch."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 常用快捷鍵</div>
-<div class="info-box-content">
-<table class="info-table">
-<tr><th>快捷鍵</th><th>功能</th></tr>
-<tr><td><code>Shift+Tab</code></td><td>切換權限模式</td></tr>
-<tr><td><code>Ctrl+G</code></td><td>在編輯器中編輯計畫</td></tr>
-<tr><td><code>Ctrl+B</code></td><td>背景執行子 Agent</td></tr>
-<tr><td><code>Ctrl+V</code></td><td>貼上圖片</td></tr>
-<tr><td><code>Option+T</code></td><td>切換 Extended Thinking</td></tr>
-<tr><td><code>Escape</code></td><td>中斷目前操作</td></tr>
-</table>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 常用斜線命令</div>
-<div class="info-box-content">
-<table class="info-table">
-<tr><th>命令</th><th>用途</th></tr>
-<tr><td><code>/compact [焦點]</code></td><td>壓縮上下文</td></tr>
-<tr><td><code>/clear</code></td><td>清空對話重新開始</td></tr>
-<tr><td><code>/context</code></td><td>查看上下文使用情況</td></tr>
-<tr><td><code>/rewind</code></td><td>回退到某個 checkpoint</td></tr>
-<tr><td><code>/effort [級別]</code></td><td>設定推理深度</td></tr>
-<tr><td><code>/init</code></td><td>自動生成 CLAUDE.md</td></tr>
-<tr><td><code>/cost</code></td><td>查看 token 消耗</td></tr>
-</table>
-</div>
-</div>
-</div>
-</div>
+
 <!-- PART X: Extended Thinking -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">X</span> Extended Thinking：讓 Claude 想深一點</div>
-<div class="bilingual-block">
-<div class="zh-text">對於複雜問題，可以開啟 Extended Thinking 模式，讓 Claude 在回答前花更多時間推理。用 <code>Option+T</code>（Mac）或 <code>Alt+T</code> 切換，也可用 <code>/effort</code> 命令設定級別。</div>
-<div class="en-text">"For complex problems, enable Extended Thinking to let Claude spend more time reasoning before answering."</div>
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">X</span> Extended Thinking：讓 Claude 想深一點</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">對於複雜問題，可以開啟 Extended Thinking 模式，讓 Claude 在回答前花更多時間推理。用 <code>Option+T</code>（Mac）或 <code>Alt+T</code> 切換，也可用 <code>/effort</code> 命令設定級別。</div>
+            <div class="en-text">"For complex problems, enable Extended Thinking to let Claude spend more time reasoning before answering."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>適用場景：</strong>複雜的架構決策、棘手的 debug、多步驟重構方案、權衡多個方案利弊。<strong>不需要的場景：</strong>簡單的程式碼修改、格式化、重命名。</div>
+            <div class="en-text">"Use for: complex architecture decisions, tricky debugging, multi-step refactoring. Skip for: simple code changes, formatting, renaming."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">小技巧：在提示詞裡寫 <code>ultrathink</code> 可以強制觸發最高推理深度，不需要手動調整 effort 設定。</div>
+            <div class="en-text">"Tip: writing 'ultrathink' in your prompt forces maximum reasoning depth without manually adjusting effort settings."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-compare">
+            <div class="info-box-header">&#9878;&#65039; Effort 級別對照</div>
+            <div class="info-box-content">
+                <table class="info-table">
+                    <tr><th>級別</th><th>適用</th><th>Token 消耗</th></tr>
+                    <tr><td><code>/effort low</code></td><td>簡單任務</td><td>最少</td></tr>
+                    <tr><td><code>/effort medium</code></td><td>一般任務</td><td>中等</td></tr>
+                    <tr><td><code>/effort high</code></td><td>複雜推理</td><td>較高</td></tr>
+                    <tr><td><code>/effort max</code></td><td>最深推理</td><td>最高</td></tr>
+                </table>
+                <p style="margin-top:0.5rem;"><code>ultrathink</code> = 等同 <code>/effort max</code> 的隱藏觸發詞</p>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>適用場景：</strong>複雜的架構決策、棘手的 debug、多步驟重構方案、權衡多個方案利弊。<strong>不需要的場景：</strong>簡單的程式碼修改、格式化、重命名。</div>
-<div class="en-text">"Use for: complex architecture decisions, tricky debugging, multi-step refactoring. Skip for: simple code changes, formatting, renaming."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">小技巧：在提示詞裡寫 <code>ultrathink</code> 可以強制觸發最高推理深度，不需要手動調整 effort 設定。</div>
-<div class="en-text">"Tip: writing 'ultrathink' in your prompt forces maximum reasoning depth without manually adjusting effort settings."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ Effort 級別對照</div>
-<div class="info-box-content">
-<table class="info-table">
-<tr><th>級別</th><th>適用</th><th>Token 消耗</th></tr>
-<tr><td><code>/effort low</code></td><td>簡單任務</td><td>最少</td></tr>
-<tr><td><code>/effort medium</code></td><td>一般任務</td><td>中等</td></tr>
-<tr><td><code>/effort high</code></td><td>複雜推理</td><td>較高</td></tr>
-<tr><td><code>/effort max</code></td><td>最深推理</td><td>最高</td></tr>
-</table>
-<p style="margin-top:0.5rem;"><code>ultrathink</code> = 等同 <code>/effort max</code> 的隱藏觸發詞</p>
-</div>
-</div>
-</div>
-</div>
+
 <!-- PART XI: MCP Server -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">XI</span> MCP Server：連接外部世界</div>
-<div class="bilingual-block">
-<div class="zh-text">MCP (Model Context Protocol) 讓 Claude Code 能和外部工具通訊 — GitHub、資料庫、Slack、Notion 等。配置在 <code>.mcp.json</code> 裡。</div>
-<div class="en-text">"MCP lets Claude Code communicate with external tools — GitHub, databases, Slack, Notion. Configured in .mcp.json."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-key">注意上下文開銷：每個 MCP server 會額外消耗 100-500+ token 的工具定義</span>。用 <code>/mcp</code> 命令可以查看開銷，停用不用的 server。作者的經驗：不要貪多，常用的 2-3 個就夠了。裝太多反而影響程式碼分析品質。</div>
-<div class="en-text">"Each MCP server costs 100-500+ tokens for tool definitions. Don't be greedy — 2-3 commonly used servers is enough. Too many hurts code analysis quality."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-code">
-<div class="info-box-header">💻 MCP 快速新增</div>
-<div class="info-box-content">
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">XI</span> MCP Server：連接外部世界</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">MCP (Model Context Protocol) 讓 Claude Code 能和外部工具通訊 — GitHub、資料庫、Slack、Notion 等。配置在 <code>.mcp.json</code> 裡。</div>
+            <div class="en-text">"MCP lets Claude Code communicate with external tools — GitHub, databases, Slack, Notion. Configured in .mcp.json."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="highlight-key">注意上下文開銷：每個 MCP server 會額外消耗 100-500+ token 的工具定義</span>。用 <code>/mcp</code> 命令可以查看開銷，停用不用的 server。作者的經驗：不要貪多，常用的 2-3 個就夠了。裝太多反而影響程式碼分析品質。</div>
+            <div class="en-text">"Each MCP server costs 100-500+ tokens for tool definitions. Don't be greedy — 2-3 commonly used servers is enough. Too many hurts code analysis quality."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">&#128187; MCP 快速新增</div>
+            <div class="info-box-content">
 <pre><code>claude mcp add github -- npx \
   @anthropic-ai/mcp-server-github
 
 claude mcp add postgres -- npx \
   @anthropic-ai/mcp-server-postgres \
   postgresql://localhost:5432/mydb</code></pre>
+            </div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; MCP 使用原則</div>
+            <div class="info-box-content">
+                <p><strong>精簡原則</strong>：常用 2-3 個就好</p>
+                <p><strong>監控開銷</strong>：用 <code>/mcp</code> 查看 token 消耗</p>
+                <p><strong>停用閒置</strong>：不用的 server 及時停用</p>
+                <p><strong>Token 預算</strong>：MCP 定義 100-500+ token/server</p>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ MCP 使用原則</div>
-<div class="info-box-content">
-<p><strong>精簡原則</strong>：常用 2-3 個就好</p>
-<p><strong>監控開銷</strong>：用 <code>/mcp</code> 查看 token 消耗</p>
-<p><strong>停用閒置</strong>：不用的 server 及時停用</p>
-<p><strong>Token 預算</strong>：MCP 定義 100-500+ token/server</p>
-</div>
-</div>
-</div>
-</div>
+
 <!-- PART XII-XIII: IDE Integration + Code Review (Combined for space) -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">XII</span> IDE 整合與程式碼審查</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>VS Code 整合</strong>：安裝 Claude Code 擴充功能後可在 VS Code 內直接使用。好用功能包括並排 diff 檢視、<code>Option+K</code> 快速插入 @引用、多標籤對話。</div>
-<div class="en-text">"VS Code integration: side-by-side diff view, Option+K for quick @references, multi-tab conversations."</div>
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">XII</span> IDE 整合與程式碼審查</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>VS Code 整合</strong>：安裝 Claude Code 擴充功能後可在 VS Code 內直接使用。好用功能包括並排 diff 檢視、<code>Option+K</code> 快速插入 @引用、多標籤對話。</div>
+            <div class="en-text">"VS Code integration: side-by-side diff view, Option+K for quick @references, multi-tab conversations."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>程式碼審查原則：信任但要驗證。</strong>Claude Code 寫的程式碼品質總體不錯，但不能盲目信任。常見問題包括：<span class="highlight-key">過度工程</span>（簡單函式搞出抽象層）、<span class="highlight-key">幻覺 API</span>（用不存在的 API）、<span class="highlight-key">改動範圍膨脹</span>（你改一個函式它重構整個檔案）。</div>
+            <div class="en-text">"Trust but verify. Common issues: over-engineering, hallucinated APIs, scope creep in modifications."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>Writer/Reviewer 模式</strong>：官方推薦的進階模式 — 用兩個獨立的會話分別扮演「寫程式碼」和「審查程式碼」的角色。兩個會話有獨立的上下文，Reviewer 不受 Writer 的思路影響，能發現 Writer 的盲點。</div>
+            <div class="en-text">"Writer/Reviewer mode: two independent sessions playing 'write code' and 'review code' roles, catching each other's blind spots."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 三大常見問題與對策</div>
+            <div class="info-box-content">
+                <p><strong>過度工程</strong> &rarr; CLAUDE.md 寫「優先用簡單方案」</p>
+                <p><strong>幻覺 API</strong> &rarr; 跑測試驗證，指令含驗證標準</p>
+                <p><strong>範圍膨脹</strong> &rarr; 明確說「只改 X，不要動其他程式碼」</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; Writer/Reviewer 工作流</div>
+            <div class="info-box-content">
+                <p><strong>會話 A（Writer）</strong>：「實作 API 限流中間件」</p>
+                <p><strong>會話 B（Reviewer）</strong>：「審查 @src/middleware/rateLimiter.ts，重點看邊界情況、競態條件」</p>
+                <p><strong>會話 A</strong>：「修復審查反饋：[貼上 B 的輸出]」</p>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>程式碼審查原則：信任但要驗證。</strong>Claude Code 寫的程式碼品質總體不錯，但不能盲目信任。常見問題包括：<span class="highlight-key">過度工程</span>（簡單函式搞出抽象層）、<span class="highlight-key">幻覺 API</span>（用不存在的 API）、<span class="highlight-key">改動範圍膨脹</span>（你改一個函式它重構整個檔案）。</div>
-<div class="en-text">"Trust but verify. Common issues: over-engineering, hallucinated APIs, scope creep in modifications."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Writer/Reviewer 模式</strong>：官方推薦的進階模式 — 用兩個獨立的會話分別扮演「寫程式碼」和「審查程式碼」的角色。兩個會話有獨立的上下文，Reviewer 不受 Writer 的思路影響，能發現 Writer 的盲點。</div>
-<div class="en-text">"Writer/Reviewer mode: two independent sessions playing 'write code' and 'review code' roles, catching each other's blind spots."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 三大常見問題與對策</div>
-<div class="info-box-content">
-<p><strong>過度工程</strong> → CLAUDE.md 寫「優先用簡單方案」</p>
-<p><strong>幻覺 API</strong> → 跑測試驗證，指令含驗證標準</p>
-<p><strong>範圍膨脹</strong> → 明確說「只改 X，不要動其他程式碼」</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ Writer/Reviewer 工作流</div>
-<div class="info-box-content">
-<p><strong>會話 A（Writer）</strong>：「實作 API 限流中間件」</p>
-<p><strong>會話 B（Reviewer）</strong>：「審查 @src/middleware/rateLimiter.ts，重點看邊界情況、競態條件」</p>
-<p><strong>會話 A</strong>：「修復審查反饋：[貼上 B 的輸出]」</p>
-</div>
-</div>
-</div>
-</div>
+
 <!-- PART XIV: Anti-patterns -->
 <div class="content-grid">
-<div class="content-left">
-<div class="part-title"><span class="part-number">XIV</span> 不要用 Claude Code 做的事</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>1. 不要讓它做你完全不了解的事。</strong>如果你對 Kubernetes 一無所知，不要讓 Claude Code 幫你寫部署配置然後直接用。<span class="highlight-key">你無法審查你不懂的東西</span>。</div>
-<div class="en-text">"Don't let it do things you don't understand at all. You can't review what you don't understand."</div>
+    <div class="content-left">
+        <div class="part-title"><span class="part-number">XIV</span> 不要用 Claude Code 做的事</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>1. 不要讓它做你完全不了解的事。</strong>如果你對 Kubernetes 一無所知，不要讓 Claude Code 幫你寫部署配置然後直接用。<span class="highlight-key">你無法審查你不懂的東西</span>。</div>
+            <div class="en-text">"Don't let it do things you don't understand at all. You can't review what you don't understand."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>2. 不要在沒有版本控制的環境下用。</strong>沒有 Git 就沒有回退的能力。Claude Code 的改動可能覆蓋你的檔案，沒有版本控制就是裸奔。</div>
+            <div class="en-text">"Don't use without version control. No Git = no rollback ability. Without version control, you're flying blind."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>3. 不要一口氣扔一個巨大的任務。</strong>「把整個專案從 JavaScript 遷移到 TypeScript」— 這種指令等於讓 Claude Code 自由發揮。結果不可控。拆成小步驟，每一步確認後再做下一步。</div>
+            <div class="en-text">"Don't throw a massive task all at once. Break into small steps, confirm each before proceeding."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>4. 不要指望一次就完美。</strong>迭代是正常的。用 <code>/rewind</code> 回退，用精確的反饋描述「哪裡不對」。</div>
+            <div class="en-text">"Don't expect perfection on the first try. Iteration is normal."</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">&#9888;&#65039; 核心哲學</div>
+            <div class="info-box-content">
+                <p style="font-size:1rem; font-weight:700; color:#1e3a8a; text-align:center; margin-bottom:0.75rem;">「它是一個極其能幹的協作者，<br>但不是自動駕駛。<br>方向盤始終在你手裡。」</p>
+                <p>工具的價值，永遠取決於使用它的人。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">&#128161; 比喻說明</div>
+            <div class="info-box-content">
+                <p>Claude Code 就像一台<strong>超強力的電動工具</strong>：它能在幾秒鐘完成你手動幾小時的工作，但如果你不知道切割方向，它也能在幾秒鐘摧毀你的作品。安全裝置（Git、權限、Plan Mode）不是限制，而是讓你敢放手用的前提。</p>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>2. 不要在沒有版本控制的環境下用。</strong>沒有 Git 就沒有回退的能力。Claude Code 的改動可能覆蓋你的檔案，沒有版本控制就是裸奔。</div>
-<div class="en-text">"Don't use without version control. No Git = no rollback ability. Without version control, you're flying blind."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>3. 不要一口氣扔一個巨大的任務。</strong>「把整個專案從 JavaScript 遷移到 TypeScript」— 這種指令等於讓 Claude Code 自由發揮。結果不可控。拆成小步驟，每一步確認後再做下一步。</div>
-<div class="en-text">"Don't throw a massive task all at once. Break into small steps, confirm each before proceeding."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>4. 不要指望一次就完美。</strong>迭代是正常的。用 <code>/rewind</code> 回退，用精確的反饋描述「哪裡不對」。</div>
-<div class="en-text">"Don't expect perfection on the first try. Iteration is normal."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 核心哲學</div>
-<div class="info-box-content">
-<p style="font-size:1rem; font-weight:700; color:#1e3a8a; text-align:center; margin-bottom:0.75rem;">「它是一個極其能幹的協作者，<br/>但不是自動駕駛。<br/>方向盤始終在你手裡。」</p>
-<p>工具的價值，永遠取決於使用它的人。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p>Claude Code 就像一台<strong>超強力的電動工具</strong>：它能在幾秒鐘完成你手動幾小時的工作，但如果你不知道切割方向，它也能在幾秒鐘摧毀你的作品。安全裝置（Git、權限、Plan Mode）不是限制，而是讓你敢放手用的前提。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><!-- end tab-container -->
-<!-- Key Takeaways -->
-<div class="section-title">Key Takeaways</div>
-<div class="takeaways">
-<div class="summary-card">
-<div class="summary-card-title">CLAUDE.md 是投資報酬率最高的動作</div>
-<div class="summary-card-text">一次寫好 200 行以內的 CLAUDE.md（含專案規範、編碼慣例、架構決策），每次對話都自動生效。搭配 <code>.claude/rules/</code> 做路徑級別的規則管理，上下文空間用在刀口上。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">Plan Mode + 驗證標準 = 品質保證</div>
-<div class="summary-card-text">複雜任務走「探索 → 規劃 → 實作 → 驗證」四步流。<code>Ctrl+G</code> 在編輯器中修改計畫比修改已寫好的程式碼快十倍。指令含測試用例讓 Claude 自我驗證。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">上下文管理是隱形品質槓桿</div>
-<div class="summary-card-text"><code>/clear</code>、<code>/compact</code>、子 Agent 三件套保持主對話上下文乾淨。MCP server 精簡到 2-3 個，避免工具定義吃掉分析空間。Memory 存偏好，CLAUDE.md 存規範。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">安全防線要層層設置</div>
-<div class="summary-card-text">權限規則（deny 優先）+ Hooks（鐵律，不會忘）+ Git Worktree（隔離實驗）+ 頻繁 commit（保留回退能力）。永遠不要讓 Claude 自動 push，永遠不要在沒有 Git 的環境下使用。</div>
-</div>
-</div>
-<!-- Practice Questions -->
-<div class="section-title">Practice Questions</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">CLAUDE.md 指令和 Hooks 的本質差異是什麼？在什麼情況下你應該用 Hooks 而非 CLAUDE.md？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>CLAUDE.md 的指令是「建議」性質 — 由 LLM 解讀執行，大部分時候會遵守但偶爾會忘記或誤解。Hooks 是「鐵律」— 是 shell 命令在特定生命週期事件上自動觸發，不經過 LLM 判斷，100% 會執行。</p>
-<p>應該用 Hooks 的場景：需要 100% 保證的規則（如每次編輯後跑 formatter、阻止修改 .env 檔案、壓縮後重新注入關鍵指令）。如果「偶爾忘記」的代價很高（如生產配置被改），就用 Hook 而非 CLAUDE.md。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">在 GMP 環境的 CDMO 工廠中，如果要用 Claude Code 輔助開發批次記錄系統或偏差調查工具，你會如何設計權限規則和 CLAUDE.md？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>權限規則：</strong>deny 優先保護所有驗證相關檔案（如 CSV 格式、21 CFR Part 11 審計追蹤模組）、deny <code>rm -rf</code> 和 <code>git push --force</code>。allow 限定在測試目錄和開發分支操作。所有涉及資料完整性的程式碼修改必須 ask。</p>
-<p><strong>CLAUDE.md：</strong>明確寫入「此專案遵循 GMP 軟體驗證要求（GAMP 5 Category 4/5）」「所有資料庫操作必須有審計追蹤」「不得繞過或修改驗證相關邏輯」「變更必須對應變更控制單號」。這是典型的 Copilot Mode — 人類審查不可繞過。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">作者說「不要讓 Claude Code 做你完全不了解的事」。但如果你正在學習一項新技術（如 Kubernetes），Claude Code 能否加速你的學習過程？這個建議的邊界在哪裡？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>作者的建議核心是「你無法審查你不懂的東西」— 這在生產部署場景完全正確。但在學習場景中，Claude Code 反而是很好的學習加速器：你可以用 Plan Mode 讓它解釋架構、用模糊指令探索「這個 K8s 配置的各個欄位是什麼意思」。</p>
-<p>邊界在於「輸出的用途」：學習用（sandbox 環境）可以大膽嘗試；生產用（真實部署）必須你能審查。這也呼應了 Copilot vs Agent 的框架 — 學習場景可以偏 Agent（讓 Claude 主導探索），生產場景必須嚴格 Copilot（人類審查每一步）。</p>
-</div>
-</details>
-<!-- Bottom Line -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Claude Code 的價值天花板不在模型能力，而在使用者的「上下文工程」能力 — CLAUDE.md 品質、指令精確度、上下文管理策略三者共同決定產出品質。這與我在文件生成 pipeline 中學到的「Context Engineering over Prompt Engineering」原則完全一致：精心策劃進入 context window 的內容，比打磨單條 prompt 更重要。Hooks 作為「鐵律」vs CLAUDE.md 作為「建議」的區分，對應到 GMP 環境就是 SOP 硬規定 vs 操作指引的差別。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週在家裡的 MacBook Air 上重新檢視我的全域 <code>~/.claude/CLAUDE.md</code>，確認是否包含作者推薦的四行核心設定。同時檢查已安裝的 MCP server 數量和 token 開銷（<code>/mcp</code>），停用不常用的。在下次使用 Claude Code headless mode 做文件生成 pipeline 時，嘗試用 <code>/compact</code> 加焦點的方式管理長對話上下文。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章來自個人 X 貼文，部分功能描述（如五種權限模式的具體名稱、Hooks 四種類型的詳細行為）需要對照 Anthropic 官方文件驗證。<code>ultrathink</code> 觸發詞是否為正式支援功能也需確認。此外，文章完全是開發者視角，缺少非工程角色（如我作為製藥營運專業人員）如何運用 Claude Code 的討論 — 這部分需要我自己補充。建議 3 個月後重讀，屆時 Claude Code 的功能可能已有顯著更新。</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>製作日期：2025-03-25 | 來源：<a href="https://x.com/PandaTalk8" target="_blank">Mr Panda (@PandaTalk8) / X</a></p>
-<p>建議 Chat Title：<strong>2025-03-25 [Tool] Claude Code Best Practices - MrPanda</strong></p>
-<p>建議檔名：<strong>2025-03-25_claude-code-best-practices.html</strong></p>
-</footer>
+
+        </div>
+
+    </div><!-- end tab-container -->
+
+
+    <!-- Key Takeaways -->
+    <div class="section-title">Key Takeaways</div>
+    <div class="takeaways">
+        <div class="summary-card">
+            <div class="summary-card-title">CLAUDE.md 是投資報酬率最高的動作</div>
+            <div class="summary-card-text">一次寫好 200 行以內的 CLAUDE.md（含專案規範、編碼慣例、架構決策），每次對話都自動生效。搭配 <code>.claude/rules/</code> 做路徑級別的規則管理，上下文空間用在刀口上。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">Plan Mode + 驗證標準 = 品質保證</div>
+            <div class="summary-card-text">複雜任務走「探索 &rarr; 規劃 &rarr; 實作 &rarr; 驗證」四步流。<code>Ctrl+G</code> 在編輯器中修改計畫比修改已寫好的程式碼快十倍。指令含測試用例讓 Claude 自我驗證。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">上下文管理是隱形品質槓桿</div>
+            <div class="summary-card-text"><code>/clear</code>、<code>/compact</code>、子 Agent 三件套保持主對話上下文乾淨。MCP server 精簡到 2-3 個，避免工具定義吃掉分析空間。Memory 存偏好，CLAUDE.md 存規範。</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-card-title">安全防線要層層設置</div>
+            <div class="summary-card-text">權限規則（deny 優先）+ Hooks（鐵律，不會忘）+ Git Worktree（隔離實驗）+ 頻繁 commit（保留回退能力）。永遠不要讓 Claude 自動 push，永遠不要在沒有 Git 的環境下使用。</div>
+        </div>
+    </div>
+
+    <!-- Practice Questions -->
+    <div class="section-title">Practice Questions</div>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">CLAUDE.md 指令和 Hooks 的本質差異是什麼？在什麼情況下你應該用 Hooks 而非 CLAUDE.md？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>CLAUDE.md 的指令是「建議」性質 — 由 LLM 解讀執行，大部分時候會遵守但偶爾會忘記或誤解。Hooks 是「鐵律」— 是 shell 命令在特定生命週期事件上自動觸發，不經過 LLM 判斷，100% 會執行。</p>
+            <p>應該用 Hooks 的場景：需要 100% 保證的規則（如每次編輯後跑 formatter、阻止修改 .env 檔案、壓縮後重新注入關鍵指令）。如果「偶爾忘記」的代價很高（如生產配置被改），就用 Hook 而非 CLAUDE.md。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">在 GMP 環境的 CDMO 工廠中，如果要用 Claude Code 輔助開發批次記錄系統或偏差調查工具，你會如何設計權限規則和 CLAUDE.md？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>權限規則：</strong>deny 優先保護所有驗證相關檔案（如 CSV 格式、21 CFR Part 11 審計追蹤模組）、deny <code>rm -rf</code> 和 <code>git push --force</code>。allow 限定在測試目錄和開發分支操作。所有涉及資料完整性的程式碼修改必須 ask。</p>
+            <p><strong>CLAUDE.md：</strong>明確寫入「此專案遵循 GMP 軟體驗證要求（GAMP 5 Category 4/5）」「所有資料庫操作必須有審計追蹤」「不得繞過或修改驗證相關邏輯」「變更必須對應變更控制單號」。這是典型的 Copilot Mode — 人類審查不可繞過。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">作者說「不要讓 Claude Code 做你完全不了解的事」。但如果你正在學習一項新技術（如 Kubernetes），Claude Code 能否加速你的學習過程？這個建議的邊界在哪裡？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>作者的建議核心是「你無法審查你不懂的東西」— 這在生產部署場景完全正確。但在學習場景中，Claude Code 反而是很好的學習加速器：你可以用 Plan Mode 讓它解釋架構、用模糊指令探索「這個 K8s 配置的各個欄位是什麼意思」。</p>
+            <p>邊界在於「輸出的用途」：學習用（sandbox 環境）可以大膽嘗試；生產用（真實部署）必須你能審查。這也呼應了 Copilot vs Agent 的框架 — 學習場景可以偏 Agent（讓 Claude 主導探索），生產場景必須嚴格 Copilot（人類審查每一步）。</p>
+        </div>
+    </details>
+
+    <!-- Bottom Line -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#127919; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#10004; 核心洞察</div>
+            <div class="bottom-line-text">Claude Code 的價值天花板不在模型能力，而在使用者的「上下文工程」能力 — CLAUDE.md 品質、指令精確度、上下文管理策略三者共同決定產出品質。這與我在文件生成 pipeline 中學到的「Context Engineering over Prompt Engineering」原則完全一致：精心策劃進入 context window 的內容，比打磨單條 prompt 更重要。Hooks 作為「鐵律」vs CLAUDE.md 作為「建議」的區分，對應到 GMP 環境就是 SOP 硬規定 vs 操作指引的差別。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#128200; 立即應用</div>
+            <div class="bottom-line-text">本週在家裡的 MacBook Air 上重新檢視我的全域 <code>~/.claude/CLAUDE.md</code>，確認是否包含作者推薦的四行核心設定。同時檢查已安裝的 MCP server 數量和 token 開銷（<code>/mcp</code>），停用不常用的。在下次使用 Claude Code headless mode 做文件生成 pipeline 時，嘗試用 <code>/compact</code> 加焦點的方式管理長對話上下文。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#9888; 需要補充</div>
+            <div class="bottom-line-text">文章來自個人 X 貼文，部分功能描述（如五種權限模式的具體名稱、Hooks 四種類型的詳細行為）需要對照 Anthropic 官方文件驗證。<code>ultrathink</code> 觸發詞是否為正式支援功能也需確認。此外，文章完全是開發者視角，缺少非工程角色（如我作為製藥營運專業人員）如何運用 Claude Code 的討論 — 這部分需要我自己補充。建議 3 個月後重讀，屆時 Claude Code 的功能可能已有顯著更新。</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>製作日期：2025-03-25 | 來源：<a href="https://x.com/PandaTalk8" target="_blank">Mr Panda (@PandaTalk8) / X</a></p>
+        <p>建議 Chat Title：<strong>2025-03-25 [Tool] Claude Code Best Practices - MrPanda</strong></p>
+        <p>建議檔名：<strong>2025-03-25_claude-code-best-practices.html</strong></p>
+    </div>
+
+
 </div><!-- end container -->
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');
@@ -857,5 +1120,6 @@ function switchTab(evt, tabId) {
     evt.currentTarget.classList.add('active');
 }
 </script>
+
 </body>
 </html>

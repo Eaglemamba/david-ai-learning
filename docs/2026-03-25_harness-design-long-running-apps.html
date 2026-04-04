@@ -1,460 +1,634 @@
 <!DOCTYPE html>
-
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Harness Design 長時間自主開發架構 - Generator-Evaluator 多代理人系統</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-<!-- Dashboard Index Meta -->
-<meta content="2026-03-25" name="doc-date"/>
-<meta content="Harness Design 長時間自主開發 - GAN 式多代理人架構" name="doc-title"/>
-<meta content="Prithvi Rajasekaran / Anthropic Engineering" name="doc-source"/>
-<meta content="Anthropic-Eng" name="doc-source-type"/>
-<meta content="Anthropic-Eng,Agent,Framework,Tool,API" name="doc-tags"/>
-<meta content="4.5" name="doc-rating"/>
-<meta content="GAN 啟發的 Generator-Evaluator-Planner 三代理人架構，解決長時間自主編碼的品質控制與自我評估偏差。" name="doc-summary"/>
-<meta content="2026-03-25_harness-design-long-running-apps.html" name="doc-file"/><meta content="v1" name="normalized"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harness Design 長時間自主開發架構 - Generator-Evaluator 多代理人系統</title>
 
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-03-25">
+    <meta name="doc-title" content="Harness Design 長時間自主開發 - GAN 式多代理人架構">
+    <meta name="doc-source" content="Prithvi Rajasekaran / Anthropic Engineering">
+    <meta name="doc-source-type" content="Anthropic-Eng">
+    <meta name="doc-tags" content="Anthropic-Eng,Agent,Framework,Tool,API">
+    <meta name="doc-rating" content="4.5">
+    <meta name="doc-summary" content="GAN 啟發的 Generator-Evaluator-Planner 三代理人架構，解決長時間自主編碼的品質控制與自我評估偏差。">
+    <meta name="doc-file" content="2026-03-25_harness-design-long-running-apps.html">
 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* === v1.4.3 MANDATORY PAGE LAYOUT === */
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+            color: white;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Tags */
+        .tag { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; margin: 0.15rem; }
+        .tag-anthropic-eng { background: #fee2e2; color: #dc2626; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-framework { background: #e0f2fe; color: #0c4a6e; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-api { background: #ddd6fe; color: #4c1d95; }
+
+        .header h1 { font-size: 1.8rem; margin: 0.75rem 0 0.5rem; line-height: 1.3; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+        .header .source { font-size: 0.85rem; opacity: 0.7; margin-top: 0.75rem; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; border: 1px solid #e2e8f0; }
+        .exec-summary h2 { color: #1e3a8a; margin-top: 0; font-size: 1.2rem; }
+        .exec-summary p, .exec-summary li { font-size: 0.95rem; line-height: 1.8; }
+
+        /* Learning Objectives */
+        .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem; font-size: 0.9rem; }
+        .objective-desc { font-size: 0.85rem; color: #475569; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Content Sections */
+        .section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+        .content-left { padding: 1.5rem; background: #ffffff; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        @media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh { font-size: 0.95rem; line-height: 1.8; color: #1e293b; }
+        .en { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; margin-top: 0.25rem; }
+        .highlight-concept { background: #a5d6a7; padding: 0 0.2rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0 0.2rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0 0.2rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1.25rem; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+
+        /* Tables */
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+        .data-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.8rem; text-align: left; }
+        .data-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #e2e8f0; }
+        .data-table tr:nth-child(even) { background: #f8fafc; }
+
+        /* Key Takeaways */
+        .takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
+        @media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card h4 { margin: 0 0 0.5rem; color: #1e3a8a; font-size: 0.95rem; }
+        .summary-card p { font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.6; }
+
+        /* Accordion */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin: 2rem 0; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+
+        /* Code blocks */
+        code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+    </style>
 </head>
 <body>
-<header class="header">
-<div class="header-content">
-<div>
-<span class="tag tag-anthropic-eng">Anthropic-Eng</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-framework">Framework</span>
-<span class="tag tag-tool">Tool</span>
+
+<div class="header">
+    <div class="header-content">
+        <div>
+            <span class="tag tag-anthropic-eng">Anthropic-Eng</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-framework">Framework</span>
+            <span class="tag tag-tool">Tool</span>
+        </div>
+        <h1>Harness Design 長時間自主開發架構</h1>
+        <div class="subtitle">GAN 啟發的 Generator-Evaluator-Planner 三代理人系統：如何讓 Claude 自主建構完整應用</div>
+        <div class="source">Prithvi Rajasekaran / Anthropic Engineering | 2026-03-24</div>
+    </div>
 </div>
-<h1>Harness Design 長時間自主開發架構</h1>
-<div class="subtitle">GAN 啟發的 Generator-Evaluator-Planner 三代理人系統：如何讓 Claude 自主建構完整應用</div>
-<div class="source">Prithvi Rajasekaran / Anthropic Engineering | 2026-03-24</div>
-</div>
-</header>
+
 <div class="container">
-<!-- Executive Summary -->
-<div class="exec-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.5/5</span>
-<span class="rating-high">↑ 技術深度, 實務應用</span>
-<span class="rating-low">↓ 學習曲線</span>
-</div>
-<p>這篇 Anthropic 工程部落格詳述了如何突破單一代理人（Solo Agent）的效能天花板。核心洞察：借鑒 GAN（生成對抗網路）的對抗結構，將「生成」與「評估」分離成獨立代理人，解決了 LLM 自我評估時過度寬容的根本問題。文章從前端設計的主觀品質評分出發，發展出 Planner-Generator-Evaluator 三代理人架構，最終實現了多小時自主編碼產出完整全端應用。從 Opus 4.5 到 Opus 4.6 的模型升級過程中，作者也展示了「簡化 Harness」的原則：移除不再必要的腳手架，保留真正 load-bearing 的元件。</p>
-<p><strong>Bias Flag:</strong> 本文為 Anthropic 第一方工程內容，展示自家模型能力，需以 2-3x Discount 評估宣稱的效能提升。成本數據（$124-$200/次）為真實數據但屬最佳案例展示。</p>
-</div>
-<!-- Learning Objectives -->
-<h2 class="section-title">Learning Objectives</h2>
-<div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">🎯</div>
-<div class="objective-title">GAN 式多代理人架構</div>
-<div class="objective-desc">理解 Generator-Evaluator 分離為何能解決自我評估偏差，以及如何校準 Evaluator 的判斷標準</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">🛠</div>
-<div class="objective-title">Harness 設計原則</div>
-<div class="objective-desc">掌握 Context Reset vs Compaction 的取捨、Sprint Contract 協商機制、以及隨模型升級簡化架構的方法</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">📈</div>
-<div class="objective-title">品質評估框架</div>
-<div class="objective-desc">學習將主觀判斷（設計好不好？）轉化為可評分標準的方法論，以及 Evaluator 校準的實務技巧</div>
-</div>
-</div>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">Three-Agent Architecture (Planner-Generator-Evaluator)</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">📜</div>
-<div class="framework-step-title">Planner</div>
-<div class="framework-step-desc">1-4 句 Prompt 展開為完整 Product Spec</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">⚙</div>
-<div class="framework-step-title">Generator</div>
-<div class="framework-step-desc">逐 Sprint 實作功能 + 自評 + 版本控制</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔍</div>
-<div class="framework-step-title">Evaluator</div>
-<div class="framework-step-desc">Playwright MCP 實際操作測試 + 品質評分</div>
-</div>
-<div class="framework-arrow">↻</div>
-<div class="framework-step">
-<div class="framework-icon">🔄</div>
-<div class="framework-step-title">Feedback Loop</div>
-<div class="framework-step-desc">未達門檻則退回 Generator 修正</div>
-</div>
-</div>
-</div>
-<!-- Part I: Why Naive Implementations Fall Short -->
-<h2 class="section-title">Part I: 為什麼天真實作會失敗</h2>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">Harness 設計對長時間自主代理編碼的有效性有<span class="highlight-key">實質性影響</span>。早期實驗使用 Initializer Agent 將產品規格分解為任務清單，再由 Coding Agent 逐一實作功能，並在 session 之間傳遞產出物以保持上下文。社群也發展出類似方法，如「Ralph Wiggum」方法使用 hooks 或 scripts 讓代理人持續迭代。</div>
-<div class="en-text">"We've previously shown that harness design has a substantial impact on the effectiveness of long running agentic coding."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">但問題依然存在。對於更複雜的任務，代理人仍然會隨時間<span class="highlight-key">脫軌</span>。分析後發現兩個常見的失敗模式。</div>
-<div class="en-text">"For more complex tasks, the agent still tends to go off the rails over time."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：兩大失敗模式</div>
-<div class="info-box-content">
-<p><strong>1. Context Window 填滿導致失去連貫性</strong><br/>
+
+    <!-- Executive Summary -->
+    <div class="exec-summary">
+        <h2>Executive Summary</h2>
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.5/5</span>
+            <span class="rating-high">&uarr; 技術深度, 實務應用</span>
+            <span class="rating-low">&darr; 學習曲線</span>
+        </div>
+        <p>這篇 Anthropic 工程部落格詳述了如何突破單一代理人（Solo Agent）的效能天花板。核心洞察：借鑒 GAN（生成對抗網路）的對抗結構，將「生成」與「評估」分離成獨立代理人，解決了 LLM 自我評估時過度寬容的根本問題。文章從前端設計的主觀品質評分出發，發展出 Planner-Generator-Evaluator 三代理人架構，最終實現了多小時自主編碼產出完整全端應用。從 Opus 4.5 到 Opus 4.6 的模型升級過程中，作者也展示了「簡化 Harness」的原則：移除不再必要的腳手架，保留真正 load-bearing 的元件。</p>
+        <p><strong>Bias Flag:</strong> 本文為 Anthropic 第一方工程內容，展示自家模型能力，需以 2-3x Discount 評估宣稱的效能提升。成本數據（$124-$200/次）為真實數據但屬最佳案例展示。</p>
+    </div>
+
+    <!-- Learning Objectives -->
+    <h2 class="section-title">Learning Objectives</h2>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">&#127919;</div>
+            <div class="objective-title">GAN 式多代理人架構</div>
+            <div class="objective-desc">理解 Generator-Evaluator 分離為何能解決自我評估偏差，以及如何校準 Evaluator 的判斷標準</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#128736;</div>
+            <div class="objective-title">Harness 設計原則</div>
+            <div class="objective-desc">掌握 Context Reset vs Compaction 的取捨、Sprint Contract 協商機制、以及隨模型升級簡化架構的方法</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">&#128200;</div>
+            <div class="objective-title">品質評估框架</div>
+            <div class="objective-desc">學習將主觀判斷（設計好不好？）轉化為可評分標準的方法論，以及 Evaluator 校準的實務技巧</div>
+        </div>
+    </div>
+
+    <!-- Framework Visual -->
+    <div class="framework-visual">
+        <div class="framework-title">Three-Agent Architecture (Planner-Generator-Evaluator)</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#128220;</div>
+                <div class="framework-step-title">Planner</div>
+                <div class="framework-step-desc">1-4 句 Prompt 展開為完整 Product Spec</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#9881;</div>
+                <div class="framework-step-title">Generator</div>
+                <div class="framework-step-desc">逐 Sprint 實作功能 + 自評 + 版本控制</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128269;</div>
+                <div class="framework-step-title">Evaluator</div>
+                <div class="framework-step-desc">Playwright MCP 實際操作測試 + 品質評分</div>
+            </div>
+            <div class="framework-arrow">&circlearrowright;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128260;</div>
+                <div class="framework-step-title">Feedback Loop</div>
+                <div class="framework-step-desc">未達門檻則退回 Generator 修正</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part I: Why Naive Implementations Fall Short -->
+    <h2 class="section-title">Part I: 為什麼天真實作會失敗</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">Harness 設計對長時間自主代理編碼的有效性有<span class="highlight-key">實質性影響</span>。早期實驗使用 Initializer Agent 將產品規格分解為任務清單，再由 Coding Agent 逐一實作功能，並在 session 之間傳遞產出物以保持上下文。社群也發展出類似方法，如「Ralph Wiggum」方法使用 hooks 或 scripts 讓代理人持續迭代。</div>
+                <div class="en">"We've previously shown that harness design has a substantial impact on the effectiveness of long running agentic coding."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">但問題依然存在。對於更複雜的任務，代理人仍然會隨時間<span class="highlight-key">脫軌</span>。分析後發現兩個常見的失敗模式。</div>
+                <div class="en">"For more complex tasks, the agent still tends to go off the rails over time."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念：兩大失敗模式</div>
+                <div class="info-box-content">
+                    <p><strong>1. Context Window 填滿導致失去連貫性</strong><br>
                     模型在長任務中隨上下文窗口填滿而失去連貫性。部分模型還會出現 <span class="highlight-concept">Context Anxiety（上下文焦慮）</span>：當模型認為接近上下文限制時，會提前開始收尾工作。</p>
-<p><strong>2. 自我評估偏差</strong><br/>
+                    <p><strong>2. 自我評估偏差</strong><br>
                     當被要求評估自己產出的工作時，代理人傾向<span class="highlight-key">自信地稱讚自己的作品</span>——即使對人類觀察者來說品質明顯平庸。這在設計等主觀任務中尤其嚴重。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：Context Reset vs Compaction</div>
-<div class="info-box-content">
-<p><strong>Context Reset</strong>：完全清除上下文窗口，啟動全新代理人，搭配結構化 Handoff 傳遞前一代理人的狀態。提供乾淨的起點，但增加編排複雜度。</p>
-<p><strong>Compaction</strong>：在原位摘要早期對話內容，讓同一代理人繼續。保持連續性，但無法解決 Context Anxiety。</p>
-<p>Sonnet 4.5 的 Context Anxiety 嚴重到 Compaction 不夠用，必須使用 Context Reset。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part II: Frontend Design -->
-<h2 class="section-title">Part II: 前端設計 - 讓主觀品質可以評分</h2>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">作者從前端設計開始實驗，因為這裡的自我評估問題最明顯。<span class="highlight-key">沒有任何干預的情況下，Claude 通常會傾向安全、可預測的佈局</span>——技術上可用但視覺上平淡無奇。</div>
-<div class="en-text">"Absent any intervention, Claude normally gravitates toward safe, predictable layouts that are technically functional but visually unremarkable."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">兩個關鍵洞察塑造了 Harness：第一，美感雖然無法完全簡化為分數，但可以用<span class="highlight-concept">編碼設計原則與偏好的評分標準</span>來改進。「這個設計漂亮嗎？」難以一致回答，但「這是否遵循了我們的好設計原則？」就有具體的評分依據。第二，將前端生成與前端評分分離，可以創建驅動 Generator 走向更強輸出的回饋迴路。</div>
-<div class="en-text">"While aesthetics can't be fully reduced to a score... they can be improved with grading criteria that encode design principles and preferences."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：四項評分標準</div>
-<div class="info-box-content">
-<table class="data-table">
-<tr><th>維度</th><th>評分重點</th><th>權重</th></tr>
-<tr><td><strong>Design Quality</strong></td><td>色彩、排版、佈局是否形成連貫整體而非零件集合</td><td>高</td></tr>
-<tr><td><strong>Originality</strong></td><td>是否有自訂決策，還是模板預設和 AI 生成模式（如紫色漸層配白色卡片）</td><td>高</td></tr>
-<tr><td><strong>Craft</strong></td><td>排版層級、間距一致性、色彩和諧、對比度</td><td>低</td></tr>
-<tr><td><strong>Functionality</strong></td><td>使用者能否理解介面功能、找到主要操作</td><td>低</td></tr>
-</table>
-<p>Design Quality 和 Originality 權重較高，因為 Claude 在 Craft 和 Functionality 上已經表現良好，但設計和原創性往往「bland at best（最好也只是平淡）」。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明：GAN 結構的啟示</div>
-<div class="info-box-content">
-<p>想像你是一個畫家（Generator），有一個嚴格的美術評論家（Evaluator）持續看你的作品。如果你自己評論自己的畫，你會說「不錯啦」。但獨立的評論家會指出：「這個構圖太安全了，色彩選擇毫無個性。」——然後你才會真正去冒險嘗試。</p>
-<p>這就是為什麼<span class="highlight-concept">讓一個獨立的 Evaluator 變得嚴格</span>，比讓 Generator 自我批評要容易得多。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part III: Frontend Iteration Loop -->
-<h2 class="section-title">Part III: 前端迭代迴路的運作</h2>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">回饋迴路建構在 <span class="highlight-concept">Claude Agent SDK</span> 上。Generator 先根據使用者 Prompt 建立 HTML/CSS/JS 前端。然後 Evaluator 透過 <span class="highlight-practical">Playwright MCP</span> 直接與即時頁面互動——自行導覽頁面、截圖、仔細研究實作——然後對每個標準評分並撰寫詳細批評。回饋再流回 Generator 作為下一次迭代的輸入。</div>
-<div class="en-text">"I gave the evaluator the Playwright MCP, which let it interact with the live page directly before scoring each criterion and writing a detailed critique."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">每次生成跑 5-15 次迭代，完整運行可長達<span class="highlight-key">四小時</span>。Generator 在每次評估後做出策略決定：如果分數趨勢良好就精進當前方向，如果方法不行就<span class="highlight-concept">完全轉向不同的美學方向</span>。</div>
-<div class="en-text">"I ran 5 to 15 iterations per generation, with each iteration typically pushing the generator in a more distinctive direction."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">一個引人注目的案例：提示模型建立荷蘭藝術博物館網站。到第九次迭代，產出了乾淨的深色主題首頁。然後在第十次循環，<span class="highlight-key">完全推翻方法</span>，重新想像為空間體驗：CSS 透視渲染的 3D 房間、棋盤格地板、藝術品自由掛在牆上、用門道導覽取代滾動或點擊。</div>
-<div class="en-text">"...it scrapped the approach entirely and reimagined the site as a spatial experience: a 3D room with a checkered floor rendered in CSS perspective."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：迭代模式的觀察</div>
-<div class="info-box-content">
-<p><strong>分數通常隨迭代提升，但並非線性。</strong>作者經常偏好中間迭代版本而非最後一版。實作複雜度也隨輪次增加——Generator 在回饋下嘗試更有企圖的方案。</p>
-<p><strong>標準的措辭直接影響輸出。</strong>包含「最好的設計是博物館等級」這類語句會將設計推向特定的視覺收斂方向，表明與標準相關的提示語直接塑造了輸出的特質。</p>
-<p><strong>即使第一次迭代就比完全無 Prompt 的基線更好。</strong>標準和相關語言本身就引導模型遠離泛用預設，在任何 Evaluator 回饋之前。</p>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：技術堆疊</div>
-<div class="info-box-content">
-<p><strong>Claude Agent SDK</strong>：編排多代理人的基礎框架<br/>
-<strong>Playwright MCP</strong>：讓 Evaluator 能「看見」和操作實際頁面<br/>
-<strong>Few-shot 校準</strong>：用帶有詳細分數分解的範例來校準 Evaluator 判斷<br/>
-<strong>策略分岔</strong>：每次迭代後決定 Refine（精進）或 Pivot（轉向）</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part IV: Full-Stack Architecture -->
-<h2 class="section-title">Part IV: 擴展到全端開發 - 三代理人架構</h2>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">Generator-Evaluator 迴路自然對應到軟體開發生命週期，其中 Code Review 和 QA 扮演與設計 Evaluator 相同的結構角色。在先前的長時間 Harness 中，已用 Initializer Agent、逐功能編碼、和 session 間的 Context Reset 解決了連貫性問題。</div>
-<div class="en-text">"The generator-evaluator loop maps naturally onto the software development lifecycle, where code review and QA serve the same structural role."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">Opus 4.5 很大程度上自行消除了 Context Anxiety 行為</span>，所以可以完全移除 Context Reset。代理人作為單一連續 session 運行，由 Claude Agent SDK 的自動 Compaction 處理上下文增長。</div>
-<div class="en-text">"Opus 4.5 largely removed that behavior on its own, so I was able to drop context resets from this harness entirely."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：三代理人角色定義</div>
-<div class="info-box-content">
-<p><strong>Planner（規劃者）</strong><br/>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示：Context Reset vs Compaction</div>
+                <div class="info-box-content">
+                    <p><strong>Context Reset</strong>：完全清除上下文窗口，啟動全新代理人，搭配結構化 Handoff 傳遞前一代理人的狀態。提供乾淨的起點，但增加編排複雜度。</p>
+                    <p><strong>Compaction</strong>：在原位摘要早期對話內容，讓同一代理人繼續。保持連續性，但無法解決 Context Anxiety。</p>
+                    <p>Sonnet 4.5 的 Context Anxiety 嚴重到 Compaction 不夠用，必須使用 Context Reset。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part II: Frontend Design -->
+    <h2 class="section-title">Part II: 前端設計 - 讓主觀品質可以評分</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">作者從前端設計開始實驗，因為這裡的自我評估問題最明顯。<span class="highlight-key">沒有任何干預的情況下，Claude 通常會傾向安全、可預測的佈局</span>——技術上可用但視覺上平淡無奇。</div>
+                <div class="en">"Absent any intervention, Claude normally gravitates toward safe, predictable layouts that are technically functional but visually unremarkable."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">兩個關鍵洞察塑造了 Harness：第一，美感雖然無法完全簡化為分數，但可以用<span class="highlight-concept">編碼設計原則與偏好的評分標準</span>來改進。「這個設計漂亮嗎？」難以一致回答，但「這是否遵循了我們的好設計原則？」就有具體的評分依據。第二，將前端生成與前端評分分離，可以創建驅動 Generator 走向更強輸出的回饋迴路。</div>
+                <div class="en">"While aesthetics can't be fully reduced to a score... they can be improved with grading criteria that encode design principles and preferences."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; 實務應用：四項評分標準</div>
+                <div class="info-box-content">
+                    <table class="data-table">
+                        <tr><th>維度</th><th>評分重點</th><th>權重</th></tr>
+                        <tr><td><strong>Design Quality</strong></td><td>色彩、排版、佈局是否形成連貫整體而非零件集合</td><td>高</td></tr>
+                        <tr><td><strong>Originality</strong></td><td>是否有自訂決策，還是模板預設和 AI 生成模式（如紫色漸層配白色卡片）</td><td>高</td></tr>
+                        <tr><td><strong>Craft</strong></td><td>排版層級、間距一致性、色彩和諧、對比度</td><td>低</td></tr>
+                        <tr><td><strong>Functionality</strong></td><td>使用者能否理解介面功能、找到主要操作</td><td>低</td></tr>
+                    </table>
+                    <p>Design Quality 和 Originality 權重較高，因為 Claude 在 Craft 和 Functionality 上已經表現良好，但設計和原創性往往「bland at best（最好也只是平淡）」。</p>
+                </div>
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明：GAN 結構的啟示</div>
+                <div class="info-box-content">
+                    <p>想像你是一個畫家（Generator），有一個嚴格的美術評論家（Evaluator）持續看你的作品。如果你自己評論自己的畫，你會說「不錯啦」。但獨立的評論家會指出：「這個構圖太安全了，色彩選擇毫無個性。」——然後你才會真正去冒險嘗試。</p>
+                    <p>這就是為什麼<span class="highlight-concept">讓一個獨立的 Evaluator 變得嚴格</span>，比讓 Generator 自我批評要容易得多。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part III: Frontend Iteration Loop -->
+    <h2 class="section-title">Part III: 前端迭代迴路的運作</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">回饋迴路建構在 <span class="highlight-concept">Claude Agent SDK</span> 上。Generator 先根據使用者 Prompt 建立 HTML/CSS/JS 前端。然後 Evaluator 透過 <span class="highlight-practical">Playwright MCP</span> 直接與即時頁面互動——自行導覽頁面、截圖、仔細研究實作——然後對每個標準評分並撰寫詳細批評。回饋再流回 Generator 作為下一次迭代的輸入。</div>
+                <div class="en">"I gave the evaluator the Playwright MCP, which let it interact with the live page directly before scoring each criterion and writing a detailed critique."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">每次生成跑 5-15 次迭代，完整運行可長達<span class="highlight-key">四小時</span>。Generator 在每次評估後做出策略決定：如果分數趨勢良好就精進當前方向，如果方法不行就<span class="highlight-concept">完全轉向不同的美學方向</span>。</div>
+                <div class="en">"I ran 5 to 15 iterations per generation, with each iteration typically pushing the generator in a more distinctive direction."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">一個引人注目的案例：提示模型建立荷蘭藝術博物館網站。到第九次迭代，產出了乾淨的深色主題首頁。然後在第十次循環，<span class="highlight-key">完全推翻方法</span>，重新想像為空間體驗：CSS 透視渲染的 3D 房間、棋盤格地板、藝術品自由掛在牆上、用門道導覽取代滾動或點擊。</div>
+                <div class="en">"...it scrapped the approach entirely and reimagined the site as a spatial experience: a 3D room with a checkered floor rendered in CSS perspective."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示：迭代模式的觀察</div>
+                <div class="info-box-content">
+                    <p><strong>分數通常隨迭代提升，但並非線性。</strong>作者經常偏好中間迭代版本而非最後一版。實作複雜度也隨輪次增加——Generator 在回饋下嘗試更有企圖的方案。</p>
+                    <p><strong>標準的措辭直接影響輸出。</strong>包含「最好的設計是博物館等級」這類語句會將設計推向特定的視覺收斂方向，表明與標準相關的提示語直接塑造了輸出的特質。</p>
+                    <p><strong>即使第一次迭代就比完全無 Prompt 的基線更好。</strong>標準和相關語言本身就引導模型遠離泛用預設，在任何 Evaluator 回饋之前。</p>
+                </div>
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念：技術堆疊</div>
+                <div class="info-box-content">
+                    <p><strong>Claude Agent SDK</strong>：編排多代理人的基礎框架<br>
+                    <strong>Playwright MCP</strong>：讓 Evaluator 能「看見」和操作實際頁面<br>
+                    <strong>Few-shot 校準</strong>：用帶有詳細分數分解的範例來校準 Evaluator 判斷<br>
+                    <strong>策略分岔</strong>：每次迭代後決定 Refine（精進）或 Pivot（轉向）</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part IV: Full-Stack Architecture -->
+    <h2 class="section-title">Part IV: 擴展到全端開發 - 三代理人架構</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">Generator-Evaluator 迴路自然對應到軟體開發生命週期，其中 Code Review 和 QA 扮演與設計 Evaluator 相同的結構角色。在先前的長時間 Harness 中，已用 Initializer Agent、逐功能編碼、和 session 間的 Context Reset 解決了連貫性問題。</div>
+                <div class="en">"The generator-evaluator loop maps naturally onto the software development lifecycle, where code review and QA serve the same structural role."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh"><span class="highlight-concept">Opus 4.5 很大程度上自行消除了 Context Anxiety 行為</span>，所以可以完全移除 Context Reset。代理人作為單一連續 session 運行，由 Claude Agent SDK 的自動 Compaction 處理上下文增長。</div>
+                <div class="en">"Opus 4.5 largely removed that behavior on its own, so I was able to drop context resets from this harness entirely."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念：三代理人角色定義</div>
+                <div class="info-box-content">
+                    <p><strong>Planner（規劃者）</strong><br>
                     接受 1-4 句簡短 Prompt，展開為完整 Product Spec。被指示保持<span class="highlight-key">有企圖的範圍</span>，聚焦產品情境和高階技術設計，而非細節實作。避免過早規定粒度細節——如果 Planner 的細節有錯，錯誤會連鎖到下游實作。</p>
-<p><strong>Generator（生成者）</strong><br/>
+                    <p><strong>Generator（生成者）</strong><br>
                     按 Sprint 逐一實作功能。技術堆疊：React + Vite + FastAPI + SQLite/PostgreSQL。每個 Sprint 結束自評後交給 QA。擁有 Git 版本控制。</p>
-<p><strong>Evaluator（評估者）</strong><br/>
+                    <p><strong>Evaluator（評估者）</strong><br>
                     用 Playwright MCP 以使用者角度點擊測試運行中的應用，檢查 UI 功能、API 端點、資料庫狀態。對每個 Sprint 按標準評分——Product Depth、Functionality、Visual Design、Code Quality。每個標準有硬門檻，任一未達標即 Sprint 失敗。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part V: Sprint Contract & Communication -->
-<h2 class="section-title">Part V: Sprint Contract 與代理人間溝通</h2>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">每個 Sprint 開始前，Generator 和 Evaluator 會<span class="highlight-concept">協商 Sprint Contract</span>——在寫任何程式碼之前，先同意這塊工作「完成」長什麼樣。Product Spec 刻意保持高階，Sprint Contract 填補了使用者故事與可測試實作之間的鴻溝。</div>
-<div class="en-text">"The generator proposed what it would build and how success would be verified, and the evaluator reviewed that proposal."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">溝通透過<span class="highlight-practical">檔案</span>處理：一個代理人寫檔案，另一個讀取並在該檔案或新檔案中回應。這讓工作忠於 Spec，同時不過早指定實作細節。</div>
-<div class="en-text">"Communication was handled via files: one agent would write a file, another agent would read it and respond."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明：Sprint Contract = 施工前的圖審</div>
-<div class="info-box-content">
-<p>這就像 CDMO 在批次生產前的 Batch Record Review。你不會讓操作員自己決定「完成」是什麼意思——QA 和生產會先同意驗收標準。Sprint Contract 就是代理人版本的「先定義 Acceptance Criteria，再開始施工」。</p>
-<p>Sprint 3 光是 Level Editor 就有 <strong>27 項驗收標準</strong>——粒度細到個別工具的行為預期。</p>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較：Evaluator 發現的真實 Bug</div>
-<div class="info-box-content">
-<table class="data-table">
-<tr><th>Contract 標準</th><th>Evaluator 發現</th></tr>
-<tr><td>矩形填充工具支援拖曳填滿</td><td><strong>FAIL</strong> — 只在起點和終點放磚，fillRectangle 函數存在但 mouseUp 未正確觸發</td></tr>
-<tr><td>可選擇並刪除已放置的 Entity</td><td><strong>FAIL</strong> — Delete handler 要求同時設定 selection 和 selectedEntityId，但點擊只設定後者</td></tr>
-<tr><td>可透過 API 重新排序動畫幀</td><td><strong>FAIL</strong> — PUT /frames/reorder 路由定義在 /{frame_id} 之後，FastAPI 將 'reorder' 當 integer 解析返回 422</td></tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-<!-- Part VI: Solo vs Harness Results -->
-<h2 class="section-title">Part VI: 實驗結果 - Solo vs 完整 Harness</h2>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">使用「建立一個 2D 復古遊戲製作器」的 Prompt 對比測試。Solo 模式 20 分鐘 $9 完成，完整 Harness 6 小時 $200。<span class="highlight-key">成本超過 20 倍，但品質差異立即可見。</span></div>
-<div class="en-text">"The harness was over 20x more expensive, but the difference in output quality was immediately apparent."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Solo 版本：佈局浪費空間、工作流程僵硬、最關鍵的是<span class="highlight-key">遊戲本身是壞的</span>——Entity 出現在畫面上但不回應輸入，Entity 定義和遊戲運行時之間的連線斷裂。</div>
-<div class="en-text">"My entities appeared on screen but nothing responded to input. The wiring between entity definitions and the game runtime was broken."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Harness 版本：Planner 將一句 Prompt 展開為跨 10 個 Sprint 的 16 功能 Spec。包含 Sprite 動畫系統、行為模板、音效、<span class="highlight-practical">AI 輔助 Sprite 生成器和關卡設計師</span>、遊戲匯出。核心功能（遊戲可以玩）確實運作。</div>
-<div class="en-text">"The spec called for a sprite animation system, behavior templates, sound effects and music, an AI-assisted sprite generator..."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-cost">
-<div class="info-box-header">💰 成本分析：Solo vs Harness</div>
-<div class="info-box-content">
-<table class="data-table">
-<tr><th>Harness 類型</th><th>時間</th><th>成本</th><th>核心功能</th></tr>
-<tr><td>Solo Agent</td><td>20 min</td><td>$9</td><td>壞的（不可玩）</td></tr>
-<tr><td>Full Harness (v1)</td><td>6 hr</td><td>$200</td><td>可玩，有 AI 整合</td></tr>
-</table>
-<p>22x 的成本換來的是：(1) 核心功能真正運作 (2) 更豐富的功能範圍 (3) 一致的視覺設計語言 (4) AI 功能整合。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：Evaluator 校準的困難</div>
-<div class="info-box-content">
-<p>原生狀態的 Claude 是<span class="highlight-key">糟糕的 QA Agent</span>。早期測試中，Evaluator 會辨識出合理的問題，然後說服自己這些不是大問題就通過了。也傾向表面測試而非探索邊界案例。</p>
-<p>校準方法：閱讀 Evaluator 的日誌，找出判斷與作者不一致的地方，更新 QA 的 Prompt 來修正。<strong>需要好幾輪迭代</strong>才讓 Evaluator 的評分合理。即使校準後，小佈局問題、不直覺的互動、和深層功能的未發現 Bug 仍然存在。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part VII: Iterating on the Harness -->
-<h2 class="section-title">Part VII: 簡化 Harness - 隨模型升級調整架構</h2>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">第一組結果令人鼓舞，但也<span class="highlight-key">笨重、緩慢、昂貴</span>。下一步是找到簡化 Harness 而不降低效能的方法。核心原則：<span class="highlight-concept">Harness 中的每個元件都編碼了一個關於模型「做不到什麼」的假設，這些假設值得壓力測試</span>——因為它們可能不正確，也因為隨著模型改進它們會快速過時。</div>
-<div class="en-text">"Every component in a harness encodes an assumption about what the model can't do on its own, and those assumptions are worth stress testing."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Opus 4.6 發布後提供了進一步簡化的動機。官方描述：「<span class="highlight-practical">規劃更謹慎、代理任務持續更久、在更大的程式庫中更可靠運作、有更好的程式碼審查和除錯能力來抓自己的錯誤</span>」——這些全是 Harness 原本設計來補充的能力。</div>
-<div class="en-text">"[Opus 4.6] plans more carefully, sustains agentic tasks for longer, can operate more reliably in larger codebases..."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">作者首先<span class="highlight-key">完全移除了 Sprint 結構</span>。Opus 4.6 可以不需要這種分解就原生處理工作。Evaluator 改為建構結束後的單次評估，而非逐 Sprint 評分。</div>
-<div class="en-text">"I started by removing the sprint construct entirely... the model could natively handle the job without this sort of decomposition."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：Tool Decay 原則</div>
-<div class="info-box-content">
-<p>這段完美呼應了我們的 <strong>Tool Decay</strong> 原則。Harness 元件就像 Prompt 中的規則——隨著模型能力提升，先前必要的約束變成限制。</p>
-<p><strong>實際案例：</strong></p>
-<p>Sprint 結構在 Opus 4.5 時是必要的（模型無法長時間保持連貫），但在 Opus 4.6 時變成不必要的開銷。Evaluator 的價值也隨模型能力移動：當任務在模型原生能力範圍內時，Evaluator 是不必要的開銷；但當任務在能力邊界上時，Evaluator 仍然提供真正的提升。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：Harness 簡化方法論</div>
-<div class="info-box-content">
-<p><strong>方法一（失敗）</strong>：大幅削減 Harness 並嘗試創新想法。結果：無法複製原始效能，也難以判斷哪些元件真正承載負荷。</p>
-<p><strong>方法二（成功）</strong>：<span class="highlight-practical">逐一移除元件</span>，觀察每個移除對最終結果的影響。系統性消去法。</p>
-<p>這與 Anthropic 的「Building Effective Agents」原則一致：找到最簡單的可行方案，只在需要時增加複雜度。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part VIII: Updated Harness Results (DAW) -->
-<h2 class="section-title">Part VIII: 更新後的 Harness 結果 - DAW 案例</h2>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">用更新的 Harness 測試：「在瀏覽器中使用 Web Audio API 建立一個完整功能的 DAW（數位音訊工作站）」。運行約 4 小時，成本 $124.70。大部分時間花在 Builder 上——<span class="highlight-key">連續運行超過兩小時而不需要先前 Opus 4.5 所需的 Sprint 分解</span>。</div>
-<div class="en-text">"Most of the time went to the builder, which ran coherently for over two hours without the sprint decomposition."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">QA Agent 仍然抓到了真正的缺口。第一輪回饋指出：應用看起來很強但多個核心 DAW 功能僅為顯示用，<span class="highlight-key">沒有互動深度</span>——Clip 無法在時間軸上拖動、沒有樂器 UI 面板、沒有視覺化效果編輯器。第二輪仍發現：音訊錄製為 stub、Clip 調整大小未實作、效果視覺化僅為數值滑桿而非圖形化。</div>
-<div class="en-text">"The QA agent still caught real gaps... several core DAW features are display-only without interactive depth."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">最終應用有所有核心部件：可運作的 Arrangement View、Mixer、Transport。透過 Prompt 就能組成一段簡短歌曲：Agent 設定節拍和調性、鋪旋律、建鼓軌、調混音器音量、加殘響。</div>
-<div class="en-text">"The core primitives for song composition were present, and the agent could drive them autonomously."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-cost">
-<div class="info-box-header">💰 成本分析：更新 Harness 各階段</div>
-<div class="info-box-content">
-<table class="data-table">
-<tr><th>階段</th><th>時間</th><th>成本</th></tr>
-<tr><td>Planner</td><td>4.7 min</td><td>$0.46</td></tr>
-<tr><td>Build (Round 1)</td><td>2 hr 7 min</td><td>$71.08</td></tr>
-<tr><td>QA (Round 1)</td><td>8.8 min</td><td>$3.24</td></tr>
-<tr><td>Build (Round 2)</td><td>1 hr 2 min</td><td>$36.89</td></tr>
-<tr><td>QA (Round 2)</td><td>6.8 min</td><td>$3.09</td></tr>
-<tr><td>Build (Round 3)</td><td>10.9 min</td><td>$5.88</td></tr>
-<tr><td>QA (Round 3)</td><td>9.6 min</td><td>$4.06</td></tr>
-<tr><td><strong>Total</strong></td><td><strong>3 hr 50 min</strong></td><td><strong>$124.70</strong></td></tr>
-</table>
-<p>比 v1 Harness ($200) 便宜 38%，同時 Generator 的單次連續運行時間更長（2hr+ vs Sprint-based）。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示：Evaluator 的動態價值</div>
-<div class="info-box-content">
-<p>Evaluator 不是固定的 yes/no 決策。其價值取決於任務是否<span class="highlight-key">超出當前模型可靠獨立完成的範圍</span>。</p>
-<p>在 4.5 上，邊界很近——大部分建構都在 Generator 能獨立做好的邊緣，Evaluator 捕捉了有意義的問題。在 4.6 上，邊界往外移——先前需要 Evaluator 的任務現在 Generator 自己就能處理。但對於仍在能力邊緣的部分，Evaluator 繼續提供真正的提升。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Key Takeaways -->
-<h2 class="section-title">Key Takeaways</h2>
-<div class="takeaways-grid">
-<div class="summary-card">
-<h4>🎯 Generator-Evaluator 分離是關鍵槓桿</h4>
-<p>讓生成者自我批評幾乎不可能——LLM 天然傾向寬容自己的產出。但校準一個獨立的 Evaluator 使其嚴格，比讓 Generator 自我批判要容易得多。這是 GAN 結構的核心洞察。</p>
-</div>
-<div class="summary-card">
-<h4>🛠 Harness 元件應隨模型升級重新審視</h4>
-<p>每個元件都是對模型弱點的假設。Opus 4.5 需要 Sprint 分解和 Context Reset；Opus 4.6 不需要。逐一移除元件測試影響，比一次大幅重寫更有效。</p>
-</div>
-<div class="summary-card">
-<h4>📈 主觀品質可以被操作化</h4>
-<p>「這個設計好不好？」無法一致回答，但「這是否符合我們的設計原則？」可以。四維度評分標準加上 few-shot 校準，讓主觀判斷變得可靠且可重複。</p>
-</div>
-<div class="summary-card">
-<h4>💰 成本是真實的但可能值得</h4>
-<p>完整 Harness 比 Solo 貴 10-20x（$9 vs $124-200），但差異是「核心功能壞掉」vs「完整可用的應用」。對需要可靠輸出的場景，Evaluator 的邊際成本遠低於人工 debug。</p>
-</div>
-</div>
-<!-- Practice Questions -->
-<h2 class="section-title">Practice Questions</h2>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">為什麼「分離 Generator 和 Evaluator」比「讓 Generator 自我評估」更有效？請從 LLM 的行為特性解釋。</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>LLM 在評估自己產出的內容時有天然的<strong>寬容偏差</strong>——傾向找到理由說服自己作品是好的，即使品質明顯平庸。這不僅是提示問題，而是模型在生成與評估共享同一上下文時的結構性傾向。分離後，Evaluator 沒有「自我辯護」的動機，可以被獨立校準為嚴格的評審。校準獨立 Evaluator 比改變 Generator 的自我認知要容易得多——你只需調整 Evaluator 的 Prompt 和 few-shot 範例，而不需要改變 Generator 的整個生成行為。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">在 CDMO 環境中，這篇文章的「Sprint Contract」概念如何對應到你已有的品質系統？可以應用在哪些流程？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>Sprint Contract 直接對應到 CDMO 的<strong>批次記錄預審和 Acceptance Criteria 定義</strong>。在 GMP 環境中，每次生產前 QA 和製造會同意：什麼算「合格」、要測哪些參數、CQA/CPP 的限值是什麼。這就是 Sprint Contract 的實體版本。</p>
-<p>可應用場景：(1) 用 AI Agent 生成偏差調查報告初稿前，先定義驗收標準（覆蓋率、根因分析深度、CAPA 建議品質）(2) 技術轉移文件的分階段審查，每階段先同意什麼算「完成」(3) 變更控制的影響評估自動化，Generator 產出評估後由 Evaluator（可以是另一個 AI 或人類 QA）驗證完整性。但關鍵差異：在 GMP 中，Evaluator 必須是人類或人類監督的系統——純 AI Evaluator 在 GMP 關鍵操作中不被接受（Copilot Mode 原則）。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">文章宣稱 Evaluator 「caught real gaps」——但 Evaluator 本身也是 LLM。你認為這個架構的品質天花板在哪裡？什麼時候人類必須介入？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>品質天花板至少有三個來源：(1) <strong>Evaluator 的品味上限</strong>——它只能按照被校準的標準評分，無法發現標準之外的問題。作者自己提到 Evaluator 校準需要「好幾輪迭代」閱讀日誌找分歧，這個校準本身依賴人類的判斷力。(2) <strong>測試深度的限制</strong>——Evaluator 透過 Playwright 操作，但深層嵌套功能和邊界案例仍然遺漏。DAW 案例中「音訊錄製為 stub」到第二輪才被發現，暗示 Evaluator 的測試覆蓋率有限。(3) <strong>產品直覺的缺失</strong>——作者指出兩個版本都沒有引導使用者「先建 Sprite 再建關卡」的 onboarding 流程，這是產品設計直覺的問題，不是程式碼 Bug。目前的 Evaluator 標準沒有覆蓋 UX 流程設計。</p>
-<p>人類必須介入的時機：(1) 定義和校準評分標準 (2) 需要產品直覺而非技術正確性的判斷 (3) 安全關鍵或合規關鍵的決策 (4) 當 Evaluator 的回饋開始重複或停滯時。</p>
-</div>
-</details>
-<!-- Bottom Line -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Generator-Evaluator 分離不只是一個 AI 架構模式——它是對 LLM 自我評估偏差的結構性解方。這個洞察對我在 CDMO 中設計 AI 輔助流程有直接意義：任何讓 AI 產出內容的場景，都應該預設分離「產出」和「品質檢查」角色，而不是讓同一個模型做兩件事。「Sprint Contract」= 先定義 Acceptance Criteria 再動工，這在 GMP 環境中已是標準做法，現在可以延伸到 AI-assisted 流程。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">在下一個教育文件生成流程中，測試「Generator + 獨立 Evaluator 檢查 meta tag 完整性和 Bottom Line 品質」的兩步架構。具體做法：讓 Claude Code 的 headless mode 生成文件（Generator），再用第二次呼叫檢查生成結果是否符合 Master Prompt 的標準（Evaluator）。如果第二步發現缺失就自動補正。這是最小可行的 Generator-Evaluator 實驗。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章的成本數據（$124-200/run）來自 Opus 4.5/4.6——頂級模型。在預算受限的情境中，能否用較小模型（Sonnet）作為 Evaluator 同時保持校準品質？文章未探討。另外，四項設計評分標準的可轉移性——能否直接套用到非前端的主觀品質評估（如文件品質、偏差報告品質）？需要自行實驗。Evaluator 校準的具體 few-shot 範例格式也未公開，這是實作時最需要的細節。</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-03-25 | 來源：<a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank">Anthropic Engineering - Harness design for long-running application development</a></p>
-<p>建議 Chat Title：<code>2026-03-25 [Anthropic-Eng] [Agent] Harness Design Long-Running Apps</code></p>
-<p>建議檔名：<code>2026-03-25_harness-design-long-running-apps.html</code></p>
-</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part V: Sprint Contract & Communication -->
+    <h2 class="section-title">Part V: Sprint Contract 與代理人間溝通</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">每個 Sprint 開始前，Generator 和 Evaluator 會<span class="highlight-concept">協商 Sprint Contract</span>——在寫任何程式碼之前，先同意這塊工作「完成」長什麼樣。Product Spec 刻意保持高階，Sprint Contract 填補了使用者故事與可測試實作之間的鴻溝。</div>
+                <div class="en">"The generator proposed what it would build and how success would be verified, and the evaluator reviewed that proposal."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">溝通透過<span class="highlight-practical">檔案</span>處理：一個代理人寫檔案，另一個讀取並在該檔案或新檔案中回應。這讓工作忠於 Spec，同時不過早指定實作細節。</div>
+                <div class="en">"Communication was handled via files: one agent would write a file, another agent would read it and respond."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明：Sprint Contract = 施工前的圖審</div>
+                <div class="info-box-content">
+                    <p>這就像 CDMO 在批次生產前的 Batch Record Review。你不會讓操作員自己決定「完成」是什麼意思——QA 和生產會先同意驗收標準。Sprint Contract 就是代理人版本的「先定義 Acceptance Criteria，再開始施工」。</p>
+                    <p>Sprint 3 光是 Level Editor 就有 <strong>27 項驗收標準</strong>——粒度細到個別工具的行為預期。</p>
+                </div>
+            </div>
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#9878;&#65039; 工具比較：Evaluator 發現的真實 Bug</div>
+                <div class="info-box-content">
+                    <table class="data-table">
+                        <tr><th>Contract 標準</th><th>Evaluator 發現</th></tr>
+                        <tr><td>矩形填充工具支援拖曳填滿</td><td><strong>FAIL</strong> — 只在起點和終點放磚，fillRectangle 函數存在但 mouseUp 未正確觸發</td></tr>
+                        <tr><td>可選擇並刪除已放置的 Entity</td><td><strong>FAIL</strong> — Delete handler 要求同時設定 selection 和 selectedEntityId，但點擊只設定後者</td></tr>
+                        <tr><td>可透過 API 重新排序動畫幀</td><td><strong>FAIL</strong> — PUT /frames/reorder 路由定義在 /{frame_id} 之後，FastAPI 將 'reorder' 當 integer 解析返回 422</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part VI: Solo vs Harness Results -->
+    <h2 class="section-title">Part VI: 實驗結果 - Solo vs 完整 Harness</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">使用「建立一個 2D 復古遊戲製作器」的 Prompt 對比測試。Solo 模式 20 分鐘 $9 完成，完整 Harness 6 小時 $200。<span class="highlight-key">成本超過 20 倍，但品質差異立即可見。</span></div>
+                <div class="en">"The harness was over 20x more expensive, but the difference in output quality was immediately apparent."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">Solo 版本：佈局浪費空間、工作流程僵硬、最關鍵的是<span class="highlight-key">遊戲本身是壞的</span>——Entity 出現在畫面上但不回應輸入，Entity 定義和遊戲運行時之間的連線斷裂。</div>
+                <div class="en">"My entities appeared on screen but nothing responded to input. The wiring between entity definitions and the game runtime was broken."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">Harness 版本：Planner 將一句 Prompt 展開為跨 10 個 Sprint 的 16 功能 Spec。包含 Sprite 動畫系統、行為模板、音效、<span class="highlight-practical">AI 輔助 Sprite 生成器和關卡設計師</span>、遊戲匯出。核心功能（遊戲可以玩）確實運作。</div>
+                <div class="en">"The spec called for a sprite animation system, behavior templates, sound effects and music, an AI-assisted sprite generator..."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-cost">
+                <div class="info-box-header">&#128176; 成本分析：Solo vs Harness</div>
+                <div class="info-box-content">
+                    <table class="data-table">
+                        <tr><th>Harness 類型</th><th>時間</th><th>成本</th><th>核心功能</th></tr>
+                        <tr><td>Solo Agent</td><td>20 min</td><td>$9</td><td>壞的（不可玩）</td></tr>
+                        <tr><td>Full Harness (v1)</td><td>6 hr</td><td>$200</td><td>可玩，有 AI 整合</td></tr>
+                    </table>
+                    <p>22x 的成本換來的是：(1) 核心功能真正運作 (2) 更豐富的功能範圍 (3) 一致的視覺設計語言 (4) AI 功能整合。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示：Evaluator 校準的困難</div>
+                <div class="info-box-content">
+                    <p>原生狀態的 Claude 是<span class="highlight-key">糟糕的 QA Agent</span>。早期測試中，Evaluator 會辨識出合理的問題，然後說服自己這些不是大問題就通過了。也傾向表面測試而非探索邊界案例。</p>
+                    <p>校準方法：閱讀 Evaluator 的日誌，找出判斷與作者不一致的地方，更新 QA 的 Prompt 來修正。<strong>需要好幾輪迭代</strong>才讓 Evaluator 的評分合理。即使校準後，小佈局問題、不直覺的互動、和深層功能的未發現 Bug 仍然存在。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part VII: Iterating on the Harness -->
+    <h2 class="section-title">Part VII: 簡化 Harness - 隨模型升級調整架構</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">第一組結果令人鼓舞，但也<span class="highlight-key">笨重、緩慢、昂貴</span>。下一步是找到簡化 Harness 而不降低效能的方法。核心原則：<span class="highlight-concept">Harness 中的每個元件都編碼了一個關於模型「做不到什麼」的假設，這些假設值得壓力測試</span>——因為它們可能不正確，也因為隨著模型改進它們會快速過時。</div>
+                <div class="en">"Every component in a harness encodes an assumption about what the model can't do on its own, and those assumptions are worth stress testing."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">Opus 4.6 發布後提供了進一步簡化的動機。官方描述：「<span class="highlight-practical">規劃更謹慎、代理任務持續更久、在更大的程式庫中更可靠運作、有更好的程式碼審查和除錯能力來抓自己的錯誤</span>」——這些全是 Harness 原本設計來補充的能力。</div>
+                <div class="en">"[Opus 4.6] plans more carefully, sustains agentic tasks for longer, can operate more reliably in larger codebases..."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">作者首先<span class="highlight-key">完全移除了 Sprint 結構</span>。Opus 4.6 可以不需要這種分解就原生處理工作。Evaluator 改為建構結束後的單次評估，而非逐 Sprint 評分。</div>
+                <div class="en">"I started by removing the sprint construct entirely... the model could natively handle the job without this sort of decomposition."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念：Tool Decay 原則</div>
+                <div class="info-box-content">
+                    <p>這段完美呼應了我們的 <strong>Tool Decay</strong> 原則。Harness 元件就像 Prompt 中的規則——隨著模型能力提升，先前必要的約束變成限制。</p>
+                    <p><strong>實際案例：</strong></p>
+                    <p>Sprint 結構在 Opus 4.5 時是必要的（模型無法長時間保持連貫），但在 Opus 4.6 時變成不必要的開銷。Evaluator 的價值也隨模型能力移動：當任務在模型原生能力範圍內時，Evaluator 是不必要的開銷；但當任務在能力邊界上時，Evaluator 仍然提供真正的提升。</p>
+                </div>
+            </div>
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128736;&#65039; 實務應用：Harness 簡化方法論</div>
+                <div class="info-box-content">
+                    <p><strong>方法一（失敗）</strong>：大幅削減 Harness 並嘗試創新想法。結果：無法複製原始效能，也難以判斷哪些元件真正承載負荷。</p>
+                    <p><strong>方法二（成功）</strong>：<span class="highlight-practical">逐一移除元件</span>，觀察每個移除對最終結果的影響。系統性消去法。</p>
+                    <p>這與 Anthropic 的「Building Effective Agents」原則一致：找到最簡單的可行方案，只在需要時增加複雜度。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part VIII: Updated Harness Results (DAW) -->
+    <h2 class="section-title">Part VIII: 更新後的 Harness 結果 - DAW 案例</h2>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="bilingual-block">
+                <div class="zh">用更新的 Harness 測試：「在瀏覽器中使用 Web Audio API 建立一個完整功能的 DAW（數位音訊工作站）」。運行約 4 小時，成本 $124.70。大部分時間花在 Builder 上——<span class="highlight-key">連續運行超過兩小時而不需要先前 Opus 4.5 所需的 Sprint 分解</span>。</div>
+                <div class="en">"Most of the time went to the builder, which ran coherently for over two hours without the sprint decomposition."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">QA Agent 仍然抓到了真正的缺口。第一輪回饋指出：應用看起來很強但多個核心 DAW 功能僅為顯示用，<span class="highlight-key">沒有互動深度</span>——Clip 無法在時間軸上拖動、沒有樂器 UI 面板、沒有視覺化效果編輯器。第二輪仍發現：音訊錄製為 stub、Clip 調整大小未實作、效果視覺化僅為數值滑桿而非圖形化。</div>
+                <div class="en">"The QA agent still caught real gaps... several core DAW features are display-only without interactive depth."</div>
+            </div>
+            <div class="bilingual-block">
+                <div class="zh">最終應用有所有核心部件：可運作的 Arrangement View、Mixer、Transport。透過 Prompt 就能組成一段簡短歌曲：Agent 設定節拍和調性、鋪旋律、建鼓軌、調混音器音量、加殘響。</div>
+                <div class="en">"The core primitives for song composition were present, and the agent could drive them autonomously."</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-cost">
+                <div class="info-box-header">&#128176; 成本分析：更新 Harness 各階段</div>
+                <div class="info-box-content">
+                    <table class="data-table">
+                        <tr><th>階段</th><th>時間</th><th>成本</th></tr>
+                        <tr><td>Planner</td><td>4.7 min</td><td>$0.46</td></tr>
+                        <tr><td>Build (Round 1)</td><td>2 hr 7 min</td><td>$71.08</td></tr>
+                        <tr><td>QA (Round 1)</td><td>8.8 min</td><td>$3.24</td></tr>
+                        <tr><td>Build (Round 2)</td><td>1 hr 2 min</td><td>$36.89</td></tr>
+                        <tr><td>QA (Round 2)</td><td>6.8 min</td><td>$3.09</td></tr>
+                        <tr><td>Build (Round 3)</td><td>10.9 min</td><td>$5.88</td></tr>
+                        <tr><td>QA (Round 3)</td><td>9.6 min</td><td>$4.06</td></tr>
+                        <tr><td><strong>Total</strong></td><td><strong>3 hr 50 min</strong></td><td><strong>$124.70</strong></td></tr>
+                    </table>
+                    <p>比 v1 Harness ($200) 便宜 38%，同時 Generator 的單次連續運行時間更長（2hr+ vs Sprint-based）。</p>
+                </div>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示：Evaluator 的動態價值</div>
+                <div class="info-box-content">
+                    <p>Evaluator 不是固定的 yes/no 決策。其價值取決於任務是否<span class="highlight-key">超出當前模型可靠獨立完成的範圍</span>。</p>
+                    <p>在 4.5 上，邊界很近——大部分建構都在 Generator 能獨立做好的邊緣，Evaluator 捕捉了有意義的問題。在 4.6 上，邊界往外移——先前需要 Evaluator 的任務現在 Generator 自己就能處理。但對於仍在能力邊緣的部分，Evaluator 繼續提供真正的提升。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Takeaways -->
+    <h2 class="section-title">Key Takeaways</h2>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <h4>&#127919; Generator-Evaluator 分離是關鍵槓桿</h4>
+            <p>讓生成者自我批評幾乎不可能——LLM 天然傾向寬容自己的產出。但校準一個獨立的 Evaluator 使其嚴格，比讓 Generator 自我批判要容易得多。這是 GAN 結構的核心洞察。</p>
+        </div>
+        <div class="summary-card">
+            <h4>&#128736; Harness 元件應隨模型升級重新審視</h4>
+            <p>每個元件都是對模型弱點的假設。Opus 4.5 需要 Sprint 分解和 Context Reset；Opus 4.6 不需要。逐一移除元件測試影響，比一次大幅重寫更有效。</p>
+        </div>
+        <div class="summary-card">
+            <h4>&#128200; 主觀品質可以被操作化</h4>
+            <p>「這個設計好不好？」無法一致回答，但「這是否符合我們的設計原則？」可以。四維度評分標準加上 few-shot 校準，讓主觀判斷變得可靠且可重複。</p>
+        </div>
+        <div class="summary-card">
+            <h4>&#128176; 成本是真實的但可能值得</h4>
+            <p>完整 Harness 比 Solo 貴 10-20x（$9 vs $124-200），但差異是「核心功能壞掉」vs「完整可用的應用」。對需要可靠輸出的場景，Evaluator 的邊際成本遠低於人工 debug。</p>
+        </div>
+    </div>
+
+    <!-- Practice Questions -->
+    <h2 class="section-title">Practice Questions</h2>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">為什麼「分離 Generator 和 Evaluator」比「讓 Generator 自我評估」更有效？請從 LLM 的行為特性解釋。</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>LLM 在評估自己產出的內容時有天然的<strong>寬容偏差</strong>——傾向找到理由說服自己作品是好的，即使品質明顯平庸。這不僅是提示問題，而是模型在生成與評估共享同一上下文時的結構性傾向。分離後，Evaluator 沒有「自我辯護」的動機，可以被獨立校準為嚴格的評審。校準獨立 Evaluator 比改變 Generator 的自我認知要容易得多——你只需調整 Evaluator 的 Prompt 和 few-shot 範例，而不需要改變 Generator 的整個生成行為。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">在 CDMO 環境中，這篇文章的「Sprint Contract」概念如何對應到你已有的品質系統？可以應用在哪些流程？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>Sprint Contract 直接對應到 CDMO 的<strong>批次記錄預審和 Acceptance Criteria 定義</strong>。在 GMP 環境中，每次生產前 QA 和製造會同意：什麼算「合格」、要測哪些參數、CQA/CPP 的限值是什麼。這就是 Sprint Contract 的實體版本。</p>
+            <p>可應用場景：(1) 用 AI Agent 生成偏差調查報告初稿前，先定義驗收標準（覆蓋率、根因分析深度、CAPA 建議品質）(2) 技術轉移文件的分階段審查，每階段先同意什麼算「完成」(3) 變更控制的影響評估自動化，Generator 產出評估後由 Evaluator（可以是另一個 AI 或人類 QA）驗證完整性。但關鍵差異：在 GMP 中，Evaluator 必須是人類或人類監督的系統——純 AI Evaluator 在 GMP 關鍵操作中不被接受（Copilot Mode 原則）。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">文章宣稱 Evaluator 「caught real gaps」——但 Evaluator 本身也是 LLM。你認為這個架構的品質天花板在哪裡？什麼時候人類必須介入？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>品質天花板至少有三個來源：(1) <strong>Evaluator 的品味上限</strong>——它只能按照被校準的標準評分，無法發現標準之外的問題。作者自己提到 Evaluator 校準需要「好幾輪迭代」閱讀日誌找分歧，這個校準本身依賴人類的判斷力。(2) <strong>測試深度的限制</strong>——Evaluator 透過 Playwright 操作，但深層嵌套功能和邊界案例仍然遺漏。DAW 案例中「音訊錄製為 stub」到第二輪才被發現，暗示 Evaluator 的測試覆蓋率有限。(3) <strong>產品直覺的缺失</strong>——作者指出兩個版本都沒有引導使用者「先建 Sprite 再建關卡」的 onboarding 流程，這是產品設計直覺的問題，不是程式碼 Bug。目前的 Evaluator 標準沒有覆蓋 UX 流程設計。</p>
+            <p>人類必須介入的時機：(1) 定義和校準評分標準 (2) 需要產品直覺而非技術正確性的判斷 (3) 安全關鍵或合規關鍵的決策 (4) 當 Evaluator 的回饋開始重複或停滯時。</p>
+        </div>
+    </details>
+
+    <!-- Bottom Line -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#127919; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#10004; 核心洞察</div>
+            <div class="bottom-line-text">Generator-Evaluator 分離不只是一個 AI 架構模式——它是對 LLM 自我評估偏差的結構性解方。這個洞察對我在 CDMO 中設計 AI 輔助流程有直接意義：任何讓 AI 產出內容的場景，都應該預設分離「產出」和「品質檢查」角色，而不是讓同一個模型做兩件事。「Sprint Contract」= 先定義 Acceptance Criteria 再動工，這在 GMP 環境中已是標準做法，現在可以延伸到 AI-assisted 流程。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#128200; 立即應用</div>
+            <div class="bottom-line-text">在下一個教育文件生成流程中，測試「Generator + 獨立 Evaluator 檢查 meta tag 完整性和 Bottom Line 品質」的兩步架構。具體做法：讓 Claude Code 的 headless mode 生成文件（Generator），再用第二次呼叫檢查生成結果是否符合 Master Prompt 的標準（Evaluator）。如果第二步發現缺失就自動補正。這是最小可行的 Generator-Evaluator 實驗。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#9888; 需要補充</div>
+            <div class="bottom-line-text">文章的成本數據（$124-200/run）來自 Opus 4.5/4.6——頂級模型。在預算受限的情境中，能否用較小模型（Sonnet）作為 Evaluator 同時保持校準品質？文章未探討。另外，四項設計評分標準的可轉移性——能否直接套用到非前端的主觀品質評估（如文件品質、偏差報告品質）？需要自行實驗。Evaluator 校準的具體 few-shot 範例格式也未公開，這是實作時最需要的細節。</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>製作日期：2026-03-25 | 來源：<a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank">Anthropic Engineering - Harness design for long-running application development</a></p>
+        <p>建議 Chat Title：<code>2026-03-25 [Anthropic-Eng] [Agent] Harness Design Long-Running Apps</code></p>
+        <p>建議檔名：<code>2026-03-25_harness-design-long-running-apps.html</code></p>
+    </div>
+
 </div><!-- end container -->
 </body>
 </html>

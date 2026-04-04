@@ -1,404 +1,584 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Claude Dispatch 生態系統完全解析</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Dispatch 生態系統完全解析</title>
+
 <!-- Dashboard Index Meta -->
-<meta content="2026-03-19" name="doc-date"/>
-<meta content="Claude Dispatch 生態系統 - Spisak Starter Pack" name="doc-title"/>
-<meta content="Nick Spisak / @NickSpisak_" name="doc-source"/>
-<meta content="" name="doc-source-type"/>
-<meta content="Tool,Agent,Automation,Integration" name="doc-tags"/>
-<meta content="3.6" name="doc-rating"/>
-<meta content="Claude Dispatch + Cowork + Plugins + Skills + Scheduled Tasks 五層架構全解析。" name="doc-summary"/>
-<meta content="2026-03-19_claude-dispatch-ecosystem.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<meta name="doc-date" content="2026-03-19">
+<meta name="doc-title" content="Claude Dispatch 生態系統 - Spisak Starter Pack">
+<meta name="doc-source" content="Nick Spisak / @NickSpisak_">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Tool,Agent,Automation,Integration">
+<meta name="doc-rating" content="3.6">
+<meta name="doc-summary" content="Claude Dispatch + Cowork + Plugins + Skills + Scheduled Tasks 五層架構全解析。">
+<meta name="doc-file" content="2026-03-19_claude-dispatch-ecosystem.html">
 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
 
+/* Tags */
+.tag-container { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+.tag-integration { background: #99f6e4; color: #134e4a; }
+.header h1 { font-size: 1.8rem; margin: 0.5rem 0; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; }
+.source-info { font-size: 0.85rem; opacity: 0.8; margin-top: 0.5rem; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+.exec-summary h2 { color: #1e3a5f; font-size: 1.2rem; margin-top: 0; }
+.exec-summary p { font-size: 0.95rem; color: #475569; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-item .obj-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-item .obj-text { font-size: 0.9rem; color: #334155; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 100px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.85rem; }
+.framework-step-desc { font-size: 0.75rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Tabs */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Content Grid internals */
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.section-label { font-size: 0.75rem; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+.bilingual-block { margin-bottom: 1.25rem; }
+.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.25rem; }
+.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
+.highlight-concept { background: #a5d6a7; padding: 0 3px; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0 3px; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0 3px; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card .card-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card .card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+
+/* Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Critical Analysis */
+.critical-box { background: #fff7ed; border: 1px solid #fdba74; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+.critical-box h4 { color: #9a3412; font-size: 0.95rem; margin: 0 0 0.5rem 0; }
+.critical-box p, .critical-box li { font-size: 0.9rem; color: #9a3412; line-height: 1.7; }
+.critical-box ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #6366f1; text-decoration: none; }
+
+/* Section headings */
+.section-heading { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+</style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="tag-container">
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-integration">Integration</span>
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-automation">Automation</span>
+        <span class="tag tag-integration">Integration</span>
+    </div>
+    <h1>Claude Dispatch 生態系統完全解析</h1>
+    <div class="subtitle">Dispatch + Cowork + Plugins + Skills + Scheduled Tasks 五層架構</div>
+    <div class="source-info">Nick Spisak (@NickSpisak_) | 2026-03-19</div>
 </div>
-<h1>Claude Dispatch 生態系統完全解析</h1>
-<div class="subtitle">Dispatch + Cowork + Plugins + Skills + Scheduled Tasks 五層架構</div>
-<div class="source-info">Nick Spisak (@NickSpisak_) | 2026-03-19</div>
-</header>
+
 <div class="container">
+
 <!-- Executive Summary -->
 <div class="exec-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
-<span class="rating-high">↑ 實務應用, 工具生態</span>
-<span class="rating-low">↓ 技術深度, 學習曲線</span>
+    <h2>Executive Summary</h2>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
+        <span class="rating-high">↑ 實務應用, 工具生態</span>
+        <span class="rating-low">↓ 技術深度, 學習曲線</span>
+    </div>
+    <p>Nick Spisak 的這篇推文串是目前最完整的 Claude Desktop Agent 生態系統地圖。他把 Anthropic 在 2026 年初推出的五個功能層（Dispatch、Cowork、Plugins、Skills、Scheduled Tasks）串接成一個可操作的架構。文章最大價值在於「系統如何連接」的全景視角，而非任何單一功能的深度教學。技術細節偏淺，但對於理解 Anthropic 產品方向和「AI 作業系統」概念極有價值。</p>
 </div>
-<p>Nick Spisak 的這篇推文串是目前最完整的 Claude Desktop Agent 生態系統地圖。他把 Anthropic 在 2026 年初推出的五個功能層（Dispatch、Cowork、Plugins、Skills、Scheduled Tasks）串接成一個可操作的架構。文章最大價值在於「系統如何連接」的全景視角，而非任何單一功能的深度教學。技術細節偏淺，但對於理解 Anthropic 產品方向和「AI 作業系統」概念極有價值。</p>
-</div>
+
 <!-- Learning Objectives -->
 <h2 class="section-heading">Learning Objectives</h2>
 <div class="objectives-grid">
-<div class="objective-item">
-<div class="obj-icon">🏗️</div>
-<div class="obj-text">理解 Claude 五層架構（Dispatch / Cowork / Plugins / Skills / Scheduled Tasks）的分工與互動關係</div>
+    <div class="objective-item">
+        <div class="obj-icon">🏗️</div>
+        <div class="obj-text">理解 Claude 五層架構（Dispatch / Cowork / Plugins / Skills / Scheduled Tasks）的分工與互動關係</div>
+    </div>
+    <div class="objective-item">
+        <div class="obj-icon">🔌</div>
+        <div class="obj-text">區分 Plugins、Skills、Connectors 三者在系統中的不同角色</div>
+    </div>
+    <div class="objective-item">
+        <div class="obj-icon">🎯</div>
+        <div class="obj-text">評估此生態系統在 GMP 合規環境中的適用性與限制</div>
+    </div>
 </div>
-<div class="objective-item">
-<div class="obj-icon">🔌</div>
-<div class="obj-text">區分 Plugins、Skills、Connectors 三者在系統中的不同角色</div>
-</div>
-<div class="objective-item">
-<div class="obj-icon">🎯</div>
-<div class="obj-text">評估此生態系統在 GMP 合規環境中的適用性與限制</div>
-</div>
-</div>
+
 <!-- Framework Visual -->
 <div class="framework-visual">
-<div class="framework-title">Claude Agent Ecosystem - 五層架構</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">📱</div>
-<div class="framework-step-title">Dispatch</div>
-<div class="framework-step-desc">遠端遙控</div>
+    <div class="framework-title">Claude Agent Ecosystem - 五層架構</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">📱</div>
+            <div class="framework-step-title">Dispatch</div>
+            <div class="framework-step-desc">遠端遙控</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">⚙️</div>
+            <div class="framework-step-title">Cowork</div>
+            <div class="framework-step-desc">執行引擎</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🔌</div>
+            <div class="framework-step-title">Plugins</div>
+            <div class="framework-step-desc">工具套件</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">📋</div>
+            <div class="framework-step-title">Skills</div>
+            <div class="framework-step-desc">任務指令</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🔄</div>
+            <div class="framework-step-title">Scheduled</div>
+            <div class="framework-step-desc">自動排程</div>
+        </div>
+    </div>
 </div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">⚙️</div>
-<div class="framework-step-title">Cowork</div>
-<div class="framework-step-desc">執行引擎</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔌</div>
-<div class="framework-step-title">Plugins</div>
-<div class="framework-step-desc">工具套件</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📋</div>
-<div class="framework-step-title">Skills</div>
-<div class="framework-step-desc">任務指令</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔄</div>
-<div class="framework-step-title">Scheduled</div>
-<div class="framework-step-desc">自動排程</div>
-</div>
-</div>
-</div>
+
 <!-- Tabbed Content -->
 <h2 class="section-heading">Content</h2>
 <div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-core')">核心架構</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-tools')">工具層</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-system')">系統整合</button>
-</div>
-<!-- Tab 1: Core Architecture (Dispatch + Cowork) -->
-<div class="tab-content active" id="tab-core">
-<h3 style="color:#1e3a5f; margin-top:0;">Part I — Dispatch：手機遙控你的桌面 AI</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="section-label">Bilingual Content</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">Dispatch 讓你與 Claude 維持一個跨裝置的持續對話</span>，手機和電腦之間同步。你從手機傳送任務，Claude 在桌面端使用你的本地檔案、應用程式和工具來執行。</div>
-<div class="en-text">Dispatch gives you one persistent conversation with Claude that syncs between your phone and your computer. You text Claude a task from your phone. Claude runs it on your desktop using your local files, apps, and tools.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">把它想像成<span class="highlight-key">傳訊息給一個坐在你電腦前的助理</span>。「打開下載資料夾裡的提案，給我重點摘要。」「搜尋客戶來信並整理摘要。」你從任何地方發送訊息，Claude 在你的機器上完成工作。</div>
-<div class="en-text">Think of it like texting an assistant who sits at your computer. "Pull up that proposal in my downloads and give me the key points." "Search my email for anything from the client and make a summary."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>Dispatch 的本質</strong>是手機 ↔ 桌面的持久通道。它不是新的 AI 能力，而是一個「觸發器」——真正做事的是 Cowork。<br/><br/>
-<strong>前提條件：</strong>Claude Desktop 必須開啟、電腦必須醒著、需要 Pro 或 Max 訂閱。
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-core')">核心架構</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-tools')">工具層</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-system')">系統整合</button>
+    </div>
+
+    <!-- Tab 1: Core Architecture (Dispatch + Cowork) -->
+    <div id="tab-core" class="tab-content active">
+
+        <h3 style="color:#1e3a5f; margin-top:0;">Part I — Dispatch：手機遙控你的桌面 AI</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="section-label">Bilingual Content</div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="highlight-concept">Dispatch 讓你與 Claude 維持一個跨裝置的持續對話</span>，手機和電腦之間同步。你從手機傳送任務，Claude 在桌面端使用你的本地檔案、應用程式和工具來執行。</div>
+                    <div class="en-text">Dispatch gives you one persistent conversation with Claude that syncs between your phone and your computer. You text Claude a task from your phone. Claude runs it on your desktop using your local files, apps, and tools.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">把它想像成<span class="highlight-key">傳訊息給一個坐在你電腦前的助理</span>。「打開下載資料夾裡的提案，給我重點摘要。」「搜尋客戶來信並整理摘要。」你從任何地方發送訊息，Claude 在你的機器上完成工作。</div>
+                    <div class="en-text">Think of it like texting an assistant who sits at your computer. "Pull up that proposal in my downloads and give me the key points." "Search my email for anything from the client and make a summary."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 核心概念</div>
+                    <div class="info-box-content">
+                        <strong>Dispatch 的本質</strong>是手機 ↔ 桌面的持久通道。它不是新的 AI 能力，而是一個「觸發器」——真正做事的是 Cowork。<br><br>
+                        <strong>前提條件：</strong>Claude Desktop 必須開啟、電腦必須醒著、需要 Pro 或 Max 訂閱。
                     </div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 CDMO 類比</div>
-<div class="info-box-content">
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 CDMO 類比</div>
+                    <div class="info-box-content">
                         Dispatch 像是 CDMO 裡的<strong>遠端批次指令系統</strong>——你可以從辦公室（手機端）對產線（桌面端）下達指令，但所有實際操作仍然發生在產線現場，所有 GMP 記錄也留在產線端。Remote trigger, local execution。
                     </div>
-</div>
-</div>
-</div>
-<h3 style="color:#1e3a5f;">Part II — Cowork：讓 Claude 從聊天機器人變成執行代理</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="section-label">Bilingual Content</div>
-<div class="bilingual-block">
-<div class="zh-text">Cowork 是讓 Dispatch 成為可能的引擎。它是 Claude Desktop 裡的一個模式，<span class="highlight-concept">把 Claude 從聊天機器人變成可以在你電腦上實際操作的代理人</span>。</div>
-<div class="en-text">Cowork is the engine that makes Dispatch possible. It's the mode inside Claude Desktop that turns Claude from a chatbot into an agent that can actually do things on your computer.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">在 Cowork 模式下，Claude 可以：直接讀寫你電腦上的檔案、建立帶公式的 Excel 試算表、<span class="highlight-practical">從零開始製作 PowerPoint 簡報、使用子代理人同時執行多個任務</span>、連接 Google Drive / Gmail / Slack 等工具、處理長時間運行的任務而不會超時。</div>
-<div class="en-text">In Cowork mode, Claude: Reads and writes files on your computer directly, creates real Excel spreadsheets with formulas, builds PowerPoint presentations from scratch, runs multiple tasks at the same time using sub-agents, connects to your Google Drive, Gmail, Slack, and other tools, handles long-running tasks without timing out.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-key">Dispatch 是遙控器，Cowork 是引擎。</span></div>
-<div class="en-text">Dispatch is the remote control. Cowork is the engine.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>Chat Mode vs Cowork Mode 的關鍵差異：</strong><br/>
-                        Chat = 問答介面（只回答問題）<br/>
-                        Cowork = Agent 模式（實際操作檔案、連接外部工具、執行多步驟任務）<br/><br/>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="color:#1e3a5f;">Part II — Cowork：讓 Claude 從聊天機器人變成執行代理</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="section-label">Bilingual Content</div>
+                <div class="bilingual-block">
+                    <div class="zh-text">Cowork 是讓 Dispatch 成為可能的引擎。它是 Claude Desktop 裡的一個模式，<span class="highlight-concept">把 Claude 從聊天機器人變成可以在你電腦上實際操作的代理人</span>。</div>
+                    <div class="en-text">Cowork is the engine that makes Dispatch possible. It's the mode inside Claude Desktop that turns Claude from a chatbot into an agent that can actually do things on your computer.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">在 Cowork 模式下，Claude 可以：直接讀寫你電腦上的檔案、建立帶公式的 Excel 試算表、<span class="highlight-practical">從零開始製作 PowerPoint 簡報、使用子代理人同時執行多個任務</span>、連接 Google Drive / Gmail / Slack 等工具、處理長時間運行的任務而不會超時。</div>
+                    <div class="en-text">In Cowork mode, Claude: Reads and writes files on your computer directly, creates real Excel spreadsheets with formulas, builds PowerPoint presentations from scratch, runs multiple tasks at the same time using sub-agents, connects to your Google Drive, Gmail, Slack, and other tools, handles long-running tasks without timing out.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="highlight-key">Dispatch 是遙控器，Cowork 是引擎。</span></div>
+                    <div class="en-text">Dispatch is the remote control. Cowork is the engine.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 重點提示</div>
+                    <div class="info-box-content">
+                        <strong>Chat Mode vs Cowork Mode 的關鍵差異：</strong><br>
+                        Chat = 問答介面（只回答問題）<br>
+                        Cowork = Agent 模式（實際操作檔案、連接外部工具、執行多步驟任務）<br><br>
                         這個區分很重要：Cowork 本質上就是 Anthropic 對「Agent Mode」的產品化包裝。
                     </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<strong>Sub-agents（子代理人）</strong>是 Cowork 的隱藏殺手級功能。Claude 可以同時啟動多個子任務並行處理——這在處理「搜尋 + 整理 + 產出報告」這類複合任務時特別有用。<br/><br/>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ 實務應用</div>
+                    <div class="info-box-content">
+                        <strong>Sub-agents（子代理人）</strong>是 Cowork 的隱藏殺手級功能。Claude 可以同時啟動多個子任務並行處理——這在處理「搜尋 + 整理 + 產出報告」這類複合任務時特別有用。<br><br>
                         對 CDMO 場景：想像同時查詢 TrackWise 偏差、搜尋 SOP 歷史版本、整理趨勢圖——如果這些資料源都有 connectors 的話。
                     </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 2: Tools Layer (Plugins + Skills) -->
-<div class="tab-content" id="tab-tools">
-<h3 style="color:#1e3a5f; margin-top:0;">Part III — Plugins：預打包的工具套件</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="section-label">Bilingual Content</div>
-<div class="bilingual-block">
-<div class="zh-text">Plugins 是賦予 Claude 在 Cowork 中新能力的工具套件。<span class="highlight-concept">每個 Plugin 包含三個元素：Skills（特定任務的專門指令）、Connectors（連接 Slack / Gmail / Google Drive 等外部應用）、Sub-agents（處理部分工作的小型 AI 代理）。</span></div>
-<div class="en-text">Plugins are bundles of tools that give Claude new abilities inside Cowork. Each plugin includes: Skills (specialized instructions for specific tasks), Connectors (links to external apps like Slack, Gmail, Google Drive), Sub-agents (smaller AI agents that handle pieces of work).</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">涵蓋銷售、行銷、財務、法務、工程、HR、設計、營運和資料分析等領域的預建 Plugins，一鍵安裝。你也可以<span class="highlight-practical">自建 Plugins 或上傳團隊成員的自訂 Plugins</span>。</div>
-<div class="en-text">There are plugins for sales, marketing, finance, legal, engineering, HR, design, operations, and data analysis. You install them with one click. You can also build your own plugins or upload custom ones from teammates.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ Plugin 結構拆解</div>
-<div class="info-box-content">
-<strong>Plugin = Skills + Connectors + Sub-agents</strong><br/><br/>
-                        可以類比為 CDMO 的「設備資格確認套件」——不是單一文件，而是包含 IQ/OQ/PQ 範本（Skills）、設備連接協議（Connectors）、和各部門負責人（Sub-agents）的完整套件。<br/><br/>
-<strong>安裝路徑：</strong>Cowork → Customize → Browse Plugins → Install
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 2: Tools Layer (Plugins + Skills) -->
+    <div id="tab-tools" class="tab-content">
+
+        <h3 style="color:#1e3a5f; margin-top:0;">Part III — Plugins：預打包的工具套件</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="section-label">Bilingual Content</div>
+                <div class="bilingual-block">
+                    <div class="zh-text">Plugins 是賦予 Claude 在 Cowork 中新能力的工具套件。<span class="highlight-concept">每個 Plugin 包含三個元素：Skills（特定任務的專門指令）、Connectors（連接 Slack / Gmail / Google Drive 等外部應用）、Sub-agents（處理部分工作的小型 AI 代理）。</span></div>
+                    <div class="en-text">Plugins are bundles of tools that give Claude new abilities inside Cowork. Each plugin includes: Skills (specialized instructions for specific tasks), Connectors (links to external apps like Slack, Gmail, Google Drive), Sub-agents (smaller AI agents that handle pieces of work).</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">涵蓋銷售、行銷、財務、法務、工程、HR、設計、營運和資料分析等領域的預建 Plugins，一鍵安裝。你也可以<span class="highlight-practical">自建 Plugins 或上傳團隊成員的自訂 Plugins</span>。</div>
+                    <div class="en-text">There are plugins for sales, marketing, finance, legal, engineering, HR, design, operations, and data analysis. You install them with one click. You can also build your own plugins or upload custom ones from teammates.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-compare">
+                    <div class="info-box-header">⚖️ Plugin 結構拆解</div>
+                    <div class="info-box-content">
+                        <strong>Plugin = Skills + Connectors + Sub-agents</strong><br><br>
+                        可以類比為 CDMO 的「設備資格確認套件」——不是單一文件，而是包含 IQ/OQ/PQ 範本（Skills）、設備連接協議（Connectors）、和各部門負責人（Sub-agents）的完整套件。<br><br>
+                        <strong>安裝路徑：</strong>Cowork → Customize → Browse Plugins → Install
                     </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 重點提示</div>
+                    <div class="info-box-content">
                         Plugin 的「一鍵安裝」設計降低了門檻，但也帶來風險：你不一定知道 Plugin 內部做了什麼。在合規環境中，這等同於安裝未經驗證的軟體——需要先了解 Plugin 的權限範圍和資料存取行為。
                     </div>
-</div>
-</div>
-</div>
-<h3 style="color:#1e3a5f;">Part IV — Skills：教 Claude 按你的方式做事</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="section-label">Bilingual Content</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">Skills 教 Claude 如何正確地完成特定任務。它們不只是文字檔——而是可以包含腳本、範本、參考資料和範例的資料夾。</span></div>
-<div class="en-text">Skills teach Claude how to do specific tasks the right way. They're not just text files - they're folders that can include scripts, templates, reference data, and examples.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">在 Cowork 中輸入「/」就能看到所有可用的 Skills。Claude 也會<span class="highlight-key">自動偵測何時需要載入相關的 Skill</span>。內建 Skills 包括 Excel 建立與操作、Word 格式化、PowerPoint 簡報建立、PDF 處理。</div>
-<div class="en-text">When you type "/" in Cowork, you see every skill available to you. Claude also detects when a skill is relevant and loads it automatically. Built-in skills include: Excel spreadsheet creation and manipulation, Word document formatting, PowerPoint presentation building, PDF creation and processing.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">但真正的威力在自訂 Skills：你可以<span class="highlight-practical">教 Claude 你的品牌語調、報告格式、內容流程、客戶工作流程</span>。以 ZIP 檔上傳後，每個對話都能使用。</div>
-<div class="en-text">But the real power is custom skills. You can teach Claude exactly how your business works - your brand voice, your reporting format, your content process, your client workflow. Upload them as a ZIP file and they're available in every session.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 Skills 的層級關係</div>
-<div class="info-box-content">
-<strong>Skills 是 Plugins 的子元素</strong>——一個 Plugin 可以包含多個 Skills。但 Skills 也可以獨立存在（不一定要透過 Plugin 安裝）。<br/><br/>
-                        類比：Skills = SOP（Standard Operating Procedure）<br/>
-                        Plugin = SOP + 設備連接 + 人員分工 的完整套件<br/><br/>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="color:#1e3a5f;">Part IV — Skills：教 Claude 按你的方式做事</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="section-label">Bilingual Content</div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="highlight-concept">Skills 教 Claude 如何正確地完成特定任務。它們不只是文字檔——而是可以包含腳本、範本、參考資料和範例的資料夾。</span></div>
+                    <div class="en-text">Skills teach Claude how to do specific tasks the right way. They're not just text files - they're folders that can include scripts, templates, reference data, and examples.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">在 Cowork 中輸入「/」就能看到所有可用的 Skills。Claude 也會<span class="highlight-key">自動偵測何時需要載入相關的 Skill</span>。內建 Skills 包括 Excel 建立與操作、Word 格式化、PowerPoint 簡報建立、PDF 處理。</div>
+                    <div class="en-text">When you type "/" in Cowork, you see every skill available to you. Claude also detects when a skill is relevant and loads it automatically. Built-in skills include: Excel spreadsheet creation and manipulation, Word document formatting, PowerPoint presentation building, PDF creation and processing.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">但真正的威力在自訂 Skills：你可以<span class="highlight-practical">教 Claude 你的品牌語調、報告格式、內容流程、客戶工作流程</span>。以 ZIP 檔上傳後，每個對話都能使用。</div>
+                    <div class="en-text">But the real power is custom skills. You can teach Claude exactly how your business works - your brand voice, your reporting format, your content process, your client workflow. Upload them as a ZIP file and they're available in every session.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 Skills 的層級關係</div>
+                    <div class="info-box-content">
+                        <strong>Skills 是 Plugins 的子元素</strong>——一個 Plugin 可以包含多個 Skills。但 Skills 也可以獨立存在（不一定要透過 Plugin 安裝）。<br><br>
+                        類比：Skills = SOP（Standard Operating Procedure）<br>
+                        Plugin = SOP + 設備連接 + 人員分工 的完整套件<br><br>
                         你已經在用的 artifact-skill、amaran-presentation 就是 Custom Skills 的概念——只是目前在 Claude Projects 裡，未來可能遷移到 Cowork Skills 系統。
                     </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 啟用路徑</div>
-<div class="info-box-content">
-                        Settings → Capabilities → 開啟 "Code execution and file creation"<br/>
-                        → Customize → Skills → 勾選需要的 Skills<br/><br/>
-<strong>自訂 Skills 上傳：</strong>ZIP 檔格式，包含 SKILL.md + 範本/腳本/參考資料
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ 啟用路徑</div>
+                    <div class="info-box-content">
+                        Settings → Capabilities → 開啟 "Code execution and file creation"<br>
+                        → Customize → Skills → 勾選需要的 Skills<br><br>
+                        <strong>自訂 Skills 上傳：</strong>ZIP 檔格式，包含 SKILL.md + 範本/腳本/參考資料
                     </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 3: System Integration (Scheduled + How It Connects + Setup) -->
-<div class="tab-content" id="tab-system">
-<h3 style="color:#1e3a5f; margin-top:0;">Part V — Scheduled Tasks：自動排程</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="section-label">Bilingual Content</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">Scheduled Tasks 讓你設定自動重複執行的工作。</span>描述一次任務、設定排程，Claude 會按時處理。</div>
-<div class="en-text">Scheduled tasks let you set up work that runs automatically on a recurring basis. You describe the task once, set the timing, and Claude handles it on repeat.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">排程任務可以使用 Cowork 的所有功能——你的檔案、Connectors、Plugins 和 Skills。<span class="highlight-key">只要你的電腦是醒著的且 Claude Desktop 正在運行</span>，任務就會按時執行。</div>
-<div class="en-text">Scheduled tasks use everything Cowork has access to - your files, connectors, plugins, and skills. They run as long as your computer is awake and the Claude Desktop app is open.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重要限制</div>
-<div class="info-box-content">
-<strong>「電腦必須醒著」是架構瓶頸。</strong>Scheduled Tasks 依賴本地機器運行，不是雲端執行。這意味著：<br/>
-                        - 筆電合蓋 = 任務停止<br/>
-                        - 網路中斷 = 任務失敗<br/>
-                        - 無法保證 SLA（服務等級協議）<br/><br/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 3: System Integration (Scheduled + How It Connects + Setup) -->
+    <div id="tab-system" class="tab-content">
+
+        <h3 style="color:#1e3a5f; margin-top:0;">Part V — Scheduled Tasks：自動排程</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="section-label">Bilingual Content</div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="highlight-concept">Scheduled Tasks 讓你設定自動重複執行的工作。</span>描述一次任務、設定排程，Claude 會按時處理。</div>
+                    <div class="en-text">Scheduled tasks let you set up work that runs automatically on a recurring basis. You describe the task once, set the timing, and Claude handles it on repeat.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">排程任務可以使用 Cowork 的所有功能——你的檔案、Connectors、Plugins 和 Skills。<span class="highlight-key">只要你的電腦是醒著的且 Claude Desktop 正在運行</span>，任務就會按時執行。</div>
+                    <div class="en-text">Scheduled tasks use everything Cowork has access to - your files, connectors, plugins, and skills. They run as long as your computer is awake and the Claude Desktop app is open.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 重要限制</div>
+                    <div class="info-box-content">
+                        <strong>「電腦必須醒著」是架構瓶頸。</strong>Scheduled Tasks 依賴本地機器運行，不是雲端執行。這意味著：<br>
+                        - 筆電合蓋 = 任務停止<br>
+                        - 網路中斷 = 任務失敗<br>
+                        - 無法保證 SLA（服務等級協議）<br><br>
                         這與 Make.com / n8n 等雲端自動化工具的架構根本不同。適合「nice-to-have」的自動化，不適合「mission-critical」的排程。
                     </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 排程設定</div>
-<div class="info-box-content">
-                        在 Cowork 中輸入 <code>/schedule</code><br/>
-                        或點擊側邊欄 "Scheduled" → "+ New task"<br/>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ 排程設定</div>
+                    <div class="info-box-content">
+                        在 Cowork 中輸入 <code>/schedule</code><br>
+                        或點擊側邊欄 "Scheduled" → "+ New task"<br>
                         可選頻率：每小時、每日、每週、工作日、手動觸發
                     </div>
-</div>
-</div>
-</div>
-<h3 style="color:#1e3a5f;">Part VI — 系統如何串接：五層協同工作</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="section-label">Bilingual Content</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-key">大多數人忽略的重點：這些不是獨立功能，而是同一系統的不同層次。</span></div>
-<div class="en-text">Here's the part most people miss. These aren't separate features. They're layers of one system.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">當你從手機 Dispatch 發送「整理我的每週銷售報告」時，完整流程是：Dispatch 把訊息送到桌面 → Cowork 接收並啟動 session → 相關 Plugin 連接 Google Sheets 和 CRM → 相關 Skill 按你的偏好格式化報告 → Cowork 產出完成的文件 → 你在手機上看到結果。</div>
-<div class="en-text">When you send a Dispatch message from your phone saying "compile my weekly sales report": Dispatch sends the message to your desktop → Cowork receives it and starts a session → The relevant plugin connects to your Google Sheets and CRM → The relevant skill formats the report the way you like it → Cowork produces the finished document on your computer → You see the result on your phone.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">一則訊息，五個系統協同運作。這就是整個生態系統。</span></div>
-<div class="en-text">One message. Five systems working together. That's the ecosystem.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 架構分析</div>
-<div class="info-box-content">
-                        Spisak 用「五層」來描述，但實際上更準確的分類是：<br/><br/>
-<strong>Interface Layer（介面層）：</strong>Dispatch（手機）、Cowork（桌面）<br/>
-<strong>Capability Layer（能力層）：</strong>Plugins、Skills<br/>
-<strong>Orchestration Layer（編排層）：</strong>Scheduled Tasks<br/><br/>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="color:#1e3a5f;">Part VI — 系統如何串接：五層協同工作</h3>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="section-label">Bilingual Content</div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="highlight-key">大多數人忽略的重點：這些不是獨立功能，而是同一系統的不同層次。</span></div>
+                    <div class="en-text">Here's the part most people miss. These aren't separate features. They're layers of one system.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">當你從手機 Dispatch 發送「整理我的每週銷售報告」時，完整流程是：Dispatch 把訊息送到桌面 → Cowork 接收並啟動 session → 相關 Plugin 連接 Google Sheets 和 CRM → 相關 Skill 按你的偏好格式化報告 → Cowork 產出完成的文件 → 你在手機上看到結果。</div>
+                    <div class="en-text">When you send a Dispatch message from your phone saying "compile my weekly sales report": Dispatch sends the message to your desktop → Cowork receives it and starts a session → The relevant plugin connects to your Google Sheets and CRM → The relevant skill formats the report the way you like it → Cowork produces the finished document on your computer → You see the result on your phone.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="highlight-concept">一則訊息，五個系統協同運作。這就是整個生態系統。</span></div>
+                    <div class="en-text">One message. Five systems working together. That's the ecosystem.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 架構分析</div>
+                    <div class="info-box-content">
+                        Spisak 用「五層」來描述，但實際上更準確的分類是：<br><br>
+                        <strong>Interface Layer（介面層）：</strong>Dispatch（手機）、Cowork（桌面）<br>
+                        <strong>Capability Layer（能力層）：</strong>Plugins、Skills<br>
+                        <strong>Orchestration Layer（編排層）：</strong>Scheduled Tasks<br><br>
                         這個架構與 Anthropic 工程部落格的 "Building Effective Agents" 思路一致——把 Agent 分解為可組合的模組，而非單一 monolithic 系統。
                     </div>
-</div>
-</div>
-</div>
-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div><!-- end tab-container -->
+
 <!-- Critical Analysis -->
 <h2 class="section-heading">Critical Analysis</h2>
 <div class="critical-box">
-<h4>🔍 來源偏差與資訊缺口</h4>
-<ul>
-<li><strong>推廣者視角：</strong>Spisak 是 AI 自動化社群的經營者，文末直接導流到付費社群。文章傾向呈現功能的理想狀態，而非實際使用的摩擦點。需要打 2-3x 折扣。</li>
-<li><strong>未提及的關鍵限制：</strong>文章完全沒有討論 Dispatch/Cowork 的安全性模型——誰有權限觸發？檔案存取範圍？操作紀錄是否可審計？對於在企業或合規環境中評估此工具的人，這些是決定性問題。</li>
-<li><strong>「AI 作業系統」的誇大風險：</strong>文末稱 Claude 從聊天機器人變成「完整的工作作業系統」。這是行銷語言。實際上它仍然受限於本地執行、單一使用者、無雲端冗餘——離真正的「作業系統」差距甚大。</li>
-<li><strong>Plugin 黑盒問題：</strong>「一鍵安裝」的便利性掩蓋了一個重要問題——你無法完整審計 Plugin 的行為。在 GMP 環境中，這等同於 CSV（Computer System Validation）未通過的軟體。</li>
-<li><strong>缺少對比基準：</strong>文章沒有將此架構與 Make.com、n8n、Zapier 等成熟自動化平台比較。Scheduled Tasks 的「電腦必須開著」限制在這些雲端工具面前是明顯劣勢。</li>
-</ul>
+    <h4>🔍 來源偏差與資訊缺口</h4>
+    <ul>
+        <li><strong>推廣者視角：</strong>Spisak 是 AI 自動化社群的經營者，文末直接導流到付費社群。文章傾向呈現功能的理想狀態，而非實際使用的摩擦點。需要打 2-3x 折扣。</li>
+        <li><strong>未提及的關鍵限制：</strong>文章完全沒有討論 Dispatch/Cowork 的安全性模型——誰有權限觸發？檔案存取範圍？操作紀錄是否可審計？對於在企業或合規環境中評估此工具的人，這些是決定性問題。</li>
+        <li><strong>「AI 作業系統」的誇大風險：</strong>文末稱 Claude 從聊天機器人變成「完整的工作作業系統」。這是行銷語言。實際上它仍然受限於本地執行、單一使用者、無雲端冗餘——離真正的「作業系統」差距甚大。</li>
+        <li><strong>Plugin 黑盒問題：</strong>「一鍵安裝」的便利性掩蓋了一個重要問題——你無法完整審計 Plugin 的行為。在 GMP 環境中，這等同於 CSV（Computer System Validation）未通過的軟體。</li>
+        <li><strong>缺少對比基準：</strong>文章沒有將此架構與 Make.com、n8n、Zapier 等成熟自動化平台比較。Scheduled Tasks 的「電腦必須開著」限制在這些雲端工具面前是明顯劣勢。</li>
+    </ul>
 </div>
+
 <!-- Key Takeaways -->
 <h2 class="section-heading">Key Takeaways</h2>
 <div class="takeaways-grid">
-<div class="summary-card">
-<div class="card-title">1. 五層不是五個產品，是一個系統</div>
-<div class="card-text">Dispatch / Cowork / Plugins / Skills / Scheduled Tasks 是介面層、能力層、編排層的分工。理解它們的互動關係比記住個別功能更重要。</div>
+    <div class="summary-card">
+        <div class="card-title">1. 五層不是五個產品，是一個系統</div>
+        <div class="card-text">Dispatch / Cowork / Plugins / Skills / Scheduled Tasks 是介面層、能力層、編排層的分工。理解它們的互動關係比記住個別功能更重要。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="card-title">2. Skills 是最大的客製化槓桿</div>
+        <div class="card-text">Skills 把 Claude 從通用工具變成你的專屬員工。ZIP 上傳 + 自動偵測的設計讓 Custom Skills 成為整個生態系統中 ROI 最高的投入點。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="card-title">3. 本地執行是雙面刃</div>
+        <div class="card-text">本地執行意味著 Claude 可以存取你的所有檔案（強大），但也意味著電腦必須開著、無雲端冗餘（脆弱）。Mission-critical 排程仍需雲端自動化工具。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="card-title">4. 合規環境需要額外驗證</div>
+        <div class="card-text">文章未討論安全性、審計軌跡、權限控管。在 GMP/合規環境中使用前，需要獨立評估 Plugin 權限範圍、資料存取行為、和操作可追溯性。</div>
+    </div>
 </div>
-<div class="summary-card" style="border-left-color: #10b981;">
-<div class="card-title">2. Skills 是最大的客製化槓桿</div>
-<div class="card-text">Skills 把 Claude 從通用工具變成你的專屬員工。ZIP 上傳 + 自動偵測的設計讓 Custom Skills 成為整個生態系統中 ROI 最高的投入點。</div>
-</div>
-<div class="summary-card" style="border-left-color: #8b5cf6;">
-<div class="card-title">3. 本地執行是雙面刃</div>
-<div class="card-text">本地執行意味著 Claude 可以存取你的所有檔案（強大），但也意味著電腦必須開著、無雲端冗餘（脆弱）。Mission-critical 排程仍需雲端自動化工具。</div>
-</div>
-<div class="summary-card" style="border-left-color: #f59e0b;">
-<div class="card-title">4. 合規環境需要額外驗證</div>
-<div class="card-text">文章未討論安全性、審計軌跡、權限控管。在 GMP/合規環境中使用前，需要獨立評估 Plugin 權限範圍、資料存取行為、和操作可追溯性。</div>
-</div>
-</div>
+
 <!-- Practice Questions -->
 <h2 class="section-heading">Practice Questions</h2>
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">Dispatch 和 Cowork 的關係是什麼？為什麼 Dispatch 不能單獨運作？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>Dispatch 是觸發介面（手機端），Cowork 是執行引擎（桌面端）。Dispatch 不能單獨運作，因為所有實際操作（檔案讀寫、外部工具連接、子代理人調度）都發生在 Cowork 模式中。Dispatch 只是把指令從手機同步到桌面端的 Cowork session。沒有 Cowork，Dispatch 就只是一個無法送達的訊息。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">Dispatch 和 Cowork 的關係是什麼？為什麼 Dispatch 不能單獨運作？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>Dispatch 是觸發介面（手機端），Cowork 是執行引擎（桌面端）。Dispatch 不能單獨運作，因為所有實際操作（檔案讀寫、外部工具連接、子代理人調度）都發生在 Cowork 模式中。Dispatch 只是把指令從手機同步到桌面端的 Cowork session。沒有 Cowork，Dispatch 就只是一個無法送達的訊息。</p>
+    </div>
 </details>
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要在 CDMO 環境中導入 Claude 的 Plugin 系統，第一個要回答的合規問題是什麼？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>第一個問題是：<strong>「這個 Plugin 存取了哪些資料，操作紀錄是否可審計？」</strong> 在 GMP 環境中，任何接觸產品品質資料的軟體都需要通過 CSV（Computer System Validation）。Plugin 的「一鍵安裝」設計意味著你可能不清楚它存取了哪些檔案、是否修改了資料、操作紀錄是否符合 ALCOA+ 標準。在通過這些驗證之前，Plugin 只能用於非 GMP 的行政/個人任務。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">如果你要在 CDMO 環境中導入 Claude 的 Plugin 系統，第一個要回答的合規問題是什麼？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>第一個問題是：<strong>「這個 Plugin 存取了哪些資料，操作紀錄是否可審計？」</strong> 在 GMP 環境中，任何接觸產品品質資料的軟體都需要通過 CSV（Computer System Validation）。Plugin 的「一鍵安裝」設計意味著你可能不清楚它存取了哪些檔案、是否修改了資料、操作紀錄是否符合 ALCOA+ 標準。在通過這些驗證之前，Plugin 只能用於非 GMP 的行政/個人任務。</p>
+    </div>
 </details>
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">Spisak 稱 Claude 已從聊天機器人變成「完整的工作作業系統」。用你的 2-3x Discount 框架評估這個說法。</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>打折後的評估：Claude Desktop 生態系統確實在「個人生產力代理」方面有顯著進展，但離「作業系統」還有結構性差距：</p>
-<p><strong>缺少的 OS 特性：</strong>多使用者支援、雲端冗餘/高可用性、權限管理（RBAC）、完整的審計軌跡、API 可程式化控制（目前主要是 GUI 操作）。</p>
-<p><strong>更準確的描述：</strong>「個人 AI 助理平台」——強大，但仍是單人單機的工具。Spisak 的 "operating system" 比喻是為了社群行銷的感染力，不是技術架構的準確描述。打 2x 折扣後，它是一個「非常好的個人自動化工具，有潛力在特定場景取代部分重複性工作」。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">Spisak 稱 Claude 已從聊天機器人變成「完整的工作作業系統」。用你的 2-3x Discount 框架評估這個說法。</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>打折後的評估：Claude Desktop 生態系統確實在「個人生產力代理」方面有顯著進展，但離「作業系統」還有結構性差距：</p>
+        <p><strong>缺少的 OS 特性：</strong>多使用者支援、雲端冗餘/高可用性、權限管理（RBAC）、完整的審計軌跡、API 可程式化控制（目前主要是 GUI 操作）。</p>
+        <p><strong>更準確的描述：</strong>「個人 AI 助理平台」——強大，但仍是單人單機的工具。Spisak 的 "operating system" 比喻是為了社群行銷的感染力，不是技術架構的準確描述。打 2x 折扣後，它是一個「非常好的個人自動化工具，有潛力在特定場景取代部分重複性工作」。</p>
+    </div>
 </details>
+
 <!-- Bottom Line -->
 <div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Anthropic 的產品策略已經從「最好的 LLM」轉向「最好的 AI Agent 平台」。Dispatch + Cowork + Plugins + Skills + Scheduled Tasks 這五層架構是他們對「AI 如何實際完成工作」的系統性回答。我在 Claude Projects 中建立的 Skills 系統（artifact-skill、amaran-presentation 等）正好是這個方向的早期實踐——未來可能直接遷移到 Cowork Skills 體系。</div>
+    <div class="bottom-line-header">🎯 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">Anthropic 的產品策略已經從「最好的 LLM」轉向「最好的 AI Agent 平台」。Dispatch + Cowork + Plugins + Skills + Scheduled Tasks 這五層架構是他們對「AI 如何實際完成工作」的系統性回答。我在 Claude Projects 中建立的 Skills 系統（artifact-skill、amaran-presentation 等）正好是這個方向的早期實踐——未來可能直接遷移到 Cowork Skills 體系。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用</div>
+        <div class="bottom-line-text">本週行動：(1) 在 Claude Desktop 上實測 Cowork 模式，跑一個完整的「搜尋檔案 → 整理 → 輸出報告」流程，感受與 Claude Projects 的差異。(2) 評估現有 Custom Skills（artifact-skill、amaran-presentation）是否可以 ZIP 打包上傳到 Cowork Skills 系統。(3) 不要急著用 Scheduled Tasks——先確認 Make.com 已有的排程是否足夠。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠ 需要補充</div>
+        <div class="bottom-line-text">文章缺少三個關鍵面向：(1) 安全性模型——Plugin/Connector 的權限範圍和審計能力，這決定了能否在 CDMO 工作中使用。(2) 與現有自動化工具（Make.com, n8n）的定位差異——本地 vs 雲端執行的 tradeoff。(3) 成本分析——這些功能需要 Pro/Max 訂閱，但文章沒有比較不同層級的功能差異。需要查 Anthropic 官方文件補充這些缺口。</div>
+    </div>
 </div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週行動：(1) 在 Claude Desktop 上實測 Cowork 模式，跑一個完整的「搜尋檔案 → 整理 → 輸出報告」流程，感受與 Claude Projects 的差異。(2) 評估現有 Custom Skills（artifact-skill、amaran-presentation）是否可以 ZIP 打包上傳到 Cowork Skills 系統。(3) 不要急著用 Scheduled Tasks——先確認 Make.com 已有的排程是否足夠。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章缺少三個關鍵面向：(1) 安全性模型——Plugin/Connector 的權限範圍和審計能力，這決定了能否在 CDMO 工作中使用。(2) 與現有自動化工具（Make.com, n8n）的定位差異——本地 vs 雲端執行的 tradeoff。(3) 成本分析——這些功能需要 Pro/Max 訂閱，但文章沒有比較不同層級的功能差異。需要查 Anthropic 官方文件補充這些缺口。</div>
-</div>
-</div>
+
 <!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-03-19 | AI Expert Learning System v1.5.0</p>
-<p>原文來源：<a href="https://x.com/NickSpisak_" target="_blank">Nick Spisak (@NickSpisak_) - X/Twitter Thread</a></p>
-<p>建議 Chat Title：2026-03-19 [Tool] Spisak - Claude Dispatch Ecosystem</p>
-<p>檔案名稱：2026-03-19_claude-dispatch-ecosystem.html</p>
-</footer>
+<div class="footer">
+    <p>製作日期：2026-03-19 | AI Expert Learning System v1.5.0</p>
+    <p>原文來源：<a href="https://x.com/NickSpisak_" target="_blank">Nick Spisak (@NickSpisak_) - X/Twitter Thread</a></p>
+    <p>建議 Chat Title：2026-03-19 [Tool] Spisak - Claude Dispatch Ecosystem</p>
+    <p>檔案名稱：2026-03-19_claude-dispatch-ecosystem.html</p>
+</div>
+
 </div><!-- end container -->
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

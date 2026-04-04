@@ -1,379 +1,548 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2026-01-23" name="doc-date"/>
-<meta content="Claude Code 非技術領導者完全指南" name="doc-title"/>
-<meta content="Joel Salinas &amp; Alejandro Aboy" name="doc-source"/>
-<meta content="Tool,Automation,Agent" name="doc-tags"/>
-<meta content="4.0" name="doc-rating"/>
-<meta content="打破 Claude Code 只給工程師用的迷思，展示非技術主管如何用 AI 解決商業問題" name="doc-summary"/>
-<meta content="2026-01-23_claude-code-nontechnical-guide.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>Claude Code 非技術領導者完全指南 | AI Expert Learning System</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-01-23">
+    <meta name="doc-title" content="Claude Code 非技術領導者完全指南">
+    <meta name="doc-source" content="Joel Salinas &amp; Alejandro Aboy">
+    <meta name="doc-tags" content="Tool,Automation,Agent">
+    <meta name="doc-rating" content="4.0">
+    <meta name="doc-summary" content="打破 Claude Code 只給工程師用的迷思，展示非技術主管如何用 AI 解決商業問題">
+    <meta name="doc-file" content="2026-01-23_claude-code-nontechnical-guide.html">
+    <title>Claude Code 非技術領導者完全指南 | AI Expert Learning System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.8; color: #1e293b; background: #f8fafc; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #1e3a5f, #3b5998); color: white; padding: 2.5rem 2rem; text-align: center; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1rem; }
+        .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 600; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .source-info { font-size: 0.85rem; opacity: 0.8; }
+        .source-info a { color: #93c5fd; text-decoration: none; }
+        .source-info a:hover { text-decoration: underline; }
+        
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        
+        /* Main Container */
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        /* Executive Summary */
+        .executive-summary { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid #3b82f6; }
+        .executive-summary h2 { color: #1e3a8a; font-size: 1.2rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .executive-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
+        
+        /* Learning Objectives */
+        .objectives { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-item:nth-child(2) { border-left-color: #10b981; }
+        .objective-item:nth-child(3) { border-left-color: #8b5cf6; }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 600; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .objective-desc { font-size: 0.85rem; color: #64748b; }
+        
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 140px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+        
+        /* Section Headers */
+        .section-header { display: flex; align-items: center; gap: 0.75rem; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+        .section-number { background: linear-gradient(135deg, #3b82f6, #1e40af); color: white; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; }
+        .section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; }
+        
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+        
+        /* Original Text Column */
+        .original-text { background: #f8fafc; border-radius: 0.75rem; padding: 1.25rem; border: 1px solid #e2e8f0; }
+        .original-text h3 { font-size: 0.85rem; color: #64748b; margin-bottom: 0.75rem; font-weight: 600; }
+        .bilingual-block { margin-bottom: 1rem; }
+        .chinese-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+        .english-text { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
+        .highlight-concept { background: linear-gradient(180deg, transparent 60%, #a5d6a7 60%); padding: 0 2px; }
+        .highlight-key { background: linear-gradient(180deg, transparent 60%, #ffcc80 60%); padding: 0 2px; }
+        .highlight-practical { background: linear-gradient(180deg, transparent 60%, #6ee7b7 60%); padding: 0 2px; }
+        
+        /* Expert Analysis Column */
+        .expert-analysis { display: flex; flex-direction: column; gap: 1rem; }
+        
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .info-box-header { padding: 0.75rem 1rem; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+        
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #8b5cf6; }
+        .summary-card:nth-child(4) { border-left-color: #f59e0b; }
+        .summary-card h4 { font-size: 0.95rem; color: #1e3a8a; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .summary-card p { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+        
+        /* Practice Questions Accordion */
+        .practice-section { margin: 2rem 0; }
+        .practice-header { font-size: 1.2rem; font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+        .question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+        .question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+        
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+        
+        /* Footer */
+        .footer { background: #1e293b; color: #94a3b8; padding: 1.5rem 2rem; text-align: center; margin-top: 2rem; }
+        .footer p { font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .footer a { color: #60a5fa; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .chat-title { background: #334155; padding: 0.5rem 1rem; border-radius: 0.5rem; display: inline-block; margin-top: 0.5rem; font-size: 0.8rem; color: #e2e8f0; }
+        
+        /* Code Styling */
+        code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.85rem; color: #7c3aed; }
+    </style>
 </head>
 <body>
-<!-- Header -->
-<header class="header">
-<h1>Claude Code 非技術領導者完全指南</h1>
-<p class="subtitle">The Non-Coder's Guide to Claude Code</p>
-<div class="tags">
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-agent">Agent</span>
-</div>
-<p class="source-info">來源：Joel Salinas &amp; Alejandro Aboy | 2026-01-22 | <a href="https://joelsalinas.substack.com" target="_blank">Joel Salinas Substack</a></p>
-</header>
-<div class="container">
-<!-- Executive Summary with Rating Bar -->
-<div class="executive-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
-<span class="rating-high">↑ Practical Value, Learning Curve</span>
-<span class="rating-low">↓ Technical Depth, Tool Ecosystem</span>
-</div>
-<h2>Quick Summary</h2>
-<p>這篇文章打破了「Claude Code 只給工程師用」的迷思。作者 Joel Salinas（非技術背景）用一個週末就用 Claude Code 建立了整個網站，而 Data Engineer Alejandro Aboy 則展示了四個企業場景：Pipeline 數據差異追蹤、Google Sheet vs 資料倉儲比對、需求文件撰寫、會議記錄轉行動項目。核心洞察：你不需要學會寫程式，你需要學會「指揮」AI 解決商業問題。這篇文章對想了解 Claude Code 能做什麼的非技術主管來說是很好的入門，但缺乏深入的技術細節和與其他 AI 工具的系統比較。</p>
-</div>
-<!-- Learning Objectives -->
-<div class="objectives">
-<div class="objective-item">
-<div class="objective-icon">🎯</div>
-<div class="objective-title">理解 Claude Code 的定位</div>
-<div class="objective-desc">為什麼名字裡有「Code」但非技術人員也能用</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">🔧</div>
-<div class="objective-title">掌握四大核心功能</div>
-<div class="objective-desc">Slash Commands、Sub Agents、Skills、MCP 的作用</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">💼</div>
-<div class="objective-title">應用於商業場景</div>
-<div class="objective-desc">數據差異追蹤、需求文件、會議紀錄轉化</div>
-</div>
-</div>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">Data Flow 三層架構 — 為什麼你的數據會「不一致」</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">📊</div>
-<div class="framework-step-title">Source</div>
-<div class="framework-step-desc">資料產生處<br/>(HubSpot, Salesforce)</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">⚙️</div>
-<div class="framework-step-title">Transformation</div>
-<div class="framework-step-desc">商業邏輯定義<br/>(Data Team 負責)</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📈</div>
-<div class="framework-step-title">Dashboard</div>
-<div class="framework-step-desc">你看到的數字<br/>(可能已經「變形」)</div>
-</div>
-</div>
-</div>
-<!-- Part I: The Stages of Data -->
-<div class="section-header">
-<div class="section-number">1</div>
-<div class="section-title">數據的三層結構 The Stages of Data</div>
-</div>
-<div class="content-grid">
-<div class="original-text">
-<h3>原文精華 Original Text</h3>
-<div class="bilingual-block">
-<p class="zh-text">想像這個場景：兩位高管用兩個不同的儀表板看「同一份」數據。通常他們會安排三天後與資料團隊開會，結果還是搞不清楚為什麼兩個讀取 Salesforce 或 HubSpot 的儀表板，對同一件事給出不同數字。</p>
-<p class="en-text">"Think of this scenario: Two executives using 2 different dashboards to see the 'same' data... They have explained to you, but it is still not clear why 2 Dashboards reading from Salesforce or Hubspot give different numbers for the same thing."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">數據從源頭到儀表板會經過三個階段：<span class="highlight-concept">Source（來源）</span>是數據產生和存放的地方；<span class="highlight-concept">Transformation（轉換）</span>是有人決定指標定義並套用商業邏輯的地方；<span class="highlight-concept">Dashboard（儀表板）</span>是你看到數字的地方。</p>
-<p class="en-text">"Source → Where data is generated and lives. Transformation → Where someone decides what metrics mean and applies business logic to them. Dashboard → Where you see the number."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">沿途可能發生很多事造成混淆：<span class="highlight-key">時間差異</span>（HubSpot 即時更新，資料庫凌晨 2 點才刷新）、<span class="highlight-key">定義漂移</span>（A 團隊的「活躍用戶」≠ B 團隊的「活躍用戶」）、<span class="highlight-key">隱藏篩選</span>（儀表板 A 排除超過 $10K 的退款，儀表板 B 包含）。</p>
-<p class="en-text">"Timing Mismatches - e.g. HubSpot updates are on the spot. Database refreshes at 2 AM. Definition Drift - e.g. One team's 'active user' ≠ another team's 'active user.' Hidden Filters - e.g. Dashboard A excludes refunds over $10K. Dashboard B includes them."</p>
-</div>
-</div>
-<div class="expert-analysis">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p>想像你在追蹤一批原料從供應商到成品的過程。供應商說「出貨 100kg」，倉庫說「收到 98kg」，生產報表說「投入 95kg」。差異可能來自：運輸損耗（時間差）、不同的計量單位或四捨五入規則（定義差異）、或某些品項被自動排除在報表外（隱藏篩選）。</p>
-<p>在 CDMO 環境中，這就像 MES、ERP、QMS 三個系統對「批次完成」的定義可能不同。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>數據差異三大根源：</strong></p>
-<p>1. <strong>Timing（時間）</strong>：不同系統的更新頻率不同</p>
-<p>2. <strong>Definition（定義）</strong>：同一個詞在不同團隊有不同意思</p>
-<p>3. <strong>Filter（篩選）</strong>：報表可能有你不知道的預設條件</p>
-<p>這三個問題在任何組織都會發生，不是資料團隊「做錯了」。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part II: What Claude Code Actually Does -->
-<div class="section-header">
-<div class="section-number">2</div>
-<div class="section-title">Claude Code 到底能做什麼 What Claude Code Actually Does</div>
-</div>
-<div class="content-grid">
-<div class="original-text">
-<h3>原文精華 Original Text</h3>
-<div class="bilingual-block">
-<p class="zh-text">Claude Code 的獨特之處：<span class="highlight-practical">直接連接商業工具</span>（HubSpot、Google Sheets、資料庫）、<span class="highlight-practical">讀取實際數據</span>而非假設、<span class="highlight-practical">展示工作過程</span>。</p>
-<p class="en-text">"What makes it different: Connects directly to business tools (HubSpot, Google Sheets, Databases). Reads actual data, not hypotheticals. Shows its work."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">當你問「為什麼這些 pipeline 數字不一致？」它會連接 HubSpot、讀取你的資料庫表格、比較邏輯，然後回答：「<span class="highlight-concept">HubSpot 包含 On Hold 的交易，你的資料倉儲在 90 天後會排除它們。</span>」</p>
-<p class="en-text">"When you ask: 'Why don't these pipeline numbers match?' it will connect to HubSpot, read your database tables, compare the logic and you will do something like 'HubSpot includes On Hold deals. Your warehouse excludes them after 90 days.'"</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">它成為一個<span class="highlight-key">你可以無限客製化的工作流程機器</span>，不會像一般 Claude 那樣受限於共用功能、需要你引導更多它該做什麼，也缺乏 Claude Code 能達到的上下文能力。</p>
-<p class="en-text">"It becomes a workflow machine that you can customize as much as you can, without getting limited by plain Claude, where you have many shared features but requires you to guide much more of what it should be doing, and its also lacking the context power Claude Code can achieve."</p>
-</div>
-</div>
-<div class="expert-analysis">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<p><strong>Claude Code vs 一般 Claude 的關鍵差異：</strong></p>
-<p>一般 Claude（claude.ai）是在瀏覽器中與 AI 對話，你需要複製貼上數據給它。Claude Code 是在你的電腦終端機（Terminal）執行，可以直接讀取本地檔案、連接外部服務、執行腳本。</p>
-<p>簡單說：一般 Claude 是「你告訴它什麼，它就知道什麼」；Claude Code 是「它可以自己去拿需要的資訊」。</p>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較</div>
-<div class="info-box-content">
-<p><strong>Claude Code vs Cowork（剛發布的預覽版）：</strong></p>
-<p>作者提到 Anthropic 剛推出 Cowork，號稱是「給非技術人員的 Claude Code」。目前還在 preview 階段，功能可能持續更新。這意味著本文的 Claude Code 學習可能之後能轉移到 Cowork，降低技術門檻。</p>
-<p>我的建議：先了解 Claude Code 的概念和能力，等 Cowork 更成熟時會更容易上手。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part III: Four Core Features -->
-<div class="section-header">
-<div class="section-number">3</div>
-<div class="section-title">四大核心功能 Claude Code Features</div>
-</div>
-<div class="content-grid">
-<div class="original-text">
-<h3>原文精華 Original Text</h3>
-<div class="bilingual-block">
-<p class="zh-text">所有這些功能都存在於 <span class="highlight-concept">Markdown (.md) 檔案</span>中，這是所有 AI 系統用來呈現文件的格式。</p>
-<p class="en-text">"All these features live under Markdown (.md) files, which is what all AI systems use to present documentation."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>Slash Commands（斜線指令）：</strong>使用者觸發的捷徑，讓你不用重複寫工作流程。例如：<code>/audit_dashboard</code> 觸發儀表板比較工作流程。</p>
-<p class="en-text">"Slash Commands: User-triggered shortcuts that save you from writing repeatable workflows. Example: /audit_dashboard - triggers dashboard comparison workflow."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>Sub Agents（子代理）：</strong>平行執行的 Claude Agent，有專門的焦點和獨立的上下文。例如：<code>@data-reconciliation</code> 平行比較 HubSpot vs Warehouse。</p>
-<p class="en-text">"Sub Agents: Parallel Claude Agents with specialized focus and isolated context. Example: @data-reconciliation - compares HubSpot vs Warehouse in parallel"</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>Skills（技能）：</strong>Claude 在相關時自動載入的知識包。Claude Code 不會告訴你它在用某個 skill，但如果它認為需要就會遵循。</p>
-<p class="en-text">"Skills: Auto-invoked knowledge packages Claude loads when relevant. Claude Code won't tell you that it is using the skill per se, but it will follow it if it thinks it needs to."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>MCP（Model Context Protocol）：</strong>我們提供給 Claude Code 連接上下文的工具。每個 MCP 不同，連接方式需要根據使用案例和認證設定。通常你會被導向一個畫面，點擊確認身份即可，不需要技術知識。</p>
-<p class="en-text">"MCP: Tools we provide Claude Code to connect with context. Each MCP is different and the way to connect them is required in the use case and authentication setup so it can recognize you."</p>
-</div>
-</div>
-<div class="expert-analysis">
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>四個功能的記憶口訣：「指-代-技-連」</strong></p>
-<p>• <strong>指</strong>令（Slash Commands）：你主動觸發的快捷鍵</p>
-<p>• <strong>代</strong>理（Sub Agents）：專門處理特定任務的分身</p>
-<p>• <strong>技</strong>能（Skills）：背景自動套用的知識包</p>
-<p>• <strong>連</strong>接（MCP）：與外部工具的橋樑</p>
-</div>
-</div>
-<div class="info-box box-code">
-<div class="info-box-header">💻 程式碼/API</div>
-<div class="info-box-content">
-<p><strong>MCP 的概念：</strong></p>
-<p>MCP（Model Context Protocol）是 Anthropic 設計的標準化協議，讓 AI 可以連接各種外部服務。你可以把它想像成「AI 專用的 USB 插槽」—— 只要外部服務支援 MCP，Claude 就能直接讀寫數據。</p>
-<p>目前已有 HubSpot、Google Drive、Confluence、Slack 等常用工具的 MCP。Plugin 市集 <code>aitmpl</code> 有更多預建的 skills 和 agents 可以安裝。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>GDPR/資安提醒：</strong></p>
-<p>如果你處理的是極機密資訊，請先聯繫資安團隊確認 Anthropic 是否已被核准為第三方工具，或找方法透過 API 在公司內部伺服器執行 Claude Code。</p>
-<p>在 CDMO 環境中，這點特別重要——21 CFR Part 11 和 ALCOA+ 對資料完整性有嚴格要求。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part IV: Hands-On Examples -->
-<div class="section-header">
-<div class="section-number">4</div>
-<div class="section-title">實戰案例 Hands-On Examples</div>
-</div>
-<div class="content-grid">
-<div class="original-text">
-<h3>原文精華 Original Text</h3>
-<div class="bilingual-block">
-<p class="zh-text"><strong>案例 1：Pipeline 差異</strong><br/>情況：HubSpot 顯示 $1M，CFO 用資料庫的儀表板顯示 $810K。<br/>你的做法：「<span class="highlight-practical">比較 HubSpot pipeline 和我們的 warehouse deals 表格。為什麼有差異？</span>」<br/>洞察：現在你可以說「讓我們對齊 On Hold 是否算作活躍 pipeline。」</p>
-<p class="en-text">"Example #1: Pipeline Discrepancies. Your Situation: HubSpot shows $1M. CFO's dashboard using the database shows $810K. What You Do: 'Compare the HubSpot pipeline with our warehouse deals table. Why is there a difference?'"</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>案例 2：Google Sheet vs 資料倉儲</strong><br/>情況：行銷總監的 Google Sheet 與資料團隊的儀表板不符。<br/>你的做法：「<span class="highlight-practical">讀取 Google Sheet 'Q1 Campaign Performance'，與 warehouse 表格 marketing.campaigns 比較。為什麼 CPL 數字不同？</span>」<br/>洞察：你的 sheet 更即時，warehouse 更乾淨。它們服務不同目的。</p>
-<p class="en-text">"Example #2: Google Sheet vs Data Warehouse. Your Situation: Marketing Director's Google Sheet doesn't match the data team's dashboard. Insight: Your sheet is fresher. The warehouse is cleaner. They serve different purposes."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>案例 3：需求文件</strong><br/>情況：你要求「客戶流失儀表板」，資料團隊做出來的是錯的。重做還是錯。<br/>你的做法：「<span class="highlight-practical">我需要一個客戶流失儀表板。幫我根據我們的 warehouse 表格寫需求，讓資料團隊一次就做對。</span>」<br/>洞察：你用 AI 拆解你想要的東西，減少很多會議。</p>
-<p class="en-text">"Example #3: Requirements Without the Back-and-Forth. You asked for a 'customer churn dashboard.' The data team built something. Wrong. They rebuilt. Still wrong. Insight: You used AI to break down what you wanted and reduced lots of meetings."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>案例 4：會議紀錄轉行動</strong><br/>情況：你在會議中討論了流失儀表板，在 Confluence 記了筆記。需要建立正式需求和給資料團隊的 ticket。<br/>你的做法：「<span class="highlight-practical">讀取我的 Confluence 頁面 'Q1 Data Requests - Churn Discussion'</span>」然後觸發 <code>/requirements_from_notes</code><br/>洞察：把鬆散的會議筆記轉成可行動的工作，不用手動重寫或在三個工具間切換。</p>
-<p class="en-text">"Example #4: From Meeting Notes to Action. Transforms loose meeting notes into actionable work without manually rewriting everything or switching between three different tools."</p>
-</div>
-</div>
-<div class="expert-analysis">
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ CDMO 應用場景</div>
-<div class="info-box-content">
-<p><strong>這四個案例對應到 CDMO 的場景：</strong></p>
-<p>1. <strong>Pipeline 差異</strong> → MES vs ERP 的批次產量差異追蹤</p>
-<p>2. <strong>Sheet vs Warehouse</strong> → Excel 追蹤表 vs Veeva QMS 的偏差數量</p>
-<p>3. <strong>需求文件</strong> → 撰寫新製程的 User Requirements Specification</p>
-<p>4. <strong>會議轉行動</strong> → 將客戶 KOM 會議紀錄轉成 Project Charter</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p><strong>從「等待解答」到「自己找答案」：</strong></p>
-<p>以前：你發現數據有問題 → 寄信給 IT → IT 排隊處理 → 3 天後開會 → 解釋你聽不懂 → 再約一次會議</p>
-<p>現在：你發現數據有問題 → 用自然語言問 Claude Code → 5 分鐘得到「HubSpot 包含 On Hold，Warehouse 排除」的答案 → 直接跟團隊說「讓我們對齊定義」</p>
-<p>這是從「被動等待」到「主動追蹤」的轉變。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Key Takeaways -->
-<div class="section-header">
-<div class="section-number">5</div>
-<div class="section-title">重點整理 Key Takeaways</div>
-</div>
-<div class="takeaways">
-<div class="summary-card">
-<h4>名稱有誤導性</h4>
-<p>Claude Code 中的「Code」讓人以為要會寫程式，但實際上你是在「指揮」(directing) AI，而非「編碼」(coding)。這是認知上最大的障礙。</p>
-</div>
-<div class="summary-card">
-<h4>閘門正在打開</h4>
-<p>作者用一個週末建立整個網站，沒有程式背景。非技術人員正在用 AI 建立真正的工具——網站、數據系統、客製化工作流程。</p>
-</div>
-<div class="summary-card">
-<h4>四大功能記住「指代技連」</h4>
-<p>Slash Commands（指令）、Sub Agents（代理）、Skills（技能）、MCP（連接）。你可以混搭使用，讓 Claude Code 自己判斷該用什麼。</p>
-</div>
-<div class="summary-card">
-<h4>5 分鐘 vs 5 天</h4>
-<p>數據差異的追蹤從「等 5 天開會還是聽不懂」變成「5 分鐘得到具體原因，直接討論該對齊什麼」。這是效率的質變。</p>
-</div>
-</div>
-<!-- Practice Questions -->
-<div class="practice-section">
-<div class="practice-header">練習題 Practice Questions</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">為什麼兩個儀表板顯示的「同一個指標」會有不同數字？請用文章提到的三層架構解釋。</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>答案：</strong>數據從 Source（來源）經過 Transformation（轉換）到 Dashboard（儀表板）的過程中，可能因為三個原因產生差異：</p>
-<ul>
-<li><strong>Timing（時間差）：</strong>不同系統的更新頻率不同，例如 HubSpot 即時更新，但資料倉儲可能凌晨 2 點才刷新</li>
-<li><strong>Definition（定義漂移）：</strong>同一個詞在不同團隊有不同定義，例如 A 團隊的「活躍用戶」可能指 30 天內登入，B 團隊可能指有交易紀錄</li>
-<li><strong>Filter（隱藏篩選）：</strong>儀表板可能有預設條件你不知道，例如自動排除超過某金額的退款</li>
-</ul>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">在 CDMO 環境中，如果你發現 MES 顯示的批次產量和 ERP 的數字不一致，你會如何用 Claude Code 的概念來追蹤原因？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>答案框架：</strong></p>
-<p>1. <strong>辨識三層架構：</strong>MES 是 Source（生產現場數據），ERP 是經過 Transformation 的數據，報表是 Dashboard</p>
-<p>2. <strong>可能的差異原因：</strong></p>
-<ul>
-<li>Timing：MES 即時記錄，ERP 可能有批次傳輸延遲</li>
-<li>Definition：MES 可能記錄「理論產量」，ERP 可能記錄「入庫產量」（扣除 QC 取樣）</li>
-<li>Filter：ERP 可能自動排除「Hold」狀態的批次</li>
-</ul>
-<p>3. <strong>Claude Code 可以做的：</strong>如果有 MCP 連接 MES 和 ERP，可以直接問「比較 Batch 12345 在 MES 和 ERP 的產量數據，找出差異點」</p>
-<p><strong>注意：</strong>在 GMP 環境中，需要先確認資安合規才能讓 AI 接觸生產數據。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">文章聲稱「非技術人員可以用 Claude Code 建立網站和數據系統」，你認為這個說法有什麼限制或風險？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>答案框架：</strong></p>
-<p><strong>合理的限制：</strong></p>
-<ul>
-<li>初始設定仍需要一些技術操作（開 Terminal、安裝、設定 MCP 認證）</li>
-<li>複雜的商業邏輯可能需要技術人員協助驗證</li>
-<li>生產環境部署通常還是需要專業支援</li>
-</ul>
-<p><strong>潛在風險：</strong></p>
-<ul>
-<li>資安考量：AI 直接連接敏感數據，需要適當的存取控制</li>
-<li>錯誤放大：如果 AI 的邏輯有誤，非技術人員可能無法發現</li>
-<li>過度依賴：可能讓人忽略學習基礎概念的必要性</li>
-</ul>
-<p><strong>平衡觀點：</strong>這篇文章的價值在於「降低入門門檻」，而非「取代專業」。最佳應用場景是「快速驗證想法」和「減少來回溝通」，而非「建立生產級系統」。</p>
-</div>
-</details>
-</div>
-<!-- Bottom Line -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Claude Code 的價值不在「寫程式」，而在「縮短從問題到答案的路徑」。在 CDMO 環境中，這意味著我可以更快追蹤 MES/ERP/QMS 之間的數據差異原因，而不是每次都要等 IT 排隊處理。這符合我「AI 增強人類判斷而非取代」的理念——AI 負責追蹤數據路徑，我負責決定該對齊什麼定義。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">這週：安裝 Claude Code 並完成基本設定（Terminal + 訂閱）。找一個實際的數據差異問題（例如上週會議提到的產量報表不一致）測試看看能追蹤到什麼。先用低敏感度的數據測試，確認資安可行性後再考慮擴大應用。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章沒有深入討論：(1) 在高度監管環境（如製藥業）如何處理 21 CFR Part 11 合規；(2) MCP 的實際設定細節和常見錯誤；(3) 與其他工具（如 n8n、Make.com）的比較。建議 3 個月後當 Cowork 更成熟時重新評估，可能有更適合非技術人員的入口點。</div>
-</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-01-23 | AI Expert Learning System v1.3</p>
-<p>原文來源：<a href="https://joelsalinas.substack.com" target="_blank">Joel Salinas Substack</a> | 作者：Joel Salinas &amp; Alejandro Aboy</p>
-<div class="chat-title">建議 Chat Title：[Tool] Claude Code Non-Technical Guide - Data Tracing</div>
-</footer>
+    <!-- Header -->
+    <div class="header">
+        <h1>Claude Code 非技術領導者完全指南</h1>
+        <p class="subtitle">The Non-Coder's Guide to Claude Code</p>
+        <div class="tags">
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-automation">Automation</span>
+            <span class="tag tag-agent">Agent</span>
+        </div>
+        <p class="source-info">來源：Joel Salinas & Alejandro Aboy | 2026-01-22 | <a href="https://joelsalinas.substack.com" target="_blank">Joel Salinas Substack</a></p>
+    </div>
+    
+    <div class="container">
+        <!-- Executive Summary with Rating Bar -->
+        <div class="executive-summary">
+            <div class="rating-bar">
+                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+                <span class="rating-high">↑ Practical Value, Learning Curve</span>
+                <span class="rating-low">↓ Technical Depth, Tool Ecosystem</span>
+            </div>
+            <h2>Quick Summary</h2>
+            <p>這篇文章打破了「Claude Code 只給工程師用」的迷思。作者 Joel Salinas（非技術背景）用一個週末就用 Claude Code 建立了整個網站，而 Data Engineer Alejandro Aboy 則展示了四個企業場景：Pipeline 數據差異追蹤、Google Sheet vs 資料倉儲比對、需求文件撰寫、會議記錄轉行動項目。核心洞察：你不需要學會寫程式，你需要學會「指揮」AI 解決商業問題。這篇文章對想了解 Claude Code 能做什麼的非技術主管來說是很好的入門，但缺乏深入的技術細節和與其他 AI 工具的系統比較。</p>
+        </div>
+        
+        <!-- Learning Objectives -->
+        <div class="objectives">
+            <div class="objective-item">
+                <div class="objective-icon">🎯</div>
+                <div class="objective-title">理解 Claude Code 的定位</div>
+                <div class="objective-desc">為什麼名字裡有「Code」但非技術人員也能用</div>
+            </div>
+            <div class="objective-item">
+                <div class="objective-icon">🔧</div>
+                <div class="objective-title">掌握四大核心功能</div>
+                <div class="objective-desc">Slash Commands、Sub Agents、Skills、MCP 的作用</div>
+            </div>
+            <div class="objective-item">
+                <div class="objective-icon">💼</div>
+                <div class="objective-title">應用於商業場景</div>
+                <div class="objective-desc">數據差異追蹤、需求文件、會議紀錄轉化</div>
+            </div>
+        </div>
+        
+        <!-- Framework Visual -->
+        <div class="framework-visual">
+            <div class="framework-title">Data Flow 三層架構 — 為什麼你的數據會「不一致」</div>
+            <div class="framework-steps">
+                <div class="framework-step">
+                    <div class="framework-icon">📊</div>
+                    <div class="framework-step-title">Source</div>
+                    <div class="framework-step-desc">資料產生處<br>(HubSpot, Salesforce)</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">⚙️</div>
+                    <div class="framework-step-title">Transformation</div>
+                    <div class="framework-step-desc">商業邏輯定義<br>(Data Team 負責)</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">📈</div>
+                    <div class="framework-step-title">Dashboard</div>
+                    <div class="framework-step-desc">你看到的數字<br>(可能已經「變形」)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part I: The Stages of Data -->
+        <div class="section-header">
+            <div class="section-number">1</div>
+            <div class="section-title">數據的三層結構 The Stages of Data</div>
+        </div>
+        
+        <div class="content-grid">
+            <div class="original-text">
+                <h3>原文精華 Original Text</h3>
+                <div class="bilingual-block">
+                    <p class="chinese-text">想像這個場景：兩位高管用兩個不同的儀表板看「同一份」數據。通常他們會安排三天後與資料團隊開會，結果還是搞不清楚為什麼兩個讀取 Salesforce 或 HubSpot 的儀表板，對同一件事給出不同數字。</p>
+                    <p class="english-text">"Think of this scenario: Two executives using 2 different dashboards to see the 'same' data... They have explained to you, but it is still not clear why 2 Dashboards reading from Salesforce or Hubspot give different numbers for the same thing."</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">數據從源頭到儀表板會經過三個階段：<span class="highlight-concept">Source（來源）</span>是數據產生和存放的地方；<span class="highlight-concept">Transformation（轉換）</span>是有人決定指標定義並套用商業邏輯的地方；<span class="highlight-concept">Dashboard（儀表板）</span>是你看到數字的地方。</p>
+                    <p class="english-text">"Source → Where data is generated and lives. Transformation → Where someone decides what metrics mean and applies business logic to them. Dashboard → Where you see the number."</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">沿途可能發生很多事造成混淆：<span class="highlight-key">時間差異</span>（HubSpot 即時更新，資料庫凌晨 2 點才刷新）、<span class="highlight-key">定義漂移</span>（A 團隊的「活躍用戶」≠ B 團隊的「活躍用戶」）、<span class="highlight-key">隱藏篩選</span>（儀表板 A 排除超過 $10K 的退款，儀表板 B 包含）。</p>
+                    <p class="english-text">"Timing Mismatches - e.g. HubSpot updates are on the spot. Database refreshes at 2 AM. Definition Drift - e.g. One team's 'active user' ≠ another team's 'active user.' Hidden Filters - e.g. Dashboard A excludes refunds over $10K. Dashboard B includes them."</p>
+                </div>
+            </div>
+            
+            <div class="expert-analysis">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 比喻說明</div>
+                    <div class="info-box-content">
+                        <p>想像你在追蹤一批原料從供應商到成品的過程。供應商說「出貨 100kg」，倉庫說「收到 98kg」，生產報表說「投入 95kg」。差異可能來自：運輸損耗（時間差）、不同的計量單位或四捨五入規則（定義差異）、或某些品項被自動排除在報表外（隱藏篩選）。</p>
+                        <p>在 CDMO 環境中，這就像 MES、ERP、QMS 三個系統對「批次完成」的定義可能不同。</p>
+                    </div>
+                </div>
+                
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>數據差異三大根源：</strong></p>
+                        <p>1. <strong>Timing（時間）</strong>：不同系統的更新頻率不同</p>
+                        <p>2. <strong>Definition（定義）</strong>：同一個詞在不同團隊有不同意思</p>
+                        <p>3. <strong>Filter（篩選）</strong>：報表可能有你不知道的預設條件</p>
+                        <p>這三個問題在任何組織都會發生，不是資料團隊「做錯了」。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part II: What Claude Code Actually Does -->
+        <div class="section-header">
+            <div class="section-number">2</div>
+            <div class="section-title">Claude Code 到底能做什麼 What Claude Code Actually Does</div>
+        </div>
+        
+        <div class="content-grid">
+            <div class="original-text">
+                <h3>原文精華 Original Text</h3>
+                <div class="bilingual-block">
+                    <p class="chinese-text">Claude Code 的獨特之處：<span class="highlight-practical">直接連接商業工具</span>（HubSpot、Google Sheets、資料庫）、<span class="highlight-practical">讀取實際數據</span>而非假設、<span class="highlight-practical">展示工作過程</span>。</p>
+                    <p class="english-text">"What makes it different: Connects directly to business tools (HubSpot, Google Sheets, Databases). Reads actual data, not hypotheticals. Shows its work."</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">當你問「為什麼這些 pipeline 數字不一致？」它會連接 HubSpot、讀取你的資料庫表格、比較邏輯，然後回答：「<span class="highlight-concept">HubSpot 包含 On Hold 的交易，你的資料倉儲在 90 天後會排除它們。</span>」</p>
+                    <p class="english-text">"When you ask: 'Why don't these pipeline numbers match?' it will connect to HubSpot, read your database tables, compare the logic and you will do something like 'HubSpot includes On Hold deals. Your warehouse excludes them after 90 days.'"</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text">它成為一個<span class="highlight-key">你可以無限客製化的工作流程機器</span>，不會像一般 Claude 那樣受限於共用功能、需要你引導更多它該做什麼，也缺乏 Claude Code 能達到的上下文能力。</p>
+                    <p class="english-text">"It becomes a workflow machine that you can customize as much as you can, without getting limited by plain Claude, where you have many shared features but requires you to guide much more of what it should be doing, and its also lacking the context power Claude Code can achieve."</p>
+                </div>
+            </div>
+            
+            <div class="expert-analysis">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">📚 核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>Claude Code vs 一般 Claude 的關鍵差異：</strong></p>
+                        <p>一般 Claude（claude.ai）是在瀏覽器中與 AI 對話，你需要複製貼上數據給它。Claude Code 是在你的電腦終端機（Terminal）執行，可以直接讀取本地檔案、連接外部服務、執行腳本。</p>
+                        <p>簡單說：一般 Claude 是「你告訴它什麼，它就知道什麼」；Claude Code 是「它可以自己去拿需要的資訊」。</p>
+                    </div>
+                </div>
+                
+                <div class="info-box box-compare">
+                    <div class="info-box-header">⚖️ 工具比較</div>
+                    <div class="info-box-content">
+                        <p><strong>Claude Code vs Cowork（剛發布的預覽版）：</strong></p>
+                        <p>作者提到 Anthropic 剛推出 Cowork，號稱是「給非技術人員的 Claude Code」。目前還在 preview 階段，功能可能持續更新。這意味著本文的 Claude Code 學習可能之後能轉移到 Cowork，降低技術門檻。</p>
+                        <p>我的建議：先了解 Claude Code 的概念和能力，等 Cowork 更成熟時會更容易上手。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part III: Four Core Features -->
+        <div class="section-header">
+            <div class="section-number">3</div>
+            <div class="section-title">四大核心功能 Claude Code Features</div>
+        </div>
+        
+        <div class="content-grid">
+            <div class="original-text">
+                <h3>原文精華 Original Text</h3>
+                <div class="bilingual-block">
+                    <p class="chinese-text">所有這些功能都存在於 <span class="highlight-concept">Markdown (.md) 檔案</span>中，這是所有 AI 系統用來呈現文件的格式。</p>
+                    <p class="english-text">"All these features live under Markdown (.md) files, which is what all AI systems use to present documentation."</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text"><strong>Slash Commands（斜線指令）：</strong>使用者觸發的捷徑，讓你不用重複寫工作流程。例如：<code>/audit_dashboard</code> 觸發儀表板比較工作流程。</p>
+                    <p class="english-text">"Slash Commands: User-triggered shortcuts that save you from writing repeatable workflows. Example: /audit_dashboard - triggers dashboard comparison workflow."</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text"><strong>Sub Agents（子代理）：</strong>平行執行的 Claude Agent，有專門的焦點和獨立的上下文。例如：<code>@data-reconciliation</code> 平行比較 HubSpot vs Warehouse。</p>
+                    <p class="english-text">"Sub Agents: Parallel Claude Agents with specialized focus and isolated context. Example: @data-reconciliation - compares HubSpot vs Warehouse in parallel"</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text"><strong>Skills（技能）：</strong>Claude 在相關時自動載入的知識包。Claude Code 不會告訴你它在用某個 skill，但如果它認為需要就會遵循。</p>
+                    <p class="english-text">"Skills: Auto-invoked knowledge packages Claude loads when relevant. Claude Code won't tell you that it is using the skill per se, but it will follow it if it thinks it needs to."</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text"><strong>MCP（Model Context Protocol）：</strong>我們提供給 Claude Code 連接上下文的工具。每個 MCP 不同，連接方式需要根據使用案例和認證設定。通常你會被導向一個畫面，點擊確認身份即可，不需要技術知識。</p>
+                    <p class="english-text">"MCP: Tools we provide Claude Code to connect with context. Each MCP is different and the way to connect them is required in the use case and authentication setup so it can recognize you."</p>
+                </div>
+            </div>
+            
+            <div class="expert-analysis">
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>四個功能的記憶口訣：「指-代-技-連」</strong></p>
+                        <p>• <strong>指</strong>令（Slash Commands）：你主動觸發的快捷鍵</p>
+                        <p>• <strong>代</strong>理（Sub Agents）：專門處理特定任務的分身</p>
+                        <p>• <strong>技</strong>能（Skills）：背景自動套用的知識包</p>
+                        <p>• <strong>連</strong>接（MCP）：與外部工具的橋樑</p>
+                    </div>
+                </div>
+                
+                <div class="info-box box-code">
+                    <div class="info-box-header">💻 程式碼/API</div>
+                    <div class="info-box-content">
+                        <p><strong>MCP 的概念：</strong></p>
+                        <p>MCP（Model Context Protocol）是 Anthropic 設計的標準化協議，讓 AI 可以連接各種外部服務。你可以把它想像成「AI 專用的 USB 插槽」—— 只要外部服務支援 MCP，Claude 就能直接讀寫數據。</p>
+                        <p>目前已有 HubSpot、Google Drive、Confluence、Slack 等常用工具的 MCP。Plugin 市集 <code>aitmpl</code> 有更多預建的 skills 和 agents 可以安裝。</p>
+                    </div>
+                </div>
+                
+                <div class="info-box box-key">
+                    <div class="info-box-header">⚠️ 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>GDPR/資安提醒：</strong></p>
+                        <p>如果你處理的是極機密資訊，請先聯繫資安團隊確認 Anthropic 是否已被核准為第三方工具，或找方法透過 API 在公司內部伺服器執行 Claude Code。</p>
+                        <p>在 CDMO 環境中，這點特別重要——21 CFR Part 11 和 ALCOA+ 對資料完整性有嚴格要求。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part IV: Hands-On Examples -->
+        <div class="section-header">
+            <div class="section-number">4</div>
+            <div class="section-title">實戰案例 Hands-On Examples</div>
+        </div>
+        
+        <div class="content-grid">
+            <div class="original-text">
+                <h3>原文精華 Original Text</h3>
+                <div class="bilingual-block">
+                    <p class="chinese-text"><strong>案例 1：Pipeline 差異</strong><br>情況：HubSpot 顯示 $1M，CFO 用資料庫的儀表板顯示 $810K。<br>你的做法：「<span class="highlight-practical">比較 HubSpot pipeline 和我們的 warehouse deals 表格。為什麼有差異？</span>」<br>洞察：現在你可以說「讓我們對齊 On Hold 是否算作活躍 pipeline。」</p>
+                    <p class="english-text">"Example #1: Pipeline Discrepancies. Your Situation: HubSpot shows $1M. CFO's dashboard using the database shows $810K. What You Do: 'Compare the HubSpot pipeline with our warehouse deals table. Why is there a difference?'"</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text"><strong>案例 2：Google Sheet vs 資料倉儲</strong><br>情況：行銷總監的 Google Sheet 與資料團隊的儀表板不符。<br>你的做法：「<span class="highlight-practical">讀取 Google Sheet 'Q1 Campaign Performance'，與 warehouse 表格 marketing.campaigns 比較。為什麼 CPL 數字不同？</span>」<br>洞察：你的 sheet 更即時，warehouse 更乾淨。它們服務不同目的。</p>
+                    <p class="english-text">"Example #2: Google Sheet vs Data Warehouse. Your Situation: Marketing Director's Google Sheet doesn't match the data team's dashboard. Insight: Your sheet is fresher. The warehouse is cleaner. They serve different purposes."</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text"><strong>案例 3：需求文件</strong><br>情況：你要求「客戶流失儀表板」，資料團隊做出來的是錯的。重做還是錯。<br>你的做法：「<span class="highlight-practical">我需要一個客戶流失儀表板。幫我根據我們的 warehouse 表格寫需求，讓資料團隊一次就做對。</span>」<br>洞察：你用 AI 拆解你想要的東西，減少很多會議。</p>
+                    <p class="english-text">"Example #3: Requirements Without the Back-and-Forth. You asked for a 'customer churn dashboard.' The data team built something. Wrong. They rebuilt. Still wrong. Insight: You used AI to break down what you wanted and reduced lots of meetings."</p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="chinese-text"><strong>案例 4：會議紀錄轉行動</strong><br>情況：你在會議中討論了流失儀表板，在 Confluence 記了筆記。需要建立正式需求和給資料團隊的 ticket。<br>你的做法：「<span class="highlight-practical">讀取我的 Confluence 頁面 'Q1 Data Requests - Churn Discussion'</span>」然後觸發 <code>/requirements_from_notes</code><br>洞察：把鬆散的會議筆記轉成可行動的工作，不用手動重寫或在三個工具間切換。</p>
+                    <p class="english-text">"Example #4: From Meeting Notes to Action. Transforms loose meeting notes into actionable work without manually rewriting everything or switching between three different tools."</p>
+                </div>
+            </div>
+            
+            <div class="expert-analysis">
+                <div class="info-box box-practical">
+                    <div class="info-box-header">🛠️ CDMO 應用場景</div>
+                    <div class="info-box-content">
+                        <p><strong>這四個案例對應到 CDMO 的場景：</strong></p>
+                        <p>1. <strong>Pipeline 差異</strong> → MES vs ERP 的批次產量差異追蹤</p>
+                        <p>2. <strong>Sheet vs Warehouse</strong> → Excel 追蹤表 vs Veeva QMS 的偏差數量</p>
+                        <p>3. <strong>需求文件</strong> → 撰寫新製程的 User Requirements Specification</p>
+                        <p>4. <strong>會議轉行動</strong> → 將客戶 KOM 會議紀錄轉成 Project Charter</p>
+                    </div>
+                </div>
+                
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">💡 比喻說明</div>
+                    <div class="info-box-content">
+                        <p><strong>從「等待解答」到「自己找答案」：</strong></p>
+                        <p>以前：你發現數據有問題 → 寄信給 IT → IT 排隊處理 → 3 天後開會 → 解釋你聽不懂 → 再約一次會議</p>
+                        <p>現在：你發現數據有問題 → 用自然語言問 Claude Code → 5 分鐘得到「HubSpot 包含 On Hold，Warehouse 排除」的答案 → 直接跟團隊說「讓我們對齊定義」</p>
+                        <p>這是從「被動等待」到「主動追蹤」的轉變。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="section-header">
+            <div class="section-number">5</div>
+            <div class="section-title">重點整理 Key Takeaways</div>
+        </div>
+        
+        <div class="takeaways">
+            <div class="summary-card">
+                <h4>名稱有誤導性</h4>
+                <p>Claude Code 中的「Code」讓人以為要會寫程式，但實際上你是在「指揮」(directing) AI，而非「編碼」(coding)。這是認知上最大的障礙。</p>
+            </div>
+            <div class="summary-card">
+                <h4>閘門正在打開</h4>
+                <p>作者用一個週末建立整個網站，沒有程式背景。非技術人員正在用 AI 建立真正的工具——網站、數據系統、客製化工作流程。</p>
+            </div>
+            <div class="summary-card">
+                <h4>四大功能記住「指代技連」</h4>
+                <p>Slash Commands（指令）、Sub Agents（代理）、Skills（技能）、MCP（連接）。你可以混搭使用，讓 Claude Code 自己判斷該用什麼。</p>
+            </div>
+            <div class="summary-card">
+                <h4>5 分鐘 vs 5 天</h4>
+                <p>數據差異的追蹤從「等 5 天開會還是聽不懂」變成「5 分鐘得到具體原因，直接討論該對齊什麼」。這是效率的質變。</p>
+            </div>
+        </div>
+
+        <!-- Practice Questions -->
+        <div class="practice-section">
+            <div class="practice-header">練習題 Practice Questions</div>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q1</span>
+                    <span class="question-type">概念理解</span>
+                    <span class="question-text">為什麼兩個儀表板顯示的「同一個指標」會有不同數字？請用文章提到的三層架構解釋。</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>答案：</strong>數據從 Source（來源）經過 Transformation（轉換）到 Dashboard（儀表板）的過程中，可能因為三個原因產生差異：</p>
+                    <ul>
+                        <li><strong>Timing（時間差）：</strong>不同系統的更新頻率不同，例如 HubSpot 即時更新，但資料倉儲可能凌晨 2 點才刷新</li>
+                        <li><strong>Definition（定義漂移）：</strong>同一個詞在不同團隊有不同定義，例如 A 團隊的「活躍用戶」可能指 30 天內登入，B 團隊可能指有交易紀錄</li>
+                        <li><strong>Filter（隱藏篩選）：</strong>儀表板可能有預設條件你不知道，例如自動排除超過某金額的退款</li>
+                    </ul>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q2</span>
+                    <span class="question-type">產業應用</span>
+                    <span class="question-text">在 CDMO 環境中，如果你發現 MES 顯示的批次產量和 ERP 的數字不一致，你會如何用 Claude Code 的概念來追蹤原因？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>答案框架：</strong></p>
+                    <p>1. <strong>辨識三層架構：</strong>MES 是 Source（生產現場數據），ERP 是經過 Transformation 的數據，報表是 Dashboard</p>
+                    <p>2. <strong>可能的差異原因：</strong></p>
+                    <ul>
+                        <li>Timing：MES 即時記錄，ERP 可能有批次傳輸延遲</li>
+                        <li>Definition：MES 可能記錄「理論產量」，ERP 可能記錄「入庫產量」（扣除 QC 取樣）</li>
+                        <li>Filter：ERP 可能自動排除「Hold」狀態的批次</li>
+                    </ul>
+                    <p>3. <strong>Claude Code 可以做的：</strong>如果有 MCP 連接 MES 和 ERP，可以直接問「比較 Batch 12345 在 MES 和 ERP 的產量數據，找出差異點」</p>
+                    <p><strong>注意：</strong>在 GMP 環境中，需要先確認資安合規才能讓 AI 接觸生產數據。</p>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q3</span>
+                    <span class="question-type">批判思考</span>
+                    <span class="question-text">文章聲稱「非技術人員可以用 Claude Code 建立網站和數據系統」，你認為這個說法有什麼限制或風險？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>答案框架：</strong></p>
+                    <p><strong>合理的限制：</strong></p>
+                    <ul>
+                        <li>初始設定仍需要一些技術操作（開 Terminal、安裝、設定 MCP 認證）</li>
+                        <li>複雜的商業邏輯可能需要技術人員協助驗證</li>
+                        <li>生產環境部署通常還是需要專業支援</li>
+                    </ul>
+                    <p><strong>潛在風險：</strong></p>
+                    <ul>
+                        <li>資安考量：AI 直接連接敏感數據，需要適當的存取控制</li>
+                        <li>錯誤放大：如果 AI 的邏輯有誤，非技術人員可能無法發現</li>
+                        <li>過度依賴：可能讓人忽略學習基礎概念的必要性</li>
+                    </ul>
+                    <p><strong>平衡觀點：</strong>這篇文章的價值在於「降低入門門檻」，而非「取代專業」。最佳應用場景是「快速驗證想法」和「減少來回溝通」，而非「建立生產級系統」。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bottom Line -->
+        <div class="bottom-line">
+            <div class="bottom-line-header">🎯 我的行動結論</div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">✔ 核心洞察</div>
+                <div class="bottom-line-text">Claude Code 的價值不在「寫程式」，而在「縮短從問題到答案的路徑」。在 CDMO 環境中，這意味著我可以更快追蹤 MES/ERP/QMS 之間的數據差異原因，而不是每次都要等 IT 排隊處理。這符合我「AI 增強人類判斷而非取代」的理念——AI 負責追蹤數據路徑，我負責決定該對齊什麼定義。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">📈 立即應用</div>
+                <div class="bottom-line-text">這週：安裝 Claude Code 並完成基本設定（Terminal + 訂閱）。找一個實際的數據差異問題（例如上週會議提到的產量報表不一致）測試看看能追蹤到什麼。先用低敏感度的數據測試，確認資安可行性後再考慮擴大應用。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">⚠ 需要補充</div>
+                <div class="bottom-line-text">文章沒有深入討論：(1) 在高度監管環境（如製藥業）如何處理 21 CFR Part 11 合規；(2) MCP 的實際設定細節和常見錯誤；(3) 與其他工具（如 n8n、Make.com）的比較。建議 3 個月後當 Cowork 更成熟時重新評估，可能有更適合非技術人員的入口點。</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>製作日期：2026-01-23 | AI Expert Learning System v1.3</p>
+        <p>原文來源：<a href="https://joelsalinas.substack.com" target="_blank">Joel Salinas Substack</a> | 作者：Joel Salinas & Alejandro Aboy</p>
+        <div class="chat-title">建議 Chat Title：[Tool] Claude Code Non-Technical Guide - Data Tracing</div>
+    </div>
 </body>
 </html>

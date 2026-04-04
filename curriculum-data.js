@@ -27,6 +27,7 @@ const stages = [
       { file: '2026-03-10_reasoning-messy-future.html', title: '混亂未來推理框架 SystematicallyLS ★3.6', required: false, why: '量化交易員的 AI 未來推理框架：四大護城河與不對稱下注' },
       { file: '2026-03-12_su-program-the-world.html', title: '偏鄉程式教育 蘇文鈺 Program the World ★3.6', required: false, why: '成大教授十年偏鄉程式教育，填補弱勢孩子的想像力斷層' },
       { file: '2026-03-14_apple-ai-affordable-strategy.html', title: '蘋果 AI 平價戰略 ★3.4', required: false, why: '蘋果用低價硬體搶佔 AI 生態入口的策略分析' },
+      { file: '2026-04-01_sid-founder-mode-cancer.html', title: 'Sid Founder Mode 抗癌 — AI 個人化醫療 ★4.5', required: false, why: 'GitLab 創辦人以工程思維+AI 對抗骨癌，展示 AI 在醫療領域的突破潛力' },
     ]
   },
   {
@@ -200,6 +201,7 @@ const topicClusters = [
           { title: 'Claude Code Power User Van Horn ★4.5', file: '2026-03-24_claude-code-power-user.html' },
           { title: 'Claude Code Auto Mode ★4.5', file: '2026-03-26_claude-code-auto-mode.html' },
           { title: '10 Claude Workflows 省 10+ 小時 ★3.6', file: '2026-03-28_claude-10-workflows.html' },
+          { title: 'Claw Code 開源 CLI 架構深度解析 ★4.2', file: '2026-04-04_claw-code-open-source-cli.html' },
         ]
       },
       {
@@ -368,6 +370,7 @@ const topicClusters = [
           { title: 'Roche × Nvidia AI 工廠製藥業 ★4.0', file: '2026-03-23_roche-nvidia-ai-factory-pharma.html' },
           { title: '2030 大預言 AI 新貴族與數位農奴 ★3.6', file: '2026-03-28_ai-2030-prediction.html' },
           { title: '財富大重洗 AI 隱形冠軍 ★3.6', file: '2025-03-28_ai-wealth-redistribution.html' },
+          { title: 'Sid Founder Mode 抗癌 AI 個人化醫療 ★4.5', file: '2026-04-01_sid-founder-mode-cancer.html' },
         ]
       }
     ]
@@ -473,6 +476,7 @@ const supplemental = [
       { title: 'Batch 331 學習指南 ★4.2', file: '2025-12-10_batch-331-study-guide.html' },
       { title: 'A2A Commerce ★3.8', file: '2026-02-12_a2a-commerce.html' },
       { title: 'Agent Ecologies ★4.0', file: '2026-02-03_agent-ecology-automation.html' },
+      { title: 'Sid Founder Mode 抗癌 AI 個人化醫療 ★4.5', file: '2026-04-01_sid-founder-mode-cancer.html' },
     ]
   },
   {

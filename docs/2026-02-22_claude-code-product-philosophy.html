@@ -1,405 +1,551 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>人們只會做他們已經在做的事 — Claude Code 背後的產品哲學</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-<!-- Dashboard Index Meta -->
-<meta content="2026-02-22" name="doc-date"/>
-<meta content="Claude Code 產品哲學 - Boris Cherny 訪談" name="doc-title"/>
-<meta content="Boris Cherny / The Lightcone (YC Podcast)" name="doc-source"/>
-<meta content="Agent,Tool,Framework,Analysis" name="doc-tags"/>
-<meta content="4.5" name="doc-rating"/>
-<meta content="Boris Cherny 談 Claude Code 從終端原型到 10 億美元產品的旅程。潛在需求、為未來模型構建、永遠不要跟模型對賭。" name="doc-summary"/>
-<meta content="2026-02-22_claude-code-product-philosophy.html" name="doc-file"/><meta content="v1" name="normalized"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人們只會做他們已經在做的事 — Claude Code 背後的產品哲學</title>
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-02-22">
+    <meta name="doc-title" content="Claude Code 產品哲學 - Boris Cherny 訪談">
+    <meta name="doc-source" content="Boris Cherny / The Lightcone (YC Podcast)">
+    <meta name="doc-tags" content="Agent,Tool,Framework,Analysis">
+    <meta name="doc-rating" content="4.5">
+    <meta name="doc-summary" content="Boris Cherny 談 Claude Code 從終端原型到 10 億美元產品的旅程。潛在需求、為未來模型構建、永遠不要跟模型對賭。">
+    <meta name="doc-file" content="2026-02-22_claude-code-product-philosophy.html">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
 
+        /* Header */
+        .header { text-align: center; margin-bottom: 2rem; padding: 2.5rem 2rem; background: linear-gradient(135deg, #0f172a, #1e3a5f); color: white; border-radius: 1rem; }
+        .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.4; }
+        .header .subtitle { font-size: 1rem; opacity: 0.85; margin-bottom: 1rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-framework { background: #fde68a; color: #92400e; }
+        .tag-analysis { background: #ddd6fe; color: #4c1d95; }
+        .source-info { font-size: 0.8rem; opacity: 0.7; }
+        .source-info a { color: #93c5fd; text-decoration: none; }
 
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Executive Summary */
+        .executive-summary { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .executive-summary h2 { font-size: 1.1rem; color: #1e3a8a; margin-bottom: 1rem; }
+        .executive-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.75rem; }
+
+        /* Section */
+        .section { background: white; border-radius: 1rem; padding: 1.5rem 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .section-title { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #bfdbfe; }
+
+        /* Learning Objectives */
+        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+        .objective-item { background: #f0f9ff; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .objective-desc { font-size: 0.85rem; color: #475569; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+        .content-left { padding-right: 1rem; border-right: 1px solid #e2e8f0; }
+        .content-right { padding-left: 0.5rem; }
+        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; padding-right: 0; } .content-right { padding-left: 0; } }
+
+        /* Bilingual */
+        .bilingual-block { margin-bottom: 1rem; }
+        .bilingual-zh { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+        .bilingual-en { font-size: 0.85rem; color: #64748b; font-style: italic; line-height: 1.6; }
+        .highlight-concept { background: #a5d6a7; padding: 0 0.2rem; border-radius: 2px; }
+        .highlight-key { background: #ffcc80; padding: 0 0.2rem; border-radius: 2px; }
+        .highlight-practical { background: #6ee7b7; padding: 0 0.2rem; border-radius: 2px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+        /* Key Takeaways */
+        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+
+        /* Practice Accordion */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; }
+        .footer a { color: #64748b; text-decoration: none; }
+
+        /* Tab Container */
+        .tab-container { margin: 1.5rem 0; }
+        .tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+        .tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; }
+        .tab-btn:hover { color: #334155; }
+        .tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Utility */
+        .part-label { display: inline-block; font-size: 0.75rem; font-weight: 700; color: white; background: #3b82f6; padding: 0.15rem 0.6rem; border-radius: 9999px; margin-bottom: 0.75rem; }
+        .quote-block { border-left: 3px solid #93c5fd; padding: 0.75rem 1rem; margin: 1rem 0; background: #f0f9ff; border-radius: 0 0.5rem 0.5rem 0; font-style: italic; color: #334155; font-size: 0.9rem; }
+    </style>
 </head>
 <body>
 <div class="container">
-<!-- HEADER -->
-<header class="header">
-<div class="tags">
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-framework">Framework</span>
-<span class="tag tag-analysis">Analysis</span>
-</div>
-<h1>人們只會做他們已經在做的事<br/>Claude Code 背後的產品哲學</h1>
-<div class="subtitle">Boris Cherny 訪談：從終端原型到 10 億美元年化收入的旅程</div>
-<div class="source-info">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="tags">
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-framework">Framework</span>
+            <span class="tag tag-analysis">Analysis</span>
+        </div>
+        <h1>人們只會做他們已經在做的事<br>Claude Code 背後的產品哲學</h1>
+        <div class="subtitle">Boris Cherny 訪談：從終端原型到 10 億美元年化收入的旅程</div>
+        <div class="source-info">
             來源：The Lightcone (YC Podcast)，2026 年 2 月 |
             <a href="https://www.youtube.com/watch?v=PQU9o_5rHC4" target="_blank">原始影片</a> |
             整理：宝玉 @dotey
         </div>
-</header>
-<!-- EXECUTIVE SUMMARY -->
-<div class="executive-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★✬</span> 4.5/5</span>
-<span class="rating-high">↑ 實務應用, 工具生態</span>
-<span class="rating-low">↓ 技術深度</span>
-</div>
-<h2>Executive Summary</h2>
-<p>Boris Cherny 是 Claude Code 的創建者。這個最初只是為了學 API 而隨手寫的終端聊天工具，在 2025 年 5 月公開發布後僅 6 個月就達到 10 億美元年化收入，目前貢獻了 GitHub 上 4% 的公開程式碼提交。這篇訪談摘要揭示了三個核心產品理念：<span class="highlight-key">潛在需求</span>（Latent Demand）— 不要讓人做新事情，幫他們把正在做的事做得更簡單；<span class="highlight-concept">為未來的模型構建</span> — 不要為今天的模型做產品；以及 <span class="highlight-key">The Bitter Lesson</span> — 永遠不要跟模型對賭。Boris 從 Opus 4.5 開始 100% 使用 Claude Code 寫程式碼、卸載了 IDE、每天提交約 20 個 PR，並預測「軟體工程師」這個頭銜將逐漸消失。</p>
-</div>
-<!-- LEARNING OBJECTIVES -->
-<div class="section">
-<div class="section-title">Learning Objectives</div>
-<div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">🎯</div>
-<div class="objective-title">潛在需求 (Latent Demand)</div>
-<div class="objective-desc">理解為什麼觀察用戶「已經在做的事」比發明新行為更有效，以及如何應用在產品開發中</div>
-</div>
-<div class="objective-item" style="border-left-color: #10b981;">
-<div class="objective-icon">🔮</div>
-<div class="objective-title">為未來模型構建</div>
-<div class="objective-desc">學習 Anthropic 的「六個月後」產品策略，理解 scaffolding 為何是技術債</div>
-</div>
-<div class="objective-item" style="border-left-color: #f59e0b;">
-<div class="objective-icon">💡</div>
-<div class="objective-title">Agent 拓撲與多 Agent 協作</div>
-<div class="objective-desc">掌握「不相關的上下文窗口」概念，理解子 Agent 遞迴架構如何實現大規模自動化</div>
-</div>
-</div>
-</div>
-<!-- FRAMEWORK VISUAL -->
-<div class="framework-visual">
-<div class="framework-title">Boris Cherny 的三大產品原則</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">👁</div>
-<div class="framework-step-title">潛在需求</div>
-<div class="framework-step-desc">觀察用戶已在做的事<br/>讓它變得更簡單</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔭</div>
-<div class="framework-step-title">為未來構建</div>
-<div class="framework-step-desc">為 6 個月後的模型<br/>而非今天的模型設計</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">⚠</div>
-<div class="framework-step-title">不跟模型對賭</div>
-<div class="framework-step-desc">任何 scaffolding<br/>都是技術債</div>
-</div>
-</div>
-</div>
-<!-- CONTENT SECTIONS - Tabbed for 6 Parts -->
-<div class="section">
-<div class="section-title">Content</div>
-<div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-origin')">起源故事</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-philosophy')">產品哲學</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-agent')">Agent 拓撲</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-future')">未來預測</button>
-</div>
-<!-- TAB 1: Origin Story -->
-<div class="tab-content active" id="tab-origin">
-<span class="part-label">Part I</span>
-<h3 style="color:#1e3a8a; margin-bottom:1rem;">從「我在聽什麼音樂」到 AGI 時刻</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">Boris 說 Claude Code 的誕生完全是偶然。他加入 Anthropic Labs 團隊時的任務是探索某種編碼產品，但他先需要搞懂 API 怎麼用，就<span class="highlight-concept">隨手寫了個終端聊天 App</span>。選終端的原因很簡單：不用寫 UI，當時就他一個人。</div>
-<div class="en-text">"I chose the terminal because I didn't have to write a UI. It was just me at the time."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">當 Anthropic 推出 Tool Use 功能時，Boris 給模型加了一個 bash 工具，直接從文件範例搬過來的。他先讓模型用 <code>cat</code> 讀了個文件，然後問了一句：「我在聽什麼音樂？」Claude 寫了一段 AppleScript，<span class="highlight-key">調用他 Mac 上的音樂播放器查了當前播放的歌</span>。</div>
-<div class="en-text">"That was my first real AGI moment. I realized: this thing just wants to use tools, it just wants to interact with the world."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">原型做出兩天後給團隊內部測試。第二天早上，同事 Robert 已經在用這個東西寫程式碼了。到了對外發布評審時，Dario Amodei 看到內部日活增長圖幾乎是一條垂直線，問 Boris 是不是在強制工程師使用。Boris 說沒有，只是發了個帖子就傳開了。</div>
-<div class="en-text">"The internal DAU chart was basically a vertical line."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">Claude Code 的誕生像是有人為了試新鍋子的手感，隨便炒了盤蛋炒飯，結果這盤蛋炒飯變成了餐廳的招牌菜。Boris 沒有設計產品路線圖，他只是在解決自己的問題。這呼應了 Paul Graham 的名言：做自己想用的東西。</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">Claude Code 到今天還在終端裡運行。Boris 自己都覺得不可思議：<strong>「那本來應該是起點，不是終點。」</strong> 這反映了一個深層邏輯 — 當模型進步太快時，任何精美的 UI 在六個月後都可能過時。最少的 UI 假設 = 最大的靈活性。</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">早期工程師主要用 Claude Code 自動化 Git 操作和容器管理。第一個真正的編碼用例是<strong>寫單元測試</strong>，因為風險相對較低。這是一個聰明的進入策略 — 從低風險場景建立信任，再逐步擴展到核心開發工作。</div>
-</div>
-</div>
-</div>
-<span class="part-label">Part II</span>
-<h3 style="color:#1e3a8a; margin-bottom:1rem;">CLAUDE.md 與 Plan Mode 的極簡哲學</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">CLAUDE.md 的由來又是一個<span class="highlight-concept">潛在需求</span>的例子。用戶自發開始寫 markdown 檔案讓模型讀，Boris 觀察到這個行為後才把它產品化。Boris 的個人 CLAUDE.md 只有兩行：第一行是提交 PR 後自動合併；第二行是 PR 提交後發到團隊頻道讓人審批。</div>
-<div class="en-text">"People just started writing markdown files for the model to read. We observed that behavior and productized it."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Boris 的建議很直接：<span class="highlight-key">如果你的 CLAUDE.md 太長了，刪掉，從頭來過</span>。模型能力隨著每次更新在變，你需要的是做最少的事情讓模型走上正軌。每個新模型需要的指令越來越少。</div>
-<div class="en-text">"Delete it and start over. You'll find each new model needs fewer and fewer instructions."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Plan Mode 的全部技術實現就是在 prompt 裡加一句<span class="highlight-key">「請不要寫程式碼」</span>。Boris 周日晚上 10 點看到用戶反覆要求「先想方案，別寫 code」，花 30 分鐘寫完程式碼，當晚發布。</div>
-<div class="en-text">"Plan Mode has no secret. It's just adding 'please don't write code' to the prompt."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：Scaffolding 是技術債</div>
-<div class="info-box-content">Boris 提到圍繞模型構建的「腳手架」(scaffolding) 可以把性能提升 10-20%，但<strong>下一個模型出來後這些優化就會被抹平</strong>。這也是他們一直留在命令列的原因 — 任何 UI 在六個月後都不會還有意義。這是一個反直覺的產品決策：<strong>最少的功能 = 最長的壽命</strong>。</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ CLAUDE.md 最佳實踐</div>
-<div class="info-box-content">
-                                Boris 的做法：只放你<strong>反覆重複</strong>的東西，其他情況直接 prompt 就行。團隊共享 CLAUDE.md 約 2000 token。Boris 每週會多次在別人 PR 上直接 tag Claude，讓它把新規則加進去。<br/><br/>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="executive-summary">
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">★★★★✬</span> 4.5/5</span>
+            <span class="rating-high">↑ 實務應用, 工具生態</span>
+            <span class="rating-low">↓ 技術深度</span>
+        </div>
+        <h2>Executive Summary</h2>
+        <p>Boris Cherny 是 Claude Code 的創建者。這個最初只是為了學 API 而隨手寫的終端聊天工具，在 2025 年 5 月公開發布後僅 6 個月就達到 10 億美元年化收入，目前貢獻了 GitHub 上 4% 的公開程式碼提交。這篇訪談摘要揭示了三個核心產品理念：<span class="highlight-key">潛在需求</span>（Latent Demand）— 不要讓人做新事情，幫他們把正在做的事做得更簡單；<span class="highlight-concept">為未來的模型構建</span> — 不要為今天的模型做產品；以及 <span class="highlight-key">The Bitter Lesson</span> — 永遠不要跟模型對賭。Boris 從 Opus 4.5 開始 100% 使用 Claude Code 寫程式碼、卸載了 IDE、每天提交約 20 個 PR，並預測「軟體工程師」這個頭銜將逐漸消失。</p>
+    </div>
+
+    <!-- LEARNING OBJECTIVES -->
+    <div class="section">
+        <div class="section-title">Learning Objectives</div>
+        <div class="objectives-grid">
+            <div class="objective-item">
+                <div class="objective-icon">&#x1F3AF;</div>
+                <div class="objective-title">潛在需求 (Latent Demand)</div>
+                <div class="objective-desc">理解為什麼觀察用戶「已經在做的事」比發明新行為更有效，以及如何應用在產品開發中</div>
+            </div>
+            <div class="objective-item" style="border-left-color: #10b981;">
+                <div class="objective-icon">&#x1F52E;</div>
+                <div class="objective-title">為未來模型構建</div>
+                <div class="objective-desc">學習 Anthropic 的「六個月後」產品策略，理解 scaffolding 為何是技術債</div>
+            </div>
+            <div class="objective-item" style="border-left-color: #f59e0b;">
+                <div class="objective-icon">&#x1F4A1;</div>
+                <div class="objective-title">Agent 拓撲與多 Agent 協作</div>
+                <div class="objective-desc">掌握「不相關的上下文窗口」概念，理解子 Agent 遞迴架構如何實現大規模自動化</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FRAMEWORK VISUAL -->
+    <div class="framework-visual">
+        <div class="framework-title">Boris Cherny 的三大產品原則</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F441;</div>
+                <div class="framework-step-title">潛在需求</div>
+                <div class="framework-step-desc">觀察用戶已在做的事<br>讓它變得更簡單</div>
+            </div>
+            <div class="framework-arrow">&#x2192;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x1F52D;</div>
+                <div class="framework-step-title">為未來構建</div>
+                <div class="framework-step-desc">為 6 個月後的模型<br>而非今天的模型設計</div>
+            </div>
+            <div class="framework-arrow">&#x2192;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#x26A0;</div>
+                <div class="framework-step-title">不跟模型對賭</div>
+                <div class="framework-step-desc">任何 scaffolding<br>都是技術債</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENT SECTIONS - Tabbed for 6 Parts -->
+    <div class="section">
+        <div class="section-title">Content</div>
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-origin')">起源故事</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-philosophy')">產品哲學</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-agent')">Agent 拓撲</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-future')">未來預測</button>
+            </div>
+
+            <!-- TAB 1: Origin Story -->
+            <div id="tab-origin" class="tab-content active">
+                <span class="part-label">Part I</span>
+                <h3 style="color:#1e3a8a; margin-bottom:1rem;">從「我在聽什麼音樂」到 AGI 時刻</h3>
+                <div class="content-grid">
+                    <div class="content-left">
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Boris 說 Claude Code 的誕生完全是偶然。他加入 Anthropic Labs 團隊時的任務是探索某種編碼產品，但他先需要搞懂 API 怎麼用，就<span class="highlight-concept">隨手寫了個終端聊天 App</span>。選終端的原因很簡單：不用寫 UI，當時就他一個人。</div>
+                            <div class="bilingual-en">"I chose the terminal because I didn't have to write a UI. It was just me at the time."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">當 Anthropic 推出 Tool Use 功能時，Boris 給模型加了一個 bash 工具，直接從文件範例搬過來的。他先讓模型用 <code>cat</code> 讀了個文件，然後問了一句：「我在聽什麼音樂？」Claude 寫了一段 AppleScript，<span class="highlight-key">調用他 Mac 上的音樂播放器查了當前播放的歌</span>。</div>
+                            <div class="bilingual-en">"That was my first real AGI moment. I realized: this thing just wants to use tools, it just wants to interact with the world."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">原型做出兩天後給團隊內部測試。第二天早上，同事 Robert 已經在用這個東西寫程式碼了。到了對外發布評審時，Dario Amodei 看到內部日活增長圖幾乎是一條垂直線，問 Boris 是不是在強制工程師使用。Boris 說沒有，只是發了個帖子就傳開了。</div>
+                            <div class="bilingual-en">"The internal DAU chart was basically a vertical line."</div>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                            <div class="info-box-content">Claude Code 的誕生像是有人為了試新鍋子的手感，隨便炒了盤蛋炒飯，結果這盤蛋炒飯變成了餐廳的招牌菜。Boris 沒有設計產品路線圖，他只是在解決自己的問題。這呼應了 Paul Graham 的名言：做自己想用的東西。</div>
+                        </div>
+                        <div class="info-box box-key">
+                            <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                            <div class="info-box-content">Claude Code 到今天還在終端裡運行。Boris 自己都覺得不可思議：<strong>「那本來應該是起點，不是終點。」</strong> 這反映了一個深層邏輯 — 當模型進步太快時，任何精美的 UI 在六個月後都可能過時。最少的 UI 假設 = 最大的靈活性。</div>
+                        </div>
+                        <div class="info-box box-practical">
+                            <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                            <div class="info-box-content">早期工程師主要用 Claude Code 自動化 Git 操作和容器管理。第一個真正的編碼用例是<strong>寫單元測試</strong>，因為風險相對較低。這是一個聰明的進入策略 — 從低風險場景建立信任，再逐步擴展到核心開發工作。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="part-label">Part II</span>
+                <h3 style="color:#1e3a8a; margin-bottom:1rem;">CLAUDE.md 與 Plan Mode 的極簡哲學</h3>
+                <div class="content-grid">
+                    <div class="content-left">
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">CLAUDE.md 的由來又是一個<span class="highlight-concept">潛在需求</span>的例子。用戶自發開始寫 markdown 檔案讓模型讀，Boris 觀察到這個行為後才把它產品化。Boris 的個人 CLAUDE.md 只有兩行：第一行是提交 PR 後自動合併；第二行是 PR 提交後發到團隊頻道讓人審批。</div>
+                            <div class="bilingual-en">"People just started writing markdown files for the model to read. We observed that behavior and productized it."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Boris 的建議很直接：<span class="highlight-key">如果你的 CLAUDE.md 太長了，刪掉，從頭來過</span>。模型能力隨著每次更新在變，你需要的是做最少的事情讓模型走上正軌。每個新模型需要的指令越來越少。</div>
+                            <div class="bilingual-en">"Delete it and start over. You'll find each new model needs fewer and fewer instructions."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Plan Mode 的全部技術實現就是在 prompt 裡加一句<span class="highlight-key">「請不要寫程式碼」</span>。Boris 周日晚上 10 點看到用戶反覆要求「先想方案，別寫 code」，花 30 分鐘寫完程式碼，當晚發布。</div>
+                            <div class="bilingual-en">"Plan Mode has no secret. It's just adding 'please don't write code' to the prompt."</div>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">&#x1F4DA; 核心概念：Scaffolding 是技術債</div>
+                            <div class="info-box-content">Boris 提到圍繞模型構建的「腳手架」(scaffolding) 可以把性能提升 10-20%，但<strong>下一個模型出來後這些優化就會被抹平</strong>。這也是他們一直留在命令列的原因 — 任何 UI 在六個月後都不會還有意義。這是一個反直覺的產品決策：<strong>最少的功能 = 最長的壽命</strong>。</div>
+                        </div>
+                        <div class="info-box box-practical">
+                            <div class="info-box-header">&#x1F6E0;&#xFE0F; CLAUDE.md 最佳實踐</div>
+                            <div class="info-box-content">
+                                Boris 的做法：只放你<strong>反覆重複</strong>的東西，其他情況直接 prompt 就行。團隊共享 CLAUDE.md 約 2000 token。Boris 每週會多次在別人 PR 上直接 tag Claude，讓它把新規則加進去。<br><br>
                                 對比 Garry Tan 的 CLAUDE.md 已膨脹到好幾千 token。Boris：「刪掉後如果模型跑偏了再加一點回來。」
                             </div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 2: Product Philosophy -->
-<div class="tab-content" id="tab-philosophy">
-<span class="part-label">Part III</span>
-<h3 style="color:#1e3a8a; margin-bottom:1rem;">三大產品原則</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text"><strong>原則一：潛在需求 (Latent Demand)</strong> — <span class="highlight-concept">人們只會做他們已經在做的事</span>。你不能讓人做新事情，只能幫他們把正在做的事做得更簡單。Boris 說自己前幾次創業都不理解這個概念。</div>
-<div class="en-text">"People will only do what they're already doing. You can't make people do new things, you can only make what they're doing easier."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>原則二：為未來的模型構建</strong> — <span class="highlight-key">不要為今天的模型做產品，要為六個月後的模型做</span>。Claude Code 正式發布時只能寫 Boris 約 10% 的程式碼，但團隊賭對了模型進步方向。如果你只為當前模型最佳化，找到的 PMF 很快就會被別人用下一代模型超越。</div>
-<div class="en-text">"Don't build for today's model, build for the model six months from now."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>原則三：The Bitter Lesson</strong> — <span class="highlight-key">永遠不要跟模型對賭</span>。他們辦公區牆上裱框了 Rich Sutton 2019 年寫的這篇文章。核心觀點是：利用通用計算的方法最終總是勝過依賴人類知識的手工設計方法。</div>
-<div class="en-text">"Never bet against the model."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 The Bitter Lesson 在 Claude Code 的實踐</div>
-<div class="info-box-content">Boris 說他們隨時面臨一個選擇：投入工程資源加一個 scaffolding 功能，獲得 10-20% 提升；或者等兩個月，下一個模型大概率自己就能做到了。他們總是這樣權衡取捨，並<strong>假設任何 scaffolding 都是技術債</strong>。<br/><br/>Claude Code 沒有任何部分是六個月前的。它一直在被重寫、重寫、再重寫。80% 的程式碼可能只有幾個月的歷史。</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ TypeScript 的啟示</div>
-<div class="info-box-content">Boris 十多年前寫了一本 TypeScript 的書。TypeScript 團隊觀察到 JavaScript 程式設計師怎麼寫程式碼，然後<strong>圍繞這些行為去設計類型系統</strong>，而不是讓程式設計師改變寫法。Claude Code 也是同樣的邏輯：不是原則驅動，而是「我自己想用什麼工具」。</div>
-</div>
-</div>
-</div>
-<span class="part-label">Part IV</span>
-<h3 style="color:#1e3a8a; margin-bottom:1rem;">新手 vs 老手：初心者心態的力量</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">Boris 認為跟上模型能力邊界的關鍵是<span class="highlight-concept">初心者心態和謙遜</span>。高級工程師過去被獎勵「有很強的觀點」，但很多這些觀點現在已經不再適用了。</div>
-<div class="en-text">"Senior engineers were rewarded for having strong opinions, but many of those opinions no longer apply."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">他講了一個內存洩漏的故事：Boris 按老辦法來（抓內存快照、開發者工具、看程式碼），團隊另一個工程師 Chris 直接讓 Claude Code 處理。<span class="highlight-key">Claude 自己抓了快照、自己寫了分析工具、比 Boris 更快找到了洩漏。</span></div>
-<div class="en-text">"This is something I have to constantly relearn, because my brain is sometimes still stuck six months ago."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Boris 招人時會問一個簡單問題：「舉一個你犯錯的例子。」他想看候選人能不能承認錯誤、把責任歸到自己身上。他自己估計<span class="highlight-practical">大約一半的想法是錯的</span>。</div>
-<div class="en-text">"About half of my ideas are wrong. You just have to keep trying."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 兩種高效工程師畫像</div>
-<div class="info-box-content">
-                                Boris 說團隊中最高效的人呈<strong>兩極分布</strong>：<br/><br/>
-<strong>極端專才</strong>：如 Jarred Sumner（Bun 創建者）和 Bun 團隊，對 JavaScript 運行時和開發工具的理解比任何人都深。<br/><br/>
-<strong>超級通才</strong>：橫跨產品、基礎設施、設計、用戶研究、商業。Boris 喜歡「做奇怪事情的人」。<br/><br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: Product Philosophy -->
+            <div id="tab-philosophy" class="tab-content">
+                <span class="part-label">Part III</span>
+                <h3 style="color:#1e3a8a; margin-bottom:1rem;">三大產品原則</h3>
+                <div class="content-grid">
+                    <div class="content-left">
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh"><strong>原則一：潛在需求 (Latent Demand)</strong> — <span class="highlight-concept">人們只會做他們已經在做的事</span>。你不能讓人做新事情，只能幫他們把正在做的事做得更簡單。Boris 說自己前幾次創業都不理解這個概念。</div>
+                            <div class="bilingual-en">"People will only do what they're already doing. You can't make people do new things, you can only make what they're doing easier."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh"><strong>原則二：為未來的模型構建</strong> — <span class="highlight-key">不要為今天的模型做產品，要為六個月後的模型做</span>。Claude Code 正式發布時只能寫 Boris 約 10% 的程式碼，但團隊賭對了模型進步方向。如果你只為當前模型最佳化，找到的 PMF 很快就會被別人用下一代模型超越。</div>
+                            <div class="bilingual-en">"Don't build for today's model, build for the model six months from now."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh"><strong>原則三：The Bitter Lesson</strong> — <span class="highlight-key">永遠不要跟模型對賭</span>。他們辦公區牆上裱框了 Rich Sutton 2019 年寫的這篇文章。核心觀點是：利用通用計算的方法最終總是勝過依賴人類知識的手工設計方法。</div>
+                            <div class="bilingual-en">"Never bet against the model."</div>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="info-box box-analogy">
+                            <div class="info-box-header">&#x1F4A1; The Bitter Lesson 在 Claude Code 的實踐</div>
+                            <div class="info-box-content">Boris 說他們隨時面臨一個選擇：投入工程資源加一個 scaffolding 功能，獲得 10-20% 提升；或者等兩個月，下一個模型大概率自己就能做到了。他們總是這樣權衡取捨，並<strong>假設任何 scaffolding 都是技術債</strong>。<br><br>Claude Code 沒有任何部分是六個月前的。它一直在被重寫、重寫、再重寫。80% 的程式碼可能只有幾個月的歷史。</div>
+                        </div>
+                        <div class="info-box box-key">
+                            <div class="info-box-header">&#x26A0;&#xFE0F; TypeScript 的啟示</div>
+                            <div class="info-box-content">Boris 十多年前寫了一本 TypeScript 的書。TypeScript 團隊觀察到 JavaScript 程式設計師怎麼寫程式碼，然後<strong>圍繞這些行為去設計類型系統</strong>，而不是讓程式設計師改變寫法。Claude Code 也是同樣的邏輯：不是原則驅動，而是「我自己想用什麼工具」。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="part-label">Part IV</span>
+                <h3 style="color:#1e3a8a; margin-bottom:1rem;">新手 vs 老手：初心者心態的力量</h3>
+                <div class="content-grid">
+                    <div class="content-left">
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Boris 認為跟上模型能力邊界的關鍵是<span class="highlight-concept">初心者心態和謙遜</span>。高級工程師過去被獎勵「有很強的觀點」，但很多這些觀點現在已經不再適用了。</div>
+                            <div class="bilingual-en">"Senior engineers were rewarded for having strong opinions, but many of those opinions no longer apply."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">他講了一個內存洩漏的故事：Boris 按老辦法來（抓內存快照、開發者工具、看程式碼），團隊另一個工程師 Chris 直接讓 Claude Code 處理。<span class="highlight-key">Claude 自己抓了快照、自己寫了分析工具、比 Boris 更快找到了洩漏。</span></div>
+                            <div class="bilingual-en">"This is something I have to constantly relearn, because my brain is sometimes still stuck six months ago."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Boris 招人時會問一個簡單問題：「舉一個你犯錯的例子。」他想看候選人能不能承認錯誤、把責任歸到自己身上。他自己估計<span class="highlight-practical">大約一半的想法是錯的</span>。</div>
+                            <div class="bilingual-en">"About half of my ideas are wrong. You just have to keep trying."</div>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">&#x1F4DA; 兩種高效工程師畫像</div>
+                            <div class="info-box-content">
+                                Boris 說團隊中最高效的人呈<strong>兩極分布</strong>：<br><br>
+                                <strong>極端專才</strong>：如 Jarred Sumner（Bun 創建者）和 Bun 團隊，對 JavaScript 運行時和開發工具的理解比任何人都深。<br><br>
+                                <strong>超級通才</strong>：橫跨產品、基礎設施、設計、用戶研究、商業。Boris 喜歡「做奇怪事情的人」。<br><br>
                                 例子：團隊成員 Daisy 要加新功能，她沒有直接實現，而是先寫了一個讓 Claude Code 能夠測試任意工具的工具，然後讓 Claude 自己去實現了那個新功能。<strong>元程式設計</strong>思維。
                             </div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 3: Agent Topologies -->
-<div class="tab-content" id="tab-agent">
-<span class="part-label">Part V</span>
-<h3 style="color:#1e3a8a; margin-bottom:1rem;">Agent 拓撲與 Mama Claude</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">Boris 引出了<span class="highlight-concept">「Agent 拓撲」(Agent Topologies)</span> 這個概念。核心思想是「不相關的上下文窗口」：多個 Agent 各有獨立的上下文，不會被彼此的上下文「污染」。更多上下文就是更多推理時計算 (inference-time compute)，配合合適的協作結構就能做更大的事。</div>
-<div class="en-text">"Unrelated context windows — multiple agents each with their own independent context, not polluted by each other's context."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Anthropic 的 Plugins 功能完全由一群 Agent 在週末自動協作構建完成。一個工程師給 Claude 一個規格說明 (spec)，讓它用 Asana 的看板來管理。<span class="highlight-key">Claude 在 Asana 上創建了一堆任務，然後自動生成了一批子 Agent，這些 Agent 開始自動領取任務執行</span>。</div>
-<div class="en-text">"The main Claude just gave instructions, and they figured it out themselves."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Boris 提到現在大多數 Agent 啟動時其實是由另一個 Claude 來提示的（而非人類），以子 Agent 的形式。在程式碼裡，子 Agent 就是遞迴的 Claude Code。他們內部叫主 Agent <span class="highlight-practical">「Mama Claude」</span>。</div>
-<div class="en-text">"Most agents are now prompted by another Claude, not by a human. We call the main agent 'Mama Claude.'"</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：不相關的上下文窗口</div>
-<div class="info-box-content">
-                                傳統做法是把所有資訊塞進一個上下文窗口。Agent 拓撲的突破在於：<strong>讓多個 Agent 各自保持乾淨的上下文</strong>，只在需要時交換結果。<br/><br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: Agent Topologies -->
+            <div id="tab-agent" class="tab-content">
+                <span class="part-label">Part V</span>
+                <h3 style="color:#1e3a8a; margin-bottom:1rem;">Agent 拓撲與 Mama Claude</h3>
+                <div class="content-grid">
+                    <div class="content-left">
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Boris 引出了<span class="highlight-concept">「Agent 拓撲」(Agent Topologies)</span> 這個概念。核心思想是「不相關的上下文窗口」：多個 Agent 各有獨立的上下文，不會被彼此的上下文「污染」。更多上下文就是更多推理時計算 (inference-time compute)，配合合適的協作結構就能做更大的事。</div>
+                            <div class="bilingual-en">"Unrelated context windows — multiple agents each with their own independent context, not polluted by each other's context."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Anthropic 的 Plugins 功能完全由一群 Agent 在週末自動協作構建完成。一個工程師給 Claude 一個規格說明 (spec)，讓它用 Asana 的看板來管理。<span class="highlight-key">Claude 在 Asana 上創建了一堆任務，然後自動生成了一批子 Agent，這些 Agent 開始自動領取任務執行</span>。</div>
+                            <div class="bilingual-en">"The main Claude just gave instructions, and they figured it out themselves."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Boris 提到現在大多數 Agent 啟動時其實是由另一個 Claude 來提示的（而非人類），以子 Agent 的形式。在程式碼裡，子 Agent 就是遞迴的 Claude Code。他們內部叫主 Agent <span class="highlight-practical">「Mama Claude」</span>。</div>
+                            <div class="bilingual-en">"Most agents are now prompted by another Claude, not by a human. We call the main agent 'Mama Claude.'"</div>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="info-box box-concept">
+                            <div class="info-box-header">&#x1F4DA; 核心概念：不相關的上下文窗口</div>
+                            <div class="info-box-content">
+                                傳統做法是把所有資訊塞進一個上下文窗口。Agent 拓撲的突破在於：<strong>讓多個 Agent 各自保持乾淨的上下文</strong>，只在需要時交換結果。<br><br>
                                 這就像一個高效的團隊會議：每個人帶著自己的專業知識來，只分享結論和關鍵發現，而不是讓每個人都讀完所有人的研究筆記。
                             </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ Boris 的多 Agent 實踐</div>
-<div class="info-box-content">
-                                Boris 說他一直這麼做：如果任務比較難，他會讓 <strong>3 個、5 個甚至 10 個子 Agent 並行研究</strong>，然後匯總結果。<br/><br/>
+                        </div>
+                        <div class="info-box box-practical">
+                            <div class="info-box-header">&#x1F6E0;&#xFE0F; Boris 的多 Agent 實踐</div>
+                            <div class="info-box-content">
+                                Boris 說他一直這麼做：如果任務比較難，他會讓 <strong>3 個、5 個甚至 10 個子 Agent 並行研究</strong>，然後匯總結果。<br><br>
                                 更常見的模式：Boris 讓 Claude 做某件事，Claude 看程式碼庫時通過 <code>git blame</code> 發現某個工程師之前改過相關部分，就<strong>自動在 Slack 上找那個人問一個確認問題</strong>，拿到答案後繼續幹活。
                             </div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 4: Future Predictions -->
-<div class="tab-content" id="tab-future">
-<span class="part-label">Part VI</span>
-<h3 style="color:#1e3a8a; margin-bottom:1rem;">1000 倍工程師與「軟體工程師」頭銜的消亡</h3>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">Anthropic 所有技術員工每天都在用 Claude Code。自推出以來，<span class="highlight-key">人均生產力累計增長了 150%</span>。Boris 用自己在 Meta 的經歷做對比：當時 2% 的生產力提升就是幾百人工作一年的成果。150%？聞所未聞。</div>
-<div class="en-text">"At Meta, a 2% productivity improvement was hundreds of people working for a year. 150%? Unheard of."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Boris 個人從 Opus 4.5 開始就 <span class="highlight-key">100% 使用 Claude Code 寫程式碼</span>，卸載了 IDE，每天提交約 20 個 PR，不再手動編輯任何一行程式碼。Anthropic 整體的 AI 編碼比例在 70-90% 之間。</div>
-<div class="en-text">"I uninstalled my IDE. I submit about 20 PRs a day. I don't manually edit a single line of code anymore."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Boris 認為程式設計將對所有人「基本解決」。<span class="highlight-concept">「軟體工程師」這個頭銜可能會消失</span>，變成「builder」或「產品經理」之類的稱呼。工程師不只寫程式碼，還要寫 spec、跟用戶交談。他們團隊已經是這樣了：PM 寫程式碼、設計師寫程式碼、EM 寫程式碼、財務人員也寫程式碼。</div>
-<div class="en-text">"The title 'software engineer' may disappear, becoming 'builder' or 'product manager.'"</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">外部數據方面：Mercury 統計顯示約 70% 的初創公司選擇 Claude 作為首選模型；SemiAnalysis 估計 4% 的公開程式碼提交來自 Claude Code。Claude Code 還被用於 <span class="highlight-practical">NASA 火星探測器 Perseverance 的航線規劃</span>。</div>
-<div class="en-text">"4% of public code commits come from Claude Code. It's been used for NASA's Perseverance rover flight planning."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ Co-Work：非技術人員的 Claude Code</div>
-<div class="info-box-content">
-                                Boris 發現有人用 Claude Code 監控番茄植物、從損壞硬碟恢復婚禮照片、做財務分析。在 Anthropic 內部，所有設計師、整個財務團隊、整個資料科學團隊都在用 Claude Code — <strong>不是為了寫程式碼</strong>。<br/><br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: Future Predictions -->
+            <div id="tab-future" class="tab-content">
+                <span class="part-label">Part VI</span>
+                <h3 style="color:#1e3a8a; margin-bottom:1rem;">1000 倍工程師與「軟體工程師」頭銜的消亡</h3>
+                <div class="content-grid">
+                    <div class="content-left">
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Anthropic 所有技術員工每天都在用 Claude Code。自推出以來，<span class="highlight-key">人均生產力累計增長了 150%</span>。Boris 用自己在 Meta 的經歷做對比：當時 2% 的生產力提升就是幾百人工作一年的成果。150%？聞所未聞。</div>
+                            <div class="bilingual-en">"At Meta, a 2% productivity improvement was hundreds of people working for a year. 150%? Unheard of."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Boris 個人從 Opus 4.5 開始就 <span class="highlight-key">100% 使用 Claude Code 寫程式碼</span>，卸載了 IDE，每天提交約 20 個 PR，不再手動編輯任何一行程式碼。Anthropic 整體的 AI 編碼比例在 70-90% 之間。</div>
+                            <div class="bilingual-en">"I uninstalled my IDE. I submit about 20 PRs a day. I don't manually edit a single line of code anymore."</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">Boris 認為程式設計將對所有人「基本解決」。<span class="highlight-concept">「軟體工程師」這個頭銜可能會消失</span>，變成「builder」或「產品經理」之類的稱呼。工程師不只寫程式碼，還要寫 spec、跟用戶交談。他們團隊已經是這樣了：PM 寫程式碼、設計師寫程式碼、EM 寫程式碼、財務人員也寫程式碼。</div>
+                            <div class="bilingual-en">"The title 'software engineer' may disappear, becoming 'builder' or 'product manager.'"</div>
+                        </div>
+                        <div class="bilingual-block">
+                            <div class="bilingual-zh">外部數據方面：Mercury 統計顯示約 70% 的初創公司選擇 Claude 作為首選模型；SemiAnalysis 估計 4% 的公開程式碼提交來自 Claude Code。Claude Code 還被用於 <span class="highlight-practical">NASA 火星探測器 Perseverance 的航線規劃</span>。</div>
+                            <div class="bilingual-en">"4% of public code commits come from Claude Code. It's been used for NASA's Perseverance rover flight planning."</div>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="info-box box-key">
+                            <div class="info-box-header">&#x26A0;&#xFE0F; Co-Work：非技術人員的 Claude Code</div>
+                            <div class="info-box-content">
+                                Boris 發現有人用 Claude Code 監控番茄植物、從損壞硬碟恢復婚禮照片、做財務分析。在 Anthropic 內部，所有設計師、整個財務團隊、整個資料科學團隊都在用 Claude Code — <strong>不是為了寫程式碼</strong>。<br><br>
                                 Co-Work 的底層就是 Claude Code，同一個 Agent。Felix 和團隊在大約 10 天內完成構建，100% 由 Claude Code 編寫。
                             </div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 生產力數據對比</div>
-<div class="info-box-content">
-<strong>Anthropic 內部</strong>：人均生產力增長 150%<br/>
-<strong>Meta 時期</strong>：幾百人一年達成 2% 提升<br/>
-<strong>Boris 個人</strong>：每天 ~20 個 PR，100% AI 編碼<br/>
-<strong>Anthropic 整體</strong>：AI 編碼比例 70-90%<br/>
-<strong>外部採用</strong>：70% 初創公司選 Claude，4% 公開提交
+                        </div>
+                        <div class="info-box box-compare">
+                            <div class="info-box-header">&#x2696;&#xFE0F; 生產力數據對比</div>
+                            <div class="info-box-content">
+                                <strong>Anthropic 內部</strong>：人均生產力增長 150%<br>
+                                <strong>Meta 時期</strong>：幾百人一年達成 2% 提升<br>
+                                <strong>Boris 個人</strong>：每天 ~20 個 PR，100% AI 編碼<br>
+                                <strong>Anthropic 整體</strong>：AI 編碼比例 70-90%<br>
+                                <strong>外部採用</strong>：70% 初創公司選 Claude，4% 公開提交
                             </div>
-</div>
-</div>
-</div>
-</div>
-</div><!-- end tab-container -->
-</div>
-<!-- KEY TAKEAWAYS -->
-<div class="section">
-<div class="section-title">Key Takeaways</div>
-<div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-icon">👁</div>
-<div class="summary-card-title">潛在需求 &gt; 創造需求</div>
-<div class="summary-card-text">CLAUDE.md、Plan Mode 都不是 Boris 發明的功能，而是用戶已經在做的事。產品開發的核心是觀察，不是想像。對於 CDMO 的 AI 導入，觀察團隊「已經在費力做的事」比構想全新工作流更有效。</div>
-</div>
-<div class="summary-card" style="border-left-color: #10b981;">
-<div class="summary-card-icon">🔮</div>
-<div class="summary-card-title">為六個月後的模型構建</div>
-<div class="summary-card-text">Claude Code 發布時只能寫 10% 的程式碼，團隊賭的是模型進步方向。任何 scaffolding 都是技術債。在高度監管環境中，這意味著不要過度投資在「繞過模型限制」的工程上。</div>
-</div>
-<div class="summary-card" style="border-left-color: #f59e0b;">
-<div class="summary-card-icon">⚠</div>
-<div class="summary-card-title">初心者心態是競爭優勢</div>
-<div class="summary-card-text">Boris 的內存洩漏故事：老方法不敵新方法。高級工程師的「強觀點」可能是包袱。承認一半想法是錯的，持續測試和迭代，比堅持過去的經驗更有價值。</div>
-</div>
-<div class="summary-card" style="border-left-color: #8b5cf6;">
-<div class="summary-card-icon">🤖</div>
-<div class="summary-card-title">Agent 拓撲是下一個前沿</div>
-<div class="summary-card-text">多個 Agent 各有獨立上下文、自動協作、遞迴子 Agent（Mama Claude）。Plugins 由 Agent 週末自動構建。大多數 Agent 現在由另一個 Claude 提示，而非人類。這是規模化的新範式。</div>
-</div>
-</div>
-</div>
-<!-- PRACTICE QUESTIONS -->
-<div class="section">
-<div class="section-title">Practice Questions</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">Boris 說「潛在需求」是他最重要的產品理念。請解釋這個概念，並說明 CLAUDE.md 和 Plan Mode 如何各自體現了這個理念。</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>潛在需求 (Latent Demand)</strong> 的核心是：人們只會做他們已經在做的事。你不能讓人做新事情，只能幫他們把正在做的事做得更簡單。</p>
-<p><strong>CLAUDE.md</strong>：用戶自發開始寫 markdown 檔案讓模型讀（已有行為），Boris 觀察到後才將其產品化（降低摩擦）。他沒有設計一個複雜的設定介面，而是把用戶已經在做的事變成正式功能。</p>
-<p><strong>Plan Mode</strong>：用戶反覆在 prompt 中寫「先想方案，別寫 code」（已有行為），Boris 只是把這句話變成一個按鈕（降低摩擦）。技術實現就是在 prompt 裡加一句「請不要寫程式碼」。</p>
-<p>兩者的共同模式：觀察用戶的笨拙解決方案 → 將其產品化為一鍵操作。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">在製藥 CDMO 的 GMP 環境中，「為未來模型構建」和「不跟模型對賭」這兩個原則會如何影響你的 AI 導入策略？請考慮法規限制。</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>這兩個原則在 GMP 環境中的應用需要做調適：</p>
-<p><strong>「為未來模型構建」的調適</strong>：在製藥環境中，不應過度投資在「繞過模型限制」的 scaffolding 上。例如：如果目前模型無法可靠地自動審查批次紀錄，與其花大量工程資源建立複雜的規則引擎來補足，不如先以「copilot 模式」部署，人類審查 + AI 輔助標記，等模型能力提升後再擴展自動化範圍。</p>
-<p><strong>「不跟模型對賭」的 GMP 限制</strong>：在 21 CFR Part 11 和 ALCOA+ 框架下，不能像 Boris 一樣假設「模型會自動變好」。法規要求每次變更都需驗證。因此策略是：選擇模組化架構（易於升級模型而不重新驗證整個系統），並將 AI 輸出保持在「輔助建議」而非「自動決策」的範圍內。</p>
-<p><strong>底線</strong>：保持架構彈性，投資在「介面層」而非「補丁層」，讓未來的模型升級成為組態變更而非系統重建。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">Boris 預測「軟體工程師」頭銜將消失，取而代之的是「builder」角色。你認為這個預測在什麼條件下成立？什麼條件下不成立？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>成立的條件</strong>：模型持續快速進步（The Bitter Lesson 繼續有效），程式碼生成品質達到「人類審查即可」的水準，開發工具生態完全整合 AI（IDE、CI/CD、測試框架），以及企業文化接受跨職能角色。Boris 自己的實踐（每天 20 PR、100% AI 編碼）已經展示了這個未來的雛形。</p>
-<p><strong>不成立的條件</strong>：高安全性/高合規環境（航太、醫療設備、金融交易系統）可能永遠需要能「從頭理解程式碼」的專業人員；模型進步遇到瓶頸（如 scaling laws 失效）；或是出現重大安全事件導致監管收緊，要求人類可追溯地理解每一行程式碼。</p>
-<p><strong>更可能的中間態</strong>：「軟體工程師」頭銜不會消失，但職責會根本改變 — 從「寫程式碼」變成「設計系統、驗證 AI 輸出、管理 Agent 拓撲」。就像會計師沒有因為 Excel 消失，但職責從「算數」變成了「分析和判斷」。</p>
-</div>
-</details>
-</div>
-<!-- BOTTOM LINE -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Boris 的「潛在需求」理念直接呼應了我在 CDMO 推動 AI 導入時的經驗：與其設計全新的「AI 驅動工作流」，不如觀察團隊目前用 Excel 和紙本費力完成的任務，然後讓 AI 介入降低摩擦。這和我的「copilot vs agent」框架完全對齊 — 先觀察，再介入，從低風險場景建立信任。「scaffolding 是技術債」這個觀點也提醒我：不要過度投資在補足目前模型限制的工程上。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週做一次「潛在需求審計」：觀察團隊在哪些任務上重複使用笨拙的解決方案（如手動複製貼上批次紀錄數據、用 email 追蹤偏差狀態）。列出 3 個最明顯的「已有行為但摩擦很高」的場景，這些就是 AI 導入的最佳切入點。同時，重新檢視我的 CLAUDE.md — 如果超過 2000 token，精簡到核心指令。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">這篇訪談主要來自矽谷快速迭代的語境，在 GMP 環境中「不跟模型對賭」需要加上法規緩衝 — 每次模型升級都需要變更管理和驗證。Boris 的「80% 程式碼只有幾個月歷史」在受監管環境中是不可接受的。需要進一步研究如何在保持架構彈性的同時滿足 21 CFR Part 11 的追溯性要求。建議 3 個月後重讀，對照屆時模型能力的變化。</div>
-</div>
-</div>
-<!-- FOOTER -->
-<footer class="footer">
-<p>製作日期：2026-02-22 | 來源：<a href="https://www.youtube.com/watch?v=PQU9o_5rHC4" target="_blank">The Lightcone (YC Podcast) - Boris Cherny 訪談</a></p>
-<p>整理來源：宝玉 @dotey | 建議 Chat Title：[Agent] Claude Code 產品哲學 - Boris Cherny</p>
-</footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end tab-container -->
+    </div>
+
+    <!-- KEY TAKEAWAYS -->
+    <div class="section">
+        <div class="section-title">Key Takeaways</div>
+        <div class="takeaways-grid">
+            <div class="summary-card">
+                <div class="summary-card-icon">&#x1F441;</div>
+                <div class="summary-card-title">潛在需求 > 創造需求</div>
+                <div class="summary-card-text">CLAUDE.md、Plan Mode 都不是 Boris 發明的功能，而是用戶已經在做的事。產品開發的核心是觀察，不是想像。對於 CDMO 的 AI 導入，觀察團隊「已經在費力做的事」比構想全新工作流更有效。</div>
+            </div>
+            <div class="summary-card" style="border-left-color: #10b981;">
+                <div class="summary-card-icon">&#x1F52E;</div>
+                <div class="summary-card-title">為六個月後的模型構建</div>
+                <div class="summary-card-text">Claude Code 發布時只能寫 10% 的程式碼，團隊賭的是模型進步方向。任何 scaffolding 都是技術債。在高度監管環境中，這意味著不要過度投資在「繞過模型限制」的工程上。</div>
+            </div>
+            <div class="summary-card" style="border-left-color: #f59e0b;">
+                <div class="summary-card-icon">&#x26A0;</div>
+                <div class="summary-card-title">初心者心態是競爭優勢</div>
+                <div class="summary-card-text">Boris 的內存洩漏故事：老方法不敵新方法。高級工程師的「強觀點」可能是包袱。承認一半想法是錯的，持續測試和迭代，比堅持過去的經驗更有價值。</div>
+            </div>
+            <div class="summary-card" style="border-left-color: #8b5cf6;">
+                <div class="summary-card-icon">&#x1F916;</div>
+                <div class="summary-card-title">Agent 拓撲是下一個前沿</div>
+                <div class="summary-card-text">多個 Agent 各有獨立上下文、自動協作、遞迴子 Agent（Mama Claude）。Plugins 由 Agent 週末自動構建。大多數 Agent 現在由另一個 Claude 提示，而非人類。這是規模化的新範式。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRACTICE QUESTIONS -->
+    <div class="section">
+        <div class="section-title">Practice Questions</div>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q1</span>
+                <span class="question-type">概念理解</span>
+                <span class="question-text">Boris 說「潛在需求」是他最重要的產品理念。請解釋這個概念，並說明 CLAUDE.md 和 Plan Mode 如何各自體現了這個理念。</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p><strong>潛在需求 (Latent Demand)</strong> 的核心是：人們只會做他們已經在做的事。你不能讓人做新事情，只能幫他們把正在做的事做得更簡單。</p>
+                <p><strong>CLAUDE.md</strong>：用戶自發開始寫 markdown 檔案讓模型讀（已有行為），Boris 觀察到後才將其產品化（降低摩擦）。他沒有設計一個複雜的設定介面，而是把用戶已經在做的事變成正式功能。</p>
+                <p><strong>Plan Mode</strong>：用戶反覆在 prompt 中寫「先想方案，別寫 code」（已有行為），Boris 只是把這句話變成一個按鈕（降低摩擦）。技術實現就是在 prompt 裡加一句「請不要寫程式碼」。</p>
+                <p>兩者的共同模式：觀察用戶的笨拙解決方案 → 將其產品化為一鍵操作。</p>
+            </div>
+        </details>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q2</span>
+                <span class="question-type">產業應用</span>
+                <span class="question-text">在製藥 CDMO 的 GMP 環境中，「為未來模型構建」和「不跟模型對賭」這兩個原則會如何影響你的 AI 導入策略？請考慮法規限制。</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p>這兩個原則在 GMP 環境中的應用需要做調適：</p>
+                <p><strong>「為未來模型構建」的調適</strong>：在製藥環境中，不應過度投資在「繞過模型限制」的 scaffolding 上。例如：如果目前模型無法可靠地自動審查批次紀錄，與其花大量工程資源建立複雜的規則引擎來補足，不如先以「copilot 模式」部署，人類審查 + AI 輔助標記，等模型能力提升後再擴展自動化範圍。</p>
+                <p><strong>「不跟模型對賭」的 GMP 限制</strong>：在 21 CFR Part 11 和 ALCOA+ 框架下，不能像 Boris 一樣假設「模型會自動變好」。法規要求每次變更都需驗證。因此策略是：選擇模組化架構（易於升級模型而不重新驗證整個系統），並將 AI 輸出保持在「輔助建議」而非「自動決策」的範圍內。</p>
+                <p><strong>底線</strong>：保持架構彈性，投資在「介面層」而非「補丁層」，讓未來的模型升級成為組態變更而非系統重建。</p>
+            </div>
+        </details>
+
+        <details class="question-accordion">
+            <summary class="question-header">
+                <span class="question-number">Q3</span>
+                <span class="question-type">批判思考</span>
+                <span class="question-text">Boris 預測「軟體工程師」頭銜將消失，取而代之的是「builder」角色。你認為這個預測在什麼條件下成立？什麼條件下不成立？</span>
+                <span class="accordion-icon"></span>
+            </summary>
+            <div class="question-answer">
+                <p><strong>成立的條件</strong>：模型持續快速進步（The Bitter Lesson 繼續有效），程式碼生成品質達到「人類審查即可」的水準，開發工具生態完全整合 AI（IDE、CI/CD、測試框架），以及企業文化接受跨職能角色。Boris 自己的實踐（每天 20 PR、100% AI 編碼）已經展示了這個未來的雛形。</p>
+                <p><strong>不成立的條件</strong>：高安全性/高合規環境（航太、醫療設備、金融交易系統）可能永遠需要能「從頭理解程式碼」的專業人員；模型進步遇到瓶頸（如 scaling laws 失效）；或是出現重大安全事件導致監管收緊，要求人類可追溯地理解每一行程式碼。</p>
+                <p><strong>更可能的中間態</strong>：「軟體工程師」頭銜不會消失，但職責會根本改變 — 從「寫程式碼」變成「設計系統、驗證 AI 輸出、管理 Agent 拓撲」。就像會計師沒有因為 Excel 消失，但職責從「算數」變成了「分析和判斷」。</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- BOTTOM LINE -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x2714; 核心洞察</div>
+            <div class="bottom-line-text">Boris 的「潛在需求」理念直接呼應了我在 CDMO 推動 AI 導入時的經驗：與其設計全新的「AI 驅動工作流」，不如觀察團隊目前用 Excel 和紙本費力完成的任務，然後讓 AI 介入降低摩擦。這和我的「copilot vs agent」框架完全對齊 — 先觀察，再介入，從低風險場景建立信任。「scaffolding 是技術債」這個觀點也提醒我：不要過度投資在補足目前模型限制的工程上。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+            <div class="bottom-line-text">本週做一次「潛在需求審計」：觀察團隊在哪些任務上重複使用笨拙的解決方案（如手動複製貼上批次紀錄數據、用 email 追蹤偏差狀態）。列出 3 個最明顯的「已有行為但摩擦很高」的場景，這些就是 AI 導入的最佳切入點。同時，重新檢視我的 CLAUDE.md — 如果超過 2000 token，精簡到核心指令。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#x26A0; 需要補充</div>
+            <div class="bottom-line-text">這篇訪談主要來自矽谷快速迭代的語境，在 GMP 環境中「不跟模型對賭」需要加上法規緩衝 — 每次模型升級都需要變更管理和驗證。Boris 的「80% 程式碼只有幾個月歷史」在受監管環境中是不可接受的。需要進一步研究如何在保持架構彈性的同時滿足 21 CFR Part 11 的追溯性要求。建議 3 個月後重讀，對照屆時模型能力的變化。</div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>製作日期：2026-02-22 | 來源：<a href="https://www.youtube.com/watch?v=PQU9o_5rHC4" target="_blank">The Lightcone (YC Podcast) - Boris Cherny 訪談</a></p>
+        <p>整理來源：宝玉 @dotey | 建議 Chat Title：[Agent] Claude Code 產品哲學 - Boris Cherny</p>
+    </div>
+
 </div><!-- end container -->
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

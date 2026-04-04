@@ -1,398 +1,548 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2026-02-05" name="doc-date"/>
-<meta content="Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程" name="doc-title"/>
-<meta content="Ruben Hassid Newsletter" name="doc-source"/>
-<meta content="Tool,Agent,Automation,Prompt" name="doc-tags"/>
-<meta content="3.8" name="doc-rating"/>
-<meta content="記錄從 ChatGPT 轉到 Claude Cowork 的完整體驗，解決指令遵循與長對話穩定性問題" name="doc-summary"/>
-<meta content="2026-02-05_claude-cowork-practical-guide.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-02-05">
+    <meta name="doc-title" content="Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程">
+    <meta name="doc-source" content="Ruben Hassid Newsletter">
+    <meta name="doc-tags" content="Tool,Agent,Automation,Prompt">
+    <meta name="doc-rating" content="3.8">
+    <meta name="doc-summary" content="記錄從 ChatGPT 轉到 Claude Cowork 的完整體驗，解決指令遵循與長對話穩定性問題">
+    <meta name="doc-file" content="2026-02-05_claude-cowork-practical-guide.html">
+    <title>Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.8; color: #1e293b; background: #f8fafc; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 100%); color: white; padding: 3rem 2rem; text-align: center; }
+        .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.4; }
+        .header-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 1.5rem; }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; }
+        .tag { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-prompt { background: #fde68a; color: #92400e; }
+        .source-info { font-size: 0.85rem; opacity: 0.8; }
+        .source-info a { color: #93c5fd; }
+        
+        /* Main Container */
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid #3b82f6; }
+        .exec-summary h2 { color: #1e3a8a; font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .exec-summary p { font-size: 0.95rem; color: #475569; }
+        
+        /* Learning Objectives */
+        .objectives { margin-bottom: 2rem; }
+        .objectives h2 { color: #1e3a8a; font-size: 1.2rem; margin-bottom: 1rem; text-align: center; }
+        .objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+        .objective-item { background: white; border-radius: 8px; padding: 1.25rem; border-left: 4px solid #10b981; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-item h3 { color: #065f46; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .objective-item p { font-size: 0.85rem; color: #64748b; }
+        
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 140px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+        
+        /* Content Section */
+        .content-section { background: white; border-radius: 12px; margin-bottom: 1.5rem; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .section-header { background: linear-gradient(135deg, #1e3a5f, #2d4a7c); color: white; padding: 1rem 1.5rem; }
+        .section-header h2 { font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .part-number { background: rgba(255,255,255,0.2); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; }
+        
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; }
+        .content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+        
+        /* Linear Layout Override */
+        .content-grid.linear { grid-template-columns: 1fr; }
+        .content-grid.linear .content-left { border-right: none; }
+        
+        /* Bilingual Block */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .chinese-text { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.5rem; }
+        .english-text { font-size: 0.9rem; font-style: italic; color: #64748b; line-height: 1.7; padding-left: 0.75rem; border-left: 2px solid #cbd5e1; }
+        
+        /* Highlights */
+        .highlight-concept { background: linear-gradient(to bottom, transparent 60%, #a5d6a7 60%); padding: 0 2px; }
+        .highlight-key { background: linear-gradient(to bottom, transparent 60%, #ffcc80 60%); padding: 0 2px; }
+        .highlight-practical { background: linear-gradient(to bottom, transparent 60%, #6ee7b7 60%); padding: 0 2px; }
+        
+        /* Info Boxes */
+        .info-box { border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
+        .info-box-header { padding: 0.6rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+        
+        /* Code Block */
+        .code-block { background: #1e293b; border-radius: 8px; padding: 1rem; margin: 0.5rem 0; overflow-x: auto; }
+        .code-block code { font-family: 'Source Code Pro', monospace; color: #e2e8f0; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; }
+        .code-comment { color: #94a3b8; }
+        
+        /* Key Takeaways */
+        .takeaways { margin: 2rem 0; }
+        .takeaways h2 { color: #1e3a8a; font-size: 1.2rem; margin-bottom: 1rem; text-align: center; }
+        .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .summary-card { background: white; border-radius: 8px; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #8b5cf6; }
+        .summary-card:nth-child(4) { border-left-color: #f59e0b; }
+        .summary-card h3 { font-size: 0.95rem; color: #1e3a8a; margin-bottom: 0.5rem; }
+        .summary-card p { font-size: 0.85rem; color: #64748b; line-height: 1.6; }
+        
+        /* Practice Questions - Accordion */
+        .practice-section { margin: 2rem 0; }
+        .practice-section h2 { color: #5b21b6; font-size: 1.2rem; margin-bottom: 1rem; text-align: center; }
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+        
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+        
+        /* Footer */
+        .footer { text-align: center; padding: 2rem; color: #64748b; font-size: 0.85rem; background: white; margin-top: 2rem; border-radius: 12px; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+        .chat-title { margin-top: 1rem; padding: 0.5rem 1rem; background: #f1f5f9; border-radius: 4px; display: inline-block; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; }
+    </style>
 </head>
 <body>
-<!-- Header -->
-<header class="header">
-<h1>Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程</h1>
-<p class="header-subtitle">從 ChatGPT 轉換到 Claude Cowork 的真實使用者體驗與案例分析</p>
-<div class="tags">
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-prompt">Prompt</span>
-</div>
-<p class="source-info">Source: Ruben Hassid Newsletter | Feb 05, 2026</p>
-</header>
-<div class="container">
-<!-- Executive Summary with Rating Bar -->
-<div class="exec-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
-<span class="rating-high">↑ Practical Value, Tool Ecosystem</span>
-<span class="rating-low">↓ Technical Depth, Learning Curve</span>
-</div>
-<h2>Executive Summary</h2>
-<p>這篇文章記錄了 AI 內容創作者 Ruben Hassid 從 ChatGPT 轉換到 Claude Cowork 的完整使用體驗。核心論點是 Claude Cowork 解決了四個長期困擾 AI 使用者的痛點：指令遵循不一致、長對話中的「無限迴圈」問題、記憶系統的過度擬合（overfitting），以及輸出僅限於文字而非實際檔案。文章透過五個真實案例展示 Claude Cowork 如何直接產生簡報、Excel、研究報告等可用檔案，對於希望將 AI 從「聊天機器人」升級為「實際工作夥伴」的專業人士具有參考價值。</p>
-</div>
-<!-- Learning Objectives -->
-<div class="objectives">
-<h2>Learning Objectives</h2>
-<div class="objectives-grid">
-<div class="objective-item">
-<h3>理解 Claude Cowork 的核心差異</h3>
-<p>掌握指令遵循、長對話穩定性、無記憶設計、檔案生成四個關鍵特性</p>
-</div>
-<div class="objective-item">
-<h3>評估工具轉換的實際價值</h3>
-<p>透過五個案例學習如何將 AI 輸出從「文字」轉換為「可用檔案」</p>
-</div>
-<div class="objective-item">
-<h3>建立工具選擇的評估框架</h3>
-<p>理解「工具是哲學」的概念，學習如何選擇最適合工作流程的 AI 平台</p>
-</div>
-</div>
-</div>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">Claude Cowork 四大核心優勢</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">1</div>
-<div class="framework-step-title">指令遵循</div>
-<div class="framework-step-desc">真正讀取並執行長指令</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">2</div>
-<div class="framework-step-title">長對話穩定</div>
-<div class="framework-step-desc">2+ 小時不迷失主題</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">3</div>
-<div class="framework-step-title">無記憶設計</div>
-<div class="framework-step-desc">避免過度擬合問題</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">4</div>
-<div class="framework-step-title">檔案生成</div>
-<div class="framework-step-desc">直接產出可用檔案</div>
-</div>
-</div>
-</div>
-<!-- Part I: Instruction Following -->
-<div class="content-section">
-<div class="section-header">
-<h2><span class="part-number">Part I</span> 指令遵循：從「忽略一半」到「完整執行」</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">作者描述了 ChatGPT 長期存在的核心問題：無論你提供多詳細的 prompt — 500 字的背景說明、具體需求、格式規則、想要和不想要的東西 — <span class="highlight-key">它會忽略其中一半</span>。</p>
-<p class="en-text">"You give it a detailed prompt. 500 words of context. Specific requirements. Formatting rules. Things you want. Things you don't want. It ignores half of it."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">作者的解決方案是上傳超過 <span class="highlight-concept">2,000 字的個人寫作風格檔案</span>，描述他如何寫作、討厭什麼、從不使用的詞彙、偏好的結構。Claude Cowork 會完整讀取並遵循這些指令。</p>
-<p class="en-text">"I upload my voice profile. Over 2,000 words describing how I write, what I hate, phrases I never use, structures I prefer."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">關鍵洞察：<span class="highlight-practical">輸出品質取決於你能提供多少 context</span>。如果 AI 忽略你的 context，你就永遠只能得到通用結果。</p>
-<p class="en-text">"The quality of your output depends on how much context you can give. If the AI ignores your context, you're stuck with generic results. Forever."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">比喻說明</div>
-<div class="info-box-content">
+    <!-- Header -->
+    <div class="header">
+        <h1>Claude Cowork 實戰指南：為什麼專業人士正在轉換 AI 工作流程</h1>
+        <p class="header-subtitle">從 ChatGPT 轉換到 Claude Cowork 的真實使用者體驗與案例分析</p>
+        <div class="tags">
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-automation">Automation</span>
+            <span class="tag tag-prompt">Prompt</span>
+        </div>
+        <p class="source-info">Source: Ruben Hassid Newsletter | Feb 05, 2026</p>
+    </div>
+
+    <div class="container">
+        <!-- Executive Summary with Rating Bar -->
+        <div class="exec-summary">
+            <div class="rating-bar">
+                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.8/5</span>
+                <span class="rating-high">↑ Practical Value, Tool Ecosystem</span>
+                <span class="rating-low">↓ Technical Depth, Learning Curve</span>
+            </div>
+            <h2>Executive Summary</h2>
+            <p>這篇文章記錄了 AI 內容創作者 Ruben Hassid 從 ChatGPT 轉換到 Claude Cowork 的完整使用體驗。核心論點是 Claude Cowork 解決了四個長期困擾 AI 使用者的痛點：指令遵循不一致、長對話中的「無限迴圈」問題、記憶系統的過度擬合（overfitting），以及輸出僅限於文字而非實際檔案。文章透過五個真實案例展示 Claude Cowork 如何直接產生簡報、Excel、研究報告等可用檔案，對於希望將 AI 從「聊天機器人」升級為「實際工作夥伴」的專業人士具有參考價值。</p>
+        </div>
+
+        <!-- Learning Objectives -->
+        <div class="objectives">
+            <h2>Learning Objectives</h2>
+            <div class="objectives-grid">
+                <div class="objective-item">
+                    <h3>理解 Claude Cowork 的核心差異</h3>
+                    <p>掌握指令遵循、長對話穩定性、無記憶設計、檔案生成四個關鍵特性</p>
+                </div>
+                <div class="objective-item">
+                    <h3>評估工具轉換的實際價值</h3>
+                    <p>透過五個案例學習如何將 AI 輸出從「文字」轉換為「可用檔案」</p>
+                </div>
+                <div class="objective-item">
+                    <h3>建立工具選擇的評估框架</h3>
+                    <p>理解「工具是哲學」的概念，學習如何選擇最適合工作流程的 AI 平台</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Framework Visual -->
+        <div class="framework-visual">
+            <div class="framework-title">Claude Cowork 四大核心優勢</div>
+            <div class="framework-steps">
+                <div class="framework-step">
+                    <div class="framework-icon">1</div>
+                    <div class="framework-step-title">指令遵循</div>
+                    <div class="framework-step-desc">真正讀取並執行長指令</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">2</div>
+                    <div class="framework-step-title">長對話穩定</div>
+                    <div class="framework-step-desc">2+ 小時不迷失主題</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">3</div>
+                    <div class="framework-step-title">無記憶設計</div>
+                    <div class="framework-step-desc">避免過度擬合問題</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">4</div>
+                    <div class="framework-step-title">檔案生成</div>
+                    <div class="framework-step-desc">直接產出可用檔案</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part I: Instruction Following -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><span class="part-number">Part I</span> 指令遵循：從「忽略一半」到「完整執行」</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">作者描述了 ChatGPT 長期存在的核心問題：無論你提供多詳細的 prompt — 500 字的背景說明、具體需求、格式規則、想要和不想要的東西 — <span class="highlight-key">它會忽略其中一半</span>。</p>
+                        <p class="english-text">"You give it a detailed prompt. 500 words of context. Specific requirements. Formatting rules. Things you want. Things you don't want. It ignores half of it."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text">作者的解決方案是上傳超過 <span class="highlight-concept">2,000 字的個人寫作風格檔案</span>，描述他如何寫作、討厭什麼、從不使用的詞彙、偏好的結構。Claude Cowork 會完整讀取並遵循這些指令。</p>
+                        <p class="english-text">"I upload my voice profile. Over 2,000 words describing how I write, what I hate, phrases I never use, structures I prefer."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text">關鍵洞察：<span class="highlight-practical">輸出品質取決於你能提供多少 context</span>。如果 AI 忽略你的 context，你就永遠只能得到通用結果。</p>
+                        <p class="english-text">"The quality of your output depends on how much context you can give. If the AI ignores your context, you're stuck with generic results. Forever."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">比喻說明</div>
+                        <div class="info-box-content">
                             想像你僱用了一個助理，給他一份詳細的工作說明書。ChatGPT 就像一個助理會瀏覽說明書後說「我懂了」，但實際執行時只記得其中一半。Claude Cowork 則像一個會仔細研讀每一條、並在工作中持續參照的助理。
                         </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">實務應用</div>
-<div class="info-box-content">
-<strong>Context 類型建議：</strong><br/>
-                            • Voice Profile（寫作風格檔）<br/>
-                            • Copywriting Rules（文案規則）<br/>
-                            • Reference Documents（參考文件）<br/>
-                            • Domain-specific Guidelines（領域專業指南）<br/><br/>
+                    </div>
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">實務應用</div>
+                        <div class="info-box-content">
+                            <strong>Context 類型建議：</strong><br>
+                            • Voice Profile（寫作風格檔）<br>
+                            • Copywriting Rules（文案規則）<br>
+                            • Reference Documents（參考文件）<br>
+                            • Domain-specific Guidelines（領域專業指南）<br><br>
                             對於 CDMO 情境，可以準備：SOP 格式規範、技術寫作風格指南、常用術語對照表。
                         </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Part II: Long Conversation Stability -->
-<div class="content-section">
-<div class="section-header">
-<h2><span class="part-number">Part II</span> 長對話穩定性：打破「無限迴圈」困境</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">作者描述了 ChatGPT 在複雜任務中常見的崩潰模式：進行 45 分鐘後開始<span class="highlight-key">重複自己、自相矛盾、或陷入不斷道歉卻產出相同錯誤輸出的迴圈</span>。</p>
-<p class="en-text">"You're 45 minutes into a complex task. ChatGPT starts repeating itself. Or contradicting what it said earlier. Or getting stuck in a loop where it keeps apologizing and producing the same wrong output."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">相比之下，Claude Cowork 可以進行 <span class="highlight-concept">2 小時以上的複雜工作階段</span>，包含來回修改、方向轉換、中途調整，而不會失去主題脈絡。</p>
-<p class="en-text">"I've had 2-hour sessions in Claude Cowork. Complex back-and-forth. Revisions. Pivots. New directions mid-conversation. It doesn't lose the thread."</p>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-key">
-<div class="info-box-header">重點提示：AI 自我提示技巧</div>
-<div class="info-box-content">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part II: Long Conversation Stability -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><span class="part-number">Part II</span> 長對話穩定性：打破「無限迴圈」困境</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">作者描述了 ChatGPT 在複雜任務中常見的崩潰模式：進行 45 分鐘後開始<span class="highlight-key">重複自己、自相矛盾、或陷入不斷道歉卻產出相同錯誤輸出的迴圈</span>。</p>
+                        <p class="english-text">"You're 45 minutes into a complex task. ChatGPT starts repeating itself. Or contradicting what it said earlier. Or getting stuck in a loop where it keeps apologizing and producing the same wrong output."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text">相比之下，Claude Cowork 可以進行 <span class="highlight-concept">2 小時以上的複雜工作階段</span>，包含來回修改、方向轉換、中途調整，而不會失去主題脈絡。</p>
+                        <p class="english-text">"I've had 2-hour sessions in Claude Cowork. Complex back-and-forth. Revisions. Pivots. New directions mid-conversation. It doesn't lose the thread."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-key">
+                        <div class="info-box-header">重點提示：AI 自我提示技巧</div>
+                        <div class="info-box-content">
                             當對話走偏時，作者使用這個 prompt 讓 Claude 來引導重新開始：
-  <span class="highlight-practical">關鍵洞察：讓 AI 來提問你，而不是你不斷提示 AI。</span>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">核心概念：AskUserQuestion</div>
-<div class="info-box-content">
+                            <div class="code-block">
+                                <code>We are getting sidetricked. We need to start over without losing the context of this chat. First, generate a first AskUserQuestion form for me to answer so we get to decide what went wrong and where we must go instead. From my answer, generate a second AskUserQuestion form to now be able to complete the task.</code>
+                            </div>
+                            <span class="highlight-practical">關鍵洞察：讓 AI 來提問你，而不是你不斷提示 AI。</span>
+                        </div>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">核心概念：AskUserQuestion</div>
+                        <div class="info-box-content">
                             Claude Cowork 可以生成結構化的問題表單來收集使用者輸入，這種「AI 提示人類」的模式翻轉了傳統的互動關係，特別適合需要多次迭代的複雜任務。
                         </div>
-</div>
-</div>
-<div class="col-full">
-  <div class="code-block">
-<code>We are getting sidetricked. We need to start over without losing the context of this chat. First, generate a first AskUserQuestion form for me to answer so we get to decide what went wrong and where we must go instead. From my answer, generate a second AskUserQuestion form to now be able to complete the task.</code>
-</div>
-</div>
-</div>
-</div>
-<!-- Part III: No Memory as Feature -->
-<div class="content-section">
-<div class="section-header">
-<h2><span class="part-number">Part III</span> 無記憶設計：避免 Overfitting 的優勢</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">作者提出一個反直覺的觀點：<span class="highlight-key">沒有記憶反而是特性而非缺陷</span>。ChatGPT 的記憶功能會創造「過度擬合」問題 — 它太過努力匹配你上週說的話，基於不再適用的舊 context 做出假設。</p>
-<p class="en-text">"ChatGPT remembers your past conversations. Sounds useful. But it creates what I call overfitting. It tries too hard to match what you said last week."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">Claude Cowork 每次都從頭開始，<span class="highlight-concept">沒有包袱、沒有三週前的假設</span>。如果你想讓 Claude 知道什麼，就在這次對話中明確提供那個 context。</p>
-<p class="en-text">"If I want Claude to know something, I give it that context explicitly. In this conversation. For this task. With my favorite markdown files to support it."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">比喻說明</div>
-<div class="info-box-content">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part III: No Memory as Feature -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><span class="part-number">Part III</span> 無記憶設計：避免 Overfitting 的優勢</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">作者提出一個反直覺的觀點：<span class="highlight-key">沒有記憶反而是特性而非缺陷</span>。ChatGPT 的記憶功能會創造「過度擬合」問題 — 它太過努力匹配你上週說的話，基於不再適用的舊 context 做出假設。</p>
+                        <p class="english-text">"ChatGPT remembers your past conversations. Sounds useful. But it creates what I call overfitting. It tries too hard to match what you said last week."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text">Claude Cowork 每次都從頭開始，<span class="highlight-concept">沒有包袱、沒有三週前的假設</span>。如果你想讓 Claude 知道什麼，就在這次對話中明確提供那個 context。</p>
+                        <p class="english-text">"If I want Claude to know something, I give it that context explicitly. In this conversation. For this task. With my favorite markdown files to support it."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">比喻說明</div>
+                        <div class="info-box-content">
                             想像你有兩種顧問：A 顧問會記住你過去所有對話，但經常把三年前的情況套用到今天；B 顧問每次見面都是全新開始，但你可以精確選擇要告訴他什麼。在快速變化的環境中，B 顧問的「精準 context 控制」往往更有價值。
                         </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">實務應用：Context 管理策略</div>
-<div class="info-box-content">
-<strong>建立 Markdown 檔案庫：</strong><br/>
-                            • 個人介紹檔（角色、專長、工作背景）<br/>
-                            • 專案情境檔（當前專案的關鍵資訊）<br/>
-                            • 風格指南檔（偏好的格式和用語）<br/><br/>
+                    </div>
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">實務應用：Context 管理策略</div>
+                        <div class="info-box-content">
+                            <strong>建立 Markdown 檔案庫：</strong><br>
+                            • 個人介紹檔（角色、專長、工作背景）<br>
+                            • 專案情境檔（當前專案的關鍵資訊）<br>
+                            • 風格指南檔（偏好的格式和用語）<br><br>
                             每次對話開始時，根據任務需求選擇性上傳，<span class="highlight-practical">你控制完整 context，而非演算法猜測</span>。
                         </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Part IV: File Creation -->
-<div class="content-section">
-<div class="section-header">
-<h2><span class="part-number">Part IV</span> 實際檔案生成：從「複製貼上」到「直接產出」</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text">這是作者認為最重要的差異：ChatGPT 給你文字，你複製貼上到其他工具再自己格式化。<span class="highlight-key">每一次都是這樣</span>。</p>
-<p class="en-text">"ChatGPT gives you text. You copy that text. You paste it into another tool. You format it yourself. Every. Single. Time."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text">Claude Cowork 則<span class="highlight-concept">直接建立實際檔案</span>：要求簡報得到真正的投影片、要求試算表得到有公式的 Excel 檔、要求文件得到格式化好的 Word 檔。檔案直接出現在資料夾中。</p>
-<p class="en-text">"Claude Cowork creates the actual files. I ask for a presentation. I get slides. Real slides. I ask for a spreadsheet. I get an Excel file with working formulas."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">重點提示</div>
-<div class="info-box-content">
-<strong>檔案生成的意義：</strong><br/>
-                            這不只是節省「複製貼上」的時間，而是改變了工作流程的本質。當 AI 可以直接產出可用檔案，它從「內容生成器」變成了「工作完成器」。<br/><br/>
-<strong>支援的檔案類型：</strong><br/>
-                            • 簡報（透過 Gamma MCP connector）<br/>
-                            • Excel（含公式）<br/>
-                            • Word 文件<br/>
-                            • PDF<br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part IV: File Creation -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><span class="part-number">Part IV</span> 實際檔案生成：從「複製貼上」到「直接產出」</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text">這是作者認為最重要的差異：ChatGPT 給你文字，你複製貼上到其他工具再自己格式化。<span class="highlight-key">每一次都是這樣</span>。</p>
+                        <p class="english-text">"ChatGPT gives you text. You copy that text. You paste it into another tool. You format it yourself. Every. Single. Time."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text">Claude Cowork 則<span class="highlight-concept">直接建立實際檔案</span>：要求簡報得到真正的投影片、要求試算表得到有公式的 Excel 檔、要求文件得到格式化好的 Word 檔。檔案直接出現在資料夾中。</p>
+                        <p class="english-text">"Claude Cowork creates the actual files. I ask for a presentation. I get slides. Real slides. I ask for a spreadsheet. I get an Excel file with working formulas."</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-key">
+                        <div class="info-box-header">重點提示</div>
+                        <div class="info-box-content">
+                            <strong>檔案生成的意義：</strong><br>
+                            這不只是節省「複製貼上」的時間，而是改變了工作流程的本質。當 AI 可以直接產出可用檔案，它從「內容生成器」變成了「工作完成器」。<br><br>
+                            <strong>支援的檔案類型：</strong><br>
+                            • 簡報（透過 Gamma MCP connector）<br>
+                            • Excel（含公式）<br>
+                            • Word 文件<br>
+                            • PDF<br>
                             • Markdown
                         </div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">工具比較</div>
-<div class="info-box-content">
-<table style="width:100%; font-size:0.85rem; border-collapse:collapse;">
-<tr style="background:#e0e7ff;">
-<th style="padding:0.5rem; text-align:left;">功能</th>
-<th style="padding:0.5rem; text-align:center;">ChatGPT</th>
-<th style="padding:0.5rem; text-align:center;">Claude Cowork</th>
-</tr>
-<tr>
-<td style="padding:0.5rem; border-bottom:1px solid #e2e8f0;">輸出格式</td>
-<td style="padding:0.5rem; text-align:center; border-bottom:1px solid #e2e8f0;">文字</td>
-<td style="padding:0.5rem; text-align:center; border-bottom:1px solid #e2e8f0;">實際檔案</td>
-</tr>
-<tr>
-<td style="padding:0.5rem; border-bottom:1px solid #e2e8f0;">後續處理</td>
-<td style="padding:0.5rem; text-align:center; border-bottom:1px solid #e2e8f0;">需手動轉換</td>
-<td style="padding:0.5rem; text-align:center; border-bottom:1px solid #e2e8f0;">直接可用</td>
-</tr>
-<tr>
-<td style="padding:0.5rem;">外部工具整合</td>
-<td style="padding:0.5rem; text-align:center;">有限</td>
-<td style="padding:0.5rem; text-align:center;">MCP Connectors</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Part V: Case Studies -->
-<div class="content-section">
-<div class="section-header">
-<h2><span class="part-number">Part V</span> 五個實戰案例：從理論到實踐</h2>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<p class="zh-text"><strong>案例 1：從 Prompt 到簡報</strong><br/>作者結合 Claude Cowork 和 Gamma（AI 簡報工具）的整合，先用 AskUserQuestion 工具讓 AI 提問來確定大綱，內容確定後直接呼叫 Gamma MCP connector 生成簡報。</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>案例 2：大量文件閱讀篩選</strong><br/>面對出版社寄來的 <span class="highlight-key">4,992 個檔案</span>，作者讓 Claude Cowork 分析並告訴他真正需要閱讀的內容及原因，而非自己一一過濾。</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>案例 3：Excel 公式自動化</strong><br/>Claude 不只可以生成 Excel 內容，還能<span class="highlight-practical">建立包含有效公式的升級版試算表</span>，直接輸出為 .xlsx 檔案。</p>
-</div>
-</div>
-<div class="content-right">
-<div class="bilingual-block">
-<p class="zh-text"><strong>案例 4：收據自動報銷</strong><br/>47 張出差收據，傳統方式需要 2 小時以上。作者將收據放入資料夾後下指令，<span class="highlight-practical">10 分鐘內得到分類完成、計算好總額的 Excel 報表</span>。模糊的 3 張收據被標記出來供手動確認。</p>
-<p class="en-text">"47 receipts from a work trip. The old way: 2 hours minimum... Time: 10 minutes total."</p>
-</div>
-<div class="bilingual-block">
-<p class="zh-text"><strong>案例 5：研究簡報自動生成</strong><br/>撰寫 AI Agents 主題的電子報時，作者讓 Claude 搜尋、閱讀、摘要、組織，<span class="highlight-concept">2 分鐘內得到按主題組織、含來源連結的 Markdown 檔案</span>。</p>
-<p class="en-text">"I didn't open a single browser tab. Claude searched, read, synthesized, and organized. Time: 2 minutes."</p>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">案例共同模式</div>
-<div class="info-box-content">
+                    </div>
+                    <div class="info-box box-compare">
+                        <div class="info-box-header">工具比較</div>
+                        <div class="info-box-content">
+                            <table style="width:100%; font-size:0.85rem; border-collapse:collapse;">
+                                <tr style="background:#e0e7ff;">
+                                    <th style="padding:0.5rem; text-align:left;">功能</th>
+                                    <th style="padding:0.5rem; text-align:center;">ChatGPT</th>
+                                    <th style="padding:0.5rem; text-align:center;">Claude Cowork</th>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0.5rem; border-bottom:1px solid #e2e8f0;">輸出格式</td>
+                                    <td style="padding:0.5rem; text-align:center; border-bottom:1px solid #e2e8f0;">文字</td>
+                                    <td style="padding:0.5rem; text-align:center; border-bottom:1px solid #e2e8f0;">實際檔案</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0.5rem; border-bottom:1px solid #e2e8f0;">後續處理</td>
+                                    <td style="padding:0.5rem; text-align:center; border-bottom:1px solid #e2e8f0;">需手動轉換</td>
+                                    <td style="padding:0.5rem; text-align:center; border-bottom:1px solid #e2e8f0;">直接可用</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0.5rem;">外部工具整合</td>
+                                    <td style="padding:0.5rem; text-align:center;">有限</td>
+                                    <td style="padding:0.5rem; text-align:center;">MCP Connectors</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part V: Case Studies -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2><span class="part-number">Part V</span> 五個實戰案例：從理論到實踐</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>案例 1：從 Prompt 到簡報</strong><br>作者結合 Claude Cowork 和 Gamma（AI 簡報工具）的整合，先用 AskUserQuestion 工具讓 AI 提問來確定大綱，內容確定後直接呼叫 Gamma MCP connector 生成簡報。</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>案例 2：大量文件閱讀篩選</strong><br>面對出版社寄來的 <span class="highlight-key">4,992 個檔案</span>，作者讓 Claude Cowork 分析並告訴他真正需要閱讀的內容及原因，而非自己一一過濾。</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>案例 3：Excel 公式自動化</strong><br>Claude 不只可以生成 Excel 內容，還能<span class="highlight-practical">建立包含有效公式的升級版試算表</span>，直接輸出為 .xlsx 檔案。</p>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>案例 4：收據自動報銷</strong><br>47 張出差收據，傳統方式需要 2 小時以上。作者將收據放入資料夾後下指令，<span class="highlight-practical">10 分鐘內得到分類完成、計算好總額的 Excel 報表</span>。模糊的 3 張收據被標記出來供手動確認。</p>
+                        <p class="english-text">"47 receipts from a work trip. The old way: 2 hours minimum... Time: 10 minutes total."</p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="chinese-text"><strong>案例 5：研究簡報自動生成</strong><br>撰寫 AI Agents 主題的電子報時，作者讓 Claude 搜尋、閱讀、摘要、組織，<span class="highlight-concept">2 分鐘內得到按主題組織、含來源連結的 Markdown 檔案</span>。</p>
+                        <p class="english-text">"I didn't open a single browser tab. Claude searched, read, synthesized, and organized. Time: 2 minutes."</p>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">案例共同模式</div>
+                        <div class="info-box-content">
                             所有案例都展示了相同模式：<strong>輸入原始材料 → AI 處理 → 輸出可用檔案</strong>。這消除了傳統的「AI 產出 → 人工轉換 → 最終檔案」中間步驟。
                         </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Key Takeaways -->
-<div class="takeaways">
-<h2>Key Takeaways</h2>
-<div class="takeaways-grid">
-<div class="summary-card">
-<h3>指令遵循是基礎</h3>
-<p>再多的 prompt engineering 技巧都無法彌補工具本身忽略指令的問題。選擇能完整執行你 context 的工具。</p>
-</div>
-<div class="summary-card">
-<h3>無記憶 = 精準控制</h3>
-<p>與其依賴不可預測的記憶系統，不如建立自己的 context 檔案庫，每次對話精確選擇要提供的資訊。</p>
-</div>
-<div class="summary-card">
-<h3>檔案生成改變工作流程</h3>
-<p>當 AI 可以直接產出簡報、Excel、文件，它從「內容助手」升級為「工作完成器」。</p>
-</div>
-<div class="summary-card">
-<h3>工具是哲學，不只是功能</h3>
-<p>Claude Cowork 代表的是一種工作方式，學會這種模式後可以應用到任何未來的 AI 工具。</p>
-</div>
-</div>
-</div>
-<!-- Practice Questions -->
-<div class="practice-section">
-<h2>Practice Questions</h2>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">作者為什麼認為「無記憶」是優勢而非劣勢？這與傳統的 AI 產品設計思維有何不同？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>核心論點：</strong>記憶系統會產生「過度擬合」（overfitting）— 系統試圖匹配過去對話的模式，可能基於不再相關的 context 做出錯誤假設。</p>
-<p><strong>思維轉換：</strong>傳統設計認為「記住使用者」等於「更好的體驗」，但在 AI 工作助手情境中，使用者需要的是「精準的 context 控制」而非「自動推斷」。每個任務可能需要完全不同的背景資訊，強制記憶反而會引入雜訊。</p>
-<p><strong>實務意涵：</strong>這意味著你需要建立自己的 context 管理系統（如 markdown 檔案庫），而非依賴平台的記憶功能。這是額外工作，但換來的是可預測性和精準度。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">在 CDMO 的 GMP 環境中，Claude Cowork 的「檔案直接生成」功能可能帶來什麼價值？有什麼合規性考量？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>潛在價值：</strong></p>
-<p>• 偏差調查報告的初稿生成（直接輸出 Word 檔）</p>
-<p>• 可行性評估的數據表格自動化（Excel 含公式）</p>
-<p>• 技術轉移文件的格式化整理</p>
-<p>• 訓練材料的簡報製作</p>
-<p><strong>合規性考量：</strong></p>
-<p>• 21 CFR Part 11：AI 生成的檔案仍需符合電子記錄的審計追蹤要求</p>
-<p>• ALCOA+ 原則：AI 輸出需要人工審核以確保 Attributable 和 Accurate</p>
-<p>• 變更控制：任何 AI 工具引入都需要通過變更管理流程</p>
-<p><strong>建議模式：</strong>AI 產生初稿 → 人工審核 → 正式文件系統登錄。AI 是加速器，不是決策者。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">作者聲稱 30 天沒開 ChatGPT，完全轉換到 Claude Cowork。這種「完全轉換」的論述有什麼潛在盲點？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>潛在盲點：</strong></p>
-<p>• <strong>使用情境侷限：</strong>作者是內容創作者，工作以文字、簡報、研究為主。對於其他情境（如程式開發、數據分析、創意設計），最佳工具可能不同。</p>
-<p>• <strong>功能比較不完整：</strong>文章沒有提到 GPT-4 的程式碼執行、DALL-E 整合、Voice Mode 等功能，也沒有比較 Gemini 的多模態能力。</p>
-<p>• <strong>蜜月期效應：</strong>任何新工具在初期都會感覺特別好用，需要更長時間才能評估真正的生產力影響。</p>
-<p>• <strong>成本效益未提：</strong>Claude Pro $17/月 vs ChatGPT Plus $20/月 的功能差異未完整分析。</p>
-<p><strong>更務實的立場：</strong>根據任務類型選擇最適合的工具，而非完全依賴單一平台。「工具是哲學」這句話的真正意涵是學會思維模式，而非綁定特定產品。</p>
-</div>
-</details>
-</div>
-<!-- Bottom Line -->
-<div class="bottom-line">
-<div class="bottom-line-header">我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">核心洞察</div>
-<div class="bottom-line-text">這篇文章最有價值的觀點不是「Claude 比 ChatGPT 好」，而是「Context 控制權」的概念。在我的 CDMO 工作中，每個專案、每個客戶、每個 deviation 都有不同的背景脈絡。與其期待 AI 記住一切，不如建立模組化的 context 檔案庫，讓我精確控制每次對話的資訊輸入。這與我「copilot mode vs agent mode」的框架一致：在合規環境中，人類控制 context 等於控制輸出品質。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">立即應用</div>
-<div class="bottom-line-text">本週行動：建立我的 CDMO Context 檔案庫，包含 (1) 個人專業背景檔 (2) SA25 Vanrx 技術規格摘要 (3) 常見偏差類型與調查框架 (4) 可行性評估標準模板。這些檔案可以在任何 AI 平台使用，不綁定特定工具。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">需要補充</div>
-<div class="bottom-line-text">文章缺少對 Claude Cowork 檔案生成品質的深入評估 — 生成的 Excel 公式是否正確？Word 格式是否符合企業標準？這些需要我自己測試。另外，文章來自內容創作者視角，需要評估在技術文件、合規報告等專業情境的實際表現。建議 2 週後重讀，屆時應該已有實際使用經驗可對照。</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>Document created: 2026-02-05</p>
-<p>Source: <a href="https://www.youropen.ai" target="_blank">Ruben Hassid Newsletter - Quit ChatGPT</a></p>
-<div class="chat-title">Suggested Chat Title: [Tool] Claude Cowork 轉換實戰 - 指令遵循與檔案生成</div>
-</footer>
-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="takeaways">
+            <h2>Key Takeaways</h2>
+            <div class="takeaways-grid">
+                <div class="summary-card">
+                    <h3>指令遵循是基礎</h3>
+                    <p>再多的 prompt engineering 技巧都無法彌補工具本身忽略指令的問題。選擇能完整執行你 context 的工具。</p>
+                </div>
+                <div class="summary-card">
+                    <h3>無記憶 = 精準控制</h3>
+                    <p>與其依賴不可預測的記憶系統，不如建立自己的 context 檔案庫，每次對話精確選擇要提供的資訊。</p>
+                </div>
+                <div class="summary-card">
+                    <h3>檔案生成改變工作流程</h3>
+                    <p>當 AI 可以直接產出簡報、Excel、文件，它從「內容助手」升級為「工作完成器」。</p>
+                </div>
+                <div class="summary-card">
+                    <h3>工具是哲學，不只是功能</h3>
+                    <p>Claude Cowork 代表的是一種工作方式，學會這種模式後可以應用到任何未來的 AI 工具。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Questions -->
+        <div class="practice-section">
+            <h2>Practice Questions</h2>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q1</span>
+                    <span class="question-type">概念理解</span>
+                    <span class="question-text">作者為什麼認為「無記憶」是優勢而非劣勢？這與傳統的 AI 產品設計思維有何不同？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>核心論點：</strong>記憶系統會產生「過度擬合」（overfitting）— 系統試圖匹配過去對話的模式，可能基於不再相關的 context 做出錯誤假設。</p>
+                    <p><strong>思維轉換：</strong>傳統設計認為「記住使用者」等於「更好的體驗」，但在 AI 工作助手情境中，使用者需要的是「精準的 context 控制」而非「自動推斷」。每個任務可能需要完全不同的背景資訊，強制記憶反而會引入雜訊。</p>
+                    <p><strong>實務意涵：</strong>這意味著你需要建立自己的 context 管理系統（如 markdown 檔案庫），而非依賴平台的記憶功能。這是額外工作，但換來的是可預測性和精準度。</p>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q2</span>
+                    <span class="question-type">產業應用</span>
+                    <span class="question-text">在 CDMO 的 GMP 環境中，Claude Cowork 的「檔案直接生成」功能可能帶來什麼價值？有什麼合規性考量？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>潛在價值：</strong></p>
+                    <p>• 偏差調查報告的初稿生成（直接輸出 Word 檔）</p>
+                    <p>• 可行性評估的數據表格自動化（Excel 含公式）</p>
+                    <p>• 技術轉移文件的格式化整理</p>
+                    <p>• 訓練材料的簡報製作</p>
+                    <p><strong>合規性考量：</strong></p>
+                    <p>• 21 CFR Part 11：AI 生成的檔案仍需符合電子記錄的審計追蹤要求</p>
+                    <p>• ALCOA+ 原則：AI 輸出需要人工審核以確保 Attributable 和 Accurate</p>
+                    <p>• 變更控制：任何 AI 工具引入都需要通過變更管理流程</p>
+                    <p><strong>建議模式：</strong>AI 產生初稿 → 人工審核 → 正式文件系統登錄。AI 是加速器，不是決策者。</p>
+                </div>
+            </details>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q3</span>
+                    <span class="question-type">批判思考</span>
+                    <span class="question-text">作者聲稱 30 天沒開 ChatGPT，完全轉換到 Claude Cowork。這種「完全轉換」的論述有什麼潛在盲點？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>潛在盲點：</strong></p>
+                    <p>• <strong>使用情境侷限：</strong>作者是內容創作者，工作以文字、簡報、研究為主。對於其他情境（如程式開發、數據分析、創意設計），最佳工具可能不同。</p>
+                    <p>• <strong>功能比較不完整：</strong>文章沒有提到 GPT-4 的程式碼執行、DALL-E 整合、Voice Mode 等功能，也沒有比較 Gemini 的多模態能力。</p>
+                    <p>• <strong>蜜月期效應：</strong>任何新工具在初期都會感覺特別好用，需要更長時間才能評估真正的生產力影響。</p>
+                    <p>• <strong>成本效益未提：</strong>Claude Pro $17/月 vs ChatGPT Plus $20/月 的功能差異未完整分析。</p>
+                    <p><strong>更務實的立場：</strong>根據任務類型選擇最適合的工具，而非完全依賴單一平台。「工具是哲學」這句話的真正意涵是學會思維模式，而非綁定特定產品。</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- Bottom Line -->
+        <div class="bottom-line">
+            <div class="bottom-line-header">我的行動結論</div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">核心洞察</div>
+                <div class="bottom-line-text">這篇文章最有價值的觀點不是「Claude 比 ChatGPT 好」，而是「Context 控制權」的概念。在我的 CDMO 工作中，每個專案、每個客戶、每個 deviation 都有不同的背景脈絡。與其期待 AI 記住一切，不如建立模組化的 context 檔案庫，讓我精確控制每次對話的資訊輸入。這與我「copilot mode vs agent mode」的框架一致：在合規環境中，人類控制 context 等於控制輸出品質。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">立即應用</div>
+                <div class="bottom-line-text">本週行動：建立我的 CDMO Context 檔案庫，包含 (1) 個人專業背景檔 (2) SA25 Vanrx 技術規格摘要 (3) 常見偏差類型與調查框架 (4) 可行性評估標準模板。這些檔案可以在任何 AI 平台使用，不綁定特定工具。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">需要補充</div>
+                <div class="bottom-line-text">文章缺少對 Claude Cowork 檔案生成品質的深入評估 — 生成的 Excel 公式是否正確？Word 格式是否符合企業標準？這些需要我自己測試。另外，文章來自內容創作者視角，需要評估在技術文件、合規報告等專業情境的實際表現。建議 2 週後重讀，屆時應該已有實際使用經驗可對照。</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Document created: 2026-02-05</p>
+            <p>Source: <a href="https://www.youropen.ai" target="_blank">Ruben Hassid Newsletter - Quit ChatGPT</a></p>
+            <div class="chat-title">Suggested Chat Title: [Tool] Claude Cowork 轉換實戰 - 指令遵循與檔案生成</div>
+        </div>
+    </div>
 </body>
 </html>

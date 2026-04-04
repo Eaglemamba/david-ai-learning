@@ -1,585 +1,811 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Anthropic 內部團隊如何使用 Claude Code - 10 個部門的實戰案例</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-<!-- Dashboard Index Meta -->
-<meta content="2026-02-27" name="doc-date"/>
-<meta content="Anthropic 內部如何使用 Claude Code - 10 團隊實戰" name="doc-title"/>
-<meta content="Anthropic / Official Case Study" name="doc-source"/>
-<meta content="Anthropic-Docs" name="doc-source-type"/>
-<meta content="Anthropic-Docs,Tool,Agent,Automation,Framework" name="doc-tags"/>
-<meta content="4.3" name="doc-rating"/>
-<meta content="Anthropic 十個內部團隊使用 Claude Code 的實戰模式、影響評估與最佳實踐。" name="doc-summary"/>
-<meta content="2026-02-27_anthropic-claude-code-internal.html" name="doc-file"/><meta content="v1" name="normalized"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anthropic 內部團隊如何使用 Claude Code - 10 個部門的實戰案例</title>
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-02-27">
+    <meta name="doc-title" content="Anthropic 內部如何使用 Claude Code - 10 團隊實戰">
+    <meta name="doc-source" content="Anthropic / Official Case Study">
+    <meta name="doc-source-type" content="Anthropic-Docs">
+    <meta name="doc-tags" content="Anthropic-Docs,Tool,Agent,Automation,Framework">
+    <meta name="doc-rating" content="4.3">
+    <meta name="doc-summary" content="Anthropic 十個內部團隊使用 Claude Code 的實戰模式、影響評估與最佳實踐。">
+    <meta name="doc-file" content="2026-02-27_anthropic-claude-code-internal.html">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
 
+/* Tags */
+.tags { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+.tag-framework { background: #e0f2fe; color: #0c4a6e; }
 
+/* Header content */
+.header h1 { font-size: 1.8rem; margin: 0 0 0.5rem; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; }
+
+/* Section titles */
+.section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+.exec-summary p { font-size: 0.95rem; line-height: 1.8; margin-bottom: 0.75rem; }
+.exec-summary p:last-child { margin-bottom: 0; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-text { font-size: 0.9rem; color: #334155; font-weight: 500; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Content sections */
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+@media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+.part-label { font-size: 0.75rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+.part-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; }
+
+/* Bilingual blocks */
+.bilingual-block { margin-bottom: 1rem; }
+.zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+.en-text { font-size: 0.9rem; line-height: 1.6; color: #64748b; font-style: italic; }
+
+/* Info boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content ul { margin: 0.5rem 0; padding-left: 1.25rem; }
+.info-box-content li { margin-bottom: 0.3rem; font-size: 0.88rem; }
+
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+
+/* Highlights */
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Tabs */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tab-btn { flex: 1; padding: 0.75rem 0.5rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; min-width: 80px; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem; font-size: 0.95rem; }
+.summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+.summary-card:nth-child(2) { border-left-color: #10b981; }
+.summary-card:nth-child(3) { border-left-color: #8b5cf6; }
+.summary-card:nth-child(4) { border-left-color: #f59e0b; }
+
+/* Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Team badge */
+.team-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.5rem; }
+.team-dev { background: #dbeafe; color: #1e40af; }
+.team-nondev { background: #fce7f3; color: #9d174d; }
+    </style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="tags">
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-framework">Framework</span>
+<div class="header">
+    <div class="tags">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-automation">Automation</span>
+        <span class="tag tag-framework">Framework</span>
+    </div>
+    <h1>Anthropic 內部團隊如何使用 Claude Code</h1>
+    <div class="subtitle">10 個部門的實戰案例、影響評估與最佳實踐</div>
+    <div class="source">Source: Anthropic Official Case Study | 2026</div>
 </div>
-<h1>Anthropic 內部團隊如何使用 Claude Code</h1>
-<div class="subtitle">10 個部門的實戰案例、影響評估與最佳實踐</div>
-<div class="source">Source: Anthropic Official Case Study | 2026</div>
-</header>
+
 <!-- Container -->
 <div class="container">
+
 <!-- Executive Summary -->
 <div class="section-title">Executive Summary</div>
 <div class="exec-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.3/5</span>
-<span class="rating-high">↑ 實務應用, 工具生態</span>
-<span class="rating-low">↓ 技術深度, 成本分析</span>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.3/5</span>
+        <span class="rating-high">&uarr; 實務應用, 工具生態</span>
+        <span class="rating-low">&darr; 技術深度, 成本分析</span>
+    </div>
+    <p>這份文件來自 Anthropic 內部，記錄了 <span class="highlight-key">10 個不同部門</span>如何在日常工作中使用 Claude Code。從資料基礎建設、產品開發、安全工程到法務部門，涵蓋了<span class="highlight-concept">開發者與非技術人員</span>兩種截然不同的使用模式。</p>
+    <p>最大的價值不在於 Claude Code 的功能介紹，而在於<span class="highlight-key">真實的採用模式（adoption patterns）</span>：哪些團隊用同步模式、哪些用非同步模式、失敗率多少、如何處理回滾。這些是你在官方文件中看不到的「使用現場」。</p>
 </div>
-<p>這份文件來自 Anthropic 內部，記錄了 <span class="highlight-key">10 個不同部門</span>如何在日常工作中使用 Claude Code。從資料基礎建設、產品開發、安全工程到法務部門，涵蓋了<span class="highlight-concept">開發者與非技術人員</span>兩種截然不同的使用模式。</p>
-<p>最大的價值不在於 Claude Code 的功能介紹，而在於<span class="highlight-key">真實的採用模式（adoption patterns）</span>：哪些團隊用同步模式、哪些用非同步模式、失敗率多少、如何處理回滾。這些是你在官方文件中看不到的「使用現場」。</p>
-</div>
+
 <!-- Learning Objectives -->
 <div class="section-title">Learning Objectives</div>
 <div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">🎯</div>
-<div class="objective-text">辨別 Claude Code 的兩大使用模式：同步協作 (Synchronous) vs. 非同步自主 (Async Autonomous)</div>
+    <div class="objective-item">
+        <div class="objective-icon">&#x1F3AF;</div>
+        <div class="objective-text">辨別 Claude Code 的兩大使用模式：同步協作 (Synchronous) vs. 非同步自主 (Async Autonomous)</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#x1F527;</div>
+        <div class="objective-text">掌握 Claude.md 文件和自訂 Slash Commands 對 Claude Code 效能的關鍵影響</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">&#x1F4A1;</div>
+        <div class="objective-text">評估非技術團隊（行銷、設計、法務）採用 Claude Code 的可行路徑與限制</div>
+    </div>
 </div>
-<div class="objective-item">
-<div class="objective-icon">🔧</div>
-<div class="objective-text">掌握 Claude.md 文件和自訂 Slash Commands 對 Claude Code 效能的關鍵影響</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">💡</div>
-<div class="objective-text">評估非技術團隊（行銷、設計、法務）採用 Claude Code 的可行路徑與限制</div>
-</div>
-</div>
+
 <!-- Framework Visual -->
 <div class="framework-visual">
-<div class="framework-title">Claude Code 採用模式光譜 (Adoption Spectrum)</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">🔍</div>
-<div class="framework-step-title">探索模式</div>
-<div class="framework-step-desc">Codebase 導航<br/>概念查詢</div>
+    <div class="framework-title">Claude Code 採用模式光譜 (Adoption Spectrum)</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F50D;</div>
+            <div class="framework-step-title">探索模式</div>
+            <div class="framework-step-desc">Codebase 導航<br>概念查詢</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F91D;</div>
+            <div class="framework-step-title">協作模式</div>
+            <div class="framework-step-desc">同步編碼<br>即時監督</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F680;</div>
+            <div class="framework-step-title">委派模式</div>
+            <div class="framework-step-desc">Auto-accept<br>非同步自主</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x2699;&#xFE0F;</div>
+            <div class="framework-step-title">系統模式</div>
+            <div class="framework-step-desc">Agentic Workflows<br>GitHub Actions</div>
+        </div>
+    </div>
 </div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🤝</div>
-<div class="framework-step-title">協作模式</div>
-<div class="framework-step-desc">同步編碼<br/>即時監督</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🚀</div>
-<div class="framework-step-title">委派模式</div>
-<div class="framework-step-desc">Auto-accept<br/>非同步自主</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">⚙️</div>
-<div class="framework-step-title">系統模式</div>
-<div class="framework-step-desc">Agentic Workflows<br/>GitHub Actions</div>
-</div>
-</div>
-</div>
+
 <!-- Tabbed Content: 10 Teams grouped into categories -->
 <div class="section-title">Content Sections</div>
+
 <div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-infra')">基礎建設</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-eng')">工程開發</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-data')">資料與 API</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-nondev')">非技術團隊</button>
-</div>
-<!-- TAB 1: Infrastructure (Data Infra + Security) -->
-<div class="tab-content active" id="tab-infra">
-<!-- Part I: Data Infrastructure -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part I</div>
-<div class="part-title">Data Infrastructure 資料基礎建設團隊</div>
-<span class="team-badge team-dev">Developer Team</span>
-<div class="bilingual-block">
-<div class="zh-text">資料基礎建設團隊負責整合公司所有業務資料。他們用 Claude Code 做三件核心的事：<span class="highlight-concept">自動化例行資料工程任務</span>、排除複雜基礎設施問題、以及為非技術成員建立可執行的工作流程。</div>
-<div class="en-text">The Data Infrastructure team organizes all business data for teams across the company, using Claude Code for automating routine data engineering tasks.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">最令人印象深刻的案例是 <span class="highlight-key">Kubernetes 截圖除錯</span>：當叢集無法排程新的 Pod 時，團隊將儀表板截圖餵給 Claude Code，它一步步引導他們在 Google Cloud UI 中找到 IP 位址耗盡的警告，並提供建立新 IP pool 的精確指令。這完全繞過了對網路專家的依賴。</div>
-<div class="en-text">They fed screenshots of dashboards into Claude Code, which guided them through Google Cloud's UI menu by menu until they found a warning indicating pod IP address exhaustion.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">另一個重要模式是<span class="highlight-practical">純文字工作流程 (Plain Text Workflows)</span>：財務團隊成員只需用純文字描述資料工作流程，載入 Claude Code 就能自動執行整個流程。零程式碼經驗的員工也能執行複雜的資料查詢和 Excel 輸出。</div>
-<div class="en-text">Employees with no coding experience could describe steps like "query this dashboard, get information, run these queries, produce Excel output," and Claude Code would execute the entire workflow.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>Claude.md 是效能倍增器</strong></p>
-<p>團隊強調：你的工作流程文件寫得越詳細，Claude Code 的表現就越好。這與 Context Engineering（上下文工程）的核心邏輯完全一致 — 指令品質決定輸出品質。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>團隊最佳實踐：</strong></p>
-<ul>
-<li>用 MCP servers 取代 CLI 處理敏感資料（更好的安全控制和日誌記錄）</li>
-<li>舉辦團隊使用分享會（knowledge sharing sessions），讓成員展示各自的工作流程</li>
-<li>每次工作結束時要求 Claude Code 總結並建議改進，形成持續改善循環</li>
-<li>開啟多個 Claude Code 實例進行<strong>平行任務管理</strong>，切換回來時不會失去上下文</li>
-</ul>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p>把 Claude.md 想成你雇用新助理時給的「工作手冊」。手冊寫得越清楚，助理第一天就能上手的工作越多。每次工作結束更新手冊，就像讓助理越來越了解你的偏好。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part II: Security Engineering -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part II</div>
-<div class="part-title">Security Engineering 安全工程團隊</div>
-<span class="team-badge team-dev">Developer Team</span>
-<div class="bilingual-block">
-<div class="zh-text">安全工程團隊專注於軟體開發生命週期的安全性、供應鏈安全和開發環境安全。他們的使用模式揭示了一個關鍵洞察：<span class="highlight-key">Claude Code 不只是寫程式碼的工具，更是「跨領域貢獻的加速器」</span>。</div>
-<div class="en-text">The Security Engineering team focuses on securing the software development lifecycle, supply chain security, and development environment security.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">在事件處理中，他們將 Stack Traces 和文件餵給 Claude Code，讓它追蹤程式碼中的控制流程。原本需要 <span class="highlight-concept">10-15 分鐘的手動程式碼掃描現在約 5 分鐘</span>就能完成。</div>
-<div class="en-text">This significantly reduces time-to-resolution for production issues, allowing them to understand problems that would normally take 10-15 minutes in about 5 minutes.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Terraform 審查是另一個亮點：將基礎設施變更計畫複製到 Claude Code，直接詢問「這會做什麼？我會後悔嗎？」這大幅縮短了安全審查的迴圈時間，消除了開發者等待安全團隊批准時的瓶頸。</div>
-<div class="en-text">They copy Terraform plans into Claude Code to ask "what's this going to do? Am I going to regret this?" creating tighter feedback loops.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">最重要的工作流程轉變：從原本的「設計文件 → 粗糙程式碼 → 重構 → 放棄測試」模式，轉為<span class="highlight-practical">測試驅動開發 (TDD)</span>，先讓 Claude Code 寫偽代碼，引導它做 TDD，定期檢查方向。</div>
-<div class="en-text">Instead of their previous "design doc → janky code → refactor → give up on tests" pattern, they now ask Claude Code for pseudocode and guide it through test-driven development.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<p><strong>Custom Slash Commands 的威力</strong></p>
-<p>安全工程團隊使用了整個 Monorepo 中 <strong>50% 的自訂 Slash Command</strong>。這些自訂指令簡化了特定工作流程，加速了重複性任務。這說明：投資建立「個人化指令庫」的回報率極高。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>團隊最佳實踐：</strong></p>
-<ul>
-<li>「讓 Claude 先說」— 不要問針對性問題取得程式碼片段，而是告訴它「邊做邊提交」讓它自主工作</li>
-<li>用 Claude Code 合成文件和建立 Runbook，取代手動搜尋知識庫</li>
-<li>提供寫作範本和格式偏好，直接產出可用於 Slack、Google Docs 的文件</li>
-<li>新專案能在<strong>數天而非數週</strong>內開始有意義的貢獻</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 2: Engineering (Product Dev + RL + Inference) -->
-<div class="tab-content" id="tab-eng">
-<!-- Part III: Product Development -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part III</div>
-<div class="part-title">Product Development 產品開發團隊</div>
-<span class="team-badge team-dev">Developer Team</span>
-<div class="bilingual-block">
-<div class="zh-text">Claude Code 團隊用自己的產品來開發 Claude Code — 這是最純正的 Dogfooding（吃自己的狗糧）。他們的使用模式最清楚地展示了<span class="highlight-key">任務分類直覺 (Task Classification Intuition)</span> 的重要性。</div>
-<div class="en-text">The Claude Code team uses their own product to build updates to Claude Code.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>非同步模式：</strong>使用 Auto-accept Mode (Shift+Tab)，讓 Claude 寫程式碼、跑測試、持續迭代。給它不熟悉的抽象問題，讓它自主工作，然後審查約 80% 完成的方案再接手最後潤飾。關鍵：<span class="highlight-practical">從乾淨的 git 狀態開始，定期提交 checkpoint</span>。</div>
-<div class="en-text">Engineers use Claude Code for rapid prototyping by enabling "auto-accept mode" (shift+tab), starting from a clean git state and committing checkpoints regularly.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>同步模式：</strong>對於觸及應用程式商業邏輯的核心功能，團隊與 Claude Code 同步工作，給出詳細的 Prompt 和具體的實作指示，即時監控過程以確保程式碼品質和架構正確性。</div>
-<div class="en-text">For more critical features touching the application's business logic, the team works synchronously with Claude Code, giving detailed prompts with specific implementation instructions.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">成功案例：實作 Vim 按鍵綁定功能，大約 <span class="highlight-concept">70% 的最終實作來自 Claude 的自主工作</span>，只需幾次迭代就完成了。</div>
-<div class="en-text">Roughly 70% of the final implementation came from Claude's autonomous work, requiring only a few iterations to complete.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>任務分類法則</strong></p>
-<p>這是整份文件最重要的框架之一：</p>
-<ul>
-<li><strong>非同步 (Auto-accept)</strong>：外圍功能、原型設計、不熟悉的抽象問題</li>
-<li><strong>同步 (監督模式)</strong>：核心商業邏輯、關鍵修復、高風險變更</li>
-</ul>
-<p>這跟 CDMO 的品質管理邏輯完全一致：常規操作可以部分自動化，關鍵品質判斷必須人工監督。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>建立自我驗證循環 (Self-Sufficient Loops)：</strong></p>
-<p>設定 Claude 自動執行 build、test、lint 來驗證自己的工作。這讓 Claude 能更長時間自主工作並抓住自己的錯誤。特別有效的做法是要求 Claude 先寫測試再寫程式碼。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part IV: RL Engineering -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part IV</div>
-<div class="part-title">RL Engineering 強化學習工程團隊</div>
-<span class="team-badge team-dev">Developer Team</span>
-<div class="bilingual-block">
-<div class="zh-text">RL 工程團隊的使用方式最為務實和坦誠。他們明確指出：<span class="highlight-key">Claude Code 首次嘗試只有約三分之一的成功率</span>，需要額外引導或手動介入。但即便如此，整體仍然節省了大量時間。</div>
-<div class="en-text">They acknowledge it only works on first attempt about one-third of the time, requiring either additional guidance or manual intervention.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">他們採用「<span class="highlight-practical">嘗試與回滾 (Try and Rollback)</span>」方法論：頻繁提交 checkpoint，讓 Claude 嘗試自主實作，不行就回滾重來。這種方法比試圖修正 Claude 的錯誤更有效率。</div>
-<div class="en-text">They now use a "try and rollback" methodology, frequently committing checkpoints so they can test Claude's autonomous implementation attempts and revert if needed.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">一個實用技巧：在 Claude.md 中加入防止重複犯錯的指令，例如「用 pytest 不要用 run，不要不必要地 cd — 直接用正確的路徑。」這顯著改善了一致性。</div>
-<div class="en-text">Add instructions to your Claude.md file to prevent Claude from making repeated tool-calling mistakes.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p><strong>「老虎機策略」(Slot Machine Strategy)</strong></p>
-<p>Data Science 團隊用了一個精準的比喻：把 Claude Code 當老虎機 — 存好狀態，讓它跑 30 分鐘，要麼接受結果，要麼從頭來。重新開始的成功率通常比試圖修正 Claude 的錯誤更高。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>「先一次搞定，不行再協作」策略：</strong></p>
-<p>給 Claude 一個快速 prompt 讓它嘗試完整實作。如果成功（約三分之一），你省下了大量時間。如果不行，再切換到更協作的引導模式。這是一個很好的期望值管理框架。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part V: Inference -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part V</div>
-<div class="part-title">Inference 推論團隊</div>
-<span class="team-badge team-dev">Developer Team</span>
-<div class="bilingual-block">
-<div class="zh-text">推論團隊的案例最能體現 Claude Code 作為<span class="highlight-concept">「技能差距橋樑」(Skill Gap Bridge)</span> 的價值。沒有機器學習背景的團隊成員，靠 Claude Code 將研究時間減少了 80% — 原本需要一小時的 Google 搜尋和文件閱讀，現在只需 10-20 分鐘。</div>
-<div class="en-text">What would require an hour of Google searching and reading documentation now takes 10-20 minutes, reducing research time by 80%.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">跨語言程式碼翻譯也是一大亮點：測試功能時需要不同程式語言（如 Rust），團隊只需解釋要測試什麼，Claude 就用所需語言寫出邏輯，<span class="highlight-practical">消除了「只為測試而學新語言」的障礙</span>。</div>
-<div class="en-text">They explain what they want to test and Claude writes the logic in the required language (like Rust), eliminating the need to learn new languages just for testing purposes.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<p><strong>信任建立路徑 (Trust Building Path)</strong></p>
-<p>推論團隊建議的採用策略很實用：</p>
-<ul>
-<li>先測試知識庫功能（問各種問題，看是否比 Google 快且準確）</li>
-<li>從程式碼生成開始（給具體指令，驗證正確性）</li>
-<li>建立信任後再擴展到更複雜的任務</li>
-</ul>
-<p>這是一個漸進式的信任建立框架，適合任何組織的 AI 工具導入。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 3: Data & API -->
-<div class="tab-content" id="tab-data">
-<!-- Part VI: Data Science -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part VI</div>
-<div class="part-title">Data Science &amp; Visualization 資料科學與視覺化團隊</div>
-<span class="team-badge team-dev">Developer Team</span>
-<div class="bilingual-block">
-<div class="zh-text">這個團隊的案例說明了一個重要轉變：<span class="highlight-key">從一次性 Jupyter Notebook 轉向持久化 React Dashboard</span>。以前用完即丟的分析筆記本，現在變成可重複使用的工具。這看似是技術選擇，實則是思維轉變 — 從「分析一次」到「建立可重用資產」。</div>
-<div class="en-text">Instead of building one-off Jupyter notebooks that get discarded, the team now has Claude build permanent React dashboards that can be reused across future model evaluations.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">團隊成員坦言「對 JavaScript 和 TypeScript 了解很少」，卻用 Claude Code 從零建立了整個 React 應用，包括一個 <span class="highlight-concept">5,000 行的 TypeScript 應用</span>。關鍵在於視覺化應用相對「低上下文」— 不需要理解整個 monorepo。</div>
-<div class="en-text">Despite knowing "very little JavaScript and TypeScript," the team uses Claude Code to build entire React applications, like a 5,000-line TypeScript app.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">實際效益：日常重構任務達到 <span class="highlight-practical">2-4 倍時間節省</span>。但團隊也誠實地提到一個重要策略：當 Claude 的方案不好時，重新開始比試圖修正的成功率更高。</div>
-<div class="en-text">Starting over often has a higher success rate than trying to fix Claude's mistakes.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p><strong>從「用完即丟的便利貼」到「系統化的操作手冊」</strong></p>
-<p>Jupyter Notebook 像工廠裡的便利貼 — 記了一次分析就丟掉。React Dashboard 像標準操作程序 (SOP) — 每次新的模型評估都能重複使用。Claude Code 讓「建立 SOP」的門檻從「需要前端工程師」降低到「描述你要什麼」。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>「打斷求簡」策略：</strong></p>
-<p>監督 Claude 工作時，不要猶豫直接打斷它問「你為什麼要這樣做？試試更簡單的方法。」模型預設傾向更複雜的解決方案，但回應簡化要求時表現良好。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part VII: API Knowledge -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part VII</div>
-<div class="part-title">API Knowledge API 知識團隊</div>
-<span class="team-badge team-dev">Developer Team</span>
-<div class="bilingual-block">
-<div class="zh-text">API 知識團隊把 Claude Code 定位為每個任務的<span class="highlight-key">「第一站」(First Stop)</span> — 任何 bug 修復、功能開發或分析，第一步都是問 Claude Code 應該檢查哪些檔案。這取代了傳統的「手動瀏覽程式碼庫 → 建立上下文 → 開始工作」的耗時流程。</div>
-<div class="en-text">The team uses Claude Code as their "first stop" for any task, asking it to identify which files to examine for bug fixes, feature development, or analysis.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">一個微妙但重要的轉變：團隊成員現在<span class="highlight-concept">有信心處理不熟悉領域的 bug</span>，而不是找其他人幫忙。這不只是技術提升，更是心理上的賦能 — 團隊報告感到更快樂、更有生產力。</div>
-<div class="en-text">The team now has the confidence to tackle bugs in unfamiliar parts of the codebase instead of asking others for help. Team reports feeling happier and more productive.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<p><strong>迭代夥伴 vs. 一次性解決方案</strong></p>
-<p>團隊的關鍵建議：將 Claude Code 視為<strong>迭代夥伴 (Iterative Partner)</strong> 而非一次性解決方案。從最少資訊開始，讓 Claude 引導你走過流程，而非預先載入大量說明。這與 Prompt Engineering 的最佳實踐一致：漸進式提供上下文。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- TAB 4: Non-Technical (Growth Marketing + Product Design + Legal) -->
-<div class="tab-content" id="tab-nondev">
-<!-- Part VIII: Growth Marketing -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part VIII</div>
-<div class="part-title">Growth Marketing 成長行銷團隊</div>
-<span class="team-badge team-nondev">Non-Technical Team</span>
-<div class="bilingual-block">
-<div class="zh-text">成長行銷團隊是一人團隊，但用 Claude Code 實現了<span class="highlight-key">「一人多角」的操作能力</span>。最具代表性的案例：建立了一個 Agentic Workflow，處理包含數百個現有廣告及績效指標的 CSV 檔案，識別表現不佳的廣告進行迭代，並生成符合嚴格字數限制的新變體。</div>
-<div class="en-text">As a non-technical team of one, they use Claude Code to automate repetitive marketing tasks and create agentic workflows that would traditionally require significant engineering resources.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">效率提升的數字非常驚人：<span class="highlight-practical">廣告文案創作從 2 小時縮短到 15 分鐘</span>，創意產出增加 10 倍。他們還建立了 Figma 外掛，能在半秒內批次生成 100 個廣告變體。</div>
-<div class="en-text">Ad copy creation reduced from 2 hours to 15 minutes. The team can now test vastly more ad variations with automated generation.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">更深層的價值：他們建立了 Meta Ads MCP Server，直接在 Claude Desktop App 中查詢廣告績效，以及一個記錄假設和實驗的記憶系統，讓每次新的廣告迭代都能參考之前的測試結果。</div>
-<div class="en-text">They created an MCP server integrated with Meta Ads API and implemented a rudimentary memory system that logs hypotheses and experiments across ad iterations.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>非技術人員的 Claude Code 三步法</strong></p>
-<ul>
-<li><strong>Step 1：</strong>先在 Claude.ai 充分構思和規劃整個工作流程</li>
-<li><strong>Step 2：</strong>讓 Claude.ai 將一切總結成 step-by-step 的實作 prompt</li>
-<li><strong>Step 3：</strong>進入 Claude Code 逐步執行，而非一次性要求完成</li>
-</ul>
-<p>這個「先想後做」的模式是非技術人員成功採用 Claude Code 的關鍵。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>找到「有 API 的重複任務」：</strong></p>
-<p>尋找涉及重複操作且工具有 API 的工作流程（如廣告平台、設計工具、分析平台）。這是自動化的最佳候選場景。將複雜工作流程拆分成<strong>專門的子代理人</strong>（如標題 Agent vs. 描述 Agent），讓除錯更容易、輸出品質更高。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part IX: Product Design -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part IX</div>
-<div class="part-title">Product Design 產品設計團隊</div>
-<span class="team-badge team-nondev">Non-Technical Team</span>
-<div class="bilingual-block">
-<div class="zh-text">產品設計團隊的案例最具革命性。設計師現在直接用 Claude Code 實作前端修改（字體、顏色、間距），工程師注意到他們正在做「<span class="highlight-key">通常不會看到設計師做的大型狀態管理變更</span>」。Figma 和 Claude Code 佔據了他們 80% 的工作時間。</div>
-<div class="en-text">Engineers noted they're making "large state management changes that you typically wouldn't see a designer making." Figma and Claude Code open 80% of the time.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">團隊描述了兩種截然不同的用戶體驗：開發者得到「<span class="highlight-concept">增強型工作流程</span>」（更快的執行），而非技術用戶得到的是「天啊，我變成開發者了」的工作流程（全新的能力）。</div>
-<div class="en-text">Developers get "augmented workflow" (faster execution), while non-technical users get "holy crap, I'm a developer workflow" (entirely new capabilities).</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">效率數字：<span class="highlight-practical">複雜專案從一週協調時間縮短到兩個 30 分鐘的通話</span>。例如，全面移除「research preview」訊息的工作，包含搜尋所有實例、審查周圍文案、與法務即時協調、實作更新。</div>
-<div class="en-text">Complex projects like GA launch messaging that would take a week of coordination now completed in two 30-minute calls.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<p><strong>非技術人員的設定建議：</strong></p>
-<ul>
-<li>請工程師協助初始設定（Repository 設定和權限）— 技術入門門檻高，但設定好後日常使用很順暢</li>
-<li>建立自訂 Memory 檔案，告訴 Claude「你是一個沒有編碼經驗的設計師，需要詳細說明和較小的漸進式變更」</li>
-<li>善用 Command+V 貼上截圖，Claude Code 擅長讀取設計並生成功能性程式碼</li>
-</ul>
-</div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較</div>
-<div class="info-box-content">
-<p><strong>GitHub Actions 整合模式：</strong></p>
-<p>設計師可以直接提交 Issue 描述需要的變更，Claude 透過 GitHub Actions 自動提出程式碼解決方案，不需要打開 Claude Code。這是「系統模式」的最佳範例 — AI 在背景自動運作，人類只需要描述需求。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Part X: Legal -->
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">Part X</div>
-<div class="part-title">Legal 法務團隊</div>
-<span class="team-badge team-nondev">Non-Technical Team</span>
-<div class="bilingual-block">
-<div class="zh-text">法務團隊的案例最出人意料也最有啟發性。一位團隊成員在<span class="highlight-key">一小時內建立了一個輔助溝通的無障礙 App</span>，為有說話困難的家人設計了一個預測文字應用，使用原生語音轉文字功能，填補了語言治療師推薦的現有工具的空白。</div>
-<div class="en-text">In just one hour, they created a predictive text app using native speech-to-text that suggests responses and speaks them using voice banks.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">在工作層面，法務團隊建立了「電話樹」系統協助員工找到合適的律師，以及 G Suite 應用自動化週報和追蹤法務審查狀態。這些都是<span class="highlight-practical">不需要傳統開發資源就能建立的自訂工具</span>。</div>
-<div class="en-text">They created prototype "phone tree" systems and G Suite applications that automate weekly team updates and track legal review status.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">作為產品律師，他們也立即識別出 MCP 深度整合的安全隱患，指出保守的安全姿態將隨著 AI 工具存取更多敏感系統而產生障礙。這種「<span class="highlight-concept">創新與風險管理的平衡</span>」觀點，對受監管行業特別有價值。</div>
-<div class="en-text">They immediately identify security implications of deep MCP integrations, noting how conservative security postures will create barriers as AI tools access more sensitive systems.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<p><strong>「不完美原型」的力量</strong></p>
-<p>法務團隊的最大心得：克服分享「玩具」或未完成作品的恐懼。就像在 CDMO 中，一個快速的概念驗證實驗（即使不完美）往往比完美的計畫書更能推動決策。分享原型能啟發跨部門的人看到他們未曾想過的可能性。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<p><strong>法務團隊的合規視角：</strong></p>
-<p>MCP 整合帶來的安全隱患是需要提前規劃的。隨著 AI 工具存取越來越多敏感系統，合規工具的建立速度必須跟上 AI 能力的擴展速度。這對於 GMP 環境中的 AI 導入同樣適用 — 21 CFR Part 11 和資料完整性要求不會因為 AI 帶來效率而放寬。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-infra')">基礎建設</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-eng')">工程開發</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-data')">資料與 API</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-nondev')">非技術團隊</button>
+    </div>
+
+    <!-- TAB 1: Infrastructure (Data Infra + Security) -->
+    <div id="tab-infra" class="tab-content active">
+
+        <!-- Part I: Data Infrastructure -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part I</div>
+                <div class="part-title">Data Infrastructure 資料基礎建設團隊</div>
+                <span class="team-badge team-dev">Developer Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">資料基礎建設團隊負責整合公司所有業務資料。他們用 Claude Code 做三件核心的事：<span class="highlight-concept">自動化例行資料工程任務</span>、排除複雜基礎設施問題、以及為非技術成員建立可執行的工作流程。</div>
+                    <div class="en-text">The Data Infrastructure team organizes all business data for teams across the company, using Claude Code for automating routine data engineering tasks.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">最令人印象深刻的案例是 <span class="highlight-key">Kubernetes 截圖除錯</span>：當叢集無法排程新的 Pod 時，團隊將儀表板截圖餵給 Claude Code，它一步步引導他們在 Google Cloud UI 中找到 IP 位址耗盡的警告，並提供建立新 IP pool 的精確指令。這完全繞過了對網路專家的依賴。</div>
+                    <div class="en-text">They fed screenshots of dashboards into Claude Code, which guided them through Google Cloud's UI menu by menu until they found a warning indicating pod IP address exhaustion.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">另一個重要模式是<span class="highlight-practical">純文字工作流程 (Plain Text Workflows)</span>：財務團隊成員只需用純文字描述資料工作流程，載入 Claude Code 就能自動執行整個流程。零程式碼經驗的員工也能執行複雜的資料查詢和 Excel 輸出。</div>
+                    <div class="en-text">Employees with no coding experience could describe steps like "query this dashboard, get information, run these queries, produce Excel output," and Claude Code would execute the entire workflow.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>Claude.md 是效能倍增器</strong></p>
+                        <p>團隊強調：你的工作流程文件寫得越詳細，Claude Code 的表現就越好。這與 Context Engineering（上下文工程）的核心邏輯完全一致 — 指令品質決定輸出品質。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>團隊最佳實踐：</strong></p>
+                        <ul>
+                            <li>用 MCP servers 取代 CLI 處理敏感資料（更好的安全控制和日誌記錄）</li>
+                            <li>舉辦團隊使用分享會（knowledge sharing sessions），讓成員展示各自的工作流程</li>
+                            <li>每次工作結束時要求 Claude Code 總結並建議改進，形成持續改善循環</li>
+                            <li>開啟多個 Claude Code 實例進行<strong>平行任務管理</strong>，切換回來時不會失去上下文</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                    <div class="info-box-content">
+                        <p>把 Claude.md 想成你雇用新助理時給的「工作手冊」。手冊寫得越清楚，助理第一天就能上手的工作越多。每次工作結束更新手冊，就像讓助理越來越了解你的偏好。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part II: Security Engineering -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part II</div>
+                <div class="part-title">Security Engineering 安全工程團隊</div>
+                <span class="team-badge team-dev">Developer Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">安全工程團隊專注於軟體開發生命週期的安全性、供應鏈安全和開發環境安全。他們的使用模式揭示了一個關鍵洞察：<span class="highlight-key">Claude Code 不只是寫程式碼的工具，更是「跨領域貢獻的加速器」</span>。</div>
+                    <div class="en-text">The Security Engineering team focuses on securing the software development lifecycle, supply chain security, and development environment security.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">在事件處理中，他們將 Stack Traces 和文件餵給 Claude Code，讓它追蹤程式碼中的控制流程。原本需要 <span class="highlight-concept">10-15 分鐘的手動程式碼掃描現在約 5 分鐘</span>就能完成。</div>
+                    <div class="en-text">This significantly reduces time-to-resolution for production issues, allowing them to understand problems that would normally take 10-15 minutes in about 5 minutes.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">Terraform 審查是另一個亮點：將基礎設施變更計畫複製到 Claude Code，直接詢問「這會做什麼？我會後悔嗎？」這大幅縮短了安全審查的迴圈時間，消除了開發者等待安全團隊批准時的瓶頸。</div>
+                    <div class="en-text">They copy Terraform plans into Claude Code to ask "what's this going to do? Am I going to regret this?" creating tighter feedback loops.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">最重要的工作流程轉變：從原本的「設計文件 → 粗糙程式碼 → 重構 → 放棄測試」模式，轉為<span class="highlight-practical">測試驅動開發 (TDD)</span>，先讓 Claude Code 寫偽代碼，引導它做 TDD，定期檢查方向。</div>
+                    <div class="en-text">Instead of their previous "design doc → janky code → refactor → give up on tests" pattern, they now ask Claude Code for pseudocode and guide it through test-driven development.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>Custom Slash Commands 的威力</strong></p>
+                        <p>安全工程團隊使用了整個 Monorepo 中 <strong>50% 的自訂 Slash Command</strong>。這些自訂指令簡化了特定工作流程，加速了重複性任務。這說明：投資建立「個人化指令庫」的回報率極高。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>團隊最佳實踐：</strong></p>
+                        <ul>
+                            <li>「讓 Claude 先說」— 不要問針對性問題取得程式碼片段，而是告訴它「邊做邊提交」讓它自主工作</li>
+                            <li>用 Claude Code 合成文件和建立 Runbook，取代手動搜尋知識庫</li>
+                            <li>提供寫作範本和格式偏好，直接產出可用於 Slack、Google Docs 的文件</li>
+                            <li>新專案能在<strong>數天而非數週</strong>內開始有意義的貢獻</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: Engineering (Product Dev + RL + Inference) -->
+    <div id="tab-eng" class="tab-content">
+
+        <!-- Part III: Product Development -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part III</div>
+                <div class="part-title">Product Development 產品開發團隊</div>
+                <span class="team-badge team-dev">Developer Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">Claude Code 團隊用自己的產品來開發 Claude Code — 這是最純正的 Dogfooding（吃自己的狗糧）。他們的使用模式最清楚地展示了<span class="highlight-key">任務分類直覺 (Task Classification Intuition)</span> 的重要性。</div>
+                    <div class="en-text">The Claude Code team uses their own product to build updates to Claude Code.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>非同步模式：</strong>使用 Auto-accept Mode (Shift+Tab)，讓 Claude 寫程式碼、跑測試、持續迭代。給它不熟悉的抽象問題，讓它自主工作，然後審查約 80% 完成的方案再接手最後潤飾。關鍵：<span class="highlight-practical">從乾淨的 git 狀態開始，定期提交 checkpoint</span>。</div>
+                    <div class="en-text">Engineers use Claude Code for rapid prototyping by enabling "auto-accept mode" (shift+tab), starting from a clean git state and committing checkpoints regularly.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>同步模式：</strong>對於觸及應用程式商業邏輯的核心功能，團隊與 Claude Code 同步工作，給出詳細的 Prompt 和具體的實作指示，即時監控過程以確保程式碼品質和架構正確性。</div>
+                    <div class="en-text">For more critical features touching the application's business logic, the team works synchronously with Claude Code, giving detailed prompts with specific implementation instructions.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">成功案例：實作 Vim 按鍵綁定功能，大約 <span class="highlight-concept">70% 的最終實作來自 Claude 的自主工作</span>，只需幾次迭代就完成了。</div>
+                    <div class="en-text">Roughly 70% of the final implementation came from Claude's autonomous work, requiring only a few iterations to complete.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>任務分類法則</strong></p>
+                        <p>這是整份文件最重要的框架之一：</p>
+                        <ul>
+                            <li><strong>非同步 (Auto-accept)</strong>：外圍功能、原型設計、不熟悉的抽象問題</li>
+                            <li><strong>同步 (監督模式)</strong>：核心商業邏輯、關鍵修復、高風險變更</li>
+                        </ul>
+                        <p>這跟 CDMO 的品質管理邏輯完全一致：常規操作可以部分自動化，關鍵品質判斷必須人工監督。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>建立自我驗證循環 (Self-Sufficient Loops)：</strong></p>
+                        <p>設定 Claude 自動執行 build、test、lint 來驗證自己的工作。這讓 Claude 能更長時間自主工作並抓住自己的錯誤。特別有效的做法是要求 Claude 先寫測試再寫程式碼。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part IV: RL Engineering -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part IV</div>
+                <div class="part-title">RL Engineering 強化學習工程團隊</div>
+                <span class="team-badge team-dev">Developer Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">RL 工程團隊的使用方式最為務實和坦誠。他們明確指出：<span class="highlight-key">Claude Code 首次嘗試只有約三分之一的成功率</span>，需要額外引導或手動介入。但即便如此，整體仍然節省了大量時間。</div>
+                    <div class="en-text">They acknowledge it only works on first attempt about one-third of the time, requiring either additional guidance or manual intervention.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">他們採用「<span class="highlight-practical">嘗試與回滾 (Try and Rollback)</span>」方法論：頻繁提交 checkpoint，讓 Claude 嘗試自主實作，不行就回滾重來。這種方法比試圖修正 Claude 的錯誤更有效率。</div>
+                    <div class="en-text">They now use a "try and rollback" methodology, frequently committing checkpoints so they can test Claude's autonomous implementation attempts and revert if needed.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">一個實用技巧：在 Claude.md 中加入防止重複犯錯的指令，例如「用 pytest 不要用 run，不要不必要地 cd — 直接用正確的路徑。」這顯著改善了一致性。</div>
+                    <div class="en-text">Add instructions to your Claude.md file to prevent Claude from making repeated tool-calling mistakes.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                    <div class="info-box-content">
+                        <p><strong>「老虎機策略」(Slot Machine Strategy)</strong></p>
+                        <p>Data Science 團隊用了一個精準的比喻：把 Claude Code 當老虎機 — 存好狀態，讓它跑 30 分鐘，要麼接受結果，要麼從頭來。重新開始的成功率通常比試圖修正 Claude 的錯誤更高。</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>「先一次搞定，不行再協作」策略：</strong></p>
+                        <p>給 Claude 一個快速 prompt 讓它嘗試完整實作。如果成功（約三分之一），你省下了大量時間。如果不行，再切換到更協作的引導模式。這是一個很好的期望值管理框架。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part V: Inference -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part V</div>
+                <div class="part-title">Inference 推論團隊</div>
+                <span class="team-badge team-dev">Developer Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">推論團隊的案例最能體現 Claude Code 作為<span class="highlight-concept">「技能差距橋樑」(Skill Gap Bridge)</span> 的價值。沒有機器學習背景的團隊成員，靠 Claude Code 將研究時間減少了 80% — 原本需要一小時的 Google 搜尋和文件閱讀，現在只需 10-20 分鐘。</div>
+                    <div class="en-text">What would require an hour of Google searching and reading documentation now takes 10-20 minutes, reducing research time by 80%.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">跨語言程式碼翻譯也是一大亮點：測試功能時需要不同程式語言（如 Rust），團隊只需解釋要測試什麼，Claude 就用所需語言寫出邏輯，<span class="highlight-practical">消除了「只為測試而學新語言」的障礙</span>。</div>
+                    <div class="en-text">They explain what they want to test and Claude writes the logic in the required language (like Rust), eliminating the need to learn new languages just for testing purposes.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>信任建立路徑 (Trust Building Path)</strong></p>
+                        <p>推論團隊建議的採用策略很實用：</p>
+                        <ul>
+                            <li>先測試知識庫功能（問各種問題，看是否比 Google 快且準確）</li>
+                            <li>從程式碼生成開始（給具體指令，驗證正確性）</li>
+                            <li>建立信任後再擴展到更複雜的任務</li>
+                        </ul>
+                        <p>這是一個漸進式的信任建立框架，適合任何組織的 AI 工具導入。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: Data & API -->
+    <div id="tab-data" class="tab-content">
+
+        <!-- Part VI: Data Science -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part VI</div>
+                <div class="part-title">Data Science &amp; Visualization 資料科學與視覺化團隊</div>
+                <span class="team-badge team-dev">Developer Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">這個團隊的案例說明了一個重要轉變：<span class="highlight-key">從一次性 Jupyter Notebook 轉向持久化 React Dashboard</span>。以前用完即丟的分析筆記本，現在變成可重複使用的工具。這看似是技術選擇，實則是思維轉變 — 從「分析一次」到「建立可重用資產」。</div>
+                    <div class="en-text">Instead of building one-off Jupyter notebooks that get discarded, the team now has Claude build permanent React dashboards that can be reused across future model evaluations.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">團隊成員坦言「對 JavaScript 和 TypeScript 了解很少」，卻用 Claude Code 從零建立了整個 React 應用，包括一個 <span class="highlight-concept">5,000 行的 TypeScript 應用</span>。關鍵在於視覺化應用相對「低上下文」— 不需要理解整個 monorepo。</div>
+                    <div class="en-text">Despite knowing "very little JavaScript and TypeScript," the team uses Claude Code to build entire React applications, like a 5,000-line TypeScript app.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">實際效益：日常重構任務達到 <span class="highlight-practical">2-4 倍時間節省</span>。但團隊也誠實地提到一個重要策略：當 Claude 的方案不好時，重新開始比試圖修正的成功率更高。</div>
+                    <div class="en-text">Starting over often has a higher success rate than trying to fix Claude's mistakes.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                    <div class="info-box-content">
+                        <p><strong>從「用完即丟的便利貼」到「系統化的操作手冊」</strong></p>
+                        <p>Jupyter Notebook 像工廠裡的便利貼 — 記了一次分析就丟掉。React Dashboard 像標準操作程序 (SOP) — 每次新的模型評估都能重複使用。Claude Code 讓「建立 SOP」的門檻從「需要前端工程師」降低到「描述你要什麼」。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>「打斷求簡」策略：</strong></p>
+                        <p>監督 Claude 工作時，不要猶豫直接打斷它問「你為什麼要這樣做？試試更簡單的方法。」模型預設傾向更複雜的解決方案，但回應簡化要求時表現良好。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part VII: API Knowledge -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part VII</div>
+                <div class="part-title">API Knowledge API 知識團隊</div>
+                <span class="team-badge team-dev">Developer Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">API 知識團隊把 Claude Code 定位為每個任務的<span class="highlight-key">「第一站」(First Stop)</span> — 任何 bug 修復、功能開發或分析，第一步都是問 Claude Code 應該檢查哪些檔案。這取代了傳統的「手動瀏覽程式碼庫 → 建立上下文 → 開始工作」的耗時流程。</div>
+                    <div class="en-text">The team uses Claude Code as their "first stop" for any task, asking it to identify which files to examine for bug fixes, feature development, or analysis.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">一個微妙但重要的轉變：團隊成員現在<span class="highlight-concept">有信心處理不熟悉領域的 bug</span>，而不是找其他人幫忙。這不只是技術提升，更是心理上的賦能 — 團隊報告感到更快樂、更有生產力。</div>
+                    <div class="en-text">The team now has the confidence to tackle bugs in unfamiliar parts of the codebase instead of asking others for help. Team reports feeling happier and more productive.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>迭代夥伴 vs. 一次性解決方案</strong></p>
+                        <p>團隊的關鍵建議：將 Claude Code 視為<strong>迭代夥伴 (Iterative Partner)</strong> 而非一次性解決方案。從最少資訊開始，讓 Claude 引導你走過流程，而非預先載入大量說明。這與 Prompt Engineering 的最佳實踐一致：漸進式提供上下文。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: Non-Technical (Growth Marketing + Product Design + Legal) -->
+    <div id="tab-nondev" class="tab-content">
+
+        <!-- Part VIII: Growth Marketing -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part VIII</div>
+                <div class="part-title">Growth Marketing 成長行銷團隊</div>
+                <span class="team-badge team-nondev">Non-Technical Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">成長行銷團隊是一人團隊，但用 Claude Code 實現了<span class="highlight-key">「一人多角」的操作能力</span>。最具代表性的案例：建立了一個 Agentic Workflow，處理包含數百個現有廣告及績效指標的 CSV 檔案，識別表現不佳的廣告進行迭代，並生成符合嚴格字數限制的新變體。</div>
+                    <div class="en-text">As a non-technical team of one, they use Claude Code to automate repetitive marketing tasks and create agentic workflows that would traditionally require significant engineering resources.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">效率提升的數字非常驚人：<span class="highlight-practical">廣告文案創作從 2 小時縮短到 15 分鐘</span>，創意產出增加 10 倍。他們還建立了 Figma 外掛，能在半秒內批次生成 100 個廣告變體。</div>
+                    <div class="en-text">Ad copy creation reduced from 2 hours to 15 minutes. The team can now test vastly more ad variations with automated generation.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">更深層的價值：他們建立了 Meta Ads MCP Server，直接在 Claude Desktop App 中查詢廣告績效，以及一個記錄假設和實驗的記憶系統，讓每次新的廣告迭代都能參考之前的測試結果。</div>
+                    <div class="en-text">They created an MCP server integrated with Meta Ads API and implemented a rudimentary memory system that logs hypotheses and experiments across ad iterations.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>非技術人員的 Claude Code 三步法</strong></p>
+                        <ul>
+                            <li><strong>Step 1：</strong>先在 Claude.ai 充分構思和規劃整個工作流程</li>
+                            <li><strong>Step 2：</strong>讓 Claude.ai 將一切總結成 step-by-step 的實作 prompt</li>
+                            <li><strong>Step 3：</strong>進入 Claude Code 逐步執行，而非一次性要求完成</li>
+                        </ul>
+                        <p>這個「先想後做」的模式是非技術人員成功採用 Claude Code 的關鍵。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>找到「有 API 的重複任務」：</strong></p>
+                        <p>尋找涉及重複操作且工具有 API 的工作流程（如廣告平台、設計工具、分析平台）。這是自動化的最佳候選場景。將複雜工作流程拆分成<strong>專門的子代理人</strong>（如標題 Agent vs. 描述 Agent），讓除錯更容易、輸出品質更高。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part IX: Product Design -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part IX</div>
+                <div class="part-title">Product Design 產品設計團隊</div>
+                <span class="team-badge team-nondev">Non-Technical Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">產品設計團隊的案例最具革命性。設計師現在直接用 Claude Code 實作前端修改（字體、顏色、間距），工程師注意到他們正在做「<span class="highlight-key">通常不會看到設計師做的大型狀態管理變更</span>」。Figma 和 Claude Code 佔據了他們 80% 的工作時間。</div>
+                    <div class="en-text">Engineers noted they're making "large state management changes that you typically wouldn't see a designer making." Figma and Claude Code open 80% of the time.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">團隊描述了兩種截然不同的用戶體驗：開發者得到「<span class="highlight-concept">增強型工作流程</span>」（更快的執行），而非技術用戶得到的是「天啊，我變成開發者了」的工作流程（全新的能力）。</div>
+                    <div class="en-text">Developers get "augmented workflow" (faster execution), while non-technical users get "holy crap, I'm a developer workflow" (entirely new capabilities).</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">效率數字：<span class="highlight-practical">複雜專案從一週協調時間縮短到兩個 30 分鐘的通話</span>。例如，全面移除「research preview」訊息的工作，包含搜尋所有實例、審查周圍文案、與法務即時協調、實作更新。</div>
+                    <div class="en-text">Complex projects like GA launch messaging that would take a week of coordination now completed in two 30-minute calls.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>非技術人員的設定建議：</strong></p>
+                        <ul>
+                            <li>請工程師協助初始設定（Repository 設定和權限）— 技術入門門檻高，但設定好後日常使用很順暢</li>
+                            <li>建立自訂 Memory 檔案，告訴 Claude「你是一個沒有編碼經驗的設計師，需要詳細說明和較小的漸進式變更」</li>
+                            <li>善用 Command+V 貼上截圖，Claude Code 擅長讀取設計並生成功能性程式碼</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box box-compare">
+                    <div class="info-box-header">&#x2696;&#xFE0F; 工具比較</div>
+                    <div class="info-box-content">
+                        <p><strong>GitHub Actions 整合模式：</strong></p>
+                        <p>設計師可以直接提交 Issue 描述需要的變更，Claude 透過 GitHub Actions 自動提出程式碼解決方案，不需要打開 Claude Code。這是「系統模式」的最佳範例 — AI 在背景自動運作，人類只需要描述需求。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part X: Legal -->
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="part-label">Part X</div>
+                <div class="part-title">Legal 法務團隊</div>
+                <span class="team-badge team-nondev">Non-Technical Team</span>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">法務團隊的案例最出人意料也最有啟發性。一位團隊成員在<span class="highlight-key">一小時內建立了一個輔助溝通的無障礙 App</span>，為有說話困難的家人設計了一個預測文字應用，使用原生語音轉文字功能，填補了語言治療師推薦的現有工具的空白。</div>
+                    <div class="en-text">In just one hour, they created a predictive text app using native speech-to-text that suggests responses and speaks them using voice banks.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">在工作層面，法務團隊建立了「電話樹」系統協助員工找到合適的律師，以及 G Suite 應用自動化週報和追蹤法務審查狀態。這些都是<span class="highlight-practical">不需要傳統開發資源就能建立的自訂工具</span>。</div>
+                    <div class="en-text">They created prototype "phone tree" systems and G Suite applications that automate weekly team updates and track legal review status.</div>
+                </div>
+
+                <div class="bilingual-block">
+                    <div class="zh-text">作為產品律師，他們也立即識別出 MCP 深度整合的安全隱患，指出保守的安全姿態將隨著 AI 工具存取更多敏感系統而產生障礙。這種「<span class="highlight-concept">創新與風險管理的平衡</span>」觀點，對受監管行業特別有價值。</div>
+                    <div class="en-text">They immediately identify security implications of deep MCP integrations, noting how conservative security postures will create barriers as AI tools access more sensitive systems.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                    <div class="info-box-content">
+                        <p><strong>「不完美原型」的力量</strong></p>
+                        <p>法務團隊的最大心得：克服分享「玩具」或未完成作品的恐懼。就像在 CDMO 中，一個快速的概念驗證實驗（即使不完美）往往比完美的計畫書更能推動決策。分享原型能啟發跨部門的人看到他們未曾想過的可能性。</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>法務團隊的合規視角：</strong></p>
+                        <p>MCP 整合帶來的安全隱患是需要提前規劃的。隨著 AI 工具存取越來越多敏感系統，合規工具的建立速度必須跟上 AI 能力的擴展速度。這對於 GMP 環境中的 AI 導入同樣適用 — 21 CFR Part 11 和資料完整性要求不會因為 AI 帶來效率而放寬。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div><!-- end tab-container -->
+
 <!-- Key Takeaways -->
 <div class="section-title">Key Takeaways</div>
 <div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-title">1. 任務分類決定使用模式</div>
-<div class="summary-card-text">Claude Code 的效能取決於你是否正確分類任務：外圍功能用非同步自主模式，核心邏輯用同步監督模式。這不是技術選擇，而是風險管理決策 — 與 GMP 的關鍵品質屬性 (CQA) 判斷邏輯完全一致。</div>
+    <div class="summary-card">
+        <div class="summary-card-title">1. 任務分類決定使用模式</div>
+        <div class="summary-card-text">Claude Code 的效能取決於你是否正確分類任務：外圍功能用非同步自主模式，核心邏輯用同步監督模式。這不是技術選擇，而是風險管理決策 — 與 GMP 的關鍵品質屬性 (CQA) 判斷邏輯完全一致。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">2. Claude.md 是最被低估的槓桿</div>
+        <div class="summary-card-text">從資料基建到 RL 工程，每個團隊都強調 Claude.md 文件和自訂 Slash Commands 的重要性。這本質上就是 Context Engineering — 你投入多少上下文品質，就得到多少輸出品質。安全工程團隊獨佔 50% 的自訂指令使用量。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">3. 非技術人員的「先想後做」模式</div>
+        <div class="summary-card-text">行銷、設計、法務三個非技術團隊共享同一模式：先在 Claude.ai 充分構思和規劃，再進入 Claude Code 逐步實作。設計團隊 80% 時間在 Figma + Claude Code 之間切換。法務團隊一小時就建立了無障礙 App。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">4. 重新開始 > 修正錯誤</div>
+        <div class="summary-card-text">多個團隊不約而同地發現：當 Claude Code 的輸出不理想時，存好狀態、從頭來過的成功率高於試圖修正它的錯誤。首次嘗試成功率約三分之一，但加上 checkpoint + rollback 策略，整體仍然大幅節省時間。</div>
+    </div>
 </div>
-<div class="summary-card">
-<div class="summary-card-title">2. Claude.md 是最被低估的槓桿</div>
-<div class="summary-card-text">從資料基建到 RL 工程，每個團隊都強調 Claude.md 文件和自訂 Slash Commands 的重要性。這本質上就是 Context Engineering — 你投入多少上下文品質，就得到多少輸出品質。安全工程團隊獨佔 50% 的自訂指令使用量。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">3. 非技術人員的「先想後做」模式</div>
-<div class="summary-card-text">行銷、設計、法務三個非技術團隊共享同一模式：先在 Claude.ai 充分構思和規劃，再進入 Claude Code 逐步實作。設計團隊 80% 時間在 Figma + Claude Code 之間切換。法務團隊一小時就建立了無障礙 App。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">4. 重新開始 &gt; 修正錯誤</div>
-<div class="summary-card-text">多個團隊不約而同地發現：當 Claude Code 的輸出不理想時，存好狀態、從頭來過的成功率高於試圖修正它的錯誤。首次嘗試成功率約三分之一，但加上 checkpoint + rollback 策略，整體仍然大幅節省時間。</div>
-</div>
-</div>
+
 <!-- Practice Questions -->
 <div class="section-title">Practice Questions</div>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">根據文章中的案例，「同步模式 (Synchronous)」和「非同步模式 (Async)」的選擇標準是什麼？這兩種模式分別適合什麼類型的任務？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>同步模式</strong>適用於觸及核心商業邏輯、關鍵修復、高風險變更的任務。產品開發團隊明確指出，對於涉及應用程式商業邏輯的核心功能，他們會同步工作、給出詳細 Prompt、即時監控程式碼品質和架構。</p>
-<p><strong>非同步模式 (Auto-accept)</strong>適用於外圍功能、原型設計、不熟悉領域的探索性工作。關鍵前提是從乾淨 git 狀態開始、定期提交 checkpoint，這樣 Claude 走偏時可以快速回滾。</p>
-<p>底層邏輯是<strong>風險與可逆性</strong>：如果結果可以輕易撤銷（回滾 git），就適合非同步；如果錯誤代價高（觸及核心邏輯），就必須同步監督。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">根據文章中的案例，「同步模式 (Synchronous)」和「非同步模式 (Async)」的選擇標準是什麼？這兩種模式分別適合什麼類型的任務？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>同步模式</strong>適用於觸及核心商業邏輯、關鍵修復、高風險變更的任務。產品開發團隊明確指出，對於涉及應用程式商業邏輯的核心功能，他們會同步工作、給出詳細 Prompt、即時監控程式碼品質和架構。</p>
+        <p><strong>非同步模式 (Auto-accept)</strong>適用於外圍功能、原型設計、不熟悉領域的探索性工作。關鍵前提是從乾淨 git 狀態開始、定期提交 checkpoint，這樣 Claude 走偏時可以快速回滾。</p>
+        <p>底層邏輯是<strong>風險與可逆性</strong>：如果結果可以輕易撤銷（回滾 git），就適合非同步；如果錯誤代價高（觸及核心邏輯），就必須同步監督。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">假設你要在 CDMO 環境中導入 Claude Code 來自動化 Campaign Report 和 CoA 生成，基於本文中的最佳實踐，你會如何設計 Claude.md 文件和任務分類？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>根據文件中多個團隊的經驗，Claude.md 設計需要包含：</p>
-<p><strong>1. 工作流程文件：</strong>詳細描述 Campaign Report 的標準格式、欄位定義、資料來源（仿資料基建團隊的方法）。</p>
-<p><strong>2. 防錯指令：</strong>加入具體的「不要做什麼」規則（仿 RL 工程團隊的 Claude.md 防重複犯錯指令），例如「不要修改驗證過的批次號碼欄位」、「所有數值保留小數點後兩位」。</p>
-<p><strong>3. 任務分類：</strong>CoA 中的數據填入屬於「低風險、可驗證」— 適合非同步模式。但最終的品質放行判斷屬於「核心品質判斷」— 必須人工同步審查（Copilot Mode）。這與產品開發團隊的「外圍 vs. 核心」分類法完全一致。</p>
-<p><strong>4. 合規護欄：</strong>仿安全工程團隊的 MCP 建議，使用受控的資料存取通道而非直接 CLI 存取，確保 21 CFR Part 11 的審計軌跡完整性。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">假設你要在 CDMO 環境中導入 Claude Code 來自動化 Campaign Report 和 CoA 生成，基於本文中的最佳實踐，你會如何設計 Claude.md 文件和任務分類？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>根據文件中多個團隊的經驗，Claude.md 設計需要包含：</p>
+        <p><strong>1. 工作流程文件：</strong>詳細描述 Campaign Report 的標準格式、欄位定義、資料來源（仿資料基建團隊的方法）。</p>
+        <p><strong>2. 防錯指令：</strong>加入具體的「不要做什麼」規則（仿 RL 工程團隊的 Claude.md 防重複犯錯指令），例如「不要修改驗證過的批次號碼欄位」、「所有數值保留小數點後兩位」。</p>
+        <p><strong>3. 任務分類：</strong>CoA 中的數據填入屬於「低風險、可驗證」— 適合非同步模式。但最終的品質放行判斷屬於「核心品質判斷」— 必須人工同步審查（Copilot Mode）。這與產品開發團隊的「外圍 vs. 核心」分類法完全一致。</p>
+        <p><strong>4. 合規護欄：</strong>仿安全工程團隊的 MCP 建議，使用受控的資料存取通道而非直接 CLI 存取，確保 21 CFR Part 11 的審計軌跡完整性。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">這份文件來自 Anthropic 內部，所有案例都使用 Anthropic 自己的產品。這對文件的可信度和可推廣性有什麼影響？哪些發現最可能、哪些最不可能適用於外部組織？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>潛在偏差：</strong>Anthropic 員工比一般用戶更了解 Claude 的能力邊界，也更有動機展示正面結果。他們的技術環境（monorepo 結構、模型開發基礎設施）遠比典型企業複雜。因此，效率數字（如 80% 時間節省）需要打折看待。</p>
-<p><strong>最可推廣的發現：</strong>Claude.md 的價值、任務分類框架、checkpoint + rollback 策略、非技術人員的「先想後做」模式。這些都是流程和方法論層面的洞察，不依賴特定技術環境。</p>
-<p><strong>最不可推廣的發現：</strong>5,000 行 TypeScript app 的開發、Monorepo 內的跨團隊 codebase 導航、特定的 GitHub Actions 整合。這些依賴於 Anthropic 的特定技術堆疊和 Claude Code 對自家程式碼庫的高度熟悉度。</p>
-<p><strong>遺漏的部分：</strong>文件完全沒有討論失敗案例的細節、成本數據、學習曲線所需時間、以及安全性和資料外洩風險。這些是外部組織評估採用時最需要的資訊。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">這份文件來自 Anthropic 內部，所有案例都使用 Anthropic 自己的產品。這對文件的可信度和可推廣性有什麼影響？哪些發現最可能、哪些最不可能適用於外部組織？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>潛在偏差：</strong>Anthropic 員工比一般用戶更了解 Claude 的能力邊界，也更有動機展示正面結果。他們的技術環境（monorepo 結構、模型開發基礎設施）遠比典型企業複雜。因此，效率數字（如 80% 時間節省）需要打折看待。</p>
+        <p><strong>最可推廣的發現：</strong>Claude.md 的價值、任務分類框架、checkpoint + rollback 策略、非技術人員的「先想後做」模式。這些都是流程和方法論層面的洞察，不依賴特定技術環境。</p>
+        <p><strong>最不可推廣的發現：</strong>5,000 行 TypeScript app 的開發、Monorepo 內的跨團隊 codebase 導航、特定的 GitHub Actions 整合。這些依賴於 Anthropic 的特定技術堆疊和 Claude Code 對自家程式碼庫的高度熟悉度。</p>
+        <p><strong>遺漏的部分：</strong>文件完全沒有討論失敗案例的細節、成本數據、學習曲線所需時間、以及安全性和資料外洩風險。這些是外部組織評估採用時最需要的資訊。</p>
+    </div>
 </details>
+
 <!-- Bottom Line -->
 <div class="section-title">Bottom Line</div>
 <div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Claude Code 的真正價值不在於「寫程式碼更快」，而在於<strong>重新定義誰能做什麼</strong>。設計師做狀態管理、行銷做 Agentic Workflow、法務做無障礙 App — 這些都是角色邊界的模糊化。對我在 CDMO 的定位來說，這正是「Pharma x AI x Leadership」交叉點最有力的證據：能用 AI 工具跨越傳統職能邊界的人，就是組織中最有價值的人。</div>
+    <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x2714; 核心洞察</div>
+        <div class="bottom-line-text">Claude Code 的真正價值不在於「寫程式碼更快」，而在於<strong>重新定義誰能做什麼</strong>。設計師做狀態管理、行銷做 Agentic Workflow、法務做無障礙 App — 這些都是角色邊界的模糊化。對我在 CDMO 的定位來說，這正是「Pharma x AI x Leadership」交叉點最有力的證據：能用 AI 工具跨越傳統職能邊界的人，就是組織中最有價值的人。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+        <div class="bottom-line-text">本週建立第一版「CDMO Operations Claude.md」文件，參考資料基建團隊的模式：記錄 Campaign Report 的標準流程、欄位定義、常見錯誤模式。同時套用「防錯指令」模式，加入 GMP 環境的特定限制（如不得自動修改已驗證的批次數據）。這是零風險、高回報的第一步。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x26A0; 需要補充</div>
+        <div class="bottom-line-text">文件完全沒有討論：(1) Claude Code 在受監管環境的合規性考量（21 CFR Part 11、資料完整性）(2) 成本結構和 ROI 計算 (3) 失敗案例的詳細分析。下一步需要搜尋 Claude Code 在製藥/GxP 環境中的合規性討論，以及 Anthropic 的企業方案定價。法務團隊提到的 MCP 安全顧慮值得深入研究。</div>
+    </div>
 </div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週建立第一版「CDMO Operations Claude.md」文件，參考資料基建團隊的模式：記錄 Campaign Report 的標準流程、欄位定義、常見錯誤模式。同時套用「防錯指令」模式，加入 GMP 環境的特定限制（如不得自動修改已驗證的批次數據）。這是零風險、高回報的第一步。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文件完全沒有討論：(1) Claude Code 在受監管環境的合規性考量（21 CFR Part 11、資料完整性）(2) 成本結構和 ROI 計算 (3) 失敗案例的詳細分析。下一步需要搜尋 Claude Code 在製藥/GxP 環境中的合規性討論，以及 Anthropic 的企業方案定價。法務團隊提到的 MCP 安全顧慮值得深入研究。</div>
-</div>
-</div>
+
 <!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-02-27 | Source: <a href="https://www.anthropic.com" target="_blank">Anthropic - How Anthropic teams use Claude Code</a></p>
-<p>Suggested Chat Title: <strong>2026-02-27 [Tool] Anthropic - Internal Claude Code Usage</strong></p>
-<p>Suggested File Name: <strong>2026-02-27_anthropic-claude-code-internal.html</strong></p>
-</footer>
+<div class="footer">
+    <p>製作日期：2026-02-27 | Source: <a href="https://www.anthropic.com" target="_blank">Anthropic - How Anthropic teams use Claude Code</a></p>
+    <p>Suggested Chat Title: <strong>2026-02-27 [Tool] Anthropic - Internal Claude Code Usage</strong></p>
+    <p>Suggested File Name: <strong>2026-02-27_anthropic-claude-code-internal.html</strong></p>
+</div>
+
 </div><!-- end container -->
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

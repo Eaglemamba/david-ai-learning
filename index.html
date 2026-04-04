@@ -40,7 +40,7 @@
             <div class="text-center">
                 <h1 class="text-3xl font-bold tracking-tight">AI Learning Dashboard</h1>
                 <p class="text-purple-200 text-sm mt-1">Pharma x AI x Leadership — Educational Document Index</p>
-                <p class="text-xs text-purple-300 mt-2">Last updated: 2026-03-29 | <a href="learning-path.html" class="text-white underline underline-offset-2 hover:text-purple-100">📚 Learning Path</a> | <a href="mindmap.html" class="text-white underline underline-offset-2 hover:text-purple-100">🗺 Mind Map</a> | <a href="https://github.com/Eaglemamba/david-ai-learning" target="_blank" class="text-white underline underline-offset-2 hover:text-purple-100">GitHub Repo</a></p>
+                <p class="text-xs text-purple-300 mt-2">Last updated: 2026-04-04 | <a href="learning-path.html" class="text-white underline underline-offset-2 hover:text-purple-100">📚 Learning Path</a> | <a href="mindmap.html" class="text-white underline underline-offset-2 hover:text-purple-100">🗺 Mind Map</a> | <a href="https://github.com/Eaglemamba/david-ai-learning" target="_blank" class="text-white underline underline-offset-2 hover:text-purple-100">GitHub Repo</a></p>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6" id="statsRow"></div>
         </div>
@@ -65,6 +65,7 @@
     <div class="max-w-6xl mx-auto px-6 py-6 text-center text-xs text-gray-400 border-t border-gray-200 mt-4">
         <p>Built with Claude AI | <a href="https://github.com/Eaglemamba" class="text-amaran-purple hover:underline">@Eaglemamba</a> | Pharma x AI x Leadership</p>
     </div>
+<script src="search-index.js"></script>
 <script src="dashboard-data.js"></script>
 <script>
 const catColors={'Anthropic-Docs':'#fde68a','Anthropic-Eng':'#fca5a5',Agent:'#a5b4fc',Tool:'#fca5a5',LLM:'#93c5fd',Prompt:'#fcd34d',Framework:'#c4b5fd',Analysis:'#67e8f9',Automation:'#86efac',Security:'#fca5a5',Content:'#fdba74',API:'#c4b5fd',Research:'#d6d3d1'};
@@ -84,36 +85,14 @@ function setFilter(f,btn){
     activeFilter=f;initFilters();renderCards();
 }
 
-// Lazy-load search index — only fetched when user focuses the search box
+// Build a lookup from searchIndex: docFile → array of section entries
 const sectionsByFile = {};
-let searchIndexLoaded = false;
-
-function loadSearchIndex() {
-    if (searchIndexLoaded) return;
-    searchIndexLoaded = true;
-    const script = document.createElement('script');
-    script.src = 'search-index.js';
-    script.onload = function() {
-        if (typeof searchIndex !== 'undefined') {
-            searchIndex.forEach(e => {
-                if (!sectionsByFile[e.docFile]) sectionsByFile[e.docFile] = [];
-                sectionsByFile[e.docFile].push(e);
-            });
-        }
-        // Re-render if user already typed something while loading
-        const q = document.getElementById('searchBox').value.trim();
-        if (q) renderCards();
-    };
-    document.head.appendChild(script);
+if (typeof searchIndex !== 'undefined') {
+    searchIndex.forEach(e => {
+        if (!sectionsByFile[e.docFile]) sectionsByFile[e.docFile] = [];
+        sectionsByFile[e.docFile].push(e);
+    });
 }
-
-// Attach lazy-load to search box focus
-document.addEventListener('DOMContentLoaded', function() {
-    const searchBox = document.getElementById('searchBox');
-    if (searchBox) {
-        searchBox.addEventListener('focus', loadSearchIndex, { once: true });
-    }
-});
 
 let prevSortBeforeSearch = 'date-desc';
 

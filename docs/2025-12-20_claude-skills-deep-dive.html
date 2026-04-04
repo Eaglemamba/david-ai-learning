@@ -1,199 +1,513 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2025-12-20" name="doc-date"/>
-<meta content="Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）" name="doc-title"/>
-<meta content="Wyndo / AI Maker Labs" name="doc-source"/>
-<meta content="Tool,Prompt,Automation" name="doc-tags"/>
-<meta content="3.5" name="doc-rating"/>
-<meta content="Claude Skills建構實戰教學，診斷常見失敗原因與修復方法" name="doc-summary"/>
-<meta content="2025-12-20_claude-skills-deep-dive.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2025-12-20">
+    <meta name="doc-title" content="Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）">
+    <meta name="doc-source" content="Wyndo / AI Maker Labs">
+    <meta name="doc-tags" content="Tool,Prompt,Automation">
+    <meta name="doc-rating" content="3.5">
+    <meta name="doc-summary" content="Claude Skills建構實戰教學，診斷常見失敗原因與修復方法">
+    <meta name="doc-file" content="2025-12-20_claude-skills-deep-dive.html">
+    <title>Claude Skills 深度解析：為什麼你的第一個 Skill 會失敗（以及如何修復）</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .header .source-link {
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .header .source-link a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        @media (max-width: 900px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .left-column {
+            background: #fafafa;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .right-column {
+            background: #f0f7ff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            color: #444;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .original-content h2 {
+            font-size: 1.2rem;
+            color: #555;
+            margin: 25px 0 15px;
+        }
+        
+        .original-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .original-content ul {
+            margin: 15px 0 15px 25px;
+        }
+        
+        .original-content li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight-term {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .quote-box {
+            background: #fff;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* Commentary Boxes */
+        .concept-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .concept-box h3 {
+            color: #2d5016;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .analogy-box {
+            background: linear-gradient(135deg, #fff9c4 0%, #ffecb3 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ffc107;
+        }
+        
+        .analogy-box h3 {
+            color: #856404;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .analogy-box .analogy-icon {
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+        
+        .key-note {
+            background: linear-gradient(135deg, #ffcc80 0%, #ffab91 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e65100;
+        }
+        
+        .key-note h3 {
+            color: #bf360c;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .formula-box {
+            background: linear-gradient(135deg, #e1bee7 0%, #ce93d8 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .formula-box h3 {
+            color: #4a148c;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .practice-box {
+            background: linear-gradient(135deg, #b3e5fc 0%, #81d4fa 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px dashed #0288d1;
+        }
+        
+        .practice-box h3 {
+            color: #01579b;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .practice-box ol {
+            margin-left: 20px;
+        }
+        
+        .practice-box li {
+            margin-bottom: 10px;
+        }
+        
+        .application-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #667eea;
+        }
+        
+        .application-box h3 {
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        pre code {
+            padding: 0;
+            background: none;
+        }
+        
+        .checklist {
+            background: #e8f5e9;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .checklist li {
+            list-style: none;
+            margin-bottom: 8px;
+        }
+        
+        .checklist li::before {
+            content: "✓ ";
+            color: #2e7d32;
+            font-weight: bold;
+        }
+        
+        .warning-box {
+            background: #ffebee;
+            border-left: 4px solid #c62828;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        
+        .summary-section h2 {
+            margin-bottom: 20px;
+        }
+        
+        .summary-section ul {
+            margin-left: 20px;
+        }
+        
+        .summary-section li {
+            margin-bottom: 10px;
+        }
 
+        .file-structure {
+            background: #263238;
+            color: #80cbc4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 15px 0;
+        }
+    </style>
 </head>
 <body>
-<header class="header">
-<h1>Claude Skills 深度解析</h1>
-<p class="subtitle">為什麼你的第一個 Skill 會失敗（以及如何修復它）</p>
-<p class="source-link">
+    <header class="header">
+        <h1>Claude Skills 深度解析</h1>
+        <p class="subtitle">為什麼你的第一個 Skill 會失敗（以及如何修復它）</p>
+        <p class="source-link">
             原文來源：<a href="https://aimaker.substack.com/p/claude-skills-deep-dive-video-tutorial-build-debug-review-anthropic" target="_blank">AI Maker Labs - Wyndo</a>
-</p>
-</header>
-<div class="container">
-<div class="content-grid">
-<!-- Left Column: Original Content -->
-<div class="content-left">
-<h2 class="section-title">原文內容 Original Content</h2>
-<div class="content-left">
-<div class="quote-box">
+        </p>
+    </header>
+    
+    <div class="container">
+        <div class="two-column">
+            <!-- Left Column: Original Content -->
+            <div class="left-column">
+                <h2 class="section-title">原文內容 Original Content</h2>
+                
+                <div class="original-content">
+                    <div class="quote-box">
                         "Because there's too much nuance in building Claude Skills that I can't capture in text alone. The edge cases, the files that break randomly, the weird formatting issues that only show up when you actually try to upload — I think you need to SEE this stuff to understand it."
                     </div>
-<p>在之前的文章中，作者展示了 <span class="highlight-term">Claude Skills</span> 是什麼以及為什麼它們重要。這週的重點是：如何實際建構它們而不會發瘋。</p>
-<div class="warning-box">
-<strong>真相揭露：</strong>Claude 生成的檔案是混亂的。有時候 skill.md 命名錯誤、有時候它參考了不存在的檔案、有時候在聊天中完美運作但上傳時就壞掉。
+                    
+                    <p>在之前的文章中，作者展示了 <span class="highlight-term">Claude Skills</span> 是什麼以及為什麼它們重要。這週的重點是：如何實際建構它們而不會發瘋。</p>
+                    
+                    <div class="warning-box">
+                        <strong>真相揭露：</strong>Claude 生成的檔案是混亂的。有時候 skill.md 命名錯誤、有時候它參考了不存在的檔案、有時候在聊天中完美運作但上傳時就壞掉。
                     </div>
-<h2>Part 1: Understanding the File Structure（理解檔案結構）</h2>
-<ul>
-<li>What's actually inside a <span class="highlight-term">Claude Skill ZIP file</span></li>
-<li>Why <span class="highlight-term">skill.md</span> is the main instruction file</li>
-<li>How Claude reads additional reference files for context</li>
-<li>Real examples from Strategic Decision Framework and Business Idea Generator Skill</li>
-</ul>
-<h2>Part 2: Building Your First Skill（建構你的第一個 Skill）</h2>
-<ul>
-<li>Live build: <span class="highlight-term">Editorial Assistant Skill</span> from scratch</li>
-<li>The exact moment when Claude generates broken files (and what to do)</li>
-<li>How to identify when skill.md is incomplete or wrongly formatted</li>
-</ul>
-<h2>Part 3: Debugging with Claude Code（用 Claude Code 除錯）</h2>
-<ul>
-<li>Setting up <span class="highlight-term">Claude Code</span> in Cursor to analyze Skill files</li>
-<li>Fixing missing reference files and broken instructions</li>
-<li>Making Claude Code improve your Skill structure automatically</li>
-<li>Why some Skills work perfectly and others need manual fixes</li>
-</ul>
-<h2>實際案例 Real Examples</h2>
-<p>影片中使用的真實範例：</p>
-<ul>
-<li><strong>Strategic Decision Framework</strong> — 通過 10 個框架分析商業決策</li>
-<li><strong>Business Idea Generator</strong> — 將語音備忘錄轉換為經過驗證的概念</li>
-<li><strong>Editorial Assistant</strong> — 現場建構、出錯、然後一起修復</li>
-</ul>
-<h2>開始之前的準備 Prerequisites</h2>
-<div class="checklist">
-<ul>
-<li>Claude Pro account — $20/month</li>
-<li>Cursor or VS Code installed (for editing Skill files) — FREE</li>
-<li>Claude Code extension installed in your IDE — FREE</li>
-</ul>
-</div>
-<div class="quote-box">
+                    
+                    <h2>Part 1: Understanding the File Structure（理解檔案結構）</h2>
+                    <ul>
+                        <li>What's actually inside a <span class="highlight-term">Claude Skill ZIP file</span></li>
+                        <li>Why <span class="highlight-term">skill.md</span> is the main instruction file</li>
+                        <li>How Claude reads additional reference files for context</li>
+                        <li>Real examples from Strategic Decision Framework and Business Idea Generator Skill</li>
+                    </ul>
+                    
+                    <h2>Part 2: Building Your First Skill（建構你的第一個 Skill）</h2>
+                    <ul>
+                        <li>Live build: <span class="highlight-term">Editorial Assistant Skill</span> from scratch</li>
+                        <li>The exact moment when Claude generates broken files (and what to do)</li>
+                        <li>How to identify when skill.md is incomplete or wrongly formatted</li>
+                    </ul>
+                    
+                    <h2>Part 3: Debugging with Claude Code（用 Claude Code 除錯）</h2>
+                    <ul>
+                        <li>Setting up <span class="highlight-term">Claude Code</span> in Cursor to analyze Skill files</li>
+                        <li>Fixing missing reference files and broken instructions</li>
+                        <li>Making Claude Code improve your Skill structure automatically</li>
+                        <li>Why some Skills work perfectly and others need manual fixes</li>
+                    </ul>
+                    
+                    <h2>實際案例 Real Examples</h2>
+                    <p>影片中使用的真實範例：</p>
+                    <ul>
+                        <li><strong>Strategic Decision Framework</strong> — 通過 10 個框架分析商業決策</li>
+                        <li><strong>Business Idea Generator</strong> — 將語音備忘錄轉換為經過驗證的概念</li>
+                        <li><strong>Editorial Assistant</strong> — 現場建構、出錯、然後一起修復</li>
+                    </ul>
+                    
+                    <h2>開始之前的準備 Prerequisites</h2>
+                    <div class="checklist">
+                        <ul>
+                            <li>Claude Pro account — $20/month</li>
+                            <li>Cursor or VS Code installed (for editing Skill files) — FREE</li>
+                            <li>Claude Code extension installed in your IDE — FREE</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="quote-box">
                         "Yes, the video shows me struggling with broken files for ~15 minutes around the 35-minute mark. I kept it in because that's the real experience of building Skills. You'll hit the same issues, and now you'll know exactly how to fix them."
                     </div>
-</div>
-</div>
-<!-- Right Column: Commentary -->
-<div class="content-right">
-<h2 class="section-title">深度解析 Commentary</h2>
-<!-- Key Concept -->
-<div class="box-concept">
-<h3>核心概念解析 Key Concepts</h3>
-<p><strong>Claude Skill（Claude 技能）</strong></p>
-<p>一種模組化、自我包含的套件，透過提供專業知識、工作流程和工具來擴展 Claude 的能力。把它想像成給 Claude 的「新員工訓練手冊」——讓通用型 AI 變成特定領域的專家。</p>
-<p style="margin-top: 15px;"><strong>SKILL.md（技能主檔）</strong></p>
-<p>每個 Skill 的核心指令檔案，包含 YAML frontmatter（元資料）和 Markdown 指令。這是 Claude 判斷何時使用該 Skill 的關鍵。</p>
-<p style="margin-top: 15px;"><strong>Claude Code（Claude 程式碼工具）</strong></p>
-<p>Anthropic 提供的命令列工具，讓開發者可以直接從終端機將程式任務委派給 Claude。在這個情境中，用於分析和修復 Skill 檔案。</p>
-</div>
-<!-- Analogy -->
-<div class="box-analogy">
-<h3>比喻說明 Analogy</h3>
-<p><strong>Skill 就像餐廳的標準作業程序（SOP）</strong></p>
-<p>想像你開了一家連鎖餐廳。每個分店都有新員工，但你不能每次都親自教導。所以你會準備：</p>
-<ul style="margin: 10px 0 10px 20px;">
-<li><strong>SKILL.md</strong> = 員工手冊主文（核心流程、服務標準）</li>
-<li><strong>scripts/</strong> = 標準食譜（照著做就不會錯）</li>
-<li><strong>references/</strong> = 食材供應商清單、過敏原資訊</li>
-<li><strong>assets/</strong> = Logo、菜單模板、制服規格</li>
-</ul>
-<p>新員工（新的 Claude 對話）拿到這份 SOP，就能立刻上手，不需要你從頭教起。</p>
-</div>
-<!-- Key Note -->
-<div class="key-note">
-<h3>重點提示 Key Insight</h3>
-<p><strong>為什麼你的第一個 Skill 會失敗？</strong></p>
-<p>三個最常見的原因：</p>
-<ol style="margin: 10px 0 0 20px;">
-<li><strong>檔案命名錯誤</strong> — Claude 可能生成 <code>Skill.md</code> 而不是 <code>SKILL.md</code>（大小寫敏感）</li>
-<li><strong>參考檔案遺失</strong> — SKILL.md 中提到的檔案實際上不存在</li>
-<li><strong>資料夾結構錯誤</strong> — skill.md 沒有放在正確的根目錄</li>
-</ol>
-</div>
-<!-- File Structure -->
-<div class="formula-box">
-<h3>檔案結構公式 File Structure</h3>
-<div class="file-structure">
-skill-name/<br/>
-├── SKILL.md          ← 必須（主指令檔）<br/>
-├── scripts/          ← 可執行程式碼<br/>
-│   └── example.py<br/>
-├── references/       ← 參考文件<br/>
-│   └── guide.md<br/>
-└── assets/           ← 輸出資源<br/>
+                </div>
+            </div>
+            
+            <!-- Right Column: Commentary -->
+            <div class="right-column">
+                <h2 class="section-title">深度解析 Commentary</h2>
+                
+                <!-- Key Concept -->
+                <div class="concept-box">
+                    <h3>核心概念解析 Key Concepts</h3>
+                    
+                    <p><strong>Claude Skill（Claude 技能）</strong></p>
+                    <p>一種模組化、自我包含的套件，透過提供專業知識、工作流程和工具來擴展 Claude 的能力。把它想像成給 Claude 的「新員工訓練手冊」——讓通用型 AI 變成特定領域的專家。</p>
+                    
+                    <p style="margin-top: 15px;"><strong>SKILL.md（技能主檔）</strong></p>
+                    <p>每個 Skill 的核心指令檔案，包含 YAML frontmatter（元資料）和 Markdown 指令。這是 Claude 判斷何時使用該 Skill 的關鍵。</p>
+                    
+                    <p style="margin-top: 15px;"><strong>Claude Code（Claude 程式碼工具）</strong></p>
+                    <p>Anthropic 提供的命令列工具，讓開發者可以直接從終端機將程式任務委派給 Claude。在這個情境中，用於分析和修復 Skill 檔案。</p>
+                </div>
+                
+                <!-- Analogy -->
+                <div class="analogy-box">
+                    <h3>比喻說明 Analogy</h3>
+                    
+                    <p><strong>Skill 就像餐廳的標準作業程序（SOP）</strong></p>
+                    <p>想像你開了一家連鎖餐廳。每個分店都有新員工，但你不能每次都親自教導。所以你會準備：</p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li><strong>SKILL.md</strong> = 員工手冊主文（核心流程、服務標準）</li>
+                        <li><strong>scripts/</strong> = 標準食譜（照著做就不會錯）</li>
+                        <li><strong>references/</strong> = 食材供應商清單、過敏原資訊</li>
+                        <li><strong>assets/</strong> = Logo、菜單模板、制服規格</li>
+                    </ul>
+                    <p>新員工（新的 Claude 對話）拿到這份 SOP，就能立刻上手，不需要你從頭教起。</p>
+                </div>
+                
+                <!-- Key Note -->
+                <div class="key-note">
+                    <h3>重點提示 Key Insight</h3>
+                    <p><strong>為什麼你的第一個 Skill 會失敗？</strong></p>
+                    <p>三個最常見的原因：</p>
+                    <ol style="margin: 10px 0 0 20px;">
+                        <li><strong>檔案命名錯誤</strong> — Claude 可能生成 <code>Skill.md</code> 而不是 <code>SKILL.md</code>（大小寫敏感）</li>
+                        <li><strong>參考檔案遺失</strong> — SKILL.md 中提到的檔案實際上不存在</li>
+                        <li><strong>資料夾結構錯誤</strong> — skill.md 沒有放在正確的根目錄</li>
+                    </ol>
+                </div>
+                
+                <!-- File Structure -->
+                <div class="formula-box">
+                    <h3>檔案結構公式 File Structure</h3>
+                    <div class="file-structure">
+skill-name/<br>
+├── SKILL.md          ← 必須（主指令檔）<br>
+├── scripts/          ← 可執行程式碼<br>
+│   └── example.py<br>
+├── references/       ← 參考文件<br>
+│   └── guide.md<br>
+└── assets/           ← 輸出資源<br>
     └── template.png
                     </div>
-<p style="margin-top: 10px;"><strong>YAML Frontmatter 格式：</strong></p>
-<pre><code>---
+                    <p style="margin-top: 10px;"><strong>YAML Frontmatter 格式：</strong></p>
+                    <pre><code>---
 name: my-skill-name
 description: 清楚描述這個 Skill 做什麼，以及何時應該被觸發
 ---</code></pre>
-</div>
-<!-- Application -->
-<div class="application-box">
-<h3>實務應用 Practical Application</h3>
-<p><strong>建構 Skill 的完整工作流程：</strong></p>
-<ol style="margin: 10px 0 0 20px;">
-<li><strong>啟動 Skill Creator</strong> — 在 Claude 中激活技能創建模式</li>
-<li><strong>透過對話建構</strong> — 描述你想要的功能</li>
-<li><strong>下載檔案</strong> — 獲取生成的 ZIP</li>
-<li><strong>用 Claude Code 修復</strong> — 分析並修正問題</li>
-<li><strong>正確打包</strong> — 確保結構正確</li>
-<li><strong>上傳到帳戶</strong> — 測試並迭代</li>
-</ol>
-<p style="margin-top: 15px;"><strong>Debug 技巧：</strong></p>
-<p>在 Cursor 或 VS Code 中使用 Claude Code 擴充套件，可以讓 AI 自動分析 Skill 檔案結構，找出缺失或格式錯誤的地方。</p>
-</div>
-<!-- Practice Questions -->
-<div class="practice-box">
-<h3>練習思考 Practice Questions</h3>
-<ol>
-<li>如果你要建構一個「會議紀錄摘要器」的 Skill，你會在 <code>scripts/</code>、<code>references/</code>、<code>assets/</code> 各放什麼內容？</li>
-<li>為什麼 SKILL.md 的 <code>description</code> 欄位如此重要？它與 Claude 何時觸發這個 Skill 有什麼關係？</li>
-<li>當你的 Skill 在聊天中運作正常但上傳失敗時，你會先檢查哪三件事？</li>
-</ol>
-</div>
-<!-- Additional Key Note -->
-<div class="key-note">
-<h3>進階提示 Advanced Tips</h3>
-<p><strong>Context Window（上下文視窗）是公共資源</strong></p>
-<p>Skill 與系統提示、對話歷史、其他 Skill 的元資料共享上下文視窗。所以：</p>
-<ul style="margin: 10px 0 0 20px;">
-<li>保持 SKILL.md 精簡（建議 500 行以內）</li>
-<li>只加入 Claude 不知道的資訊</li>
-<li>用 references/ 存放詳細文件，按需載入</li>
-</ul>
-</div>
-</div>
-</div>
-<!-- Summary Section -->
-<div class="summary-section">
-<h2>本文重點摘要 Key Takeaways</h2>
-<ul>
-<li><strong>Claude Skills</strong> 是擴展 AI 能力的模組化套件，包含專業知識、工作流程和工具</li>
-<li><strong>SKILL.md</strong> 是每個 Skill 的核心，必須有正確的 YAML frontmatter 和清晰的 description</li>
-<li>常見失敗原因：檔案命名錯誤、參考檔案遺失、資料夾結構不正確</li>
-<li>使用 <strong>Claude Code + Cursor/VS Code</strong> 可以有效 debug 和修復 Skill 檔案</li>
-<li>建構 Skill 是一個迭代過程——預期會遇到問題，準備好修復它們</li>
-<li>保持 Skill 精簡，善用 Progressive Disclosure（漸進式揭露）設計原則</li>
-</ul>
-</div>
-<!-- Additional Context Section -->
-<div style="margin-top: 30px; padding: 25px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-<h2 style="color: #667eea; margin-bottom: 15px;">延伸學習資源 Additional Resources</h2>
-<p>根據 Anthropic 官方的 Skill Creator 指南，建構有效 Skill 的完整步驟是：</p>
-<ol style="margin: 15px 0 15px 25px;">
-<li><strong>理解具體用例</strong> — 收集真實的使用範例</li>
-<li><strong>規劃可重用內容</strong> — 分析哪些腳本、參考資料、資源值得打包</li>
-<li><strong>初始化 Skill</strong> — 使用 <code>init_skill.py</code> 建立模板</li>
-<li><strong>編輯 Skill</strong> — 實作資源並撰寫 SKILL.md</li>
-<li><strong>打包 Skill</strong> — 使用 <code>package_skill.py</code> 驗證並打包</li>
-<li><strong>迭代改進</strong> — 根據實際使用情況持續優化</li>
-</ol>
-<p style="margin-top: 15px; color: #666;">提示：如果在建構第一個 Skill 時遇到問題，可以在 Substack 社群中發問，作者 Wyndo 會協助 debug。</p>
-</div>
-</div>
+                </div>
+                
+                <!-- Application -->
+                <div class="application-box">
+                    <h3>實務應用 Practical Application</h3>
+                    
+                    <p><strong>建構 Skill 的完整工作流程：</strong></p>
+                    <ol style="margin: 10px 0 0 20px;">
+                        <li><strong>啟動 Skill Creator</strong> — 在 Claude 中激活技能創建模式</li>
+                        <li><strong>透過對話建構</strong> — 描述你想要的功能</li>
+                        <li><strong>下載檔案</strong> — 獲取生成的 ZIP</li>
+                        <li><strong>用 Claude Code 修復</strong> — 分析並修正問題</li>
+                        <li><strong>正確打包</strong> — 確保結構正確</li>
+                        <li><strong>上傳到帳戶</strong> — 測試並迭代</li>
+                    </ol>
+                    
+                    <p style="margin-top: 15px;"><strong>Debug 技巧：</strong></p>
+                    <p>在 Cursor 或 VS Code 中使用 Claude Code 擴充套件，可以讓 AI 自動分析 Skill 檔案結構，找出缺失或格式錯誤的地方。</p>
+                </div>
+                
+                <!-- Practice Questions -->
+                <div class="practice-box">
+                    <h3>練習思考 Practice Questions</h3>
+                    <ol>
+                        <li>如果你要建構一個「會議紀錄摘要器」的 Skill，你會在 <code>scripts/</code>、<code>references/</code>、<code>assets/</code> 各放什麼內容？</li>
+                        <li>為什麼 SKILL.md 的 <code>description</code> 欄位如此重要？它與 Claude 何時觸發這個 Skill 有什麼關係？</li>
+                        <li>當你的 Skill 在聊天中運作正常但上傳失敗時，你會先檢查哪三件事？</li>
+                    </ol>
+                </div>
+                
+                <!-- Additional Key Note -->
+                <div class="key-note">
+                    <h3>進階提示 Advanced Tips</h3>
+                    <p><strong>Context Window（上下文視窗）是公共資源</strong></p>
+                    <p>Skill 與系統提示、對話歷史、其他 Skill 的元資料共享上下文視窗。所以：</p>
+                    <ul style="margin: 10px 0 0 20px;">
+                        <li>保持 SKILL.md 精簡（建議 500 行以內）</li>
+                        <li>只加入 Claude 不知道的資訊</li>
+                        <li>用 references/ 存放詳細文件，按需載入</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2>本文重點摘要 Key Takeaways</h2>
+            <ul>
+                <li><strong>Claude Skills</strong> 是擴展 AI 能力的模組化套件，包含專業知識、工作流程和工具</li>
+                <li><strong>SKILL.md</strong> 是每個 Skill 的核心，必須有正確的 YAML frontmatter 和清晰的 description</li>
+                <li>常見失敗原因：檔案命名錯誤、參考檔案遺失、資料夾結構不正確</li>
+                <li>使用 <strong>Claude Code + Cursor/VS Code</strong> 可以有效 debug 和修復 Skill 檔案</li>
+                <li>建構 Skill 是一個迭代過程——預期會遇到問題，準備好修復它們</li>
+                <li>保持 Skill 精簡，善用 Progressive Disclosure（漸進式揭露）設計原則</li>
+            </ul>
+        </div>
+        
+        <!-- Additional Context Section -->
+        <div style="margin-top: 30px; padding: 25px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+            <h2 style="color: #667eea; margin-bottom: 15px;">延伸學習資源 Additional Resources</h2>
+            <p>根據 Anthropic 官方的 Skill Creator 指南，建構有效 Skill 的完整步驟是：</p>
+            <ol style="margin: 15px 0 15px 25px;">
+                <li><strong>理解具體用例</strong> — 收集真實的使用範例</li>
+                <li><strong>規劃可重用內容</strong> — 分析哪些腳本、參考資料、資源值得打包</li>
+                <li><strong>初始化 Skill</strong> — 使用 <code>init_skill.py</code> 建立模板</li>
+                <li><strong>編輯 Skill</strong> — 實作資源並撰寫 SKILL.md</li>
+                <li><strong>打包 Skill</strong> — 使用 <code>package_skill.py</code> 驗證並打包</li>
+                <li><strong>迭代改進</strong> — 根據實際使用情況持續優化</li>
+            </ol>
+            <p style="margin-top: 15px; color: #666;">提示：如果在建構第一個 Skill 時遇到問題，可以在 Substack 社群中發問，作者 Wyndo 會協助 debug。</p>
+        </div>
+    </div>
 </body>
 </html>

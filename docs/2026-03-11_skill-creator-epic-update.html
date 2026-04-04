@@ -1,464 +1,641 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Skill-creator 史詩級更新 - 評估系統、基準測試、多代理並行、描述調優</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill-creator 史詩級更新 - 評估系統、基準測試、多代理並行、描述調優</title>
+
 <!-- Dashboard Index Meta -->
-<meta content="2026-03-11" name="doc-date"/>
-<meta content="Skill-creator 史詩級更新 - 四大評估能力全解析" name="doc-title"/>
-<meta content="数字生命卡兹克 / @Khazix0918" name="doc-source"/>
-<meta content="" name="doc-source-type"/>
-<meta content="Agent,Tool,Framework,Automation" name="doc-tags"/>
-<meta content="4.0" name="doc-rating"/>
-<meta content="Anthropic Skills 生態基石更新：評估系統、基準測試、多代理並行、描述調優四大能力全面解析。" name="doc-summary"/>
-<meta content="2026-03-11_skill-creator-epic-update.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<meta name="doc-date" content="2026-03-11">
+<meta name="doc-title" content="Skill-creator 史詩級更新 - 四大評估能力全解析">
+<meta name="doc-source" content="数字生命卡兹克 / @Khazix0918">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Agent,Tool,Framework,Automation">
+<meta name="doc-rating" content="4.0">
+<meta name="doc-summary" content="Anthropic Skills 生態基石更新：評估系統、基準測試、多代理並行、描述調優四大能力全面解析。">
+<meta name="doc-file" content="2026-03-11_skill-creator-epic-update.html">
 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
 
+/* Tags */
+.tags { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-framework { background: #bfdbfe; color: #1e3a8a; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+
+.header h1 { font-size: 1.6rem; margin: 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 0.95rem; opacity: 0.9; margin-top: 0.5rem; }
+.header .source { font-size: 0.8rem; opacity: 0.7; margin-top: 0.75rem; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.executive-summary h2 { font-size: 1.1rem; color: #1e3a5f; margin-top: 0; }
+.executive-summary p { font-size: 0.9rem; color: #475569; margin-bottom: 0.75rem; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; padding: 1.25rem; border-radius: 0.75rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; font-size: 0.85rem; color: #1e3a5f; margin-bottom: 0.25rem; }
+.objective-desc { font-size: 0.8rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Section Headers */
+.section-header { margin: 2rem 0 1rem; }
+.section-header h2 { font-size: 1.15rem; color: #1e3a5f; border-bottom: 2px solid #3b82f6; display: inline-block; padding-bottom: 0.25rem; }
+
+/* Content Grid Columns */
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+
+/* Bilingual Block */
+.bilingual-block { margin-bottom: 1.25rem; }
+.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.3rem; }
+.en-text { font-size: 0.85rem; color: #64748b; font-style: italic; line-height: 1.6; }
+.highlight-concept { background: #a5d6a7; padding: 0 3px; border-radius: 2px; }
+.highlight-key { background: #ffcc80; padding: 0 3px; border-radius: 2px; }
+.highlight-practical { background: #6ee7b7; padding: 0 3px; border-radius: 2px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 0.75rem; font-weight: 700; font-size: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
+.info-box-content { padding: 0.75rem; font-size: 0.85rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: 0; border-radius: 0 0 0.75rem 0.75rem; }
+
+/* Tabs */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; font-size: 0.9rem; color: #1e3a5f; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+/* Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Code blocks */
+code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+</style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="tags">
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-framework">Framework</span>
-<span class="tag tag-automation">Automation</span>
+<div class="header">
+    <div class="tags">
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-framework">Framework</span>
+        <span class="tag tag-automation">Automation</span>
+    </div>
+    <h1>Skill-creator 史詩級更新</h1>
+    <div class="subtitle">評估系統、基準測試、多代理並行、描述調優 - 四大能力全面解析</div>
+    <div class="source">來源：数字生命卡兹克 (@Khazix0918) | 製作日期：2026-03-11</div>
 </div>
-<h1>Skill-creator 史詩級更新</h1>
-<div class="subtitle">評估系統、基準測試、多代理並行、描述調優 - 四大能力全面解析</div>
-<div class="source">來源：数字生命卡兹克 (@Khazix0918) | 製作日期：2026-03-11</div>
-</header>
+
 <div class="container">
+
 <!-- Executive Summary -->
 <div class="executive-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
-<span class="rating-high">↑ 實務應用, 工具生態</span>
-<span class="rating-low">↓ 技術深度, 學習曲線</span>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+        <span class="rating-high">&#8593; 實務應用, 工具生態</span>
+        <span class="rating-low">&#8595; 技術深度, 學習曲線</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>Anthropic 官方的 Skill-creator 迎來重大更新，新增四大核心能力：<strong>評估系統</strong>（Evaluation System）讓你量化 Skill 品質、<strong>基準測試</strong>（Benchmarking）提供有 Skill vs 無 Skill 的 A/B 對比數據、<strong>多代理並行測試</strong>（Multi-agent Parallel Testing）在乾淨環境中獨立執行避免上下文污染、<strong>描述調優</strong>（Description Optimization）自動迭代改善 Skill 觸發準確率。這次更新本質上將軟體工程的測試驅動開發（TDD）理念引入 Skills 生態，補上了過去最大的缺口 - 評估機制。</p>
+    <p>文章以實際案例（YouTube 影片轉講稿 Skill）完整走過描述調優和評估流程，展示了從觸發率優化到品質量化的完整閉環。對所有使用 Claude Skills 的人來說，這是立即可執行的升級。</p>
 </div>
-<h2>Executive Summary</h2>
-<p>Anthropic 官方的 Skill-creator 迎來重大更新，新增四大核心能力：<strong>評估系統</strong>（Evaluation System）讓你量化 Skill 品質、<strong>基準測試</strong>（Benchmarking）提供有 Skill vs 無 Skill 的 A/B 對比數據、<strong>多代理並行測試</strong>（Multi-agent Parallel Testing）在乾淨環境中獨立執行避免上下文污染、<strong>描述調優</strong>（Description Optimization）自動迭代改善 Skill 觸發準確率。這次更新本質上將軟體工程的測試驅動開發（TDD）理念引入 Skills 生態，補上了過去最大的缺口 - 評估機制。</p>
-<p>文章以實際案例（YouTube 影片轉講稿 Skill）完整走過描述調優和評估流程，展示了從觸發率優化到品質量化的完整閉環。對所有使用 Claude Skills 的人來說，這是立即可執行的升級。</p>
-</div>
+
 <!-- Learning Objectives -->
 <div class="section-header"><h2>Learning Objectives</h2></div>
 <div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">🎯</div>
-<div class="objective-title">理解四大新能力</div>
-<div class="objective-desc">掌握評估系統、基準測試、多代理並行、描述調優的功能定位與使用時機</div>
+    <div class="objective-item">
+        <div class="objective-icon">&#x1F3AF;</div>
+        <div class="objective-title">理解四大新能力</div>
+        <div class="objective-desc">掌握評估系統、基準測試、多代理並行、描述調優的功能定位與使用時機</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #10b981;">
+        <div class="objective-icon">&#x1F527;</div>
+        <div class="objective-title">執行 Skill 評估流程</div>
+        <div class="objective-desc">學會用新版 Skill-creator 對既有 Skills 進行觸發率優化和品質評估的完整工作流</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #8b5cf6;">
+        <div class="objective-icon">&#x1F4CA;</div>
+        <div class="objective-title">區分兩種 Skill 類型</div>
+        <div class="objective-desc">區分「能力提升型」與「編碼偏好型」Skill 的不同評估方向與策略</div>
+    </div>
 </div>
-<div class="objective-item" style="border-left-color: #10b981;">
-<div class="objective-icon">🔧</div>
-<div class="objective-title">執行 Skill 評估流程</div>
-<div class="objective-desc">學會用新版 Skill-creator 對既有 Skills 進行觸發率優化和品質評估的完整工作流</div>
-</div>
-<div class="objective-item" style="border-left-color: #8b5cf6;">
-<div class="objective-icon">📊</div>
-<div class="objective-title">區分兩種 Skill 類型</div>
-<div class="objective-desc">區分「能力提升型」與「編碼偏好型」Skill 的不同評估方向與策略</div>
-</div>
-</div>
+
 <!-- Framework Visual -->
 <div class="framework-visual">
-<div class="framework-title">Skill-creator 完整評估閉環</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">📝</div>
-<div class="framework-step-title">建立 Skill</div>
-<div class="framework-step-desc">用 Skill-creator 生成</div>
+    <div class="framework-title">Skill-creator 完整評估閉環</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F4DD;</div>
+            <div class="framework-step-title">建立 Skill</div>
+            <div class="framework-step-desc">用 Skill-creator 生成</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F3AF;</div>
+            <div class="framework-step-title">描述調優</div>
+            <div class="framework-step-desc">優化觸發準確率</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F9EA;</div>
+            <div class="framework-step-title">多代理測試</div>
+            <div class="framework-step-desc">乾淨環境並行跑</div>
+        </div>
+        <div class="framework-arrow">&#8594;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F4CA;</div>
+            <div class="framework-step-title">量化評估</div>
+            <div class="framework-step-desc">基準測試 + 迭代</div>
+        </div>
+    </div>
 </div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🎯</div>
-<div class="framework-step-title">描述調優</div>
-<div class="framework-step-desc">優化觸發準確率</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🧪</div>
-<div class="framework-step-title">多代理測試</div>
-<div class="framework-step-desc">乾淨環境並行跑</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📊</div>
-<div class="framework-step-title">量化評估</div>
-<div class="framework-step-desc">基準測試 + 迭代</div>
-</div>
-</div>
-</div>
+
 <!-- Tabbed Content -->
 <div class="section-header"><h2>Content</h2></div>
 <div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">背景與更新概覽</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-desc-opt')">描述調優實戰</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-eval')">評估與基準測試</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-types')">Skill 類型與策略</button>
-</div>
-<!-- Tab 1: Foundation -->
-<div class="tab-content active" id="tab-foundation">
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a5f; font-size:1rem; margin-top:0;">Part I: Skill-creator 是什麼？為何重要？</h3>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-concept">Skill-creator 是 Anthropic 官方推出的 Skills 生成器</span>，堪稱整個 Skills 生態的基石。你可以用自然語言描述需求，它就能幫你生成一個完整的 Skill。</div>
-<div class="en-text">Skill-creator is Anthropic's official skill generator - the foundation of the entire Skills ecosystem. You describe your needs in natural language, and it creates a complete Skill for you.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">作者指出，Claude 之所以能力這麼強，<span class="highlight-key">有一半的原因要歸功於 Skills</span>。每個 Skill 就像一個技能包，掛載越多，Agent 能做的事情就越多。</div>
-<div class="en-text">The author argues that half of Claude's capability comes from Skills. Each Skill is like a skill pack - the more you attach, the more the Agent can do.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Skills 是整個 Agent 未來大繁榮生態的基石。而 Skill-creator 作為生成 Skills 的「母 Skill」，它的更新等於整個生態的基礎設施升級。</div>
-<div class="en-text">Skills are the cornerstone of the Agent ecosystem's future prosperity. As the "mother Skill" that generates all others, Skill-creator updates represent infrastructure-level upgrades.</div>
-</div>
-<h3 style="color:#1e3a5f; font-size:1rem;">Part II: 四大新能力總覽</h3>
-<div class="bilingual-block">
-<div class="zh-text">這次更新一口氣加入四個全新能力：</div>
-<div class="en-text">This update introduces four brand-new capabilities at once:</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>1. 評估系統（Evaluation System）</strong> - 跑完直接告訴你這個 Skill 到底行不行。解決了過去 Skill 建完就是黑盒的問題。</div>
-<div class="en-text">Evaluation System - run it and immediately know if the Skill works. Solves the previous black-box problem.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>2. 基準測試（Benchmarking）</strong> - 將通過率、耗時、Token 用量全都量化。<span class="highlight-practical">有 Skill vs 無 Skill 的對比數據一目了然</span>。</div>
-<div class="en-text">Benchmarking - quantifies pass rate, execution time, and token consumption. Clear comparison between with-Skill vs without-Skill.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>3. 多代理並行測試（Multi-agent Parallel Testing）</strong> - 每個測試在乾淨環境獨立運行，支持 A/B 盲評，結果不互相污染。</div>
-<div class="en-text">Multi-agent Parallel Testing - each test runs independently in a clean environment, supports A/B blind evaluation, results don't cross-contaminate.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>4. 描述調優（Description Optimization）</strong> - 自動幫你修改 Skill 描述，<span class="highlight-key">讓該觸發的觸發，不該觸發的別亂觸發</span>。</div>
-<div class="en-text">Description Optimization - automatically refines Skill descriptions so the right triggers fire and wrong ones don't.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">核心問題：之前缺少<span class="highlight-concept">評估機制</span>。用工業化體系的話來說，沒有品質檢測就沒有品質保證。這次更新把整個評估體系全都補上了。</div>
-<div class="en-text">The core problem: the lack of an evaluation mechanism. In industrial terms, without quality testing there's no quality assurance. This update fills the entire evaluation gap.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-foundation')">背景與更新概覽</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-desc-opt')">描述調優實戰</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-eval')">評估與基準測試</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-types')">Skill 類型與策略</button>
+    </div>
+
+    <!-- Tab 1: Foundation -->
+    <div id="tab-foundation" class="tab-content active">
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a5f; font-size:1rem; margin-top:0;">Part I: Skill-creator 是什麼？為何重要？</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="highlight-concept">Skill-creator 是 Anthropic 官方推出的 Skills 生成器</span>，堪稱整個 Skills 生態的基石。你可以用自然語言描述需求，它就能幫你生成一個完整的 Skill。</div>
+                    <div class="en-text">Skill-creator is Anthropic's official skill generator - the foundation of the entire Skills ecosystem. You describe your needs in natural language, and it creates a complete Skill for you.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">作者指出，Claude 之所以能力這麼強，<span class="highlight-key">有一半的原因要歸功於 Skills</span>。每個 Skill 就像一個技能包，掛載越多，Agent 能做的事情就越多。</div>
+                    <div class="en-text">The author argues that half of Claude's capability comes from Skills. Each Skill is like a skill pack - the more you attach, the more the Agent can do.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">Skills 是整個 Agent 未來大繁榮生態的基石。而 Skill-creator 作為生成 Skills 的「母 Skill」，它的更新等於整個生態的基礎設施升級。</div>
+                    <div class="en-text">Skills are the cornerstone of the Agent ecosystem's future prosperity. As the "mother Skill" that generates all others, Skill-creator updates represent infrastructure-level upgrades.</div>
+                </div>
+
+                <h3 style="color:#1e3a5f; font-size:1rem;">Part II: 四大新能力總覽</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">這次更新一口氣加入四個全新能力：</div>
+                    <div class="en-text">This update introduces four brand-new capabilities at once:</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>1. 評估系統（Evaluation System）</strong> - 跑完直接告訴你這個 Skill 到底行不行。解決了過去 Skill 建完就是黑盒的問題。</div>
+                    <div class="en-text">Evaluation System - run it and immediately know if the Skill works. Solves the previous black-box problem.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>2. 基準測試（Benchmarking）</strong> - 將通過率、耗時、Token 用量全都量化。<span class="highlight-practical">有 Skill vs 無 Skill 的對比數據一目了然</span>。</div>
+                    <div class="en-text">Benchmarking - quantifies pass rate, execution time, and token consumption. Clear comparison between with-Skill vs without-Skill.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>3. 多代理並行測試（Multi-agent Parallel Testing）</strong> - 每個測試在乾淨環境獨立運行，支持 A/B 盲評，結果不互相污染。</div>
+                    <div class="en-text">Multi-agent Parallel Testing - each test runs independently in a clean environment, supports A/B blind evaluation, results don't cross-contaminate.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>4. 描述調優（Description Optimization）</strong> - 自動幫你修改 Skill 描述，<span class="highlight-key">讓該觸發的觸發，不該觸發的別亂觸發</span>。</div>
+                    <div class="en-text">Description Optimization - automatically refines Skill descriptions so the right triggers fire and wrong ones don't.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">核心問題：之前缺少<span class="highlight-concept">評估機制</span>。用工業化體系的話來說，沒有品質檢測就沒有品質保證。這次更新把整個評估體系全都補上了。</div>
+                    <div class="en-text">The core problem: the lack of an evaluation mechanism. In industrial terms, without quality testing there's no quality assurance. This update fills the entire evaluation gap.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                    <div class="info-box-content">
                         想像你開了一家工廠（Agent），雇了一堆員工（Skills）。以前的問題是：員工入職後沒有績效考核，你不知道誰表現好、誰在摸魚。Skill-creator 的更新就像裝上了完整的 KPI 體系 - 觸發率就是出勤率，基準測試就是工作品質評估，多代理並行就是避免同事互相抄答案。
                     </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>更新方式極簡：</strong>直接對你的 Agent 說：「https://github.com/anthropics/skills/tree/main/skills/skill-creator 這個 Skills 更新了，幫我更新到最新版」。Claude Code、OpenClaw、OpenCode 等都適用。
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <strong>更新方式極簡：</strong>直接對你的 Agent 說：「https://github.com/anthropics/skills/tree/main/skills/skill-creator 這個 Skills 更新了，幫我更新到最新版」。Claude Code、OpenClaw、OpenCode 等都適用。
                     </div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>Skills 的本質定位：</strong>Skills 是 Agent 生態的基石。Agent 本身不一定多厲害，真正的差異化來自於它掛載了多少高品質的 Skills。這個觀點與 Anthropic 官方「Building Effective Agents」文中的 tool-augmented approach 一致。
+                </div>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
+                    <div class="info-box-content">
+                        <strong>Skills 的本質定位：</strong>Skills 是 Agent 生態的基石。Agent 本身不一定多厲害，真正的差異化來自於它掛載了多少高品質的 Skills。這個觀點與 Anthropic 官方「Building Effective Agents」文中的 tool-augmented approach 一致。
                     </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<strong>案例背景：</strong>作者先前用 GitHub 上的 yt-dlp 做了一個影片下載 Skill，後來想擴展功能 - 不只下載，還要自動生成中英雙語文字講稿。於是用 Skill-creator 新建了一個講稿生成 Skill，整個過程約 3-5 分鐘。
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <strong>案例背景：</strong>作者先前用 GitHub 上的 yt-dlp 做了一個影片下載 Skill，後來想擴展功能 - 不只下載，還要自動生成中英雙語文字講稿。於是用 Skill-creator 新建了一個講稿生成 Skill，整個過程約 3-5 分鐘。
                     </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 2: Description Optimization -->
-<div class="tab-content" id="tab-desc-opt">
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a5f; font-size:1rem; margin-top:0;">Part III: 描述調優完整流程</h3>
-<div class="bilingual-block">
-<div class="zh-text">當你有多個相似 Skill 時，最怕的就是<span class="highlight-key">觸發打架</span> - 該觸發的不觸發，不該觸發的亂觸發。作者的案例：yt-dlp（下載影片）和講稿生成（轉文字）兩個 Skill 的觸發條件都是「給一個影片連結」，極易衝突。</div>
-<div class="en-text">When you have multiple similar Skills, the biggest fear is trigger conflicts - the right one doesn't fire while the wrong one does. The author's case: both yt-dlp (download video) and transcript generation (convert to text) trigger on "video link input."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Step 1：自動生成測試查詢</strong> - Skill-creator 會讀取你的 Skill 描述，然後自動生成兩組查詢：<span class="highlight-practical">應觸發的 10 條 + 不應觸發的 10 條</span>。設計巧妙之處在於故意把邊界情況（edge cases）都擺進去，逼模型在模糊地帶做判斷。</div>
-<div class="en-text">Step 1: Auto-generate test queries - Skill-creator reads your Skill description and generates two sets: 10 should-trigger queries + 10 should-not-trigger queries. Cleverly includes edge cases to force the model to make decisions in gray areas.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Step 2：互動式確認介面</strong> - 生成一個網頁，所有查詢排列整齊，每條右邊有開關，標著是否應該觸發。你可以逐條審閱，覺得哪條判斷不對，直接關掉。</div>
-<div class="en-text">Step 2: Interactive confirmation UI - generates a webpage with all queries neatly listed, each with a toggle switch for trigger/no-trigger. Review one by one and flip any you disagree with.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Step 3：導出評估集 + 自動迭代</strong> - 確認完畢後點擊「導出評估集」，優化循環在後台啟動，<span class="highlight-concept">最多跑 5 輪迭代</span>。</div>
-<div class="en-text">Step 3: Export evaluation set + auto-iteration - after confirmation, click "export evaluation set" and the optimization loop runs in the background, up to 5 iterations.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>Step 4：結果視覺化</strong> - 跑完後會看到一個巨型表格：每一列是查詢樣本，每一行是迭代版本。<span class="highlight-practical">綠色勾表示觸發成功，紅色叉表示未觸發</span>。藍色列是測試集，其餘是訓練集。</div>
-<div class="en-text">Step 4: Results visualization - a large table shows queries as columns, iteration versions as rows. Green checks = trigger success, red X = no trigger. Blue columns = test set, rest = training set.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>防過擬合設計：</strong>樣本分成 60% 訓練集和 40% 測試集，在訓練集上迭代優化，最終用測試集表現來選最佳版本。跑完後，最優描述<span class="highlight-key">自動寫回 SKILL.md</span>，全程不用手動操作。</div>
-<div class="en-text">Anti-overfitting design: samples split 60% training / 40% test. Iterates on training set, selects best version based on test set performance. The optimal description is automatically written back to SKILL.md.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 2: Description Optimization -->
+    <div id="tab-desc-opt" class="tab-content">
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a5f; font-size:1rem; margin-top:0;">Part III: 描述調優完整流程</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">當你有多個相似 Skill 時，最怕的就是<span class="highlight-key">觸發打架</span> - 該觸發的不觸發，不該觸發的亂觸發。作者的案例：yt-dlp（下載影片）和講稿生成（轉文字）兩個 Skill 的觸發條件都是「給一個影片連結」，極易衝突。</div>
+                    <div class="en-text">When you have multiple similar Skills, the biggest fear is trigger conflicts - the right one doesn't fire while the wrong one does. The author's case: both yt-dlp (download video) and transcript generation (convert to text) trigger on "video link input."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>Step 1：自動生成測試查詢</strong> - Skill-creator 會讀取你的 Skill 描述，然後自動生成兩組查詢：<span class="highlight-practical">應觸發的 10 條 + 不應觸發的 10 條</span>。設計巧妙之處在於故意把邊界情況（edge cases）都擺進去，逼模型在模糊地帶做判斷。</div>
+                    <div class="en-text">Step 1: Auto-generate test queries - Skill-creator reads your Skill description and generates two sets: 10 should-trigger queries + 10 should-not-trigger queries. Cleverly includes edge cases to force the model to make decisions in gray areas.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>Step 2：互動式確認介面</strong> - 生成一個網頁，所有查詢排列整齊，每條右邊有開關，標著是否應該觸發。你可以逐條審閱，覺得哪條判斷不對，直接關掉。</div>
+                    <div class="en-text">Step 2: Interactive confirmation UI - generates a webpage with all queries neatly listed, each with a toggle switch for trigger/no-trigger. Review one by one and flip any you disagree with.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>Step 3：導出評估集 + 自動迭代</strong> - 確認完畢後點擊「導出評估集」，優化循環在後台啟動，<span class="highlight-concept">最多跑 5 輪迭代</span>。</div>
+                    <div class="en-text">Step 3: Export evaluation set + auto-iteration - after confirmation, click "export evaluation set" and the optimization loop runs in the background, up to 5 iterations.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>Step 4：結果視覺化</strong> - 跑完後會看到一個巨型表格：每一列是查詢樣本，每一行是迭代版本。<span class="highlight-practical">綠色勾表示觸發成功，紅色叉表示未觸發</span>。藍色列是測試集，其餘是訓練集。</div>
+                    <div class="en-text">Step 4: Results visualization - a large table shows queries as columns, iteration versions as rows. Green checks = trigger success, red X = no trigger. Blue columns = test set, rest = training set.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>防過擬合設計：</strong>樣本分成 60% 訓練集和 40% 測試集，在訓練集上迭代優化，最終用測試集表現來選最佳版本。跑完後，最優描述<span class="highlight-key">自動寫回 SKILL.md</span>，全程不用手動操作。</div>
+                    <div class="en-text">Anti-overfitting design: samples split 60% training / 40% test. Iterates on training set, selects best version based on test set performance. The optimal description is automatically written back to SKILL.md.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                    <div class="info-box-content">
                         描述調優就像訓練機場安檢系統。你給它一堆「應該攔下」和「應該放行」的樣本，讓它學會區分。60/40 訓練測試分割就是留一部分「新行李」做最終驗收，確保系統不是靠死記硬背，而是真的學會了判斷規則。
                     </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>Anthropic 官方實測數據：</strong>在 6 個文檔類 Skill 上測試，5 個的觸發率都有提升。僅僅是用新版 Skill-creator 優化描述，不改任何 Skill 邏輯本身。
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <strong>Anthropic 官方實測數據：</strong>在 6 個文檔類 Skill 上測試，5 個的觸發率都有提升。僅僅是用新版 Skill-creator 優化描述，不改任何 Skill 邏輯本身。
                     </div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>訓練集/測試集分割（Train/Test Split）：</strong>機器學習的基本方法論。避免模型只是「背答案」（過擬合），而是要在從未見過的資料上也能表現良好。Skill-creator 用 60/40 的比例，在 Skill 描述優化場景下是合理的選擇。
+                </div>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
+                    <div class="info-box-content">
+                        <strong>訓練集/測試集分割（Train/Test Split）：</strong>機器學習的基本方法論。避免模型只是「背答案」（過擬合），而是要在從未見過的資料上也能表現良好。Skill-creator 用 60/40 的比例，在 Skill 描述優化場景下是合理的選擇。
                     </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<strong>描述調優耗時：</strong>整個過程（5 輪迭代）大約需要 10-20 分鐘。期間 Skill-creator 會定期匯報進度。考慮到這是一次性投資，ROI 非常高 - 一次調優可以長期受益。
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <strong>描述調優耗時：</strong>整個過程（5 輪迭代）大約需要 10-20 分鐘。期間 Skill-creator 會定期匯報進度。考慮到這是一次性投資，ROI 非常高 - 一次調優可以長期受益。
                     </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 3: Evaluation & Benchmarking -->
-<div class="tab-content" id="tab-eval">
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a5f; font-size:1rem; margin-top:0;">Part IV: 多代理並行評估</h3>
-<div class="bilingual-block">
-<div class="zh-text">觸發對了不等於 OK - Skill 能穩定觸發之後，還要評估它在實際任務上的表現。作者用講稿生成 Skill 做了完整演示。</div>
-<div class="en-text">Correct triggering doesn't equal OK - after stable triggering, you still need to evaluate actual task performance. The author demonstrates with the transcript Skill.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Skill-creator 會先完整讀取你的 Skill 文件，搞清核心流程。然後問你想測哪個方面（可選全面評估）。它會根據 Skill 功能<span class="highlight-concept">自動設計三類測試場景</span>，同時設計量化驗收標準。</div>
-<div class="en-text">Skill-creator reads your Skill file completely, understands the core flow, then asks what aspect to test (full evaluation available). It auto-designs three test scenario categories with quantitative acceptance criteria.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>核心突破：4 個獨立子代理同時並行運行。</strong>以前的評估是按順序跑，前一個任務的上下文會污染下一個的結果。<span class="highlight-key">你以為是 Skill 的功勞，其實是對話歷史幫了忙</span>。現在每個代理都在完全乾淨的環境裡獨立運行，有自己的 Token 計數和時間指標。</div>
-<div class="en-text">Core breakthrough: 4 independent sub-agents run in parallel. Previous evaluations ran sequentially, where prior context contaminated results. Now each agent runs independently in a clean environment with its own token count and time metrics.</div>
-</div>
-<h3 style="color:#1e3a5f; font-size:1rem;">Part V: 基準測試量化數據</h3>
-<div class="bilingual-block">
-<div class="zh-text">測試完成後，瀏覽器會彈出評估查看頁面，有兩個標籤頁：</div>
-<div class="en-text">After testing, the browser shows an evaluation page with two tabs:</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>輸出標籤頁：</strong>直接查看每個測試用例的輸出。下方有回饋框，可以標注問題點。<span class="highlight-practical">這些回饋會被存起來，下次改進 Skill 時直接使用</span>。</div>
-<div class="en-text">Output tab: view each test case output directly. Feedback box below for annotating issues. Feedback is saved for use in the next Skill improvement cycle.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>基準測試標籤頁：</strong>有 Skill vs 無 Skill 的量化對比。作者案例的數據 - 有 Skill 通過率 100%，無 Skill 基線 9%，差值 91.5%。費用上，有 Skill 每次約 4000 Token，無 Skill 約 1750 Token，差距 2250 Token。</div>
-<div class="en-text">Benchmark tab: quantitative comparison with vs without Skill. Author's data - with Skill pass rate 100%, without Skill baseline 9%, delta 91.5%. Cost: ~4000 tokens with Skill vs ~1750 without, 2250 token difference.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>閉環設計：</strong>Anthropic 舉了 PDF Skill 的例子 - 在處理表格時，Claude 需要把文字放在特定座標上，但因為缺乏明確引導經常放歪。<span class="highlight-concept">這個問題在評估過程中被發現</span>，修復定位邏輯後問題解決。評估結果存在本地，下次改進時自動帶入，形成「測試 → 發現 → 修復 → 再測試」的完整循環。</div>
-<div class="en-text">Closed-loop design: Anthropic's PDF Skill example - when handling tables, Claude needed to place text at specific coordinates but frequently misaligned. The issue was caught during evaluation, fixed in positioning logic. Results stored locally, automatically loaded for next improvement cycle.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>上下文污染（Context Contamination）：</strong>當測試按順序在同一對話中執行時，前面任務的對話歷史會影響後面任務的表現。模型可能「記住」了前面的答案模式，讓後面的結果看起來更好，但這不是 Skill 本身的功勞。獨立環境並行測試是解決此問題的標準做法。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 3: Evaluation & Benchmarking -->
+    <div id="tab-eval" class="tab-content">
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a5f; font-size:1rem; margin-top:0;">Part IV: 多代理並行評估</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">觸發對了不等於 OK - Skill 能穩定觸發之後，還要評估它在實際任務上的表現。作者用講稿生成 Skill 做了完整演示。</div>
+                    <div class="en-text">Correct triggering doesn't equal OK - after stable triggering, you still need to evaluate actual task performance. The author demonstrates with the transcript Skill.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">Skill-creator 會先完整讀取你的 Skill 文件，搞清核心流程。然後問你想測哪個方面（可選全面評估）。它會根據 Skill 功能<span class="highlight-concept">自動設計三類測試場景</span>，同時設計量化驗收標準。</div>
+                    <div class="en-text">Skill-creator reads your Skill file completely, understands the core flow, then asks what aspect to test (full evaluation available). It auto-designs three test scenario categories with quantitative acceptance criteria.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>核心突破：4 個獨立子代理同時並行運行。</strong>以前的評估是按順序跑，前一個任務的上下文會污染下一個的結果。<span class="highlight-key">你以為是 Skill 的功勞，其實是對話歷史幫了忙</span>。現在每個代理都在完全乾淨的環境裡獨立運行，有自己的 Token 計數和時間指標。</div>
+                    <div class="en-text">Core breakthrough: 4 independent sub-agents run in parallel. Previous evaluations ran sequentially, where prior context contaminated results. Now each agent runs independently in a clean environment with its own token count and time metrics.</div>
+                </div>
+
+                <h3 style="color:#1e3a5f; font-size:1rem;">Part V: 基準測試量化數據</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">測試完成後，瀏覽器會彈出評估查看頁面，有兩個標籤頁：</div>
+                    <div class="en-text">After testing, the browser shows an evaluation page with two tabs:</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>輸出標籤頁：</strong>直接查看每個測試用例的輸出。下方有回饋框，可以標注問題點。<span class="highlight-practical">這些回饋會被存起來，下次改進 Skill 時直接使用</span>。</div>
+                    <div class="en-text">Output tab: view each test case output directly. Feedback box below for annotating issues. Feedback is saved for use in the next Skill improvement cycle.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>基準測試標籤頁：</strong>有 Skill vs 無 Skill 的量化對比。作者案例的數據 - 有 Skill 通過率 100%，無 Skill 基線 9%，差值 91.5%。費用上，有 Skill 每次約 4000 Token，無 Skill 約 1750 Token，差距 2250 Token。</div>
+                    <div class="en-text">Benchmark tab: quantitative comparison with vs without Skill. Author's data - with Skill pass rate 100%, without Skill baseline 9%, delta 91.5%. Cost: ~4000 tokens with Skill vs ~1750 without, 2250 token difference.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>閉環設計：</strong>Anthropic 舉了 PDF Skill 的例子 - 在處理表格時，Claude 需要把文字放在特定座標上，但因為缺乏明確引導經常放歪。<span class="highlight-concept">這個問題在評估過程中被發現</span>，修復定位邏輯後問題解決。評估結果存在本地，下次改進時自動帶入，形成「測試 → 發現 → 修復 → 再測試」的完整循環。</div>
+                    <div class="en-text">Closed-loop design: Anthropic's PDF Skill example - when handling tables, Claude needed to place text at specific coordinates but frequently misaligned. The issue was caught during evaluation, fixed in positioning logic. Results stored locally, automatically loaded for next improvement cycle.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念</div>
+                    <div class="info-box-content">
+                        <strong>上下文污染（Context Contamination）：</strong>當測試按順序在同一對話中執行時，前面任務的對話歷史會影響後面任務的表現。模型可能「記住」了前面的答案模式，讓後面的結果看起來更好，但這不是 Skill 本身的功勞。獨立環境並行測試是解決此問題的標準做法。
                     </div>
-</div>
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較</div>
-<div class="info-box-content">
-<strong>有 Skill vs 無 Skill（講稿生成案例）：</strong><br/>
-                        通過率：100% vs 9%（差值 91.5%）<br/>
-                        Token 消耗：~4000 vs ~1750（多 2250）<br/>
-<strong>結論：</strong>Token 成本增加約 2.3 倍，但通過率從接近零提升到 100%。投入產出比極高。
+                </div>
+                <div class="info-box box-compare">
+                    <div class="info-box-header">&#x2696;&#xFE0F; 工具比較</div>
+                    <div class="info-box-content">
+                        <strong>有 Skill vs 無 Skill（講稿生成案例）：</strong><br>
+                        通過率：100% vs 9%（差值 91.5%）<br>
+                        Token 消耗：~4000 vs ~1750（多 2250）<br>
+                        <strong>結論：</strong>Token 成本增加約 2.3 倍，但通過率從接近零提升到 100%。投入產出比極高。
                     </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>回饋的累積效應：</strong>每次評估時標注的問題點會被持久化存儲。下次用 Skill-creator 改進時，這些回饋會自動帶入上下文。這意味著 Skill 的品質是<strong>累積進步</strong>的，不是每次從零開始。
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示</div>
+                    <div class="info-box-content">
+                        <strong>回饋的累積效應：</strong>每次評估時標注的問題點會被持久化存儲。下次用 Skill-creator 改進時，這些回饋會自動帶入上下文。這意味著 Skill 的品質是<strong>累積進步</strong>的，不是每次從零開始。
                     </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<strong>PDF Skill 案例啟示：</strong>有些 Bug 在日常使用中不容易發現（例如座標偏移），但在系統性評估中會被暴露。這跟製造業的 SPC（統計過程控制）原理相同 - 個案不一定看得出問題，但統計數據會說話。
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <strong>PDF Skill 案例啟示：</strong>有些 Bug 在日常使用中不容易發現（例如座標偏移），但在系統性評估中會被暴露。這跟製造業的 SPC（統計過程控制）原理相同 - 個案不一定看得出問題，但統計數據會說話。
                     </div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 4: Skill Types & Strategy -->
-<div class="tab-content" id="tab-types">
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a5f; font-size:1rem; margin-top:0;">Part VI: 兩種 Skill 類型的不同評估策略</h3>
-<div class="bilingual-block">
-<div class="zh-text">在評估之前，你得先搞清楚你的 Skill 屬於哪一種。本質上，<span class="highlight-concept">Skills 分為兩種類型</span>：</div>
-<div class="en-text">Before evaluating, you need to know which type your Skill is. Fundamentally, Skills fall into two categories:</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>第一種：能力提升型（Capability Enhancement）</strong> - 教 Claude 做它本來不擅長的事。例如官方的前端設計 Skill、文檔創建 Skill，裡面寫了大量技巧，是光靠 Prompt 拿不到的效果。大多數人自己做的 Skill 都屬於這類。</div>
-<div class="en-text">Type 1: Capability Enhancement - teaches Claude to do what it's not naturally good at. Examples: official frontend design Skill, document creation Skill, containing techniques that prompting alone can't achieve.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>第二種：編碼偏好型（Coding Preference / Workflow）</strong> - 告訴 Claude 按你的規矩來。Claude 本身每一步都能做，但你的 Skill 把這些步驟按你的流程串起來。例如：會議紀要整理 Skill（按公司固定格式轉錄音為行動項文件）、週報生成 Skill（從各平台拉數據按指定格式排列）。</div>
-<div class="en-text">Type 2: Coding Preference/Workflow - tells Claude to follow your rules. Claude can do each step, but your Skill chains them in your specific process. Examples: meeting notes Skill (company format), weekly report Skill (pull data, format).</div>
-</div>
-<h3 style="color:#1e3a5f; font-size:1rem;">Part VII: 不同類型的評估重點</h3>
-<div class="bilingual-block">
-<div class="zh-text"><strong>能力提升型的評估重點：</strong><span class="highlight-key">測的是模型更新後這個 Skill 還有沒有存在的必要</span>。用 A/B 測試對比，有 Skill 和沒 Skill 各跑一次。如果結果差不多，這個 Skill 就可以退休了。</div>
-<div class="en-text">Capability Enhancement evaluation focus: test whether the Skill is still necessary after model updates. A/B test with and without Skill. If results are similar, the Skill can be retired.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>編碼偏好型的評估重點：</strong>測的是另一件事 - <span class="highlight-practical">有沒有老老實實按你的流程走</span>？有沒有漏步驟？有沒有自作主張改了順序？有沒有忘了你特別說過的某個要求？</div>
-<div class="en-text">Coding Preference evaluation focus: did it faithfully follow your process? Any skipped steps? Any unauthorized reordering? Any forgotten specific requirements?</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">作者的最終建議：<span class="highlight-concept">所有的 Skills 都值得重新優化和評估一遍</span>。更新到最新版 Skill-creator 後，對你所有的 Skills 進行一次全面的觸發率優化和品質評估，是目前 ROI 最高的操作。</div>
-<div class="en-text">The author's final advice: all Skills are worth re-optimizing and re-evaluating. After updating to the latest Skill-creator, a comprehensive trigger optimization and quality evaluation of all your Skills is the highest ROI activity right now.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較</div>
-<div class="info-box-content">
-<table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
-<tr style="background:#e2e8f0;">
-<th style="padding:0.5rem; text-align:left;">面向</th>
-<th style="padding:0.5rem; text-align:left;">能力提升型</th>
-<th style="padding:0.5rem; text-align:left;">編碼偏好型</th>
-</tr>
-<tr>
-<td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">目的</td>
-<td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">教 Claude 新技能</td>
-<td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">讓 Claude 按流程走</td>
-</tr>
-<tr>
-<td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">評估問題</td>
-<td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">還有存在必要嗎？</td>
-<td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">有沒有按規矩走？</td>
-</tr>
-<tr>
-<td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">測試方法</td>
-<td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">A/B 有無 Skill 對比</td>
-<td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">流程合規性檢查</td>
-</tr>
-<tr>
-<td style="padding:0.4rem;">退休條件</td>
-<td style="padding:0.4rem;">模型升級後差異不大</td>
-<td style="padding:0.4rem;">流程本身被淘汰</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<strong>能力提升型</strong>像是教新員工用 Excel 做 VLOOKUP - 等他自己學會了，你就不用再手把手教了（Skill 可以退休）。<strong>編碼偏好型</strong>像是 SOP 手冊 - 即使員工能力很強，你還是需要確保他照公司流程走（Skill 持續有效）。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab 4: Skill Types & Strategy -->
+    <div id="tab-types" class="tab-content">
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a5f; font-size:1rem; margin-top:0;">Part VI: 兩種 Skill 類型的不同評估策略</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">在評估之前，你得先搞清楚你的 Skill 屬於哪一種。本質上，<span class="highlight-concept">Skills 分為兩種類型</span>：</div>
+                    <div class="en-text">Before evaluating, you need to know which type your Skill is. Fundamentally, Skills fall into two categories:</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>第一種：能力提升型（Capability Enhancement）</strong> - 教 Claude 做它本來不擅長的事。例如官方的前端設計 Skill、文檔創建 Skill，裡面寫了大量技巧，是光靠 Prompt 拿不到的效果。大多數人自己做的 Skill 都屬於這類。</div>
+                    <div class="en-text">Type 1: Capability Enhancement - teaches Claude to do what it's not naturally good at. Examples: official frontend design Skill, document creation Skill, containing techniques that prompting alone can't achieve.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>第二種：編碼偏好型（Coding Preference / Workflow）</strong> - 告訴 Claude 按你的規矩來。Claude 本身每一步都能做，但你的 Skill 把這些步驟按你的流程串起來。例如：會議紀要整理 Skill（按公司固定格式轉錄音為行動項文件）、週報生成 Skill（從各平台拉數據按指定格式排列）。</div>
+                    <div class="en-text">Type 2: Coding Preference/Workflow - tells Claude to follow your rules. Claude can do each step, but your Skill chains them in your specific process. Examples: meeting notes Skill (company format), weekly report Skill (pull data, format).</div>
+                </div>
+
+                <h3 style="color:#1e3a5f; font-size:1rem;">Part VII: 不同類型的評估重點</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>能力提升型的評估重點：</strong><span class="highlight-key">測的是模型更新後這個 Skill 還有沒有存在的必要</span>。用 A/B 測試對比，有 Skill 和沒 Skill 各跑一次。如果結果差不多，這個 Skill 就可以退休了。</div>
+                    <div class="en-text">Capability Enhancement evaluation focus: test whether the Skill is still necessary after model updates. A/B test with and without Skill. If results are similar, the Skill can be retired.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><strong>編碼偏好型的評估重點：</strong>測的是另一件事 - <span class="highlight-practical">有沒有老老實實按你的流程走</span>？有沒有漏步驟？有沒有自作主張改了順序？有沒有忘了你特別說過的某個要求？</div>
+                    <div class="en-text">Coding Preference evaluation focus: did it faithfully follow your process? Any skipped steps? Any unauthorized reordering? Any forgotten specific requirements?</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">作者的最終建議：<span class="highlight-concept">所有的 Skills 都值得重新優化和評估一遍</span>。更新到最新版 Skill-creator 後，對你所有的 Skills 進行一次全面的觸發率優化和品質評估，是目前 ROI 最高的操作。</div>
+                    <div class="en-text">The author's final advice: all Skills are worth re-optimizing and re-evaluating. After updating to the latest Skill-creator, a comprehensive trigger optimization and quality evaluation of all your Skills is the highest ROI activity right now.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-compare">
+                    <div class="info-box-header">&#x2696;&#xFE0F; 工具比較</div>
+                    <div class="info-box-content">
+                        <table style="width:100%; border-collapse:collapse; font-size:0.82rem;">
+                            <tr style="background:#e2e8f0;">
+                                <th style="padding:0.5rem; text-align:left;">面向</th>
+                                <th style="padding:0.5rem; text-align:left;">能力提升型</th>
+                                <th style="padding:0.5rem; text-align:left;">編碼偏好型</th>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">目的</td>
+                                <td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">教 Claude 新技能</td>
+                                <td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">讓 Claude 按流程走</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">評估問題</td>
+                                <td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">還有存在必要嗎？</td>
+                                <td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">有沒有按規矩走？</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">測試方法</td>
+                                <td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">A/B 有無 Skill 對比</td>
+                                <td style="padding:0.4rem; border-bottom:1px solid #e2e8f0;">流程合規性檢查</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0.4rem;">退休條件</td>
+                                <td style="padding:0.4rem;">模型升級後差異不大</td>
+                                <td style="padding:0.4rem;">流程本身被淘汰</td>
+                            </tr>
+                        </table>
                     </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用</div>
-<div class="info-box-content">
-<strong>你的 Skills 分類清單：</strong>根據你目前的 Skills，快速判斷類型：<br/>
-                        - artifact-skill (教育文件生成) → 編碼偏好型（按 Master Prompt 格式走）<br/>
-                        - amaran-presentation → 編碼偏好型（品牌識別規範）<br/>
-                        - cdmo-feasibility-assessment → 混合型（既有專業知識也有流程規範）<br/>
-                        - frontend-design → 能力提升型（提升設計品質）<br/>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明</div>
+                    <div class="info-box-content">
+                        <strong>能力提升型</strong>像是教新員工用 Excel 做 VLOOKUP - 等他自己學會了，你就不用再手把手教了（Skill 可以退休）。<strong>編碼偏好型</strong>像是 SOP 手冊 - 即使員工能力很強，你還是需要確保他照公司流程走（Skill 持續有效）。
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用</div>
+                    <div class="info-box-content">
+                        <strong>你的 Skills 分類清單：</strong>根據你目前的 Skills，快速判斷類型：<br>
+                        - artifact-skill (教育文件生成) → 編碼偏好型（按 Master Prompt 格式走）<br>
+                        - amaran-presentation → 編碼偏好型（品牌識別規範）<br>
+                        - cdmo-feasibility-assessment → 混合型（既有專業知識也有流程規範）<br>
+                        - frontend-design → 能力提升型（提升設計品質）<br>
                         這個分類直接決定你的評估策略。
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-</div>
-</div>
+
 <!-- Key Takeaways -->
 <div class="section-header"><h2>Key Takeaways</h2></div>
 <div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-title">1. 評估機制是 Skills 生態的轉折點</div>
-<div class="summary-card-text">過去 Skill 建完就是黑盒，現在有了完整的「建立 → 調優 → 測試 → 量化 → 迭代」閉環。這是從「手工作坊」到「工業化生產」的跨越。</div>
+    <div class="summary-card">
+        <div class="summary-card-title">1. 評估機制是 Skills 生態的轉折點</div>
+        <div class="summary-card-text">過去 Skill 建完就是黑盒，現在有了完整的「建立 → 調優 → 測試 → 量化 → 迭代」閉環。這是從「手工作坊」到「工業化生產」的跨越。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="summary-card-title">2. 描述調優 ROI 最高</div>
+        <div class="summary-card-text">10-20 分鐘的一次性投入，就能提升觸發準確率。Anthropic 官方測試 6 個 Skill 中 5 個有提升，且完全自動化。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="summary-card-title">3. 上下文污染是隱形殺手</div>
+        <div class="summary-card-text">多代理並行測試解決了順序評估的根本缺陷 - 確保每個測試結果反映的是 Skill 本身的能力，而非對話歷史的加成。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="summary-card-title">4. 區分 Skill 類型決定評估方向</div>
+        <div class="summary-card-text">能力提升型測「是否還有必要」，編碼偏好型測「是否按流程走」。搞錯方向會浪費評估資源，得出錯誤結論。</div>
+    </div>
 </div>
-<div class="summary-card" style="border-left-color: #10b981;">
-<div class="summary-card-title">2. 描述調優 ROI 最高</div>
-<div class="summary-card-text">10-20 分鐘的一次性投入，就能提升觸發準確率。Anthropic 官方測試 6 個 Skill 中 5 個有提升，且完全自動化。</div>
-</div>
-<div class="summary-card" style="border-left-color: #8b5cf6;">
-<div class="summary-card-title">3. 上下文污染是隱形殺手</div>
-<div class="summary-card-text">多代理並行測試解決了順序評估的根本缺陷 - 確保每個測試結果反映的是 Skill 本身的能力，而非對話歷史的加成。</div>
-</div>
-<div class="summary-card" style="border-left-color: #f59e0b;">
-<div class="summary-card-title">4. 區分 Skill 類型決定評估方向</div>
-<div class="summary-card-text">能力提升型測「是否還有必要」，編碼偏好型測「是否按流程走」。搞錯方向會浪費評估資源，得出錯誤結論。</div>
-</div>
-</div>
+
 <!-- Practice Questions -->
 <div class="section-header"><h2>Practice Questions</h2></div>
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">為什麼「多代理並行測試」比「順序測試」更可靠？請用「上下文污染」的概念解釋。</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>順序測試在同一對話中依次執行多個測試用例，前面任務的對話歷史（包含正確答案的模式、格式範例等）會自動成為後續任務的上下文。這意味著後面的測試可能「借用」了前面的經驗，表現出比 Skill 實際能力更好的結果。</p>
-<p>多代理並行測試讓每個測試在完全獨立的環境中運行，各自有獨立的 Token 計數和時間指標。測試結果只反映 Skill 本身的品質，而非累積的對話上下文。這就像藥物臨床試驗中的「雙盲設計」- 確保結果的純淨性。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">為什麼「多代理並行測試」比「順序測試」更可靠？請用「上下文污染」的概念解釋。</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>順序測試在同一對話中依次執行多個測試用例，前面任務的對話歷史（包含正確答案的模式、格式範例等）會自動成為後續任務的上下文。這意味著後面的測試可能「借用」了前面的經驗，表現出比 Skill 實際能力更好的結果。</p>
+        <p>多代理並行測試讓每個測試在完全獨立的環境中運行，各自有獨立的 Token 計數和時間指標。測試結果只反映 Skill 本身的品質，而非累積的對話上下文。這就像藥物臨床試驗中的「雙盲設計」- 確保結果的純淨性。</p>
+    </div>
 </details>
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">在你的 CDMO 環境中，artifact-skill（教育文件生成）屬於哪種類型？如果用新版 Skill-creator 評估它，應該關注什麼指標？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>artifact-skill 主要是「編碼偏好型」- 它的核心價值不是教 Claude 新能力，而是確保 Claude 按照 Master Prompt v1.5.0 的格式規範走（雙語格式、Tabbed 結構、Rating Bar、Dashboard Meta Tags 等）。</p>
-<p>評估時應關注的指標包括：(1) 格式合規性 - 是否完整包含所有必要區塊（meta tags、rating bar、bottom line 等）？(2) 雙語對齊準確性 - 中文翻譯是否對應正確的英文原文？(3) 佈局一致性 - 是否遵循 v1.4.3 的 1100px 置中佈局？(4) 分類標籤準確性 - doc-tags 是否符合 standard_categories？這些都是可量化的檢查點，非常適合自動化評估。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">在你的 CDMO 環境中，artifact-skill（教育文件生成）屬於哪種類型？如果用新版 Skill-creator 評估它，應該關注什麼指標？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>artifact-skill 主要是「編碼偏好型」- 它的核心價值不是教 Claude 新能力，而是確保 Claude 按照 Master Prompt v1.5.0 的格式規範走（雙語格式、Tabbed 結構、Rating Bar、Dashboard Meta Tags 等）。</p>
+        <p>評估時應關注的指標包括：(1) 格式合規性 - 是否完整包含所有必要區塊（meta tags、rating bar、bottom line 等）？(2) 雙語對齊準確性 - 中文翻譯是否對應正確的英文原文？(3) 佈局一致性 - 是否遵循 v1.4.3 的 1100px 置中佈局？(4) 分類標籤準確性 - doc-tags 是否符合 standard_categories？這些都是可量化的檢查點，非常適合自動化評估。</p>
+    </div>
 </details>
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">文章聲稱「所有 Skills 都值得重新評估」。你認為這個建議有什麼盲點或需要補充的地方？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>幾個需要打折扣的地方：(1) <strong>時間成本</strong> - 每個 Skill 的描述調優需要 10-20 分鐘，完整評估可能更久。如果你有 20+ 個 Skills，全部跑一遍需要數小時。應該用 Pareto 原則，先評估使用頻率最高的 Top 5。(2) <strong>Token 成本</strong> - 文章沒提到評估過程本身的 Token 消耗。4 個並行代理 + 5 輪迭代的 Token 用量不會少，需要納入 ROI 計算。(3) <strong>評估標準的主觀性</strong> - 觸發率可以量化，但「輸出品質」的判斷仍然有主觀成分。自動化評估只能檢查格式合規，無法完全替代人工品質判斷。(4) <strong>模型版本依賴</strong> - 在某個 Claude 版本上優化的描述，在模型升級後可能需要重新調優。這個維護成本文章沒有提及。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">文章聲稱「所有 Skills 都值得重新評估」。你認為這個建議有什麼盲點或需要補充的地方？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>幾個需要打折扣的地方：(1) <strong>時間成本</strong> - 每個 Skill 的描述調優需要 10-20 分鐘，完整評估可能更久。如果你有 20+ 個 Skills，全部跑一遍需要數小時。應該用 Pareto 原則，先評估使用頻率最高的 Top 5。(2) <strong>Token 成本</strong> - 文章沒提到評估過程本身的 Token 消耗。4 個並行代理 + 5 輪迭代的 Token 用量不會少，需要納入 ROI 計算。(3) <strong>評估標準的主觀性</strong> - 觸發率可以量化，但「輸出品質」的判斷仍然有主觀成分。自動化評估只能檢查格式合規，無法完全替代人工品質判斷。(4) <strong>模型版本依賴</strong> - 在某個 Claude 版本上優化的描述，在模型升級後可能需要重新調優。這個維護成本文章沒有提及。</p>
+    </div>
 </details>
+
 <!-- Bottom Line -->
 <div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Skills 生態從「能造」進化到「能評估」，這是質變。對應到我的 Pharma x AI x Leadership 路線，評估能力的引入意味著 Skills 開始具備 GMP 環境所要求的「可驗證性」- 雖然離 21 CFR Part 11 的驗證標準還很遠，但方向對了。Skill 品質可量化 = 可改進 = 可管理。</div>
+    <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x2714; 核心洞察</div>
+        <div class="bottom-line-text">Skills 生態從「能造」進化到「能評估」，這是質變。對應到我的 Pharma x AI x Leadership 路線，評估能力的引入意味著 Skills 開始具備 GMP 環境所要求的「可驗證性」- 雖然離 21 CFR Part 11 的驗證標準還很遠，但方向對了。Skill 品質可量化 = 可改進 = 可管理。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+        <div class="bottom-line-text">本週行動：(1) 用一句話指令更新 Claude Code 中的 Skill-creator 到最新版。(2) 優先對 artifact-skill 跑一次描述調優，因為它是我使用頻率最高的 Skill，且與其他 Skills（如 amaran-presentation）可能有觸發衝突。(3) 對 artifact-skill 做一次基準測試，量化「有 Skill vs 無 Skill」的品質差異，作為持續優化的基線。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x26A0; 需要補充</div>
+        <div class="bottom-line-text">文章缺乏幾個關鍵面向：(1) 評估過程本身的 Token 成本和時間成本沒有量化，這在 Max Plan 有限的使用量下需要考慮。(2) 描述調優的結果是否跨模型版本穩定？Claude 升級後是否需要重新調優？(3) 多個 Skills 之間的交互作用 - 單個 Skill 通過評估不代表在多 Skill 共存環境下依然穩定。建議 3 個月後重新閱讀並對照實際經驗。</div>
+    </div>
 </div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週行動：(1) 用一句話指令更新 Claude Code 中的 Skill-creator 到最新版。(2) 優先對 artifact-skill 跑一次描述調優，因為它是我使用頻率最高的 Skill，且與其他 Skills（如 amaran-presentation）可能有觸發衝突。(3) 對 artifact-skill 做一次基準測試，量化「有 Skill vs 無 Skill」的品質差異，作為持續優化的基線。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章缺乏幾個關鍵面向：(1) 評估過程本身的 Token 成本和時間成本沒有量化，這在 Max Plan 有限的使用量下需要考慮。(2) 描述調優的結果是否跨模型版本穩定？Claude 升級後是否需要重新調優？(3) 多個 Skills 之間的交互作用 - 單個 Skill 通過評估不代表在多 Skill 共存環境下依然穩定。建議 3 個月後重新閱讀並對照實際經驗。</div>
-</div>
-</div>
+
 <!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-03-11 | 來源：<a href="https://x.com/Khazix0918" target="_blank">数字生命卡兹克 @Khazix0918</a></p>
-<p>建議 Chat Title：2026-03-11 [Agent] Khazix - Skill-creator Epic Update</p>
-<p>建議檔名：2026-03-11_skill-creator-epic-update.html</p>
-</footer>
+<div class="footer">
+    <p>製作日期：2026-03-11 | 來源：<a href="https://x.com/Khazix0918" target="_blank">数字生命卡兹克 @Khazix0918</a></p>
+    <p>建議 Chat Title：2026-03-11 [Agent] Khazix - Skill-creator Epic Update</p>
+    <p>建議檔名：2026-03-11_skill-creator-epic-update.html</p>
 </div>
+
+</div>
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

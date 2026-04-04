@@ -1,329 +1,469 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="2026-01-15" name="doc-date"/>
-<meta content="Email Triage AI Agent 自動化教學" name="doc-title"/>
-<meta content="Wyndo / AI Maker" name="doc-source"/>
-<meta content="Agent,Automation,Tool" name="doc-tags"/>
-<meta content="4.2" name="doc-rating"/>
-<meta content="主動式Email Triage Agent實作教學，Make.com結合Gmail與OpenAI" name="doc-summary"/>
-<meta content="2026-01-15_email-triage-agent.html" name="doc-file"/><meta content="v1" name="normalized"/>
-<title>Email Triage AI Agent 自動化教學</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-01-15">
+    <meta name="doc-title" content="Email Triage AI Agent 自動化教學">
+    <meta name="doc-source" content="Wyndo / AI Maker">
+    <meta name="doc-tags" content="Agent,Automation,Tool">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="主動式Email Triage Agent實作教學，Make.com結合Gmail與OpenAI">
+    <meta name="doc-file" content="2026-01-15_email-triage-agent.html">
+    <title>Email Triage AI Agent 自動化教學</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; line-height: 1.8; color: #1e293b; background: #f8fafc; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        /* Header */
+        .header { text-align: center; padding: 3rem 2rem; background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 100%); color: white; border-radius: 1rem; margin-bottom: 2rem; }
+        .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+        .header-subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 1.5rem; }
+        .tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .tag { padding: 0.3rem 0.8rem; border-radius: 2rem; font-size: 0.8rem; font-weight: 600; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-integration { background: #99f6e4; color: #134e4a; }
+        .source-info { font-size: 0.85rem; opacity: 0.8; }
+        .source-info a { color: #93c5fd; text-decoration: none; }
+        .source-info a:hover { text-decoration: underline; }
 
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin: 1.5rem auto; padding: 0.6rem 1rem; background: rgba(255,255,255,0.15); border-radius: 8px; flex-wrap: wrap; max-width: 600px; justify-content: center; }
+        .rating-score { font-weight: 700; color: white; font-size: 1rem; }
+        .rating-stars { color: #fcd34d; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #065f46; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
 
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 1rem; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-left: 4px solid #3b82f6; }
+        .exec-summary h2 { font-size: 1.3rem; color: #1e3a8a; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .exec-summary p { color: #475569; margin-bottom: 0.75rem; }
+
+        /* Learning Objectives */
+        .objectives { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 600; color: #1e3a8a; margin-bottom: 0.25rem; font-size: 0.95rem; }
+        .objective-desc { font-size: 0.85rem; color: #64748b; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+        .content-left { background: #f0f9ff; border-radius: 0.75rem; padding: 1.5rem; border: 1px solid #bae6fd; }
+        .content-right { background: white; border-radius: 0.75rem; padding: 1.5rem; border: 1px solid #e2e8f0; }
+        .bilingual-text { margin-bottom: 1rem; }
+        .bilingual-zh { color: #1e293b; margin-bottom: 0.25rem; }
+        .bilingual-en { color: #64748b; font-style: italic; font-size: 0.9rem; }
+        .highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+        /* Info Boxes */
+        .info-box { border-radius: 0.75rem; margin-bottom: 1rem; overflow: hidden; }
+        .info-box-header { padding: 0.75rem 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+        .box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+        .box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+        .box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+        .box-cost .info-box-content { background: #f0fdfa; border: 1px solid #5eead4; border-top: none; }
+
+        /* Part Header */
+        .part-header { background: linear-gradient(135deg, #e0f2fe, #f0f9ff); padding: 1rem 1.5rem; border-radius: 0.75rem; margin-bottom: 1.5rem; border-left: 4px solid #0284c7; }
+        .part-header h3 { font-size: 1.2rem; color: #0c4a6e; margin-bottom: 0.25rem; }
+        .part-header p { font-size: 0.9rem; color: #64748b; }
+
+        /* Code Block */
+        pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; margin: 0.75rem 0; }
+        code { font-family: 'Source Code Pro', monospace; background: #e2e8f0; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.85rem; }
+        pre code { background: transparent; padding: 0; }
+
+        /* Key Takeaways */
+        .takeaways { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card:nth-child(2) { border-left-color: #10b981; }
+        .summary-card:nth-child(3) { border-left-color: #8b5cf6; }
+        .summary-card:nth-child(4) { border-left-color: #f59e0b; }
+        .summary-card-title { font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.6; }
+
+        /* Practice Questions Accordion */
+        .practice-section { background: #faf5ff; border-radius: 1rem; padding: 1.5rem; margin: 2rem 0; }
+        .practice-header { font-size: 1.2rem; font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+        .question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+        .question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); margin: 2rem 0; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 2rem; background: #f1f5f9; border-radius: 1rem; margin-top: 2rem; }
+        .footer p { font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        .chat-title { background: #e0f2fe; padding: 0.5rem 1rem; border-radius: 0.5rem; display: inline-block; margin-top: 1rem; font-size: 0.9rem; color: #0c4a6e; }
+    </style>
 </head>
 <body>
-<div class="container">
-<!-- Header -->
-<header class="header">
-<div class="tags">
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-tool">Make.com</span>
-<span class="tag tag-integration">Gmail Integration</span>
-</div>
-<h1>Email Triage AI Agent 自動化教學</h1>
-<p class="header-subtitle">如何打造主動式信箱分類代理，實現真正的 Inbox Zero</p>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
-<span class="rating-high">↑ 實務應用、工具生態</span>
-<span class="rating-low">↓ 學習曲線（需 Make.com 基礎）</span>
-</div>
-<p class="source-info">來源：The AI Maker by Wyndo | 2026.01.15 | <a href="https://aimaker.substack.com/p/build-ai-email-triage-agent-automation-make-tutorial" target="_blank">原文連結</a></p>
-</header>
-<!-- Executive Summary -->
-<section class="exec-summary">
-<h2>快速摘要</h2>
-<p>這篇文章教你建立一個<strong>主動式 (Proactive) Email Triage Agent</strong>，使用 Make.com 的 AI Agent 模組結合 Gmail，自動監控收件匣、分類標籤、生成草稿回覆，並發送 HTML 摘要報告。</p>
-<p>核心差異：不再是「你問它答」的 Reactive Agent，而是「它自動處理、你收報告」的 Proactive Agent。作者每天早上收到一封整理好的摘要信，完全不需要打開 Gmail。</p>
-<p><strong>成本估算：</strong>Make.com 付費方案 $9/月 + OpenAI API $5-10/月，總計約 $12-15/月，比市面 AI 信箱服務 $20-50/月 便宜。</p>
-</section>
-<!-- Learning Objectives -->
-<section>
-<div class="objectives">
-<div class="objective-item">
-<div class="objective-icon">1</div>
-<div class="objective-title">理解 Reactive vs Proactive Agent</div>
-<div class="objective-desc">區分「被動回應」與「主動執行」的 AI Agent 架構差異</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">2</div>
-<div class="objective-title">設計 Email Triage System Prompt</div>
-<div class="objective-desc">學習如何撰寫具備決策邏輯、優先順序、工具調用的分類系統提示</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">3</div>
-<div class="objective-title">整合 Make.com + Gmail + OpenAI</div>
-<div class="objective-desc">實作完整的自動化工作流程，從監控到輸出摘要</div>
-</div>
-</div>
-</section>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">Email Triage Agent 四步驟工作流程</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">1</div>
-<div class="framework-step-title">Gmail Trigger</div>
-<div class="framework-step-desc">監控未讀郵件</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">2</div>
-<div class="framework-step-title">AI Agent</div>
-<div class="framework-step-desc">分析內容+決策</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">3</div>
-<div class="framework-step-title">Label + Draft</div>
-<div class="framework-step-desc">標籤+草稿回覆</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">4</div>
-<div class="framework-step-title">HTML Summary</div>
-<div class="framework-step-desc">發送摘要報告</div>
-</div>
-</div>
-</div>
-<!-- PART I -->
-<div class="part-header">
-<h3>Part I：為什麼需要 Proactive Agent？</h3>
-<p>從 Reactive 到 Proactive 的關鍵轉變</p>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-text">
-<p class="zh-text">作者在前一篇文章中展示了如何建立一個連接 Email、Calendar 和 Notion 的 <span class="highlight-concept">on-demand assistant</span>——一個當你詢問時才回應的助手。</p>
-<p class="en-text">"In the previous post, I showed you how to build a personal AI agent that connects your email, calendar, and Notion tasks—an on-demand assistant that responds when you ask."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">但那個 Agent 有個問題：它是<span class="highlight-key">被動的 (Reactive)</span>。你仍然必須檢查收件匣，告訴 Agent 該做什麼。<strong>你仍然是瓶頸</strong>。</p>
-<p class="en-text">"But that agent had a problem. It was reactive. You still had to check your inbox and tell the agent what to do. You were still the bottleneck."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">作者真正需要的是：一個<span class="highlight-practical">監控收件匣並自動處理</span>到達郵件的 Agent。</p>
-<p class="en-text">"Here's what I actually needed: an agent that watches my inbox and processes emails automatically as they arrive."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">核心概念</div>
-<div class="info-box-content">
-<p><strong>Reactive Agent（被動式）：</strong>等待使用者指令才行動。你問「幫我整理信箱」，它才開始工作。</p>
-<p><strong>Proactive Agent（主動式）：</strong>持續監控事件，自動觸發行動。不需要你介入，它就完成分類、標籤、回覆草稿。</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">比喻說明</div>
-<div class="info-box-content">
-<p>想像你有一位秘書。Reactive 秘書坐在辦公室等你走過去說「幫我處理這堆信」。Proactive 秘書會自己去收發室、分類信件、把需要你簽名的放在桌上、不重要的直接歸檔，你只需要看「今日待辦摘要」。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">重點提示</div>
-<div class="info-box-content">
-<p>Proactive Agent 的價值不在於「做更多」，而在於<strong>移除你作為瓶頸的角色</strong>。你從「處理者」變成「審核者」。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- PART II -->
-<div class="part-header">
-<h3>Part II：Email Triage Agent 的設計原則</h3>
-<p>不是自動分類到資料夾，而是智慧標籤 + 有限度的自動回覆</p>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-text">
-<p class="zh-text">作者明確指出這個 Agent <strong>不是</strong>什麼：不是把所有東西分到資料夾（重要郵件會被埋沒）、不是未經審核就自動回覆（你會發蠢話）。</p>
-<p class="en-text">"Not one that sorts everything into folders (that's how important emails get buried). Not one that auto-replies without approval (that's how you send something stupid)."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">這個 Agent 的核心功能：(1) 當未讀郵件到達時自動執行、(2) 分析每封郵件（寄件者、主旨、內容）、(3) 根據分類規則標籤郵件、(4) 發送處理過的郵件摘要。</p>
-<p class="en-text">"But an agent that: Runs automatically when unread emails hit my inbox; Analyzes each email (sender, subject, content); Applies my triage rules to categorize and label them; Sends me a summary email with everything processed."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">作者早上收到的摘要郵件包含：3 封 <span class="highlight-key">URGENT</span>（需要回應的會議邀請）、2 封 <span class="highlight-practical">NEWSLETTER IDEAS</span>（值得探索的讀者問題）、1 封 FOLLOW-UP REQUIRED、4 封歸檔。</p>
-<p class="en-text">"3 emails labeled URGENT (meeting invites that need responses); 2 emails labeled NEWSLETTER IDEAS (reader questions worth exploring); 1 email labeled FOLLOW-UP REQUIRED (partnership inquiry); 4 emails archived."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">核心概念</div>
-<div class="info-box-content">
-<p><strong>智慧標籤 vs 自動資料夾：</strong>標籤保留郵件在原位，只是加上分類標記；資料夾則會移動郵件。標籤的好處是你仍然可以看到完整收件匣，但有視覺提示告訴你優先順序。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">重點提示</div>
-<div class="info-box-content">
-<p><strong>Draft Reply（草稿回覆）的設計哲學：</strong>Agent 只「準備」回覆，不「發送」回覆。這是 AI 自動化的安全閥——你保留最終審核權，避免 AI 代你發出不當內容。</p>
-<p>這正是我之前學到的 <strong>Copilot Model</strong>：100% 人工審核，適合高風險場景。</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">實務應用</div>
-<div class="info-box-content">
-<p>在製藥 CDMO 環境中，這種「草稿不自動發送」的設計尤其重要。任何對外溝通（客戶、法規單位）都需要人工審核，避免資訊洩漏或承諾不當。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- PART III -->
-<div class="part-header">
-<h3>Part III：System Prompt 的六層標籤邏輯</h3>
-<p>從 URGENT 到 READ LATER 的決策樹設計</p>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-text">
-<p class="zh-text">作者的 System Prompt 定義了六個標籤類別，並有明確的<span class="highlight-concept">優先順序決策樹</span>：</p>
-<p class="en-text">"For each email, you must decide on one primary label and apply it via the Gmail Add Label to Email tool."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text"><strong>URGENT</strong>：只用於「今天真正時間緊迫」的情況。關鍵詞包含 "today", "by end of day", "ASAP", "deadline today"。</p>
-<p class="en-text">"Use only if genuinely time-critical for TODAY... Email contains time-sensitive phrases: 'today', 'by end of day', 'EOD', 'ASAP'..."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text"><strong>FOLLOW-UP REQUIRED</strong>：需要回應但不急於今天。包含直接問題、會議安排、文件請求等。</p>
-<p class="en-text">"Use when: The email needs a response or action, but not strictly today... Direct questions that need answers, Meeting/scheduling requests..."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text"><strong>NEWSLETTER IDEAS</strong>：對於內容創作者特別設計，任何可以啟發 Newsletter 內容的郵件。</p>
-<p class="en-text">"Use when the email contains content that could inspire newsletter material... Interesting AI tools, case studies, or implementation examples..."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text"><strong>PROMOTIONAL / CHECK LATER / READ LATER</strong>：分別處理行銷郵件、陌生人的 Cold Outreach、以及資訊性但非緊急的內容。</p>
-<p class="en-text">"PROMOTIONAL: Marketing/sales emails, product announcements... CHECK LATER: Cold outreach from unknown senders... READ LATER: Informative but not action-oriented..."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">核心概念</div>
-<div class="info-box-content">
-<p><strong>Decision Priority Order（決策優先順序）：</strong>當多個標籤都可能適用時，System Prompt 定義了明確的判斷順序：</p>
-<p>1. 寄件者是否未知且明顯是 Cold Outreach → CHECK LATER</p>
-<p>2. 是否需要<strong>今天</strong>做決定或行動 → URGENT</p>
-<p>3. 是否需要回應但不急 → FOLLOW-UP REQUIRED</p>
-<p>4. 是否是行銷/銷售郵件 → PROMOTIONAL</p>
-<p>5. 內容是否能啟發 Newsletter → NEWSLETTER IDEAS</p>
-<p>6. 預設 → READ LATER</p>
-</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">比喻說明</div>
-<div class="info-box-content">
-<p>這就像急診室的 <strong>Triage（檢傷分類）</strong>系統：不是「誰先來誰先看」，而是根據嚴重程度分配資源。紅色（立即處理）、橙色（緊急但可等）、黃色（需要關注）、綠色（可延後）。你的收件匣也需要這種系統。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">重點提示</div>
-<div class="info-box-content">
-<p><strong>每封郵件只套用一個標籤：</strong>這是刻意的設計。多重標籤會造成認知負擔，你最後還是要決定「這封信到底屬於哪類」。單一標籤強制 Agent 做出判斷。</p>
-<p><strong>注意：</strong>你必須先在 Gmail 中建立這些標籤，否則 Agent 無法套用。</p>
-</div>
-</div>
-</div>
-</div>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="tags">
+                <span class="tag tag-automation">Automation</span>
+                <span class="tag tag-agent">Agent</span>
+                <span class="tag tag-tool">Make.com</span>
+                <span class="tag tag-integration">Gmail Integration</span>
+            </div>
+            <h1>Email Triage AI Agent 自動化教學</h1>
+            <p class="header-subtitle">如何打造主動式信箱分類代理，實現真正的 Inbox Zero</p>
+            
+            <div class="rating-bar">
+                <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
+                <span class="rating-high">↑ 實務應用、工具生態</span>
+                <span class="rating-low">↓ 學習曲線（需 Make.com 基礎）</span>
+            </div>
+            
+            <p class="source-info">來源：The AI Maker by Wyndo | 2026.01.15 | <a href="https://aimaker.substack.com/p/build-ai-email-triage-agent-automation-make-tutorial" target="_blank">原文連結</a></p>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="exec-summary">
+            <h2>快速摘要</h2>
+            <p>這篇文章教你建立一個<strong>主動式 (Proactive) Email Triage Agent</strong>，使用 Make.com 的 AI Agent 模組結合 Gmail，自動監控收件匣、分類標籤、生成草稿回覆，並發送 HTML 摘要報告。</p>
+            <p>核心差異：不再是「你問它答」的 Reactive Agent，而是「它自動處理、你收報告」的 Proactive Agent。作者每天早上收到一封整理好的摘要信，完全不需要打開 Gmail。</p>
+            <p><strong>成本估算：</strong>Make.com 付費方案 $9/月 + OpenAI API $5-10/月，總計約 $12-15/月，比市面 AI 信箱服務 $20-50/月 便宜。</p>
+        </section>
+
+        <!-- Learning Objectives -->
+        <section>
+            <div class="objectives">
+                <div class="objective-item">
+                    <div class="objective-icon">1</div>
+                    <div class="objective-title">理解 Reactive vs Proactive Agent</div>
+                    <div class="objective-desc">區分「被動回應」與「主動執行」的 AI Agent 架構差異</div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-icon">2</div>
+                    <div class="objective-title">設計 Email Triage System Prompt</div>
+                    <div class="objective-desc">學習如何撰寫具備決策邏輯、優先順序、工具調用的分類系統提示</div>
+                </div>
+                <div class="objective-item">
+                    <div class="objective-icon">3</div>
+                    <div class="objective-title">整合 Make.com + Gmail + OpenAI</div>
+                    <div class="objective-desc">實作完整的自動化工作流程，從監控到輸出摘要</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Framework Visual -->
+        <div class="framework-visual">
+            <div class="framework-title">Email Triage Agent 四步驟工作流程</div>
+            <div class="framework-steps">
+                <div class="framework-step">
+                    <div class="framework-icon">1</div>
+                    <div class="framework-step-title">Gmail Trigger</div>
+                    <div class="framework-step-desc">監控未讀郵件</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">2</div>
+                    <div class="framework-step-title">AI Agent</div>
+                    <div class="framework-step-desc">分析內容+決策</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">3</div>
+                    <div class="framework-step-title">Label + Draft</div>
+                    <div class="framework-step-desc">標籤+草稿回覆</div>
+                </div>
+                <div class="framework-arrow">→</div>
+                <div class="framework-step">
+                    <div class="framework-icon">4</div>
+                    <div class="framework-step-title">HTML Summary</div>
+                    <div class="framework-step-desc">發送摘要報告</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART I -->
+        <div class="part-header">
+            <h3>Part I：為什麼需要 Proactive Agent？</h3>
+            <p>從 Reactive 到 Proactive 的關鍵轉變</p>
+        </div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">作者在前一篇文章中展示了如何建立一個連接 Email、Calendar 和 Notion 的 <span class="highlight-concept">on-demand assistant</span>——一個當你詢問時才回應的助手。</p>
+                    <p class="bilingual-en">"In the previous post, I showed you how to build a personal AI agent that connects your email, calendar, and Notion tasks—an on-demand assistant that responds when you ask."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">但那個 Agent 有個問題：它是<span class="highlight-key">被動的 (Reactive)</span>。你仍然必須檢查收件匣，告訴 Agent 該做什麼。<strong>你仍然是瓶頸</strong>。</p>
+                    <p class="bilingual-en">"But that agent had a problem. It was reactive. You still had to check your inbox and tell the agent what to do. You were still the bottleneck."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">作者真正需要的是：一個<span class="highlight-practical">監控收件匣並自動處理</span>到達郵件的 Agent。</p>
+                    <p class="bilingual-en">"Here's what I actually needed: an agent that watches my inbox and processes emails automatically as they arrive."</p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>Reactive Agent（被動式）：</strong>等待使用者指令才行動。你問「幫我整理信箱」，它才開始工作。</p>
+                        <p><strong>Proactive Agent（主動式）：</strong>持續監控事件，自動觸發行動。不需要你介入，它就完成分類、標籤、回覆草稿。</p>
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">比喻說明</div>
+                    <div class="info-box-content">
+                        <p>想像你有一位秘書。Reactive 秘書坐在辦公室等你走過去說「幫我處理這堆信」。Proactive 秘書會自己去收發室、分類信件、把需要你簽名的放在桌上、不重要的直接歸檔，你只需要看「今日待辦摘要」。</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        <p>Proactive Agent 的價值不在於「做更多」，而在於<strong>移除你作為瓶頸的角色</strong>。你從「處理者」變成「審核者」。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART II -->
+        <div class="part-header">
+            <h3>Part II：Email Triage Agent 的設計原則</h3>
+            <p>不是自動分類到資料夾，而是智慧標籤 + 有限度的自動回覆</p>
+        </div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">作者明確指出這個 Agent <strong>不是</strong>什麼：不是把所有東西分到資料夾（重要郵件會被埋沒）、不是未經審核就自動回覆（你會發蠢話）。</p>
+                    <p class="bilingual-en">"Not one that sorts everything into folders (that's how important emails get buried). Not one that auto-replies without approval (that's how you send something stupid)."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">這個 Agent 的核心功能：(1) 當未讀郵件到達時自動執行、(2) 分析每封郵件（寄件者、主旨、內容）、(3) 根據分類規則標籤郵件、(4) 發送處理過的郵件摘要。</p>
+                    <p class="bilingual-en">"But an agent that: Runs automatically when unread emails hit my inbox; Analyzes each email (sender, subject, content); Applies my triage rules to categorize and label them; Sends me a summary email with everything processed."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">作者早上收到的摘要郵件包含：3 封 <span class="highlight-key">URGENT</span>（需要回應的會議邀請）、2 封 <span class="highlight-practical">NEWSLETTER IDEAS</span>（值得探索的讀者問題）、1 封 FOLLOW-UP REQUIRED、4 封歸檔。</p>
+                    <p class="bilingual-en">"3 emails labeled URGENT (meeting invites that need responses); 2 emails labeled NEWSLETTER IDEAS (reader questions worth exploring); 1 email labeled FOLLOW-UP REQUIRED (partnership inquiry); 4 emails archived."</p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>智慧標籤 vs 自動資料夾：</strong>標籤保留郵件在原位，只是加上分類標記；資料夾則會移動郵件。標籤的好處是你仍然可以看到完整收件匣，但有視覺提示告訴你優先順序。</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>Draft Reply（草稿回覆）的設計哲學：</strong>Agent 只「準備」回覆，不「發送」回覆。這是 AI 自動化的安全閥——你保留最終審核權，避免 AI 代你發出不當內容。</p>
+                        <p>這正是我之前學到的 <strong>Copilot Model</strong>：100% 人工審核，適合高風險場景。</p>
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">實務應用</div>
+                    <div class="info-box-content">
+                        <p>在製藥 CDMO 環境中，這種「草稿不自動發送」的設計尤其重要。任何對外溝通（客戶、法規單位）都需要人工審核，避免資訊洩漏或承諾不當。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART III -->
+        <div class="part-header">
+            <h3>Part III：System Prompt 的六層標籤邏輯</h3>
+            <p>從 URGENT 到 READ LATER 的決策樹設計</p>
+        </div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">作者的 System Prompt 定義了六個標籤類別，並有明確的<span class="highlight-concept">優先順序決策樹</span>：</p>
+                    <p class="bilingual-en">"For each email, you must decide on one primary label and apply it via the Gmail Add Label to Email tool."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh"><strong>URGENT</strong>：只用於「今天真正時間緊迫」的情況。關鍵詞包含 "today", "by end of day", "ASAP", "deadline today"。</p>
+                    <p class="bilingual-en">"Use only if genuinely time-critical for TODAY... Email contains time-sensitive phrases: 'today', 'by end of day', 'EOD', 'ASAP'..."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh"><strong>FOLLOW-UP REQUIRED</strong>：需要回應但不急於今天。包含直接問題、會議安排、文件請求等。</p>
+                    <p class="bilingual-en">"Use when: The email needs a response or action, but not strictly today... Direct questions that need answers, Meeting/scheduling requests..."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh"><strong>NEWSLETTER IDEAS</strong>：對於內容創作者特別設計，任何可以啟發 Newsletter 內容的郵件。</p>
+                    <p class="bilingual-en">"Use when the email contains content that could inspire newsletter material... Interesting AI tools, case studies, or implementation examples..."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh"><strong>PROMOTIONAL / CHECK LATER / READ LATER</strong>：分別處理行銷郵件、陌生人的 Cold Outreach、以及資訊性但非緊急的內容。</p>
+                    <p class="bilingual-en">"PROMOTIONAL: Marketing/sales emails, product announcements... CHECK LATER: Cold outreach from unknown senders... READ LATER: Informative but not action-oriented..."</p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>Decision Priority Order（決策優先順序）：</strong>當多個標籤都可能適用時，System Prompt 定義了明確的判斷順序：</p>
+                        <p>1. 寄件者是否未知且明顯是 Cold Outreach → CHECK LATER</p>
+                        <p>2. 是否需要<strong>今天</strong>做決定或行動 → URGENT</p>
+                        <p>3. 是否需要回應但不急 → FOLLOW-UP REQUIRED</p>
+                        <p>4. 是否是行銷/銷售郵件 → PROMOTIONAL</p>
+                        <p>5. 內容是否能啟發 Newsletter → NEWSLETTER IDEAS</p>
+                        <p>6. 預設 → READ LATER</p>
+                    </div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">比喻說明</div>
+                    <div class="info-box-content">
+                        <p>這就像急診室的 <strong>Triage（檢傷分類）</strong>系統：不是「誰先來誰先看」，而是根據嚴重程度分配資源。紅色（立即處理）、橙色（緊急但可等）、黃色（需要關注）、綠色（可延後）。你的收件匣也需要這種系統。</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>每封郵件只套用一個標籤：</strong>這是刻意的設計。多重標籤會造成認知負擔，你最後還是要決定「這封信到底屬於哪類」。單一標籤強制 Agent 做出判斷。</p>
+                        <p><strong>注意：</strong>你必須先在 Gmail 中建立這些標籤，否則 Agent 無法套用。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 <!-- PART IV -->
-<div class="part-header">
-<h3>Part IV：Context 個人化設定</h3>
-<p>讓 Agent 理解你的工作情境、重要聯絡人、個人偏好</p>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-text">
-<p class="zh-text">作者強調可以在 <span class="highlight-concept">Context</span> 區塊加入更多關於你自己的資訊。例如，你可能想讓特定網域的郵件獲得不同處理，因為他們是同事或主管。</p>
-<p class="en-text">"Before we continue, you can use the Context feature to add more information about yourself. For example, you might want to treat emails from specific domains differently because they're from colleagues or managers."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">作者的個人範例：他建立 Newsletter「The AI Maker」，所以告訴 Agent 任何「有人按讚我的文章」的通知都自動歸檔，不要混在重要郵件中。</p>
-<p class="en-text">"For instance: I receive Substack notifications whenever someone likes my post. I've told the AI agent that I'm building my newsletter, The AI Maker, and that any email indicating someone liked my post should be moved to 'Archive'..."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="info-box-header">實務應用</div>
-<div class="info-box-content">
-<p><strong>Context 設定範例（製藥 CDMO 情境）：</strong></p>
-<p>• 來自 @client.com 網域的郵件：預設 FOLLOW-UP REQUIRED，若主旨含「production」或「批次問題」則 URGENT</p>
-<p>• 來自內部 QA 部門：若含「deviation」或「OOS」則 URGENT</p>
-<p>• 法規更新通知：標記為 READ LATER 但加星號</p>
-<p>• 設備供應商的行銷郵件：PROMOTIONAL</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">重點提示</div>
-<div class="info-box-content">
-<p><strong>Context 是 Agent 個人化的關鍵：</strong>System Prompt 定義「通用規則」，Context 定義「你的規則」。兩者結合才能讓 Agent 真正理解你的工作情境。</p>
-<p>這也是為什麼同一個 Agent 架構，不同人用會有不同效果——Context 的深度決定了準確度。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- PART V -->
-<div class="part-header">
-<h3>Part V：Make.com Scenario 建構步驟</h3>
-<p>從 Gmail Watch 到 HTML Summary 的完整流程</p>
-</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-text">
-<p class="zh-text"><strong>Step 1：監控郵件</strong> - 使用 Gmail: Watch emails 模組，監控 Inbox 資料夾、只處理未讀郵件、抓取後標記為已讀、設定每次處理上限（建議從 10 封開始測試）。</p>
-<p class="en-text">"Open a new scenario in Make, then add a starting module called Gmail: Watch emails... I want to simply monitor all emails in the 'Inbox' folder, process only unread messages, mark them as read once fetched, and set a limit of 50."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text"><strong>Step 2：Bundle 郵件</strong> - 使用 <span class="highlight-concept">Array Aggregator</span> 將所有郵件打包成單一批次，才能一次傳給 AI Agent。否則 Agent 會對每封郵件分別處理並重複發送摘要。</p>
-<p class="en-text">"Next, we want these emails bundled into a single batch for processing so we can pass them all to the AI agent later. To do this, we need an Array Aggregator."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text">需要打包的欄位：Message ID、Thread ID（重要！用於生成 Draft Reply）、Subject、From (name)、From (email)、Snippet（Gmail 自動生成的摘要）。</p>
-<p class="en-text">"In Aggregated fields, select which parts of the emails you want to pass to the AI agent. Here's the checklist: Message ID, Thread ID (important for generating a draft reply), Subject, From (name), From (email), Snippet..."</p>
-</div>
-<div class="bilingual-text">
-<p class="zh-text"><strong>重要建議：</strong>使用 <span class="highlight-key">Snippet</span> 而非 Full text body。Full text body 可能太大，導致 Agent 無法處理所有郵件。</p>
-<p class="en-text">"My suggestion: Use Snippet instead of Full text body to analyze your emails because Full text body can be too large to process, and your AI agent may respond that it can't handle all emails."</p>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">核心概念</div>
-<div class="info-box-content">
-<p><strong>Array Aggregator 的作用：</strong>Make.com 預設是「每筆資料觸發一次後續流程」。當你收到 10 封郵件，沒有 Aggregator 時，AI Agent 會被呼叫 10 次，產生 10 封摘要信。</p>
-<p>加入 Aggregator 後，10 封郵件被「打包」成一個陣列，AI Agent 只被呼叫 1 次，產生 1 封完整摘要。</p>
-</div>
-</div>
-<div class="info-box box-cost">
-<div class="info-box-header">成本分析</div>
-<div class="info-box-content">
-<p><strong>Snippet vs Full Body 的 Token 考量：</strong></p>
-<p>• Snippet：約 50-100 tokens/封</p>
-<p>• Full Body：可能 500-2000+ tokens/封</p>
-<p>假設每天處理 50 封郵件：</p>
-<p>• Snippet：~5,000 tokens/天</p>
-<p>• Full Body：~50,000 tokens/天</p>
-<p>OpenAI GPT-4o 定價約 $5/1M input tokens，差異雖不大，但累積起來 Snippet 更經濟且更穩定。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">重點提示</div>
-<div class="info-box-content">
-<p><strong>Scenario Settings 調整：</strong>Gmail 模組每次只能處理 10 封郵件。若你設定處理 50 封，需要在 Scenario settings 將 cycle 從 1 調整為 5，讓流程執行 5 輪。</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Code Example for Additional Instructions -->
-<div class="info-box box-code" style="margin: 0 0 2rem 0;">
-<div class="info-box-header">程式碼/API</div>
-<div class="info-box-content">
-<p><strong>AI Agent 的 Additional System Instructions（傳入郵件陣列）：</strong></p>
-<pre><code>You are an email triage agent to help me manage my emails and provide HTML summaries.
+        <div class="part-header">
+            <h3>Part IV：Context 個人化設定</h3>
+            <p>讓 Agent 理解你的工作情境、重要聯絡人、個人偏好</p>
+        </div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">作者強調可以在 <span class="highlight-concept">Context</span> 區塊加入更多關於你自己的資訊。例如，你可能想讓特定網域的郵件獲得不同處理，因為他們是同事或主管。</p>
+                    <p class="bilingual-en">"Before we continue, you can use the Context feature to add more information about yourself. For example, you might want to treat emails from specific domains differently because they're from colleagues or managers."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">作者的個人範例：他建立 Newsletter「The AI Maker」，所以告訴 Agent 任何「有人按讚我的文章」的通知都自動歸檔，不要混在重要郵件中。</p>
+                    <p class="bilingual-en">"For instance: I receive Substack notifications whenever someone likes my post. I've told the AI agent that I'm building my newsletter, The AI Maker, and that any email indicating someone liked my post should be moved to 'Archive'..."</p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-practical">
+                    <div class="info-box-header">實務應用</div>
+                    <div class="info-box-content">
+                        <p><strong>Context 設定範例（製藥 CDMO 情境）：</strong></p>
+                        <p>• 來自 @client.com 網域的郵件：預設 FOLLOW-UP REQUIRED，若主旨含「production」或「批次問題」則 URGENT</p>
+                        <p>• 來自內部 QA 部門：若含「deviation」或「OOS」則 URGENT</p>
+                        <p>• 法規更新通知：標記為 READ LATER 但加星號</p>
+                        <p>• 設備供應商的行銷郵件：PROMOTIONAL</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>Context 是 Agent 個人化的關鍵：</strong>System Prompt 定義「通用規則」，Context 定義「你的規則」。兩者結合才能讓 Agent 真正理解你的工作情境。</p>
+                        <p>這也是為什麼同一個 Agent 架構，不同人用會有不同效果——Context 的深度決定了準確度。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PART V -->
+        <div class="part-header">
+            <h3>Part V：Make.com Scenario 建構步驟</h3>
+            <p>從 Gmail Watch 到 HTML Summary 的完整流程</p>
+        </div>
+        <div class="content-grid">
+            <div class="content-left">
+                <div class="bilingual-text">
+                    <p class="bilingual-zh"><strong>Step 1：監控郵件</strong> - 使用 Gmail: Watch emails 模組，監控 Inbox 資料夾、只處理未讀郵件、抓取後標記為已讀、設定每次處理上限（建議從 10 封開始測試）。</p>
+                    <p class="bilingual-en">"Open a new scenario in Make, then add a starting module called Gmail: Watch emails... I want to simply monitor all emails in the 'Inbox' folder, process only unread messages, mark them as read once fetched, and set a limit of 50."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh"><strong>Step 2：Bundle 郵件</strong> - 使用 <span class="highlight-concept">Array Aggregator</span> 將所有郵件打包成單一批次，才能一次傳給 AI Agent。否則 Agent 會對每封郵件分別處理並重複發送摘要。</p>
+                    <p class="bilingual-en">"Next, we want these emails bundled into a single batch for processing so we can pass them all to the AI agent later. To do this, we need an Array Aggregator."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh">需要打包的欄位：Message ID、Thread ID（重要！用於生成 Draft Reply）、Subject、From (name)、From (email)、Snippet（Gmail 自動生成的摘要）。</p>
+                    <p class="bilingual-en">"In Aggregated fields, select which parts of the emails you want to pass to the AI agent. Here's the checklist: Message ID, Thread ID (important for generating a draft reply), Subject, From (name), From (email), Snippet..."</p>
+                </div>
+                <div class="bilingual-text">
+                    <p class="bilingual-zh"><strong>重要建議：</strong>使用 <span class="highlight-key">Snippet</span> 而非 Full text body。Full text body 可能太大，導致 Agent 無法處理所有郵件。</p>
+                    <p class="bilingual-en">"My suggestion: Use Snippet instead of Full text body to analyze your emails because Full text body can be too large to process, and your AI agent may respond that it can't handle all emails."</p>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-concept">
+                    <div class="info-box-header">核心概念</div>
+                    <div class="info-box-content">
+                        <p><strong>Array Aggregator 的作用：</strong>Make.com 預設是「每筆資料觸發一次後續流程」。當你收到 10 封郵件，沒有 Aggregator 時，AI Agent 會被呼叫 10 次，產生 10 封摘要信。</p>
+                        <p>加入 Aggregator 後，10 封郵件被「打包」成一個陣列，AI Agent 只被呼叫 1 次，產生 1 封完整摘要。</p>
+                    </div>
+                </div>
+                <div class="info-box box-cost">
+                    <div class="info-box-header">成本分析</div>
+                    <div class="info-box-content">
+                        <p><strong>Snippet vs Full Body 的 Token 考量：</strong></p>
+                        <p>• Snippet：約 50-100 tokens/封</p>
+                        <p>• Full Body：可能 500-2000+ tokens/封</p>
+                        <p>假設每天處理 50 封郵件：</p>
+                        <p>• Snippet：~5,000 tokens/天</p>
+                        <p>• Full Body：~50,000 tokens/天</p>
+                        <p>OpenAI GPT-4o 定價約 $5/1M input tokens，差異雖不大，但累積起來 Snippet 更經濟且更穩定。</p>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        <p><strong>Scenario Settings 調整：</strong>Gmail 模組每次只能處理 10 封郵件。若你設定處理 50 封，需要在 Scenario settings 將 cycle 從 1 調整為 5，讓流程執行 5 輪。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Example for Additional Instructions -->
+        <div class="info-box box-code" style="margin: 0 0 2rem 0;">
+            <div class="info-box-header">程式碼/API</div>
+            <div class="info-box-content">
+                <p><strong>AI Agent 的 Additional System Instructions（傳入郵件陣列）：</strong></p>
+                <pre><code>You are an email triage agent to help me manage my emails and provide HTML summaries.
 
 You will receive an array of email objects. Each email object contains:
 - `id`: Gmail message ID
@@ -339,116 +479,124 @@ EXECUTION INSTRUCTIONS:
 1. Iterate through the array of emails
 2. For each email: Analyze → Determine label → Apply label via tool → Create draft if URGENT/FOLLOW-UP
 3. After processing ALL emails: Compile summary → Generate HTML → OUTPUT as final text response</code></pre>
-<p style="margin-top: 1rem;"><strong>傳入的 Message（使用 Make.com 變數）：</strong></p>
-<pre><code>Here's the array of emails you need to process:
+                <p style="margin-top: 1rem;"><strong>傳入的 Message（使用 Make.com 變數）：</strong></p>
+                <pre><code>Here's the array of emails you need to process:
 
 {{4.array}}</code></pre>
-<p style="margin-top: 0.5rem; font-size: 0.85rem; color: #64748b;">注意：<code>{{4.array}}</code> 是 Make.com 的變數語法，代表前一個 Array Aggregator 模組的輸出。</p>
-</div>
-</div>
-<!-- Key Takeaways -->
-<section>
-<div class="part-header">
-<h3>Key Takeaways</h3>
-<p>這篇文章的四個核心要點</p>
-</div>
-<div class="takeaways">
-<div class="summary-card">
-<div class="summary-card-title">Proactive &gt; Reactive</div>
-<div class="summary-card-text">真正的生產力提升來自移除自己作為瓶頸。Proactive Agent 讓你從「處理者」變成「審核者」，每天只需看一封摘要信。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">Draft, Not Auto-Send</div>
-<div class="summary-card-text">Agent 只生成草稿，不自動發送。這是 AI 自動化的安全閥——保留人類審核權，避免發出不當內容。Copilot Model 的典型應用。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">決策樹勝過模糊規則</div>
-<div class="summary-card-text">System Prompt 中的六層優先順序（URGENT → CHECK LATER）讓 Agent 有明確的判斷依據，減少邊界情況的誤判。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">Context 是個人化關鍵</div>
-<div class="summary-card-text">通用 System Prompt + 個人 Context = 真正理解你工作情境的 Agent。同一架構，不同人用效果截然不同。</div>
-</div>
-</div>
-</section>
-<!-- Practice Questions -->
-<section class="practice-section">
-<div class="practice-header">練習題</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">為什麼作者選擇「智慧標籤」而非「自動分類到資料夾」？這兩種方法在使用者體驗上有什麼差異？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>答案：</strong>自動分類到資料夾會讓郵件「消失」在視野中，重要郵件可能被埋沒在某個資料夾裡而錯過。智慧標籤則保留郵件在收件匣，只是加上視覺標記，讓你仍能看到完整收件匣的同時，快速識別優先順序。</p>
-<p>使用者體驗差異：</p>
-<ul>
-<li><strong>資料夾：</strong>需要主動切換檢視不同資料夾，認知負擔較高，容易遺漏</li>
-<li><strong>標籤：</strong>單一視窗即可看到所有郵件的優先級，掃描效率更高</li>
-</ul>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要在製藥 CDMO 環境中部署這個 Email Triage Agent，會如何修改六層標籤邏輯？請設計至少 3 個產業特定的標籤規則。</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>參考答案：</strong></p>
-<ul>
-<li><strong>REGULATORY URGENT：</strong>來自 FDA、TFDA、EMA 的郵件，或主旨含「483」「Warning Letter」「inspection」等關鍵詞，優先於一般 URGENT</li>
-<li><strong>DEVIATION ALERT：</strong>含「OOS」「deviation」「CAPA」「batch failure」的內部通知，需要即時關注</li>
-<li><strong>CLIENT ESCALATION：</strong>來自客戶且主旨含「urgent」「critical」「production hold」的郵件，直接升級為最高優先</li>
-<li><strong>TECH TRANSFER：</strong>關於新產品或技術轉移的郵件，標記為需要追蹤但非緊急</li>
-</ul>
-<p>重點是根據產業的「什麼不能等」來定義 URGENT，而非通用的時間敏感詞。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">這個 Email Triage Agent 的設計中，有什麼潛在風險或限制是作者沒有提到的？如何緩解這些風險？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>潛在風險與限制：</strong></p>
-<ul>
-<li><strong>誤判的連鎖效應：</strong>如果 Agent 把真正緊急的郵件標為 READ LATER，你可能幾天都不會看到。緩解：定期抽查 READ LATER 標籤，或設定「未回覆超過 X 天」的二次提醒</li>
-<li><strong>Snippet 資訊不足：</strong>有些郵件的重要性藏在附件或郵件中段，Snippet 只抓開頭。緩解：對特定寄件者（如主管、重要客戶）使用 Full Body</li>
-<li><strong>Draft Reply 品質：</strong>AI 生成的草稿可能語氣不對或資訊錯誤，若審核不仔細會發出問題回覆。緩解：草稿只處理「確認收到、會回覆」等低風險回應</li>
-<li><strong>隱私與合規：</strong>郵件內容傳給 OpenAI API，可能違反企業資料政策。緩解：使用私有部署或確認 API 不訓練資料</li>
-</ul>
-</div>
-</details>
-</section>
-<!-- Bottom Line -->
-<div class="bottom-line">
-<div class="bottom-line-header">我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Proactive Agent 的價值不在於「做更多」，而在於「移除瓶頸」。這個概念可以應用在我的 CDMO 工作中——從「處理者」變成「審核者」的轉變，正是我追求 COO 角色需要建立的工作模式。Email Triage 是最容易開始的 Proactive Agent 應用場景。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週可以做：(1) 在 Gmail 建立六個基本標籤（URGENT, FOLLOW-UP, NEWSLETTER IDEAS, PROMOTIONAL, CHECK LATER, READ LATER）(2) 註冊 Make.com 試用帳號，熟悉介面 (3) 用我的工作情境改寫 Context 設定，特別是 Client、Regulatory、Internal QA 的判斷規則。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章沒有討論企業環境的資料合規問題（郵件傳給 OpenAI API 是否符合公司政策）。在正式部署前需要確認：(1) 公司對外部 AI 服務的政策 (2) 是否有私有部署選項 (3) 只處理非機密郵件的可行性。另外，Gmail 是消費者工具，企業用 Outlook 時需要調整整合方式。</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026 年 1 月 16 日</p>
-<p>原文來源：<a href="https://aimaker.substack.com/p/build-ai-email-triage-agent-automation-make-tutorial" target="_blank">The AI Maker - How I Automated Inbox Zero Without Losing Control</a></p>
-<p>作者：Wyndo</p>
-<div class="chat-title">建議 Chat Title：[Automation] Email Triage Agent - Make.com + Gmail 自動化</div>
-</footer>
-</div>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #64748b;">注意：<code>{{4.array}}</code> 是 Make.com 的變數語法，代表前一個 Array Aggregator 模組的輸出。</p>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <section>
+            <div class="part-header">
+                <h3>Key Takeaways</h3>
+                <p>這篇文章的四個核心要點</p>
+            </div>
+            <div class="takeaways">
+                <div class="summary-card">
+                    <div class="summary-card-title">Proactive > Reactive</div>
+                    <div class="summary-card-text">真正的生產力提升來自移除自己作為瓶頸。Proactive Agent 讓你從「處理者」變成「審核者」，每天只需看一封摘要信。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-title">Draft, Not Auto-Send</div>
+                    <div class="summary-card-text">Agent 只生成草稿，不自動發送。這是 AI 自動化的安全閥——保留人類審核權，避免發出不當內容。Copilot Model 的典型應用。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-title">決策樹勝過模糊規則</div>
+                    <div class="summary-card-text">System Prompt 中的六層優先順序（URGENT → CHECK LATER）讓 Agent 有明確的判斷依據，減少邊界情況的誤判。</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-card-title">Context 是個人化關鍵</div>
+                    <div class="summary-card-text">通用 System Prompt + 個人 Context = 真正理解你工作情境的 Agent。同一架構，不同人用效果截然不同。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Questions -->
+        <section class="practice-section">
+            <div class="practice-header">練習題</div>
+            
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q1</span>
+                    <span class="question-type">概念理解</span>
+                    <span class="question-text">為什麼作者選擇「智慧標籤」而非「自動分類到資料夾」？這兩種方法在使用者體驗上有什麼差異？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>答案：</strong>自動分類到資料夾會讓郵件「消失」在視野中，重要郵件可能被埋沒在某個資料夾裡而錯過。智慧標籤則保留郵件在收件匣，只是加上視覺標記，讓你仍能看到完整收件匣的同時，快速識別優先順序。</p>
+                    <p>使用者體驗差異：</p>
+                    <ul>
+                        <li><strong>資料夾：</strong>需要主動切換檢視不同資料夾，認知負擔較高，容易遺漏</li>
+                        <li><strong>標籤：</strong>單一視窗即可看到所有郵件的優先級，掃描效率更高</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q2</span>
+                    <span class="question-type">產業應用</span>
+                    <span class="question-text">如果你要在製藥 CDMO 環境中部署這個 Email Triage Agent，會如何修改六層標籤邏輯？請設計至少 3 個產業特定的標籤規則。</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>參考答案：</strong></p>
+                    <ul>
+                        <li><strong>REGULATORY URGENT：</strong>來自 FDA、TFDA、EMA 的郵件，或主旨含「483」「Warning Letter」「inspection」等關鍵詞，優先於一般 URGENT</li>
+                        <li><strong>DEVIATION ALERT：</strong>含「OOS」「deviation」「CAPA」「batch failure」的內部通知，需要即時關注</li>
+                        <li><strong>CLIENT ESCALATION：</strong>來自客戶且主旨含「urgent」「critical」「production hold」的郵件，直接升級為最高優先</li>
+                        <li><strong>TECH TRANSFER：</strong>關於新產品或技術轉移的郵件，標記為需要追蹤但非緊急</li>
+                    </ul>
+                    <p>重點是根據產業的「什麼不能等」來定義 URGENT，而非通用的時間敏感詞。</p>
+                </div>
+            </details>
+
+            <details class="question-accordion">
+                <summary class="question-header">
+                    <span class="question-number">Q3</span>
+                    <span class="question-type">批判思考</span>
+                    <span class="question-text">這個 Email Triage Agent 的設計中，有什麼潛在風險或限制是作者沒有提到的？如何緩解這些風險？</span>
+                    <span class="accordion-icon"></span>
+                </summary>
+                <div class="question-answer">
+                    <p><strong>潛在風險與限制：</strong></p>
+                    <ul>
+                        <li><strong>誤判的連鎖效應：</strong>如果 Agent 把真正緊急的郵件標為 READ LATER，你可能幾天都不會看到。緩解：定期抽查 READ LATER 標籤，或設定「未回覆超過 X 天」的二次提醒</li>
+                        <li><strong>Snippet 資訊不足：</strong>有些郵件的重要性藏在附件或郵件中段，Snippet 只抓開頭。緩解：對特定寄件者（如主管、重要客戶）使用 Full Body</li>
+                        <li><strong>Draft Reply 品質：</strong>AI 生成的草稿可能語氣不對或資訊錯誤，若審核不仔細會發出問題回覆。緩解：草稿只處理「確認收到、會回覆」等低風險回應</li>
+                        <li><strong>隱私與合規：</strong>郵件內容傳給 OpenAI API，可能違反企業資料政策。緩解：使用私有部署或確認 API 不訓練資料</li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- Bottom Line -->
+        <div class="bottom-line">
+            <div class="bottom-line-header">我的行動結論</div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">✔ 核心洞察</div>
+                <div class="bottom-line-text">Proactive Agent 的價值不在於「做更多」，而在於「移除瓶頸」。這個概念可以應用在我的 CDMO 工作中——從「處理者」變成「審核者」的轉變，正是我追求 COO 角色需要建立的工作模式。Email Triage 是最容易開始的 Proactive Agent 應用場景。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">📈 立即應用</div>
+                <div class="bottom-line-text">本週可以做：(1) 在 Gmail 建立六個基本標籤（URGENT, FOLLOW-UP, NEWSLETTER IDEAS, PROMOTIONAL, CHECK LATER, READ LATER）(2) 註冊 Make.com 試用帳號，熟悉介面 (3) 用我的工作情境改寫 Context 設定，特別是 Client、Regulatory、Internal QA 的判斷規則。</div>
+            </div>
+            <div class="bottom-line-item">
+                <div class="bottom-line-label">⚠ 需要補充</div>
+                <div class="bottom-line-text">文章沒有討論企業環境的資料合規問題（郵件傳給 OpenAI API 是否符合公司政策）。在正式部署前需要確認：(1) 公司對外部 AI 服務的政策 (2) 是否有私有部署選項 (3) 只處理非機密郵件的可行性。另外，Gmail 是消費者工具，企業用 Outlook 時需要調整整合方式。</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>製作日期：2026 年 1 月 16 日</p>
+            <p>原文來源：<a href="https://aimaker.substack.com/p/build-ai-email-triage-agent-automation-make-tutorial" target="_blank">The AI Maker - How I Automated Inbox Zero Without Losing Control</a></p>
+            <p>作者：Wyndo</p>
+            <div class="chat-title">建議 Chat Title：[Automation] Email Triage Agent - Make.com + Gmail 自動化</div>
+        </footer>
+
+    </div>
 </body>
 </html>

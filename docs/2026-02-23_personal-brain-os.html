@@ -1,422 +1,617 @@
 <!DOCTYPE html>
-
 <html lang="zh-TW">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Personal Brain OS：用檔案系統打造 AI Agent 的個人作業系統</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-<!-- Dashboard Index Meta -->
-<meta content="2026-02-23" name="doc-date"/>
-<meta content="Personal Brain OS - File System as AI Agent Memory" name="doc-title"/>
-<meta content="Muratcan Koylan / X Thread" name="doc-source"/>
-<meta content="Agent,Framework,Tool,Automation" name="doc-tags"/>
-<meta content="4.2" name="doc-rating"/>
-<meta content="用 Git repo + 80 個檔案打造 AI Agent 個人 OS，實現 Progressive Disclosure 與 Context Engineering。" name="doc-summary"/>
-<meta content="2026-02-23_personal-brain-os.html" name="doc-file"/><meta content="v1" name="normalized"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Brain OS：用檔案系統打造 AI Agent 的個人作業系統</title>
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-02-23">
+    <meta name="doc-title" content="Personal Brain OS - File System as AI Agent Memory">
+    <meta name="doc-source" content="Muratcan Koylan / X Thread">
+    <meta name="doc-tags" content="Agent,Framework,Tool,Automation">
+    <meta name="doc-rating" content="4.2">
+    <meta name="doc-summary" content="用 Git repo + 80 個檔案打造 AI Agent 個人 OS，實現 Progressive Disclosure 與 Context Engineering。">
+    <meta name="doc-file" content="2026-02-23_personal-brain-os.html">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
 
+/* Tags */
+.tags { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-framework { background: #fde68a; color: #92400e; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
 
+/* Header Content */
+.header h1 { font-size: 1.8rem; margin: 0 0 0.5rem; line-height: 1.3; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; }
+.header .source a { color: white; text-decoration: underline; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+.exec-summary h2 { color: #1e3a5f; font-size: 1.2rem; margin-top: 0; }
+.exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-top: 3px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; color: #1e3a5f; font-size: 0.9rem; margin-bottom: 0.25rem; }
+.objective-desc { font-size: 0.8rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Section Headers */
+.section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+.part-label { font-size: 0.8rem; font-weight: 600; color: #3b82f6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem; }
+
+/* Content Grid Cells */
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+@media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+
+/* Bilingual Content */
+.bilingual-block { margin-bottom: 1.25rem; }
+.bilingual-block .zh { font-size: 0.95rem; line-height: 1.8; color: #1e293b; }
+.bilingual-block .en { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; margin-top: 0.25rem; }
+
+/* Highlights */
+.hl-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.hl-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.hl-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.hl-cost { background: #5eead4; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 1rem; font-weight: 600; font-size: 0.85rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Code blocks */
+code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; }
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; }
+pre code { background: none; padding: 0; color: inherit; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+/* Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Tabs */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; }
+.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Comparison Table */
+.compare-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+.compare-table th { background: #1e3a5f; color: white; padding: 0.75rem; text-align: left; }
+.compare-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; }
+.compare-table tr:nth-child(even) { background: #f8fafc; }
+    </style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="header-content">
-<div class="tags">
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-framework">Framework</span>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-automation">Automation</span>
+<div class="header">
+    <div class="header-content">
+        <div class="tags">
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-framework">Framework</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-automation">Automation</span>
+        </div>
+        <h1>Personal Brain OS：用檔案系統打造 AI Agent 的個人作業系統</h1>
+        <div class="subtitle">The File System Is the New Database: How I Built a Personal OS for AI Agents</div>
+        <div class="source">Muratcan Koylan (@koylanai) | X Thread, 2025-02-22 | <a href="https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering" target="_blank">GitHub Repo</a></div>
+    </div>
 </div>
-<h1>Personal Brain OS：用檔案系統打造 AI Agent 的個人作業系統</h1>
-<div class="subtitle">The File System Is the New Database: How I Built a Personal OS for AI Agents</div>
-<div class="source">Muratcan Koylan (@koylanai) | X Thread, 2025-02-22 | <a href="https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering" target="_blank">GitHub Repo</a></div>
-</div>
-</header>
+
 <!-- Container -->
 <div class="container">
-<!-- Executive Summary -->
-<div class="exec-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
-<span class="rating-high">↑ 實務應用, 工具生態</span>
-<span class="rating-low">↓ 技術深度, 學習曲線</span>
-</div>
-<h2>Executive Summary</h2>
-<p>Muratcan Koylan 厭倦了每次與 AI 對話都要重新介紹自己，於是打造了一套名為 <span class="highlight-concept">Personal Brain OS</span> 的檔案式個人作業系統。整個系統是一個 Git repository，包含 80+ 個 Markdown、YAML、JSONL 檔案，涵蓋他的語氣、品牌、目標、聯絡人、內容管線和失敗紀錄。核心架構原則是 <span class="highlight-key">Progressive Disclosure（漸進式揭露）</span>：不一次餵給 AI 所有資料，而是透過三層路由（Routing → Module → Data）讓模型在每個任務只看到它需要的東西。這不是 Prompt Engineering，而是 <span class="highlight-key">Context Engineering</span> ── 設計資訊架構，讓 AI 能做出正確決策。</p>
-</div>
-<!-- Learning Objectives -->
-<div class="section-title">Learning Objectives</div>
-<div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">🏗️</div>
-<div class="objective-title">Context Engineering 架構設計</div>
-<div class="objective-desc">理解 Progressive Disclosure 三層架構如何解決 Context Window 的注意力瓶頸</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">📁</div>
-<div class="objective-title">檔案格式選擇策略</div>
-<div class="objective-desc">掌握 JSONL / YAML / Markdown 各自的最佳使用場景與 Agent 安全性考量</div>
-</div>
-<div class="objective-item">
-<div class="objective-icon">⚡</div>
-<div class="objective-title">Skill System 與自動化鏈</div>
-<div class="objective-desc">學習如何用 Agent Skills 編碼工作流程，實現一個指令觸發完整上下文組裝</div>
-</div>
-</div>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">Progressive Disclosure 三層架構</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">🗺️</div>
-<div class="framework-step-title">Level 1: Routing</div>
-<div class="framework-step-desc">SKILL.md 輕量路由<br/>永遠載入，判斷任務類型</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">📋</div>
-<div class="framework-step-title">Level 2: Module</div>
-<div class="framework-step-desc">CONTENT.md 等模組指令<br/>40-100 行，任務相關才載入</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">💾</div>
-<div class="framework-step-title">Level 3: Data</div>
-<div class="framework-step-desc">JSONL/YAML 資料檔<br/>逐行讀取，按需載入</div>
-</div>
-</div>
-</div>
-<!-- Content Sections - Tabbed (6 Parts) -->
-<div class="section-title">Content Deep Dive</div>
-<div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-arch')">架構基礎</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-memory')">檔案即記憶</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-skill')">Skill 系統</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-ops')">日常運作</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-lessons')">踩坑與成果</button>
-</div>
-<!-- Tab 1: Architecture Foundation -->
-<div class="tab-content active" id="tab-arch">
-<div class="part-label">Part I &amp; II — 核心問題與模組化架構</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">大多數人認為 AI 助手的瓶頸在於 <span class="highlight-key">Prompting（提示方式）</span>。寫一個更好的 Prompt，得到更好的回答。這對單次互動來說是對的，但當你想讓 AI <span class="highlight-concept">長期以你的身份運作</span>時就完全行不通了。</div>
-<div class="en-text">"Most people think the bottleneck with AI assistants is prompting. Write a better prompt, get a better answer. That's true for single interactions. It falls apart when you want an AI to operate as you across dozens of tasks over weeks and months."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">語言模型有有限的 Context Window，而且<span class="highlight-key">不是所有 Token 位置都同等重要</span>。把所有資訊塞進 System Prompt 不只浪費，還會主動降低表現 ── 每個 Token 都在搶奪模型的注意力。我們的大腦也類似：別人花 15 分鐘簡報，你記得第一件事和最後一件事，中間模糊。語言模型有同樣的 <span class="highlight-concept">U 型注意力曲線</span>。</div>
-<div class="en-text">"Language models have a finite context window, and not all of it is created equal... dumping everything you know into a system prompt isn't just wasteful, it actively degrades performance. Every token you add competes for the model's attention."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">解決方案：<span class="highlight-practical">將個人 OS 拆成 11 個獨立模組</span>。寫文章時，AI 載入語氣指南和品牌檔案；準備會議時，載入聯絡人資料庫和互動紀錄。模型永遠不會在內容任務中看到網路資料，也不會在會議任務中看到內容模板。</div>
-<div class="en-text">"Instead of writing one massive system prompt, I split Personal OS into 11 isolated modules. When I ask the AI to write a blog post, it loads my voice guide and brand files. When I ask it to prepare for a meeting, it loads my contact database and interaction history."</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">想像你走進一間辦公室，秘書不會一次把所有文件都倒在你桌上。她會問：「今天要做什麼？」寫企劃書 → 拿品牌手冊；見客戶 → 拿客戶資料。Progressive Disclosure 就是讓 AI 有一個聰明的秘書。</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：Progressive Disclosure</div>
-<div class="info-box-content">
-<p><strong>三層載入架構：</strong></p>
-<p><strong>Level 1 — Routing File（路由檔）</strong><br/><code>SKILL.md</code> 永遠載入，告訴 AI「這是內容任務，載入品牌模組」或「這是網路任務，載入聯絡人」。</p>
-<p><strong>Level 2 — Module Instructions（模組指令）</strong><br/>如 <code>CONTENT.md</code>、<code>OPERATIONS.md</code>、<code>NETWORK.md</code>，每個 40-100 行，包含檔案清單、工作流程序列和行為規則。</p>
-<p><strong>Level 3 — Data Files（資料檔）</strong><br/>JSONL log、YAML config、研究文件。只在任務需要時載入。Agent 逐行讀取 JSONL，而非解析整個檔案。</p>
-<p><strong>關鍵數字：</strong>任何資訊最多兩跳（two hops）即可到達。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ Agent Instruction Hierarchy</div>
-<div class="info-box-content">
-<p><strong>Repository Level：</strong><code>CLAUDE.md</code> — AI 首先讀取的 onboarding 文件，提供完整專案地圖。</p>
-<p><strong>Brain Level：</strong><code>AGENT.md</code> — 7 條核心規則 + 決策表，將常見請求映射到精確動作序列。</p>
-<p><strong>Module Level：</strong>每個目錄的指令檔，包含領域特定的行為約束。</p>
-<p>分層好處：可更新單一模組規則而不影響其他模組。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 2: File System as Memory -->
-<div class="tab-content" id="tab-memory">
-<div class="part-label">Part III — 檔案系統即記憶</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">最反直覺的決定之一：<span class="highlight-key">不用資料庫。不用向量儲存。不用任何檢索系統</span>。只用磁碟上的檔案，用 Git 做版本控制。</div>
-<div class="en-text">"One of the most counterintuitive decisions I made: no database. No vector store. No retrieval system except Cursor or Claude Code's features. Just files on disk, versioned with Git."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">每個檔案格式都有其選擇原因：<span class="highlight-practical">JSONL</span> 用於日誌（append-only、串流友好、每行獨立有效 JSON）、<span class="highlight-practical">YAML</span> 用於配置（層次清晰、支援註釋）、<span class="highlight-practical">Markdown</span> 用於敘事（LLM 原生讀取、到處可渲染、Git diff 乾淨）。</div>
-<div class="en-text">"JSONL for logs because it's append-only by design, stream-friendly... YAML for configuration because it handles hierarchical data cleanly, supports comments... Markdown for narrative because LLMs read it natively."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">JSONL 的 append-only 特性防止了一類 bug：<span class="highlight-key">Agent 意外覆寫歷史資料</span>。作者曾因 Agent 重寫 <code>posts.jsonl</code> 而丟失三個月的貼文互動數據。JSONL 下，Agent 只能新增行，刪除改用 <code>"status": "archived"</code> 標記，保留完整歷史。</div>
-<div class="en-text">"I lost three months of post engagement data early on because an agent rewrote posts.jsonl instead of appending to it. JSONL's append-only pattern isn't just a convention -- it's a safety mechanism."</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">JSONL 像實驗室的 <strong>Logbook（實驗紀錄簿）</strong>：你只能往後寫，不能撕掉前面的頁面。即使寫錯了，也是畫線標註「作廢」而非銷毀。這在 GMP 環境中完全是同樣的原則 ── 數據完整性的根基就是「不可覆寫」。</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：Format-Function Mapping</div>
-<div class="info-box-content">
-<table class="compare-table">
-<tr><th>格式</th><th>用途</th><th>Agent 安全性</th></tr>
-<tr><td><code>JSONL</code></td><td>日誌/紀錄（11 個檔案）<br/>posts, contacts, interactions, bookmarks, ideas, metrics, experiences, decisions, failures, engagement, meetings</td><td>Append-only，防覆寫</td></tr>
-<tr><td><code>YAML</code></td><td>配置（6 個檔案）<br/>goals, values, learning, circles, rhythms, heuristics</td><td>支援註釋，人機都可讀</td></tr>
-<tr><td><code>Markdown</code></td><td>敘事/指南（50+ 個檔案）<br/>voice guides, research, templates, drafts, todos</td><td>LLM 原生格式，diff 友好</td></tr>
-</table>
-<p>每個 JSONL 檔案開頭都有 schema 行：<code>{"_schema": "contact", "_version": "1.0", "_description": "..."}</code>，讓 Agent 讀資料前就知道結構。</p>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ Episodic Memory（情節記憶）</div>
-<div class="info-box-content">
-<p>多數「第二大腦」系統儲存事實。這個系統也<strong>儲存判斷</strong>：</p>
-<p><strong>experiences.jsonl</strong> — 關鍵時刻 + 情緒權重 (1-10)</p>
-<p><strong>decisions.jsonl</strong> — 決策 + 推理 + 備選方案 + 結果追蹤</p>
-<p><strong>failures.jsonl</strong> — 失敗 + 根因 + 預防措施</p>
-<p>事實告訴 Agent 發生了什麼；情節記憶告訴 Agent <strong>什麼重要、下次怎麼做</strong>。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 3: Skill System -->
-<div class="tab-content" id="tab-skill">
-<div class="part-label">Part IV — Skill System：教 AI 你的工作方式</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text">檔案儲存知識，<span class="highlight-key">Skills 編碼流程</span>。作者按照 Anthropic Agent Skills 標準建立結構化指令，告訴 AI 如何執行特定任務，並內建品質閘門（quality gates）。</div>
-<div class="en-text">"Files store knowledge. Skills encode process. I built Agent Skills following the Anthropic Agent Skills standard -- structured instructions that tell the AI how to perform specific tasks with quality gates baked in."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">兩種 Skill 解決兩種問題。<span class="highlight-concept">Reference Skills</span>（如語氣指南）設定 <code>user-invocable: false</code>，Agent 寫作時自動靜默載入。<span class="highlight-concept">Task Skills</span>（如 <code>/write-blog</code>）設定 <code>disable-model-invocation: true</code>，只有使用者輸入 slash command 才觸發。</div>
-<div class="en-text">"Reference skills set user-invocable: false in their YAML frontmatter. The agent reads the description field and injects them automatically... Task skills set disable-model-invocation: true. The agent can't trigger them on its own."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">當他輸入 <code>/write-blog context engineering for marketing teams</code> 時，五件事自動發生：語氣指南載入、反模式載入、部落格模板載入（7 段結構 + 字數目標）、受眾 persona 檢查、既有主題研究檢查。<span class="highlight-practical">一個 slash command 觸發完整的上下文組裝</span>。</div>
-<div class="en-text">"When I type /write-blog context engineering for marketing teams, five things happen automatically: the voice guide loads, the anti-patterns load, the blog template loads, the persona folder is checked, and the research folder is checked."</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">Reference Skills 就像你實驗室的 <strong>SOP（標準作業程序）</strong>── 不需要每次操作前翻出來念一遍，它已經內化在操作員的習慣裡。Task Skills 則像 <strong>Batch Record（批次紀錄）</strong>── 只有在執行特定製程時才打開，按步驟逐一完成。</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念：Voice System</div>
-<div class="info-box-content">
-<p>語氣不是用形容詞描述的。作者用<strong>結構化數據</strong>定義：</p>
-<p><strong>五維度量表 (1-10)：</strong><br/>
-                            Formal/Casual: 6 | Serious/Playful: 4<br/>
-                            Technical/Simple: 7 | Reserved/Expressive: 6<br/>
+
+    <!-- Executive Summary -->
+    <div class="exec-summary">
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.2/5</span>
+            <span class="rating-high">↑ 實務應用, 工具生態</span>
+            <span class="rating-low">↓ 技術深度, 學習曲線</span>
+        </div>
+        <h2>Executive Summary</h2>
+        <p>Muratcan Koylan 厭倦了每次與 AI 對話都要重新介紹自己，於是打造了一套名為 <span class="hl-concept">Personal Brain OS</span> 的檔案式個人作業系統。整個系統是一個 Git repository，包含 80+ 個 Markdown、YAML、JSONL 檔案，涵蓋他的語氣、品牌、目標、聯絡人、內容管線和失敗紀錄。核心架構原則是 <span class="hl-key">Progressive Disclosure（漸進式揭露）</span>：不一次餵給 AI 所有資料，而是透過三層路由（Routing → Module → Data）讓模型在每個任務只看到它需要的東西。這不是 Prompt Engineering，而是 <span class="hl-key">Context Engineering</span> ── 設計資訊架構，讓 AI 能做出正確決策。</p>
+    </div>
+
+    <!-- Learning Objectives -->
+    <div class="section-title">Learning Objectives</div>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">🏗️</div>
+            <div class="objective-title">Context Engineering 架構設計</div>
+            <div class="objective-desc">理解 Progressive Disclosure 三層架構如何解決 Context Window 的注意力瓶頸</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">📁</div>
+            <div class="objective-title">檔案格式選擇策略</div>
+            <div class="objective-desc">掌握 JSONL / YAML / Markdown 各自的最佳使用場景與 Agent 安全性考量</div>
+        </div>
+        <div class="objective-item">
+            <div class="objective-icon">⚡</div>
+            <div class="objective-title">Skill System 與自動化鏈</div>
+            <div class="objective-desc">學習如何用 Agent Skills 編碼工作流程，實現一個指令觸發完整上下文組裝</div>
+        </div>
+    </div>
+
+    <!-- Framework Visual -->
+    <div class="framework-visual">
+        <div class="framework-title">Progressive Disclosure 三層架構</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">🗺️</div>
+                <div class="framework-step-title">Level 1: Routing</div>
+                <div class="framework-step-desc">SKILL.md 輕量路由<br>永遠載入，判斷任務類型</div>
+            </div>
+            <div class="framework-arrow">→</div>
+            <div class="framework-step">
+                <div class="framework-icon">📋</div>
+                <div class="framework-step-title">Level 2: Module</div>
+                <div class="framework-step-desc">CONTENT.md 等模組指令<br>40-100 行，任務相關才載入</div>
+            </div>
+            <div class="framework-arrow">→</div>
+            <div class="framework-step">
+                <div class="framework-icon">💾</div>
+                <div class="framework-step-title">Level 3: Data</div>
+                <div class="framework-step-desc">JSONL/YAML 資料檔<br>逐行讀取，按需載入</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Sections - Tabbed (6 Parts) -->
+    <div class="section-title">Content Deep Dive</div>
+
+    <div class="tab-container">
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-arch')">架構基礎</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-memory')">檔案即記憶</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-skill')">Skill 系統</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-ops')">日常運作</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-lessons')">踩坑與成果</button>
+        </div>
+
+        <!-- Tab 1: Architecture Foundation -->
+        <div id="tab-arch" class="tab-content active">
+            <div class="part-label">Part I &amp; II — 核心問題與模組化架構</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <div class="zh">大多數人認為 AI 助手的瓶頸在於 <span class="hl-key">Prompting（提示方式）</span>。寫一個更好的 Prompt，得到更好的回答。這對單次互動來說是對的，但當你想讓 AI <span class="hl-concept">長期以你的身份運作</span>時就完全行不通了。</div>
+                        <div class="en">"Most people think the bottleneck with AI assistants is prompting. Write a better prompt, get a better answer. That's true for single interactions. It falls apart when you want an AI to operate as you across dozens of tasks over weeks and months."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh">語言模型有有限的 Context Window，而且<span class="hl-key">不是所有 Token 位置都同等重要</span>。把所有資訊塞進 System Prompt 不只浪費，還會主動降低表現 ── 每個 Token 都在搶奪模型的注意力。我們的大腦也類似：別人花 15 分鐘簡報，你記得第一件事和最後一件事，中間模糊。語言模型有同樣的 <span class="hl-concept">U 型注意力曲線</span>。</div>
+                        <div class="en">"Language models have a finite context window, and not all of it is created equal... dumping everything you know into a system prompt isn't just wasteful, it actively degrades performance. Every token you add competes for the model's attention."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh">解決方案：<span class="hl-practical">將個人 OS 拆成 11 個獨立模組</span>。寫文章時，AI 載入語氣指南和品牌檔案；準備會議時，載入聯絡人資料庫和互動紀錄。模型永遠不會在內容任務中看到網路資料，也不會在會議任務中看到內容模板。</div>
+                        <div class="en">"Instead of writing one massive system prompt, I split Personal OS into 11 isolated modules. When I ask the AI to write a blog post, it loads my voice guide and brand files. When I ask it to prepare for a meeting, it loads my contact database and interaction history."</div>
+                    </div>
+
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">💡 比喻說明</div>
+                        <div class="info-box-content">想像你走進一間辦公室，秘書不會一次把所有文件都倒在你桌上。她會問：「今天要做什麼？」寫企劃書 → 拿品牌手冊；見客戶 → 拿客戶資料。Progressive Disclosure 就是讓 AI 有一個聰明的秘書。</div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 核心概念：Progressive Disclosure</div>
+                        <div class="info-box-content">
+                            <p><strong>三層載入架構：</strong></p>
+                            <p><strong>Level 1 — Routing File（路由檔）</strong><br><code>SKILL.md</code> 永遠載入，告訴 AI「這是內容任務，載入品牌模組」或「這是網路任務，載入聯絡人」。</p>
+                            <p><strong>Level 2 — Module Instructions（模組指令）</strong><br>如 <code>CONTENT.md</code>、<code>OPERATIONS.md</code>、<code>NETWORK.md</code>，每個 40-100 行，包含檔案清單、工作流程序列和行為規則。</p>
+                            <p><strong>Level 3 — Data Files（資料檔）</strong><br>JSONL log、YAML config、研究文件。只在任務需要時載入。Agent 逐行讀取 JSONL，而非解析整個檔案。</p>
+                            <p><strong>關鍵數字：</strong>任何資訊最多兩跳（two hops）即可到達。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠️ Agent Instruction Hierarchy</div>
+                        <div class="info-box-content">
+                            <p><strong>Repository Level：</strong><code>CLAUDE.md</code> — AI 首先讀取的 onboarding 文件，提供完整專案地圖。</p>
+                            <p><strong>Brain Level：</strong><code>AGENT.md</code> — 7 條核心規則 + 決策表，將常見請求映射到精確動作序列。</p>
+                            <p><strong>Module Level：</strong>每個目錄的指令檔，包含領域特定的行為約束。</p>
+                            <p>分層好處：可更新單一模組規則而不影響其他模組。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: File System as Memory -->
+        <div id="tab-memory" class="tab-content">
+            <div class="part-label">Part III — 檔案系統即記憶</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <div class="zh">最反直覺的決定之一：<span class="hl-key">不用資料庫。不用向量儲存。不用任何檢索系統</span>。只用磁碟上的檔案，用 Git 做版本控制。</div>
+                        <div class="en">"One of the most counterintuitive decisions I made: no database. No vector store. No retrieval system except Cursor or Claude Code's features. Just files on disk, versioned with Git."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh">每個檔案格式都有其選擇原因：<span class="hl-practical">JSONL</span> 用於日誌（append-only、串流友好、每行獨立有效 JSON）、<span class="hl-practical">YAML</span> 用於配置（層次清晰、支援註釋）、<span class="hl-practical">Markdown</span> 用於敘事（LLM 原生讀取、到處可渲染、Git diff 乾淨）。</div>
+                        <div class="en">"JSONL for logs because it's append-only by design, stream-friendly... YAML for configuration because it handles hierarchical data cleanly, supports comments... Markdown for narrative because LLMs read it natively."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh">JSONL 的 append-only 特性防止了一類 bug：<span class="hl-key">Agent 意外覆寫歷史資料</span>。作者曾因 Agent 重寫 <code>posts.jsonl</code> 而丟失三個月的貼文互動數據。JSONL 下，Agent 只能新增行，刪除改用 <code>"status": "archived"</code> 標記，保留完整歷史。</div>
+                        <div class="en">"I lost three months of post engagement data early on because an agent rewrote posts.jsonl instead of appending to it. JSONL's append-only pattern isn't just a convention -- it's a safety mechanism."</div>
+                    </div>
+
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">💡 比喻說明</div>
+                        <div class="info-box-content">JSONL 像實驗室的 <strong>Logbook（實驗紀錄簿）</strong>：你只能往後寫，不能撕掉前面的頁面。即使寫錯了，也是畫線標註「作廢」而非銷毀。這在 GMP 環境中完全是同樣的原則 ── 數據完整性的根基就是「不可覆寫」。</div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 核心概念：Format-Function Mapping</div>
+                        <div class="info-box-content">
+                            <table class="compare-table">
+                                <tr><th>格式</th><th>用途</th><th>Agent 安全性</th></tr>
+                                <tr><td><code>JSONL</code></td><td>日誌/紀錄（11 個檔案）<br>posts, contacts, interactions, bookmarks, ideas, metrics, experiences, decisions, failures, engagement, meetings</td><td>Append-only，防覆寫</td></tr>
+                                <tr><td><code>YAML</code></td><td>配置（6 個檔案）<br>goals, values, learning, circles, rhythms, heuristics</td><td>支援註釋，人機都可讀</td></tr>
+                                <tr><td><code>Markdown</code></td><td>敘事/指南（50+ 個檔案）<br>voice guides, research, templates, drafts, todos</td><td>LLM 原生格式，diff 友好</td></tr>
+                            </table>
+                            <p>每個 JSONL 檔案開頭都有 schema 行：<code>{"_schema": "contact", "_version": "1.0", "_description": "..."}</code>，讓 Agent 讀資料前就知道結構。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠️ Episodic Memory（情節記憶）</div>
+                        <div class="info-box-content">
+                            <p>多數「第二大腦」系統儲存事實。這個系統也<strong>儲存判斷</strong>：</p>
+                            <p><strong>experiences.jsonl</strong> — 關鍵時刻 + 情緒權重 (1-10)</p>
+                            <p><strong>decisions.jsonl</strong> — 決策 + 推理 + 備選方案 + 結果追蹤</p>
+                            <p><strong>failures.jsonl</strong> — 失敗 + 根因 + 預防措施</p>
+                            <p>事實告訴 Agent 發生了什麼；情節記憶告訴 Agent <strong>什麼重要、下次怎麼做</strong>。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Skill System -->
+        <div id="tab-skill" class="tab-content">
+            <div class="part-label">Part IV — Skill System：教 AI 你的工作方式</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <div class="zh">檔案儲存知識，<span class="hl-key">Skills 編碼流程</span>。作者按照 Anthropic Agent Skills 標準建立結構化指令，告訴 AI 如何執行特定任務，並內建品質閘門（quality gates）。</div>
+                        <div class="en">"Files store knowledge. Skills encode process. I built Agent Skills following the Anthropic Agent Skills standard -- structured instructions that tell the AI how to perform specific tasks with quality gates baked in."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh">兩種 Skill 解決兩種問題。<span class="hl-concept">Reference Skills</span>（如語氣指南）設定 <code>user-invocable: false</code>，Agent 寫作時自動靜默載入。<span class="hl-concept">Task Skills</span>（如 <code>/write-blog</code>）設定 <code>disable-model-invocation: true</code>，只有使用者輸入 slash command 才觸發。</div>
+                        <div class="en">"Reference skills set user-invocable: false in their YAML frontmatter. The agent reads the description field and injects them automatically... Task skills set disable-model-invocation: true. The agent can't trigger them on its own."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh">當他輸入 <code>/write-blog context engineering for marketing teams</code> 時，五件事自動發生：語氣指南載入、反模式載入、部落格模板載入（7 段結構 + 字數目標）、受眾 persona 檢查、既有主題研究檢查。<span class="hl-practical">一個 slash command 觸發完整的上下文組裝</span>。</div>
+                        <div class="en">"When I type /write-blog context engineering for marketing teams, five things happen automatically: the voice guide loads, the anti-patterns load, the blog template loads, the persona folder is checked, and the research folder is checked."</div>
+                    </div>
+
+                    <div class="info-box box-analogy">
+                        <div class="info-box-header">💡 比喻說明</div>
+                        <div class="info-box-content">Reference Skills 就像你實驗室的 <strong>SOP（標準作業程序）</strong>── 不需要每次操作前翻出來念一遍，它已經內化在操作員的習慣裡。Task Skills 則像 <strong>Batch Record（批次紀錄）</strong>── 只有在執行特定製程時才打開，按步驟逐一完成。</div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 核心概念：Voice System</div>
+                        <div class="info-box-content">
+                            <p>語氣不是用形容詞描述的。作者用<strong>結構化數據</strong>定義：</p>
+                            <p><strong>五維度量表 (1-10)：</strong><br>
+                            Formal/Casual: 6 | Serious/Playful: 4<br>
+                            Technical/Simple: 7 | Reserved/Expressive: 6<br>
                             Humble/Confident: 7</p>
-<p><strong>Anti-patterns 檔案：</strong><br/>
+                            <p><strong>Anti-patterns 檔案：</strong><br>
                             50+ 禁用詞（三級分類）、禁用開頭、結構陷阱（強制三分法、copula 迴避、過度 hedging）、每段落最多一個 em-dash。</p>
-<p><strong>4-pass 編輯流程：</strong><br/>
-                            1. 結構編輯（hook 夠吸引？）<br/>
-                            2. 語氣編輯（禁用詞掃描）<br/>
-                            3. 證據編輯（引用有來源？）<br/>
+                            <p><strong>4-pass 編輯流程：</strong><br>
+                            1. 結構編輯（hook 夠吸引？）<br>
+                            2. 語氣編輯（禁用詞掃描）<br>
+                            3. 證據編輯（引用有來源？）<br>
                             4. 朗讀測試</p>
-</div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：Skill 的 Auto vs Manual</div>
-<div class="info-box-content">
-<table class="compare-table">
-<tr><th>類型</th><th>載入方式</th><th>範例</th></tr>
-<tr><td>Reference Skill</td><td>自動（靜默注入）<br/><code>user-invocable: false</code></td><td>voice-guide<br/>writing-anti-patterns</td></tr>
-<tr><td>Task Skill</td><td>手動（slash command）<br/><code>disable-model-invocation: true</code></td><td>/write-blog<br/>/topic-research<br/>/content-workflow</td></tr>
-</table>
-<p>自動載入解決一致性問題；手動觸發解決精確性問題。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 4: Daily Operations -->
-<div class="tab-content" id="tab-ops">
-<div class="part-label">Part V — 日常運作：內容管線、CRM、自動化鏈</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-practical">內容管線分 7 階段</span>：Idea → Research → Outline → Draft → Edit → Publish → Promote。點子記錄到 <code>ideas.jsonl</code>，用 5 維度評分（定位對齊、獨特洞察、受眾需求、時效性、投入產出比），滿分 25，<span class="highlight-key">達到 15 分以上才推進</span>。</div>
-<div class="en-text">"Seven stages: Idea, Research, Outline, Draft, Edit, Publish, Promote. Ideas are captured to ideas.jsonl with a scoring system -- each idea rated 1-5 on alignment with positioning, unique insight, audience need, timeliness, and effort-versus-impact. Proceed if total score hits 15 or higher."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-practical">個人 CRM</span> 把聯絡人分成四個圈層，各有不同維護頻率：Inner（每週）、Active（雙週）、Network（每月）、Dormant（每季重啟）。每筆聯絡人有 <code>can_help_with</code> 和 <code>you_can_help_with</code> 欄位，交叉比對可自動發現互惠介紹機會。</div>
-<div class="en-text">"Contacts organized into four circles with different maintenance cadences: inner (weekly), active (bi-weekly), network (monthly), dormant (quarterly reactivation). Each contact record has can_help_with and you_can_help_with fields that enable the introduction matching system."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">五個腳本處理週期性工作流程。週日 Weekly Review 依序執行：<code>metrics_snapshot.py</code>（更新數字）→ <code>stale_contacts.py</code>（標記需維護關係）→ <code>weekly_review.py</code>（產生摘要，含完成 vs 計畫、趨勢、下週優先事項）。Review 不只是報告 ── 它是下週規劃的起點。</div>
-<div class="en-text">"The Sunday weekly review runs three scripts in sequence... The review isn't a report -- it's the starting point for next week's planning. The automation creates a feedback loop: goals drive content, content drives metrics, metrics drive reviews, reviews drive goals."</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="info-box-header">🛠️ 實務應用：內容計分系統</div>
-<div class="info-box-content">
-<p>每個點子用 5 維度評分（各 1-5 分）：</p>
-<p>1. <strong>定位對齊</strong> — 符合個人品牌嗎？<br/>
-                            2. <strong>獨特洞察</strong> — 我有別人沒有的角度嗎？<br/>
-                            3. <strong>受眾需求</strong> — 目標讀者真的想知道嗎？<br/>
-                            4. <strong>時效性</strong> — 現在發布有優勢嗎？<br/>
+                        </div>
+                    </div>
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">🛠️ 實務應用：Skill 的 Auto vs Manual</div>
+                        <div class="info-box-content">
+                            <table class="compare-table">
+                                <tr><th>類型</th><th>載入方式</th><th>範例</th></tr>
+                                <tr><td>Reference Skill</td><td>自動（靜默注入）<br><code>user-invocable: false</code></td><td>voice-guide<br>writing-anti-patterns</td></tr>
+                                <tr><td>Task Skill</td><td>手動（slash command）<br><code>disable-model-invocation: true</code></td><td>/write-blog<br>/topic-research<br>/content-workflow</td></tr>
+                            </table>
+                            <p>自動載入解決一致性問題；手動觸發解決精確性問題。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Daily Operations -->
+        <div id="tab-ops" class="tab-content">
+            <div class="part-label">Part V — 日常運作：內容管線、CRM、自動化鏈</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <div class="zh"><span class="hl-practical">內容管線分 7 階段</span>：Idea → Research → Outline → Draft → Edit → Publish → Promote。點子記錄到 <code>ideas.jsonl</code>，用 5 維度評分（定位對齊、獨特洞察、受眾需求、時效性、投入產出比），滿分 25，<span class="hl-key">達到 15 分以上才推進</span>。</div>
+                        <div class="en">"Seven stages: Idea, Research, Outline, Draft, Edit, Publish, Promote. Ideas are captured to ideas.jsonl with a scoring system -- each idea rated 1-5 on alignment with positioning, unique insight, audience need, timeliness, and effort-versus-impact. Proceed if total score hits 15 or higher."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh"><span class="hl-practical">個人 CRM</span> 把聯絡人分成四個圈層，各有不同維護頻率：Inner（每週）、Active（雙週）、Network（每月）、Dormant（每季重啟）。每筆聯絡人有 <code>can_help_with</code> 和 <code>you_can_help_with</code> 欄位，交叉比對可自動發現互惠介紹機會。</div>
+                        <div class="en">"Contacts organized into four circles with different maintenance cadences: inner (weekly), active (bi-weekly), network (monthly), dormant (quarterly reactivation). Each contact record has can_help_with and you_can_help_with fields that enable the introduction matching system."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh">五個腳本處理週期性工作流程。週日 Weekly Review 依序執行：<code>metrics_snapshot.py</code>（更新數字）→ <code>stale_contacts.py</code>（標記需維護關係）→ <code>weekly_review.py</code>（產生摘要，含完成 vs 計畫、趨勢、下週優先事項）。Review 不只是報告 ── 它是下週規劃的起點。</div>
+                        <div class="en">"The Sunday weekly review runs three scripts in sequence... The review isn't a report -- it's the starting point for next week's planning. The automation creates a feedback loop: goals drive content, content drives metrics, metrics drive reviews, reviews drive goals."</div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-practical">
+                        <div class="info-box-header">🛠️ 實務應用：內容計分系統</div>
+                        <div class="info-box-content">
+                            <p>每個點子用 5 維度評分（各 1-5 分）：</p>
+                            <p>1. <strong>定位對齊</strong> — 符合個人品牌嗎？<br>
+                            2. <strong>獨特洞察</strong> — 我有別人沒有的角度嗎？<br>
+                            3. <strong>受眾需求</strong> — 目標讀者真的想知道嗎？<br>
+                            4. <strong>時效性</strong> — 現在發布有優勢嗎？<br>
                             5. <strong>投入產出比</strong> — 花的力氣值得嗎？</p>
-<p><strong>門檻：總分 ≥ 15/25 才推進到 Research 階段。</strong></p>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 Cross-Module References（跨模組引用）</div>
-<div class="info-box-content">
-<p>系統使用<strong>扁平檔案關聯模型</strong>（flat-file relational model）：</p>
-<p><code>contact_id</code> in interactions.jsonl → contacts.jsonl<br/>
-<code>pillar</code> in ideas.jsonl → brand.md 內容柱<br/>
-                            bookmarks → content ideas<br/>
+                            <p><strong>門檻：總分 ≥ 15/25 才推進到 Research 階段。</strong></p>
+                        </div>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 Cross-Module References（跨模組引用）</div>
+                        <div class="info-box-content">
+                            <p>系統使用<strong>扁平檔案關聯模型</strong>（flat-file relational model）：</p>
+                            <p><code>contact_id</code> in interactions.jsonl → contacts.jsonl<br>
+                            <code>pillar</code> in ideas.jsonl → brand.md 內容柱<br>
+                            bookmarks → content ideas<br>
                             post metrics → weekly reviews</p>
-<p><strong>實例：</strong>「準備與 Sarah 的會議」觸發查詢鏈：contacts（她是誰）→ interactions（歷史互動）→ todos（待辦事項）→ 產出一頁簡報。</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Tab 5: Lessons Learned & Results -->
-<div class="tab-content" id="tab-lessons">
-<div class="part-label">Part VI — 踩坑教訓與核心原則</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="bilingual-block">
-<div class="zh-text"><strong>Schema 過度工程化。</strong> 初版 JSONL schema 每筆有 15+ 欄位，大多空白。Agent 遇到稀疏資料會嘗試填充或評論缺失。<span class="highlight-key">精簡到 8-10 個必要欄位</span>，可選欄位只在有資料時才加。更簡單的 schema = 更好的 Agent 行為。</div>
-<div class="en-text">"My initial JSONL schemas had 15+ fields per entry. Most were empty. Agents struggle with sparse data -- they try to fill in fields or comment on the absence. I cut schemas to 8-10 essential fields."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>語氣指南太長。</strong> V1 的 <code>tone-of-voice.md</code> 有 1,200 行。Agent 前幾段寫得好，第四段就開始漂移 ── 語氣指令掉進了 <span class="highlight-key">Lost-in-the-Middle（中間遺失）</span> 區域。重構後將最具辨識度的模式（簽名短語、禁用詞、開頭模式）放在前 100 行。</div>
-<div class="en-text">"Version one of tone-of-voice.md was 1,200 lines. The agent would start strong, then drift by paragraph four as the voice instructions fell into the lost-in-middle zone."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>模組邊界比你想的更重要。</strong> 原本 identity 和 brand 在同一模組。Agent 只需要禁用詞列表卻載入整份個人簡介。拆開後，<span class="highlight-practical">語氣相關任務的 Token 使用量減少 40%</span>。每個模組邊界都是一個載入決策。</div>
-<div class="en-text">"I initially had identity and brand in one module. The agent would load my entire bio when it only needed my banned words list. Splitting them into two modules cut token usage for voice-only tasks by 40%."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><strong>核心原則。</strong> 這是 <span class="highlight-concept">Context Engineering（上下文工程）</span>，不是 Prompt Engineering。Prompt Engineering 問「我怎麼把問題問得更好？」Context Engineering 問「<span class="highlight-key">AI 做出正確決策需要什麼資訊，以及如何結構化這些資訊讓模型真正使用它？</span>」</div>
-<div class="en-text">"Prompt engineering asks 'how do I phrase this question better?' Context engineering asks 'what information does this AI need to make the right decision, and how do I structure that information so the model actually uses it?'"</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 五大踩坑教訓</div>
-<div class="info-box-content">
-<p><strong>1. Schema 過度工程化</strong><br/>15+ 欄位 → 8-10 必要欄位。稀疏資料讓 Agent 行為異常。</p>
-<p><strong>2. 語氣指南太長</strong><br/>1,200 行 → 關鍵規則前置 100 行。對抗 Lost-in-Middle 效應。</p>
-<p><strong>3. 模組邊界不對</strong><br/>identity + brand 合一 → 拆開省 40% Token。每個邊界都是載入決策。</p>
-<p><strong>4. Append-only 不可妥協</strong><br/>Agent 重寫 JSONL → 丟失三個月資料。JSONL 只能新增，不能覆寫。</p>
-<p><strong>5. 關鍵指令要放最前面</strong><br/>Token 位置影響回憶機率。最重要的規則放文件頂部。</p>
-</div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 Context Engineering vs Prompt Engineering</div>
-<div class="info-box-content">
-<table class="compare-table">
-<tr><th></th><th>Prompt Engineering</th><th>Context Engineering</th></tr>
-<tr><td><strong>核心問題</strong></td><td>如何問得更好？</td><td>AI 需要什麼資訊？</td></tr>
-<tr><td><strong>範圍</strong></td><td>單次互動</td><td>跨任務資訊架構</td></tr>
-<tr><td><strong>比喻</strong></td><td>寫一封好 email</td><td>建一套好的檔案系統</td></tr>
-<tr><td><strong>效益</strong></td><td>幫你一次</td><td>每次都幫你</td></tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><!-- end tab-container -->
-<!-- Key Takeaways -->
-<div class="section-title">Key Takeaways</div>
-<div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-title">🏗️ Progressive Disclosure 是核心架構</div>
-<div class="summary-card-text">不要把所有資料塞進 System Prompt。用三層架構（Routing → Module → Data）讓 AI 每次只看到任務需要的資訊。任何資訊最多兩跳可達。模組隔離不只省 Token，更防止指令衝突。</div>
-</div>
-<div class="summary-card" style="border-left-color: #10b981;">
-<div class="summary-card-title">📁 檔案格式即安全策略</div>
-<div class="summary-card-text">JSONL 的 append-only 不只是慣例，是安全機制 ── 防止 Agent 覆寫歷史資料。YAML 的註釋功能讓人機都能讀配置。Markdown 是 LLM 原生語言。每個格式選擇都是一個架構決策。</div>
-</div>
-<div class="summary-card" style="border-left-color: #8b5cf6;">
-<div class="summary-card-title">🎯 Context Engineering &gt; Prompt Engineering</div>
-<div class="summary-card-text">Prompt Engineering 優化單次提問；Context Engineering 設計跨任務的資訊架構。前者像寫一封好 email，後者像建一套好的檔案系統。一次性 vs 永久性的差別。</div>
-</div>
-<div class="summary-card" style="border-left-color: #f59e0b;">
-<div class="summary-card-title">⚡ Skill = 流程編碼 + 品質閘門</div>
-<div class="summary-card-text">Reference Skills 自動靜默載入保一致性；Task Skills 手動觸發保精確性。每個 Skill 內建品質檢查點，Agent 自我評估後才呈現草稿。一個 slash command 觸發完整上下文組裝。</div>
-</div>
-</div>
-<!-- Practice Questions -->
-<div class="section-title">Practice Questions</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">為什麼作者說「把所有資訊塞進 System Prompt 會主動降低表現」？這跟 Token 數量限制是不同的問題嗎？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>是不同的問題。Token 數量限制是「裝不下」的硬性問題；但即使裝得下，也會有<strong>注意力稀釋</strong>的問題。語言模型有 U 型注意力曲線 ── 對開頭和結尾的 Token 記憶較好，中間段落容易「遺失」（Lost-in-the-Middle 效應）。每多加一段無關資訊，都在搶奪模型對真正重要指令的注意力。所以 Progressive Disclosure 的核心不只是省 Token，更是讓每個載入的 Token 都是高信號（high-signal）的。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要在 CDMO 環境中應用 Personal Brain OS 的架構，哪些模組會是第一優先？Agent 的 append-only 原則與 GMP 的數據完整性要求有何呼應？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>第一優先模組：</strong>Deviation Investigation 模組（儲存歷史偏差類型、根因分析、CAPA 紀錄）和 Tech Transfer 模組（儲存製程參數、設備對照、驗證狀態）。這兩個領域每次都需要大量歷史脈絡，且每個案例都有獨特判斷需求。</p>
-<p><strong>Append-only 與 GMP 的呼應：</strong>JSONL 的 append-only 原則直接對應 ALCOA+ 中的「Original」和「Attributable」原則 ── 原始紀錄不可覆寫，修改必須保留稽核軌跡。<code>"status": "archived"</code> 的做法等同於 GMP 中的「畫線註銷但保留可讀」。這個系統天然符合 21 CFR Part 11 的數據完整性精神。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">這套系統的最大限制是什麼？在哪些場景下它會比 RAG（Retrieval Augmented Generation）更差？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>最大限制：規模天花板。</strong> 當資料量從 80 個檔案成長到 800 個或 8,000 個時，純檔案系統的搜尋效率會急劇下降。JSONL 的逐行讀取在大檔案時消耗大量 Token。作者的系統適合<strong>個人尺度</strong>（一個人的知識庫），不適合團隊或組織尺度。</p>
-<p><strong>RAG 勝出的場景：</strong>當你需要從大量文件中找到語義相似的片段時（例如從 1,000 份 SOP 中找到最相關的三份），向量檢索的效率遠勝逐行掃描。RAG 也更適合處理非結構化長文件（研究論文、法規文件）。</p>
-<p><strong>平衡觀點：</strong>這套系統的真正價值不在於取代 RAG，而在於示範<strong>資訊架構設計</strong>的重要性。即使你最終用 RAG，Progressive Disclosure 和模組隔離的原則同樣適用。</p>
-</div>
-</details>
-<!-- Bottom Line -->
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">Context Engineering 的核心不是「給 AI 更多資訊」，而是「讓 AI 在正確的時間看到正確的資訊」。這跟我在 CDMO 推動 AI 自動化的經驗完全一致 ── 我的 Claude Projects 已經在做類似的事（用 Project Knowledge 做模組化上下文），但缺少「三層 Progressive Disclosure」的明確架構。這篇文章把我隱性知道的東西變成了顯性框架。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週行動：盤點我現有 Claude Project Knowledge 中的所有檔案，用 Routing / Module / Data 三層分類重新組織。特別是把「永遠需要的指令」（如這份 Master Prompt）和「任務特定資料」明確分層。同時建立一個 <code>failures.jsonl</code> 開始記錄偏差調查中的判斷模式和踩坑紀錄，這是最容易開始、價值最高的 Episodic Memory。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章缺少在<strong>受管制環境</strong>下的應用討論 ── 在 GMP 環境中，Agent 不能直接修改任何品質紀錄，所有輸出都必須經過人工審核（Copilot Mode）。作者的「Agent 自動寫入 JSONL」模式在製藥場景需要加上審核層。此外，80 個檔案的維護成本未被討論 ── 建議三個月後重新檢視，評估哪些檔案真正被 Agent 使用、哪些可以合併或刪除。</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>製作日期：2026-02-23 | 來源：<a href="https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering" target="_blank">Muratcan Koylan - Agent Skills for Context Engineering (GitHub)</a></p>
-<p>建議 Chat Title：<strong>2026-02-23 [Agent] Personal Brain OS - File System Context Engineering</strong></p>
-<p>建議檔名：<code>2026-02-23_personal-brain-os.html</code></p>
-</footer>
+                            <p><strong>實例：</strong>「準備與 Sarah 的會議」觸發查詢鏈：contacts（她是誰）→ interactions（歷史互動）→ todos（待辦事項）→ 產出一頁簡報。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Lessons Learned & Results -->
+        <div id="tab-lessons" class="tab-content">
+            <div class="part-label">Part VI — 踩坑教訓與核心原則</div>
+            <div class="content-grid">
+                <div class="content-left">
+                    <div class="bilingual-block">
+                        <div class="zh"><strong>Schema 過度工程化。</strong> 初版 JSONL schema 每筆有 15+ 欄位，大多空白。Agent 遇到稀疏資料會嘗試填充或評論缺失。<span class="hl-key">精簡到 8-10 個必要欄位</span>，可選欄位只在有資料時才加。更簡單的 schema = 更好的 Agent 行為。</div>
+                        <div class="en">"My initial JSONL schemas had 15+ fields per entry. Most were empty. Agents struggle with sparse data -- they try to fill in fields or comment on the absence. I cut schemas to 8-10 essential fields."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh"><strong>語氣指南太長。</strong> V1 的 <code>tone-of-voice.md</code> 有 1,200 行。Agent 前幾段寫得好，第四段就開始漂移 ── 語氣指令掉進了 <span class="hl-key">Lost-in-the-Middle（中間遺失）</span> 區域。重構後將最具辨識度的模式（簽名短語、禁用詞、開頭模式）放在前 100 行。</div>
+                        <div class="en">"Version one of tone-of-voice.md was 1,200 lines. The agent would start strong, then drift by paragraph four as the voice instructions fell into the lost-in-middle zone."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh"><strong>模組邊界比你想的更重要。</strong> 原本 identity 和 brand 在同一模組。Agent 只需要禁用詞列表卻載入整份個人簡介。拆開後，<span class="hl-practical">語氣相關任務的 Token 使用量減少 40%</span>。每個模組邊界都是一個載入決策。</div>
+                        <div class="en">"I initially had identity and brand in one module. The agent would load my entire bio when it only needed my banned words list. Splitting them into two modules cut token usage for voice-only tasks by 40%."</div>
+                    </div>
+                    <div class="bilingual-block">
+                        <div class="zh"><strong>核心原則。</strong> 這是 <span class="hl-concept">Context Engineering（上下文工程）</span>，不是 Prompt Engineering。Prompt Engineering 問「我怎麼把問題問得更好？」Context Engineering 問「<span class="hl-key">AI 做出正確決策需要什麼資訊，以及如何結構化這些資訊讓模型真正使用它？</span>」</div>
+                        <div class="en">"Prompt engineering asks 'how do I phrase this question better?' Context engineering asks 'what information does this AI need to make the right decision, and how do I structure that information so the model actually uses it?'"</div>
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="info-box box-key">
+                        <div class="info-box-header">⚠️ 五大踩坑教訓</div>
+                        <div class="info-box-content">
+                            <p><strong>1. Schema 過度工程化</strong><br>15+ 欄位 → 8-10 必要欄位。稀疏資料讓 Agent 行為異常。</p>
+                            <p><strong>2. 語氣指南太長</strong><br>1,200 行 → 關鍵規則前置 100 行。對抗 Lost-in-Middle 效應。</p>
+                            <p><strong>3. 模組邊界不對</strong><br>identity + brand 合一 → 拆開省 40% Token。每個邊界都是載入決策。</p>
+                            <p><strong>4. Append-only 不可妥協</strong><br>Agent 重寫 JSONL → 丟失三個月資料。JSONL 只能新增，不能覆寫。</p>
+                            <p><strong>5. 關鍵指令要放最前面</strong><br>Token 位置影響回憶機率。最重要的規則放文件頂部。</p>
+                        </div>
+                    </div>
+                    <div class="info-box box-concept">
+                        <div class="info-box-header">📚 Context Engineering vs Prompt Engineering</div>
+                        <div class="info-box-content">
+                            <table class="compare-table">
+                                <tr><th></th><th>Prompt Engineering</th><th>Context Engineering</th></tr>
+                                <tr><td><strong>核心問題</strong></td><td>如何問得更好？</td><td>AI 需要什麼資訊？</td></tr>
+                                <tr><td><strong>範圍</strong></td><td>單次互動</td><td>跨任務資訊架構</td></tr>
+                                <tr><td><strong>比喻</strong></td><td>寫一封好 email</td><td>建一套好的檔案系統</td></tr>
+                                <tr><td><strong>效益</strong></td><td>幫你一次</td><td>每次都幫你</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- end tab-container -->
+
+    <!-- Key Takeaways -->
+    <div class="section-title">Key Takeaways</div>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <div class="summary-card-title">🏗️ Progressive Disclosure 是核心架構</div>
+            <div class="summary-card-text">不要把所有資料塞進 System Prompt。用三層架構（Routing → Module → Data）讓 AI 每次只看到任務需要的資訊。任何資訊最多兩跳可達。模組隔離不只省 Token，更防止指令衝突。</div>
+        </div>
+        <div class="summary-card" style="border-left-color: #10b981;">
+            <div class="summary-card-title">📁 檔案格式即安全策略</div>
+            <div class="summary-card-text">JSONL 的 append-only 不只是慣例，是安全機制 ── 防止 Agent 覆寫歷史資料。YAML 的註釋功能讓人機都能讀配置。Markdown 是 LLM 原生語言。每個格式選擇都是一個架構決策。</div>
+        </div>
+        <div class="summary-card" style="border-left-color: #8b5cf6;">
+            <div class="summary-card-title">🎯 Context Engineering > Prompt Engineering</div>
+            <div class="summary-card-text">Prompt Engineering 優化單次提問；Context Engineering 設計跨任務的資訊架構。前者像寫一封好 email，後者像建一套好的檔案系統。一次性 vs 永久性的差別。</div>
+        </div>
+        <div class="summary-card" style="border-left-color: #f59e0b;">
+            <div class="summary-card-title">⚡ Skill = 流程編碼 + 品質閘門</div>
+            <div class="summary-card-text">Reference Skills 自動靜默載入保一致性；Task Skills 手動觸發保精確性。每個 Skill 內建品質檢查點，Agent 自我評估後才呈現草稿。一個 slash command 觸發完整上下文組裝。</div>
+        </div>
+    </div>
+
+    <!-- Practice Questions -->
+    <div class="section-title">Practice Questions</div>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">為什麼作者說「把所有資訊塞進 System Prompt 會主動降低表現」？這跟 Token 數量限制是不同的問題嗎？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>是不同的問題。Token 數量限制是「裝不下」的硬性問題；但即使裝得下，也會有<strong>注意力稀釋</strong>的問題。語言模型有 U 型注意力曲線 ── 對開頭和結尾的 Token 記憶較好，中間段落容易「遺失」（Lost-in-the-Middle 效應）。每多加一段無關資訊，都在搶奪模型對真正重要指令的注意力。所以 Progressive Disclosure 的核心不只是省 Token，更是讓每個載入的 Token 都是高信號（high-signal）的。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">如果你要在 CDMO 環境中應用 Personal Brain OS 的架構，哪些模組會是第一優先？Agent 的 append-only 原則與 GMP 的數據完整性要求有何呼應？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>第一優先模組：</strong>Deviation Investigation 模組（儲存歷史偏差類型、根因分析、CAPA 紀錄）和 Tech Transfer 模組（儲存製程參數、設備對照、驗證狀態）。這兩個領域每次都需要大量歷史脈絡，且每個案例都有獨特判斷需求。</p>
+            <p><strong>Append-only 與 GMP 的呼應：</strong>JSONL 的 append-only 原則直接對應 ALCOA+ 中的「Original」和「Attributable」原則 ── 原始紀錄不可覆寫，修改必須保留稽核軌跡。<code>"status": "archived"</code> 的做法等同於 GMP 中的「畫線註銷但保留可讀」。這個系統天然符合 21 CFR Part 11 的數據完整性精神。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">這套系統的最大限制是什麼？在哪些場景下它會比 RAG（Retrieval Augmented Generation）更差？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>最大限制：規模天花板。</strong> 當資料量從 80 個檔案成長到 800 個或 8,000 個時，純檔案系統的搜尋效率會急劇下降。JSONL 的逐行讀取在大檔案時消耗大量 Token。作者的系統適合<strong>個人尺度</strong>（一個人的知識庫），不適合團隊或組織尺度。</p>
+            <p><strong>RAG 勝出的場景：</strong>當你需要從大量文件中找到語義相似的片段時（例如從 1,000 份 SOP 中找到最相關的三份），向量檢索的效率遠勝逐行掃描。RAG 也更適合處理非結構化長文件（研究論文、法規文件）。</p>
+            <p><strong>平衡觀點：</strong>這套系統的真正價值不在於取代 RAG，而在於示範<strong>資訊架構設計</strong>的重要性。即使你最終用 RAG，Progressive Disclosure 和模組隔離的原則同樣適用。</p>
+        </div>
+    </details>
+
+    <!-- Bottom Line -->
+    <div class="bottom-line">
+        <div class="bottom-line-header">🎯 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">✔ 核心洞察</div>
+            <div class="bottom-line-text">Context Engineering 的核心不是「給 AI 更多資訊」，而是「讓 AI 在正確的時間看到正確的資訊」。這跟我在 CDMO 推動 AI 自動化的經驗完全一致 ── 我的 Claude Projects 已經在做類似的事（用 Project Knowledge 做模組化上下文），但缺少「三層 Progressive Disclosure」的明確架構。這篇文章把我隱性知道的東西變成了顯性框架。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">📈 立即應用</div>
+            <div class="bottom-line-text">本週行動：盤點我現有 Claude Project Knowledge 中的所有檔案，用 Routing / Module / Data 三層分類重新組織。特別是把「永遠需要的指令」（如這份 Master Prompt）和「任務特定資料」明確分層。同時建立一個 <code>failures.jsonl</code> 開始記錄偏差調查中的判斷模式和踩坑紀錄，這是最容易開始、價值最高的 Episodic Memory。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">⚠ 需要補充</div>
+            <div class="bottom-line-text">文章缺少在<strong>受管制環境</strong>下的應用討論 ── 在 GMP 環境中，Agent 不能直接修改任何品質紀錄，所有輸出都必須經過人工審核（Copilot Mode）。作者的「Agent 自動寫入 JSONL」模式在製藥場景需要加上審核層。此外，80 個檔案的維護成本未被討論 ── 建議三個月後重新檢視，評估哪些檔案真正被 Agent 使用、哪些可以合併或刪除。</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>製作日期：2026-02-23 | 來源：<a href="https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering" target="_blank">Muratcan Koylan - Agent Skills for Context Engineering (GitHub)</a></p>
+        <p>建議 Chat Title：<strong>2026-02-23 [Agent] Personal Brain OS - File System Context Engineering</strong></p>
+        <p>建議檔名：<code>2026-02-23_personal-brain-os.html</code></p>
+    </div>
+
 </div><!-- end container -->
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

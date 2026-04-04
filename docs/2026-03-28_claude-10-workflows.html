@@ -1,140 +1,308 @@
 <!DOCTYPE html>
-
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>10 個 Claude 工作流 — 每週省 10+ 小時的實戰系統</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 個 Claude 工作流 — 每週省 10+ 小時的實戰系統</title>
+
 <!-- Dashboard Index Meta -->
-<meta content="2026-03-28" name="doc-date"/>
-<meta content="10 Claude Workflows 每週省 10+ 小時" name="doc-title"/>
-<meta content="@zodchiii (darkzodchi) / X Thread" name="doc-source"/>
-<meta content="Prompt,Automation,Tool,Framework" name="doc-tags"/>
-<meta content="3.6" name="doc-rating"/>
-<meta content="10 個可重複使用的 Claude prompt workflow，涵蓋研究、內容、程式碼審查、數據分析。實測追蹤每週省 13 小時。" name="doc-summary"/>
-<meta content="2026-03-28_claude-10-workflows.html" name="doc-file"/><meta content="v1" name="normalized"/>
+<meta name="doc-date" content="2026-03-28">
+<meta name="doc-title" content="10 Claude Workflows 每週省 10+ 小時">
+<meta name="doc-source" content="@zodchiii (darkzodchi) / X Thread">
+<meta name="doc-tags" content="Prompt,Automation,Tool,Framework">
+<meta name="doc-rating" content="3.6">
+<meta name="doc-summary" content="10 個可重複使用的 Claude prompt workflow，涵蓋研究、內容、程式碼審查、數據分析。實測追蹤每週省 13 小時。">
+<meta name="doc-file" content="2026-03-28_claude-10-workflows.html">
 
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
 
+/* Tags */
+.tag-container { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+.tag-prompt { background: #fde68a; color: #92400e; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-framework { background: #c7d2fe; color: #3730a3; }
+
+.header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-top: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; margin-top: 0.75rem; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.executive-summary h2 { color: #1e3a8a; font-size: 1.1rem; margin-top: 0; }
+.executive-summary p { font-size: 0.95rem; color: #334155; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+.objective-desc { font-size: 0.85rem; color: #64748b; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Section Headers */
+.section-header { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* Content Grid internals */
+.content-left { padding: 1.5rem; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+@media (max-width: 768px) { .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+
+/* Bilingual */
+.bilingual-block { margin-bottom: 1.25rem; }
+.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; }
+.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.7; margin-top: 0.25rem; }
+
+/* Highlight */
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Code blocks */
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; }
+code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
+.inline-code { background: #f1f5f9; color: #7c3aed; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+
+/* Tabbed Content */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; min-width: 120px; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Data Table */
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+.data-table th { background: #1e3a5f; color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+.data-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e2e8f0; }
+.data-table tr:nth-child(even) { background: #f8fafc; }
+.data-table tr:hover { background: #e0f2fe; }
+.saved-cell { color: #047857; font-weight: 600; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card:nth-child(2) { border-left-color: #10b981; }
+.summary-card:nth-child(3) { border-left-color: #f59e0b; }
+.summary-card:nth-child(4) { border-left-color: #8b5cf6; }
+.summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.summary-card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+
+/* Practice Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin: 2rem 0; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+</style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="tag-container">
-<span class="tag tag-prompt">Prompt</span>
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-framework">Framework</span>
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-prompt">Prompt</span>
+        <span class="tag tag-automation">Automation</span>
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-framework">Framework</span>
+    </div>
+    <h1>10 個 Claude 工作流 — 每週省 10+ 小時的實戰系統</h1>
+    <div class="subtitle">10 Claude Workflows That Save Me 10+ Hours a Week</div>
+    <div class="source">@zodchiii (darkzodchi) / X Thread | 2026-03-26</div>
 </div>
-<h1>10 個 Claude 工作流 — 每週省 10+ 小時的實戰系統</h1>
-<div class="subtitle">10 Claude Workflows That Save Me 10+ Hours a Week</div>
-<div class="source">@zodchiii (darkzodchi) / X Thread | 2026-03-26</div>
-</header>
+
 <!-- Container -->
 <div class="container">
+
 <!-- Executive Summary -->
 <div class="executive-summary">
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
-<span class="rating-high">↑ Practical Value, Learning Curve</span>
-<span class="rating-low">↓ Technical Depth, Tool Ecosystem</span>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 3.6/5</span>
+        <span class="rating-high">↑ Practical Value, Learning Curve</span>
+        <span class="rating-low">↓ Technical Depth, Tool Ecosystem</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>一位內容創作者追蹤兩週的 Claude Pro 使用數據，整理出 10 個可重複使用的 Prompt Workflow（提示工作流），涵蓋研究、內容製作、程式碼審查、數據分析等場景。核心概念是<span class="highlight-concept">「Workflow = 可重複的 Prompt + 固定結構」</span>，將 AI 從一次性問答工具轉化為系統化的生產力引擎。作者宣稱每週節省約 13 小時，但需注意此數據為個人自報、未經第三方驗證，且部分場景的「省時」計算可能過度樂觀（適用 2-3x 折扣原則）。</p>
+    <p>文章的真正價值不在於具體數字，而在於每個 Workflow 的 <span class="highlight-key">Prompt 結構設計模式</span>——特別是「反向指令」（告訴 AI 不要做什麼）和「品質錨定語句」（如 "Be harsh"、"Don't speculate"）的使用技巧，這些可直接套用到任何 AI 工作流設計中。</p>
 </div>
-<h2>Executive Summary</h2>
-<p>一位內容創作者追蹤兩週的 Claude Pro 使用數據，整理出 10 個可重複使用的 Prompt Workflow（提示工作流），涵蓋研究、內容製作、程式碼審查、數據分析等場景。核心概念是<span class="highlight-concept">「Workflow = 可重複的 Prompt + 固定結構」</span>，將 AI 從一次性問答工具轉化為系統化的生產力引擎。作者宣稱每週節省約 13 小時，但需注意此數據為個人自報、未經第三方驗證，且部分場景的「省時」計算可能過度樂觀（適用 2-3x 折扣原則）。</p>
-<p>文章的真正價值不在於具體數字，而在於每個 Workflow 的 <span class="highlight-key">Prompt 結構設計模式</span>——特別是「反向指令」（告訴 AI 不要做什麼）和「品質錨定語句」（如 "Be harsh"、"Don't speculate"）的使用技巧，這些可直接套用到任何 AI 工作流設計中。</p>
-</div>
+
 <!-- Learning Objectives -->
 <h2 class="section-header">Learning Objectives</h2>
 <div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">1</div>
-<div class="objective-title">Workflow 思維模式</div>
-<div class="objective-desc">理解「可重複 Prompt 系統」vs「一次性提問」的根本差異，以及如何將日常任務 Workflow 化</div>
+    <div class="objective-item">
+        <div class="objective-icon">1</div>
+        <div class="objective-title">Workflow 思維模式</div>
+        <div class="objective-desc">理解「可重複 Prompt 系統」vs「一次性提問」的根本差異，以及如何將日常任務 Workflow 化</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #10b981;">
+        <div class="objective-icon">2</div>
+        <div class="objective-title">Prompt 品質控制技巧</div>
+        <div class="objective-desc">掌握反向指令、品質錨定、輸出格式固定等 Prompt Engineering 實戰模式</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #f59e0b;">
+        <div class="objective-icon">3</div>
+        <div class="objective-title">批判性效益評估</div>
+        <div class="objective-desc">學會用 2-3x 折扣原則評估 AI 生產力宣稱，區分真實省時與認知偏誤</div>
+    </div>
 </div>
-<div class="objective-item" style="border-left-color: #10b981;">
-<div class="objective-icon">2</div>
-<div class="objective-title">Prompt 品質控制技巧</div>
-<div class="objective-desc">掌握反向指令、品質錨定、輸出格式固定等 Prompt Engineering 實戰模式</div>
-</div>
-<div class="objective-item" style="border-left-color: #f59e0b;">
-<div class="objective-icon">3</div>
-<div class="objective-title">批判性效益評估</div>
-<div class="objective-desc">學會用 2-3x 折扣原則評估 AI 生產力宣稱，區分真實省時與認知偏誤</div>
-</div>
-</div>
+
 <!-- Framework Visual -->
 <div class="framework-visual">
-<div class="framework-title">Workflow 設計四步驟</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">1</div>
-<div class="framework-step-title">識別重複任務</div>
-<div class="framework-step-desc">追蹤時間花在哪裡</div>
+    <div class="framework-title">Workflow 設計四步驟</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">1</div>
+            <div class="framework-step-title">識別重複任務</div>
+            <div class="framework-step-desc">追蹤時間花在哪裡</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">2</div>
+            <div class="framework-step-title">固定輸入格式</div>
+            <div class="framework-step-desc">標準化資料輸入</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">3</div>
+            <div class="framework-step-title">設計 Prompt 模板</div>
+            <div class="framework-step-desc">含品質錨定指令</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">4</div>
+            <div class="framework-step-title">迭代優化</div>
+            <div class="framework-step-desc">追蹤實際效果</div>
+        </div>
+    </div>
 </div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">2</div>
-<div class="framework-step-title">固定輸入格式</div>
-<div class="framework-step-desc">標準化資料輸入</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">3</div>
-<div class="framework-step-title">設計 Prompt 模板</div>
-<div class="framework-step-desc">含品質錨定指令</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">4</div>
-<div class="framework-step-title">迭代優化</div>
-<div class="framework-step-desc">追蹤實際效果</div>
-</div>
-</div>
-</div>
+
 <!-- MAIN CONTENT: Tabbed (10 workflows = 3 groups) -->
 <h2 class="section-header">Content</h2>
+
 <div class="tab-container">
-<div class="tab-nav">
-<button class="tab-btn active" onclick="switchTab(event, 'tab-research')">Research &amp; Analysis (1-5)</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-content')">Content &amp; Code (6-8)</button>
-<button class="tab-btn" onclick="switchTab(event, 'tab-meta')">Meta-Workflows (9-10) &amp; ROI</button>
-</div>
-<!-- TAB 1: Research & Analysis -->
-<div class="tab-content active" id="tab-research">
-<!-- Workflow 1: Research -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF1: Research</h3>
-<div class="bilingual-block">
-<div class="zh-text">作者描述研究任務的傳統痛點：開 15 個分頁、在 Google Doc 中複製貼上引用、注意力分散到 Twitter，兩小時後得到一份「還需要整理」的雜亂文件。這個 Workflow 的核心是<span class="highlight-concept">將開放式研究轉化為結構化輸出</span>。</div>
-<div class="en-text">"open 15 tabs, skim docs, copy-paste quotes into a Google Doc, try to make sense of it... come back 2 hours later with a messy doc that still needed organizing"</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">關鍵設計元素：Prompt 末尾加入<span class="highlight-key">「If data is insufficient for any claim, say so. Don't speculate. Don't pad.」</span>——這是一個「品質錨定語句」。沒有這條指令，Claude 會自信地編造數字。</div>
-<div class="en-text">"The line that makes this work is 'If data is insufficient, say so.' Without it Claude confidently invents numbers."</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">比喻說明</div>
-<div class="info-box-content">品質錨定語句就像 GMP 中的偏差調查 SOP 裡的「不得在無數據支持的情況下做出結論」條款——它不是教 AI 怎麼做，而是設定一條不可跨越的底線，防止 AI 的「幻覺」行為。</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">Prompt 設計模式</div>
-<div class="info-box-content">
-<strong>固定輸出結構</strong>：4 個編號區塊，強制結構化<br/>
-<strong>反向指令</strong>：Don't speculate / Don't pad<br/>
-<strong>品質錨定</strong>：承認不足 &gt; 編造數據<br/>
-<strong>省時估計</strong>：2hr → 15min（作者宣稱）
-                    </div>
-</div>
-</div>
-<div class="col-full">
-  <pre>Research [TOPIC].
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-research')">Research &amp; Analysis (1-5)</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-content')">Content &amp; Code (6-8)</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-meta')">Meta-Workflows (9-10) &amp; ROI</button>
+    </div>
+
+    <!-- TAB 1: Research & Analysis -->
+    <div id="tab-research" class="tab-content active">
+        <!-- Workflow 1: Research -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF1: Research</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">作者描述研究任務的傳統痛點：開 15 個分頁、在 Google Doc 中複製貼上引用、注意力分散到 Twitter，兩小時後得到一份「還需要整理」的雜亂文件。這個 Workflow 的核心是<span class="highlight-concept">將開放式研究轉化為結構化輸出</span>。</div>
+                    <div class="en-text">"open 15 tabs, skim docs, copy-paste quotes into a Google Doc, try to make sense of it... come back 2 hours later with a messy doc that still needed organizing"</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">關鍵設計元素：Prompt 末尾加入<span class="highlight-key">「If data is insufficient for any claim, say so. Don't speculate. Don't pad.」</span>——這是一個「品質錨定語句」。沒有這條指令，Claude 會自信地編造數字。</div>
+                    <div class="en-text">"The line that makes this work is 'If data is insufficient, say so.' Without it Claude confidently invents numbers."</div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">比喻說明</div>
+                    <div class="info-box-content">品質錨定語句就像 GMP 中的偏差調查 SOP 裡的「不得在無數據支持的情況下做出結論」條款——它不是教 AI 怎麼做，而是設定一條不可跨越的底線，防止 AI 的「幻覺」行為。</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>Research [TOPIC].
 
 Structure:
 1. Executive summary (3 sentences max)
@@ -144,34 +312,38 @@ Structure:
 
 If data is insufficient for any claim, say so.
 Don't speculate. Don't pad.</pre>
-</div>
-</div>
-<!-- Workflow 2: Content Research -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF2: Content Research (多來源整合)</h3>
-<div class="bilingual-block">
-<div class="zh-text">內容創作最耗時的不是寫作本身，而是<span class="highlight-concept">處理資訊的前置作業</span>——閱讀 5-10 個來源（GitHub README、文件、Twitter 討論串、部落格、更新日誌），手動閱讀、標記重點、交叉比對、萃取關鍵資訊，每篇要花超過一小時。</div>
-<div class="en-text">"reading 5-10 sources: GitHub READMEs, docs, Twitter threads, blog posts, changelog entries"</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Prompt 設計的亮點是<span class="highlight-key">受眾定義</span>（builders, not consumers）和<span class="highlight-key">差異化視角</span>（contradicts common narrative / angle nobody else is covering）。這不只是摘要工具，而是內容策略分析工具。</div>
-<div class="en-text">"If two sources disagree, show me both sides. Don't summarize fluff. Only signal."</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">實務應用</div>
-<div class="info-box-content">此模式可直接套用到 CDMO 的 Tech Transfer 文件審查：將多份來源文件（藥品規格書、製程開發報告、穩定性數據）貼入 Claude，要求萃取「最重要的 5 個製程參數差異」和「任何來源之間的矛盾」。</div>
-</div>
-</div>
-<div class="col-full">
-  <pre>Here are my sources on [TOPIC]:
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">Prompt 設計模式</div>
+                    <div class="info-box-content">
+                        <strong>固定輸出結構</strong>：4 個編號區塊，強制結構化<br>
+                        <strong>反向指令</strong>：Don't speculate / Don't pad<br>
+                        <strong>品質錨定</strong>：承認不足 > 編造數據<br>
+                        <strong>省時估計</strong>：2hr &rarr; 15min（作者宣稱）
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow 2: Content Research -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF2: Content Research (多來源整合)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">內容創作最耗時的不是寫作本身，而是<span class="highlight-concept">處理資訊的前置作業</span>——閱讀 5-10 個來源（GitHub README、文件、Twitter 討論串、部落格、更新日誌），手動閱讀、標記重點、交叉比對、萃取關鍵資訊，每篇要花超過一小時。</div>
+                    <div class="en-text">"reading 5-10 sources: GitHub READMEs, docs, Twitter threads, blog posts, changelog entries"</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">Prompt 設計的亮點是<span class="highlight-key">受眾定義</span>（builders, not consumers）和<span class="highlight-key">差異化視角</span>（contradicts common narrative / angle nobody else is covering）。這不只是摘要工具，而是內容策略分析工具。</div>
+                    <div class="en-text">"If two sources disagree, show me both sides. Don't summarize fluff. Only signal."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>Here are my sources on [TOPIC]:
 [PASTE ALL RAW MATERIAL]
 
 Extract:
@@ -183,38 +355,37 @@ Extract:
 
 If two sources disagree, show me both sides.
 Don't summarize fluff. Only signal.</pre>
-</div>
-</div>
-<!-- Workflow 3: GitHub Repo Analysis -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF3: GitHub Repo Analysis (大量篩選)</h3>
-<div class="bilingual-block">
-<div class="zh-text">作者需要從 1,000+ 個 GitHub repo 中挑選 40 個值得介紹的。手動操作每個 repo 需 3-5 分鐘，總計 50+ 小時。解決方案是<span class="highlight-concept">批次處理 + AI 預篩選 + 人類驗證</span>的三層架構。</div>
-<div class="en-text">"I still opened every 'Yes' repo myself to verify, but instead of reviewing 1,000 repos I only needed to check around 80."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">最有效的篩選條件是<span class="highlight-key">「skip anything with no commits in 30+ days」</span>——半數熱門 repo 實際上已經被棄置。這是一個 Heuristic Filter（啟發式篩選器），用簡單規則排除大量噪音。</div>
-<div class="en-text">"Half the hyped repos on trending lists are already abandoned."</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">比喻說明</div>
-<div class="info-box-content">這就像 CDMO 供應商資格審查（Vendor Qualification）的初篩階段——先用硬性條件（GMP 認證、產能、地理位置）排除 80% 不合格的供應商，再對剩下的 20% 做深度評估。AI 做初篩，人類做終審。</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">O-Ring 觀察</div>
-<div class="info-box-content">注意 AI 的角色是<strong>預篩選</strong>（1,000 → 80），人類仍然做最終判斷（80 → 40）。這是 Copilot Mode 的教科書案例——AI 處理不可逆決策之前的可逆工作。</div>
-</div>
-</div>
-<div class="col-full">
-  <pre>Here's a list of GitHub repos with descriptions:
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">實務應用</div>
+                    <div class="info-box-content">此模式可直接套用到 CDMO 的 Tech Transfer 文件審查：將多份來源文件（藥品規格書、製程開發報告、穩定性數據）貼入 Claude，要求萃取「最重要的 5 個製程參數差異」和「任何來源之間的矛盾」。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow 3: GitHub Repo Analysis -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF3: GitHub Repo Analysis (大量篩選)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">作者需要從 1,000+ 個 GitHub repo 中挑選 40 個值得介紹的。手動操作每個 repo 需 3-5 分鐘，總計 50+ 小時。解決方案是<span class="highlight-concept">批次處理 + AI 預篩選 + 人類驗證</span>的三層架構。</div>
+                    <div class="en-text">"I still opened every 'Yes' repo myself to verify, but instead of reviewing 1,000 repos I only needed to check around 80."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">最有效的篩選條件是<span class="highlight-key">「skip anything with no commits in 30+ days」</span>——半數熱門 repo 實際上已經被棄置。這是一個 Heuristic Filter（啟發式篩選器），用簡單規則排除大量噪音。</div>
+                    <div class="en-text">"Half the hyped repos on trending lists are already abandoned."</div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">比喻說明</div>
+                    <div class="info-box-content">這就像 CDMO 供應商資格審查（Vendor Qualification）的初篩階段——先用硬性條件（GMP 認證、產能、地理位置）排除 80% 不合格的供應商，再對剩下的 20% 做深度評估。AI 做初篩，人類做終審。</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>Here's a list of GitHub repos with descriptions:
 [PASTE BATCH]
 
 For each repo, evaluate:
@@ -228,29 +399,32 @@ For each repo, evaluate:
 Skip anything that's a wrapper, tutorial repo, 
 or has no commits in 30+ days.
 Sort "Yes" picks by most interesting first.</pre>
-</div>
-</div>
-<!-- Workflow 4: Data Analysis -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF4: Data Analysis (無需試算表)</h3>
-<div class="bilingual-block">
-<div class="zh-text">上傳 CSV 檔案，讓 Claude 直接做趨勢分析、異常偵測、欄位相關性分析。輸出是<span class="highlight-concept">表格 + 兩段純文字摘要</span>，避免了試算表工具的學習曲線。</div>
-<div class="en-text">"export CSV, open Google Sheets, spend 40 minutes building formulas, realize one was wrong, start over"</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">Prompt 的巧妙之處在於<span class="highlight-key">「If the dataset is too small for a conclusion, say so」</span>——再次使用品質錨定，防止 AI 從不足的數據中硬擠出結論。</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-</div>
-<div class="col-full">
-  <pre>Analyze this data. I need:
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">O-Ring 觀察</div>
+                    <div class="info-box-content">注意 AI 的角色是<strong>預篩選</strong>（1,000 &rarr; 80），人類仍然做最終判斷（80 &rarr; 40）。這是 Copilot Mode 的教科書案例——AI 處理不可逆決策之前的可逆工作。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow 4: Data Analysis -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF4: Data Analysis (無需試算表)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">上傳 CSV 檔案，讓 Claude 直接做趨勢分析、異常偵測、欄位相關性分析。輸出是<span class="highlight-concept">表格 + 兩段純文字摘要</span>，避免了試算表工具的學習曲線。</div>
+                    <div class="en-text">"export CSV, open Google Sheets, spend 40 minutes building formulas, realize one was wrong, start over"</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">Prompt 的巧妙之處在於<span class="highlight-key">「If the dataset is too small for a conclusion, say so」</span>——再次使用品質錨定，防止 AI 從不足的數據中硬擠出結論。</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>Analyze this data. I need:
 1. Top 3 trends over time
 2. Anything unusual or unexpected
 3. Correlations between [COL A] and [COL B]
@@ -258,33 +432,28 @@ Sort "Yes" picks by most interesting first.</pre>
 Table first, then a 2-paragraph summary explaining
 what this means in plain English.
 If the dataset is too small for a conclusion, say so.</pre>
-</div>
-</div>
-<!-- Workflow 5: Competitor Analysis -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF5: Competitor Analysis</h3>
-<div class="bilingual-block">
-<div class="zh-text">競爭者分析的關鍵設計是<span class="highlight-concept">在 Prompt 中加入「關於我」的上下文</span>。沒有這個上下文，AI 只能產出通用的 SWOT 分析。有了它，AI 能針對你的定位給出差異化建議。</div>
-<div class="en-text">"The key is giving Claude context about YOU, not just the competitor. Otherwise you get a generic SWOT analysis that could apply to anyone."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">反向指令<span class="highlight-key">「Don't say 'they have a strong brand.' Tell me WHY and what specifically makes it work」</span>——強制 AI 從表面描述進入因果分析。</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">實務應用</div>
-<div class="info-box-content">CDMO 競標場景：將競爭對手的公開資訊（產能、技術平台、客戶案例）輸入 Claude，加上自己的「About me」上下文（SA25 isolator 技術、QS-21 經驗），要求分析差異化定位。</div>
-</div>
-</div>
-<div class="col-full">
-  <pre>I'm analyzing [COMPETITOR/ACCOUNT].
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow 5: Competitor Analysis -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF5: Competitor Analysis</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">競爭者分析的關鍵設計是<span class="highlight-concept">在 Prompt 中加入「關於我」的上下文</span>。沒有這個上下文，AI 只能產出通用的 SWOT 分析。有了它，AI 能針對你的定位給出差異化建議。</div>
+                    <div class="en-text">"The key is giving Claude context about YOU, not just the competitor. Otherwise you get a generic SWOT analysis that could apply to anyone."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">反向指令<span class="highlight-key">「Don't say 'they have a strong brand.' Tell me WHY and what specifically makes it work」</span>——強制 AI 從表面描述進入因果分析。</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>I'm analyzing [COMPETITOR/ACCOUNT].
 
 Based on what you know + the data I'm providing:
 1. Top 3 things they're doing well (be specific)
@@ -296,42 +465,39 @@ About me: [YOUR CONTEXT]
 
 Don't say "they have a strong brand." Tell me WHY 
 and what specifically makes it work.</pre>
-</div>
-</div>
-</div>
-<!-- TAB 2: Content & Code -->
-<div class="tab-content" id="tab-content">
-<!-- Workflow 6: Code Review -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF6: Code Review</h3>
-<div class="bilingual-block">
-<div class="zh-text">作者坦承他大量使用 Vibe Coding（AI 寫大部分程式碼），因此需要在部署前驗證安全性。Prompt 的亮點是<span class="highlight-concept">嚴重等級分類</span>（Critical/High/Medium/Low）和<span class="highlight-key">「Be harsh」品質錨定</span>。</div>
-<div class="en-text">"Without it Claude defaults to polite feedback like 'the code is well-structured, perhaps consider...' With it you get the mean code reviewer energy you actually need."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">這揭示了 LLM 的一個重要行為特徵：<span class="highlight-key">預設禮貌偏差</span>（Default Politeness Bias）。AI 天生傾向給正面回饋，除非你明確要求嚴格。在需要批判性分析的場景中，必須用指令覆蓋這個預設行為。</div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">比喻說明</div>
-<div class="info-box-content">就像 GMP 稽核員的角色切換——如果你請同事「看看這份批次紀錄」，他會禮貌地說「看起來不錯」。但如果你說「假裝你是 FDA 稽核員，找出所有不合規的地方」，同樣的人會變得極其嚴格。「Be harsh」就是把 AI 從同事模式切換到稽核員模式。</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">重點提示</div>
-<div class="info-box-content">
-<strong>注意限制</strong>：Claude 的 Code Review 不等於專業安全稽核。它能抓到常見模式（硬編碼 API key、基本 XSS），但無法做動態分析、滲透測試、或複雜的商業邏輯漏洞檢測。適合做「第一道防線」，不能替代專業安全審查。
                     </div>
-</div>
-</div>
-<div class="col-full">
-  <pre>Review this code for:
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">實務應用</div>
+                    <div class="info-box-content">CDMO 競標場景：將競爭對手的公開資訊（產能、技術平台、客戶案例）輸入 Claude，加上自己的「About me」上下文（SA25 isolator 技術、QS-21 經驗），要求分析差異化定位。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: Content & Code -->
+    <div id="tab-content" class="tab-content">
+        <!-- Workflow 6: Code Review -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF6: Code Review</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">作者坦承他大量使用 Vibe Coding（AI 寫大部分程式碼），因此需要在部署前驗證安全性。Prompt 的亮點是<span class="highlight-concept">嚴重等級分類</span>（Critical/High/Medium/Low）和<span class="highlight-key">「Be harsh」品質錨定</span>。</div>
+                    <div class="en-text">"Without it Claude defaults to polite feedback like 'the code is well-structured, perhaps consider...' With it you get the mean code reviewer energy you actually need."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">這揭示了 LLM 的一個重要行為特徵：<span class="highlight-key">預設禮貌偏差</span>（Default Politeness Bias）。AI 天生傾向給正面回饋，除非你明確要求嚴格。在需要批判性分析的場景中，必須用指令覆蓋這個預設行為。</div>
+                </div>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">比喻說明</div>
+                    <div class="info-box-content">就像 GMP 稽核員的角色切換——如果你請同事「看看這份批次紀錄」，他會禮貌地說「看起來不錯」。但如果你說「假裝你是 FDA 稽核員，找出所有不合規的地方」，同樣的人會變得極其嚴格。「Be harsh」就是把 AI 從同事模式切換到稽核員模式。</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>Review this code for:
 - Security issues (exposed keys, injection, XSS)
 - Logic errors and edge cases
 - Performance problems
@@ -343,33 +509,38 @@ exact location, why it matters, corrected code.
 Be harsh. "Looks good overall" is not helpful.
 
 [PASTE CODE]</pre>
-</div>
-</div>
-<!-- Workflow 7: Content Repurposing -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF7: Long Content ↔ Short Content</h3>
-<div class="bilingual-block">
-<div class="zh-text">經營多個社群媒體帳號（X、Telegram、Instagram）最痛苦的是為每個平台寫不同版本。此 Workflow 是<span class="highlight-concept">一對多的內容轉換引擎</span>：一篇長文 → tweet hook、TG 貼文、quote-tweet caption、獨立推文。</div>
-<div class="en-text">"One prompt, 10 minutes of editing. Used to be 2 hours of work."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">關鍵設計：<span class="highlight-key">「Each piece must work independently. Someone who never read the article should still get value.」</span>——這防止 AI 產出需要原文上下文才能理解的碎片。</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">作者也提到<span class="highlight-practical">反向操作</span>：將一週的短文貼文全部輸入，請 Claude 找出連結主題，起草長文大綱。短 → 長同樣有價值。</div>
-<div class="en-text">"I'll take 5-6 short TG posts from the week... and ask Claude to find the connecting thread and draft a long-form article outline."</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-</div>
-<div class="col-full">
-  <pre>Here's my article: [PASTE OR UPLOAD]
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        <strong>注意限制</strong>：Claude 的 Code Review 不等於專業安全稽核。它能抓到常見模式（硬編碼 API key、基本 XSS），但無法做動態分析、滲透測試、或複雜的商業邏輯漏洞檢測。適合做「第一道防線」，不能替代專業安全審查。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow 7: Content Repurposing -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF7: Long Content &harr; Short Content</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">經營多個社群媒體帳號（X、Telegram、Instagram）最痛苦的是為每個平台寫不同版本。此 Workflow 是<span class="highlight-concept">一對多的內容轉換引擎</span>：一篇長文 &rarr; tweet hook、TG 貼文、quote-tweet caption、獨立推文。</div>
+                    <div class="en-text">"One prompt, 10 minutes of editing. Used to be 2 hours of work."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">關鍵設計：<span class="highlight-key">「Each piece must work independently. Someone who never read the article should still get value.」</span>——這防止 AI 產出需要原文上下文才能理解的碎片。</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">作者也提到<span class="highlight-practical">反向操作</span>：將一週的短文貼文全部輸入，請 Claude 找出連結主題，起草長文大綱。短 &rarr; 長同樣有價值。</div>
+                    <div class="en-text">"I'll take 5-6 short TG posts from the week... and ask Claude to find the connecting thread and draft a long-form article outline."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>Here's my article: [PASTE OR UPLOAD]
 
 Create:
 1. A 2-sentence hook for X (include a specific 
@@ -381,33 +552,28 @@ Create:
 
 Each piece must work independently. Someone who 
 never read the article should still get value.</pre>
-</div>
-</div>
-<!-- Workflow 8: Email -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF8: Email Drafting</h3>
-<div class="bilingual-block">
-<div class="zh-text">寫 email 的痛點是<span class="highlight-concept">語氣拿捏的認知負荷</span>：太正式像機器人，太隨意不專業。作者的解法是在 Prompt 中明確定義「不要像什麼」。</div>
-<div class="en-text">"Too formal and you sound like a robot. Too casual and you sound unprofessional."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text"><span class="highlight-key">「Does not sound like: a cold pitch template, corporate speak, or something ChatGPT would write. No 'I hope this email finds you well.'」</span>——這是反向指令的經典應用。透過排除不想要的風格，比正面描述想要的風格更有效。</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">實務應用</div>
-<div class="info-box-content">在 CDMO 情境中，這個模板可用於客戶溝通的初稿——特別是需要拿捏語氣的情況（如通知客戶偏差調查結果、請求延長時程）。但最終版本必須經過人類審閱，確保技術準確性和法規合規性。</div>
-</div>
-</div>
-<div class="col-full">
-  <pre>Draft an email.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow 8: Email -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF8: Email Drafting</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">寫 email 的痛點是<span class="highlight-concept">語氣拿捏的認知負荷</span>：太正式像機器人，太隨意不專業。作者的解法是在 Prompt 中明確定義「不要像什麼」。</div>
+                    <div class="en-text">"Too formal and you sound like a robot. Too casual and you sound unprofessional."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="highlight-key">「Does not sound like: a cold pitch template, corporate speak, or something ChatGPT would write. No 'I hope this email finds you well.'」</span>——這是反向指令的經典應用。透過排除不想要的風格，比正面描述想要的風格更有效。</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>Draft an email.
 To: [NAME + how I know them]
 Goal: [WHAT I WANT THEM TO DO]
 Tone: professional but sounds like a real person
@@ -417,73 +583,71 @@ Context: [THE SITUATION]
 Does not sound like: a cold pitch template, 
 corporate speak, or something ChatGPT would write.
 No "I hope this email finds you well."</pre>
-</div>
-</div>
-</div>
-<!-- TAB 3: Meta-Workflows & ROI -->
-<div class="tab-content" id="tab-meta">
-<!-- Workflow 9: Morning Briefing -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF9: Morning Briefing</h3>
-<div class="bilingual-block">
-<div class="zh-text">用 Claude 取代每天早上 45 分鐘的社群媒體滑動。核心價值是<span class="highlight-concept">訊號與噪音分離</span>——社群媒體把新聞混雜著戲劇性內容、meme、釣魚式參與誘餌和 20 分鐘的兔子洞。</div>
-<div class="en-text">"Claude gives you signal without noise."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">作者誠實承認限制：<span class="highlight-key">準確率約 80%，特別容易漏掉最近一小時的突發新聞</span>。剩下 20% 靠群組聊天和通知自然補上。這個「80% 自動化 + 20% 人類補完」的比例很有參考價值。</div>
-<div class="en-text">"Is it perfect? No. It misses things sometimes, especially breaking news from the last hour. But it catches maybe 80% of what matters."</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">重點提示</div>
-<div class="info-box-content">
-<strong>限制注意</strong>：Claude 的 web search 有延遲和涵蓋範圍限制，不適合作為即時新聞來源。此 Workflow 更適合作為「背景知識更新」而非「即時警報系統」。在 CDMO 場景中，法規更新追蹤需要更可靠的來源（如 PDA/ISPE Newsletter）。
                     </div>
-</div>
-</div>
-<div class="col-full">
-  <pre>3-minute briefing:
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">實務應用</div>
+                    <div class="info-box-content">在 CDMO 情境中，這個模板可用於客戶溝通的初稿——特別是需要拿捏語氣的情況（如通知客戶偏差調查結果、請求延長時程）。但最終版本必須經過人類審閱，確保技術準確性和法規合規性。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: Meta-Workflows & ROI -->
+    <div id="tab-meta" class="tab-content">
+        <!-- Workflow 9: Morning Briefing -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF9: Morning Briefing</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">用 Claude 取代每天早上 45 分鐘的社群媒體滑動。核心價值是<span class="highlight-concept">訊號與噪音分離</span>——社群媒體把新聞混雜著戲劇性內容、meme、釣魚式參與誘餌和 20 分鐘的兔子洞。</div>
+                    <div class="en-text">"Claude gives you signal without noise."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">作者誠實承認限制：<span class="highlight-key">準確率約 80%，特別容易漏掉最近一小時的突發新聞</span>。剩下 20% 靠群組聊天和通知自然補上。這個「80% 自動化 + 20% 人類補完」的比例很有參考價值。</div>
+                    <div class="en-text">"Is it perfect? No. It misses things sometimes, especially breaking news from the last hour. But it catches maybe 80% of what matters."</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>3-minute briefing:
 1. Top 3 AI news from last 24 hours (one sentence each)
 2. Crypto: major moves, liquidations, new narratives
 3. Anything I should know before posting content today
 
 Be specific: names, numbers, links.
 Skip anything that isn't genuinely important.
-3 real updates &gt; 10 filler items.</pre>
-</div>
-</div>
-<!-- Workflow 10: Weekly Review -->
-<div class="content-grid">
-<div class="content-left">
-<h3 style="color:#1e3a8a; margin-top:0;">WF10: Weekly Review (最高 ROI)</h3>
-<div class="bilingual-block">
-<div class="zh-text">每週日晚上將整週的筆記、書籤、半成形的想法全部倒入 Claude。作者認為這是<span class="highlight-concept">AI 從工具轉變為思考夥伴</span>的轉折點——它能看到你自己因為太靠近而錯過的想法之間的連結。</div>
-<div class="en-text">"This is where Claude stops being a tool and starts being a thinking partner. It sees connections across your own ideas that you miss because you're too close to your own work."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">品質錨定：<span class="highlight-key">「Be honest. If an idea is weak, say so. Don't tell me everything is great.」</span>——再次覆蓋 AI 的預設禮貌偏差。</div>
-</div>
-</div>
-<div class="content-right">
-  <div class="info-box box-code">
-<div class="info-box-header">Prompt Template</div>
-<div class="info-box-content">
-  </div>
-</div>
-<div class="info-box box-practical">
-<div class="info-box-header">實務應用</div>
-<div class="info-box-content">這個模式可套用到個人學習系統：每週日將本週讀的文章、做的筆記、產出的教育文件全部列出，請 Claude 找出「我正在忽略哪個學習維度」和「下週最應該深入的 2 個主題」。</div>
-</div>
-</div>
-<div class="col-full">
-  <pre>Here are my notes and ideas from this week:
+3 real updates > 10 filler items.</pre>
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">重點提示</div>
+                    <div class="info-box-content">
+                        <strong>限制注意</strong>：Claude 的 web search 有延遲和涵蓋範圍限制，不適合作為即時新聞來源。此 Workflow 更適合作為「背景知識更新」而非「即時警報系統」。在 CDMO 場景中，法規更新追蹤需要更可靠的來源（如 PDA/ISPE Newsletter）。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow 10: Weekly Review -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3 style="color:#1e3a8a; margin-top:0;">WF10: Weekly Review (最高 ROI)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">每週日晚上將整週的筆記、書籤、半成形的想法全部倒入 Claude。作者認為這是<span class="highlight-concept">AI 從工具轉變為思考夥伴</span>的轉折點——它能看到你自己因為太靠近而錯過的想法之間的連結。</div>
+                    <div class="en-text">"This is where Claude stops being a tool and starts being a thinking partner. It sees connections across your own ideas that you miss because you're too close to your own work."</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">品質錨定：<span class="highlight-key">「Be honest. If an idea is weak, say so. Don't tell me everything is great.」</span>——再次覆蓋 AI 的預設禮貌偏差。</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <div class="info-box box-code">
+                    <div class="info-box-header">Prompt Template</div>
+                    <div class="info-box-content">
+<pre>Here are my notes and ideas from this week:
 [PASTE EVERYTHING]
 
 Help me:
@@ -494,126 +658,141 @@ Help me:
 
 Be honest. If an idea is weak, say so.
 Don't tell me everything is great.</pre>
-</div>
-</div>
-<!-- ROI Data Table -->
-<h3 style="color:#1e3a8a;">ROI 數據分析（作者自報，需打折）</h3>
-<table class="data-table">
-<thead>
-<tr>
-<th>Workflow</th>
-<th>Before</th>
-<th>After</th>
-<th>Saved/week</th>
-</tr>
-</thead>
-<tbody>
-<tr><td>1. Research</td><td>2 hrs</td><td>15 min</td><td class="saved-cell">1h 45m</td></tr>
-<tr><td>2. Content Research</td><td>4 hrs</td><td>1.5 hrs</td><td class="saved-cell">2h 30m</td></tr>
-<tr><td>3. GitHub Repo Analysis</td><td>1.5 hrs</td><td>20 min</td><td class="saved-cell">1h 10m</td></tr>
-<tr><td>4. Data Analysis</td><td>2 hrs</td><td>20 min</td><td class="saved-cell">1h 40m</td></tr>
-<tr><td>5. Competitor Analysis</td><td>1 hr</td><td>15 min</td><td class="saved-cell">45m</td></tr>
-<tr><td>6. Code Review</td><td>2 hr</td><td>15 min</td><td class="saved-cell">1h 45m</td></tr>
-<tr><td>7. Content Repurposing</td><td>2 hrs</td><td>20 min</td><td class="saved-cell">1h 40m</td></tr>
-<tr><td>8. Email</td><td>30 min</td><td>5 min</td><td class="saved-cell">25m</td></tr>
-<tr><td>9. Morning Briefing</td><td>45 min</td><td>5 min</td><td class="saved-cell">40m</td></tr>
-<tr><td>10. Weekly Review</td><td>1 hr</td><td>30 min</td><td class="saved-cell">30m</td></tr>
-<tr style="font-weight:700; background:#e0f2fe;"><td>TOTAL</td><td></td><td></td><td class="saved-cell">~13 hrs/week</td></tr>
-</tbody>
-</table>
-<div class="info-box box-key">
-<div class="info-box-header">2-3x Discount 分析</div>
-<div class="info-box-content">
-<strong>可信度評估</strong>：作者宣稱每週省 13 小時。但需注意幾個偏誤：<br/>
-                (1) <strong>自報數據</strong>：無第三方驗證，「Before」時間可能被誇大（誰真的精確計時自己滑 Twitter 花了 45 分鐘？）<br/>
-                (2) <strong>品質折扣</strong>：省時計算假設 AI 輸出品質 = 人類輸出品質，但多數場景仍需人類編輯/驗證<br/>
-                (3) <strong>頻率假設</strong>：每週真的都用滿 10 個 Workflow 嗎？<br/>
-<strong>合理估計</strong>：打 2x 折扣後，每週實際省時約 6-7 小時——仍然很有價值，但不是作者宣稱的 13 小時。作者自己也承認「your mileage will vary」，這增加了可信度。
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">實務應用</div>
+                    <div class="info-box-content">這個模式可套用到個人學習系統：每週日將本週讀的文章、做的筆記、產出的教育文件全部列出，請 Claude 找出「我正在忽略哪個學習維度」和「下週最應該深入的 2 個主題」。</div>
+                </div>
             </div>
+        </div>
+
+        <!-- ROI Data Table -->
+        <h3 style="color:#1e3a8a;">ROI 數據分析（作者自報，需打折）</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Workflow</th>
+                    <th>Before</th>
+                    <th>After</th>
+                    <th>Saved/week</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1. Research</td><td>2 hrs</td><td>15 min</td><td class="saved-cell">1h 45m</td></tr>
+                <tr><td>2. Content Research</td><td>4 hrs</td><td>1.5 hrs</td><td class="saved-cell">2h 30m</td></tr>
+                <tr><td>3. GitHub Repo Analysis</td><td>1.5 hrs</td><td>20 min</td><td class="saved-cell">1h 10m</td></tr>
+                <tr><td>4. Data Analysis</td><td>2 hrs</td><td>20 min</td><td class="saved-cell">1h 40m</td></tr>
+                <tr><td>5. Competitor Analysis</td><td>1 hr</td><td>15 min</td><td class="saved-cell">45m</td></tr>
+                <tr><td>6. Code Review</td><td>2 hr</td><td>15 min</td><td class="saved-cell">1h 45m</td></tr>
+                <tr><td>7. Content Repurposing</td><td>2 hrs</td><td>20 min</td><td class="saved-cell">1h 40m</td></tr>
+                <tr><td>8. Email</td><td>30 min</td><td>5 min</td><td class="saved-cell">25m</td></tr>
+                <tr><td>9. Morning Briefing</td><td>45 min</td><td>5 min</td><td class="saved-cell">40m</td></tr>
+                <tr><td>10. Weekly Review</td><td>1 hr</td><td>30 min</td><td class="saved-cell">30m</td></tr>
+                <tr style="font-weight:700; background:#e0f2fe;"><td>TOTAL</td><td></td><td></td><td class="saved-cell">~13 hrs/week</td></tr>
+            </tbody>
+        </table>
+        <div class="info-box box-key">
+            <div class="info-box-header">2-3x Discount 分析</div>
+            <div class="info-box-content">
+                <strong>可信度評估</strong>：作者宣稱每週省 13 小時。但需注意幾個偏誤：<br>
+                (1) <strong>自報數據</strong>：無第三方驗證，「Before」時間可能被誇大（誰真的精確計時自己滑 Twitter 花了 45 分鐘？）<br>
+                (2) <strong>品質折扣</strong>：省時計算假設 AI 輸出品質 = 人類輸出品質，但多數場景仍需人類編輯/驗證<br>
+                (3) <strong>頻率假設</strong>：每週真的都用滿 10 個 Workflow 嗎？<br>
+                <strong>合理估計</strong>：打 2x 折扣後，每週實際省時約 6-7 小時——仍然很有價值，但不是作者宣稱的 13 小時。作者自己也承認「your mileage will vary」，這增加了可信度。
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+
 <!-- Key Takeaways -->
 <h2 class="section-header">Key Takeaways</h2>
 <div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-title">Workflow = System, Not Prompt</div>
-<div class="summary-card-text">Workflow 的定義是「可重複的 Prompt + 固定結構 + 可預測的輸出」。一次性提問是工具使用，Workflow 是系統設計。真正的價值在於從 ad-hoc 使用轉向系統化生產力。</div>
+    <div class="summary-card">
+        <div class="summary-card-title">Workflow = System, Not Prompt</div>
+        <div class="summary-card-text">Workflow 的定義是「可重複的 Prompt + 固定結構 + 可預測的輸出」。一次性提問是工具使用，Workflow 是系統設計。真正的價值在於從 ad-hoc 使用轉向系統化生產力。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">反向指令 > 正向指令</div>
+        <div class="summary-card-text">告訴 AI「不要做什麼」（Don't speculate / Don't pad / No corporate speak）比描述「要做什麼」更有效。這覆蓋了 LLM 的預設禮貌偏差和填充行為，是 Prompt Engineering 的高槓桿技巧。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">Context About You 是差異化關鍵</div>
+        <div class="summary-card-text">在 Prompt 中加入「關於我」的上下文（受眾定義、角色定位、專業背景），將 AI 輸出從通用建議轉化為個人化洞察。這正是 Claude Projects 的 System Prompt 和 Memory 功能設計的核心理念。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">AI 做篩選，人類做判斷</div>
+        <div class="summary-card-text">最有效的 Workflow 遵循「AI 預處理 + 人類終審」模式（1,000 repos &rarr; 80 候選 &rarr; 40 精選）。這是 Copilot Mode 的本質——AI 加速可逆工作，人類保留不可逆決策。</div>
+    </div>
 </div>
-<div class="summary-card">
-<div class="summary-card-title">反向指令 &gt; 正向指令</div>
-<div class="summary-card-text">告訴 AI「不要做什麼」（Don't speculate / Don't pad / No corporate speak）比描述「要做什麼」更有效。這覆蓋了 LLM 的預設禮貌偏差和填充行為，是 Prompt Engineering 的高槓桿技巧。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">Context About You 是差異化關鍵</div>
-<div class="summary-card-text">在 Prompt 中加入「關於我」的上下文（受眾定義、角色定位、專業背景），將 AI 輸出從通用建議轉化為個人化洞察。這正是 Claude Projects 的 System Prompt 和 Memory 功能設計的核心理念。</div>
-</div>
-<div class="summary-card">
-<div class="summary-card-title">AI 做篩選，人類做判斷</div>
-<div class="summary-card-text">最有效的 Workflow 遵循「AI 預處理 + 人類終審」模式（1,000 repos → 80 候選 → 40 精選）。這是 Copilot Mode 的本質——AI 加速可逆工作，人類保留不可逆決策。</div>
-</div>
-</div>
+
 <!-- Practice -->
 <h2 class="section-header">Practice</h2>
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">作者在多個 Workflow 中反覆使用的「品質錨定語句」（如 "If data is insufficient, say so"）解決了 LLM 的什麼行為特徵？這與 GMP 中的哪個概念最接近？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>品質錨定語句解決的是 LLM 的<strong>幻覺傾向</strong>（Hallucination）和<strong>預設禮貌偏差</strong>（Default Politeness Bias）。LLM 傾向在資訊不足時仍然給出看似自信的回答，而非承認不確定性。品質錨定語句強制模型在證據不足時停下來。</p>
-<p>這與 GMP 中的<strong>數據完整性原則（ALCOA+ 中的 Attributable 和 Complete）</strong>最為接近——你不能在沒有數據支持的情況下簽署批次放行。SOP 中的「不得在無數據支持的情況下做出結論」就是品質錨定語句的 GMP 版本。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">作者在多個 Workflow 中反覆使用的「品質錨定語句」（如 "If data is insufficient, say so"）解決了 LLM 的什麼行為特徵？這與 GMP 中的哪個概念最接近？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>品質錨定語句解決的是 LLM 的<strong>幻覺傾向</strong>（Hallucination）和<strong>預設禮貌偏差</strong>（Default Politeness Bias）。LLM 傾向在資訊不足時仍然給出看似自信的回答，而非承認不確定性。品質錨定語句強制模型在證據不足時停下來。</p>
+        <p>這與 GMP 中的<strong>數據完整性原則（ALCOA+ 中的 Attributable 和 Complete）</strong>最為接近——你不能在沒有數據支持的情況下簽署批次放行。SOP 中的「不得在無數據支持的情況下做出結論」就是品質錨定語句的 GMP 版本。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">將 WF3（GitHub Repo 大量篩選）的「批次處理 + AI 預篩選 + 人類驗證」架構套用到 CDMO 的供應商資格審查流程中。你會如何設計 AI 的初篩條件？人類終審應該關注什麼？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>AI 初篩條件</strong>（對應 "skip anything with no commits in 30+ days"）：GMP 認證狀態（無 GMP = 自動排除）、產能是否符合需求範圍、地理位置是否在可接受的供應鏈半徑內、近 2 年是否有 FDA Warning Letter 或 Import Alert。</p>
-<p><strong>人類終審</strong>（對應「仍然親自打開每個 Yes repo 驗證」）：技術能力的深度評估（不只是「有無」aseptic 經驗，而是具體的產品類型和批量規模）、供應商的客戶參考查核、合約條款和商業條件的判斷、文化適配度和溝通品質。</p>
-<p>O-Ring 原則：AI 處理結構化資訊的篩選（可逆，錯過了可以重跑），人類處理需要判斷力的評估（不可逆，選錯供應商影響巨大）。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">將 WF3（GitHub Repo 大量篩選）的「批次處理 + AI 預篩選 + 人類驗證」架構套用到 CDMO 的供應商資格審查流程中。你會如何設計 AI 的初篩條件？人類終審應該關注什麼？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>AI 初篩條件</strong>（對應 "skip anything with no commits in 30+ days"）：GMP 認證狀態（無 GMP = 自動排除）、產能是否符合需求範圍、地理位置是否在可接受的供應鏈半徑內、近 2 年是否有 FDA Warning Letter 或 Import Alert。</p>
+        <p><strong>人類終審</strong>（對應「仍然親自打開每個 Yes repo 驗證」）：技術能力的深度評估（不只是「有無」aseptic 經驗，而是具體的產品類型和批量規模）、供應商的客戶參考查核、合約條款和商業條件的判斷、文化適配度和溝通品質。</p>
+        <p>O-Ring 原則：AI 處理結構化資訊的篩選（可逆，錯過了可以重跑），人類處理需要判斷力的評估（不可逆，選錯供應商影響巨大）。</p>
+    </div>
 </details>
+
 <details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">作者宣稱這些 Workflow 每週省 13 小時。你認為這個數字的主要偏誤來源是什麼？如果你要設計一個更嚴謹的「AI 省時效益追蹤」方法，你會怎麼做？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p><strong>主要偏誤</strong>：(1) 自報偏差——「Before」時間很可能被高估（人傾向記住最慢的那次，而非平均值）；(2) 品質等價假設——省時計算假設 AI 輸出品質等於人類輸出，但多數場景需要額外編輯時間未被計入；(3) 頻率樂觀——假設每週都用滿全部 10 個 Workflow，實際上可能只用 5-6 個。</p>
-<p><strong>更嚴謹的追蹤方法</strong>：(1) 用計時工具（如 Toggl）而非估算記錄 Before/After；(2) 將「AI 產出 + 人類編輯」的總時間計為 After，而非只計 AI 生成時間；(3) 追蹤 2-3 個月取平均值，避免新鮮感效應（Novelty Effect）；(4) 加入品質評估——省時但品質下降 30% 不算真正的效率提升。</p>
-</div>
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">作者宣稱這些 Workflow 每週省 13 小時。你認為這個數字的主要偏誤來源是什麼？如果你要設計一個更嚴謹的「AI 省時效益追蹤」方法，你會怎麼做？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>主要偏誤</strong>：(1) 自報偏差——「Before」時間很可能被高估（人傾向記住最慢的那次，而非平均值）；(2) 品質等價假設——省時計算假設 AI 輸出品質等於人類輸出，但多數場景需要額外編輯時間未被計入；(3) 頻率樂觀——假設每週都用滿全部 10 個 Workflow，實際上可能只用 5-6 個。</p>
+        <p><strong>更嚴謹的追蹤方法</strong>：(1) 用計時工具（如 Toggl）而非估算記錄 Before/After；(2) 將「AI 產出 + 人類編輯」的總時間計為 After，而非只計 AI 生成時間；(3) 追蹤 2-3 個月取平均值，避免新鮮感效應（Novelty Effect）；(4) 加入品質評估——省時但品質下降 30% 不算真正的效率提升。</p>
+    </div>
 </details>
+
 <!-- Bottom Line -->
 <div class="bottom-line">
-<div class="bottom-line-header">My Bottom Line</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">Core Insight</div>
-<div class="bottom-line-text">這篇文章的核心價值不在 10 個具體 Prompt（這些可以自己寫），而在於兩個 Prompt Engineering 模式的反覆驗證：(1) 反向指令比正向指令更有效控制 LLM 行為，(2) 品質錨定語句是防止 AI 幻覺的最簡單方法。這兩個模式直接適用到我的 Claude Code 自動化管線中——每個 repo 的 prompt file 都應該包含至少一條品質錨定語句和一條反向指令。</div>
+    <div class="bottom-line-header">My Bottom Line</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">Core Insight</div>
+        <div class="bottom-line-text">這篇文章的核心價值不在 10 個具體 Prompt（這些可以自己寫），而在於兩個 Prompt Engineering 模式的反覆驗證：(1) 反向指令比正向指令更有效控制 LLM 行為，(2) 品質錨定語句是防止 AI 幻覺的最簡單方法。這兩個模式直接適用到我的 Claude Code 自動化管線中——每個 repo 的 prompt file 都應該包含至少一條品質錨定語句和一條反向指令。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">Immediate Action</div>
+        <div class="bottom-line-text">本週審查我的 repo-registry.conf 中所有 prompt files，檢查是否都包含品質錨定語句（如「如果資訊不足以支持結論，明確說明」）。特別是 daily digest 和 COO tracking 的 prompt——這兩個最容易產生「看起來有道理但實際是幻覺」的輸出。同時，將 WF10（Weekly Review）的模式加入我的週日學習復盤流程中。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">Gap to Fill</div>
+        <div class="bottom-line-text">文章完全來自內容創作者視角，所有 Workflow 都是非關鍵任務（研究、寫作、email）。缺少任何關於受規管行業（pharma、finance、healthcare）中使用 AI Workflow 的討論——這些場景的 Workflow 設計需要加入驗證層、audit trail、和人類簽核機制，複雜度完全不同。此外，作者只用 Claude Web Pro，沒有 API 或 Claude Code 的討論，這限制了自動化的上限。</div>
+    </div>
 </div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">Immediate Action</div>
-<div class="bottom-line-text">本週審查我的 repo-registry.conf 中所有 prompt files，檢查是否都包含品質錨定語句（如「如果資訊不足以支持結論，明確說明」）。特別是 daily digest 和 COO tracking 的 prompt——這兩個最容易產生「看起來有道理但實際是幻覺」的輸出。同時，將 WF10（Weekly Review）的模式加入我的週日學習復盤流程中。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">Gap to Fill</div>
-<div class="bottom-line-text">文章完全來自內容創作者視角，所有 Workflow 都是非關鍵任務（研究、寫作、email）。缺少任何關於受規管行業（pharma、finance、healthcare）中使用 AI Workflow 的討論——這些場景的 Workflow 設計需要加入驗證層、audit trail、和人類簽核機制，複雜度完全不同。此外，作者只用 Claude Web Pro，沒有 API 或 Claude Code 的討論，這限制了自動化的上限。</div>
-</div>
-</div>
+
 <!-- Footer -->
-<footer class="footer">
-<p>Made on 2026-03-28 | Source: <a href="https://x.com/zodchiii/status/1904898189498413422" target="_blank">@zodchiii X Thread (2026-03-26)</a></p>
-<p>Suggested Chat Title: 2026-03-28 [Prompt] zodchiii - 10 Claude Workflows Save Time</p>
-</footer>
+<div class="footer">
+    <p>Made on 2026-03-28 | Source: <a href="https://x.com/zodchiii/status/1904898189498413422" target="_blank">@zodchiii X Thread (2026-03-26)</a></p>
+    <p>Suggested Chat Title: 2026-03-28 [Prompt] zodchiii - 10 Claude Workflows Save Time</p>
+</div>
+
 </div><!-- end container -->
+
 <script>
 function switchTab(evt, tabId) {
     const container = evt.currentTarget.closest('.tab-container');

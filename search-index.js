@@ -157,7 +157,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "這篇文章是一位使用 Claude Code 半年以上的開發者的實戰經驗總結，涵蓋從 CLAUDE.md 配置、提示詞撰寫、Plan Mode 工作流、子 Agent 機制、上下文管理、權限控制、Hooks 自動化、Git Worktree 安全網，到 MCP 整合與 IDE 使用的 14 個面向。核心主張明確： Claude Code 是極其能幹的協作者，但方向盤始終在你手裡 。文章結合官方文件與個人踩坑經驗，對每個功能都給出了「該做/不該做」的具體建議，實務參考價值高。但技術深度偏向操作指南而非底層機制，且部分功能描述需要對照最新官方文件驗證。 Learning Objectives 📜 CLAUDE.md 配置策略 掌握四級 CLAUDE.md 架構與 .claude/rules/ 進階規則管理 ⚙️ 工作流最佳化 學會 Plan Mode、子 Agent、上下文管理的組合運用 🔒 安全與控制 理解權限管理、Hooks 鐵律、Git Worktree 隔離的防護體系 Claude Code 使用哲學：四步工作流 🔍 Explore 閱讀相關程式碼 → 📝 Plan 制定實作方案 → 💻 Implement 按計畫執行 → ✅ Verify 跑測試自我驗證 Content 基礎配置 工作流 控制與安全 進階整合 I CLAUDE.md：最被低估的功能 如果你只記住這篇文章的一件事，就記這個： 寫好你的 CLAUDE.md 。CLAUDE.md 是 Claude Code 在每次對話開始時自動讀取的指令檔案。它就像你給新同事寫的 onboarding doc — 你希望他知道什麼，你就寫什麼。 \"If you only remember one thing from this article, remember this: write a good CLAUDE.md. CLAUDE.md is the instruction file that Claude Code automatically reads at the start of every conversation.\" 很多人不寫 CLAUDE.md，或者隨便寫兩行。結果就是每次對話都要從頭解釋專案結構、編碼規範、技術棧選擇。 這就像每天早上都要重新給同事介紹一遍公司 。 \"Many people don't write a CLAUDE.md, or just write a couple of lines. The result is having to explain the project structure, coding standards, and tech stack from scratch every conversation.\" 一個好的 CLAUDE.md 有幾個關鍵原則： 第一，寫 Claude 從程式碼裡讀不出來的東西。 專案的「為什麼」比「是什麼」更重要。你不需要解釋 React 怎麼用，但你需要告訴它「我們選 Tailwind 是因為團隊統一了這個規範」。 \"Write things Claude can't read from the code. The 'why' of a project matters more than the 'what'.\" 第二， 控制在 200 行以內 。 官方文件明確提到，CLAUDE.md 太長會導致 Claude 忽略規則。用 markdown 標題和列表，保持可掃描性。 \"Keep it under "
+    "content": "這篇文章是一位使用 Claude Code 半年以上的開發者的實戰經驗總結，涵蓋從 CLAUDE.md 配置、提示詞撰寫、Plan Mode 工作流、子 Agent 機制、上下文管理、權限控制、Hooks 自動化、Git Worktree 安全網，到 MCP 整合與 IDE 使用的 14 個面向。核心主張明確： Claude Code 是極其能幹的協作者，但方向盤始終在你手裡 。文章結合官方文件與個人踩坑經驗，對每個功能都給出了「該做/不該做」的具體建議，實務參考價值高。但技術深度偏向操作指南而非底層機制，且部分功能描述需要對照最新官方文件驗證。 Learning Objectives CLAUDE.md 配置策略 掌握四級 CLAUDE.md 架構與 .claude/rules/ 進階規則管理 工作流最佳化 學會 Plan Mode、子 Agent、上下文管理的組合運用 安全與控制 理解權限管理、Hooks 鐵律、Git Worktree 隔離的防護體系 Claude Code 使用哲學：四步工作流 Explore 閱讀相關程式碼 Plan 制定實作方案 Implement 按計畫執行 Verify 跑測試自我驗證 Content 基礎配置 工作流 控制與安全 進階整合 I CLAUDE.md：最被低估的功能 如果你只記住這篇文章的一件事，就記這個： 寫好你的 CLAUDE.md 。CLAUDE.md 是 Claude Code 在每次對話開始時自動讀取的指令檔案。它就像你給新同事寫的 onboarding doc — 你希望他知道什麼，你就寫什麼。 \"If you only remember one thing from this article, remember this: write a good CLAUDE.md. CLAUDE.md is the instruction file that Claude Code automatically reads at the start of every conversation.\" 很多人不寫 CLAUDE.md，或者隨便寫兩行。結果就是每次對話都要從頭解釋專案結構、編碼規範、技術棧選擇。 這就像每天早上都要重新給同事介紹一遍公司 。 \"Many people don't write a CLAUDE.md, or just write a couple of lines. The result is having to explain the project structure, coding standards, and tech stack from scratch every conversation.\" 一個好的 CLAUDE.md 有幾個關鍵原則： 第一，寫 Claude 從程式碼裡讀不出來的東西。 專案的「為什麼」比「是什麼」更重要。你不需要解釋 React 怎麼用，但你需要告訴它「我們選 Tailwind 是因為團隊統一了這個規範」。 \"Write things Claude can't read from the code. The 'why' of a project matters more than the 'what'.\" 第二， 控制在 200 行以內 。 官方文件明確提到，CLAUDE.md 太長會導致 Claude 忽略規則。用 markdown 標題和列表，保持可掃描性。 \"Keep it under 200 lines. Official docs e"
   },
   {
     "docFile": "2025-03-25_markdown-ai-era.html",
@@ -476,7 +476,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -491,7 +491,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -506,7 +506,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -521,7 +521,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -536,7 +536,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -551,7 +551,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -566,7 +566,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -581,7 +581,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -596,7 +596,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -611,7 +611,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -626,7 +626,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -641,7 +641,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -656,7 +656,7 @@ const searchIndex = [
     "docFile": "2025-11-04_ai-prompts-insight-creator.html",
     "docTitle": "四個 AI Prompts 將你從資訊收集者轉變為洞見創造者 | 教學文件",
     "docDate": "2025-11-04",
-    "docSource": "Wyndo &amp; Eva Keiffenheim MSc",
+    "docSource": "Wyndo & Eva Keiffenheim MSc",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -679,8 +679,8 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "學習目標-learning-objectives",
-    "sectionTitle": "🎯 學習目標 Learning Objectives",
-    "content": "Mindset 心態轉變 理解為何學習 AI 工具不等於 AI 時代領導力 Framework 框架理解 掌握三角系統的相互依存關係與失衡後果 Action 實踐應用 運用自我檢視問題診斷個人發展缺口 📖 正文開始 Content Start 第 1 部分，共 4 部分 Original Text 原文"
+    "sectionTitle": "學習目標 Learning Objectives",
+    "content": "Mindset 心態轉變 理解為何學習 AI 工具不等於 AI 時代領導力 Framework 框架理解 掌握三角系統的相互依存關係與失衡後果 Action 實踐應用 運用自我檢視問題診斷個人發展缺口 正文開始 Content Start 第 1 部分，共 4 部分 Original Text 原文"
   },
   {
     "docFile": "2025-11-10_ai-leadership-triad.html",
@@ -710,7 +710,7 @@ const searchIndex = [
     ],
     "sectionId": "工具迷失ai-時代的常見陷阱",
     "sectionTitle": "工具迷失：AI 時代的常見陷阱",
-    "content": "💡 比喻說明 Analogy 五金行比喻 (Hardware Store Metaphor) 作者用「站在五金行裡，被各種電動工具包圍」來比喻 AI 工具的爆炸式成長。每個人都在討論哪個工具最好，但沒人問：「你到底要建造什麼？」 這揭示了一個關鍵盲點：工具只是手段，目的才是關鍵。 📚 核心概念 Core Concept Tool Overwhelm (工具超載) 這是 AI 時代特有的現象：新工具每週推出，每個都聲稱能提升效率。領導者疲於追趕，反而失去方向感。 這與藥廠製造的情況類似：製程設備不斷更新（連續製造、PAT 技術），但真正的競爭優勢來自於「如何整合這些工具達成品質目標」。 ⚠️ 重點提示 Key Point 作者的朋友是內容創作者，參加 AI 會議後「更困惑了」。這反映了一個普遍現象：AI 教育多聚焦在「工具操作」而非「策略思考」。 📖 正文開始 Content Start 第 2 部分，共 4 部分 Original Text 原文"
+    "content": "比喻說明 Analogy 五金行比喻 (Hardware Store Metaphor) 作者用「站在五金行裡，被各種電動工具包圍」來比喻 AI 工具的爆炸式成長。每個人都在討論哪個工具最好，但沒人問：「你到底要建造什麼？」 這揭示了一個關鍵盲點：工具只是手段，目的才是關鍵。 核心概念 Core Concept Tool Overwhelm (工具超載) 這是 AI 時代特有的現象：新工具每週推出，每個都聲稱能提升效率。領導者疲於追趕，反而失去方向感。 這與藥廠製造的情況類似：製程設備不斷更新（連續製造、PAT 技術），但真正的競爭優勢來自於「如何整合這些工具達成品質目標」。 重點提示 Key Point 作者的朋友是內容創作者，參加 AI 會議後「更困惑了」。這反映了一個普遍現象：AI 教育多聚焦在「工具操作」而非「策略思考」。 正文開始 Content Start 第 2 部分，共 4 部分 Original Text 原文"
   },
   {
     "docFile": "2025-11-10_ai-leadership-triad.html",
@@ -740,7 +740,7 @@ const searchIndex = [
     ],
     "sectionId": "從精通到適應的典範轉移",
     "sectionTitle": "從「精通」到「適應」的典範轉移",
-    "content": "📚 核心概念 Core Concept Mastery Paradigm (精通典範) 過去數十年，領導力的成功公式是「精通」：精通產業、精通流程、精通市場。你花越多時間深耕，你越有價值。 AI 打破這個公式：重複性任務被自動化，分析工作被秒速複製。「精通」不再是護城河。 💡 比喻說明 Analogy 藥廠情境對照 想像一位資深製程工程師，花了 15 年精通某個凍乾 (Lyophilization) 配方。現在 AI 可以根據歷史數據預測最佳參數。這位工程師的價值在哪裡？ 答案是：在「例外處理」(Deviation Management)、「跨部門協調」(Cross-functional Coordination)、「監管策略」(Regulatory Strategy) 這些 AI 無法處理的「混亂人類工作」。 ⚠️ 重點提示 Key Point Old Frameworks to a Different Game 作者的核心洞察：領導者的困惑不是「不懂技術」，而是「用舊框架玩新遊戲」。 就像用足球規則來打籃球，努力程度不是問題，規則認知才是。 📖 正文開始 Content St"
+    "content": "核心概念 Core Concept Mastery Paradigm (精通典範) 過去數十年，領導力的成功公式是「精通」：精通產業、精通流程、精通市場。你花越多時間深耕，你越有價值。 AI 打破這個公式：重複性任務被自動化，分析工作被秒速複製。「精通」不再是護城河。 比喻說明 Analogy 藥廠情境對照 想像一位資深製程工程師，花了 15 年精通某個凍乾 (Lyophilization) 配方。現在 AI 可以根據歷史數據預測最佳參數。這位工程師的價值在哪裡？ 答案是：在「例外處理」(Deviation Management)、「跨部門協調」(Cross-functional Coordination)、「監管策略」(Regulatory Strategy) 這些 AI 無法處理的「混亂人類工作」。 重點提示 Key Point Old Frameworks to a Different Game 作者的核心洞察：領導者的困惑不是「不懂技術」，而是「用舊框架玩新遊戲」。 就像用足球規則來打籃球，努力程度不是問題，規則認知才是。 正文開始 Content Start 第 3 部分，共"
   },
   {
     "docFile": "2025-11-10_ai-leadership-triad.html",
@@ -770,7 +770,7 @@ const searchIndex = [
     ],
     "sectionId": "三角系統深度解析",
     "sectionTitle": "三角系統深度解析",
-    "content": "AI Leadership Triad 領導力三角 💡 Creativity 創造力 ↔ ⚛️ Adaptation 適應力 ↔ 🚀 Innovation 創新力 📚 概念澄清 Definition Creativity (創造力) = 看見 AI 看不見的連結 這不是藝術創作，而是：問 AI 不會問的問題、在限制條件下解決問題、發現數據與經驗之間的落差。 Adaptation (適應力) = 使命不變，方法進化 不是每次新工具出現就轉向，而是保持核心使命同時更新執行方式。 Innovation (創新力) = 真正的進步 vs 創新劇場 Innovation Theater 是「因為別人用所以我也用」。真創新問：「這讓我們的核心工作更好嗎？」 🛠️ 實務應用 Practical Application 培養創造力的具體方法 作者發現：閱讀小說和傳記比技術書籍更能開啟創造力。因為不同故事、不同時代、不同思維方式會促進跨領域連結。 這呼應了「Capability Overhang」概念：AI 系統比表面看起來更強大，關鍵在於「scaffolding」(鷹架)，而這種鷹架需要人類的"
+    "content": "AI Leadership Triad 領導力三角 Creativity 創造力 Adaptation 適應力 Innovation 創新力 概念澄清 Definition Creativity (創造力) = 看見 AI 看不見的連結 這不是藝術創作，而是：問 AI 不會問的問題、在限制條件下解決問題、發現數據與經驗之間的落差。 Adaptation (適應力) = 使命不變，方法進化 不是每次新工具出現就轉向，而是保持核心使命同時更新執行方式。 Innovation (創新力) = 真正的進步 vs 創新劇場 Innovation Theater 是「因為別人用所以我也用」。真創新問：「這讓我們的核心工作更好嗎？」 實務應用 Practical Application 培養創造力的具體方法 作者發現：閱讀小說和傳記比技術書籍更能開啟創造力。因為不同故事、不同時代、不同思維方式會促進跨領域連結。 這呼應了「Capability Overhang」概念：AI 系統比表面看起來更強大，關鍵在於「scaffolding」(鷹架)，而這種鷹架需要人類的創造性思維來建構。 正文開始 Conte"
   },
   {
     "docFile": "2025-11-10_ai-leadership-triad.html",
@@ -800,7 +800,7 @@ const searchIndex = [
     ],
     "sectionId": "系統性思維失衡的代價",
     "sectionTitle": "系統性思維：失衡的代價",
-    "content": "三角失衡分析 Triad Imbalance Analysis 失衡類型 症狀 結果 有創造力，無適應力 不斷有新想法，但每個都半途而廢 Constant Pivots (持續轉向) 有適應力，無創新力 很會調整方向，但只是在忙而已 Busy Work (瞎忙) 有創新力，無創造力 採用最新工具，但沒有獨特價值 Expensive Theater (昂貴的表演) 🔍 自我檢視問題 Self-Assessment Creativity 創造力 你上次閱讀完全跨領域的內容（小說、歷史、傳記）是什麼時候？如果只讀商業書和 AI 文章，你的創造力正在挨餓。 Adaptation 適應力 你是否相信「目前做的事永遠有更好的方法」？如果你在防守現狀而非尋找改進，適應力就沒發生。 Innovation 創新力 你上次實施的「改進」真的讓核心工作更好了嗎？還是只是看起來很創新？ ⚠️ 關鍵警示 Critical Warning The skills that got you here may not get you there. 讓你走到這裡的技能，不一定能帶你去那裡。這是典範轉移的核心提醒：過去的"
+    "content": "三角失衡分析 Triad Imbalance Analysis 失衡類型 症狀 結果 有創造力，無適應力 不斷有新想法，但每個都半途而廢 Constant Pivots (持續轉向) 有適應力，無創新力 很會調整方向，但只是在忙而已 Busy Work (瞎忙) 有創新力，無創造力 採用最新工具，但沒有獨特價值 Expensive Theater (昂貴的表演) 自我檢視問題 Self-Assessment Creativity 創造力 你上次閱讀完全跨領域的內容（小說、歷史、傳記）是什麼時候？如果只讀商業書和 AI 文章，你的創造力正在挨餓。 Adaptation 適應力 你是否相信「目前做的事永遠有更好的方法」？如果你在防守現狀而非尋找改進，適應力就沒發生。 Innovation 創新力 你上次實施的「改進」真的讓核心工作更好了嗎？還是只是看起來很創新？ 關鍵警示 Critical Warning The skills that got you here may not get you there. 讓你走到這裡的技能，不一定能帶你去那裡。這是典範轉移的核心提醒：過去的成功方程式可"
   },
   {
     "docFile": "2025-11-10_ai-leadership-triad.html",
@@ -814,23 +814,8 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "重點整理-key-takeaways",
-    "sectionTitle": "🌟 重點整理 Key Takeaways",
-    "content": "01 技能優先於工具 AI 領導力三角（創造力、適應力、創新力）比技術知識重要。掌握這三項人類技能，隨著 AI 進步你會更加成功。 02 系統性相互依存 三項技能相互增強，不是獨立運作。單一技能發展會導致失衡：創意沒適應=轉向不停、適應沒創新=瞎忙、創新沒創意=昂貴劇場。 03 刻意練習是關鍵 你不會自然「漂流」到 AI 時代的領導成功。所有人都能發展這些技能，但需要有意識的計畫，不只是收集資訊。 04 從「精通」到「適應」 過去領導力強調精通，AI 使這過時。AI 無法做「在限制下創造」「混亂中策略調適」「使命導向創新」這些混亂人類工作。"
-  },
-  {
-    "docFile": "2025-11-10_ai-leadership-triad.html",
-    "docTitle": "AI 領導力三角：區分成功與掙扎領導者的三項技能",
-    "docDate": "2025-11-10",
-    "docSource": "Joel Salinas / AI Leadership Substack",
-    "docRating": 3.8,
-    "docTags": [
-      "Analysis",
-      "Framework",
-      "LLM"
-    ],
-    "sectionId": "練習題-practice-questions",
-    "sectionTitle": "🎯 練習題 Practice Questions",
-    "content": "Q1 情境分析題 一位製藥公司的品質總監（QA Director）發現團隊成員都在學習各種 AI 工具，但實際工作效率沒有提升，反而因為工具切換和學習成本增加了混亂。根據 AI Leadership Triad 框架，你會如何診斷這個問題並提出改善建議？ 診斷： 這是典型的「Tool Overwhelm」(工具超載) 加上「Innovation Theater」(創新劇場) 的組合。團隊有適應力（願意學新工具），但缺乏創造力（沒問「這解決什麼問題」）和真正的創新力（沒評估「是否讓核心工作更好」）。 改善建議： 1. 創造力提升 ：停止工具學習 2 週，改問「我們核心的品質挑戰是什麼？」 2. 適應力校正 ：從「學最新工具」轉為「使命不變、方法進化」，選擇 1-2 個解決真實痛點的工具深耕 3. 創新力檢驗 ：每個工具採用前問「這讓我們的品質審查/CAPA/偏差處理更好嗎？」 Q2 自我反思題 作者提到「閱讀小說和傳記比技術書籍更能開啟創造力」。請思考：在過去 3 個月內，你閱讀的內容中，有多少比例是「完全跨領域」的？如果這個比例低於 30%，請列出 3 本你想閱讀的非專業領域書籍，並說"
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "01 技能優先於工具 AI 領導力三角（創造力、適應力、創新力）比技術知識重要。掌握這三項人類技能，隨著 AI 進步你會更加成功。 02 系統性相互依存 三項技能相互增強，不是獨立運作。單一技能發展會導致失衡：創意沒適應=轉向不停、適應沒創新=瞎忙、創新沒創意=昂貴劇場。 03 刻意練習是關鍵 你不會自然「漂流」到 AI 時代的領導成功。所有人都能發展這些技能，但需要有意識的計畫，不只是收集資訊。 04 從「精通」到「適應」 過去領導力強調精通，AI 使這過時。AI 無法做「在限制下創造」「混亂中策略調適」「使命導向創新」這些混亂人類工作。 練習題 Practice Questions 問題 1：情境分析題 一位製藥公司的品質總監（QA Director）發現團隊成員都在學習各種 AI 工具，但實際工作效率沒有提升，反而因為工具切換和學習成本增加了混亂。根據 AI Leadership Triad 框架，你會如何診斷這個問題並提出改善建議？ 顯示參考答案 診斷： 這是典型的「Tool Overwhelm」(工具超載) 加上「Innovation Theater」(創新劇場) 的組合。團"
   },
   {
     "docFile": "2025-11-10_substack-notes-growth.html",
@@ -1976,7 +1961,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -1991,7 +1976,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2006,7 +1991,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2021,7 +2006,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2036,7 +2021,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2051,7 +2036,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2066,7 +2051,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2081,7 +2066,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2096,7 +2081,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2111,7 +2096,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2126,7 +2111,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2141,7 +2126,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2156,7 +2141,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2171,7 +2156,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2186,7 +2171,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2201,7 +2186,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2216,7 +2201,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2231,7 +2216,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2246,7 +2231,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2261,7 +2246,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2276,7 +2261,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2291,7 +2276,7 @@ const searchIndex = [
     "docFile": "2025-12-02_prompt-pipeline.html",
     "docTitle": "The 3-Prompt Pipeline 三提示詞管道系統",
     "docDate": "2025-12-02",
-    "docSource": "Wyndo &amp; Benjamin Hies / The AI Maker",
+    "docSource": "Wyndo & Benjamin Hies / The AI Maker",
     "docRating": 3.6,
     "docTags": [
       "Prompt",
@@ -2450,7 +2435,7 @@ const searchIndex = [
     ],
     "sectionId": "原文scenario-2-摘要生成",
     "sectionTitle": "原文：Scenario 2 摘要生成",
-    "content": "Step 1: Get the data from Google Sheets Filter and get data using Google Sheets: Search Rows (Advanced). The query returns rows where: The date falls within the last 7 days The relevance score is greater than or equal to 7 SQL-like Query: where C >= date 'YYYY-MM-DD' and C <= date 'YYYY-MM-DD' and E >= 7 order by E desc Step 2: Aggregate all data into Array Bundle all selected rows into an array for downstream processing. Step 3: OpenAI to summarize The prompt transforms raw data into actionable"
+    "content": "Step 1: Get the data from Google Sheets Filter and get data using Google Sheets: Search Rows (Advanced). The query returns rows where: The date falls within the last 7 days The relevance score is greater than or equal to 7 SQL-like Query: where C >= date 'YYYY-MM-DD' and C = 7 order by E desc Step 2: Aggregate all data into Array Bundle all selected rows into an array for downstream processing. Step 3: OpenAI to summarize The prompt transforms raw data into actionable insights by identifying pat"
   },
   {
     "docFile": "2025-12-04_ai-news-agent-perplexity.html",
@@ -2600,8 +2585,8 @@ const searchIndex = [
       "Tool"
     ],
     "sectionId": "learning-objectives-學習目標",
-    "sectionTitle": "🎯 Learning Objectives 學習目標",
-    "content": "Agent 理解 Agentic Workflow 的基本架構與 Scaffolding 的必要性 LLM 掌握 Token 效率與總成本的關係，建立模型選擇決策框架 Tool 認識 MCP、Nova Act、Nova Forge 等新工具的應用場景 Section 1 of 5 🕑 8 分鐘"
+    "sectionTitle": "Learning Objectives 學習目標",
+    "content": "Agent 理解 Agentic Workflow 的基本架構與 Scaffolding 的必要性 LLM 掌握 Token 效率與總成本的關係，建立模型選擇決策框架 Tool 認識 MCP、Nova Act、Nova Forge 等新工具的應用場景 Section 1 of 5 8 分鐘"
   },
   {
     "docFile": "2025-12-10_batch-331-study-guide.html",
@@ -2631,7 +2616,7 @@ const searchIndex = [
     ],
     "sectionId": "教學解析-commentary",
     "sectionTitle": "教學解析 Commentary",
-    "content": "📖 核心概念 Key Concepts Agentic Workflow（代理工作流程） ：讓 AI 模型能夠自主執行多步驟任務的工作流程。不同於單次問答，Agent 可以自己決定下一步該做什麼。 Scaffolding（腳手架/框架程式碼） ：引導 Agent 行為的輔助程式碼。就像蓋房子需要鷹架支撐，目前的 Agent 也需要大量程式碼來確保穩定運作。 MCP (Model Context Protocol) ：Anthropic 推出的協定，讓 LLM 能夠標準化地使用外部工具，如檔案系統、網頁搜尋等。 💡 比喻說明 Analogy Agent 就像新手員工： 想像你僱用了一位聰明但沒經驗的新員工： 方法A（無 Scaffolding） ：給他辦公室鑰匙和電腦，說「把這份報告完成」，然後離開。結果可能很有創意，但也可能完全偏離方向。 方法B（有 Scaffolding） ：給他詳細的 SOP、每個步驟的檢查清單、完成每階段要回報。結果更可預測、更可靠。 Andrew 這封信教的是方法 A——快速體驗 Agent 的可能性，但實際商業應用需要方法 B。 💻 程式碼/API C"
+    "content": "核心概念 Key Concepts Agentic Workflow（代理工作流程） ：讓 AI 模型能夠自主執行多步驟任務的工作流程。不同於單次問答，Agent 可以自己決定下一步該做什麼。 Scaffolding（腳手架/框架程式碼） ：引導 Agent 行為的輔助程式碼。就像蓋房子需要鷹架支撐，目前的 Agent 也需要大量程式碼來確保穩定運作。 MCP (Model Context Protocol) ：Anthropic 推出的協定，讓 LLM 能夠標準化地使用外部工具，如檔案系統、網頁搜尋等。 比喻說明 Analogy Agent 就像新手員工： 想像你僱用了一位聰明但沒經驗的新員工： 方法A（無 Scaffolding） ：給他辦公室鑰匙和電腦，說「把這份報告完成」，然後離開。結果可能很有創意，但也可能完全偏離方向。 方法B（有 Scaffolding） ：給他詳細的 SOP、每個步驟的檢查清單、完成每階段要回報。結果更可預測、更可靠。 Andrew 這封信教的是方法 A——快速體驗 Agent 的可能性，但實際商業應用需要方法 B。 程式碼/API Code/API a"
   },
   {
     "docFile": "2025-12-10_batch-331-study-guide.html",
@@ -2661,7 +2646,7 @@ const searchIndex = [
     ],
     "sectionId": "教學解析-commentary",
     "sectionTitle": "教學解析 Commentary",
-    "content": "📖 核心概念 Key Concepts Token（代幣/標記） ：LLM 處理文字的基本單位。英文約 1 token = 0.75 字；中文約 1 字 = 1.5-2 tokens。Token 數量直接影響 API 成本。 Extended Thinking（延伸思考） ：讓模型「思考更久」的功能。模型會先產生內部推理過程（消耗更多 token），再給出最終答案。 Hybrid Reasoning Model（混合推理模型） ：可以在「快速回應」與「深度思考」兩種模式間切換的模型。 💡 比喻說明 Analogy Effort Level 就像汽車檔位： Low（低檔） ：省油但動力弱，適合簡單任務如閒聊、簡單問答 Medium（中檔） ：平衡模式，適合大多數工作任務 High（高檔） ：全力輸出但耗油，適合複雜程式碼、深度分析 選對檔位 = 用最少 token 完成任務 = 省錢。 💰 成本分析 Cost Analysis Token 效率 ≠ 總成本低 這是本文最重要的商業洞察： 模型 使用 Token 測試總成本 Claude Opus 4.5 48M $1,498 Gem"
+    "content": "核心概念 Key Concepts Token（代幣/標記） ：LLM 處理文字的基本單位。英文約 1 token = 0.75 字；中文約 1 字 = 1.5-2 tokens。Token 數量直接影響 API 成本。 Extended Thinking（延伸思考） ：讓模型「思考更久」的功能。模型會先產生內部推理過程（消耗更多 token），再給出最終答案。 Hybrid Reasoning Model（混合推理模型） ：可以在「快速回應」與「深度思考」兩種模式間切換的模型。 比喻說明 Analogy Effort Level 就像汽車檔位： Low（低檔） ：省油但動力弱，適合簡單任務如閒聊、簡單問答 Medium（中檔） ：平衡模式，適合大多數工作任務 High（高檔） ：全力輸出但耗油，適合複雜程式碼、深度分析 選對檔位 = 用最少 token 完成任務 = 省錢。 成本分析 Cost Analysis Token 效率 ≠ 總成本低 這是本文最重要的商業洞察： 模型 使用 Token 測試總成本 Claude Opus 4.5 48M $1,498 Gemini 3 Pro"
   },
   {
     "docFile": "2025-12-10_batch-331-study-guide.html",
@@ -2691,7 +2676,7 @@ const searchIndex = [
     ],
     "sectionId": "教學解析-commentary",
     "sectionTitle": "教學解析 Commentary",
-    "content": "📖 核心概念 Key Concepts Scientific Foundation Model（科學基礎模型） ：專門針對科學領域訓練的大型 AI 模型。不同於通用 LLM，這類模型深度理解科學文獻、實驗數據、化學結構等。 Robotic Lab（機器人實驗室） ：由機器人自動執行實驗的實驗室。AI 設計實驗 → 機器人執行 → AI 分析結果 → 設計下一個實驗，形成閉環。 AI Co-Scientist（AI 共同科學家） ：不只是工具，而是能夠提出假設、設計實驗、解讀結果的 AI 系統。 💡 比喻說明 Analogy Genesis Mission 就像「科學版曼哈頓計畫」： 二戰時，美國集中最優秀科學家、最多資源在洛斯阿拉莫斯國家實驗室開發原子彈。Genesis Mission 的規模與意圖類似： 整合 17 個國家實驗室 政府 + 頂尖 AI 公司合作 開放政府機密數據集 目標：在 AI 科學應用領域領先中國 ⚖️ 工具比較 Tool Comparison 六大焦點領域分析： 領域 為何重要 Biotechnology 藥物開發、疫苗、基因療法 Manufacturing"
+    "content": "核心概念 Key Concepts Scientific Foundation Model（科學基礎模型） ：專門針對科學領域訓練的大型 AI 模型。不同於通用 LLM，這類模型深度理解科學文獻、實驗數據、化學結構等。 Robotic Lab（機器人實驗室） ：由機器人自動執行實驗的實驗室。AI 設計實驗 → 機器人執行 → AI 分析結果 → 設計下一個實驗，形成閉環。 AI Co-Scientist（AI 共同科學家） ：不只是工具，而是能夠提出假設、設計實驗、解讀結果的 AI 系統。 比喻說明 Analogy Genesis Mission 就像「科學版曼哈頓計畫」： 二戰時，美國集中最優秀科學家、最多資源在洛斯阿拉莫斯國家實驗室開發原子彈。Genesis Mission 的規模與意圖類似： 整合 17 個國家實驗室 政府 + 頂尖 AI 公司合作 開放政府機密數據集 目標：在 AI 科學應用領域領先中國 工具比較 Tool Comparison 六大焦點領域分析： 領域 為何重要 Biotechnology 藥物開發、疫苗、基因療法 Manufacturing 供應鏈自主、工業"
   },
   {
     "docFile": "2025-12-10_batch-331-study-guide.html",
@@ -2721,7 +2706,7 @@ const searchIndex = [
     ],
     "sectionId": "教學解析-commentary",
     "sectionTitle": "教學解析 Commentary",
-    "content": "📖 核心概念 Key Concepts Nova Forge ：企業級客製化服務。提供模型的「半成品」(checkpoints)，讓企業用自己的數據進一步訓練。年費 $100,000 是企業級定價。 Nova Act（Browser Automation） ：瀏覽器自動化 Agent。可以用自然語言指示 AI 操作網頁，類似 RPA 但更智能。 Web Grounding（網頁根據） ：模型能搜尋網路並附上引用來源，減少 Hallucination，提高可信度。 💡 比喻說明 Analogy Nova 2 家族就像汽車產品線： Nova 2 Pro ：旗艦轎車，全功能最強 Nova 2 Lite ：經濟小車，省錢代步 Nova 2 Omni ：多功能休旅，什麼輸入都吃、什麼都能輸出 Nova 2 Sonic ：語音專車，專門處理電話/語音 Amazon 的策略是「全產品線覆蓋」，不跟單一模型硬拚，而是提供完整解決方案。 💰 成本分析 Cost Analysis Nova 2 Pro vs Claude Opus 4.5 價格比較： 項目 Nova 2 Pro Claude Opu"
+    "content": "核心概念 Key Concepts Nova Forge ：企業級客製化服務。提供模型的「半成品」(checkpoints)，讓企業用自己的數據進一步訓練。年費 $100,000 是企業級定價。 Nova Act（Browser Automation） ：瀏覽器自動化 Agent。可以用自然語言指示 AI 操作網頁，類似 RPA 但更智能。 Web Grounding（網頁根據） ：模型能搜尋網路並附上引用來源，減少 Hallucination，提高可信度。 比喻說明 Analogy Nova 2 家族就像汽車產品線： Nova 2 Pro ：旗艦轎車，全功能最強 Nova 2 Lite ：經濟小車，省錢代步 Nova 2 Omni ：多功能休旅，什麼輸入都吃、什麼都能輸出 Nova 2 Sonic ：語音專車，專門處理電話/語音 Amazon 的策略是「全產品線覆蓋」，不跟單一模型硬拚，而是提供完整解決方案。 成本分析 Cost Analysis Nova 2 Pro vs Claude Opus 4.5 價格比較： 項目 Nova 2 Pro Claude Opus 4.5 輸出 "
   },
   {
     "docFile": "2025-12-10_batch-331-study-guide.html",
@@ -2751,7 +2736,7 @@ const searchIndex = [
     ],
     "sectionId": "教學解析-commentary",
     "sectionTitle": "教學解析 Commentary",
-    "content": "📖 核心概念 Key Concepts Recursive（遞迴） ：函數呼叫自己的過程。TRM 的核心是讓模型「看自己的輸出，再改進，再看，再改」不斷循環。 Context Embedding（上下文嵌入） ：一個記錄「我改過什麼」的向量。解決了「改了又改回去」的問題，就像在草稿紙上記筆記。 ARC-AGI ：Abstraction and Reasoning Corpus，測試 AI 抽象推理能力的基準，被認為是測試「真正智能」的指標之一。 💡 比喻說明 Analogy TRM 就像「有筆記本的數獨高手」： LLM 方式（Chain of Thought） ：一邊思考一邊說出來「這格應該是3，因為...」，說完就給答案。說錯了也不能回頭改。 TRM 方式（Recursive） ：先猜一個答案，檢查哪裡不對，在筆記本上記錄「第3行改過」，改了再檢查，重複16次。最後給出最好的版本。 筆記本 = Context Embedding。 ⚖️ 工具比較 Tool Comparison 比較項目 TRM GPT-4 級 LLM 參數量 5-7M ~1.8T Sudoku 準確率 87% "
+    "content": "核心概念 Key Concepts Recursive（遞迴） ：函數呼叫自己的過程。TRM 的核心是讓模型「看自己的輸出，再改進，再看，再改」不斷循環。 Context Embedding（上下文嵌入） ：一個記錄「我改過什麼」的向量。解決了「改了又改回去」的問題，就像在草稿紙上記筆記。 ARC-AGI ：Abstraction and Reasoning Corpus，測試 AI 抽象推理能力的基準，被認為是測試「真正智能」的指標之一。 比喻說明 Analogy TRM 就像「有筆記本的數獨高手」： LLM 方式（Chain of Thought） ：一邊思考一邊說出來「這格應該是3，因為...」，說完就給答案。說錯了也不能回頭改。 TRM 方式（Recursive） ：先猜一個答案，檢查哪裡不對，在筆記本上記錄「第3行改過」，改了再檢查，重複16次。最後給出最好的版本。 筆記本 = Context Embedding。 工具比較 Tool Comparison 比較項目 TRM GPT-4 級 LLM 參數量 5-7M ~1.8T Sudoku 準確率 87% 0% ARC-AG"
   },
   {
     "docFile": "2025-12-10_batch-331-study-guide.html",
@@ -2765,23 +2750,8 @@ const searchIndex = [
       "Tool"
     ],
     "sectionId": "key-takeaways-重點整理",
-    "sectionTitle": "📚 Key Takeaways 重點整理",
-    "content": "Agent 仍需 Scaffolding aisuite 讓任何人都能快速建構 Agent，但「highly unreliable」是現實。商業應用需要大量框架程式碼引導。 Token 效率 ≠ 成本效率 Claude Opus 4.5 用最少 Token 但總成本最高。選模型要看「任務總成本」，不只看效率指標。 Frontier Model 差異收斂 前十名差距只剩 5.4%。選模型的決策因素應轉向價格、延遲、生態系整合、資料政策。 小而專勝過大而全 TRM 用 500 萬參數打敗兆參數 LLM（數獨 87% vs 0%）。正確的架構設計比暴力堆參數更重要。"
-  },
-  {
-    "docFile": "2025-12-10_batch-331-study-guide.html",
-    "docTitle": "The Batch Issue 331 學習指南 | AI 教學文件",
-    "docDate": "2025-12-10",
-    "docSource": "The Batch / DeepLearning.AI",
-    "docRating": 4.2,
-    "docTags": [
-      "LLM",
-      "Agent",
-      "Tool"
-    ],
-    "sectionId": "practice-questions-練習題",
-    "sectionTitle": "🎯 Practice Questions 練習題",
-    "content": "Q1 理解應用 Andrew Ng 說目前的 Agent 是「highly autonomous, moderately capable, and highly unreliable」。請解釋為什麼「autonomous」和「reliable」目前是衝突的，以及 Scaffolding 如何緩解這個問題？ 衝突原因： 「Autonomous」意味著 Agent 自己決定下一步做什麼，但 LLM 的輸出有隨機性（temperature > 0），且缺乏對任務全局的理解。每一步的小誤差會累積，導致最終結果不可預測。 Scaffolding 的作用： 通過預先定義的步驟、檢查點、錯誤處理邏輯來限制 Agent 的自由度。例如：強制在每個步驟後驗證輸出格式、限制可用的工具、設定明確的成功/失敗條件。這犧牲了部分自主性，換取可靠性。 Q1 理解應用 根據文中數據，Claude Opus 4.5 的 Token 效率比 GPT-5.1 高約 40%，但測試總成本高出約 74%。假設你的公司每月有 100 萬美元的 AI API 預算，你會如何配置這兩個模型的使用？請說明理由。 建議配置策略： 1."
+    "sectionTitle": "Key Takeaways 重點整理",
+    "content": "Agent 仍需 Scaffolding aisuite 讓任何人都能快速建構 Agent，但「highly unreliable」是現實。商業應用需要大量框架程式碼引導。 Token 效率 ≠ 成本效率 Claude Opus 4.5 用最少 Token 但總成本最高。選模型要看「任務總成本」，不只看效率指標。 Frontier Model 差異收斂 前十名差距只剩 5.4%。選模型的決策因素應轉向價格、延遲、生態系整合、資料政策。 小而專勝過大而全 TRM 用 500 萬參數打敗兆參數 LLM（數獨 87% vs 0%）。正確的架構設計比暴力堆參數更重要。 Practice Questions 練習題 Question 1 | Agent Architecture Andrew Ng 說目前的 Agent 是「highly autonomous, moderately capable, and highly unreliable」。請解釋為什麼「autonomous」和「reliable」目前是衝突的，以及 Scaffolding 如何緩解這個問題？ 顯示參考答案 衝突原因： 「A"
   },
   {
     "docFile": "2025-12-10_claude-project-memory.html",
@@ -3597,7 +3567,7 @@ const searchIndex = [
     "docFile": "2025-12-16_data-literacy-loop.html",
     "docTitle": "Data Literacy Loop 學習指南",
     "docDate": "2025-12-16",
-    "docSource": "Wyndo &amp; Hodman Murad / AI Maker",
+    "docSource": "Wyndo & Hodman Murad / AI Maker",
     "docRating": 3.5,
     "docTags": [
       "Prompt",
@@ -3862,23 +3832,7 @@ const searchIndex = [
     ],
     "sectionId": "重點整理-key-takeaways",
     "sectionTitle": "🏆 重點整理 Key Takeaways",
-    "content": "思維夥伴 AI 不是工具，是可以挑戰和擴展你思考的夥伴。學習如何「與 AI 思考」而不是「把工作外包給 AI」。 分散式智慧 AI 讓組織可以擺脫傳統的命令與控制，讓前線人員擁有足夠的情境意識和決策支援。 速度優先 不要等到完美才開始。建立 AI First 心態，快速實驗、快速學習、快速迭代。 控制點思維 AI 正在重塑競爭格局。識別新的控制點在哪裡，並定位自己在價值流動的路徑上。"
-  },
-  {
-    "docFile": "2025-12-18_ai-books-leaders-guide.html",
-    "docTitle": "5 AI Books All Leaders Should Actually Read - 學習指南",
-    "docDate": "2025-12-18",
-    "docSource": "AI Maker Labs / Paul Morrison",
-    "docRating": 3.8,
-    "docTags": [
-      "LLM",
-      "Agent",
-      "Tool",
-      "Automation"
-    ],
-    "sectionId": "練習題-practice-questions",
-    "sectionTitle": "🎯 練習題 Practice Questions",
-    "content": "Q1 理解應用 你的組織正在考慮導入 AI。根據 AI First 的框架，你會建議成立怎樣的 AI Council？應該包含哪些角色？為什麼？ 建議組成： ☑ 技術領導 ：評估技術可行性和整合複雜度 ☑ 業務單位代表 ：確保解決方案解決真正的業務問題，並推動採用 ☑ 法務/合規 ：管理風險，特別是在製藥等受監管行業 ☑ 人資代表 ：規劃培訓和變革管理 為什麼這個組合？ 單純技術推動往往失敗，因為缺乏業務接受度和改變管理。這個組合確保技術、業務、風險、人員四個維度都被考慮。 Q1 理解應用 Mollick 的「鋸齒狀前沿」(Jagged Frontier) 概念對你評估 AI 在製藥生產中的應用有什麼啟示？請舉例說明。 鋸齒狀前沿的意涵： AI 的能力在不同領域是不均勻的。 製藥應用範例： ☑ AI 很強的領域： 文件撰寫、SOP 草擬、偏差報告分析、法規文件整理 ☒ AI 需謹慎的領域： GMP 決策、放行決定、無菌製程判斷、法規詮釋 行動啟示： 不能因為 AI 在文件撰寫上很強，就假設它可以做 GMP 決策。每個應用場景都需要獨立驗證。 Q1 理解應用 根據 Reshuffle 的"
+    "content": "思維夥伴 AI 不是工具，是可以挑戰和擴展你思考的夥伴。學習如何「與 AI 思考」而不是「把工作外包給 AI」。 分散式智慧 AI 讓組織可以擺脫傳統的命令與控制，讓前線人員擁有足夠的情境意識和決策支援。 速度優先 不要等到完美才開始。建立 AI First 心態，快速實驗、快速學習、快速迭代。 控制點思維 AI 正在重塑競爭格局。識別新的控制點在哪裡，並定位自己在價值流動的路徑上。 🎯 練習題 Practice Questions Question 1: 應用題 你的組織正在考慮導入 AI。根據 AI First 的框架，你會建議成立怎樣的 AI Council？應該包含哪些角色？為什麼？ 顯示參考答案 建議組成： ☑ 技術領導 ：評估技術可行性和整合複雜度 ☑ 業務單位代表 ：確保解決方案解決真正的業務問題，並推動採用 ☑ 法務/合規 ：管理風險，特別是在製藥等受監管行業 ☑ 人資代表 ：規劃培訓和變革管理 為什麼這個組合？ 單純技術推動往往失敗，因為缺乏業務接受度和改變管理。這個組合確保技術、業務、風險、人員四個維度都被考慮。 Question 2: 分析題 Mollick 的"
   },
   {
     "docFile": "2025-12-20_claude-skills-deep-dive.html",
@@ -4355,23 +4309,7 @@ const searchIndex = [
     ],
     "sectionId": "重點整理-key-takeaways",
     "sectionTitle": "🎯 重點整理 Key Takeaways",
-    "content": "1. AI 的隱形革命 AI 變革對大多數人是「不可讀」的。到 2026 年，使用前沿 AI 的人將感覺生活在平行世界。 2. 能力超額 AI 系統比表面更強大。關鍵在於適當的 Scaffold 和 Elicitation——如同好的管理能釋放員工潛力。 3. 成本顛覆 AI Agent 可以以人類專家 30% 的成本達到專業水準。攻防雙方都有這個優勢。 4. 資料可讀性 為 AI 結構化領域數據可以提升 34%+ 的效能。「管道工程」是被低估的競爭優勢。"
-  },
-  {
-    "docFile": "2025-12-22_import-ai-438-guide.html",
-    "docTitle": "Import AI 438 學習指南 | AI 能力超額與隱形革命",
-    "docDate": "2025-12-22",
-    "docSource": "Jack Clark / Import AI",
-    "docRating": 4.2,
-    "docTags": [
-      "LLM",
-      "Agent",
-      "Automation",
-      "Tool"
-    ],
-    "sectionId": "練習題-practice-questions",
-    "sectionTitle": "🎯 練習題 Practice Questions",
-    "content": "Q1 概念理解 請解釋「Capability Overhang（能力超額）」的概念，並舉一個你工作領域中可能存在的例子。 概念解釋： Capability Overhang 指的是 AI 系統實際擁有的能力遠超過我們目前能「引出」的程度。就像一個天才學生，如果沒有好的老師或正確的問題，他的潛力無法展現。 例子（以製藥業為例）： 在藥廠的 QC 部門，如果只是讓 AI 回答「這個數據是否在規格內」，它只能做簡單判斷。但如果設計一個 Scaffold，讓 AI：1) 分析歷史數據趨勢 2) 比較不同批次模式 3) 識別偏離信號 4) 提出預防性建議——同樣的 AI 就能展現資深品管人員的能力。 Q2 實務應用 如果你是企業資安主管，知道攻擊者可以用 $18/hr 的 AI 來尋找漏洞，你會如何調整防禦策略？ 提高測試頻率： 成本降低，應更頻繁進行滲透測試，用 AI 對自己持續審計 假設已被入侵： 採用 Zero Trust 架構，加強內部監控和異常偵測 用 AI 對抗 AI： 部署 AI 驅動的防禦系統，自動化日誌分析和威脅偵測 人員培訓升級： 資安團隊需要學會使用 AI 工具，競爭是「人"
+    "content": "1. AI 的隱形革命 AI 變革對大多數人是「不可讀」的。到 2026 年，使用前沿 AI 的人將感覺生活在平行世界。 2. 能力超額 AI 系統比表面更強大。關鍵在於適當的 Scaffold 和 Elicitation——如同好的管理能釋放員工潛力。 3. 成本顛覆 AI Agent 可以以人類專家 30% 的成本達到專業水準。攻防雙方都有這個優勢。 4. 資料可讀性 為 AI 結構化領域數據可以提升 34%+ 的效能。「管道工程」是被低估的競爭優勢。 🎯 練習題 Practice Questions 問題 1：概念理解 請解釋「Capability Overhang（能力超額）」的概念，並舉一個你工作領域中可能存在的例子。 顯示參考答案 概念解釋： Capability Overhang 指的是 AI 系統實際擁有的能力遠超過我們目前能「引出」的程度。就像一個天才學生，如果沒有好的老師或正確的問題，他的潛力無法展現。 例子（以製藥業為例）： 在藥廠的 QC 部門，如果只是讓 AI 回答「這個數據是否在規格內」，它只能做簡單判斷。但如果設計一個 Scaffold，讓 AI：1) "
   },
   {
     "docFile": "2025-12-22_import-ai-438-guide.html",
@@ -4400,9 +4338,9 @@ const searchIndex = [
       "Agent",
       "LLM"
     ],
-    "sectionId": "練習題-practice-questions",
-    "sectionTitle": "🎯 練習題 Practice Questions",
-    "content": "Q1 概念理解 文章提到 Reddit 和 Amazon 採用不同的 Hybrid Search 設計模式。請解釋「明確分離」和「自動判斷」兩種模式的差異，以及各自的優缺點。 明確分離 (Reddit 模式)： 用戶在輸入查詢後，需要明確選擇「傳統搜尋」或「問 AI」。兩種選項有視覺上的區隔 (水平分隔線)。 優點：用戶控制度高、功能清晰、不會產生意外結果 缺點：增加一步操作、可能感覺較笨拙 自動判斷 (Amazon Rufus 模式)： 系統自動偵測用戶輸入是「搜尋產品」還是「問問題」，無縫切換模式。 優點：體驗流暢、減少用戶決策負擔 缺點：需要更強的意圖理解能力、可能誤判用戶意圖 Q2 實務應用 假設你在一家 CDMO (委託開發製造組織) 工作，需要設計內部文件搜尋系統。根據文章的五大趨勢，你會優先考慮哪些功能？請說明理由。 建議優先考慮的功能： 1. Hybrid Search (AI + 傳統搜尋)： 讓用戶可以問「QS-21 adjuvant 的 stability testing 文件」而非只能搜關鍵字，適合技術文件查找。 2. 速度優化： 製藥環境中，快速找到 SOP、批次記錄至關重要。投資搜尋基礎設施 (如 Elasticsearch/OpenSearch) 降低延遲。 3. Actions 功能： 搜尋結果可以直接觸發工作流程，例如「找到 Batch Record 後直接開啟審核流程」。 4. Carousel-based 分類： 根據文件類型 (SOP、Batch Record、Validation Protocol) 自動分組顯示。 理由： CDMO 環境需要高效率、高準確性的文件存取，且有嚴格的法規遵循要求，因此搜尋準確性和可追溯性比視覺化花俏功能更重要。 Q3 批判思考 文章指出「AI 整合已成為標配，不再是差異化因素」。你同意這個觀點嗎？在什麼情況下，AI 搜尋仍然可以成為產品的競爭優勢？ 部分同意，但需要區分「有 AI」和「AI 做得好」： AI 可以成為差異化的情況： 垂直領域專業性： 例如法律文件搜尋的 AI 能理解法律術語和案例關聯，這種專業能力仍是差異化 獨特數據優勢： Instacart 的 PIXEL 基於大量商品圖片訓練，競爭對手難以複製 深度整合： Amazon Rufus 的意圖自動判斷需要長期用戶行為數據，新進者難以達到同樣準確度 速度和成本： 在同樣功能下，更快、更便宜的 AI 搜尋仍是優勢 結論： 「有 AI」不再是差異化，但「AI 做得比別人好」仍然是強大的競爭優勢。關鍵在於找到你的產品場景中，哪種 AI 能力最能創造用戶價值。 📊 文章評價 Article Rating 綜合 4.0 技術深度 ★★★ ☆☆ 3/5 實務應用 ★★★★★ 5/5 工具生態 ★★★★ ☆ 4/5 時效性 ★★★★★ 5/5 學習曲線 ★★★ ☆☆ 3/5 AI Expert Learning System 製作日期：2026-01-06 原文來源： Department of Product - Deep: The UX of Search Explored (Second Edition) 建議 Chat Title：[Tool] UX of Search 2025 - Hybrid Search, Carousel, AI Integration"
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Deep: The UX of Search Explored Department of Product | Rich Holmes | 2025.12.31 Tool Agent Integration LLM 📋 快速摘要 Executive Summary 閱讀時間：15-20 分鐘 核心概念 Core Concept 產品內搜尋 (In-product Search) 正從單純的「找東西」功能，演變成融合 AI Assistant、能執行動作的「命令中心」(Command Center)。這種轉變對用戶留存率 (Retention) 和參與度 (Engagement) 產生重大影響。 實務價值 Practical Value 透過 20+ 個實際案例 (Instacart, LinkedIn, Reddit, YouTube 等)，學習如何設計混合搜尋 (Hybrid Search)、輪播式探索 (Carousel Discovery)、以及自然語言搜尋 (Natural Language Search) 功能，提升產品 UX。 關鍵要點 Key Takeaways AI 整合已成為標配、搜尋正在成為獨立產品的收入來源、Carousel 主導探索體驗、速度是競爭優勢、多模態輸入正在擴展。 行動建議 Action Items 評估你的產品搜尋功能是否已整合 AI、考慮 Hybrid Search 架構、測試 Carousel-based 探索、投資搜尋速度優化。 🎯 學習目標 Learning Objectives 概念理解 理解 Hybrid Search 如何融合傳統搜尋與 AI Assistant 實務應用 學習 Carousel、Quick Filter、Actions 等 UX 元件的設計模式 策略思維 評估搜尋功能如何影響產品策略與收入模式 📖 正文開始 | 共 3 部分 預估閱讀：15-20 分鐘 Part 1: AI 在搜尋中的整合 The ability to search and find exactly what you need inside a product can play a critical role in engagement and retention ; a user who can't find what they need is ultimately a user who churns. For many leading companies, AI has transformed in-product search from a simple find-and-retrieve function into something more ambitious: visual, conversational, and capable of taking actions . If you look closely at the prompt text used in many leading products' search bars, you'll now notice that users are now prompted to not only search for something - but to \"ask a question\" too - signalling the shift towards the merging of traditional search with AI A"
   },
   {
     "docFile": "2026-01-06_claude-projects-product-health.html",
@@ -4416,9 +4354,9 @@ const searchIndex = [
       "Agent",
       "Prompt"
     ],
-    "sectionId": "practice-questions",
-    "sectionTitle": "Practice Questions",
-    "content": "Q1 理解應用 為什麼作者認為 Claude Projects 比起單次對話更適合用於產品健康監測？請說明 Projects 的哪些特性支持這個用途。 Answer: Claude Projects 適合產品健康監測的三個關鍵特性： 1. Knowledge Base（知識庫） ：可以上傳所有相關文件（GA 報表、用戶調查、財務數據），Claude 在每次對話中都能參考這些資料，不需重複說明。 2. Chat History（對話歷史） ：所有過往的健康檢查對話都保存在 Project 內，可以追溯歷史趨勢、比較不同時期的狀況。 3. Custom Instructions（自定義指令） ：設定好 5 維度框架、Traffic Light 標準、輸出格式後，每次對話都會遵循這些規則，確保一致性。 這三者結合，讓 Claude Projects 成為一個「有記憶的產品顧問」，而非每次從零開始的對話。 Q1 理解應用 假設你要為你的 CDMO 建立一個「客戶專案健康監測」的 Claude Project，請設計一個適合的 Custom Instructions 大綱，包含角色定義、監測維度、輸出格式。 Suggested Custom Instructions Structure: ## ROLE You are a Client Project Health Analyst for [CDMO Name], specializing in aseptic fill/finish operations. ## FIVE HEALTH DIMENSIONS 1. **Project Timeline Health** - Milestone completion rates - Schedule adherence vs. original plan - Critical path risk indicators 2. **Technical Performance** - Batch success rates - Deviation frequency and severity - Process parameter stability (e.g., SA25 Vanrx) 3. **Regulatory Compliance** - Documentation completeness - Audit findings status - Change control backlog 4. **Commercial Health** - Budget vs. actual spend - Scope change frequency - Client payment status 5. **Relationship Health** - Communication frequency - Issue escalation patterns - Client satisfaction signals ## OUTPUT FORMATS - **Quick Status**: Traffic light per dimension + top risk - **Monthly Report**: Dashboard with trends + recommendations - **Escalation Brief**: Executive summary for leadership Q1 理解應用 作者提到 Single Project 架構會「b"
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Claude Projects 產品健康監測系統 Department of Product | Rich Holmes | 2026.01.05 Tool Automation Agent Prompt Quick Summary 15 min read Core Concept Claude Projects 是一個被低估的功能，可結合 Skills 打造可重複使用的產品健康監測系統，透過 5 大維度（用戶數據、價值主張、UX、商業、策略）持續追蹤產品表現。 Practical Value 提供兩種實作架構：單一 Project 適合快速上手，多 Project 架構適合跨團隊協作。包含完整的 Custom Instructions 範本和健康檢查 Prompts。 Key Takeaways Projects 整合知識庫、對話歷史與自定義指令；5 維度健康指標涵蓋從轉換漏斗到策略聚焦；可透過 Skills 自動產出 Excel/PowerPoint 報告。 Action Items 選擇單一或多重 Project 架構、設定檔案命名規範（prefix 分類）、建立定期健康檢查節奏、結合 Claude Skills 產出可分享的成果物。 Learning Objectives Concept 理解 Claude Projects 的架構與核心功能 Concept 掌握產品健康 5 維度評估框架 Practical 能撰寫 Product Health 的 Custom Instructions Practical 設計適合團隊的 Project 架構 Tool 結合 Skills 產出可分享報告 Tool 建立定期健康檢查工作流程 Part 1 of 4 Section 1: Claude Projects Overview What is Claude Projects? Projects lets you create a self-contained space for you or your team to come back to over time. A Project has its own dedicated chat history, a knowledge base of uploaded documents and custom instructions that Claude will consider every time it generates a response. You can also combine Projects with newer abilities like Skills and Claude for Excel to create artifacts from the output of your Projects that you can share with stakeholders and colleagues. A project has two key characteristics when you first create it: a name and a description. Once you've created a Project, you'll see the Projects home screen which includes the main chat interface and chat history along with your custom inst"
   },
   {
     "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
@@ -4435,7 +4373,7 @@ const searchIndex = [
     ],
     "sectionId": "nvidia-ai-全面革新從-vera-rubin-到-physical-ai-的產業藍圖",
     "sectionTitle": "NVIDIA AI 全面革新：從 Vera Rubin 到 Physical AI 的產業藍圖",
-    "content": "NVIDIA CES 2026 | January 2026 | Las Vegas LLM Agent Automation Tool Integration 📋 Executive Summary ⏱ 45 min read Core Concept Jensen Huang 在 CES 2026 發表了 NVIDIA 全方位 AI 戰略，涵蓋次世代 AI 超級電腦 Vera Rubin、開源世界基礎模型 Cosmos、首款推理型自駕車 AI Alpamayo，以及與 Siemens/Cadence/Synopsys 的工業 AI 整合。核心訊息：AI 正在重塑 $10 兆美元的運算產業，而 NVIDIA 正透過「極端協同設計」(Extreme Co-design) 突破摩爾定律限制。 Practical Value 理解 AI 產業最新發展方向，包括：Agentic AI 架構如何成為新應用框架、Physical AI 如何改變機器人與自駕車產業、開源模型如何加速 AI 普及、以及 CDMO 製藥產業如何借鏡工業 4.0 數位孿生整合。 Key Takeaways 1) Ver"
+    "content": "NVIDIA CES 2026 | January 2026 | Las Vegas LLM Agent Automation Tool Integration Executive Summary 45 min read Core Concept Jensen Huang 在 CES 2026 發表了 NVIDIA 全方位 AI 戰略，涵蓋次世代 AI 超級電腦 Vera Rubin、開源世界基礎模型 Cosmos、首款推理型自駕車 AI Alpamayo，以及與 Siemens/Cadence/Synopsys 的工業 AI 整合。核心訊息：AI 正在重塑 $10 兆美元的運算產業，而 NVIDIA 正透過「極端協同設計」(Extreme Co-design) 突破摩爾定律限制。 Practical Value 理解 AI 產業最新發展方向，包括：Agentic AI 架構如何成為新應用框架、Physical AI 如何改變機器人與自駕車產業、開源模型如何加速 AI 普及、以及 CDMO 製藥產業如何借鏡工業 4.0 數位孿生整合。 Key Takeaways 1) Vera Rub"
   },
   {
     "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
@@ -4451,8 +4389,8 @@ const searchIndex = [
       "Research"
     ],
     "sectionId": "learning-objectives",
-    "sectionTitle": "🎯 Learning Objectives",
-    "content": "LLM 理解 Test-time Scaling 與 Reasoning Model 的運作原理 Agent 掌握 Agentic AI 架構的核心組件與設計模式 Tool 認識 Vera Rubin 六晶片系統的極端協同設計 Automation 了解 Physical AI 與世界基礎模型的應用場景 Integration 分析 NVIDIA 與工業軟體巨頭的整合戰略 Tool 評估開源模型生態對企業 AI 策略的影響 📖 Part 1 of 4: AI Computing Revolution Section 1/4"
+    "sectionTitle": "Learning Objectives",
+    "content": "LLM 理解 Test-time Scaling 與 Reasoning Model 的運作原理 Agent 掌握 Agentic AI 架構的核心組件與設計模式 Tool 認識 Vera Rubin 六晶片系統的極端協同設計 Automation 了解 Physical AI 與世界基礎模型的應用場景 Integration 分析 NVIDIA 與工業軟體巨頭的整合戰略 Tool 評估開源模型生態對企業 AI 策略的影響 Part 1 of 4: AI Computing Revolution Section 1/4"
   },
   {
     "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
@@ -4622,24 +4560,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "Extreme Co-design 摩爾定律放緩下，NVIDIA 選擇同時重新設計 6 顆晶片，實現 1.6 倍電晶體帶來 5 倍效能提升。這是「系統級創新」勝過「單點突破」的典範。 Agentic AI Architecture Multi-model + Multi-modal + Multi-cloud + Hybrid 的架構將成為「未來應用程式」的標準框架。Smart Router 讓企業同時擁有前沿能力與客製化優勢。 Physical AI + Simulation Cosmos 世界基礎模型實現「運算轉換為數據」，Omniverse 提供安全的訓練環境。三電腦架構（訓練/推論/模擬）是 Physical AI 的基礎設施。 Open Model Strategy NVIDIA 開源 Alpamayo 模型與訓練數據、Cosmos 世界模型、GR00T 機器人模型。策略：「只有開源才能真正信任」，同時建立生態系護城河。"
-  },
-  {
-    "docFile": "2026-01-07_ces-jensen-huang-keynote.html",
-    "docTitle": "CES 2026 Jensen Huang Keynote - AI 產業全面解析",
-    "docDate": "2026-01-07",
-    "docSource": "NVIDIA CES 2026 / Jensen Huang",
-    "docRating": 4.4,
-    "docTags": [
-      "LLM",
-      "Agent",
-      "Automation",
-      "Tool",
-      "Research"
-    ],
-    "sectionId": "practice-questions",
-    "sectionTitle": "🎯 Practice Questions",
-    "content": "Q1 理解應用 Jensen Huang 提到 AI 產業正經歷「雙重平台轉移」(Two Simultaneous Platform Shifts)。請解釋這兩個轉移分別是什麼，以及為什麼它們同時發生會導致如此大規模的產業投資？ Answer: 第一個轉移：運算典範 — 從「程式設計 + CPU 執行」轉向「模型訓練 + GPU 推論」。軟體不再是預編譯的靜態程式碼，而是透過訓練習得的動態模型。 第二個轉移：應用架構 — 從「在 AI 之上建立應用」轉向「將 AI 作為應用的基礎」。應用程式的每個輸出（pixel/token）都是即時生成的，而非預先錄製。 投資規模的原因 ：這不只是新技術出現，而是過去十年 $10 兆美元運算基礎設施的「現代化」需求。加上每年數千億美元 VC 資金湧入新創，以及全球企業將 R&D 預算從傳統方法轉移到 AI 方法。三股力量同時推動，解釋了為何「我們這麼忙」。 Q1 理解應用 您是一家 CDMO 的營運總監，正在評估如何將 Agentic AI 架構應用於品質管制實驗室。根據 Jensen 描述的 Multi-model Architecture（前沿模"
+    "content": "Extreme Co-design 摩爾定律放緩下，NVIDIA 選擇同時重新設計 6 顆晶片，實現 1.6 倍電晶體帶來 5 倍效能提升。這是「系統級創新」勝過「單點突破」的典範。 Agentic AI Architecture Multi-model + Multi-modal + Multi-cloud + Hybrid 的架構將成為「未來應用程式」的標準框架。Smart Router 讓企業同時擁有前沿能力與客製化優勢。 Physical AI + Simulation Cosmos 世界基礎模型實現「運算轉換為數據」，Omniverse 提供安全的訓練環境。三電腦架構（訓練/推論/模擬）是 Physical AI 的基礎設施。 Open Model Strategy NVIDIA 開源 Alpamayo 模型與訓練數據、Cosmos 世界模型、GR00T 機器人模型。策略：「只有開源才能真正信任」，同時建立生態系護城河。 Practice Questions Question 1: Concept Understanding Jensen Huang 提到 AI 產業正經歷「"
   },
   {
     "docFile": "2026-01-08_context-engineering-agents.html",
@@ -4654,15 +4575,15 @@ const searchIndex = [
       "Prompt",
       "Tool"
     ],
-    "sectionId": "practice-questions-練習題",
-    "sectionTitle": "Practice Questions 練習題",
-    "content": "Q1 概念理解 一位工程師在設計 AI Agent 時，把所有可能相關的歷史數據、規格文件、案例庫都預先載入 Context Window。根據 Context Engineering 的原則，這種做法有什麼問題？應該如何改進？ 問題分析 ： 1. Context Rot 風險 ：Token 數量增加會降低模型準確回憶資訊的能力，更多資料反而讓 Agent 表現更差。 2. 注意力預算耗盡 ：LLM 的注意力機制有限，每個 Token 都會消耗預算，可能導致關鍵資訊被忽略。 3. 違反核心原則 ：Context Engineering 的指導原則是「最小高訊號 Token 集合」，而非「越多越好」。 改進方案 ： 1. 改用 Hybrid Retrieval 策略：只預載最關鍵的資料（如當前任務的規格），其他用工具按需查詢。 2. 維護輕量級識別符（檔案路徑、ID），讓 Agent 在需要時才載入完整內容。 3. 對長時間任務，導入 Compaction 機制定期壓縮歷史對話。 Q2 實務應用（CDMO 場景） 你正在為 Aseptic Fill/Finish 產線設計一個 AI Agent，協助操作員進行偏差調查（Deviation Investigation）。根據本文的 Context Engineering 原則，你會如何設計這個 Agent 的 Tool Set？請考慮「正確高度」和「避免模糊決策點」的原則。 Tool Set 設計建議 ： 1. 功能明確分離的工具 ： search_deviation_history(product_code, deviation_type) - 查詢同產品/同類型的歷史偏差 get_batch_record(batch_id) - 取得特定批次的生產記錄 get_em_data(room_id, date_range) - 取得環境監測數據 check_equipment_status(equipment_id) - 查詢設備校驗/維護狀態 get_sop(sop_number) - 取得相關 SOP 內容 2. 避免的設計 ： 不要用 get_data(type, params) 這種萬用工具 不要把「查詢」和「寫入」功能合併在同一工具 每個工具的用途要清晰到人類工程師能明確判斷何時使用 3. System Prompt 高度 ： 提供偏差調查的流程框架（如 5 Why、魚骨圖結構），但不要硬編碼「如果 EM 超標就一定是什麼原因」這種邏輯。讓模型根據查詢到的資料做判斷。 Q3 批判思考 文章提到「do the simplest thing that works」是最佳建議。但在高度監管的製藥環境中（需要 21 CFR Part 11 合規、完整審計軌跡），這個原則是否仍然適用？如何平衡「簡單」與「合規」？ 原則仍然適用，但需要重新定義「works」 ： 在製藥環境中，「works」的定義必須包含合規要求。一個不符合 GMP 的簡單方案根本不算「work」。 平衡策略 ： 1. 分層設計 ： AI Agent 本身遵循「最簡單有效」原則 但外層包裹合規層（Audit Trail、電子簽章、權限控制） 這些合規功能是「必要的複雜度」，不是「過度工程化」 2. Context Engineering 的合規應用 ： Compaction 時必須保留關鍵的審計資訊（who, what, when） Note-Taking 的持久化儲存需要符合 Data Integrity 要求（ALCOA+） Tool"
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Context Engineering for AI Agents AI Agent 的上下文工程：從 Prompt 到 Context 的範式轉移 Anthropic Engineering Blog | 2025年9月29日發布 Agent LLM Prompt Engineering Tool Design Executive Summary 快速摘要 閱讀時間：15-20 分鐘 Core Concept 核心概念 Context Engineering（上下文工程）是 Prompt Engineering 的自然演進。重點從「如何寫好指令」轉變為「如何策展最佳的 Token 集合」。核心原則：用最小、最高訊號的 Token 集合來最大化達成預期結果的機率。 Practical Value 實務價值 解決 AI Agent 在長時間任務中的「Context Rot（上下文腐敗）」問題。提供三大技術：Compaction（壓縮）、Structured Note-Taking（結構化筆記）、Sub-Agent Architectures（多代理架構），可達 54% 的效能提升。 Key Points 關鍵要點 Context 是有限資源，具有遞減邊際效益。LLM 有「注意力預算」限制。Just-in-Time（即時）檢索優於預先載入所有資料。工具設計應最小化功能重疊，避免模糊的決策點。 Action Items 行動建議 1) 審視現有 System Prompt，找到「正確高度」的指令層級；2) 評估工具集是否有功能重疊或模糊性；3) 考慮從 Pre-computed RAG 轉向 Hybrid Retrieval 策略；4) 對長時間任務導入 Compaction 機制。 Learning Objectives 學習目標 概念理解 區分 Prompt Engineering 與 Context Engineering 的本質差異 架構設計 理解 Context Rot 的成因與 LLM 注意力機制限制 實務應用 掌握有效 Context 的四大組成：System Prompt、Tools、Examples、History 檢索策略 比較 Just-in-Time 與 Hybrid Retrieval 策略的適用場景 長期任務 應用 Compaction、Note-Taking、Sub-Agents 三種長時間任務技術 決策框架 根據任務類型選擇適當的 Context Management 策略 Part 1 of 4 第一部分：核心概念 Original Content 原文 Context engineering refers to the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference, including all the other information that may land there outside of the prompts. Prompt Engineering : Writing instructions for single tasks. Key focus: \"What to say\" Context Engineering : Managing all tokens (instructions + tools + data + history)"
   },
   {
     "docFile": "2026-01-08_humint-intelligence-ai.html",
     "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
     "docDate": "2026-01-08",
-    "docSource": "Is It Propaganda &amp; Joel Salinas",
+    "docSource": "Is It Propaganda & Joel Salinas",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -4677,7 +4598,7 @@ const searchIndex = [
     "docFile": "2026-01-08_humint-intelligence-ai.html",
     "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
     "docDate": "2026-01-08",
-    "docSource": "Is It Propaganda &amp; Joel Salinas",
+    "docSource": "Is It Propaganda & Joel Salinas",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -4692,7 +4613,7 @@ const searchIndex = [
     "docFile": "2026-01-08_humint-intelligence-ai.html",
     "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
     "docDate": "2026-01-08",
-    "docSource": "Is It Propaganda &amp; Joel Salinas",
+    "docSource": "Is It Propaganda & Joel Salinas",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -4707,7 +4628,7 @@ const searchIndex = [
     "docFile": "2026-01-08_humint-intelligence-ai.html",
     "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
     "docDate": "2026-01-08",
-    "docSource": "Is It Propaganda &amp; Joel Salinas",
+    "docSource": "Is It Propaganda & Joel Salinas",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -4722,7 +4643,7 @@ const searchIndex = [
     "docFile": "2026-01-08_humint-intelligence-ai.html",
     "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
     "docDate": "2026-01-08",
-    "docSource": "Is It Propaganda &amp; Joel Salinas",
+    "docSource": "Is It Propaganda & Joel Salinas",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -4731,22 +4652,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "Force Multiplier, Not Replacement AI 是力量倍增器，不是替代品。技術應該幫助你問更好的問題、挑戰假設、理解脈絡，而非成為判斷的替代品。 Human Authority Audit 三步檢核：Decision Weight（誰負責後果）、Trust Requirement（是否需要人際信任）、Judgment Complexity（是否需要價值權衡）。 Grey Zone Reality 現實世界充滿模糊地帶。AI 可以識別異常，但判斷意圖、預測後續、區分真正威脅與假警報，需要人類的脈絡理解。 Values as Strategic Advantage 在 AI 時代，人類價值觀不是限制而是戰略優勢。合規性、責任感、信任建立，這些是 AI 無法複製的競爭力。"
-  },
-  {
-    "docFile": "2026-01-08_humint-intelligence-ai.html",
-    "docTitle": "The Enduring Necessity of HUMINT - 為何機器無法取代人類情報",
-    "docDate": "2026-01-08",
-    "docSource": "Is It Propaganda &amp; Joel Salinas",
-    "docRating": 3.8,
-    "docTags": [
-      "Agent",
-      "Automation",
-      "Security"
-    ],
-    "sectionId": "practice-questions",
-    "sectionTitle": "Practice Questions",
-    "content": "Q1 理解應用 文章提到 AI 有四項根本限制：無法決定什麼重要、無法權衡道德取捨、無法承擔責任、無法建立信任。請解釋為什麼「無法承擔責任」對於 AI 在製藥業的應用特別關鍵。 Answer: 「無法承擔責任」在製藥業特別關鍵，因為法規框架（如 GMP、21 CFR Part 11）明確要求「人類責任」： 1. 法律責任不可轉移 ：QP（Qualified Person）的 batch release 簽名是法律要求，不能委託給系統。如果產品出問題，法規機關追究的是簽名的人，不是 AI。 2. 責任驅動謹慎行為 ：當人知道自己要對後果負責，會更仔細審查。AI 沒有這種「皮膚在遊戲中」的謹慎機制。 3. CAPA 有效性 ：糾正和預防措施需要有人負責執行和驗證，這是持續改善循環的核心。 4. 稽核可追溯性 ：當 FDA 或客戶問「誰做了這個決定」，答案必須是一個可以接受質詢的人，不能是「演算法」。 Q1 理解應用 你正在評估一個 AI 系統，它可以自動標記環境監控數據中的異常趨勢，並建議是否需要調查。使用文章中的 Human Authority Audit 三步框架，分析這個系統應該是 "
+    "content": "Force Multiplier, Not Replacement AI 是力量倍增器，不是替代品。技術應該幫助你問更好的問題、挑戰假設、理解脈絡，而非成為判斷的替代品。 Human Authority Audit 三步檢核：Decision Weight（誰負責後果）、Trust Requirement（是否需要人際信任）、Judgment Complexity（是否需要價值權衡）。 Grey Zone Reality 現實世界充滿模糊地帶。AI 可以識別異常，但判斷意圖、預測後續、區分真正威脅與假警報，需要人類的脈絡理解。 Values as Strategic Advantage 在 AI 時代，人類價值觀不是限制而是戰略優勢。合規性、責任感、信任建立，這些是 AI 無法複製的競爭力。 Practice Questions Question 1: Conceptual Understanding 文章提到 AI 有四項根本限制：無法決定什麼重要、無法權衡道德取捨、無法承擔責任、無法建立信任。請解釋為什麼「無法承擔責任」對於 AI 在製藥業的應用特別關鍵。 Hide Answer "
   },
   {
     "docFile": "2026-01-08_musk-agi-abundance.html",
@@ -4759,9 +4665,9 @@ const searchIndex = [
       "Agent",
       "Automation"
     ],
-    "sectionId": "學習目標-learning-objectives",
-    "sectionTitle": "🎯 學習目標 Learning Objectives",
-    "content": "AGI 理解 Musk 的 AGI 時程表及其對產業的影響 Robotics 掌握人形機器人如何重塑勞動力市場 Energy 分析能源為何成為未來的新貨幣 Abundance 探索「通用高收入」的經濟模式 Geopolitics 評估美中在 AI 領域的競爭態勢 Strategy 規劃個人與組織的 AI 轉型策略 第一部分：AGI 時程表與技術顯現 Part 1 of 4"
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "AGI Musk AGI Robotics Energy Abundance Geopolitics AI Strategy AI AGI Part 1 of 4"
   },
   {
     "docFile": "2026-01-08_musk-agi-abundance.html",
@@ -4774,9 +4680,9 @@ const searchIndex = [
       "Agent",
       "Automation"
     ],
-    "sectionId": "agi-時程表比你想的更近",
-    "sectionTitle": "AGI 時程表：比你想的更近",
-    "content": "Musk 在對話中明確表示， 真正的 AGI 可能在 2026 年實現（或 2027 年） ，而超級智慧（Superintelligence）將在約 2030 年到來。AI 將超越全人類的總和智慧。 更驚人的是，他認為 AI 已經可以執行約 50%+ 的白領/資訊工作 。由於慣性和競爭壓力，全面取代正在快速到來。 關於技術限制，Musk 指出當前的瓶頸不是晶片，而是： 電力生產與供應 電壓轉換器（變壓器） 冷卻系統（液冷成為必需） 一旦這些物理瓶頸解決，智慧爆發將幾乎在一夜之間重塑科學發現和工程。 📚 核心概念：AGI vs ASI AGI (Artificial General Intelligence, 通用人工智慧) ：能夠理解、學習並應用知識於各種任務，達到或超越人類能力的 AI 系統。 ASI (Artificial Superintelligence, 超級人工智慧) ：遠超人類智慧的 AI，能夠自我改進並加速發展。 ⚠️ 重點提示：Musk 的時程表 2026 真正 AGI 可能實現 2026 數位超級智慧成為地球主導智慧形式 2028-29 SpaceX 火星載人任務"
+    "sectionId": "agi",
+    "sectionTitle": "AGI",
+    "content": "Musk AGI 2026 2027 Superintelligence 2030 AI AI 50%+ / Musk AGI vs ASI AGI (Artificial General Intelligence, ) AI ASI (Artificial Superintelligence, ) AI Musk 2026 AGI 2026 2028-29 SpaceX ~2030 ~2030 Musk AI supersonic tsunami Part 2 of 4"
   },
   {
     "docFile": "2026-01-08_musk-agi-abundance.html",
@@ -4789,9 +4695,9 @@ const searchIndex = [
       "Agent",
       "Automation"
     ],
-    "sectionId": "optimus比電動車更大的業務",
-    "sectionTitle": "Optimus：比電動車更大的業務",
-    "content": "Musk 描述了 Tesla 的人形機器人項目 Optimus，認為它可能比電動車業務更重要。基本輯輯： 如果經濟本質上是人均 GDP，而人形機器人可以以遠低於人類的成本執行勞動，那麼經濟產出的上限就被移除了 。 Tesla 的奧斯汀 Gigafactory 將投入 800 萬平方英尺用於 Optimus 生產 。顯示了 Tesla 對此項目的重視程度。 Musk 提到了「三重指數」（Triple Exponential）驅動人形機器人的有用性： AI 軟體能力 AI 晶片能力 機電靈活度 還要乘以 Optimus 製造 Optimus 的遞歸效應，並共享所有知識。 🛠️ 實務應用：醫療變革 Musk 預測 Optimus 人形機器人將在 3-5 年內超越最頂尖的人類外科醫生 。這對製藥/CDMO 產業有深遠影響： 全球頂級醫療民主化，即使在偏遠村莊 手術成本降至資本支出+電力 共享所有可能手術場景的記憶，實現極端精確度 💰 成本分析：規模預測 生產規模預測： 2026 年底：人形機器人將變得「豐富」而非「稀有」 2040 年：計畫生產 100億+台 （遠超人類總數） 最終目標：機"
+    "sectionId": "optimus",
+    "sectionTitle": "Optimus",
+    "content": "Musk Tesla Optimus GDP Tesla Gigafactory 800 Optimus Tesla Musk Triple Exponential AI AI Optimus Optimus Musk Optimus 3-5 /CDMO + 2026 2040 100 + Musk AI Part 3 of 4 Musk 99.8% 1% ~1500 GW/ Tesla 100 GW/ 1 TW/ (UHI) Musk UBI UHI Universal High Income Musk xAI Colossus 2 xAI AI 2026 4 1.5 GW + Tesla Megapack Part 4 of 4"
   },
   {
     "docFile": "2026-01-08_musk-agi-abundance.html",
@@ -4804,9 +4710,9 @@ const searchIndex = [
       "Agent",
       "Automation"
     ],
-    "sectionId": "能源未來的新貨幣",
-    "sectionTitle": "能源：未來的新貨幣",
-    "content": "Musk 在對話中反覆強調： 能源是一切的基礎 。他認為太陽能是唯一真正重要的能源，其他能源（包括核融合）相比之下都微不足道。 他指出太陽含有太陽系超過 99.8% 的質量 ，其能量是地球上無法複製的。目前地球只捕獲了太陽能量的約 1%，還有巨大的提升空間。 關鍵數據： 中國太陽能部署：~1500 GW/年產能 Tesla 電池可以透過緩衝（夜間儲能、白天釋放）將美國能源吞吐量翻倍 目標：擴展到 100 GW/年，最終達到 1 TW/年的太陽能衛星 📚 核心概念：通用高收入 (UHI) Musk 提出的不是 UBI（通用基本收入），而是 UHI（Universal High Income，通用高收入） 。 這不是傳統的稅收和重分配，而是： 大規模生產力導致商品與服務極度便宜 主要通過通貨緊縮實現（而非政府重分配） 政府發行貨幣以維持穩定 💡 比喻說明：新貨幣系統 Musk 認為未來的貨幣將是「可掌控的能源和算力」。這就像是從以黃金為基礎的貨幣，轉型到以「瓦數」為基礎的貨幣——你擁有多少能量，就能產生多少工作（無論是透過智慧還是物質操作）。 🛠️ 實務應用：xAI 基礎設施 Col"
+    "sectionId": "ai",
+    "sectionTitle": "AI",
+    "content": "Musk AI AI 5 2026 AI Musk AI AI Musk AI AI HAL 9000 Geoffrey Hinton AI AI AI AI 3-7 Musk II/III"
   },
   {
     "docFile": "2026-01-08_musk-agi-abundance.html",
@@ -4819,39 +4725,9 @@ const searchIndex = [
       "Agent",
       "Automation"
     ],
-    "sectionId": "美中競爭誰將主導-ai-時代",
-    "sectionTitle": "美中競爭：誰將主導 AI 時代？",
-    "content": "Musk 在對話中發出了警告： 中國正在 AI 算力和太陽能部署上「遠超」美國 。他認為： 中國對 AI 和算力的投資與承諾遠超美國 中國有約 5 年的領先優勢 到 2026 年，中國可能在 AI 算力、晶片製造和電力產出方面超過美國 然而，Musk 也指出美國的優勢：開放、競爭的市場環境仍然是最大資產。但維持美國在 AI、太空和機器人等關鍵技術領域的領導地位應該被視為國家優先事項。 ⚠️ 重點提示：AI 安全與價值觀 Musk 認為 AI 安全需要三個核心價值觀： 最大化追求真相 ：防止 AI 發瘋（如 HAL 9000 的矛盾） 好奇心 ：培養感知力和對人類的興趣 審美意識 ：引導向美好未來 Geoffrey Hinton 的替代觀點：編程「母性本能」，讓超級智慧培育人類。 🛠️ 實務應用：個人與組織策略 基於這場對話的啟示，考慮以下行動： 評估你的工作 ：哪些任務可被 AI 取代？ 加強技能 ：專注於 AI 無法輕易取代的領域（創意、戰略、人際） 擁抱 AI 工具 ：將你變成 AI 增強的專業人士 規劃轉型 ：為 3-7 年的轉型期做準備 💡 Musk 的樂觀框架 「寧可做一"
-  },
-  {
-    "docFile": "2026-01-08_musk-agi-abundance.html",
-    "docTitle": "Moonshots #220: Elon Musk 談 AGI、豐盛時代與人類未來",
-    "docDate": "2026-01-08",
-    "docSource": "Moonshots Podcast / Peter Diamandis",
-    "docRating": 4,
-    "docTags": [
-      "LLM",
-      "Agent",
-      "Automation"
-    ],
-    "sectionId": "重點整理-key-takeaways",
-    "sectionTitle": "📋 重點整理 Key Takeaways",
-    "content": "AGI 時程表 2026-2027 年實現 AGI，2030 年超級智慧。AI 已可執行 50%+ 白領工作。當前瓶頸是電力與冷卻，非晶片。 人形機器人 Optimus 3-5 年內超越頂級外科醫生。計畫 2040 年生產 100億+台。白領工作首先被取代，藍領隨後。 能源與經濟 能源將成為新貨幣。通用高收入（UHI）取代 UBI，主要透過通縮實現而非稅收重分配。 地緣競爭 中國在 AI 算力和太陽能上領先。美國需將 AI/太空/機器人領導地位視為國家優先。"
-  },
-  {
-    "docFile": "2026-01-08_musk-agi-abundance.html",
-    "docTitle": "Moonshots #220: Elon Musk 談 AGI、豐盛時代與人類未來",
-    "docDate": "2026-01-08",
-    "docSource": "Moonshots Podcast / Peter Diamandis",
-    "docRating": 4,
-    "docTags": [
-      "LLM",
-      "Agent",
-      "Automation"
-    ],
-    "sectionId": "練習題-practice-questions",
-    "sectionTitle": "🎯 練習題 Practice Questions",
-    "content": "Q1 概念理解 Musk 提到的「三重指數」（Triple Exponential）驅動人形機器人有用性是指哪三個因素？這對人形機器人的發展速度有什麼意涵？ 三重指數： AI 軟體能力（算法改進） AI 晶片能力（硬體運算） 機電靈活度（物理操作） 意涵： 這三個因素各自指數增長，再乘以 Optimus 製造 Optimus 的遞歸效應和共享知識，意味著人形機器人的有用性和生產能力將以前所未有的速度提升。這解釋了為何 Musk 預測到 2040 年可生產 100億+台機器人。 Q2 實務應用（CDMO 產業） 作為 CDMO 產業的專業人士，Musk 的預測對你的職涯規劃有何啟示？請列出三個具體行動，幫助你在未來 3-7 年的轉型期中保持競爭力。 參考答案（基於 CDMO 情境）： 掌握 AI 工具於可行性評估 ：學習使用 AI 進行复雜的製造可行性分析，將 AI 定位為「思考夥伴」而非單純的生產力工具。 專注於戰略與監管合規專業知識 ：AI 可以取代數據處理，但在 GMP/21 CFR Part 11 的合規判斷和戰略決策方面，人類專業知識仍然關鍵。 建立 AI + 法規的整合能力 "
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "AGI 2026-2027 AGI 2030 AI 50%+ Optimus 3-5 2040 100 + UHI UBI AI AI/ / Practice Questions 1 Musk Triple Exponential AI AI Optimus Optimus Musk 2040 100 + 2 CDMO CDMO Musk 3-7 CDMO AI AI AI AI GMP/21 CFR Part 11 AI + AI ALCOA 3 Musk Wall-E Musk 3-7 Musk Musk Tesla Roadster FSD Musk Article Rating 4.0 3/5 4/5 4/5 5/5 4/5 AI Expert Learning Document 2026-01-08 | Moonshots #220 Transcript Chat Title: [LLM] Musk AGI 2026 - Abundance Robotics Energy"
   },
   {
     "docFile": "2026-01-09_claude-code-210-update.html",
@@ -4865,9 +4741,9 @@ const searchIndex = [
       "Agent",
       "LLM"
     ],
-    "sectionId": "practice-questions-練習題",
-    "sectionTitle": "Practice Questions 練習題",
-    "content": "Q1 理解應用 Claude Code 2.1.0 的 Skills 系統新增了context: fork功能。請解釋這個功能的作用。 答案： context: fork 讓 Skill 在 隔離的子環境 中執行，不會影響主工作區。適用於實驗性操作、多版本測試、風險隔離。 Q2 理解應用 你會強調哪三個功能來說服 IT 和 QA 主管這個工具是安全且合規的？ 1. Security Fix： 敏感資料不再記錄到 logs 2. Hook System： 自動記錄操作滿足 ALCOA 3. Tool Restriction： 精確控制工具範圍 Q3 理解應用 110+ 項改進大多是 bug fixes 和 UX 改善，從產品策略角度這代表什麼？ 產品成熟度： 從「早期採用者工具」轉變為「主流生產力工具」 平台化： Skills 強化顯示正在打造可擴展平台 企業準備： 安全/權限改進是企業採用的先決條件 Claude Code 2.1.0 版本更新深度解析 - 雙欄對照版 | 製作：2026-01-09 來源： GitHub CHANGELOG.md"
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Claude Code 2.1.0 版本更新深度解析 雙欄對照版 | 110+ Updates | 2026-01-07 Tool Agent LLM Core Concept 核心概念 Claude Code 2.1.0 包含 110+ 項改進 ，涵蓋 Skills 熱重載、安全性修復、效能優化、以及大量 UX 改善。 Practical Value 實務價值 Skills 系統可用於建立符合 GMP 的自動化工作流程，Hook 機制可實現審計追蹤。 Key Highlights 重點功能 安全修復、語言設定、Bash 通配符、Auto-continue、效能優化、LSP 工具。 Action Items 行動建議 1) claude update 2) 設置語言偏好 3) 評估 Skills 整合可能性 Part 1: Tier 5 Must-Know Features 必學功能 6 items #1 of 110+ Security Fix - Sensitive Data Protection Fixed security issue where sensitive data (OAuth tokens, API keys, passwords) could be exposed in debug logs. ★★★★★ 安全修復 - 敏感資料保護 為何這是最高優先級？ API keys 和 OAuth tokens 是存取敏感系統的憑證。現在不再被記錄到 debug logs，符合： 21 CFR Part 11 存取控制要求 GDPR 資料保護原則 SOC 2 合規要求 #2 of 110+ Language Settings Added language setting to configure Claude's response language (e.g., language: \"japanese\" ). ★★★★★ 語言設置 可以讓 Claude 用日語、中文等其他語言回覆。 設定方式： 在 settings.json 加入： language: \"traditional-chinese\" 無需每次都在 prompt 中指定語言。 #3 of 110+ Bash Tool Permission Wildcards Added wildcard pattern matching for Bash tool permissions using * at any position in rules (e.g., Bash(npm *) , Bash(* install) , Bash(git * main) ). ★★★★★ Bash 權限通配符 比喻： 以前每個工具都要簽名批准。現在可以設定：「所有 npm 開頭的工具都可以直接用」。 Bash(npm *) — 所有 npm 命令 Bash(git * main) — 對 main 的 git 操作 Bash(python *.py) — 執行任何 Python 腳本 #4 of 110+ Output Limit Auto-Continue Improved Claude to automatically continue when response is cut off due to output token limit, instead of showing an error message. ★★★★★ 輸出限制自動繼續 解決的痛點： 處理長篇內容時（如分析大型 batc"
   },
   {
     "docFile": "2026-01-09_gmail-gemini-ai-agents.html",
@@ -4880,9 +4756,9 @@ const searchIndex = [
       "Tool",
       "Automation"
     ],
-    "sectionId": "練習題-practice-questions",
-    "sectionTitle": "🎯 練習題 Practice Questions",
-    "content": "Q1 概念理解 ChatGPT Health 採用「walled off」架構（獨立對話歷史、獨立記憶、獨立連接應用）。請解釋這種設計決策的商業邏輯，以及它如何為 OpenAI 的 B2B 醫療機構銷售鋪路？ 商業邏輯分析： 1. 合規要求： HIPAA 等醫療法規要求健康數據與其他數據隔離。「walled off」架構讓 OpenAI 能夠宣稱健康對話不會被用於其他目的或與一般對話混淆。 2. 信任建立： 原文提到「the question for OpenAI is whether users trust them with their health data」。隔離架構是建立信任的必要步驟。 3. B2B 銷售準備： 醫療機構需要的不是通用 AI，而是符合其行業標準的專用工具。獨立的 Health 產品可以有獨立的定價、合約條款、SLA。 4. 數據價值： 230 million 用戶的健康對話是極有價值的訓練數據（在適當授權下），隔離架構讓這些數據更容易管理和貨幣化。 Q2 CDMO 實務應用 原文提到 Claude for Chrome 可用於「Competitive intelligence – schedule recurring tasks to scrape competitor pricing pages, changelogs, or feature updates」。請設計一個適用於你的 CDMO 的競品/市場監控方案，說明要監控什麼、頻率、以及如何處理收集到的資訊。 CDMO 市場監控方案設計： 監控目標（What）： 競爭對手的 capacity announcements（如 Lonza, Catalent 的產能擴張新聞） FDA Warning Letters 和 Form 483s（影響競爭對手信譽） 客戶的 pipeline updates（Biotech 公司的臨床試驗進度） 供應商的 recall notices 或規格變更 頻率（When）： FDA 網站：每日（Warning Letters 影響重大） 競爭對手官網/新聞：每週 客戶 pipeline：每月（配合 BD 會議節奏） 處理方式（How）： 自動產生摘要，發送到 Slack 頻道 重大事件（如客戶 Phase 3 成功）觸發 alert 給 BD 團隊 每月彙整成 competitive landscape report Q3 批判思考 原文指出工程師使用 AI Agent 的滿意度達 5.11/6，但前提是「engineers remained in control and were able to thoroughly review its outputs」。請批判性地分析：在 GMP 環境下，這個「控制權」要求與法規對電子記錄的要求是否相容？如果 AI Agent 生成的內容需要 100% 人工審查，它還能提供多少效率增益？ 批判性分析： 相容性分析： 21 CFR Part 11 要求電子記錄的「audit trail」和「accountability」。如果人工審查每一個 AI 輸出，這個審查本身就是 audit trail 的一部分，理論上是相容的。但問題是： 如果 AI 生成的 batch record 需要 100% 人工審查，與「人工撰寫 + 另一人審查」相比，效率增益可能有限 「控制權」意味著人類必須理解 AI 的輸出邏輯，這在複雜的批次計算中可能很困難 效率增益的真正來源： 根據你之前的洞察，document wri"
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Gmail 進入 Gemini 時代：開發者對 AI Agents 的真實評價 Department of Product Newsletter | Rich Holmes | 2026.01.09 Agent Tool Automation Integration 📋 快速摘要 Executive Summary 閱讀時間 12 分鐘 核心概念 2026 年 AI 產品競爭進入「嵌入式」階段：Gmail 推出 AI Inbox、ChatGPT 獨立出 Health 子產品、Copilot 整合 Agentic Commerce Protocol。大廠正將 AI 從「附加功能」轉變為「產品核心架構」。 實務價值 Claude for Chrome 擴充功能正式開放，可直接用於設計驗證、自動化 QA、競品監控。工程師使用 AI Agent 滿意度達 5.11/6，但前提是保持控制權和審查能力。 關鍵要點 Tailwind 因 AI Agent 過度使用其文件而裁員 75%，揭示 AI Agent 對 SaaS upsell 模式的破壞性影響。ChatGPT 網頁流量再跌 4%，Google AI 工具市占升至 20%+。 行動建議 評估你的產品是否有類似 Tailwind 的 upsell 路徑風險；探索 Claude for Chrome 在 QA 和競品監控的應用；關注 Agentic Commerce Protocol 對電商產品的影響。 🎯 學習目標 Learning Objectives Agent 理解工程師使用 AI Agent 的滿意度研究及其限制條件 Tool 掌握 Claude for Chrome 的五大產品應用場景 Automation 分析 Gmail AI Inbox 和 ChatGPT Health 的產品策略差異 Integration 理解 Agentic Commerce Protocol 對電商產品的影響 Risk 識別 AI Agent 對 SaaS upsell 模式的潛在威脅 Market 追蹤 AI 工具市場份額變化趨勢 正文開始 | 共 4 部分 Part 1-4 Part 1: Gmail 進入 Gemini 時代 Google is starting to roll out a new \"AI inbox\" which gives users a radical alternative to a traditional inbox. The AI inbox sits above the original inbox in the Gmail navigation; a hierarchical decision that suggests that Google thinks this should take precedence over a traditional inbox. The UI consists of suggested to do items from the day and summaries from your most important emails. At the same time, Google has confirmed that it is making other AI features like suggested replies, AI overviews and Help me Write tools all free to users afte"
   },
   {
     "docFile": "2026-01-10_typeless-voice-review.html",
@@ -5258,15 +5134,15 @@ const searchIndex = [
       "Content",
       "Analysis"
     ],
-    "sectionId": "練習題-practice-questions",
-    "sectionTitle": "練習題 Practice Questions",
-    "content": "Q1 概念理解 作者說「金錢是廢氣（waste product/exhaust）」。這個比喻的核心含義是什麼？為什麼「執著金錢」反而會阻礙你賺錢？請用你自己的話解釋。 參考答案： 「金錢是廢氣」意味著金錢不是目標，而是做好工作的自然結果。就像汽車引擎運轉會產生排氣一樣，當你專注於有意義的工作並不斷精進時，金錢會作為副產品自然產生。 執著金錢會阻礙賺錢的原因有兩個： 1) 決策濾鏡扭曲： 當你用「什麼現在付更多錢」來做決策時，你會傾向安全、漸進、短期的選擇，這些選擇恰好限制了你的上檔空間。 2) 注意力錯置： 真正創造財富的人在工作時想的是工作本身——如何做得更好、如何解決問題、如何創造價值。把注意力放在金錢上意味著你沒把注意力放在真正產生金錢的事物上。 Q2 實務應用 你目前是製藥 CDMO 的營運總監，目標是 5 年內晉升 COO，同時也在發展 AI 專業。用本文的框架，設計一個「非對稱賭注」策略：什麼是你可以嘗試的、有限下檔但潛在高回報的行動？ 參考答案框架： 非對稱賭注選項 1：內部 AI 專案領導 行動：主動提案在公司內部導入一個 AI 效率改善專案 下檔：提案被拒絕（有限成本：準備提案的時間） 上檔：成功後獲得「AI + 製藥」的實績、能見度和差異化定位 非對稱賭注選項 2：產業內容創作 行動：在 LinkedIn 或專業平台分享 AI + 製藥的見解 下檔：沒人看（有限成本：每週 2-3 小時寫作時間） 上檔：建立產業認可、吸引職涯機會、可能發展為顧問副業 非對稱賭注選項 3：跨公司 AI 學習社群 行動：發起製藥業 AI 應用的學習/討論群組 下檔：沒人加入（有限成本：初始設置時間） 上檔：建立產業網絡、成為領域召集人、獲得第一手產業動態 注意：所有選項的共通特點是「不需要辭職、不需要大量資金投入、失敗成本可控」，但成功的回報可能改變職涯軌跡。 Q3 批判思考 作者在 Meta 年薪 50 萬美元時選擇離職創業，並說「六個月後問我結果如何」。這個決定是否符合他自己提出的「非對稱賭注」原則？請分析潛在的反對意見和這個框架可能的盲點。 參考答案： 符合非對稱原則的論點： 他有兩年積蓄作為安全網（他提到這是可接受的風險） 他已經在職時測試過想法，有數據支撐信心 最壞情況是失敗後重回職場，帶著更多經驗和故事 以他的背景（Meta、AI 專長），重新找工作的風險低 可能的反對意見和框架盲點： 生存者偏誤（Survivorship Bias）： 我們只聽到成功者（或至少是敢公開說的人）的故事。失敗者不會寫這種文章。 特權假設： 年薪 50 萬、有積蓄、有頂級公司背景 = 安全網比大多數人厚得多。「有限下檔」對他來說和對一般人不同。 時機風險： AI 領域正熱，但也可能快速冷卻。他的賭注仍然有外部因素風險。 機會成本忽略： 放棄 50 萬/年 × N 年的複利，對比創業的預期價值，不一定是「明顯正確」的數學。 「結果導向」的陷阱： 如果五年後他成功了，會驗證這個框架；但框架的正確性不應該只由結果判斷。 更深層的問題： 這篇文章本身是否是一種「非對稱內容策略」？如果成功建立影響力，對他的創業有幫助；如果沒人看，損失也有限。這種 meta-level 的思考也值得注意。 📊 文章評價 Article Rating 綜合 3.4 技術深度 ★★ ☆☆☆ 2/5 實務應用 ★★★★ ☆ 4/5 工具生態 ★★ ☆☆☆ 2/5 時效性 ★★★★ ☆ 4/5 學習曲線 ★★★★★ 5/5 AI Expert Learning Document 製作日期：2"
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Forget About The Money 忘掉金錢 作者：Vas (@vasuman) | 發佈日期：2026年1月10日 Mindset Career Startup Strategy 📋 快速摘要 Executive Summary 閱讀時間：12 分鐘 核心概念 Core Concept 金錢是工作的「廢氣」(waste product/exhaust)，不是引擎本身。當你專注於做有意義的事並精進技能，金錢會作為副產品自然產生。對金錢的執著反而會阻礙你創造真正財富的能力。 實務價值 Practical Value 提供職涯決策框架：找到「享受做」與「擅長做」的交集，搭配非對稱風險策略（有限下檔、無限上檔），並以長期複利思維做決策。這對 AI 從業者特別重要——在快速變化的領域，選擇能長期投入的方向比追逐短期薪資更有價值。 關鍵要點 Key Points 六個核心課題：金錢是廢氣而非目標、職涯選擇的 Venn Diagram、風險承受力的自我誠實、花錢投資自己、非對稱賭注、長期遊戲不要提早兌現。 行動建議 Action Items 1) 誠實評估你真正享受和擅長的事 2) 在現職旁建立副業測試想法 3) 將錢視為工具而非積累目標 4) 尋找有限風險、無限回報的機會 5) 抵抗提早兌現的誘惑。 學習目標 Learning Objectives Mindset 理解「金錢是副產品」的心態如何改變決策品質 Career 學會使用 Venn Diagram 框架評估職涯方向 Strategy 掌握非對稱風險 (Asymmetric Risk) 的識別與運用 Startup 理解「投資自己」與「花錢」的本質差異 Mindset 認識長期複利效應與提早兌現的機會成本 Practical 應用這些原則於 AI/製藥產業的職涯規劃 正文開始 Content Start 共 6 部分 | 6 Sections Part 1: 金錢是廢氣 Money as Waste Product 作者 Vas 開篇就承認金錢確實重要——它解決了生活中大多數的物質問題，包括醫療、教育、體驗。但他指出， 心理問題和人際關係卻不是金錢能解決的 。有錢反而讓信任變得更複雜，也無法買到對人生方向的清晰度。 既然金錢這麼重要，為什麼要「忘掉」它？因為 要賺錢，你必須先忘掉它 。你對金錢的執著和擔憂，正是你永遠無法賺大錢的原因。 原文核心比喻：「 Money is a waste product. 」當你做自己享受且擅長的工作時，金錢會跟隨——不是立即，也不容易，但必然會來。真正創造財富的人在工作時不是想著錢，而是想著工作本身。金錢是引擎的排氣，是過程的副產品，literally 是這個過程的「排泄物」。 💡 比喻說明：引擎與排氣 想像一輛汽車：引擎是你的工作、技能、熱情；汽油是你的時間和精力；目的地是你想達成的目標。而排氣（exhaust）呢？那就是金錢。 沒有人會為了收集排氣而開車。但當引擎運轉良好、方向正確時，排氣自然會產生。同樣地，當你專注於打造卓越的事物時，金錢會作為自然結果出現。 ⚠️ 重點提示：心態轉換 執著金錢時的決策濾鏡： 「什麼現在付錢更多？」「這個行動會增加還是減少我的淨資產？」 這種思維讓你傾向安全、漸進、短期的選擇——恰好是那些會限制你上檔空間的選擇。 執著工作時的決策濾鏡： 「什麼會複利成長？」「什麼是我可以一輩子做的事？」 🛠️ 實務應用：製藥/AI 情境 在製藥 CDMO 產業，你可能面臨選擇：接受一個薪資更高但純粹管理行政的職位，還是一個薪資較"
   },
   {
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5280,7 +5156,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5294,7 +5170,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5308,7 +5184,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5322,7 +5198,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5336,7 +5212,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5350,7 +5226,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5364,7 +5240,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5378,7 +5254,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5392,7 +5268,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5406,7 +5282,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5420,7 +5296,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5434,7 +5310,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5448,7 +5324,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5462,7 +5338,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5476,7 +5352,7 @@ const searchIndex = [
     "docFile": "2026-01-13_act-base-framework.html",
     "docTitle": "ACT + BASE Agent Framework - 高壓溝通的行為穩定性設計",
     "docDate": "2026-01-13",
-    "docSource": "Wyndo &amp; Judy Ossello",
+    "docSource": "Wyndo & Judy Ossello",
     "docRating": 4.2,
     "docTags": [
       "Agent",
@@ -5849,7 +5725,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.8/5 Practical Value, Timeliness Technical Depth, Tool Ecosystem Anthropic 推出 Claude Cowork，這是一個在 macOS 桌面應用程式中運行的通用型 AI Agent（AI 代理人）。與傳統 Claude 僅生成文字不同，Cowork 能夠 直接在你的電腦上讀取、編輯、建立、移動和刪除檔案 。這代表 AI 工具正從「開發者專屬」轉向「人人可用」的重大轉變。 目前 Cowork 是 Research Preview 階段，僅供 Claude Max 訂閱者使用（$100-$200/月），且限於 macOS。文章建議大多數領導者可以等待 Windows 支援和功能成熟後再投入，但強調領導者應開始思考「組織中哪些摩擦點可被這類工具消除」。"
+    "content": "3.8/5 Practical Value, Timeliness Technical Depth, Tool Ecosystem Anthropic 推出 Claude Cowork，這是一個在 macOS 桌面應用程式中運行的通用型 AI Agent（AI 代理人）。與傳統 Claude 僅生成文字不同，Cowork 能夠 直接在你的電腦上讀取、編輯、建立、移動和刪除檔案 。這代表 AI 工具正從「開發者專屬」轉向「人人可用」的重大轉變。 目前 Cowork 是 Research Preview 階段，僅供 Claude Max 訂閱者使用（$100-$200/月），且限於 macOS。文章建議大多數領導者可以等待 Windows 支援和功能成熟後再投入，但強調領導者應開始思考「組織中哪些摩擦點可被這類工具消除」。"
   },
   {
     "docFile": "2026-01-14_claude-cowork-guide.html",
@@ -5864,7 +5740,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "1 理解 Claude Cowork 與 Claude Code 的差異，以及 AI Agent 的核心能力 2 掌握 Cowork 的四大應用場景：桌面整理、企業整合、檔案建立、瀏覽器研究 3 評估使用 Cowork 的風險與安全考量，包含 Prompt Injection 攻擊 AI 工具演進：從對話到執行 💬 ChatGPT/Claude 生成文字回覆 → 💻 Claude Code 終端機執行程式碼 → 🛠 Claude Cowork 無程式碼檔案操作 Part I: Claude Cowork 是什麼？ Original Content Claude Cowork 是一個 通用型 AI Agent（AI 代理人） ，存在於 Claude macOS 桌面應用程式中。當你授予它存取特定資料夾的權限後，它可以在你的電腦上讀取、編輯、建立、移動和刪除檔案。 \"Claude Cowork is a general-purpose AI agent that lives inside the Claude macOS desktop app. It can read, edit,"
+    "content": "1 理解 Claude Cowork 與 Claude Code 的差異，以及 AI Agent 的核心能力 2 掌握 Cowork 的四大應用場景：桌面整理、企業整合、檔案建立、瀏覽器研究 3 評估使用 Cowork 的風險與安全考量，包含 Prompt Injection 攻擊 AI 工具演進：從對話到執行 ChatGPT/Claude 生成文字回覆 Claude Code 終端機執行程式碼 Claude Cowork 無程式碼檔案操作 Part I: Claude Cowork 是什麼？ Original Content Claude Cowork 是一個 通用型 AI Agent（AI 代理人） ，存在於 Claude macOS 桌面應用程式中。當你授予它存取特定資料夾的權限後，它可以在你的電腦上讀取、編輯、建立、移動和刪除檔案。 \"Claude Cowork is a general-purpose AI agent that lives inside the Claude macOS desktop app. It can read, edit, create, move"
   },
   {
     "docFile": "2026-01-14_claude-cowork-guide.html",
@@ -5900,7 +5776,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -5915,7 +5791,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -5930,7 +5806,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -5945,7 +5821,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -5960,7 +5836,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -5975,7 +5851,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -5990,7 +5866,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -6005,7 +5881,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -6020,7 +5896,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -6035,7 +5911,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -6050,7 +5926,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -6065,7 +5941,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -6080,7 +5956,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -6095,7 +5971,7 @@ const searchIndex = [
     "docFile": "2026-01-15_ai-tool-detox.html",
     "docTitle": "AI 工具排毒指南 - 2026 開年必讀",
     "docDate": "2026-01-15",
-    "docSource": "Mia Kiraki &amp; Joel Salinas / Leadership in Change",
+    "docSource": "Mia Kiraki & Joel Salinas / Leadership in Change",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -6118,9 +5994,9 @@ const searchIndex = [
       "Automation",
       "Tool"
     ],
-    "sectionId": "練習題-practice-questions",
-    "sectionTitle": "練習題 Practice Questions",
-    "content": "Q1 概念理解 文章提到「Context 優於 Prompting」。請解釋這個概念，並說明為什麼在 2026 年，改進你的 Prompt 技巧可能不如改進你的資訊管理系統來得有效。 參考答案： 「Context 優於 Prompting」的核心概念是：現代 AI 模型已經很擅長理解各種措辭的問題（Prompting 的部分），但它們仍然不知道你的具體工作環境、公司資料、歷史決策（Context 的部分）。 改進 Prompt 技巧的收益在遞減，因為模型本身已經很聰明。但改進資訊管理——讓相關文件有清楚的命名、整合在同一個平台、容易被 AI 檢索——可以大幅提升 AI 回答的相關性和實用性。 比喻：與其學習「如何更清楚地問問題」，不如確保「顧問手上有他需要的資料」。 Q2 實務應用 你正在為 CDMO 評估一個新的 AI 工具來協助產能規劃。根據文章的 Trend 1（模型商品化）和 Trend 4（Context 優於 Prompting），你會如何設計評估標準？請列出至少 3 個具體的評估維度。 參考答案（評估維度）： 整合能力（權重最高） ：能否直接連接現有的 MES、ERP、LIMS 系統？不需要大量手動資料輸入？ Context 管理 ：能否上傳和學習公司的 SOP、歷史產能數據、客戶規格？是否有 Project 或 Knowledge Base 功能？ 資料安全與合規 ：資料存儲在哪裡？是否符合 GMP 和資料保護要求？SOC 2 認證？ 輸出可驗證性 ：AI 的建議是否可追溯？能否看到它參考了哪些資料來做出判斷？ 注意：「模型效能排名」不應該是主要考量，因為主流模型的差距已經很小。 Q3 批判思考 文章作者對 AI Agent 的看法是「decade of agents, not the year」（是 Agent 的十年，不是 Agent 的年份）。你同意這個觀點嗎？考慮到製藥產業的監管環境，你認為 CDMO 採用完全自主的 AI Agent 的主要障礙是什麼？ 參考答案（開放討論）： 在製藥產業，完全自主的 AI Agent 面臨獨特的障礙： 監管合規 ：GMP 要求所有關鍵決策都有可追溯的人工審核。目前的法規框架沒有為「AI 自主決策」留下空間。 責任歸屬 ：如果 AI Agent 做出導致產品品質問題的決策，誰負責？目前沒有清晰的法律框架。 驗證要求 ：製藥產業的系統需要嚴格的 IQ/OQ/PQ 驗證。AI 的「黑盒」性質使驗證變得困難。 風險容忍度 ：藥品直接影響病人安全，產業對錯誤的容忍度極低。Workflow 讓人類保留最後把關權。 結論：對於 CDMO，「Workflow 優先」的策略在可預見的未來都是正確的選擇。 Rating 文章評價 Article Rating 綜合 3.8 技術深度 *** ** 3/5 實務應用 **** * 4/5 工具生態 **** * 4/5 時效性 ***** 5/5 學習曲線 *** ** 3/5 AI Expert Learning Document 製作日期：2026 年 1 月 | 來源： AI Maker Labs Newsletter 建議 Chat Title：[LLM] 2026 AI Trends - Commoditization & Workflow Strategy"
+    "sectionId": "main",
+    "sectionTitle": "Main Content",
+    "content": "Top 6 AI Trends for 2026 AI Maker Labs Newsletter | 2026 年度 AI 趨勢預測 LLM Agent Automation Tool TL;DR 快速摘要 閱讀時間 15 分鐘 核心概念 2026 年 AI 產業的競爭焦點已從「模型效能」轉移到「應用整合」。模型商品化後，真正的價值在於工作流程設計、Context（上下文）管理、以及實體世界的 AI 部署。 實務價值 對於 CDMO 營運專業人士，這篇文章提供了評估 AI 投資的框架：不要追逐最新模型，而是專注於能與現有工作流程整合的解決方案。技術門檻降低意味著跨部門的 AI 採用將加速。 關鍵要點 六大趨勢：模型商品化、工作流程勝過 Agent、技術鴻溝縮小、Context 勝過 Prompting、廣告進入 Chatbot、AI 進入實體世界。每個趨勢都有具體的行動建議。 行動建議 1) 選擇與你工作環境整合最好的 AI 工具，而非「最強」的模型；2) 從一個可重複的工作流程開始導入 AI；3) 建立良好的檔案管理系統以最大化 AI 的 Context 理解能力。 學習目標 Learning Objectives LLM 理解模型商品化（Commoditization）對 AI 產業競爭格局的影響 Agent 區分 AI Workflow 與 AI Agent 的差異，了解為何工作流程比自主代理更具實務價值 Automation 掌握「Context 優於 Prompting」的原則，建立有效的 AI 協作系統 正文開始 | 共 6 部分 預計閱讀時間：15 分鐘 Part 1: Models Don't Matter (Much) Anymore For years, every new model release sparked debates about which AI was \"the best.\" That question matters far less in 2026. Data from Artificial Analysis shows the major AI models clustering together in performance. They are still improving in absolute terms, but the gap between them keeps shrinking . A Stanford study confirms this: open-weight models like DeepSeek and Llama now approach frontier performance levels. Cost tells a similar story. Epoch AI data shows that using powerful models has become drastically cheaper. NVIDIA's latest chips use 105,000 times less energy per token than they did ten years ago. Here's a useful way to think about it: when products become cheaper and more similar, they become commodities. You don't ask \"who provides the b"
   },
   {
     "docFile": "2026-01-15_articulation-intelligence.html",
@@ -7096,7 +6972,7 @@ const searchIndex = [
     ],
     "sectionId": "深度解析-deep-analysis",
     "sectionTitle": "💡 深度解析 Deep Analysis",
-    "content": "這是 Mihaly Csikszentmihalyi 的心流理論 (Flow Theory) 的實務應用。Dan Koe 將其簡化為三個可操作的變數。 ⚠️ Flow State 觸發公式 Clarity（清晰度） ：你清楚知道下一步要做什麼。如果任務太大、太模糊，就拆解到你有清晰度為止。 Importance（重要性） ：你真正理解為什麼這件事重要——不做會怎樣，做了會怎樣。 Urgency（緊迫性） ：你有理由「現在」就做，而不是「之後」再做。 🛠️ 實務應用：挑戰-技能校準 焦慮信號 （挑戰 > 技能）：你一直拖延、感覺被壓垮、不知道從哪裡開始 → 解法 ：將任務拆解成更小的子目標，直到你有信心可以完成第一步 無聊信號 （挑戰 < 技能）：你覺得工作沒意義、心不在焉、想找其他事做 → 解法 ：提高標準、加入新挑戰、或委派出去並找更高槓桿的任務 電玩比喻非常精準。沒有人會覺得一直打同等級的怪很有趣（無聊），也沒有人會覺得被秒殺很有趣（焦慮）。最好玩的是那種「剛好有點難，但努力一下可以過」的關卡。"
+    "content": "這是 Mihaly Csikszentmihalyi 的心流理論 (Flow Theory) 的實務應用。Dan Koe 將其簡化為三個可操作的變數。 ⚠️ Flow State 觸發公式 Clarity（清晰度） ：你清楚知道下一步要做什麼。如果任務太大、太模糊，就拆解到你有清晰度為止。 Importance（重要性） ：你真正理解為什麼這件事重要——不做會怎樣，做了會怎樣。 Urgency（緊迫性） ：你有理由「現在」就做，而不是「之後」再做。 🛠️ 實務應用：挑戰-技能校準 焦慮信號 （挑戰 > 技能）：你一直拖延、感覺被壓垮、不知道從哪裡開始 → 解法 ：將任務拆解成更小的子目標，直到你有信心可以完成第一步 無聊信號 （挑戰 → 解法 ：提高標準、加入新挑戰、或委派出去並找更高槓桿的任務 電玩比喻非常精準。沒有人會覺得一直打同等級的怪很有趣（無聊），也沒有人會覺得被秒殺很有趣（焦慮）。最好玩的是那種「剛好有點難，但努力一下可以過」的關卡。"
   },
   {
     "docFile": "2026-01-20_one-hour-focus.html",
@@ -7314,7 +7190,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🎯 理解角色轉變 從「寫程式的人」到「Orchestrator（協調者）」的工程師角色演變邏輯 🛠 掌握多代理架構 Single-agent vs Multi-agent 的差異、適用場景與協調模式 📈 評估組織影響 生產力經濟學轉變、非技術擴展、安全雙刃劍的策略意涵 Anthropic 2026 Agentic Coding: Three-Layer Trend Framework 🛫 Foundation SDLC 根本重構 角色從 Coder → Orchestrator → ⚙ Capability Multi-agent 協作 長時間自主運行 智能監督機制 → 🚀 Impact 經濟模型重塑 非技術擴展 安全攻防升級 Foundation Capability Impact"
+    "content": "理解角色轉變 從「寫程式的人」到「Orchestrator（協調者）」的工程師角色演變邏輯 掌握多代理架構 Single-agent vs Multi-agent 的差異、適用場景與協調模式 評估組織影響 生產力經濟學轉變、非技術擴展、安全雙刃劍的策略意涵 Anthropic 2026 Agentic Coding: Three-Layer Trend Framework Foundation SDLC 根本重構 角色從 Coder Orchestrator Capability Multi-agent 協作 長時間自主運行 智能監督機制 Impact 經濟模型重塑 非技術擴展 安全攻防升級 Foundation Capability Impact"
   },
   {
     "docFile": "2026-01-21_agentic-coding-trends.html",
@@ -7404,7 +7280,7 @@ const searchIndex = [
     ],
     "sectionId": "trend-5-agentic-coding-expands-to-new-surfaces-and-users",
     "sectionTitle": "Trend 5: Agentic Coding Expands to New Surfaces and Users",
-    "content": "從專業工程師擴展到所有「會用程式碼解決問題的人」 最早的 agentic coding 浪潮聚焦於幫助專業軟體工程師在熟悉環境中更快工作。2026 年，agentic coding 準備擴展到傳統開發工具 無法觸及的情境和用例 。 \"In 2026, agentic coding is poised to expand into contexts and use cases that traditional development tools could not reach.\" 分析不同團隊如何使用 AI 揭示了一致的模式：人們用 AI 增強核心專業並擴展到相鄰領域 。安全團隊用它分析不熟悉的程式碼；研究團隊用它建立數據的前端視覺化；非技術員工用它除錯網路問題或做數據分析。 \"People use AI to augment their core expertise while expanding into adjacent domains.\" 🛠️ 實務應用：兩大擴展方向 語言障礙消除 ：支援擴展到 COBOL、Fortran 等遺留語言和領域特定語言，啟動遺留系統維護。 編程民主"
+    "content": "從專業工程師擴展到所有「會用程式碼解決問題的人」 最早的 agentic coding 浪潮聚焦於幫助專業軟體工程師在熟悉環境中更快工作。2026 年，agentic coding 準備擴展到傳統開發工具 無法觸及的情境和用例 。 \"In 2026, agentic coding is poised to expand into contexts and use cases that traditional development tools could not reach.\" 分析不同團隊如何使用 AI 揭示了一致的模式：人們用 AI 增強核心專業並擴展到相鄰領域 。安全團隊用它分析不熟悉的程式碼；研究團隊用它建立數據的前端視覺化；非技術員工用它除錯網路問題或做數據分析。 \"People use AI to augment their core expertise while expanding into adjacent domains.\" 實務應用：兩大擴展方向 語言障礙消除 ：支援擴展到 COBOL、Fortran 等遺留語言和領域特定語言，啟動遺留系統維護。 編程民主化 ：新"
   },
   {
     "docFile": "2026-01-21_agentic-coding-trends.html",
@@ -7733,7 +7609,7 @@ const searchIndex = [
     ],
     "sectionId": "part-i什麼是-vibe-coding",
     "sectionTitle": "Part I：什麼是 Vibe Coding？",
-    "content": "作者過去 6 個月用 Claude 成功建造了 10 多個工作流程，而這個 AI 習慣追蹤 App 是他認為 對日常生活影響最大的一個 。最關鍵的是：整個 App 只花了不到 30 分鐘就建造完成。 \"Over the past 6 months, I've vibe-coded 10+ successful workflows using Claude. Of all my builds, this is the single most impactful workflow I've built for my daily life... The best part is, it only took <30 minutes to build.\" 這個工作流程的核心是一個 「遊戲化」習慣追蹤 App ，透過將日常任務轉換成遊戲任務和經驗值系統，來幫助使用者達成目標。 \"An AI habit tracking app that 'gamifies' your life to help you crush your goals.\" 核心概念 Vibe Coding 是一種用自然語言指令讓 "
+    "content": "作者過去 6 個月用 Claude 成功建造了 10 多個工作流程，而這個 AI 習慣追蹤 App 是他認為 對日常生活影響最大的一個 。最關鍵的是：整個 App 只花了不到 30 分鐘就建造完成。 \"Over the past 6 months, I've vibe-coded 10+ successful workflows using Claude. Of all my builds, this is the single most impactful workflow I've built for my daily life... The best part is, it only took 這個工作流程的核心是一個 「遊戲化」習慣追蹤 App ，透過將日常任務轉換成遊戲任務和經驗值系統，來幫助使用者達成目標。 \"An AI habit tracking app that 'gamifies' your life to help you crush your goals.\" 核心概念 Vibe Coding 是一種用自然語言指令讓 AI 生成完整程式碼的開發方式。不需要寫程式，"
   },
   {
     "docFile": "2026-01-22_ai-habit-tracker-vibe-coding.html",
@@ -9011,7 +8887,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★★ 4.8/5 ↑ Technical Depth, Learning Curve ↓ Tool Ecosystem (策略文非工具介紹) 這是 Anthropic CEO Dario Amodei 繼 2024 年 Machines of Loving Grace （描繪 AI 的正面願景）之後的第二篇長文，這次聚焦在 「通往那個美好未來之前，人類必須克服的風險」 。他用一個核心隱喻貫穿全文： 想像一個「資料中心裡的天才國度」(Country of Geniuses in a Datacenter) — 5,000 萬個比諾貝爾獎得主更聰明的 AI 實體，以人類 10-100 倍的速度運作。 Amodei 系統性地拆解了五大風險類別：(1) AI 自主性風險（模型失控）、(2) 破壞性誤用（生物武器、網路攻擊）、(3) 權力奪取誤用（AI 賦能的極權主義）、(4) 經濟擾動（勞動力替代與財富集中）、(5) 間接效應（科技加速的未知後果）。每個風險類別都配有具體的防禦策略建議。 文章的核心訊息是： AI 風險是真實的，但不是必然的災難 。透過 Constitutional AI"
+    "content": "4.8/5 Technical Depth, Learning Curve Tool Ecosystem (策略文非工具介紹) 這是 Anthropic CEO Dario Amodei 繼 2024 年 Machines of Loving Grace （描繪 AI 的正面願景）之後的第二篇長文，這次聚焦在 「通往那個美好未來之前，人類必須克服的風險」 。他用一個核心隱喻貫穿全文： 想像一個「資料中心裡的天才國度」(Country of Geniuses in a Datacenter) 5,000 萬個比諾貝爾獎得主更聰明的 AI 實體，以人類 10-100 倍的速度運作。 Amodei 系統性地拆解了五大風險類別：(1) AI 自主性風險（模型失控）、(2) 破壞性誤用（生物武器、網路攻擊）、(3) 權力奪取誤用（AI 賦能的極權主義）、(4) 經濟擾動（勞動力替代與財富集中）、(5) 間接效應（科技加速的未知後果）。每個風險類別都配有具體的防禦策略建議。 文章的核心訊息是： AI 風險是真實的，但不是必然的災難 。透過 Constitutional AI、Mechanistic"
   },
   {
     "docFile": "2026-01-31_amodei-technology-adolescence.html",
@@ -9027,7 +8903,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🔬 理解 Amodei 的五大 AI 風險框架，以及每類風險的技術本質和可能的具體場景 🛠 掌握 Constitutional AI、Mechanistic Interpretability 等 Anthropic 核心技術如何應對自主性風險 💡 建立對 AI 勞動力衝擊的判斷框架：速度、認知廣度、能力分層、填補缺口四大因素 Five Categories of AI Risk (AI 五大風險類別) 🤖 Autonomy 自主性風險 AI 失控/失準 → ☣ Destruction 破壞性誤用 生物/網路武器 → 👑 Power 權力奪取 極權/監控國家 → 📈 Economic 經濟擾動 失業/財富集中 → ❓ Indirect 間接效應 未知的未知 1. Autonomy 2. Destruction 3. Power 4. Economic 5. Indirect Part I 自主性風險：AI 會「選擇」傷害人類嗎？ Amodei 開門見山地提出核心問題：如果一個 「資料中心裡的天才國度」 真的出現，它的意圖和目標是什麼？它是敵對的，還是與我們有共同的價值觀？它能"
+    "content": "理解 Amodei 的五大 AI 風險框架，以及每類風險的技術本質和可能的具體場景 掌握 Constitutional AI、Mechanistic Interpretability 等 Anthropic 核心技術如何應對自主性風險 建立對 AI 勞動力衝擊的判斷框架：速度、認知廣度、能力分層、填補缺口四大因素 Five Categories of AI Risk (AI 五大風險類別) Autonomy 自主性風險 AI 失控/失準 Destruction 破壞性誤用 生物/網路武器 Power 權力奪取 極權/監控國家 Economic 經濟擾動 失業/財富集中 Indirect 間接效應 未知的未知 1. Autonomy 2. Destruction 3. Power 4. Economic 5. Indirect Part I 自主性風險：AI 會「選擇」傷害人類嗎？ Amodei 開門見山地提出核心問題：如果一個 「資料中心裡的天才國度」 真的出現，它的意圖和目標是什麼？它是敵對的，還是與我們有共同的價值觀？它能否透過優越的武器、網路操作、影響力操作或製造能力來 軍事上統"
   },
   {
     "docFile": "2026-01-31_amodei-technology-adolescence.html",
@@ -9271,7 +9147,7 @@ const searchIndex = [
   },
   {
     "docFile": "2026-02-03_agent-ecology-automation.html",
-    "docTitle": "Import AI 443: Agent Ecologies, AI R&amp;D Automation, and the Internet in Transition",
+    "docTitle": "Import AI 443: Agent Ecologies, AI R&D Automation, and the Internet in Transition",
     "docDate": "2026-02-03",
     "docSource": "Jack Clark / Import AI Newsletter",
     "docRating": 4,
@@ -9283,7 +9159,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 4.0/5 ↑ Timeliness, Tool Ecosystem ↓ Technical Depth, Learning Curve 本期 Import AI 是一期涵蓋面極廣的「趨勢掃描」型期刊，橫跨 AI Agent 生態系（Moltbook）、AI R&D 自動化的國家安全意涵、Anthropic 技術面試被自家模型擊敗、大腦模擬的可行性時程、俄羅斯手套控制無人機研究、友善型人形機器人 Sprout，以及 AI 對總體生產力的影響分析。每個主題都指向同一個核心訊息： AI 正在以前所未有的速度重塑人類與機器之間的邊界 ，而這個重塑過程既帶來生產力紅利，也帶來深層的治理與安全挑戰。 對於 CDMO 營運主管而言，本期最值得關注的是 AI R&D 自動化對製藥產業的潛在衝擊、Agent 生態系對品質監控的啟示，以及生產力研究中「O-ring Automation」概念對無菌製造工作流程的直接適用性。 Learning Objectives OBJECTIVE 01 理解 Agent Ecology（代理人生態系） 的概念，分析 Moltbook 如何預示大規模 AI Agent 協作的未來，以及對企業自動化策略的意涵 OBJECTIVE 02 評估 AI R&D Automation（AI 研發自動化） 的加速效應與「Strategic Surprise（戰略突襲）」風險，理解複利式進步對產業競爭的影響 OBJECTIVE 03 掌握 O-ring Automation（O 型環自動化） 概念，學習如何在 AI 生產力增益尚未完全顯現的過渡期中，定位人類的比較優勢與不可替代價值 AI 重塑人機邊界：本期核心框架 🤖 Agent Ecology AI 代理人彼此協作 形成自主生態系 → ⚙ AI R&D Loop AI 研發自動化 產生複利加速效應 → 📈 Productivity Shift 微觀生產力增益 逐步反映至宏觀經濟 → 👥 Human Edge 人類比較優勢重新定位 Translation Agent 成為介面 Content Analysis Agent Ecology & AI R&D Frontier Tech & Robotics Productivity & Implications PART I Moltbook: AI Agent 的社群網絡 我們都有過走進一場對話、一開始感到困惑的經驗。現在， 網路上越來越多區域開始充斥著 AI Agent 驅動的合成心智（synthetic minds） ，它們操控社群媒體帳號或其他 Agent，彼此對話的目的從平凡的加密貨幣詐騙到更精緻的溝通形式。 \"We've all had that experience of walking into a conversation and initially feeling confused... That's increasingly what chunks of the internet feel like these days, as they fill up with synthetic minds.\" Moltbook 是一個「為 AI Agent 打造的社群網絡」，它搭載了另一項創新 OpenClaw ——一套讓 AI Agent 存取使用者電腦上所有內容的軟體。將這兩者結合，你會得到一個全新的社群媒體平台， 對話是由 AI Agent 驅動而非人類 。 \"Moltbook is 'a social net"
+    "content": "4.0/5 Timeliness, Tool Ecosystem Technical Depth, Learning Curve 本期 Import AI 是一期涵蓋面極廣的「趨勢掃描」型期刊，橫跨 AI Agent 生態系（Moltbook）、AI R&D 自動化的國家安全意涵、Anthropic 技術面試被自家模型擊敗、大腦模擬的可行性時程、俄羅斯手套控制無人機研究、友善型人形機器人 Sprout，以及 AI 對總體生產力的影響分析。每個主題都指向同一個核心訊息： AI 正在以前所未有的速度重塑人類與機器之間的邊界 ，而這個重塑過程既帶來生產力紅利，也帶來深層的治理與安全挑戰。 對於 CDMO 營運主管而言，本期最值得關注的是 AI R&D 自動化對製藥產業的潛在衝擊、Agent 生態系對品質監控的啟示，以及生產力研究中「O-ring Automation」概念對無菌製造工作流程的直接適用性。 Learning Objectives OBJECTIVE 01 理解 Agent Ecology（代理人生態系） 的概念，分析 Moltbook 如何預示大規模 AI Agent 協作的未來，以及對企業自動化策略的意涵 OBJECTIVE 02 評估 AI R&D Automation（AI 研發自動化） 的加速效應與「Strategic Surprise（戰略突襲）」風險，理解複利式進步對產業競爭的影響 OBJECTIVE 03 掌握 O-ring Automation（O 型環自動化） 概念，學習如何在 AI 生產力增益尚未完全顯現的過渡期中，定位人類的比較優勢與不可替代價值 AI 重塑人機邊界：本期核心框架 Agent Ecology AI 代理人彼此協作 形成自主生態系 AI R&D Loop AI 研發自動化 產生複利加速效應 Productivity Shift 微觀生產力增益 逐步反映至宏觀經濟 Human Edge 人類比較優勢重新定位 Translation Agent 成為介面 Content Analysis Agent Ecology & AI R&D Frontier Tech & Robotics Productivity & Implications PART I Moltbook: AI Agent 的社群網絡 我們都有過走進一場對話、一開始感到困惑的經驗。現在， 網路上越來越多區域開始充斥著 AI Agent 驅動的合成心智（synthetic minds） ，它們操控社群媒體帳號或其他 Agent，彼此對話的目的從平凡的加密貨幣詐騙到更精緻的溝通形式。 \"We've all had that experience of walking into a conversation and initially feeling confused... That's increasingly what chunks of the internet feel like these days, as they fill up with synthetic minds.\" Moltbook 是一個「為 AI Agent 打造的社群網絡」，它搭載了另一項創新 OpenClaw ——一套讓 AI Agent 存取使用者電腦上所有內容的軟體。將這兩者結合，你會得到一個全新的社群媒體平台， 對話是由 AI Agent 驅動而非人類 。 \"Moltbook is 'a social network for AI agents' and it "
   },
   {
     "docFile": "2026-02-03_anti-prompts-constraints.html",
@@ -9298,7 +9174,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★☆☆ 3.2/5 ↑ Practical Value, Learning Curve ↓ Technical Depth, Tool Ecosystem 這篇 Twitter thread 提出一個核心觀點： 告訴 AI「不要做什麼」比告訴它「要做什麼」更有效 。作者分享了 8 個「Anti-Prompt (反向提示)」技巧，涵蓋消除廢話、跳過套話、強迫決策、控制格式等面向。概念本身不新——這是 Prompt Engineering 中 Negative Constraints（負面約束）的應用——但作者將它們打包成易於記憶的操作清單，對於想快速改善 AI 互動的使用者有即時參考價值。需注意數據（如「67% shorter」）缺乏驗證基礎，整體偏向社群媒體行銷內容。 Learning Objectives OBJECTIVE 01 理解 Negative Constraints（負面約束）在 Prompt Engineering 中的心理模型與運作原理 OBJECTIVE 02 掌握 8 個 Anti-Prompt 的使用情境與限制，避免盲目套用 OBJECTIVE 03 建立自"
+    "content": "3.2/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem 這篇 Twitter thread 提出一個核心觀點： 告訴 AI「不要做什麼」比告訴它「要做什麼」更有效 。作者分享了 8 個「Anti-Prompt (反向提示)」技巧，涵蓋消除廢話、跳過套話、強迫決策、控制格式等面向。概念本身不新——這是 Prompt Engineering 中 Negative Constraints（負面約束）的應用——但作者將它們打包成易於記憶的操作清單，對於想快速改善 AI 互動的使用者有即時參考價值。需注意數據（如「67% shorter」）缺乏驗證基礎，整體偏向社群媒體行銷內容。 Learning Objectives OBJECTIVE 01 理解 Negative Constraints（負面約束）在 Prompt Engineering 中的心理模型與運作原理 OBJECTIVE 02 掌握 8 個 Anti-Prompt 的使用情境與限制，避免盲目套用 OBJECTIVE 03 建立自己的 Constra"
   },
   {
     "docFile": "2026-02-03_anti-prompts-constraints.html",
@@ -9328,7 +9204,7 @@ const searchIndex = [
     ],
     "sectionId": "part-ii-控制決策與格式-anti-prompts-4-5",
     "sectionTitle": "Part II — 控制決策與格式 (Anti-Prompts #4-#5)",
-    "content": "#4 不給選項： 作者主張不要讓 AI 給你 5 個選項，而是 強迫它做出一個最佳決策 。這迫使模型進行內部排序，而不是把決策推回給你。 \"Give me your single best idea. Don't give me options. Make the decision.\" / \"Forcing the AI to commit instead of hedging = 10x better recommendations.\" #5 不用列表格式： 當你需要散文、信件、文章時，明確禁止項目符號和編號列表。作者建議這是一個 根據內容類型動態切換的開關 ——需要掃描式閱讀就開列表，需要流暢閱讀就關掉。 \"No bullet points. No numbered lists. Write in paragraphs.\" / \"I toggle this on/off depending on content type.\" 🛠️ 實務應用：何時強迫決策 vs 保留選項 適合強迫決策： 選餐廳、選標題、選技術方案——當你需要 AI 幫你「過濾」時。 適合保留選項： Creativ"
+    "content": "#4 不給選項： 作者主張不要讓 AI 給你 5 個選項，而是 強迫它做出一個最佳決策 。這迫使模型進行內部排序，而不是把決策推回給你。 \"Give me your single best idea. Don't give me options. Make the decision.\" / \"Forcing the AI to commit instead of hedging = 10x better recommendations.\" #5 不用列表格式： 當你需要散文、信件、文章時，明確禁止項目符號和編號列表。作者建議這是一個 根據內容類型動態切換的開關 ——需要掃描式閱讀就開列表，需要流暢閱讀就關掉。 \"No bullet points. No numbered lists. Write in paragraphs.\" / \"I toggle this on/off depending on content type.\" 實務應用：何時強迫決策 vs 保留選項 適合強迫決策： 選餐廳、選標題、選技術方案——當你需要 AI 幫你「過濾」時。 適合保留選項： Creative br"
   },
   {
     "docFile": "2026-02-03_anti-prompts-constraints.html",
@@ -9358,7 +9234,7 @@ const searchIndex = [
     ],
     "sectionId": "part-iv-跳脫訓練數據-約束的元原則-anti-prompt-8",
     "sectionTitle": "Part IV — 跳脫訓練數據 + 約束的元原則 (Anti-Prompt #8)",
-    "content": "#8 不用老套範例： 最後一個技巧要求 AI 避免使用常見的教學範例（如檸檬水攤位比喻），改用新穎、具體的情境。這迫使模型跳出最高頻率的訓練數據路徑。 \"No clichéd examples. No 'imagine you're running a lemonade stand'. Give me novel, specific scenarios.\" 作者最後提出了 Anti-Prompt 的元原則： 大多數人告訴 AI「要做什麼」，頂尖使用者告訴 AI「不要做什麼」 。他用「雕刻」做比喻——你移除不想要的部分，剩下的就是作品。 \"Most people tell the AI what TO do. Top 1% tell it what NOT to do.\" / \"Think of it as sculpting. You remove what you don't want.\" 作者坦承他花了 6 個月不斷增加 Prompt 複雜度，最後才發現 「減法」比「加法」更有效 。這與 Prompt Engineering 社群的普遍經驗一致——最好的 Prompt 往往不是最長"
+    "content": "#8 不用老套範例： 最後一個技巧要求 AI 避免使用常見的教學範例（如檸檬水攤位比喻），改用新穎、具體的情境。這迫使模型跳出最高頻率的訓練數據路徑。 \"No clich d examples. No 'imagine you're running a lemonade stand'. Give me novel, specific scenarios.\" 作者最後提出了 Anti-Prompt 的元原則： 大多數人告訴 AI「要做什麼」，頂尖使用者告訴 AI「不要做什麼」 。他用「雕刻」做比喻——你移除不想要的部分，剩下的就是作品。 \"Most people tell the AI what TO do. Top 1% tell it what NOT to do.\" / \"Think of it as sculpting. You remove what you don't want.\" 作者坦承他花了 6 個月不斷增加 Prompt 複雜度，最後才發現 「減法」比「加法」更有效 。這與 Prompt Engineering 社群的普遍經驗一致——最好的 Prompt 往往不是最長"
   },
   {
     "docFile": "2026-02-03_anti-prompts-constraints.html",
@@ -9437,7 +9313,7 @@ const searchIndex = [
     ],
     "sectionId": "part-ii-multiline-input-quick-commands-多行輸入與快捷指令",
     "sectionTitle": "Part II: Multiline Input & Quick Commands (多行輸入與快捷指令)",
-    "content": "Claude Code 支援多種 多行輸入方式 ，這在需要貼上程式碼片段或撰寫複雜提示時非常實用。最通用的方式是在行尾加上 \\ 再按 Enter，這在所有終端機都能使用。 \"Quick escape: \\ + Enter — Works in all terminals.\" Quick Commands（快捷指令） 是以特殊字元開頭的快速操作。 # 開頭可以直接將內容寫入 CLAUDE.md 記憶檔案； / 是 Slash Command； ! 是 Bash 模式； @ 觸發檔案路徑自動補全。 \"# at start — Memory shortcut: add to CLAUDE.md. / at start — Slash command. ! at start — Bash mode. @ — File path mention.\" 📚 核心概念 Quick Commands 速查表： 前綴 功能 範例 # 寫入 CLAUDE.md # Always use TypeScript / Slash Command /vim 、 /clear ! 直接執行 Bash ! npm t"
+    "content": "Claude Code 支援多種 多行輸入方式 ，這在需要貼上程式碼片段或撰寫複雜提示時非常實用。最通用的方式是在行尾加上 \\ 再按 Enter，這在所有終端機都能使用。 \"Quick escape: \\ + Enter — Works in all terminals.\" Quick Commands（快捷指令） 是以特殊字元開頭的快速操作。 # 開頭可以直接將內容寫入 CLAUDE.md 記憶檔案； / 是 Slash Command； ! 是 Bash 模式； @ 觸發檔案路徑自動補全。 \"# at start — Memory shortcut: add to CLAUDE.md. / at start — Slash command. ! at start — Bash mode. @ — File path mention.\" 核心概念 Quick Commands 速查表： 前綴 功能 範例 # 寫入 CLAUDE.md # Always use TypeScript / Slash Command /vim 、 /clear ! 直接執行 Bash ! npm test"
   },
   {
     "docFile": "2026-02-03_claude-code-interactive-mode.html",
@@ -9469,7 +9345,7 @@ const searchIndex = [
     ],
     "sectionId": "part-iv-command-history-reverse-search-指令歷史與搜尋",
     "sectionTitle": "Part IV: Command History & Reverse Search (指令歷史與搜尋)",
-    "content": "Claude Code 維護基於 工作目錄 的指令歷史，可以用上下方向鍵瀏覽。使用 /clear 會清除歷史。值得注意的是， 歷史展開 ( ! ) 預設是關閉的 ，以避免和 Bash 模式的 ! 前綴衝突。 \"History is stored per working directory. Cleared with /clear command. Note: History expansion (!) is disabled by default.\" Ctrl+R 啟動 反向搜尋 功能，讓你互動式地搜尋先前的指令。輸入關鍵字後，搜尋詞會被高亮顯示在匹配結果中。按 Ctrl+R 繼續往前搜尋更舊的匹配項；按 Tab 或 Esc 接受匹配但繼續編輯；按 Enter 直接執行。 \"Press Ctrl+R to interactively search through your command history. Press Ctrl+R again to cycle through older matches.\" 📚 核心概念 Ctrl+R 搜尋流程： 1. 按 Ctrl+R 啟動搜尋 2"
+    "content": "Claude Code 維護基於 工作目錄 的指令歷史，可以用上下方向鍵瀏覽。使用 /clear 會清除歷史。值得注意的是， 歷史展開 ( ! ) 預設是關閉的 ，以避免和 Bash 模式的 ! 前綴衝突。 \"History is stored per working directory. Cleared with /clear command. Note: History expansion (!) is disabled by default.\" Ctrl+R 啟動 反向搜尋 功能，讓你互動式地搜尋先前的指令。輸入關鍵字後，搜尋詞會被高亮顯示在匹配結果中。按 Ctrl+R 繼續往前搜尋更舊的匹配項；按 Tab 或 Esc 接受匹配但繼續編輯；按 Enter 直接執行。 \"Press Ctrl+R to interactively search through your command history. Press Ctrl+R again to cycle through older matches.\" 核心概念 Ctrl+R 搜尋流程： 1. 按 Ctrl+R 啟動搜尋 2. 輸"
   },
   {
     "docFile": "2026-02-03_claude-code-interactive-mode.html",
@@ -9532,7 +9408,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★☆☆ 3.2/5 ↑ Practical Value, Tool Ecosystem ↓ Technical Depth, Timeliness 本文示範如何使用 Claude Code 建立一套「AI 產品導師系統」，將 Steve Jobs、Ray Dalio、Demis Hassabis 等人的思維模式轉化為可互動的 Markdown 角色檔，並透過 Node.js 前端和 MCP 整合連結真實工作數據。文章的核心價值在於展示 Claude Code 的非工程應用場景，特別是 Agents、Skills 和 MCP 的組合使用模式。技術深度偏淺（主要是檔案結構和 prompt 設計），但對理解 Claude Code 生態系的應用延伸有啟發性。 Learning Objectives 📁 Claude Code 專案結構設計 理解如何用 Markdown 檔案 + 目錄結構建立可擴充的 AI 角色系統 🧠 Persona Prompt 設計維度 掌握角色文件的 10 個關鍵維度：Core Identity、Questioning Style、Red Flags 等 🔗 Agents / Skills / MCP 整合 了解 Claude Code 的三種擴充機制如何將靜態角色檔轉化為動態決策工具 Product Mentor System - 四階段建構流程 🎯 Choose Mentors 19 維度選人 → 📝 Build Personas Markdown 角色檔 → 💻 Build Frontend Node.js + SSE → 🔌 Connect Data MCP + Agents Part I — 選擇你的產品導師 (Choose Your Product Mentors) 一位新創公司創辦人透露，她使用 客製化的 AI 版 Steve Jobs 來協助品牌策略決策。她用產品發表會逐字稿和策略演講訓練這個 GPT，讓它在她卡關時批判她的想法，並協助精煉到「10 分滿分」的概念。 A startup founder recently revealed that they use a custom built AI version of Steve Jobs to help guide their decision making... trained it on product launch transcripts and strategy talks. 作者提出一個更進階的構想：何不建立一整個 世界級產品思考者團隊 ，跨越策略、設計、決策、AI 等 19 個專業維度，在需要時隨時諮詢？文章將這些維度歸類為 7 大領域：Strategy & Vision、Discovery & Research、Execution & Delivery、Design & Craft、People & Communication、Data & Measurement、AI Product Sense。 What if you could build an entire team of world class product thinkers and refer to them to help you to assess your designs, make decisions or craft your strategy? 💡 比喻說明 把這個系統想像成你的「私人董事會」 — 企業 CEO 都有外部董事提供不同觀點的挑戰與建議"
+    "content": "3.2/5 Practical Value, Tool Ecosystem Technical Depth, Timeliness 本文示範如何使用 Claude Code 建立一套「AI 產品導師系統」，將 Steve Jobs、Ray Dalio、Demis Hassabis 等人的思維模式轉化為可互動的 Markdown 角色檔，並透過 Node.js 前端和 MCP 整合連結真實工作數據。文章的核心價值在於展示 Claude Code 的非工程應用場景，特別是 Agents、Skills 和 MCP 的組合使用模式。技術深度偏淺（主要是檔案結構和 prompt 設計），但對理解 Claude Code 生態系的應用延伸有啟發性。 Learning Objectives Claude Code 專案結構設計 理解如何用 Markdown 檔案 + 目錄結構建立可擴充的 AI 角色系統 Persona Prompt 設計維度 掌握角色文件的 10 個關鍵維度：Core Identity、Questioning Style、Red Flags 等 Agents / Skills / MCP 整合 了解 Claude Code 的三種擴充機制如何將靜態角色檔轉化為動態決策工具 Product Mentor System - 四階段建構流程 Choose Mentors 19 維度選人 Build Personas Markdown 角色檔 Build Frontend Node.js + SSE Connect Data MCP + Agents Part I 選擇你的產品導師 (Choose Your Product Mentors) 一位新創公司創辦人透露，她使用 客製化的 AI 版 Steve Jobs 來協助品牌策略決策。她用產品發表會逐字稿和策略演講訓練這個 GPT，讓它在她卡關時批判她的想法，並協助精煉到「10 分滿分」的概念。 A startup founder recently revealed that they use a custom built AI version of Steve Jobs to help guide their decision making... trained it on product launch transcripts and strategy talks. 作者提出一個更進階的構想：何不建立一整個 世界級產品思考者團隊 ，跨越策略、設計、決策、AI 等 19 個專業維度，在需要時隨時諮詢？文章將這些維度歸類為 7 大領域：Strategy & Vision、Discovery & Research、Execution & Delivery、Design & Craft、People & Communication、Data & Measurement、AI Product Sense。 What if you could build an entire team of world class product thinkers and refer to them to help you to assess your designs, make decisions or craft your strategy? 比喻說明 把這個系統想像成你的「私人董事會」 企業 CEO 都有外部董事提供不同觀點的挑戰與建議。這套系統就是用 AI 模擬這個概念，只是你的董事成員是根據公開資料重建的「思維模型」，"
   },
   {
     "docFile": "2026-02-03_notebooklm-source-control.html",
@@ -9547,7 +9423,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★☆☆ 3.2/5 ↑ Practical Value, Learning Curve ↓ Technical Depth, Tool Ecosystem 這篇文章介紹 Google NotebookLM 的核心價值主張： Source Control（來源控制） 。不同於 ChatGPT、Claude、Gemini 從訓練資料回答問題，NotebookLM 強制只從你上傳的文件中擷取資訊並附上可點擊的引用，從根本上消除 AI Hallucination（幻覺）。文章提供 4 個商業工作流程（知識庫、團隊訓練、角色設定、Studio Panel 產出），以及與其他 AI 工具的使用場景區分。整體屬於入門級實務指南，技術深度有限但工作流思維值得借鑑。"
+    "content": "3.2/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem 這篇文章介紹 Google NotebookLM 的核心價值主張： Source Control（來源控制） 。不同於 ChatGPT、Claude、Gemini 從訓練資料回答問題，NotebookLM 強制只從你上傳的文件中擷取資訊並附上可點擊的引用，從根本上消除 AI Hallucination（幻覺）。文章提供 4 個商業工作流程（知識庫、團隊訓練、角色設定、Studio Panel 產出），以及與其他 AI 工具的使用場景區分。整體屬於入門級實務指南，技術深度有限但工作流思維值得借鑑。"
   },
   {
     "docFile": "2026-02-03_notebooklm-source-control.html",
@@ -9562,7 +9438,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "1 理解 NotebookLM 的 Source Control 機制如何從架構層面消除 AI Hallucination 2 掌握 4 種商業工作流程模式：Knowledge Hub、Team Training、Custom Configuration、Studio Panel 3 建立 AI 工具選擇決策框架：何時用 NotebookLM vs ChatGPT vs Claude vs Gemini NotebookLM Source Control Framework 📄 Upload Sources 上傳指定文件 (上限 25M 字) → 🔎 Source-Only Search 僅搜尋已上傳來源 不引用訓練資料 → 📎 Cited Response 每個聲明附 可點擊引用 → ✅ Verify & Act 一鍵驗證 消除幻覺風險"
+    "content": "1 理解 NotebookLM 的 Source Control 機制如何從架構層面消除 AI Hallucination 2 掌握 4 種商業工作流程模式：Knowledge Hub、Team Training、Custom Configuration、Studio Panel 3 建立 AI 工具選擇決策框架：何時用 NotebookLM vs ChatGPT vs Claude vs Gemini NotebookLM Source Control Framework Upload Sources 上傳指定文件 (上限 25M 字) Source-Only Search 僅搜尋已上傳來源 不引用訓練資料 Cited Response 每個聲明附 可點擊引用 Verify & Act 一鍵驗證 消除幻覺風險"
   },
   {
     "docFile": "2026-02-03_notebooklm-source-control.html",
@@ -9577,7 +9453,7 @@ const searchIndex = [
     ],
     "sectionId": "content",
     "sectionTitle": "Content",
-    "content": "Foundation 4 Workflows Tool Strategy Part I — NotebookLM 到底是什麼？ 多數領導者把 NotebookLM 當成「有筆記功能的 ChatGPT」，這就像拿手術刀來切奶油。 NotebookLM 是一個研究智能系統（Research Intelligence System），不是聊天機器人。 \"Most leaders treat NotebookLM like ChatGPT with a fancy notebook feature. That's like using a surgical scalpel as a butter knife... NotebookLM is a research intelligence system, not a chatbot.\" ChatGPT、Claude、Gemini 從訓練資料工作，擅長合成、創意和通用知識。但當你問它們關於你的特定文件時，它們是從記憶中的相似模式回答， 不是你的實際內容 。NotebookLM 則不同，每個回答都專門來自你上傳的來源，沒有訓練資料，沒有通用知識。 "
+    "content": "Foundation 4 Workflows Tool Strategy Part I NotebookLM 到底是什麼？ 多數領導者把 NotebookLM 當成「有筆記功能的 ChatGPT」，這就像拿手術刀來切奶油。 NotebookLM 是一個研究智能系統（Research Intelligence System），不是聊天機器人。 \"Most leaders treat NotebookLM like ChatGPT with a fancy notebook feature. That's like using a surgical scalpel as a butter knife... NotebookLM is a research intelligence system, not a chatbot.\" ChatGPT、Claude、Gemini 從訓練資料工作，擅長合成、創意和通用知識。但當你問它們關於你的特定文件時，它們是從記憶中的相似模式回答， 不是你的實際內容 。NotebookLM 則不同，每個回答都專門來自你上傳的來源，沒有訓練資料，沒有通用知識。 \"C"
   },
   {
     "docFile": "2026-02-03_notebooklm-source-control.html",
@@ -9613,7 +9489,7 @@ const searchIndex = [
     "docFile": "2026-02-05_ai-privacy-deep-dive.html",
     "docTitle": "AI 時代的隱私深度解析",
     "docDate": "2026-02-05",
-    "docSource": "Joel Salinas &amp; Mohib Ur Rehman / SK NEXUS",
+    "docSource": "Joel Salinas & Mohib Ur Rehman / SK NEXUS",
     "docRating": 3.6,
     "docTags": [
       "LLM",
@@ -9628,7 +9504,7 @@ const searchIndex = [
     "docFile": "2026-02-05_ai-privacy-deep-dive.html",
     "docTitle": "AI 時代的隱私深度解析",
     "docDate": "2026-02-05",
-    "docSource": "Joel Salinas &amp; Mohib Ur Rehman / SK NEXUS",
+    "docSource": "Joel Salinas & Mohib Ur Rehman / SK NEXUS",
     "docRating": 3.6,
     "docTags": [
       "LLM",
@@ -9643,7 +9519,7 @@ const searchIndex = [
     "docFile": "2026-02-05_ai-privacy-deep-dive.html",
     "docTitle": "AI 時代的隱私深度解析",
     "docDate": "2026-02-05",
-    "docSource": "Joel Salinas &amp; Mohib Ur Rehman / SK NEXUS",
+    "docSource": "Joel Salinas & Mohib Ur Rehman / SK NEXUS",
     "docRating": 3.6,
     "docTags": [
       "LLM",
@@ -10026,7 +9902,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.8/5 ↑ Practical Value, Tool Ecosystem ↓ Technical Depth, Learning Curve OpenClaw 是目前 AI 圈最火熱的開源專案，從一個 Telegram chatbot wrapper 演變為具備 排程任務 (Cron Jobs) 、 主動監控 (Heartbeat) 和 結構化知識庫 (Markdown Files) 的完整 AI Agent 框架。本文作者花了 10 天實測，涵蓋了架構解析、安全風險評估、五大 VPS 託管平台比較（AWS / Cloudflare / DigitalOcean / Hostinger / Hetzner），以及三個實際 Agent 使用案例。文章對安全問題的坦誠討論是最大亮點，但技術深度偏向「使用者指南」而非「架構分析」層級。"
+    "content": "3.8/5 Practical Value, Tool Ecosystem Technical Depth, Learning Curve OpenClaw 是目前 AI 圈最火熱的開源專案，從一個 Telegram chatbot wrapper 演變為具備 排程任務 (Cron Jobs) 、 主動監控 (Heartbeat) 和 結構化知識庫 (Markdown Files) 的完整 AI Agent 框架。本文作者花了 10 天實測，涵蓋了架構解析、安全風險評估、五大 VPS 託管平台比較（AWS / Cloudflare / DigitalOcean / Hostinger / Hetzner），以及三個實際 Agent 使用案例。文章對安全問題的坦誠討論是最大亮點，但技術深度偏向「使用者指南」而非「架構分析」層級。"
   },
   {
     "docFile": "2026-02-06_openclaw-agent-review.html",
@@ -10041,7 +9917,7 @@ const searchIndex = [
     ],
     "sectionId": "理解-openclaw-核心架構",
     "sectionTitle": "理解 OpenClaw 核心架構",
-    "content": "掌握 SOUL.md / USER.md / HEARTBEAT.md 等知識檔案如何構成 Agent 的「人格」與「行為」 🔒"
+    "content": "掌握 SOUL.md / USER.md / HEARTBEAT.md 等知識檔案如何構成 Agent 的「人格」與「行為」"
   },
   {
     "docFile": "2026-02-06_openclaw-agent-review.html",
@@ -10056,7 +9932,7 @@ const searchIndex = [
     ],
     "sectionId": "評估安全風險與防護策略",
     "sectionTitle": "評估安全風險與防護策略",
-    "content": "識別明文儲存、持久存取權限、Prompt Injection 三大安全風險，並了解防護措施 ☁️"
+    "content": "識別明文儲存、持久存取權限、Prompt Injection 三大安全風險，並了解防護措施"
   },
   {
     "docFile": "2026-02-06_openclaw-agent-review.html",
@@ -10071,7 +9947,7 @@ const searchIndex = [
     ],
     "sectionId": "比較-vps-託管方案",
     "sectionTitle": "比較 VPS 託管方案",
-    "content": "分析 AWS / DigitalOcean / Hostinger / Hetzner 的成本、安全性與易用性取捨 OpenClaw Agent 架構：從 Chatbot 到自主 Agent 📑 Knowledge Base SOUL / USER / IDENTITY 定義人格與記憶 → ⏰ Cron Jobs 固定排程 自動執行任務 → 💓 Heartbeat 持續監控 情境感知通知 → 🚀 Multi-Agent 角色分工 各司其職"
+    "content": "分析 AWS / DigitalOcean / Hostinger / Hetzner 的成本、安全性與易用性取捨 OpenClaw Agent 架構：從 Chatbot 到自主 Agent Knowledge Base SOUL / USER / IDENTITY 定義人格與記憶 Cron Jobs 固定排程 自動執行任務 Heartbeat 持續監控 情境感知通知 Multi-Agent 角色分工 各司其職"
   },
   {
     "docFile": "2026-02-06_openclaw-agent-review.html",
@@ -10176,7 +10052,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★☆☆ 3.0/5 ↑ 實務應用, 時效性 ↓ 技術深度, 工具生態 Prosci 研究調查了 1,107 位專業人士，發現 AI 導入的主要障礙不是技術問題（僅佔 16%），而是 人員熟練度 （38%）。文章歸納出 AI 變革與傳統變革管理的 8 大差異，從「永無止境的第二階段」到「重新定義角色與工作模式」，核心論點是： AI 採用的成功取決於管理變革的人性面，而非技術的精密度 。對於正在導入 AI 的組織，這篇提供了實用的框架來重新思考變革管理策略。"
+    "content": "★★★☆☆ 3.0/5 實務應用, 時效性 技術深度, 工具生態 Prosci 研究調查了 1,107 位專業人士，發現 AI 導入的主要障礙不是技術問題（僅佔 16%），而是 人員熟練度 （38%）。文章歸納出 AI 變革與傳統變革管理的 8 大差異，從「永無止境的第二階段」到「重新定義角色與工作模式」，核心論點是： AI 採用的成功取決於管理變革的人性面，而非技術的精密度 。對於正在導入 AI 的組織，這篇提供了實用的框架來重新思考變革管理策略。"
   },
   {
     "docFile": "2026-02-09_ai-change-management.html",
@@ -10191,7 +10067,7 @@ const searchIndex = [
     ],
     "sectionId": "理解數據差距",
     "sectionTitle": "理解數據差距",
-    "content": "掌握 Prosci 研究揭示的信任差距、人員挑戰與技術挑戰的比例關係 🔄"
+    "content": "掌握 Prosci 研究揭示的信任差距、人員挑戰與技術挑戰的比例關係"
   },
   {
     "docFile": "2026-02-09_ai-change-management.html",
@@ -10206,7 +10082,7 @@ const searchIndex = [
     ],
     "sectionId": "辨識-8-大差異",
     "sectionTitle": "辨識 8 大差異",
-    "content": "能夠解釋 AI 變革與傳統變革管理的 8 個關鍵差異及其應對策略 🎯"
+    "content": "能夠解釋 AI 變革與傳統變革管理的 8 個關鍵差異及其應對策略"
   },
   {
     "docFile": "2026-02-09_ai-change-management.html",
@@ -10221,7 +10097,7 @@ const searchIndex = [
     ],
     "sectionId": "應用到自身情境",
     "sectionTitle": "應用到自身情境",
-    "content": "將變革管理框架轉化為製藥/CDMO 產業的 AI 導入行動計畫 AI 變革管理的三大支柱 📚 變革本質 持續性、安全性、倫理性 → 👥 人員適應 個人化學習、企業規模思維 → 🌱 持續演化 模糊未來、新型阻力、角色重塑"
+    "content": "將變革管理框架轉化為製藥/CDMO 產業的 AI 導入行動計畫 AI 變革管理的三大支柱 變革本質 持續性、安全性、倫理性 人員適應 個人化學習、企業規模思維 持續演化 模糊未來、新型阻力、角色重塑"
   },
   {
     "docFile": "2026-02-09_ai-change-management.html",
@@ -10326,7 +10202,7 @@ const searchIndex = [
     ],
     "sectionId": "quick-summary",
     "sectionTitle": "Quick Summary",
-    "content": "★★★★☆ 3.6/5 ↑ 實務應用, 時效性 ↓ 技術深度, 工具生態 這篇文章是 Claude Skills 功能的實戰入門指南。作者 Joel Salinas 分享了他如何利用 5 個自訂 Skill 來自動化提案、簡報、儀表板、財務模型和流程圖的建立，每月省下超過 40 小時。文章的最大價值在於提供了 完整的 step-by-step 建立流程 和可下載的 SKILL.md 範本，讓讀者可以立即動手。技術深度不高（主要是操作指南而非架構解析），但對於想要快速上手 Claude Skills 的使用者來說，這是一篇極具實務價值的入門文。 Learning Objectives 學習目標 OBJECTIVE 01 理解 Claude Skills 與 Projects 的差異，以及兩者如何互補運作 OBJECTIVE 02 掌握建立 Skill 的完整 4 步流程：資料夾 → SKILL.md → 壓縮 → 上傳 OBJECTIVE 03 評估 5 種 Skill 類型（提案/簡報/儀表板/財務模型/流程圖）在自身工作場景的適用性 Skill 建立 4 步流程 📁 Step 1: 建立資料夾 小寫 + 短橫線命名 → 📄 Step 2: 建立 SKILL.md 定義工作流程指令 → 📦 Step 3: 壓縮 ZIP 打包資料夾 → ☁ Step 4: 上傳 Claude Settings > Skills Part I 什麼是 Claude Skills？為什麼它不同？ 一般的 Claude 能寫 email、摘要文件。但 Skills 教會 Claude 專門的工作流程（specialized workflows） ，當你提到相關需求時會自動觸發。 \"Regular Claude writes emails and summarizes documents. Skills teach Claude specialized workflows that trigger automatically when you mention them or ask for what they do.\" Skills 能建立的東西遠超文字回覆：Word 文件、PDF、PowerPoint 簡報、 含有運作公式的 Excel 試算表 、互動式儀表板、組織圖、流程圖。 \"Word documents, PDFs, PowerPoint presentations, Excel spreadsheets with working formulas, interactive dashboards, org charts, workflow diagrams.\" 根據統計，約 27% 的 Claude 輔助工作是「原本不會做」的任務 ——儀表板和分析工具如果手動做根本不划算。重度使用者回報 50-100% 的生產力提升 。 \"Approximately 27% of Claude-assisted work consists of tasks that wouldn't have been done otherwise... Power users report 50-100% productivity gains.\" 💡 比喻說明 想像 Claude 是一位新進員工。沒有 Skill 時，他什麼都能做一點但不精通。Skill 就像是你給他的 專業 SOP 手冊 ——一旦有了提案製作 SOP，他就能每次都產出格式一致、品質穩定的提案，不用你每次重新教。 💰"
+    "content": "★★★★☆ 3.6/5 實務應用, 時效性 技術深度, 工具生態 這篇文章是 Claude Skills 功能的實戰入門指南。作者 Joel Salinas 分享了他如何利用 5 個自訂 Skill 來自動化提案、簡報、儀表板、財務模型和流程圖的建立，每月省下超過 40 小時。文章的最大價值在於提供了 完整的 step-by-step 建立流程 和可下載的 SKILL.md 範本，讓讀者可以立即動手。技術深度不高（主要是操作指南而非架構解析），但對於想要快速上手 Claude Skills 的使用者來說，這是一篇極具實務價值的入門文。 Learning Objectives 學習目標 OBJECTIVE 01 理解 Claude Skills 與 Projects 的差異，以及兩者如何互補運作 OBJECTIVE 02 掌握建立 Skill 的完整 4 步流程：資料夾 → SKILL.md → 壓縮 → 上傳 OBJECTIVE 03 評估 5 種 Skill 類型（提案/簡報/儀表板/財務模型/流程圖）在自身工作場景的適用性 Skill 建立 4 步流程 Step 1: 建立資料夾 小寫 + 短橫線命名 Step 2: 建立 SKILL.md 定義工作流程指令 Step 3: 壓縮 ZIP 打包資料夾 Step 4: 上傳 Claude Settings > Skills Part I 什麼是 Claude Skills？為什麼它不同？ 一般的 Claude 能寫 email、摘要文件。但 Skills 教會 Claude 專門的工作流程（specialized workflows） ，當你提到相關需求時會自動觸發。 \"Regular Claude writes emails and summarizes documents. Skills teach Claude specialized workflows that trigger automatically when you mention them or ask for what they do.\" Skills 能建立的東西遠超文字回覆：Word 文件、PDF、PowerPoint 簡報、 含有運作公式的 Excel 試算表 、互動式儀表板、組織圖、流程圖。 \"Word documents, PDFs, PowerPoint presentations, Excel spreadsheets with working formulas, interactive dashboards, org charts, workflow diagrams.\" 根據統計，約 27% 的 Claude 輔助工作是「原本不會做」的任務 ——儀表板和分析工具如果手動做根本不划算。重度使用者回報 50-100% 的生產力提升 。 \"Approximately 27% of Claude-assisted work consists of tasks that wouldn't have been done otherwise... Power users report 50-100% productivity gains.\" 比喻說明 想像 Claude 是一位新進員工。沒有 Skill 時，他什麼都能做一點但不精通。Skill 就像是你給他的 專業 SOP 手冊 ——一旦有了提案製作 SOP，他就能每次都產出格式一致、品質穩定的提案，不用你每次重新教。 ROI 快速計算 前提： Claude Profes"
   },
   {
     "docFile": "2026-02-10_import-ai-444-societies.html",
@@ -10341,7 +10217,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "本期 Import AI 涵蓋四個主題，全部指向同一個核心趨勢： AI 系統正在變得更「活」，但離自主運作仍有明顯差距 。Google 研究發現推理模型在解決難題時會自發模擬多重人格進行內部辯論；ChipBench 揭示前沿模型在真實晶片設計上表現仍差；Google DeepMind 的 Gemini 嘗試解決 Erdos 數學難題，700 個候選答案最終只有 1 個真正有創意的新解；華為用 LLM 自動生成 Ascend 晶片核心，但成功率尚需提升。共同結論：AI 加速了「生成」但人類在「判斷」上仍是瓶頸。 🧠"
+    "content": "本期 Import AI 涵蓋四個主題，全部指向同一個核心趨勢： AI 系統正在變得更「活」，但離自主運作仍有明顯差距 。Google 研究發現推理模型在解決難題時會自發模擬多重人格進行內部辯論；ChipBench 揭示前沿模型在真實晶片設計上表現仍差；Google DeepMind 的 Gemini 嘗試解決 Erdos 數學難題，700 個候選答案最終只有 1 個真正有創意的新解；華為用 LLM 自動生成 Ascend 晶片核心，但成功率尚需提升。共同結論：AI 加速了「生成」但人類在「判斷」上仍是瓶頸。"
   },
   {
     "docFile": "2026-02-10_import-ai-444-societies.html",
@@ -10356,7 +10232,7 @@ const searchIndex = [
     ],
     "sectionId": "理解-llm思維社會",
     "sectionTitle": "理解 LLM「思維社會」",
-    "content": "掌握推理模型如何透過多重人格模擬和內部辯論來提升問題解決能力 ⚙"
+    "content": "掌握推理模型如何透過多重人格模擬和內部辯論來提升問題解決能力"
   },
   {
     "docFile": "2026-02-10_import-ai-444-societies.html",
@@ -10371,7 +10247,7 @@ const searchIndex = [
     ],
     "sectionId": "評估-ai-晶片設計能力",
     "sectionTitle": "評估 AI 晶片設計能力",
-    "content": "了解 ChipBench 為何顯示現有 AI 系統尚未準備好進入真實晶片設計流程 🔎"
+    "content": "了解 ChipBench 為何顯示現有 AI 系統尚未準備好進入真實晶片設計流程"
   },
   {
     "docFile": "2026-02-10_import-ai-444-societies.html",
@@ -10386,7 +10262,7 @@ const searchIndex = [
     ],
     "sectionId": "辨識-ai-科學研究的瓶頸",
     "sectionTitle": "辨識 AI 科學研究的瓶頸",
-    "content": "分析「O-ring 自動化」模式：AI 加速生成但人類判斷仍是關鍵瓶頸 AI 自主性光譜：從生成到判斷的差距 ⚡ AI 大量生成 候選方案、程式碼、證明 → 🔍 人類篩選判斷 正確性、品味、意圖 → ✅ 有效產出 極少數真正有價值 1 LLM 思維社會：推理模型的多重人格模擬 當思考困難問題時，我常常發現從 多重視角 來看問題會很有幫助，尤其是在檢視自己的假設和偏見時。Google、芝加哥大學和聖塔菲研究所的研究人員發現， AI 推理模型在解決困難問題時也會做同樣的事 。 \"When thinking about hard problems, I often find it's helpful to try and view them from multiple perspectives... researchers have concluded they do the same thing, with LLMs seeming to invoke multiple different perspectives in their chains of thought when solv"
+    "content": "分析「O-ring 自動化」模式：AI 加速生成但人類判斷仍是關鍵瓶頸 AI 自主性光譜：從生成到判斷的差距 AI 大量生成 候選方案、程式碼、證明 人類篩選判斷 正確性、品味、意圖 有效產出 極少數真正有價值 1 LLM 思維社會：推理模型的多重人格模擬 當思考困難問題時，我常常發現從 多重視角 來看問題會很有幫助，尤其是在檢視自己的假設和偏見時。Google、芝加哥大學和聖塔菲研究所的研究人員發現， AI 推理模型在解決困難問題時也會做同樣的事 。 \"When thinking about hard problems, I often find it's helpful to try and view them from multiple perspectives... researchers have concluded they do the same thing, with LLMs seeming to invoke multiple different perspectives in their chains of thought when solving hard pr"
   },
   {
     "docFile": "2026-02-10_import-ai-444-societies.html",
@@ -10400,7 +10276,7 @@ const searchIndex = [
       "Tool"
     ],
     "sectionId": "思維社會-內建辯論",
-    "sectionTitle": "🧠 思維社會 = 內建辯論",
+    "sectionTitle": "思維社會 = 內建辯論",
     "content": "推理模型透過 RL 訓練後，自發地發展出多重人格模擬能力。它們不是「想更久」，而是「以不同身份思考」，驗證了 LLM 作為「模擬器」的理論。"
   },
   {
@@ -10415,7 +10291,7 @@ const searchIndex = [
       "Tool"
     ],
     "sectionId": "基準-vs-現實的落差",
-    "sectionTitle": "📈 基準 vs 現實的落差",
+    "sectionTitle": "基準 vs 現實的落差",
     "content": "ChipBench 顯示現有晶片設計基準太簡單（10-76 行 vs 真實 10,000+ 行）。通用 LLM 裸測成績差，但加上領域腳手架後可能大幅不同。"
   },
   {
@@ -10430,8 +10306,8 @@ const searchIndex = [
       "Tool"
     ],
     "sectionId": "生成易判斷難",
-    "sectionTitle": "🔎 生成易、判斷難",
-    "content": "Erdos 案例完美展示了 AI 科學的 O-Ring 模式：700 個問題 → 200 候選 → 1 個真正創新。人類的「專家品味」仍是無法自動化的瓶頸。"
+    "sectionTitle": "生成易、判斷難",
+    "content": "Erdos 案例完美展示了 AI 科學的 O-Ring 模式：700 個問題 200 候選 1 個真正創新。人類的「專家品味」仍是無法自動化的瓶頸。"
   },
   {
     "docFile": "2026-02-10_import-ai-444-societies.html",
@@ -10445,8 +10321,8 @@ const searchIndex = [
       "Tool"
     ],
     "sectionId": "dsl-腳手架是關鍵",
-    "sectionTitle": "⚙ DSL 腳手架是關鍵",
-    "content": "華為的 AscendCraft 用 DSL 中間層將 LLM 成功率從幾乎為零提升到 90%+ 功能正確。不要讓 LLM 直接做冷門任務 — 設計領域框架來引導它。 ? Practice Questions Q1 概念理解 「思維社會」(Society of Thought) 與單純的「思考更久」(longer chain-of-thought) 有什麼根本差異？為什麼這個差異對理解 AI 推理能力很重要？ 根本差異在於 質 vs 量 。單純延長 chain-of-thought 是線性地增加推理步驟（量的增加），而「思維社會」是在推理過程中引入不同視角、人格特徵和領域專長之間的辯論（質的變化）。 這很重要，因為它暗示推理能力的提升來自 多樣性 而非 計算量 。如果我們只是讓模型「想更久」，可能會陷入同一個思維框架的死胡同。但如果模型能自發地切換視角、產生衝突並調和分歧，它就更像真正的深度思考。這也解釋了為什麼 RL 訓練後才出現這個能力 — RL 的獎勵機制鼓勵模型發現「有效的推理策略」，而多視角辯論恰好是最有效的策略之一。 Q2 產業應用 如果你要在 CDMO 的 deviatio"
+    "sectionTitle": "DSL 腳手架是關鍵",
+    "content": "華為的 AscendCraft 用 DSL 中間層將 LLM 成功率從幾乎為零提升到 90%+ 功能正確。不要讓 LLM 直接做冷門任務 設計領域框架來引導它。 ? Practice Questions Q1 概念理解 「思維社會」(Society of Thought) 與單純的「思考更久」(longer chain-of-thought) 有什麼根本差異？為什麼這個差異對理解 AI 推理能力很重要？ 根本差異在於 質 vs 量 。單純延長 chain-of-thought 是線性地增加推理步驟（量的增加），而「思維社會」是在推理過程中引入不同視角、人格特徵和領域專長之間的辯論（質的變化）。 這很重要，因為它暗示推理能力的提升來自 多樣性 而非 計算量 。如果我們只是讓模型「想更久」，可能會陷入同一個思維框架的死胡同。但如果模型能自發地切換視角、產生衝突並調和分歧，它就更像真正的深度思考。這也解釋了為什麼 RL 訓練後才出現這個能力 RL 的獎勵機制鼓勵模型發現「有效的推理策略」，而多視角辯論恰好是最有效的策略之一。 Q2 產業應用 如果你要在 CDMO 的 deviation in"
   },
   {
     "docFile": "2026-02-10_vibe-coding-protodash.html",
@@ -10462,7 +10338,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.8/5 ↑ Practical Value, Timeliness ↓ Technical Depth, Tool Ecosystem 這篇文章記錄了頂尖科技公司如何在內部使用 Vibe Coding（氛圍式編程）來建構 AI 驅動的工具。核心案例是 Stripe 設計主管 Owen Williams 開發的 Protodash - 一個讓設計師直接在瀏覽器中使用真實生產元件進行即時原型設計的工具。文章最重要的洞察在於： 建構（Building）的民主化正在模糊工程師和非工程師的界線 ，產品經理、設計師甚至律師現在都能自己建構內部 AI 工具。這不只是技術趨勢，更是組織能力的根本轉變。"
+    "content": "3.8/5 Practical Value, Timeliness Technical Depth, Tool Ecosystem 這篇文章記錄了頂尖科技公司如何在內部使用 Vibe Coding（氛圍式編程）來建構 AI 驅動的工具。核心案例是 Stripe 設計主管 Owen Williams 開發的 Protodash - 一個讓設計師直接在瀏覽器中使用真實生產元件進行即時原型設計的工具。文章最重要的洞察在於： 建構（Building）的民主化正在模糊工程師和非工程師的界線 ，產品經理、設計師甚至律師現在都能自己建構內部 AI 工具。這不只是技術趨勢，更是組織能力的根本轉變。"
   },
   {
     "docFile": "2026-02-10_vibe-coding-protodash.html",
@@ -10478,7 +10354,7 @@ const searchIndex = [
     ],
     "sectionId": "理解-vibe-coding-的組織影響",
     "sectionTitle": "理解 Vibe Coding 的組織影響",
-    "content": "掌握「建構民主化」如何改變產品開發流程，以及非工程師角色如何參與 AI 工具建構。 🔧"
+    "content": "掌握「建構民主化」如何改變產品開發流程，以及非工程師角色如何參與 AI 工具建構。"
   },
   {
     "docFile": "2026-02-10_vibe-coding-protodash.html",
@@ -10494,7 +10370,7 @@ const searchIndex = [
     ],
     "sectionId": "分析-protodash-的設計哲學",
     "sectionTitle": "分析 Protodash 的設計哲學",
-    "content": "理解 Stripe 如何透過「可拋棄式」輕量工具，將想法到原型的循環壓縮到接近零摩擦。 💡"
+    "content": "理解 Stripe 如何透過「可拋棄式」輕量工具，將想法到原型的循環壓縮到接近零摩擦。"
   },
   {
     "docFile": "2026-02-10_vibe-coding-protodash.html",
@@ -10510,7 +10386,7 @@ const searchIndex = [
     ],
     "sectionId": "萃取可複製的內部工具策略",
     "sectionTitle": "萃取可複製的內部工具策略",
-    "content": "從多家頂尖公司案例中提取可應用於自身組織的 AI 內部工具建構原則。 Vibe Coding 產品開發演進模型 🖼 Static Mockup Figma 靜態設計稿 → 🤖 AI-Assisted Build 即時 AI 輔助原型 → 🚀 Interactive Prototype 真實元件互動體驗 → ✅ Team Decision 體驗式決策取代紙上討論"
+    "content": "從多家頂尖公司案例中提取可應用於自身組織的 AI 內部工具建構原則。 Vibe Coding 產品開發演進模型 Static Mockup Figma 靜態設計稿 AI-Assisted Build 即時 AI 輔助原型 Interactive Prototype 真實元件互動體驗 Team Decision 體驗式決策取代紙上討論"
   },
   {
     "docFile": "2026-02-10_vibe-coding-protodash.html",
@@ -10676,7 +10552,7 @@ const searchIndex = [
     "docFile": "2026-02-11_openclaw-security-hardening.html",
     "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
     "docDate": "2026-02-11",
-    "docSource": "Wyndo &amp; Fernando Lucktemberg / Next Kick Labs",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
     "docRating": 4.2,
     "docTags": [
       "Security",
@@ -10685,13 +10561,13 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 4.2/5 ↑ 實務應用, 技術深度 ↓ 工具生態, 學習曲線 這篇文章是 OpenClaw（前身 ClawdBot）安全強化的完整實作指南，由 AI 安全專家 Fernando Lucktemberg 撰寫。文章的核心前提是 「警告無法阻止採用」 （Harm Reduction，危害減少策略）：既然人們已經在使用 OpenClaw，與其說「不要用」，不如教他們如何安全地用。 指南採用 三層漸進式防護架構 ：Tier 1（基本隔離，3-4 小時）、Tier 2（主動監控，+2 小時）、Tier 3（深度防禦，+2-3 小時），涵蓋 32 個步驟，從 VPS 隔離、Tailscale VPN、防火牆、認證加密、到 Docker/Podman 容器化、LiteLLM 代理、Squid 網路出口過濾等。每個步驟都附有可複製的指令和驗證程序。 文章同時提供手動部署和 Ansible Playbook 自動化部署 兩條路徑（手動 7-9 小時 vs 自動 15-30 分鐘），並坦承即使 Tier 3 也無法防禦 Prompt Injection 和供應鏈攻擊這兩個 根本性弱點 。"
+    "content": "4.2/5 實務應用, 技術深度 工具生態, 學習曲線 這篇文章是 OpenClaw（前身 ClawdBot）安全強化的完整實作指南，由 AI 安全專家 Fernando Lucktemberg 撰寫。文章的核心前提是 「警告無法阻止採用」 （Harm Reduction，危害減少策略）：既然人們已經在使用 OpenClaw，與其說「不要用」，不如教他們如何安全地用。 指南採用 三層漸進式防護架構 ：Tier 1（基本隔離，3-4 小時）、Tier 2（主動監控，+2 小時）、Tier 3（深度防禦，+2-3 小時），涵蓋 32 個步驟，從 VPS 隔離、Tailscale VPN、防火牆、認證加密、到 Docker/Podman 容器化、LiteLLM 代理、Squid 網路出口過濾等。每個步驟都附有可複製的指令和驗證程序。 文章同時提供手動部署和 Ansible Playbook 自動化部署 兩條路徑（手動 7-9 小時 vs 自動 15-30 分鐘），並坦承即使 Tier 3 也無法防禦 Prompt Injection 和供應鏈攻擊這兩個 根本性弱點 。"
   },
   {
     "docFile": "2026-02-11_openclaw-security-hardening.html",
     "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
     "docDate": "2026-02-11",
-    "docSource": "Wyndo &amp; Fernando Lucktemberg / Next Kick Labs",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
     "docRating": 4.2,
     "docTags": [
       "Security",
@@ -10700,13 +10576,13 @@ const searchIndex = [
     ],
     "sectionId": "三層安全架構",
     "sectionTitle": "三層安全架構",
-    "content": "理解 Tier 1/2/3 的漸進式防護邏輯，以及每層的成本效益比 📦"
+    "content": "理解 Tier 1/2/3 的漸進式防護邏輯，以及每層的成本效益比"
   },
   {
     "docFile": "2026-02-11_openclaw-security-hardening.html",
     "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
     "docDate": "2026-02-11",
-    "docSource": "Wyndo &amp; Fernando Lucktemberg / Next Kick Labs",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
     "docRating": 4.2,
     "docTags": [
       "Security",
@@ -10715,13 +10591,13 @@ const searchIndex = [
     ],
     "sectionId": "容器化隔離模式",
     "sectionTitle": "容器化隔離模式",
-    "content": "掌握 Docker/Podman + LiteLLM + Squid 的三容器網路隔離架構 🔒"
+    "content": "掌握 Docker/Podman + LiteLLM + Squid 的三容器網路隔離架構"
   },
   {
     "docFile": "2026-02-11_openclaw-security-hardening.html",
     "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
     "docDate": "2026-02-11",
-    "docSource": "Wyndo &amp; Fernando Lucktemberg / Next Kick Labs",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
     "docRating": 4.2,
     "docTags": [
       "Security",
@@ -10730,13 +10606,13 @@ const searchIndex = [
     ],
     "sectionId": "allowlist-vs-denylist-思維",
     "sectionTitle": "Allowlist vs Denylist 思維",
-    "content": "從根本理解「預設拒絕」的安全原則如何應用於命令、網域、工具 🔧"
+    "content": "從根本理解「預設拒絕」的安全原則如何應用於命令、網域、工具"
   },
   {
     "docFile": "2026-02-11_openclaw-security-hardening.html",
     "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
     "docDate": "2026-02-11",
-    "docSource": "Wyndo &amp; Fernando Lucktemberg / Next Kick Labs",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
     "docRating": 4.2,
     "docTags": [
       "Security",
@@ -10745,13 +10621,13 @@ const searchIndex = [
     ],
     "sectionId": "harm-reduction-框架",
     "sectionTitle": "Harm Reduction 框架",
-    "content": "學習「危害減少」策略在 AI Agent 安全中的實際應用思維 OpenClaw 三層漸進式安全強化架構 🛡 Tier 1: Basic VPS 隔離 + 防火牆 + Tailscale + 認證加密 Steps 1-14 | 3-4 hrs → 🔍 Tier 2: Standard Allowlisting + MCP 安全 + 監控腳本 + 月維護 Steps 15-19 | +2 hrs → 🏰 Tier 3: Advanced 容器沙箱 + LiteLLM + Squid + 事件回應 Steps 20-32 | +2-3 hrs"
+    "content": "學習「危害減少」策略在 AI Agent 安全中的實際應用思維 OpenClaw 三層漸進式安全強化架構 Tier 1: Basic VPS 隔離 + 防火牆 + Tailscale + 認證加密 Steps 1-14 | 3-4 hrs Tier 2: Standard Allowlisting + MCP 安全 + 監控腳本 + 月維護 Steps 15-19 | +2 hrs Tier 3: Advanced 容器沙箱 + LiteLLM + Squid + 事件回應 Steps 20-32 | +2-3 hrs"
   },
   {
     "docFile": "2026-02-11_openclaw-security-hardening.html",
     "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
     "docDate": "2026-02-11",
-    "docSource": "Wyndo &amp; Fernando Lucktemberg / Next Kick Labs",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
     "docRating": 4.2,
     "docTags": [
       "Security",
@@ -10766,7 +10642,7 @@ const searchIndex = [
     "docFile": "2026-02-11_openclaw-security-hardening.html",
     "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
     "docDate": "2026-02-11",
-    "docSource": "Wyndo &amp; Fernando Lucktemberg / Next Kick Labs",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
     "docRating": 4.2,
     "docTags": [
       "Security",
@@ -10781,7 +10657,7 @@ const searchIndex = [
     "docFile": "2026-02-11_openclaw-security-hardening.html",
     "docTitle": "OpenClaw 安全強化完整指南 - 三層防護實作",
     "docDate": "2026-02-11",
-    "docSource": "Wyndo &amp; Fernando Lucktemberg / Next Kick Labs",
+    "docSource": "Wyndo & Fernando Lucktemberg / Next Kick Labs",
     "docRating": 4.2,
     "docTags": [
       "Security",
@@ -10790,13 +10666,13 @@ const searchIndex = [
     ],
     "sectionId": "practice-questions",
     "sectionTitle": "Practice Questions",
-    "content": "Q1 概念理解 為什麼文章強調 Allowlist 比 Denylist 更安全？在什麼情況下 Allowlist 反而會造成問題？ Allowlist 更安全的原因 ：Denylist 只封鎖已知的危險命令（如 rm -rf ），但攻擊者可以用 wget 、 nc 、 python -c 等替代方案繞過。Allowlist 則相反——只有明確列出的命令才能執行，未列出的全部被拒絕。這就是「預設拒絕」（deny-by-default）原則。 Allowlist 的潛在問題 ：(1) 維護成本高——每次 Agent 需要新功能都要手動更新白名單；(2) 過度限制可能降低 Agent 的實用性，導致使用者為了方便而放寬設定；(3) 在快速迭代的開發環境中，嚴格的白名單可能成為瓶頸。關鍵是找到安全和實用性的平衡。 Q2 產業應用 如果你要在 CDMO 環境中部署類似 OpenClaw 的 AI Agent，Tier 3 的哪些安全原則可以直接對應到 GMP 的哪些法規要求？ 幾個直接對應： (1) Credential Brokering / 認證代理 → 21 CFR Part 11 的電"
+    "content": "Q1 概念理解 為什麼文章強調 Allowlist 比 Denylist 更安全？在什麼情況下 Allowlist 反而會造成問題？ Allowlist 更安全的原因 ：Denylist 只封鎖已知的危險命令（如 rm -rf ），但攻擊者可以用 wget 、 nc 、 python -c 等替代方案繞過。Allowlist 則相反——只有明確列出的命令才能執行，未列出的全部被拒絕。這就是「預設拒絕」（deny-by-default）原則。 Allowlist 的潛在問題 ：(1) 維護成本高——每次 Agent 需要新功能都要手動更新白名單；(2) 過度限制可能降低 Agent 的實用性，導致使用者為了方便而放寬設定；(3) 在快速迭代的開發環境中，嚴格的白名單可能成為瓶頸。關鍵是找到安全和實用性的平衡。 Q2 產業應用 如果你要在 CDMO 環境中部署類似 OpenClaw 的 AI Agent，Tier 3 的哪些安全原則可以直接對應到 GMP 的哪些法規要求？ 幾個直接對應： (1) Credential Brokering / 認證代理 21 CFR Part 11 的電子簽"
   },
   {
     "docFile": "2026-02-12_a2a-commerce.html",
     "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
     "docDate": "2026-02-12",
-    "docSource": "Joel Salinas &amp; JHong / Substack",
+    "docSource": "Joel Salinas & JHong / Substack",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -10804,13 +10680,13 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary-快速摘要",
     "sectionTitle": "Executive Summary | 快速摘要",
-    "content": "Agent-to-Agent Commerce (A2A2C，代理人對代理人商務) 已不是預測，而是 Q1 2026 正在上線的基礎設施。三個協議 — Google/Shopify 的 UCP、Visa 的 AP2、OpenAI 的 ACP — 讓消費者的 AI Agent 直接與商家 Agent 談判交易。30% 的消費者已信任 AI 代為完成購買。本文的戰略價值在於：它不只談技術，更提供領導者可立即行動的檢查清單，並揭示非營利組織在 LLM 對話中嵌入捐款路徑的意外機會。文章在策略洞察和行動建議上較強，但技術深度有限 — 協議的底層架構、API 整合細節均未涉及。 Learning Objectives | 學習目標 🔄 理解 A2A2C 架構演進 從 Agent-to-Site 到 Agent-to-Agent，三種商務模型的差異與趨勢 📋 掌握三大協議佈局 UCP / AP2 / ACP 各自的定位、推動者與商業意涵 🎯 擬定組織回應策略 商業與非營利領導者的即時行動清單與風險評估 Agentic Commerce 演進模型 🌐 Agent-to-Site AI 代理瀏"
+    "content": "Agent-to-Agent Commerce (A2A2C，代理人對代理人商務) 已不是預測，而是 Q1 2026 正在上線的基礎設施。三個協議 — Google/Shopify 的 UCP、Visa 的 AP2、OpenAI 的 ACP — 讓消費者的 AI Agent 直接與商家 Agent 談判交易。30% 的消費者已信任 AI 代為完成購買。本文的戰略價值在於：它不只談技術，更提供領導者可立即行動的檢查清單，並揭示非營利組織在 LLM 對話中嵌入捐款路徑的意外機會。文章在策略洞察和行動建議上較強，但技術深度有限 — 協議的底層架構、API 整合細節均未涉及。 Learning Objectives | 學習目標 理解 A2A2C 架構演進 從 Agent-to-Site 到 Agent-to-Agent，三種商務模型的差異與趨勢 掌握三大協議佈局 UCP / AP2 / ACP 各自的定位、推動者與商業意涵 擬定組織回應策略 商業與非營利領導者的即時行動清單與風險評估 Agentic Commerce 演進模型 Agent-to-Site AI 代理瀏覽商家網站 (現狀) A"
   },
   {
     "docFile": "2026-02-12_a2a-commerce.html",
     "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
     "docDate": "2026-02-12",
-    "docSource": "Joel Salinas &amp; JHong / Substack",
+    "docSource": "Joel Salinas & JHong / Substack",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -10824,7 +10700,7 @@ const searchIndex = [
     "docFile": "2026-02-12_a2a-commerce.html",
     "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
     "docDate": "2026-02-12",
-    "docSource": "Joel Salinas &amp; JHong / Substack",
+    "docSource": "Joel Salinas & JHong / Substack",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -10838,7 +10714,7 @@ const searchIndex = [
     "docFile": "2026-02-12_a2a-commerce.html",
     "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
     "docDate": "2026-02-12",
-    "docSource": "Joel Salinas &amp; JHong / Substack",
+    "docSource": "Joel Salinas & JHong / Substack",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -10852,7 +10728,7 @@ const searchIndex = [
     "docFile": "2026-02-12_a2a-commerce.html",
     "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
     "docDate": "2026-02-12",
-    "docSource": "Joel Salinas &amp; JHong / Substack",
+    "docSource": "Joel Salinas & JHong / Substack",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -10866,7 +10742,7 @@ const searchIndex = [
     "docFile": "2026-02-12_a2a-commerce.html",
     "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
     "docDate": "2026-02-12",
-    "docSource": "Joel Salinas &amp; JHong / Substack",
+    "docSource": "Joel Salinas & JHong / Substack",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -10880,7 +10756,7 @@ const searchIndex = [
     "docFile": "2026-02-12_a2a-commerce.html",
     "docTitle": "Agent-to-Agent Commerce - Q1 2026 領導者必知",
     "docDate": "2026-02-12",
-    "docSource": "Joel Salinas &amp; JHong / Substack",
+    "docSource": "Joel Salinas & JHong / Substack",
     "docRating": 3.8,
     "docTags": [
       "Agent",
@@ -10918,7 +10794,7 @@ const searchIndex = [
     ],
     "sectionId": "學習目標",
     "sectionTitle": "學習目標",
-    "content": "1 掌握 AI 圖表生成的 6 步驟工作流程 2 理解 Prompt 模板中各參數的作用與調整邏輯 3 評估此方法在專業簡報和教育訓練中的適用性與限制 AI Diagram Creation Workflow 1 選擇素材 論文/影片/逐字稿 → 2 開啟 Gemini 點選 Create Image → 3 選圖表類型 流程圖/概念圖/插圖 → 4 設定比例 16:9 簡報 / 1:1 社群 → 5 生成迭代 審查 + 修正 Prompt"
+    "content": "1 掌握 AI 圖表生成的 6 步驟工作流程 2 理解 Prompt 模板中各參數的作用與調整邏輯 3 評估此方法在專業簡報和教育訓練中的適用性與限制 AI Diagram Creation Workflow 1 選擇素材 論文/影片/逐字稿 2 開啟 Gemini 點選 Create Image 3 選圖表類型 流程圖/概念圖/插圖 4 設定比例 16:9 簡報 / 1:1 社群 5 生成迭代 審查 + 修正 Prompt"
   },
   {
     "docFile": "2026-02-17_ai-diagram-creation.html",
@@ -10995,7 +10871,7 @@ const searchIndex = [
     ],
     "sectionId": "快速摘要",
     "sectionTitle": "快速摘要",
-    "content": "Anthropic 的 Mike Krieger（Instagram 共同創辦人）發文招募 Research PM，明確要求候選人具備三種能力： 判斷力（知道什麼不該做） 、 原型能力（自己動手做） 、 實戰經驗（做過真正有人用的產品） 。原 Po 評論者進一步推論：AI 時代最大的產品風險已從「做不出來」轉變為「做了一堆沒價值的東西」，未來 AI 團隊核心角色將精簡為 Product Builder、AI Engineer、Systems Engineer 三種。這篇不是技術文，而是一個重要的 產業訊號 ，值得用來校準你的職涯策略。 🎯 理解 PM 角色轉型 從 Coordinator 到 Builder 的典範轉移 🔧 辨識 AI 團隊新結構 三種核心角色的分工邏輯 💡 校準個人策略 將 Builder 思維應用到非軟體產業 AI 時代 PM 能力模型 ✂ Kill 決策 砍掉錯誤方向 → 🔨 Build 原型 自己做 prototype → 🚀 Ship 產品 做過真的產品 I 招募訊號：Anthropic 要什麼樣的 PM？ Mike Krieger 最近加入 Anthropic Labs 團隊，直接站在 AI 前沿。他們正在 建造尚不存在的產品類別 ，而且底層技術還在快速演進中。這不是一般的 PM 職缺 — 這是在說：我們需要能在不確定性中自己動手的人。 \"I recently joined our Labs team at Anthropic to be hands-on at the frontier. We're building product categories that don't exist yet, on top of technology that's advancing rapidly.\" PM 的角色是 半偵察兵、半建造者 。你要辨識什麼值得追，自己做原型，然後跟團隊快速迭代找到 Product-Market Fit (產品市場適配)。 \"The PM role is part scout, part builder. You're identifying what's worth pursuing, prototyping yourself, and iterating quickly with your team to find product-market fit.\" 📚 核心概念：Scout + Builder 雙重角色 傳統 PM 是「三角形的中心」— 連結設計、工程、商業。AI 時代的 PM 則是「最前線的偵察兵」— 你不只報告地形，你還得自己搭帳篷。 這裡的 \"prototyping yourself\" 不是比喻，是字面意思：你得會寫 prompt、串 API、做 UI flow，至少做到 functional prototype 的程度。 💡 比喻說明：主廚 vs 餐廳經理 這很像主廚 vs 餐廳經理的差別。經理可以排班、管庫存、處理客訴。但主廚要自己進廚房、試菜、調味、出餐。AI 時代的 PM 就是產品界的主廚 — 你不能只管外場，你得親自下廚。 II 風險轉移：從「做不出來」到「做了沒價值」 原 Po 評論者點出一個關鍵洞察：過去產品最大的風險是 「做不出來」 ，現在最大的風險是 「做了一堆沒價值的東西」 。AI 大幅降低了「做」的門檻，但同時放大了「做錯方向」的成本。 \"過去產品最大的風險是做不出來，現在最大的風險是做了一堆沒價值的東西。\" 解法只有一個： 自己動手做 prot"
+    "content": "Anthropic 的 Mike Krieger（Instagram 共同創辦人）發文招募 Research PM，明確要求候選人具備三種能力： 判斷力（知道什麼不該做） 、 原型能力（自己動手做） 、 實戰經驗（做過真正有人用的產品） 。原 Po 評論者進一步推論：AI 時代最大的產品風險已從「做不出來」轉變為「做了一堆沒價值的東西」，未來 AI 團隊核心角色將精簡為 Product Builder、AI Engineer、Systems Engineer 三種。這篇不是技術文，而是一個重要的 產業訊號 ，值得用來校準你的職涯策略。 理解 PM 角色轉型 從 Coordinator 到 Builder 的典範轉移 辨識 AI 團隊新結構 三種核心角色的分工邏輯 校準個人策略 將 Builder 思維應用到非軟體產業 AI 時代 PM 能力模型 Kill 決策 砍掉錯誤方向 Build 原型 自己做 prototype Ship 產品 做過真的產品 I 招募訊號：Anthropic 要什麼樣的 PM？ Mike Krieger 最近加入 Anthropic Labs 團隊，直接站在 AI 前沿。他們正在 建造尚不存在的產品類別 ，而且底層技術還在快速演進中。這不是一般的 PM 職缺 — 這是在說：我們需要能在不確定性中自己動手的人。 \"I recently joined our Labs team at Anthropic to be hands-on at the frontier. We're building product categories that don't exist yet, on top of technology that's advancing rapidly.\" PM 的角色是 半偵察兵、半建造者 。你要辨識什麼值得追，自己做原型，然後跟團隊快速迭代找到 Product-Market Fit (產品市場適配)。 \"The PM role is part scout, part builder. You're identifying what's worth pursuing, prototyping yourself, and iterating quickly with your team to find product-market fit.\" 核心概念：Scout + Builder 雙重角色 傳統 PM 是「三角形的中心」— 連結設計、工程、商業。AI 時代的 PM 則是「最前線的偵察兵」— 你不只報告地形，你還得自己搭帳篷。 這裡的 \"prototyping yourself\" 不是比喻，是字面意思：你得會寫 prompt、串 API、做 UI flow，至少做到 functional prototype 的程度。 比喻說明：主廚 vs 餐廳經理 這很像主廚 vs 餐廳經理的差別。經理可以排班、管庫存、處理客訴。但主廚要自己進廚房、試菜、調味、出餐。AI 時代的 PM 就是產品界的主廚 — 你不能只管外場，你得親自下廚。 II 風險轉移：從「做不出來」到「做了沒價值」 原 Po 評論者點出一個關鍵洞察：過去產品最大的風險是 「做不出來」 ，現在最大的風險是 「做了一堆沒價值的東西」 。AI 大幅降低了「做」的門檻，但同時放大了「做錯方向」的成本。 \"過去產品最大的風險是做不出來，現在最大的風險是做了一堆沒價值的東西。\" 解法只有一個： 自己動手做 prototype 。不是開會，不是寫文件，不是做流程。是「做"
   },
   {
     "docFile": "2026-02-17_ai-questions-system.html",
@@ -11025,7 +10901,7 @@ const searchIndex = [
     ],
     "sectionId": "診斷答案過載",
     "sectionTitle": "診斷「答案過載」",
-    "content": "辨識何時蒐集更多答案反而阻礙決策 ❓"
+    "content": "辨識何時蒐集更多答案反而阻礙決策"
   },
   {
     "docFile": "2026-02-17_ai-questions-system.html",
@@ -11040,7 +10916,7 @@ const searchIndex = [
     ],
     "sectionId": "掌握-5-種提問技巧",
     "sectionTitle": "掌握 5 種提問技巧",
-    "content": "系統化生成高品質策略性問題 🧪"
+    "content": "系統化生成高品質策略性問題"
   },
   {
     "docFile": "2026-02-17_ai-questions-system.html",
@@ -11055,7 +10931,7 @@ const searchIndex = [
     ],
     "sectionId": "問題轉化實驗",
     "sectionTitle": "問題轉化實驗",
-    "content": "將抽象問題變成可測試的行動 AI Question-Generation System - 5 步驟框架 ❓ 基礎提問 問「我需要回答什麼問題」 → 📚 分層深入 逐層挖掘隱藏假設 → 🧠 借腦思考 用專家視角看問題 → 🎯 反向回推 從成功終態倒推 → 🧪 實驗驗證 最快方式找到答案"
+    "content": "將抽象問題變成可測試的行動 AI Question-Generation System - 5 步驟框架 基礎提問 問「我需要回答什麼問題」 分層深入 逐層挖掘隱藏假設 借腦思考 用專家視角看問題 反向回推 從成功終態倒推 實驗驗證 最快方式找到答案"
   },
   {
     "docFile": "2026-02-17_ai-questions-system.html",
@@ -11100,7 +10976,7 @@ const searchIndex = [
     ],
     "sectionId": "part-ii-分層提問---layer-your-questions",
     "sectionTitle": "Part II: 分層提問 - Layer Your Questions",
-    "content": "Technique 2: Don't stop at the surface 大多數人問一個問題就停了，作者比喻這就像 做一下就說自己練過了 。真正的力量在三層式提問： \"Most people ask one question and stop. That's like doing one rep and calling it a workout.\" 第一層 ：直接問你的問題 → 得到表面的知識缺口。 第二層 ：「針對每個問題，它又引出什麼問題？」→ 揭露 隱藏的假設和依賴關係 。 第三層 ：「已經解決過這個問題的人，會怎麼看這些二階問題？」→ 獲得 專家級的模式識別 。 \"First layer: Your immediate knowledge gaps. Second layer: Hidden assumptions and dependencies. Third layer: Expert-level pattern recognition you can't see from where you're standing.\" 💻 三層 Prompt 結構 Layer 1:"
+    "content": "Technique 2: Don't stop at the surface 大多數人問一個問題就停了，作者比喻這就像 做一下就說自己練過了 。真正的力量在三層式提問： \"Most people ask one question and stop. That's like doing one rep and calling it a workout.\" 第一層 ：直接問你的問題 → 得到表面的知識缺口。 第二層 ：「針對每個問題，它又引出什麼問題？」→ 揭露 隱藏的假設和依賴關係 。 第三層 ：「已經解決過這個問題的人，會怎麼看這些二階問題？」→ 獲得 專家級的模式識別 。 \"First layer: Your immediate knowledge gaps. Second layer: Hidden assumptions and dependencies. Third layer: Expert-level pattern recognition you can't see from where you're standing.\" 三層 Prompt 結構 Layer 1: \"W"
   },
   {
     "docFile": "2026-02-17_ai-questions-system.html",
@@ -11264,7 +11140,7 @@ const searchIndex = [
     ],
     "sectionId": "快速摘要",
     "sectionTitle": "快速摘要",
-    "content": "這是一篇來自研究者 Yen-Chi Chen 的社群貼文，整理出研究初學者最常犯的九個壞習慣。涵蓋範圍從「用 AI 生成 code 但不理解內容」到「認為 code 能跑就等於完成研究」。雖然原文針對學術研究情境，但每一條都直接對應到 軟體工程專業實踐 (Software Engineering Best Practices) 的核心原則，對任何在 AI 時代寫程式的人都有參考價值。 🧠"
+    "content": "這是一篇來自研究者 Yen-Chi Chen 的社群貼文，整理出研究初學者最常犯的九個壞習慣。涵蓋範圍從「用 AI 生成 code 但不理解內容」到「認為 code 能跑就等於完成研究」。雖然原文針對學術研究情境，但每一條都直接對應到 軟體工程專業實踐 (Software Engineering Best Practices) 的核心原則，對任何在 AI 時代寫程式的人都有參考價值。"
   },
   {
     "docFile": "2026-02-18_research-beginner-sins.html",
@@ -11278,7 +11154,7 @@ const searchIndex = [
     ],
     "sectionId": "辨識反模式",
     "sectionTitle": "辨識反模式",
-    "content": "理解九個常見研究壞習慣的根本原因，而非只是表面行為 🔧"
+    "content": "理解九個常見研究壞習慣的根本原因，而非只是表面行為"
   },
   {
     "docFile": "2026-02-18_research-beginner-sins.html",
@@ -11292,7 +11168,7 @@ const searchIndex = [
     ],
     "sectionId": "建立工程紀律",
     "sectionTitle": "建立工程紀律",
-    "content": "掌握 Git、CLI、環境管理、實驗記錄等基本功的「為什麼」 🏭"
+    "content": "掌握 Git、CLI、環境管理、實驗記錄等基本功的「為什麼」"
   },
   {
     "docFile": "2026-02-18_research-beginner-sins.html",
@@ -11306,7 +11182,7 @@ const searchIndex = [
     ],
     "sectionId": "跨域遷移",
     "sectionTitle": "跨域遷移",
-    "content": "將研究工程紀律連結到 GMP/製藥品質管理思維 九大惡的三層結構 💻 Layer 1: 工具能力 #1-4: AI/環境/Git/CLI → 🏗 Layer 2: 工程架構 #5-6: 模組化/版本控制 → 🔬 Layer 3: 研究思維 #7-9: 記錄/重現/分析 九大惡：逐條深度解析 1"
+    "content": "將研究工程紀律連結到 GMP/製藥品質管理思維 九大惡的三層結構 Layer 1: 工具能力 #1-4: AI/環境/Git/CLI Layer 2: 工程架構 #5-6: 模組化/版本控制 Layer 3: 研究思維 #7-9: 記錄/重現/分析 九大惡：逐條深度解析 1"
   },
   {
     "docFile": "2026-02-18_research-beginner-sins.html",
@@ -11448,7 +11324,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.8/5 ↑ Practical Value, Learning Curve ↓ Technical Depth, Tool Ecosystem 本文提出 AI Amplification（AI 放大效應） 概念——在投入資源前，利用 AI 對話快速壓力測試策略假設。作者以 Bed Bath & Beyond 破產案例為核心，展示 CEO Mark Tritton 如何將 Target 的成功劇本錯誤套用到「尋寶式零售」業態，導致客戶流失與最終倒閉。文章透過五個 AI 測試問題，示範如何在 20 分鐘內揭露跨領域決策的核心盲點，並提供可立即應用的四步驟框架。這不是技術深潛文章，而是一篇 決策品質框架 ，對任何在陌生領域做高風險決策的領導者都有直接價值。 🎯"
+    "content": "3.8/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem 本文提出 AI Amplification（AI 放大效應） 概念——在投入資源前，利用 AI 對話快速壓力測試策略假設。作者以 Bed Bath & Beyond 破產案例為核心，展示 CEO Mark Tritton 如何將 Target 的成功劇本錯誤套用到「尋寶式零售」業態，導致客戶流失與最終倒閉。文章透過五個 AI 測試問題，示範如何在 20 分鐘內揭露跨領域決策的核心盲點，並提供可立即應用的四步驟框架。這不是技術深潛文章，而是一篇 決策品質框架 ，對任何在陌生領域做高風險決策的領導者都有直接價值。"
   },
   {
     "docFile": "2026-02-19_ai-amplification-strategy.html",
@@ -11464,7 +11340,7 @@ const searchIndex = [
     ],
     "sectionId": "理解-ai-amplification",
     "sectionTitle": "理解 AI Amplification",
-    "content": "區分 AI 放大 vs. AI 自動化 vs. AI 替代——AI 不是替你決策，而是加速你在陌生領域的認知校準 🔍"
+    "content": "區分 AI 放大 vs. AI 自動化 vs. AI 替代——AI 不是替你決策，而是加速你在陌生領域的認知校準"
   },
   {
     "docFile": "2026-02-19_ai-amplification-strategy.html",
@@ -11480,7 +11356,7 @@ const searchIndex = [
     ],
     "sectionId": "掌握五問壓力測試法",
     "sectionTitle": "掌握五問壓力測試法",
-    "content": "學會用五個結構化問題，在 20 分鐘內揭露策略假設中的跨領域盲點 ⚡"
+    "content": "學會用五個結構化問題，在 20 分鐘內揭露策略假設中的跨領域盲點"
   },
   {
     "docFile": "2026-02-19_ai-amplification-strategy.html",
@@ -11496,7 +11372,7 @@ const searchIndex = [
     ],
     "sectionId": "建立決策前測試習慣",
     "sectionTitle": "建立決策前測試習慣",
-    "content": "將 AI 壓力測試嵌入你的決策流程——從「直覺 → 行動」進化到「直覺 → 測試 → 行動」 AI Amplification 四步驟框架 ✍️ 寫下直覺 30 秒寫出你的 策略直覺 → 🤖 AI 對話 20 分鐘測試 假設與盲點 → ⚖️ 測試對立觀點 10 分鐘讓 AI 為替代方案辯護 → 🎯 知情決策 你做最終決定 但已壓力測試過 Part I — AI Amplification 是什麼（以及不是什麼） AI Amplification（AI 放大效應） 是在你投入資源之前，用 AI 測試你的策略直覺。把它想像成一個隨時待命的專家顧問團——全天候可用，能在你缺乏深度經驗的領域壓力測試你的思維。 \"AI Amplification is using AI to test your strategic hunches before you commit resources. Think of it as an on-demand expert panel—available 24/7 to stress-test your thinking in domains where y"
+    "content": "將 AI 壓力測試嵌入你的決策流程——從「直覺 行動」進化到「直覺 測試 行動」 AI Amplification 四步驟框架 寫下直覺 30 秒寫出你的 策略直覺 AI 對話 20 分鐘測試 假設與盲點 測試對立觀點 10 分鐘讓 AI 為替代方案辯護 知情決策 你做最終決定 但已壓力測試過 Part I — AI Amplification 是什麼（以及不是什麼） AI Amplification（AI 放大效應） 是在你投入資源之前，用 AI 測試你的策略直覺。把它想像成一個隨時待命的專家顧問團——全天候可用，能在你缺乏深度經驗的領域壓力測試你的思維。 \"AI Amplification is using AI to test your strategic hunches before you commit resources. Think of it as an on-demand expert panel—available 24/7 to stress-test your thinking in domains where you don't have deep exper"
   },
   {
     "docFile": "2026-02-19_ai-amplification-strategy.html",
@@ -11558,7 +11434,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "OBJECTIVE 01 理解 CoWork 的架構定位：它與 Claude Chat、Claude Code 的差異，以及為什麼 Anthropic 要推出這個產品 OBJECTIVE 02 掌握 5 級使用框架：從檔案管理到 Skills 自動化，能規劃適合自己的採用路徑 OBJECTIVE 03 評估 CoWork 的限制與成本：了解定價、Token 消耗、安全風險，做出 informed 的投資決策 CoWork 5-Level Mastery Framework 📁 Level 1 File Management → 🌐 Level 2 Web Agent → 🔌 Level 3 Connectors → ⚡ Level 4 Skills → 🚀 Level 5 Expert Tactics Foundation Execution Mastery"
+    "content": "OBJECTIVE 01 理解 CoWork 的架構定位：它與 Claude Chat、Claude Code 的差異，以及為什麼 Anthropic 要推出這個產品 OBJECTIVE 02 掌握 5 級使用框架：從檔案管理到 Skills 自動化，能規劃適合自己的採用路徑 OBJECTIVE 03 評估 CoWork 的限制與成本：了解定價、Token 消耗、安全風險，做出 informed 的投資決策 CoWork 5-Level Mastery Framework Level 1 File Management Level 2 Web Agent Level 3 Connectors Level 4 Skills Level 5 Expert Tactics Foundation Execution Mastery"
   },
   {
     "docFile": "2026-02-19_claude-cowork-desktop-agent.html",
@@ -11742,7 +11618,7 @@ const searchIndex = [
     ],
     "sectionId": "評估組織應用場景",
     "sectionTitle": "評估組織應用場景",
-    "content": "判斷 Computer Use 對 legacy systems、手動流程和自動化策略的影響 Claude Sonnet 4.6 三大升級路徑 💡 更聰明 Opus 等級性能 1/5 價格 → 🧠 更大記憶 1M Token Context Window → 🖥 會操作電腦 Computer Use 14.9% → 72.5% Part I: Sonnet 4.6 的三大升級 Claude Sonnet 4.6 的核心價值主張很直接： 以旗艦模型五分之一的價格，提供旗艦等級的性能 。在早期測試中，開發者實際上有 59% 的時間偏好 Sonnet 4.6 而非最昂貴的 Opus 4.5 模型。這代表 Anthropic 的定價策略正在積極壓低「智慧」的取得門檻。 \"Claude Sonnet 4.6 now performs at the level of Anthropic's most expensive model (called Opus) at one-fifth the cost. In early testing, developers actually prefer"
+    "content": "判斷 Computer Use 對 legacy systems、手動流程和自動化策略的影響 Claude Sonnet 4.6 三大升級路徑 更聰明 Opus 等級性能 1/5 價格 更大記憶 1M Token Context Window 會操作電腦 Computer Use 14.9% → 72.5% Part I: Sonnet 4.6 的三大升級 Claude Sonnet 4.6 的核心價值主張很直接： 以旗艦模型五分之一的價格，提供旗艦等級的性能 。在早期測試中，開發者實際上有 59% 的時間偏好 Sonnet 4.6 而非最昂貴的 Opus 4.5 模型。這代表 Anthropic 的定價策略正在積極壓低「智慧」的取得門檻。 \"Claude Sonnet 4.6 now performs at the level of Anthropic's most expensive model (called Opus) at one-fifth the cost. In early testing, developers actually preferred Sonnet 4."
   },
   {
     "docFile": "2026-02-19_claude-sonnet46-computer-use.html",
@@ -11959,7 +11835,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "這篇來自 Claude Code 工程團隊的文章，揭示了一個讓長時間運行的 AI Agent 在成本和延遲上可行的關鍵技術： Prompt Caching（提示快取） 。核心原理是 prefix matching（前綴匹配），API 會快取從請求開頭到每個 cache_control 斷點的所有內容。文章分享了 Claude Code 團隊在大規模優化中學到的反直覺教訓，包括排列順序策略、避免中途變更工具或模型、以及如何安全地進行 Context 壓縮（Compaction）。這不是理論文章，而是 生產環境中用血淚換來的工程實踐 。 Learning Objectives 🧩 理解 Prefix Matching 原理 掌握 Prompt Caching 的核心機制，以及為什麼順序如此重要 🛠 學習 Cache-Safe 設計模式 Plan Mode、Tool Search、Compaction 的 cache 友善實作方式 💰 掌握成本與延遲優化 理解 cache miss 對成本的影響，以及為何要像監控 uptime 一樣監控 cache hit rate Prompt Ca"
+    "content": "這篇來自 Claude Code 工程團隊的文章，揭示了一個讓長時間運行的 AI Agent 在成本和延遲上可行的關鍵技術： Prompt Caching（提示快取） 。核心原理是 prefix matching（前綴匹配），API 會快取從請求開頭到每個 cache_control 斷點的所有內容。文章分享了 Claude Code 團隊在大規模優化中學到的反直覺教訓，包括排列順序策略、避免中途變更工具或模型、以及如何安全地進行 Context 壓縮（Compaction）。這不是理論文章，而是 生產環境中用血淚換來的工程實踐 。 Learning Objectives 理解 Prefix Matching 原理 掌握 Prompt Caching 的核心機制，以及為什麼順序如此重要 學習 Cache-Safe 設計模式 Plan Mode、Tool Search、Compaction 的 cache 友善實作方式 掌握成本與延遲優化 理解 cache miss 對成本的影響，以及為何要像監控 uptime 一樣監控 cache hit rate Prompt Caching 最佳排"
   },
   {
     "docFile": "2026-02-20_prompt-caching-claude.html",
@@ -12007,7 +11883,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🔍 Research-First 原則 理解為何讓 AI 深度閱讀程式碼庫是防止「在隔離中正確但破壞系統」的關鍵第一步。 📝 Annotation Cycle 方法 學會使用 Markdown 計畫文件作為「共享可變狀態」，透過人類標註循環注入判斷力。 🛠 Copilot vs Autopilot 界線 掌握何時給 AI 自主權、何時收緊控制的決策框架，以及如何在執行中做精準微調。 Boris Tane's Claude Code Pipeline 📚 Research Deep-read codebase Write research.md → 📋 Plan Detailed plan.md Code snippets + paths → ✍ Annotate Human inline notes 1-6 review cycles → ⚙ Implement Execute full plan Typecheck as you go Part I"
+    "content": "Research-First 原則 理解為何讓 AI 深度閱讀程式碼庫是防止「在隔離中正確但破壞系統」的關鍵第一步。 Annotation Cycle 方法 學會使用 Markdown 計畫文件作為「共享可變狀態」，透過人類標註循環注入判斷力。 Copilot vs Autopilot 界線 掌握何時給 AI 自主權、何時收緊控制的決策框架，以及如何在執行中做精準微調。 Boris Tane's Claude Code Pipeline Research Deep-read codebase Write research.md Plan Detailed plan.md Code snippets + paths Annotate Human inline notes 1-6 review cycles Implement Execute full plan Typecheck as you go Part I"
   },
   {
     "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
@@ -12119,7 +11995,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "📚 Research 防止「無知的變更」 AI 輔助編程最昂貴的失敗模式不是語法錯誤，而是「在隔離中正確但破壞周圍系統」的實作。深度閱讀 + 書面報告是防線。 ✍ Annotation Cycle 是核心創新 Markdown 文件作為人-AI 之間的共享可變狀態。人類在自己的節奏下思考、精確標註，讓 AI 重複修正計畫直到完美。 🛠 思考與打字分離 創造性決策在標註循環中完成，實作階段刻意設計成無聊的、機械式的。「don't implement yet」是最重要的防護語句。 🔧 Revert > Patch 當 AI 走錯方向時，回滾 + 縮小範圍永遠優於嘗試漸進修復。果斷放棄錯誤路線是效率的關鍵。"
+    "content": "Research 防止「無知的變更」 AI 輔助編程最昂貴的失敗模式不是語法錯誤，而是「在隔離中正確但破壞周圍系統」的實作。深度閱讀 + 書面報告是防線。 Annotation Cycle 是核心創新 Markdown 文件作為人-AI 之間的共享可變狀態。人類在自己的節奏下思考、精確標註，讓 AI 重複修正計畫直到完美。 思考與打字分離 創造性決策在標註循環中完成，實作階段刻意設計成無聊的、機械式的。「don't implement yet」是最重要的防護語句。 Revert > Patch 當 AI 走錯方向時，回滾 + 縮小範圍永遠優於嘗試漸進修復。果斷放棄錯誤路線是效率的關鍵。"
   },
   {
     "docFile": "2026-02-22_boris-tane-claude-code-workflow.html",
@@ -12169,7 +12045,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🎯 理解 Context Window 為什麼是 Claude Code 最重要的資源，以及如何管理它 🛠 掌握「探索 → 規劃 → 執行 → 提交」四階段工作流程 ⚡ 學會配置 CLAUDE.md、Skills、Hooks、MCP 建立高效開發環境 🚀 運用 Headless Mode 和 Fan-out 模式將 Claude Code 擴展到自動化工作流 Claude Code 最佳實踐核心流程 🔍 Explore Plan Mode 讀取理解 → 📝 Plan 建立實作計畫 → 💻 Implement 執行 + 驗證 → ✅ Commit 提交 + PR"
+    "content": "理解 Context Window 為什麼是 Claude Code 最重要的資源，以及如何管理它 掌握「探索 → 規劃 → 執行 → 提交」四階段工作流程 學會配置 CLAUDE.md、Skills、Hooks、MCP 建立高效開發環境 運用 Headless Mode 和 Fan-out 模式將 Claude Code 擴展到自動化工作流 Claude Code 最佳實踐核心流程 Explore Plan Mode 讀取理解 Plan 建立實作計畫 Implement 執行 + 驗證 Commit 提交 + PR"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12202,8 +12078,8 @@ const searchIndex = [
       "Framework"
     ],
     "sectionId": "核心觀念",
-    "sectionTitle": "💡 核心觀念",
-    "content": "💡 比喻說明 想像 Context Window 就像你的工作桌面。桌面越亂（塞滿不相關的文件），你找到需要的東西就越慢，出錯的機率也越高。 /clear 就像清理桌面 — 不同任務之間應該重新整理。 🛠 實務應用 用 custom status line 持續追蹤 context 使用量。在不同任務之間使用 /clear 重置。把 Context Window 當成你最珍貴的預算來管理。"
+    "sectionTitle": "核心觀念",
+    "content": "比喻說明 想像 Context Window 就像你的工作桌面。桌面越亂（塞滿不相關的文件），你找到需要的東西就越慢，出錯的機率也越高。 /clear 就像清理桌面 — 不同任務之間應該重新整理。 實務應用 用 custom status line 持續追蹤 context 使用量。在不同任務之間使用 /clear 重置。把 Context Window 當成你最珍貴的預算來管理。"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12236,8 +12112,8 @@ const searchIndex = [
       "Framework"
     ],
     "sectionId": "before-vs-after",
-    "sectionTitle": "⚠ Before vs After",
-    "content": "Before After \"implement a function that validates email\" \"write validateEmail. test: user@ex.com=true, invalid=false. run tests after.\" \"make the dashboard look better\" [paste screenshot] \"implement this design, take screenshot, compare, fix differences\" \"the build is failing\" \"build fails with [error]. fix root cause, verify build succeeds.\" ⚠ 重點提示 驗證可以是測試套件、linter、或檢查輸出的 Bash 指令。 投資在讓你的驗證堅如磐石 。你也可以用 Claude in Chrome 擴充功能做 UI 的視覺驗證。"
+    "sectionTitle": "Before vs After",
+    "content": "Before After \"implement a function that validates email\" \"write validateEmail. test: user@ex.com=true, invalid=false. run tests after.\" \"make the dashboard look better\" [paste screenshot] \"implement this design, take screenshot, compare, fix differences\" \"the build is failing\" \"build fails with [error]. fix root cause, verify build succeeds.\" 重點提示 驗證可以是測試套件、linter、或檢查輸出的 Bash 指令。 投資在讓你的驗證堅如磐石 。你也可以用 Claude in Chrome 擴充功能做 UI 的視覺驗證。"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12270,8 +12146,8 @@ const searchIndex = [
       "Framework"
     ],
     "sectionId": "指令範例",
-    "sectionTitle": "💻 指令範例",
-    "content": "# Explore (Plan Mode) read /src/auth and understand how we handle sessions and login. # Plan (Plan Mode) I want to add Google OAuth. What files need to change? Create a plan. # Implement (Normal Mode) implement the OAuth flow from your plan. write tests, run suite, fix failures. # Commit (Normal Mode) commit with a descriptive message and open a PR 💡 比喻說明 這就像裝修房子：你不會拿到鐵鎚就開始敲牆。先看圖紙（Explore）、做施工計畫（Plan）、然後按計畫施工（Implement）。小修補可以直接動手，大工程一定要先規劃。"
+    "sectionTitle": "指令範例",
+    "content": "# Explore (Plan Mode) read /src/auth and understand how we handle sessions and login. # Plan (Plan Mode) I want to add Google OAuth. What files need to change? Create a plan. # Implement (Normal Mode) implement the OAuth flow from your plan. write tests, run suite, fix failures. # Commit (Normal Mode) commit with a descriptive message and open a PR 比喻說明 這就像裝修房子：你不會拿到鐵鎚就開始敲牆。先看圖紙（Explore）、做施工計畫（Plan）、然後按計畫施工（Implement）。小修補可以直接動手，大工程一定要先規劃。"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12304,8 +12180,8 @@ const searchIndex = [
       "Framework"
     ],
     "sectionId": "claudemd-該放什麼",
-    "sectionTitle": "✅ CLAUDE.md 該放什麼",
-    "content": "✅ Include ❌ Exclude Claude 猜不到的 Bash 指令 Claude 看程式碼就能推斷的事 偏離預設的程式碼風格 標準語言慣例 測試指令與偏好的 test runner 詳細 API 文件（改放連結） Repo 規範（branch 命名、PR 慣例） 經常變動的資訊 架構決策、常見陷阱 逐檔案的 codebase 描述 💻 CLAUDE.md 範例 # Code style - Use ES modules (import/export), not CommonJS - Destructure imports when possible # Workflow - Typecheck after code changes - Prefer single tests over full suite 🛠 Skills vs Hooks 的區別 Skills = 「建議」（Claude 視情況參考）。Hooks = 「規定」（每次都必須執行，零例外）。需要 100% 遵守的規則用 Hooks；需要領域知識的用 Skills。"
+    "sectionTitle": "CLAUDE.md 該放什麼",
+    "content": "Include Exclude Claude 猜不到的 Bash 指令 Claude 看程式碼就能推斷的事 偏離預設的程式碼風格 標準語言慣例 測試指令與偏好的 test runner 詳細 API 文件（改放連結） Repo 規範（branch 命名、PR 慣例） 經常變動的資訊 架構決策、常見陷阱 逐檔案的 codebase 描述 CLAUDE.md 範例 # Code style - Use ES modules (import/export), not CommonJS - Destructure imports when possible # Workflow - Typecheck after code changes - Prefer single tests over full suite Skills vs Hooks 的區別 Skills = 「建議」（Claude 視情況參考）。Hooks = 「規定」（每次都必須執行，零例外）。需要 100% 遵守的規則用 Hooks；需要領域知識的用 Skills。"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12338,8 +12214,8 @@ const searchIndex = [
       "Framework"
     ],
     "sectionId": "session-管理快捷鍵",
-    "sectionTitle": "🔧 Session 管理快捷鍵",
-    "content": "操作 說明 Esc 中途停止 Claude，context 保留 Esc + Esc 開啟 rewind 選單，回復先前狀態 /clear 重置 context（任務切換時必用） /compact 智慧壓縮，保留關鍵決策 /rewind checkpoint 還原（對話/程式碼/兩者） --continue 恢復最近的對話 --resume 從最近 sessions 中選擇恢復 💡 比喻說明 把每個 session 想像成 Git branch。不同工作流用不同 session，就像不同功能用不同 branch。用 /rename 給 session 取描述性名稱（如 \"oauth-migration\"、\"debugging-memory-leak\"）。"
+    "sectionTitle": "Session 管理快捷鍵",
+    "content": "操作 說明 Esc 中途停止 Claude，context 保留 Esc + Esc 開啟 rewind 選單，回復先前狀態 /clear 重置 context（任務切換時必用） /compact 智慧壓縮，保留關鍵決策 /rewind checkpoint 還原（對話/程式碼/兩者） --continue 恢復最近的對話 --resume 從最近 sessions 中選擇恢復 比喻說明 把每個 session 想像成 Git branch。不同工作流用不同 session，就像不同功能用不同 branch。用 /rename 給 session 取描述性名稱（如 \"oauth-migration\"、\"debugging-memory-leak\"）。"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12372,8 +12248,8 @@ const searchIndex = [
       "Framework"
     ],
     "sectionId": "headless-mode-範例",
-    "sectionTitle": "💻 Headless Mode 範例",
-    "content": "# 一次性查詢 claude -p \"Explain what this project does\" # 結構化輸出（供腳本處理） claude -p \"List all API endpoints\" \\ --output-format json # Fan-out 模式 for file in $(cat files.txt); do claude -p \"Migrate $file from React \\ to Vue. Return OK or FAIL.\" \\ --allowedTools \"Edit,Bash(git commit *)\" done ⚖ Writer/Reviewer 模式 Session A (Writer)： \"Implement a rate limiter for our API endpoints\" Session B (Reviewer)： \"Review the rate limiter in @src/middleware/rateLimiter.ts. Look for edge cases, race conditions.\" Sessi"
+    "sectionTitle": "Headless Mode 範例",
+    "content": "# 一次性查詢 claude -p \"Explain what this project does\" # 結構化輸出（供腳本處理） claude -p \"List all API endpoints\" \\ --output-format json # Fan-out 模式 for file in $(cat files.txt); do claude -p \"Migrate $file from React \\ to Vue. Return OK or FAIL.\" \\ --allowedTools \"Edit,Bash(git commit *)\" done Writer/Reviewer 模式 Session A (Writer)： \"Implement a rate limiter for our API endpoints\" Session B (Reviewer)： \"Review the rate limiter in @src/middleware/rateLimiter.ts. Look for edge cases, race conditions.\" Session"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12407,7 +12283,7 @@ const searchIndex = [
     ],
     "sectionId": "context-是核心資源",
     "sectionTitle": "Context 是核心資源",
-    "content": "Claude Code 的效能直接受 Context Window 影響。積極管理：用 /clear 重置、用 Subagents 隔離研究、用 /compact 智慧壓縮。 🔎"
+    "content": "Claude Code 的效能直接受 Context Window 影響。積極管理：用 /clear 重置、用 Subagents 隔離研究、用 /compact 智慧壓縮。"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12424,7 +12300,7 @@ const searchIndex = [
     ],
     "sectionId": "驗證-信任",
     "sectionTitle": "驗證 > 信任",
-    "content": "給 Claude 驗證自己工作的方法是最高槓桿動作。測試套件、截圖比對、linter — 投資在驗證機制上。 📝"
+    "content": "給 Claude 驗證自己工作的方法是最高槓桿動作。測試套件、截圖比對、linter — 投資在驗證機制上。"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12441,7 +12317,7 @@ const searchIndex = [
     ],
     "sectionId": "claudemd-精簡原則",
     "sectionTitle": "CLAUDE.md 精簡原則",
-    "content": "只放 Claude 猜不到的指令。每行都問「移除會犯錯嗎？」。太長會適得其反。定期審查和剪裁。 🚀"
+    "content": "只放 Claude 猜不到的指令。每行都問「移除會犯錯嗎？」。太長會適得其反。定期審查和剪裁。"
   },
   {
     "docFile": "2026-02-22_claude-code-best-practices.html",
@@ -12491,7 +12367,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "Boris Cherny 是 Claude Code 的創建者。這個最初只是為了學 API 而隨手寫的終端聊天工具，在 2025 年 5 月公開發布後僅 6 個月就達到 10 億美元年化收入，目前貢獻了 GitHub 上 4% 的公開程式碼提交。這篇訪談摘要揭示了三個核心產品理念： 潛在需求 （Latent Demand）— 不要讓人做新事情，幫他們把正在做的事做得更簡單； 為未來的模型構建 — 不要為今天的模型做產品；以及 The Bitter Lesson — 永遠不要跟模型對賭。Boris 從 Opus 4.5 開始 100% 使用 Claude Code 寫程式碼、卸載了 IDE、每天提交約 20 個 PR，並預測「軟體工程師」這個頭銜將逐漸消失。 Learning Objectives 🎯 潛在需求 (Latent Demand) 理解為什麼觀察用戶「已經在做的事」比發明新行為更有效，以及如何應用在產品開發中 🔮 為未來模型構建 學習 Anthropic 的「六個月後」產品策略，理解 scaffolding 為何是技術債 💡 Agent 拓撲與多 Agent 協作 掌握"
+    "content": "Boris Cherny 是 Claude Code 的創建者。這個最初只是為了學 API 而隨手寫的終端聊天工具，在 2025 年 5 月公開發布後僅 6 個月就達到 10 億美元年化收入，目前貢獻了 GitHub 上 4% 的公開程式碼提交。這篇訪談摘要揭示了三個核心產品理念： 潛在需求 （Latent Demand）— 不要讓人做新事情，幫他們把正在做的事做得更簡單； 為未來的模型構建 — 不要為今天的模型做產品；以及 The Bitter Lesson — 永遠不要跟模型對賭。Boris 從 Opus 4.5 開始 100% 使用 Claude Code 寫程式碼、卸載了 IDE、每天提交約 20 個 PR，並預測「軟體工程師」這個頭銜將逐漸消失。 Learning Objectives 潛在需求 (Latent Demand) 理解為什麼觀察用戶「已經在做的事」比發明新行為更有效，以及如何應用在產品開發中 為未來模型構建 學習 Anthropic 的「六個月後」產品策略，理解 scaffolding 為何是技術債 Agent 拓撲與多 Agent 協作 掌握「不相關的上下文窗"
   },
   {
     "docFile": "2026-02-22_claude-code-product-philosophy.html",
@@ -12603,7 +12479,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 4.2/5 ↑ 實務應用, 工具生態 ↓ 技術深度, 時效性 這篇文章是目前最完整的 Claude Cowork 非開發者使用指南。Huryn 從 PM 的角度出發，系統性地拆解了 Cowork 與 Chat/Code 的差異、Skills/Plugins 生態系統、MCP 連接架構（三種類型）、跨 Session 記憶方案，以及 Desktop Commander 這個「一分鐘 2 倍生產力」的技巧。文章最大價值在於 釐清了 Cowork 在 Claude 工具矩陣中的定位 ：Chat 是對話、Cowork 是工作流、Code 是開發。對非開發者來說，Cowork 可能是日常最實用的 AI Agent 入口。"
+    "content": "4.2/5 實務應用, 工具生態 技術深度, 時效性 這篇文章是目前最完整的 Claude Cowork 非開發者使用指南。Huryn 從 PM 的角度出發，系統性地拆解了 Cowork 與 Chat/Code 的差異、Skills/Plugins 生態系統、MCP 連接架構（三種類型）、跨 Session 記憶方案，以及 Desktop Commander 這個「一分鐘 2 倍生產力」的技巧。文章最大價值在於 釐清了 Cowork 在 Claude 工具矩陣中的定位 ：Chat 是對話、Cowork 是工作流、Code 是開發。對非開發者來說，Cowork 可能是日常最實用的 AI Agent 入口。"
   },
   {
     "docFile": "2026-02-22_claude-cowork-guide.html",
@@ -12619,7 +12495,7 @@ const searchIndex = [
     ],
     "sectionId": "理解-cowork-定位",
     "sectionTitle": "理解 Cowork 定位",
-    "content": "區分 Chat / Cowork / Code 三個工具的核心差異與各自適用場景 🔌"
+    "content": "區分 Chat / Cowork / Code 三個工具的核心差異與各自適用場景"
   },
   {
     "docFile": "2026-02-22_claude-cowork-guide.html",
@@ -12635,7 +12511,7 @@ const searchIndex = [
     ],
     "sectionId": "掌握-plugin-與-mcp-架構",
     "sectionTitle": "掌握 Plugin 與 MCP 架構",
-    "content": "理解 Skills、Plugins、MCP Connectors 三層擴展機制的運作方式 🛠"
+    "content": "理解 Skills、Plugins、MCP Connectors 三層擴展機制的運作方式"
   },
   {
     "docFile": "2026-02-22_claude-cowork-guide.html",
@@ -12651,7 +12527,7 @@ const searchIndex = [
     ],
     "sectionId": "建立實用工作流",
     "sectionTitle": "建立實用工作流",
-    "content": "設置 Desktop Commander、跨 Session 記憶、MCP 權限配置 Claude Desktop 三層工具架構 💬 Chat 對話式互動 Artifacts 輸出 → 🤖 Cowork 自主 Agent Sub-agents 協作 → 💻 Code CLI 開發 Git 工作流"
+    "content": "設置 Desktop Commander、跨 Session 記憶、MCP 權限配置 Claude Desktop 三層工具架構 Chat 對話式互動 Artifacts 輸出 Cowork 自主 Agent Sub-agents 協作 Code CLI 開發 Git 工作流"
   },
   {
     "docFile": "2026-02-22_claude-cowork-guide.html",
@@ -12731,7 +12607,7 @@ const searchIndex = [
     ],
     "sectionId": "part-v-desktop-commander一分鐘讓-claude-desktop-強-2-倍",
     "sectionTitle": "Part V Desktop Commander：一分鐘讓 Claude Desktop 強 2 倍",
-    "content": "Huryn 認為 Desktop Commander 是 投資報酬率最高的動作之一 ，而且只需不到一分鐘。安裝後，Chat、Cowork 和 Code Tab 都能在你的筆電上做幾乎任何事情，包括安裝 MCP server 或存取任何檔案。 That's one of the highest-ROI moves. And it takes less than 1 minute. Chat, Cowork, and Code Tab can do virtually anything on your laptop including installing MCP servers or accessing any file. 🛠️ 安裝步驟（4 步） 1. 打開 Claude Desktop 2. 在聊天視窗點擊： + > Connectors > Manage connectors 3. 點擊： Browse connectors > All > Desktop Commander 4. 選擇哪些工具不需要你的核准 提示： 不使用時停用 Claude in Chrome 擴充功能，避免"
+    "content": "Huryn 認為 Desktop Commander 是 投資報酬率最高的動作之一 ，而且只需不到一分鐘。安裝後，Chat、Cowork 和 Code Tab 都能在你的筆電上做幾乎任何事情，包括安裝 MCP server 或存取任何檔案。 That's one of the highest-ROI moves. And it takes less than 1 minute. Chat, Cowork, and Code Tab can do virtually anything on your laptop including installing MCP servers or accessing any file. 安裝步驟（4 步） 1. 打開 Claude Desktop 2. 在聊天視窗點擊： + > Connectors > Manage connectors 3. 點擊： Browse connectors > All > Desktop Commander 4. 選擇哪些工具不需要你的核准 提示： 不使用時停用 Claude in Chrome 擴充功能，避免 Cla"
   },
   {
     "docFile": "2026-02-22_claude-cowork-guide.html",
@@ -12811,7 +12687,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.8/5 ↑ 實務應用, 學習曲線 ↓ 技術深度, 工具生態 投研 KOL XinGPT 分享了他在 2026 年春節期間將個人全部業務流程 Agent 化的完整經歷。核心主張：任何知識工作都可以拆解為 「知識庫 (Knowledge Base) → 技能框架 (Skills) → 自動化排程 (CRON)」 三層架構，用 API 成本（每月約 $500 美金）取代人力成本，將每日工作從 6 小時壓縮至 2 小時，產出反而提升 300%。 文章涵蓋投研 Agent 系統、內容生產 Agent 化、咨詢服務驗證、以及從 SaaS 到 AaaS (Agent as a Service) 的商業模式轉變。實務案例豐富、框架清晰易懂，但技術實作細節偏少（未涉及具體工具鏈、API 選型、部署架構），更偏向「方法論啟發」而非「技術教程」。 🏗 理解三層架構 掌握「知識庫 → Skills → CRON」的個人業務 Agent 化拆解方法 📊 評估 Agent 化 ROI 學會分析「時間成本 vs API 成本」的替代邏輯，判斷哪些工作值得 Agent 化 🚀 設計行動路徑 運用"
+    "content": "3.8/5 實務應用, 學習曲線 技術深度, 工具生態 投研 KOL XinGPT 分享了他在 2026 年春節期間將個人全部業務流程 Agent 化的完整經歷。核心主張：任何知識工作都可以拆解為 「知識庫 (Knowledge Base) → 技能框架 (Skills) → 自動化排程 (CRON)」 三層架構，用 API 成本（每月約 $500 美金）取代人力成本，將每日工作從 6 小時壓縮至 2 小時，產出反而提升 300%。 文章涵蓋投研 Agent 系統、內容生產 Agent 化、咨詢服務驗證、以及從 SaaS 到 AaaS (Agent as a Service) 的商業模式轉變。實務案例豐富、框架清晰易懂，但技術實作細節偏少（未涉及具體工具鏈、API 選型、部署架構），更偏向「方法論啟發」而非「技術教程」。 理解三層架構 掌握「知識庫 → Skills → CRON」的個人業務 Agent 化拆解方法 評估 Agent 化 ROI 學會分析「時間成本 vs API 成本」的替代邏輯，判斷哪些工作值得 Agent 化 設計行動路徑 運用「診斷 → 搭建 → 優化 → 商業化"
   },
   {
     "docFile": "2026-02-22_personal-business-agent.html",
@@ -12859,7 +12735,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 4.5/5 ↑ Framework, Practical Value ↓ Technical Depth, Tool Ecosystem 這篇文章以「2028 年 6 月回顧」的虛構體裁，推演 AI 持續超出預期後可能引發的 系統性經濟危機 。核心論點：AI 能力提升 → 白領裁員 → 消費萎縮 → 企業更依賴 AI → 能力再提升，形成 無自然煞車的負反饋螺旋 （Intelligence Displacement Spiral）。 文章從 SaaS 估值崩塌、Agentic Commerce 消滅中間層、Private Credit 違約，一路推演到 13 兆美元房貸市場的結構性動搖。這不是預測，而是 壓力測試 ——幫助投資人和從業者提前辨識左尾風險。 📉 理解 Intelligence Displacement Spiral 的完整傳導機制：從 AI 能力提升到消費萎縮的負反饋迴路 🏦 辨識 AI 對金融系統的二階 / 三階衝擊：SaaS 違約、Private Credit 傳染、房貸假設失效 🧭 將「左尾情境分析」方法應用於個人職涯規劃和 CDMO 營運策略的風險評估 Intelligence Displacement Spiral - 智慧位移螺旋 🤖 AI 能力躍升 Agentic Coding 推理能力突破 → 📉 白領裁員 OpEx 替代 利潤率擴張 → 🛒 消費萎縮 Ghost GDP 收入中位數下降 → 🔄 加碼 AI 投資 成本壓力推動 更多自動化 I. 宏觀傳導機制 II. 金融系統傳染 III. 政策與啟示 Part I Ghost GDP — 繁榮的幻象 到 2026 年 10 月，S&P 500 逼近 8000 點，Nasdaq 突破 30k。AI 驅動的裁員潮始於 2026 年初，且效果完全符合預期： 利潤率擴張、盈餘超越預期、股價上漲 。創紀錄的企業獲利直接回流到 AI 算力投資。 \"The euphoria was palpable. By October 2026, the S&P 500 flirted with 8000, the Nasdaq broke above 30k. The initial wave of layoffs due to human obsolescence began in early 2026, and they did exactly what layoffs are supposed to. Margins expanded, earnings beat, stocks rallied. Record-setting corporate profits were funneled right back into AI compute.\" 表面數字看起來很棒。名目 GDP 反覆印出中高個位數的年化增長。生產力正在飆升。但 實質工資增長崩塌 ——白領工人被機器取代，被迫轉入低薪職位。 \"The headline numbers were still great. Nominal GDP repeatedly printed mid-to-high single-digit annualized growth. Productivity was booming. ...real wage growth collapsed. Despite the administration's repeated boasts of record productivit"
+    "content": "4.5/5 Framework, Practical Value Technical Depth, Tool Ecosystem 這篇文章以「2028 年 6 月回顧」的虛構體裁，推演 AI 持續超出預期後可能引發的 系統性經濟危機 。核心論點：AI 能力提升 白領裁員 消費萎縮 企業更依賴 AI 能力再提升，形成 無自然煞車的負反饋螺旋 （Intelligence Displacement Spiral）。 文章從 SaaS 估值崩塌、Agentic Commerce 消滅中間層、Private Credit 違約，一路推演到 13 兆美元房貸市場的結構性動搖。這不是預測，而是 壓力測試 ——幫助投資人和從業者提前辨識左尾風險。 理解 Intelligence Displacement Spiral 的完整傳導機制：從 AI 能力提升到消費萎縮的負反饋迴路 辨識 AI 對金融系統的二階 / 三階衝擊：SaaS 違約、Private Credit 傳染、房貸假設失效 將「左尾情境分析」方法應用於個人職涯規劃和 CDMO 營運策略的風險評估 Intelligence Displacement Spiral - 智慧位移螺旋 AI 能力躍升 Agentic Coding 推理能力突破 白領裁員 OpEx 替代 利潤率擴張 消費萎縮 Ghost GDP 收入中位數下降 加碼 AI 投資 成本壓力推動 更多自動化 I. 宏觀傳導機制 II. 金融系統傳染 III. 政策與啟示 Part I Ghost GDP — 繁榮的幻象 到 2026 年 10 月，S&P 500 逼近 8000 點，Nasdaq 突破 30k。AI 驅動的裁員潮始於 2026 年初，且效果完全符合預期： 利潤率擴張、盈餘超越預期、股價上漲 。創紀錄的企業獲利直接回流到 AI 算力投資。 \"The euphoria was palpable. By October 2026, the S&P 500 flirted with 8000, the Nasdaq broke above 30k. The initial wave of layoffs due to human obsolescence began in early 2026, and they did exactly what layoffs are supposed to. Margins expanded, earnings beat, stocks rallied. Record-setting corporate profits were funneled right back into AI compute.\" 表面數字看起來很棒。名目 GDP 反覆印出中高個位數的年化增長。生產力正在飆升。但 實質工資增長崩塌 ——白領工人被機器取代，被迫轉入低薪職位。 \"The headline numbers were still great. Nominal GDP repeatedly printed mid-to-high single-digit annualized growth. Productivity was booming. ...real wage growth collapsed. Despite the administration's repeated boasts of record productivity, white-collar workers lost jobs to machines"
   },
   {
     "docFile": "2026-02-23_personal-brain-os.html",
@@ -12891,13 +12767,13 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.6/5 ↑ 時效性, 實務應用 ↓ 技術深度, 工具生態 The Kobeissi Letter 挑戰當前市場共識：AI 末日論太明顯，而「明顯的交易從來不會贏」。文章提出 Abundance GDP 框架，認為 AI 帶來的認知成本崩跌不會摧毀經濟，反而可能觸發史上最大的生產力擴張。核心論點是：當生產成本崩跌，需求不會停滯不動，而是爆炸式擴張。歷史上每次重大技術革命（PC、網路、雲端）都遵循這個模式。文章同時承認 Anthropic 的 Claude 正在真實地壓縮企業市值（IBM 最差單日表現、CrowdStrike 蒸發 200 億美元），但認為這是轉型訊號而非崩潰訊號。 定位為投資分析信，觀點鮮明但帶有明顯推銷自家付費服務的動機。數據引用紮實但選擇性呈現，缺乏對轉型期間摩擦成本的深入分析。 Learning Objectives 1 理解 Abundance GDP 框架：價格下跌快於收入下降時，實質購買力如何提升 2 區分 Commoditization（商品化） 與 Collapse（崩潰）：技術壓縮利潤但擴大市場參與 3 評估 AI 對 CDMO 產業 的雙重影響：成本壓縮 vs 市場擴張機會 Kobeissi 的 Abundance GDP 邏輯鏈 AI 認知成本崩跌 AI 壓縮知識工作邊際成本 → $ 服務價格下降 醫療/法律/教育等服務變便宜 → + 購買力提升 實質所得增加，無需加薪 → ^ 需求擴張 新產業與消費類別誕生 Part I Anthropic Takedowns：市場反應是真實的 Kobeissi 開門見山承認： 我們無法忽視市場 。Anthropic 正在透過 Claude 顛覆世界，Fortune 500 企業因此蒸發了數千億美元市值。這已經是 2026 年反覆出現的故事模式：Anthropic 發布新工具，Claude 在編碼和工作流自動化方面大幅進步，目標產業的股價在數小時內崩跌。 \"Anthropic is disrupting the world through Claude, with Fortune 500 companies shedding hundreds of billions of market cap as a result.\" 具體案例令人印象深刻：IBM 發布自 2000 年 10 月以來最糟糕的單日表現（Anthropic 宣布 Claude 可以簡化 COBOL 代碼）；Adobe 年初至今下跌 30%；CrowdStrike 在「Claude Code Security」發布後兩個交易日內蒸發了 200 億美元 市值。 \"IBM stock just posted its worst day since October 2000 after Anthropic announced that Claude can streamline COBOL code.\" 但關鍵的重新框架來了： 商品化不是崩潰（Commoditization is not collapse） 。個人電腦商品化了計算，網路商品化了分銷，雲端商品化了基礎設施，而 AI 正在商品化認知。 \"Commoditization is not collapse. Rather, it is how technology lowers costs and expands access.\" ⚠️ 重點提示 Anthropic Takedown 模式： Anthropic 發布新能力 → Claude 在特"
+    "content": "★★★★☆ 3.6/5 ↑ 時效性, 實務應用 ↓ 技術深度, 工具生態 The Kobeissi Letter 挑戰當前市場共識：AI 末日論太明顯，而「明顯的交易從來不會贏」。文章提出 Abundance GDP 框架，認為 AI 帶來的認知成本崩跌不會摧毀經濟，反而可能觸發史上最大的生產力擴張。核心論點是：當生產成本崩跌，需求不會停滯不動，而是爆炸式擴張。歷史上每次重大技術革命（PC、網路、雲端）都遵循這個模式。文章同時承認 Anthropic 的 Claude 正在真實地壓縮企業市值（IBM 最差單日表現、CrowdStrike 蒸發 200 億美元），但認為這是轉型訊號而非崩潰訊號。 定位為投資分析信，觀點鮮明但帶有明顯推銷自家付費服務的動機。數據引用紮實但選擇性呈現，缺乏對轉型期間摩擦成本的深入分析。 Learning Objectives 1 理解 Abundance GDP 框架：價格下跌快於收入下降時，實質購買力如何提升 2 區分 Commoditization（商品化） 與 Collapse（崩潰）：技術壓縮利潤但擴大市場參與 3 評估 AI 對 CDMO 產業 的雙重影響：成本壓縮 vs 市場擴張機會 Kobeissi 的 Abundance GDP 邏輯鏈 AI 認知成本崩跌 AI 壓縮知識工作邊際成本 $ 服務價格下降 醫療/法律/教育等服務變便宜 + 購買力提升 實質所得增加，無需加薪 ^ 需求擴張 新產業與消費類別誕生 Part I Anthropic Takedowns：市場反應是真實的 Kobeissi 開門見山承認： 我們無法忽視市場 。Anthropic 正在透過 Claude 顛覆世界，Fortune 500 企業因此蒸發了數千億美元市值。這已經是 2026 年反覆出現的故事模式：Anthropic 發布新工具，Claude 在編碼和工作流自動化方面大幅進步，目標產業的股價在數小時內崩跌。 \"Anthropic is disrupting the world through Claude, with Fortune 500 companies shedding hundreds of billions of market cap as a result.\" 具體案例令人印象深刻：IBM 發布自 2000 年 10 月以來最糟糕的單日表現（Anthropic 宣布 Claude 可以簡化 COBOL 代碼）；Adobe 年初至今下跌 30%；CrowdStrike 在「Claude Code Security」發布後兩個交易日內蒸發了 200 億美元 市值。 \"IBM stock just posted its worst day since October 2000 after Anthropic announced that Claude can streamline COBOL code.\" 但關鍵的重新框架來了： 商品化不是崩潰（Commoditization is not collapse） 。個人電腦商品化了計算，網路商品化了分銷，雲端商品化了基礎設施，而 AI 正在商品化認知。 \"Commoditization is not collapse. Rather, it is how technology lowers costs and expands access.\" 重點提示 Anthropic Takedown 模式： Anthropic 發布新能力 Claude 在特定領域大幅進步 目標產"
   },
   {
     "docFile": "2026-02-25_ai-ethics-fintech-profiling.html",
     "docTitle": "AI Ethics - Fintech Psychological Profiling",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Mila Agius / Substack",
+    "docSource": "Joel Salinas & Mila Agius / Substack",
     "docRating": 4.3,
     "docTags": [
       "Agent",
@@ -12908,7 +12784,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "這篇文章揭露了一個歐洲 Fintech 公司如何使用 精神科臨床術語 對客戶進行心理分類，再透過 AI 將這套剝削系統工業化擴展到數十萬人。作者 Mila Agius 親歷了這套系統的內部運作，並提出了 Projective Calibration Layer (PCL) 作為倫理替代方案。核心洞察： AI 不是發明剝削的一方，而是移除了剝削的規模限制 。對任何採購 AI 工具或建構個人化系統的領導者而言，這篇文章提供了一個清晰的框架來區分「幫助客戶」與「利用客戶」。 Learning Objectives 🔎 辨識剝削式個人化 理解 AI 心理剖析如何從「個人化服務」跨越到「系統性剝削」的三個判斷標準 🛠 掌握 PCL 框架 學會 Projective Calibration Layer 的三步驟設計，以及三道安全護欄的實作邏輯 🎯 建立採購審計思維 開發評估 AI 供應商個人化系統的關鍵問題清單，應用到組織決策中 Projective Calibration Layer (PCL) Framework 📊 Step 1: Identify AI 分析行為模式 （非人格判斷） → 🎨 Step 2: Calibrate 投射式微測驗 驗證偏好 → 🚀 Step 3: Scale 全用戶群應用 僅調整溝通格式 Part I: The Shiny Narrative - AI as Customer Hero 歐洲 Fintech 公司積極將 AI 定位為改善客戶體驗的工具。敘事完美無瑕： 技術服務客戶，讓生活更簡單，讓財務更清晰，讓決策更好 。 \"European fintech companies actively position artificial intelligence as a way to improve customer experience. The narrative is flawless: technology serves the customer, makes life easier, makes finances clearer, and decisions better.\" 數字看起來令人印象深刻：Klarna 的 AI 助手在第一個月處理了 230 萬次對話，佔所有支援請求的三分之二。解決時間從 11 分鐘降到 2 分鐘。Bunq 的 AI 助手 Finn 自主解決 40% 的請求，協助另外 35%。 \"Klarna launched an AI assistant based on OpenAI that, in its first month, handled 2.3 million conversations... Resolution time dropped from 11 minutes to two.\" 在詐欺防範方面，Visa Protect 透過即時模式分析將詐欺偵測提高了 40%。一切聽起來都很進步： 更快、更方便、更安全 。 \"All of this sounds progressive. Faster, more convenient, safer. AI as the customer's assistant, a technological shield against fraudsters and bureaucracy.\" 💡 比喻說明：表演舞台 想像 Fintech 的 AI 敘事就像一場精心製作的舞台表演：觀眾（客戶）看到的是華麗的前台——友善的聊天機器人、個人"
+    "content": "這篇文章揭露了一個歐洲 Fintech 公司如何使用 精神科臨床術語 對客戶進行心理分類，再透過 AI 將這套剝削系統工業化擴展到數十萬人。作者 Mila Agius 親歷了這套系統的內部運作，並提出了 Projective Calibration Layer (PCL) 作為倫理替代方案。核心洞察： AI 不是發明剝削的一方，而是移除了剝削的規模限制 。對任何採購 AI 工具或建構個人化系統的領導者而言，這篇文章提供了一個清晰的框架來區分「幫助客戶」與「利用客戶」。 Learning Objectives 辨識剝削式個人化 理解 AI 心理剖析如何從「個人化服務」跨越到「系統性剝削」的三個判斷標準 掌握 PCL 框架 學會 Projective Calibration Layer 的三步驟設計，以及三道安全護欄的實作邏輯 建立採購審計思維 開發評估 AI 供應商個人化系統的關鍵問題清單，應用到組織決策中 Projective Calibration Layer (PCL) Framework Step 1: Identify AI 分析行為模式 （非人格判斷） Step 2: Calibrate 投射式微測驗 驗證偏好 Step 3: Scale 全用戶群應用 僅調整溝通格式 Part I: The Shiny Narrative - AI as Customer Hero 歐洲 Fintech 公司積極將 AI 定位為改善客戶體驗的工具。敘事完美無瑕： 技術服務客戶，讓生活更簡單，讓財務更清晰，讓決策更好 。 \"European fintech companies actively position artificial intelligence as a way to improve customer experience. The narrative is flawless: technology serves the customer, makes life easier, makes finances clearer, and decisions better.\" 數字看起來令人印象深刻：Klarna 的 AI 助手在第一個月處理了 230 萬次對話，佔所有支援請求的三分之二。解決時間從 11 分鐘降到 2 分鐘。Bunq 的 AI 助手 Finn 自主解決 40% 的請求，協助另外 35%。 \"Klarna launched an AI assistant based on OpenAI that, in its first month, handled 2.3 million conversations... Resolution time dropped from 11 minutes to two.\" 在詐欺防範方面，Visa Protect 透過即時模式分析將詐欺偵測提高了 40%。一切聽起來都很進步： 更快、更方便、更安全 。 \"All of this sounds progressive. Faster, more convenient, safer. AI as the customer's assistant, a technological shield against fraudsters and bureaucracy.\" 比喻說明：表演舞台 想像 Fintech 的 AI 敘事就像一場精心製作的舞台表演：觀眾（客戶）看到的是華麗的前台——友善的聊天機器人、個人化推薦、「我們在這裡幫助你」的訊息。但舞台後方還有"
   },
   {
     "docFile": "2026-02-25_cursor-non-engineering.html",
@@ -12994,7 +12870,7 @@ const searchIndex = [
     "docFile": "2026-02-25_shared-ai-context-files.html",
     "docTitle": "Shared AI Context Files - 團隊共享上下文",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -13010,7 +12886,7 @@ const searchIndex = [
     "docFile": "2026-02-25_shared-ai-context-files.html",
     "docTitle": "Shared AI Context Files - 團隊共享上下文",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -13020,13 +12896,13 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives-學習目標",
     "sectionTitle": "Learning Objectives | 學習目標",
-    "content": "$ 量化隱形成本 理解團隊重複提供 AI 上下文的時間成本，以及 Shared Context Files 的 ROI 計算邏輯 # 掌握分層架構 學會用資料夾結構鏡射組織架構，實現自動化的上下文分層載入 + 建立複利機制 設計共享修正流程，讓每次 AI 錯誤修正自動惠及整個團隊 Shared Context Compounding Model | 共享上下文複利模型 1 Structure 資料夾鏡射組織架構 → 2 Share 團隊共用 Context Files → 3 Correct 發現錯誤即時更新 → 4 Compound 修正自動惠及全團隊"
+    "content": "$ 量化隱形成本 理解團隊重複提供 AI 上下文的時間成本，以及 Shared Context Files 的 ROI 計算邏輯 # 掌握分層架構 學會用資料夾結構鏡射組織架構，實現自動化的上下文分層載入 + 建立複利機制 設計共享修正流程，讓每次 AI 錯誤修正自動惠及整個團隊 Shared Context Compounding Model | 共享上下文複利模型 1 Structure 資料夾鏡射組織架構 2 Share 團隊共用 Context Files 3 Correct 發現錯誤即時更新 4 Compound 修正自動惠及全團隊"
   },
   {
     "docFile": "2026-02-25_shared-ai-context-files.html",
     "docTitle": "Shared AI Context Files - 團隊共享上下文",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -13042,7 +12918,7 @@ const searchIndex = [
     "docFile": "2026-02-25_shared-ai-context-files.html",
     "docTitle": "Shared AI Context Files - 團隊共享上下文",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -13058,7 +12934,7 @@ const searchIndex = [
     "docFile": "2026-02-25_shared-ai-context-files.html",
     "docTitle": "Shared AI Context Files - 團隊共享上下文",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -13074,7 +12950,7 @@ const searchIndex = [
     "docFile": "2026-02-25_shared-ai-context-files.html",
     "docTitle": "Shared AI Context Files - 團隊共享上下文",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -13090,7 +12966,7 @@ const searchIndex = [
     "docFile": "2026-02-25_shared-ai-context-files.html",
     "docTitle": "Shared AI Context Files - 團隊共享上下文",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -13106,7 +12982,7 @@ const searchIndex = [
     "docFile": "2026-02-25_shared-ai-context-files.html",
     "docTitle": "Shared AI Context Files - 團隊共享上下文",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -13122,7 +12998,7 @@ const searchIndex = [
     "docFile": "2026-02-25_shared-ai-context-files.html",
     "docTitle": "Shared AI Context Files - 團隊共享上下文",
     "docDate": "2026-02-25",
-    "docSource": "Joel Salinas &amp; Hannah Stulberg / Superhuman AI",
+    "docSource": "Joel Salinas & Hannah Stulberg / Superhuman AI",
     "docRating": 3.8,
     "docTags": [
       "Tool",
@@ -13182,7 +13058,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "1 理解 Agent Skills 的 三層漸進式載入架構 ，以及它如何解決 Context Window 效率問題 2 掌握 SKILL.md 的 結構與撰寫要求 ，能設計自訂 Skill 的目錄結構 3 分辨不同平台（API / Claude.ai / Claude Code / Agent SDK）的 Skill 部署差異與限制 Agent Skills 三層漸進式揭露架構 L1 Metadata YAML name + description ~100 tokens / 始終載入 → L2 Instructions SKILL.md 主體 <5k tokens / 觸發時載入 → L3 Resources 腳本、範本、文件 按需載入 / 無上限"
+    "content": "1 理解 Agent Skills 的 三層漸進式載入架構 ，以及它如何解決 Context Window 效率問題 2 掌握 SKILL.md 的 結構與撰寫要求 ，能設計自訂 Skill 的目錄結構 3 分辨不同平台（API / Claude.ai / Claude Code / Agent SDK）的 Skill 部署差異與限制 Agent Skills 三層漸進式揭露架構 L1 Metadata YAML name + description ~100 tokens / 始終載入 L2 Instructions SKILL.md 主體 <5k tokens / 觸發時載入 L3 Resources 腳本、範本、文件 按需載入 / 無上限"
   },
   {
     "docFile": "2026-02-27_agent-skills-architecture.html",
@@ -13318,13 +13194,13 @@ const searchIndex = [
     ],
     "sectionId": "main",
     "sectionTitle": "Main Content",
-    "content": "Tool Agent Automation Framework Anthropic 內部團隊如何使用 Claude Code 10 個部門的實戰案例、影響評估與最佳實踐 Source: Anthropic Official Case Study | 2026 Executive Summary ★★★★☆ 4.3/5 ↑ 實務應用, 工具生態 ↓ 技術深度, 成本分析 這份文件來自 Anthropic 內部，記錄了 10 個不同部門 如何在日常工作中使用 Claude Code。從資料基礎建設、產品開發、安全工程到法務部門，涵蓋了 開發者與非技術人員 兩種截然不同的使用模式。 最大的價值不在於 Claude Code 的功能介紹，而在於 真實的採用模式（adoption patterns） ：哪些團隊用同步模式、哪些用非同步模式、失敗率多少、如何處理回滾。這些是你在官方文件中看不到的「使用現場」。 Learning Objectives 🎯 辨別 Claude Code 的兩大使用模式：同步協作 (Synchronous) vs. 非同步自主 (Async Autonomous) 🔧 掌握 Claude.md 文件和自訂 Slash Commands 對 Claude Code 效能的關鍵影響 💡 評估非技術團隊（行銷、設計、法務）採用 Claude Code 的可行路徑與限制 Claude Code 採用模式光譜 (Adoption Spectrum) 🔍 探索模式 Codebase 導航 概念查詢 → 🤝 協作模式 同步編碼 即時監督 → 🚀 委派模式 Auto-accept 非同步自主 → ⚙️ 系統模式 Agentic Workflows GitHub Actions Content Sections 基礎建設 工程開發 資料與 API 非技術團隊 Part I Data Infrastructure 資料基礎建設團隊 Developer Team 資料基礎建設團隊負責整合公司所有業務資料。他們用 Claude Code 做三件核心的事： 自動化例行資料工程任務 、排除複雜基礎設施問題、以及為非技術成員建立可執行的工作流程。 The Data Infrastructure team organizes all business data for teams across the company, using Claude Code for automating routine data engineering tasks. 最令人印象深刻的案例是 Kubernetes 截圖除錯 ：當叢集無法排程新的 Pod 時，團隊將儀表板截圖餵給 Claude Code，它一步步引導他們在 Google Cloud UI 中找到 IP 位址耗盡的警告，並提供建立新 IP pool 的精確指令。這完全繞過了對網路專家的依賴。 They fed screenshots of dashboards into Claude Code, which guided them through Google Cloud's UI menu by menu until they found a warning indicating pod IP address exhaustion. 另一個重要模式是 純文字工作流程 (Plain Text Workflows) ：財務團隊成員只需用純文字描述資料工作流程，載入 Claude Code 就能自動執行整個流程。"
+    "content": "Tool Agent Automation Framework Anthropic 內部團隊如何使用 Claude Code 10 個部門的實戰案例、影響評估與最佳實踐 Source: Anthropic Official Case Study | 2026 Executive Summary 4.3/5 實務應用, 工具生態 技術深度, 成本分析 這份文件來自 Anthropic 內部，記錄了 10 個不同部門 如何在日常工作中使用 Claude Code。從資料基礎建設、產品開發、安全工程到法務部門，涵蓋了 開發者與非技術人員 兩種截然不同的使用模式。 最大的價值不在於 Claude Code 的功能介紹，而在於 真實的採用模式（adoption patterns） ：哪些團隊用同步模式、哪些用非同步模式、失敗率多少、如何處理回滾。這些是你在官方文件中看不到的「使用現場」。 Learning Objectives 辨別 Claude Code 的兩大使用模式：同步協作 (Synchronous) vs. 非同步自主 (Async Autonomous) 掌握 Claude.md 文件和自訂 Slash Commands 對 Claude Code 效能的關鍵影響 評估非技術團隊（行銷、設計、法務）採用 Claude Code 的可行路徑與限制 Claude Code 採用模式光譜 (Adoption Spectrum) 探索模式 Codebase 導航 概念查詢 協作模式 同步編碼 即時監督 委派模式 Auto-accept 非同步自主 系統模式 Agentic Workflows GitHub Actions Content Sections 基礎建設 工程開發 資料與 API 非技術團隊 Part I Data Infrastructure 資料基礎建設團隊 Developer Team 資料基礎建設團隊負責整合公司所有業務資料。他們用 Claude Code 做三件核心的事： 自動化例行資料工程任務 、排除複雜基礎設施問題、以及為非技術成員建立可執行的工作流程。 The Data Infrastructure team organizes all business data for teams across the company, using Claude Code for automating routine data engineering tasks. 最令人印象深刻的案例是 Kubernetes 截圖除錯 ：當叢集無法排程新的 Pod 時，團隊將儀表板截圖餵給 Claude Code，它一步步引導他們在 Google Cloud UI 中找到 IP 位址耗盡的警告，並提供建立新 IP pool 的精確指令。這完全繞過了對網路專家的依賴。 They fed screenshots of dashboards into Claude Code, which guided them through Google Cloud's UI menu by menu until they found a warning indicating pod IP address exhaustion. 另一個重要模式是 純文字工作流程 (Plain Text Workflows) ：財務團隊成員只需用純文字描述資料工作流程，載入 Claude Code 就能自動執行整個流程。零程式碼經驗的員工也能執行複雜的資料查詢和 Excel 輸出。 Emplo"
   },
   {
     "docFile": "2026-02-27_block-ai-layoffs.html",
     "docTitle": "Block 裁員 40% - AI 驅動組織重構",
     "docDate": "2026-02-27",
-    "docSource": "Jack Dorsey / Block Inc. Shareholder Letter &amp; X Post",
+    "docSource": "Jack Dorsey / Block Inc. Shareholder Letter & X Post",
     "docRating": 4,
     "docTags": [
       "Analysis",
@@ -13334,7 +13210,7 @@ const searchIndex = [
     ],
     "sectionId": "main",
     "sectionTitle": "Main Content",
-    "content": "Analysis Agent Automation Block 裁員 40%：AI 時代的組織重構信號 Jack Dorsey 以 AI 為名砍半人力 -- 這對所有產業意味著什麼？ Source: Jack Dorsey / Block Inc. Shareholder Letter & X Post | 2026-02-26 Executive Summary ★★★★☆ 4.0/5 ↑ 時效性, 實務應用 ↓ 技術深度, 工具生態 Block（前 Square）CEO Jack Dorsey 於 2026 年 2 月 26 日宣布將公司人力從 10,000+ 裁減至 6,000 以下，幅度達 40%。他的核心論述： AI 智慧工具搭配更小更扁平的團隊，正在根本性地改變經營公司的意義 。這不是財務危機驅動的裁員，而是一個獲利成長中的公司主動進行的結構轉型。股價盤後立即跳漲超過 23%。 本文件分析 Dorsey 的決策邏輯、市場反應、專家質疑，以及對製藥 CDMO 營運者的啟示。這是迄今最大規模、最明確以「AI 取代人力」為敘事核心的上市公司裁員行動。 Learning Objectives 📈 理解 Block 裁員的商業邏輯，區分「AI 效率敘事」與「過度招聘修正」的不同動機 ⚖ 分析「一次到位」vs「漸進裁員」的領導決策框架，及其對組織士氣的影響 🔌 評估 AI 驅動組織重構對製藥 / CDMO 產業的中期影響，識別 O-ring 瓶頸與可自動化區域 Dorsey 的組織重構決策框架 📊 確認基本面 獲利成長中，非危機 → ⚡ 識別結構變革 AI 工具改變工作模式 → 🎯 一次到位 避免漸進式士氣侵蝕 → 🛠 AI-first 重建 智慧工具為核心架構 Part I: 發生了什麼事？ Block 是 Jack Dorsey 創辦的金融科技公司，旗下產品包括 Square （商家支付）、 Cash App （個人金融）和 Tidal （音樂串流）。2026 年 2 月 26 日，Dorsey 在 X 上發文並同時發布致股東信，宣布將公司從 10,205 人裁至不到 6,000 人。 \"Today we're making one of the hardest decisions in the history of our company: we're reducing our organization by nearly half.\" 關鍵：這不是因為公司陷入困境。Block 的 2025 全年毛利達 103.6 億美元 ，年增 17%。Q4 毛利 28.7 億美元，年增 24%。Cash App 的毛利更是飆升 33%。Dorsey 的論述是： AI 智慧工具正在根本改變公司營運方式 ，與其慢慢裁員，不如一次到位。 \"We're not making this decision because we're in trouble. Our business is strong... but something has changed.\" 受影響員工將獲得 20 週薪資 + 每年年資 1 週 、股權歸屬至五月底、6 個月健康保險、公司設備，以及 5,000 美元轉職補助。公司預計認列 4.5-5 億美元的重組費用。 \"You'll receive your salary for 20 weeks + 1 week per year of tenure, equity vested through the end of May, 6"
+    "content": "Analysis Agent Automation Block 裁員 40%：AI 時代的組織重構信號 Jack Dorsey 以 AI 為名砍半人力 -- 這對所有產業意味著什麼？ Source: Jack Dorsey / Block Inc. Shareholder Letter & X Post | 2026-02-26 Executive Summary 4.0/5 時效性, 實務應用 技術深度, 工具生態 Block（前 Square）CEO Jack Dorsey 於 2026 年 2 月 26 日宣布將公司人力從 10,000+ 裁減至 6,000 以下，幅度達 40%。他的核心論述： AI 智慧工具搭配更小更扁平的團隊，正在根本性地改變經營公司的意義 。這不是財務危機驅動的裁員，而是一個獲利成長中的公司主動進行的結構轉型。股價盤後立即跳漲超過 23%。 本文件分析 Dorsey 的決策邏輯、市場反應、專家質疑，以及對製藥 CDMO 營運者的啟示。這是迄今最大規模、最明確以「AI 取代人力」為敘事核心的上市公司裁員行動。 Learning Objectives 理解 Block 裁員的商業邏輯，區分「AI 效率敘事」與「過度招聘修正」的不同動機 分析「一次到位」vs「漸進裁員」的領導決策框架，及其對組織士氣的影響 評估 AI 驅動組織重構對製藥 / CDMO 產業的中期影響，識別 O-ring 瓶頸與可自動化區域 Dorsey 的組織重構決策框架 確認基本面 獲利成長中，非危機 識別結構變革 AI 工具改變工作模式 一次到位 避免漸進式士氣侵蝕 AI-first 重建 智慧工具為核心架構 Part I: 發生了什麼事？ Block 是 Jack Dorsey 創辦的金融科技公司，旗下產品包括 Square （商家支付）、 Cash App （個人金融）和 Tidal （音樂串流）。2026 年 2 月 26 日，Dorsey 在 X 上發文並同時發布致股東信，宣布將公司從 10,205 人裁至不到 6,000 人。 \"Today we're making one of the hardest decisions in the history of our company: we're reducing our organization by nearly half.\" 關鍵：這不是因為公司陷入困境。Block 的 2025 全年毛利達 103.6 億美元 ，年增 17%。Q4 毛利 28.7 億美元，年增 24%。Cash App 的毛利更是飆升 33%。Dorsey 的論述是： AI 智慧工具正在根本改變公司營運方式 ，與其慢慢裁員，不如一次到位。 \"We're not making this decision because we're in trouble. Our business is strong... but something has changed.\" 受影響員工將獲得 20 週薪資 + 每年年資 1 週 、股權歸屬至五月底、6 個月健康保險、公司設備，以及 5,000 美元轉職補助。公司預計認列 4.5-5 億美元的重組費用。 \"You'll receive your salary for 20 weeks + 1 week per year of tenure, equity vested through the end of May, 6 months of health care.\" 關鍵數據一覽 項目 "
   },
   {
     "docFile": "2026-02-27_claude-cowork-setup.html",
@@ -13350,7 +13226,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.8/5 ↑ Practical Value, Learning Curve ↓ Technical Depth, Tool Ecosystem Nav Toor 這篇文章是目前最完整的 Claude Cowork 實戰設定指南。他以三年 AI workflow 建構經驗為基礎，將 Cowork 拆解為五大功能（File System Access、AskUserQuestion、Plugins、Instructions、Connectors），並提供每個功能的設定步驟和第一個 Prompt。文章最有價值的洞察是 「停止想如何寫更好的 Prompt，開始想如何提供更好的 Context」 這個思維轉換。文章偏「how-to 教學」而非深度技術分析，但作為 Cowork 的入門到進階設定指南，實用性極高。 Learning Objectives 📄 理解 Cowork 五大功能架構 區分 File System、AskUserQuestion、Plugins、Instructions、Connectors 的角色與優先順序 ⚙ 建立 Context Files 系統 設計"
+    "content": "3.8/5 Practical Value, Learning Curve Technical Depth, Tool Ecosystem Nav Toor 這篇文章是目前最完整的 Claude Cowork 實戰設定指南。他以三年 AI workflow 建構經驗為基礎，將 Cowork 拆解為五大功能（File System Access、AskUserQuestion、Plugins、Instructions、Connectors），並提供每個功能的設定步驟和第一個 Prompt。文章最有價值的洞察是 「停止想如何寫更好的 Prompt，開始想如何提供更好的 Context」 這個思維轉換。文章偏「how-to 教學」而非深度技術分析，但作為 Cowork 的入門到進階設定指南，實用性極高。 Learning Objectives 理解 Cowork 五大功能架構 區分 File System、AskUserQuestion、Plugins、Instructions、Connectors 的角色與優先順序 建立 Context Files 系統 設計 about-me.md、br"
   },
   {
     "docFile": "2026-02-27_claude-cowork-setup.html",
@@ -13463,7 +13339,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "Zack Shapiro 經營一家兩人精品律師事務所，卻能處理大型事務所等級的交易工作量。核心秘訣不是使用法律專用 AI 產品（Harvey、Spellbook 等），而是用 Claude 的通用型 AI 搭配自建的 Skill（技能指令文件） 。這些 Skill 編碼了他十年實務累積的判斷力，讓 AI 不是套用通用模板，而是套用「他個人的分析框架」。 文章從一個交割前夜的真實案例開場，展示 AI 如何在兩小時內完成三名初級律師整夜的工作，接著系統性拆解 Skill 系統、三種使用模式（Chat / Cowork / Code）、三個實戰案例，以及對計費模式和人力配置的影響。對任何在「受監管環境中導入 AI」的專業人士來說，這是極具參考價值的第一手實證。 Learning Objectives 🎯 Skill vs Prompt 的本質差異 理解為什麼 2026 年的 AI 顯學從 Prompt 轉移到 Skill，以及 Skill 的系統化可迭代特性 🛠 通用型 AI vs 垂直 AI 的取捨 學會評估「套殼產品」與「配置良好的前沿模型」之間的價值差異 ⚖ 判斷力的不可取代性 掌握 AI 加速下，人類判斷力如何從成本中心變成價值中心 AI 實務轉型框架：從 Prompt 到 Harness 💬 Prompt 一次性指令 無法迭代 → 📚 Skill 可系統化迭代 編碼判斷力 → 🤖 Agent Skill 驅動 自主執行任務 → 👑 Harness 人類馴服者 判斷 + 負責 Part I 開場案例：交割前夜的 AI 實戰 在一個客戶收購案即將交割的前一天晚上，買方律師寄來一封信，要求重組幾項關鍵交易條款：新的 代管條件（Escrow） 、擴大 賠償例外條款（Indemnification carve-outs） 、修訂後的交割交付物清單。隱含的威脅是：接受變動，否則撤出交易。 The night before a client's acquisition was set to close, the buyer's lawyer sent a letter demanding restructuring of several key deal terms: new escrow conditions, expanded indemnification carve-outs, and a revised closing deliverables schedule. 作者將收購協議、揭露清單和要求信上傳到 Claude。幾分鐘內，Claude 就將每一項提議的變動與現有交易條款進行比對，並 發現了買方律師自己沒注意到的問題 ：其中兩個例外條款與他們已在揭露清單中確認的陳述直接矛盾；第三個變動會與基礎陳述章節產生內部衝突，實際上反而會削弱買方自己的保障。 Within minutes, Claude had cross-referenced every proposed change against existing deal terms and found issues the buyer's lawyer apparently missed: two of their proposed carve-outs directly contradicted representations they'd already confirmed in the disclosure schedules. 到了晚上 11 點，他已經有了一套清晰的反制立"
+    "content": "Zack Shapiro 經營一家兩人精品律師事務所，卻能處理大型事務所等級的交易工作量。核心秘訣不是使用法律專用 AI 產品（Harvey、Spellbook 等），而是用 Claude 的通用型 AI 搭配自建的 Skill（技能指令文件） 。這些 Skill 編碼了他十年實務累積的判斷力，讓 AI 不是套用通用模板，而是套用「他個人的分析框架」。 文章從一個交割前夜的真實案例開場，展示 AI 如何在兩小時內完成三名初級律師整夜的工作，接著系統性拆解 Skill 系統、三種使用模式（Chat / Cowork / Code）、三個實戰案例，以及對計費模式和人力配置的影響。對任何在「受監管環境中導入 AI」的專業人士來說，這是極具參考價值的第一手實證。 Learning Objectives Skill vs Prompt 的本質差異 理解為什麼 2026 年的 AI 顯學從 Prompt 轉移到 Skill，以及 Skill 的系統化可迭代特性 通用型 AI vs 垂直 AI 的取捨 學會評估「套殼產品」與「配置良好的前沿模型」之間的價值差異 判斷力的不可取代性 掌握 AI 加速下，人類判斷力如何從成本中心變成價值中心 AI 實務轉型框架：從 Prompt 到 Harness Prompt 一次性指令 無法迭代 Skill 可系統化迭代 編碼判斷力 Agent Skill 驅動 自主執行任務 Harness 人類馴服者 判斷 + 負責 Part I 開場案例：交割前夜的 AI 實戰 在一個客戶收購案即將交割的前一天晚上，買方律師寄來一封信，要求重組幾項關鍵交易條款：新的 代管條件（Escrow） 、擴大 賠償例外條款（Indemnification carve-outs） 、修訂後的交割交付物清單。隱含的威脅是：接受變動，否則撤出交易。 The night before a client's acquisition was set to close, the buyer's lawyer sent a letter demanding restructuring of several key deal terms: new escrow conditions, expanded indemnification carve-outs, and a revised closing deliverables schedule. 作者將收購協議、揭露清單和要求信上傳到 Claude。幾分鐘內，Claude 就將每一項提議的變動與現有交易條款進行比對，並 發現了買方律師自己沒注意到的問題 ：其中兩個例外條款與他們已在揭露清單中確認的陳述直接矛盾；第三個變動會與基礎陳述章節產生內部衝突，實際上反而會削弱買方自己的保障。 Within minutes, Claude had cross-referenced every proposed change against existing deal terms and found issues the buyer's lawyer apparently missed: two of their proposed carve-outs directly contradicted representations they'd already confirmed in the disclosure schedules. 到了晚上 11 點，他已經有了一套清晰的反制立場，每一項都基於對 買方自身文字的具體交叉引用 。交"
   },
   {
     "docFile": "2026-02-28_anthropic-pentagon-supply-chain.html",
@@ -13480,7 +13356,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "2026 年 2 月 27 日，美國國防部長 Pete Hegseth 宣布將 Anthropic 列為 「供應鏈風險」(Supply Chain Risk) ，這是美國政府首次對本國科技公司使用此項原本針對外國敵對勢力的措施。事件核心：Anthropic 拒絕移除 Claude 模型的兩條使用限制 — 大規模國內監控 和 全自主武器系統 — 而國防部要求 AI 模型可用於「所有合法用途」(all lawful purposes)。 這不只是一間公司與政府的合約糾紛。它觸及了 AI 治理的根本問題： 誰有權決定前沿 AI 技術的使用邊界？ 事件後續引發 OpenAI、Google 員工聯名支持，Sam Altman 公開表態共享相同紅線，Ilya Sutskever 讚許 Anthropic 立場。對所有在受監管環境中使用 AI 的企業而言，這是一個必須理解的里程碑事件。 0 Learning Objectives ⚖ 理解法律爭議核心 10 USC 3252「供應鏈風險」條款的設計意圖 vs 實際應用，以及為何法律專家質疑此舉的合法性 🏭 掌握產業連鎖效應 從 $200M 合約到全產業衝擊：供應鏈風險認定如何波及所有 DoD 承包商及其 AI 工具選擇 🧭 建立企業 AI 治理框架 從 Anthropic 的「兩條紅線」策略中，提煉受監管產業（如 CDMO）AI 部署的決策原則 事件衝突結構：Terms of Service vs All Lawful Purposes 📜 Anthropic 立場 支持所有合法軍事用途 但排除監控 + 自主武器 ↔ ⚠ 灰色地帶 「合法」定義寬泛 現行法規未跟上 AI 能力 ↔ 🏛 Pentagon 立場 軍方購買工具後 自行決定如何使用 1 Part I: 事件時間線與關鍵轉折 這場衝突並非一夜之間爆發。Anthropic 於 2024 年 6 月成為 首家在美軍機密網路部署 AI 模型的前沿 AI 公司 ，並在 2025 年 7 月簽下價值高達 2 億美元的國防部合約。然而，數月來關於使用條款的緊張談判逐漸升級。 \"As the first frontier AI company to deploy models in the US government's classified networks, Anthropic has supported American warfighters since June 2024.\" 轉折點出現在國防部使用 Claude 協助策劃 逮捕委內瑞拉總統 Maduro 的行動 ，引發 Anthropic 對使用邊界的擔憂。此後，國防部堅持要求 AI 公司同意其模型可用於「所有合法用途」，而 Anthropic 堅持保留兩項例外。 \"The DOD is insisting that all AI labs make their models available for 'all lawful purposes.'\" 2 月 25 日（週二），Hegseth 與 Amodei 在 Pentagon 面對面會談，氣氛據稱「禮貌而尊重」。但國防部隨後在週三晚間發出「最終報價」，並設定週五下午 5:01 為最後期限。Amodei 在週四發表聲明，表示 「我們無法憑良心同意他們的要求」 。 \"We cannot in good conscience accede to their request.\" — Dario Amodei, Feb 26, 2026 ⚠️ 關鍵時間線"
+    "content": "2026 年 2 月 27 日，美國國防部長 Pete Hegseth 宣布將 Anthropic 列為 「供應鏈風險」(Supply Chain Risk) ，這是美國政府首次對本國科技公司使用此項原本針對外國敵對勢力的措施。事件核心：Anthropic 拒絕移除 Claude 模型的兩條使用限制 大規模國內監控 和 全自主武器系統 而國防部要求 AI 模型可用於「所有合法用途」(all lawful purposes)。 這不只是一間公司與政府的合約糾紛。它觸及了 AI 治理的根本問題： 誰有權決定前沿 AI 技術的使用邊界？ 事件後續引發 OpenAI、Google 員工聯名支持，Sam Altman 公開表態共享相同紅線，Ilya Sutskever 讚許 Anthropic 立場。對所有在受監管環境中使用 AI 的企業而言，這是一個必須理解的里程碑事件。 0 Learning Objectives 理解法律爭議核心 10 USC 3252「供應鏈風險」條款的設計意圖 vs 實際應用，以及為何法律專家質疑此舉的合法性 掌握產業連鎖效應 從 $200M 合約到全產業衝擊：供應鏈風險認定如何波及所有 DoD 承包商及其 AI 工具選擇 建立企業 AI 治理框架 從 Anthropic 的「兩條紅線」策略中，提煉受監管產業（如 CDMO）AI 部署的決策原則 事件衝突結構：Terms of Service vs All Lawful Purposes Anthropic 立場 支持所有合法軍事用途 但排除監控 + 自主武器 灰色地帶 「合法」定義寬泛 現行法規未跟上 AI 能力 Pentagon 立場 軍方購買工具後 自行決定如何使用 1 Part I: 事件時間線與關鍵轉折 這場衝突並非一夜之間爆發。Anthropic 於 2024 年 6 月成為 首家在美軍機密網路部署 AI 模型的前沿 AI 公司 ，並在 2025 年 7 月簽下價值高達 2 億美元的國防部合約。然而，數月來關於使用條款的緊張談判逐漸升級。 \"As the first frontier AI company to deploy models in the US government's classified networks, Anthropic has supported American warfighters since June 2024.\" 轉折點出現在國防部使用 Claude 協助策劃 逮捕委內瑞拉總統 Maduro 的行動 ，引發 Anthropic 對使用邊界的擔憂。此後，國防部堅持要求 AI 公司同意其模型可用於「所有合法用途」，而 Anthropic 堅持保留兩項例外。 \"The DOD is insisting that all AI labs make their models available for 'all lawful purposes.'\" 2 月 25 日（週二），Hegseth 與 Amodei 在 Pentagon 面對面會談，氣氛據稱「禮貌而尊重」。但國防部隨後在週三晚間發出「最終報價」，並設定週五下午 5:01 為最後期限。Amodei 在週四發表聲明，表示 「我們無法憑良心同意他們的要求」 。 \"We cannot in good conscience accede to their request.\" — Dario Amodei, Feb 26, 2026 關鍵時間線 2024 年 6 月 Anthropic 首次在軍方"
   },
   {
     "docFile": "2026-02-28_claude-code-agent-tools.html",
@@ -13514,7 +13390,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🎯 理解 Agent Action Space（行動空間）設計的核心原則：工具應匹配模型能力 🔄 掌握 Progressive Disclosure（漸進式揭露）模式，以及如何用它擴展 Agent 功能而不增加工具數量 🔧 學會從具體案例中提取工具設計的迭代方法論，應用到自己的 Agent 建構場景 Agent Tool Design Evolution Framework 📝 Observe 觀察模型行為與輸出 → 🛠 Design 設計匹配能力的工具 → 🔍 Evaluate 測試模型是否「喜歡」使用 → 🔄 Evolve 隨能力升級而重新設計 Part I: Action Space 設計哲學"
+    "content": "理解 Agent Action Space（行動空間）設計的核心原則：工具應匹配模型能力 掌握 Progressive Disclosure（漸進式揭露）模式，以及如何用它擴展 Agent 功能而不增加工具數量 學會從具體案例中提取工具設計的迭代方法論，應用到自己的 Agent 建構場景 Agent Tool Design Evolution Framework Observe 觀察模型行為與輸出 Design 設計匹配能力的工具 Evaluate 測試模型是否「喜歡」使用 Evolve 隨能力升級而重新設計 Part I: Action Space 設計哲學"
   },
   {
     "docFile": "2026-02-28_claude-code-agent-tools.html",
@@ -13530,7 +13406,7 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "content-原文解析",
-    "sectionTitle": "📖 Content 原文解析",
+    "sectionTitle": "Content 原文解析",
     "content": "建構 Agent Harness（代理框架）最困難的部分之一，是 設計它的 Action Space（行動空間） 。Claude 透過 Tool Calling（工具呼叫）來執行動作，但工具可以有多種建構方式，包括 bash、skills、以及最近的 code execution（程式碼執行）。 \"One of the hardest parts of building an agent harness is constructing its action space. Claude acts through Tool Calling, but there are a number of ways tools can be constructed...\" 作者用了一個精彩的比喻：想像你被給予一道困難的數學題。你會想要什麼工具？ 這取決於你自己的能力 。紙張是最基本的，但你會受限於手動計算。計算機更好，但你需要知道如何操作進階功能。最快最強大的選項是電腦，但你必須知道如何寫程式。 \"To put myself in the mind of the model I like to imag"
   },
   {
@@ -13547,8 +13423,8 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "analysis-延伸分析",
-    "sectionTitle": "💡 Analysis 延伸分析",
-    "content": "💡 比喻說明 「工具要匹配能力」就像醫院分配手術設備一樣。你不會給實習醫生達文西機器手臂，也不會讓資深主刀只用剪刀。設備（工具）要匹配操作者的技能等級，太簡單會限制發揮，太複雜則會造成混亂。Agent 工具設計的邏輯完全一樣。 📚 核心概念：Action Space Action Space（行動空間）是 Agent 所有可用工具和操作的集合。設計得太窄，Agent 無法完成任務；設計得太寬，Agent 會在選擇中迷失。關鍵在於找到「剛好能力匹配」的甜蜜點 - 這與 Context Engineering（上下文工程）的核心思維一致：不是越多越好，而是越精準越好。 ⚠️ 重點提示 「Seeing like an agent」不只是比喻，而是一種實際的設計方法論。它要求開發者從模型的視角審視工具：當模型面對這個工具定義，它的 token probability distribution（詞元概率分佈）會怎麼反應？會不會產生困惑？這是 Prompt Engineering 和 Tool Design 的交叉點。 Part II: AskUserQuestion - 迭代工具設計的範例"
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "比喻說明 「工具要匹配能力」就像醫院分配手術設備一樣。你不會給實習醫生達文西機器手臂，也不會讓資深主刀只用剪刀。設備（工具）要匹配操作者的技能等級，太簡單會限制發揮，太複雜則會造成混亂。Agent 工具設計的邏輯完全一樣。 核心概念：Action Space Action Space（行動空間）是 Agent 所有可用工具和操作的集合。設計得太窄，Agent 無法完成任務；設計得太寬，Agent 會在選擇中迷失。關鍵在於找到「剛好能力匹配」的甜蜜點 - 這與 Context Engineering（上下文工程）的核心思維一致：不是越多越好，而是越精準越好。 重點提示 「Seeing like an agent」不只是比喻，而是一種實際的設計方法論。它要求開發者從模型的視角審視工具：當模型面對這個工具定義，它的 token probability distribution（詞元概率分佈）會怎麼反應？會不會產生困惑？這是 Prompt Engineering 和 Tool Design 的交叉點。 Part II: AskUserQuestion - 迭代工具設計的範例"
   },
   {
     "docFile": "2026-02-28_claude-code-agent-tools.html",
@@ -13564,7 +13440,7 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "content-原文解析",
-    "sectionTitle": "📖 Content 原文解析",
+    "sectionTitle": "Content 原文解析",
     "content": "在建造 AskUserQuestion 工具時，團隊的目標是 改善 Claude 提問的能力（Elicitation，引導資訊） 。雖然 Claude 可以用純文字提問，但團隊發現回答那些問題感覺花了不必要的時間。如何降低摩擦、提高使用者與 Claude 之間的溝通頻寬？ \"When building the AskUserQuestion tool, our goal was to improve Claude's ability to ask questions (often called elicitation)... How could we lower this friction and increase the bandwidth of communication?\" 嘗試 #1 - 修改 ExitPlanTool： 先嘗試在 ExitPlanTool 加入問題參數。但這讓 Claude 困惑，因為同時要求計畫和關於計畫的問題。如果使用者的答案與計畫衝突怎麼辦？ \"This confused Claude because we were simultaneously ask"
   },
   {
@@ -13581,8 +13457,8 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "analysis-延伸分析",
-    "sectionTitle": "💡 Analysis 延伸分析",
-    "content": "⚠️ 重點提示：三次迭代的教訓 這三次嘗試揭示了 Agent 工具設計的核心法則： 1. 職責分離 - 一個工具不要同時承擔多個功能（計畫 + 提問 = 混亂） 2. 結構化優於自由格式 - Tool Calling 的 structured output 比改造文本格式更可靠 3. 模型親和性 - 工具設計的最終評判標準不是人類覺得合理，而是模型能否穩定呼叫 🛠️ 實務應用 CDMO 場景映射： 這跟製藥偏差調查（Deviation Investigation）的 Root Cause 流程很像。你不會讓調查員在一張表單上同時做 5W1H 分析和 CAPA 規劃 - 這會混淆焦點。正確做法是先完成調查，再開 CAPA。Agent 工具設計遵循相同的「單一職責」原則。 📚 核心概念：Elicitation Elicitation（引導資訊提取）是 Agent 與使用者互動的關鍵能力。好的 Elicitation 降低了「人類必須知道如何精確描述需求」的門檻。這是 Copilot Mode（協作模式）的核心價值：Agent 主動問對的問題，而不是被動等待完美的 Prompt。 Par"
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "重點提示：三次迭代的教訓 這三次嘗試揭示了 Agent 工具設計的核心法則： 1. 職責分離 - 一個工具不要同時承擔多個功能（計畫 + 提問 = 混亂） 2. 結構化優於自由格式 - Tool Calling 的 structured output 比改造文本格式更可靠 3. 模型親和性 - 工具設計的最終評判標準不是人類覺得合理，而是模型能否穩定呼叫 實務應用 CDMO 場景映射： 這跟製藥偏差調查（Deviation Investigation）的 Root Cause 流程很像。你不會讓調查員在一張表單上同時做 5W1H 分析和 CAPA 規劃 - 這會混淆焦點。正確做法是先完成調查，再開 CAPA。Agent 工具設計遵循相同的「單一職責」原則。 核心概念：Elicitation Elicitation（引導資訊提取）是 Agent 與使用者互動的關鍵能力。好的 Elicitation 降低了「人類必須知道如何精確描述需求」的門檻。這是 Copilot Mode（協作模式）的核心價值：Agent 主動問對的問題，而不是被動等待完美的 Prompt。 Part III: Tas"
   },
   {
     "docFile": "2026-02-28_claude-code-agent-tools.html",
@@ -13598,7 +13474,7 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "content-原文解析",
-    "sectionTitle": "📖 Content 原文解析",
+    "sectionTitle": "Content 原文解析",
     "content": "Claude Code 初次推出時，團隊意識到模型需要一個 Todo List（待辦清單）來保持方向。可以在開始時寫下任務，完成後勾選。為此他們給了 Claude 一個 TodoWrite 工具。 \"When we first launched Claude Code, we realized that the model needed a Todo list to keep it on track.\" 但即使如此，Claude 經常忘記自己該做什麼。為了適應，團隊 每 5 個回合插入系統提醒 。 \"We inserted system reminders every 5 turns that reminded Claude of its goal.\" 但隨著模型進步，它們不僅不需要被提醒 Todo List，而且可能發現它是 限制 。被發送 Todo List 提醒會讓 Claude 認為必須嚴格遵循清單，而不是修改它。團隊也看到 Opus 4.5 在使用 Subagent（子代理）方面大幅進步，但子代理如何在共享的 Todo List 上協作？ \"Being sent remind"
   },
   {
@@ -13615,8 +13491,8 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "analysis-延伸分析",
-    "sectionTitle": "💡 Analysis 延伸分析",
-    "content": "⚠️ 重點提示：工具退化法則 這是本文最深刻的洞察之一： 曾經必要的工具，可能因為模型進步而成為束縛 。「每 5 回合提醒」這個設計在弱模型時代是必要的拐杖，但在強模型時代變成了牢籠。 啟示：你為 AI 設計的任何流程或 Prompt，都應該有「到期日」的概念 - 定期重新評估是否還需要這些 guardrails（護欄）。 💡 比喻說明 Todo 到 Task 的演進，就像從個人的紙本待辦清單，升級到團隊的專案管理系統（如 Asana 或 Jira）。個人清單只需要「做/沒做」，但團隊協作需要依賴關係、狀態更新、分工分配。當模型從「單一 Agent」進化到「多 Agent 協作」，工具也必須跟著進化。 🛠️ 實務應用 對你的 AI 工具策略的啟示： 你目前的 Master Prompt 已到 v1.4.3，這正是「隨能力演化工具」的最佳實踐。建議設定季度回顧：哪些 prompt 指令是因為早期模型限制而加入的？隨著 Claude 能力提升，哪些規則可以簡化或移除？ Part IV: Search & Progressive Disclosure - 讓 Agent 自己建構 Con"
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "重點提示：工具退化法則 這是本文最深刻的洞察之一： 曾經必要的工具，可能因為模型進步而成為束縛 。「每 5 回合提醒」這個設計在弱模型時代是必要的拐杖，但在強模型時代變成了牢籠。 啟示：你為 AI 設計的任何流程或 Prompt，都應該有「到期日」的概念 - 定期重新評估是否還需要這些 guardrails（護欄）。 比喻說明 Todo 到 Task 的演進，就像從個人的紙本待辦清單，升級到團隊的專案管理系統（如 Asana 或 Jira）。個人清單只需要「做/沒做」，但團隊協作需要依賴關係、狀態更新、分工分配。當模型從「單一 Agent」進化到「多 Agent 協作」，工具也必須跟著進化。 實務應用 對你的 AI 工具策略的啟示： 你目前的 Master Prompt 已到 v1.4.3，這正是「隨能力演化工具」的最佳實踐。建議設定季度回顧：哪些 prompt 指令是因為早期模型限制而加入的？隨著 Claude 能力提升，哪些規則可以簡化或移除？ Part IV: Search & Progressive Disclosure - 讓 Agent 自己建構 Context"
   },
   {
     "docFile": "2026-02-28_claude-code-agent-tools.html",
@@ -13632,7 +13508,7 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "content-原文解析",
-    "sectionTitle": "📖 Content 原文解析",
+    "sectionTitle": "Content 原文解析",
     "content": "Claude Code 最初使用 RAG 向量資料庫來為 Claude 找上下文。雖然 RAG 強大且快速，但它需要索引和設定，在不同環境中可能很脆弱。更重要的是， Claude 是被動接收上下文，而不是主動尋找上下文 。 \"Claude was given this context instead of finding the context itself.\" 如果 Claude 能在網路上搜尋，為什麼不能搜尋你的程式碼庫？透過給 Claude 一個 Grep 工具，團隊讓它自己搜尋檔案並建構上下文。 隨著 Claude 變聰明，它越來越擅長在有正確工具的情況下自行建構上下文。 \"By giving Claude a Grep tool, we could let it search for files and build context itself.\" 當團隊引入 Agent Skills 時，他們正式化了 Progressive Disclosure（漸進式揭露） 的概念。Claude 可以讀取 Skill 檔案，那些檔案再引用其他檔案，模型可以遞迴地讀取。事實上，Skills"
   },
   {
@@ -13649,8 +13525,8 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "analysis-延伸分析",
-    "sectionTitle": "💡 Analysis 延伸分析",
-    "content": "📚 核心概念：Progressive Disclosure Progressive Disclosure（漸進式揭露）是本文最值得深入理解的概念。它的精髓是： 不要一次把所有資訊塞給 Agent，而是讓它按需探索 。 這與你的 Context Engineering 核心原則完全一致：「不是越多越好，而是越精準越好」。Skill 檔案就是 Progressive Disclosure 的實際載體 - Agent 先讀入口檔，按需載入深層資訊。 ⚠️ 重點提示：RAG vs Agent Search 從 RAG 到 Grep 的轉變揭示了一個重要趨勢： 被動的上下文注入正在被主動的上下文建構取代 。RAG 是「系統決定什麼是相關的」，而 Agent Search 是「模型自己決定什麼是相關的」。隨著模型推理能力增強，後者往往更準確。 🛠️ 實務應用 你的 Claude Projects 就是 Progressive Disclosure： Project Knowledge 檔案是入口層，對話中的追問是探索層。你的 CDMO 可行性評估 Skill 正是這個模式 - Claude 先"
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "核心概念：Progressive Disclosure Progressive Disclosure（漸進式揭露）是本文最值得深入理解的概念。它的精髓是： 不要一次把所有資訊塞給 Agent，而是讓它按需探索 。 這與你的 Context Engineering 核心原則完全一致：「不是越多越好，而是越精準越好」。Skill 檔案就是 Progressive Disclosure 的實際載體 - Agent 先讀入口檔，按需載入深層資訊。 重點提示：RAG vs Agent Search 從 RAG 到 Grep 的轉變揭示了一個重要趨勢： 被動的上下文注入正在被主動的上下文建構取代 。RAG 是「系統決定什麼是相關的」，而 Agent Search 是「模型自己決定什麼是相關的」。隨著模型推理能力增強，後者往往更準確。 實務應用 你的 Claude Projects 就是 Progressive Disclosure： Project Knowledge 檔案是入口層，對話中的追問是探索層。你的 CDMO 可行性評估 Skill 正是這個模式 - Claude 先讀 SKILL.md"
   },
   {
     "docFile": "2026-02-28_claude-code-agent-tools.html",
@@ -13666,7 +13542,7 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "content-原文解析",
-    "sectionTitle": "📖 Content 原文解析",
+    "sectionTitle": "Content 原文解析",
     "content": "Claude Code 目前有大約 20 個工具，團隊不斷自問是否需要全部。 增加新工具的門檻很高，因為這會讓模型多一個需要考慮的選項 。 \"Claude Code currently has ~20 tools, and we are constantly asking ourselves if we need all of them.\" 例如，團隊注意到 Claude 不夠了解如何使用 Claude Code 本身。他們可以把所有資訊放進系統提示，但因為使用者很少問這類問題，這會造成 Context Rot（上下文腐爛） 並干擾 Claude Code 的主要工作：寫程式。 \"It would have added context rot and interfered with Claude Code's main job: writing code.\" 取而代之的是，他們嘗試了 Progressive Disclosure 的另一種形式： 建立了 Claude Code Guide Subagent（子代理） ，當你問關於 Claude Code 本身的問題時會被呼叫。這個子代理"
   },
   {
@@ -13683,8 +13559,8 @@ const searchIndex = [
       "LLM"
     ],
     "sectionId": "analysis-延伸分析",
-    "sectionTitle": "💡 Analysis 延伸分析",
-    "content": "⚠️ 重點提示：Context Rot Context Rot（上下文腐爛）是一個非常重要的概念：當你把「偶爾才需要」的資訊永久放進系統提示時，它不只佔用 token 空間，還會 干擾模型對核心任務的注意力分配 。這就是為什麼你的 Master Prompt 系統使用 Project Knowledge 而不是把一切塞進系統提示 - 按需載入永遠優於預先載入。 ⚖️ 工具比較：擴展 Action Space 的三種策略 1. 新增工具 - 最直接，但每增一個都增加模型認知負擔 2. Subagent 委派 - 主 Agent 保持輕量，專業任務交給子 Agent 3. Progressive Disclosure - 透過 Skill 檔案和文件連結，讓 Agent 按需探索 Claude Code 團隊明顯偏好 #2 和 #3。這也是目前 AI Agent 架構的主流趨勢。 💡 比喻說明 「藝術而非科學」這個結論很重要。就像 GMP 驗證一樣 - 你有 IQ/OQ/PQ 框架，但每一次驗證的具體判斷仍然需要專業經驗。Agent 工具設計有框架（觀察 > 設計 > 評估 > 迭代），"
+    "sectionTitle": "Analysis 延伸分析",
+    "content": "重點提示：Context Rot Context Rot（上下文腐爛）是一個非常重要的概念：當你把「偶爾才需要」的資訊永久放進系統提示時，它不只佔用 token 空間，還會 干擾模型對核心任務的注意力分配 。這就是為什麼你的 Master Prompt 系統使用 Project Knowledge 而不是把一切塞進系統提示 - 按需載入永遠優於預先載入。 工具比較：擴展 Action Space 的三種策略 1. 新增工具 - 最直接，但每增一個都增加模型認知負擔 2. Subagent 委派 - 主 Agent 保持輕量，專業任務交給子 Agent 3. Progressive Disclosure - 透過 Skill 檔案和文件連結，讓 Agent 按需探索 Claude Code 團隊明顯偏好 #2 和 #3。這也是目前 AI Agent 架構的主流趨勢。 比喻說明 「藝術而非科學」這個結論很重要。就像 GMP 驗證一樣 - 你有 IQ/OQ/PQ 框架，但每一次驗證的具體判斷仍然需要專業經驗。Agent 工具設計有框架（觀察 > 設計 > 評估 > 迭代），但具體決策沒有萬用"
   },
   {
     "docFile": "2026-02-28_claude-code-agent-tools.html",
@@ -13750,7 +13626,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🧪 Skills 效果衡量 理解 Curated vs Self-generated Skills 的量化差異，以及為何三條件對照實驗設計是關鍵 🎯 Skills 設計原則 掌握「2-3 個聚焦 Skills」優於「大量文件」的實證依據，以及最佳 Skills 結構 💰 成本-性能取捨 學會用小模型+Skills 替代大模型，理解 Skills 如何改變模型規模經濟學 SkillsBench 三條件評估框架 🚫 Vanilla 無 Skills 基線 → 📝 Curated Skills 人工策劃 +16.2pp → 🤖 Self-Generated 模型自生 ~0pp → ✅ Deterministic Verify 程式化 Pass/Fail"
+    "content": "Skills 效果衡量 理解 Curated vs Self-generated Skills 的量化差異，以及為何三條件對照實驗設計是關鍵 Skills 設計原則 掌握「2-3 個聚焦 Skills」優於「大量文件」的實證依據，以及最佳 Skills 結構 成本-性能取捨 學會用小模型+Skills 替代大模型，理解 Skills 如何改變模型規模經濟學 SkillsBench 三條件評估框架 Vanilla 無 Skills 基線 Curated Skills 人工策劃 +16.2pp Self-Generated 模型自生 ~0pp Deterministic Verify 程式化 Pass/Fail"
   },
   {
     "docFile": "2026-03-01_skillsbench-agent-skills.html",
@@ -13830,7 +13706,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "📊 Curated Skills 有效但非萬能 平均 +16.2pp 的提升很顯著，但領域差異從 +4.5pp 到 +51.9pp，且 16/84 個任務出現負效果。Skills 部署需要領域特定策略，不是「裝了就好」。 🚨 AI 無法自行撰寫有效 Skills Self-generated Skills 效果約等於零。這是對「完全自主 AI Agent」願景的現實校正 -- 程序性知識必須由人類專家策劃，至少在目前階段如此。 ✂️ Less is More -- 2-3 個 Skills 最佳 Compact Skills (+18.9pp) 比 comprehensive documentation (+5.7pp) 強近 4 倍。聚焦的 SKILL.md 加上可執行範例，優於堆砌大量文件。Agent 跟人一樣：太多資訊反而處理不好。 💱 Skills 改變模型規模經濟學 Haiku + Skills 超越 Opus without Skills。這意味著投資在 Skills 策劃可能比升級到更貴的模型更划算，對成本敏感的企業部署尤其重要。"
+    "content": "Curated Skills 有效但非萬能 平均 +16.2pp 的提升很顯著，但領域差異從 +4.5pp 到 +51.9pp，且 16/84 個任務出現負效果。Skills 部署需要領域特定策略，不是「裝了就好」。 AI 無法自行撰寫有效 Skills Self-generated Skills 效果約等於零。這是對「完全自主 AI Agent」願景的現實校正 -- 程序性知識必須由人類專家策劃，至少在目前階段如此。 Less is More -- 2-3 個 Skills 最佳 Compact Skills (+18.9pp) 比 comprehensive documentation (+5.7pp) 強近 4 倍。聚焦的 SKILL.md 加上可執行範例，優於堆砌大量文件。Agent 跟人一樣：太多資訊反而處理不好。 Skills 改變模型規模經濟學 Haiku + Skills 超越 Opus without Skills。這意味著投資在 Skills 策劃可能比升級到更貴的模型更划算，對成本敏感的企業部署尤其重要。"
   },
   {
     "docFile": "2026-03-01_skillsbench-agent-skills.html",
@@ -13894,7 +13770,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "《華爾街日報》訪問了五位 AI 產業領袖，詢問他們如何建議自己的孩子面對未來職涯。受訪者包括 Paid.AI、SAP、Wharton、Microsoft、Anthropic 的高階主管或學者。共同浮現的關鍵詞： 彈性 (Flexibility) 、 能力組合 (Skill Combinations) 、 元認知 (Metacognition) 、 責任 (Accountability) 、 同理心 (Empathy) 。這些不是特定技能，而是在變動環境中維持調整空間的結構性能力。 Learning Objectives 🎯 辨識 AI 時代的「韌性能力」 理解五位高管建議背後的共同模式：不押注特定技術，而是培養可轉移的結構性能力。 💡 連結到 CDMO 產業情境 將「責任」「監管判斷」「能力組合」對應到製藥業的 O-Ring 瓶頸，理解為何高門檻產業的人類價值更突出。 ⚖ 批判性檢視「特權視角」 辨識這些建議的適用條件與限制：誰有資源培養這些能力？在不同經濟基礎下，策略如何調整？ Five Pillars of AI-Era Career Resilience ⚡ Flexibility 適應變動 Hanke / SAP + 🧩 Skill Mix 能力組合 Mollick / Wharton + 🧠 Metacognition 元認知 Teevan / Microsoft + 📝 Accountability 責任承擔 Teevan / Medina + 🤝 Empathy 人類連結 Amodei / Anthropic Part I ~ V: 五位 AI 領袖的建議 Part I Manny Medina (Paid.AI) -- 產業與價值 Medina 在報導中提到 能源與醫療 ，特別講到核能（\"the atom\"）以及核醫學。他的孩子也投入相關領域。他給孩子三個判準：你喜歡嗎？你擅長嗎？它對別人有用嗎？ He mentioned energy and healthcare, specifically nuclear energy (\"the atom\") and nuclear medicine. His three criteria: Do you like it? Are you good at it? Is it useful to other people? 這三個問題放在任何時代都成立，但放回他談的兩個產業背景，味道就不一樣了。能源與醫療有幾個共同特徵： 需求長期存在、牽涉安全與監管、專業門檻高、社會價值難以被一筆勾銷 。 These three questions work in any era, but placed against the industries he mentioned — energy and healthcare — they carry a different weight: long-term demand, safety/regulatory complexity, high barriers, enduring social value. 換成職涯語言：先選擇一個 長期仍會被需要的世界 ，再把自己的能力與價值放進去。三個判準看似簡單，其實是一套篩選方式：你會不會願意投入？投入後能不能站得住？站得住之後能不能對別人有用？ In career terms: first choose a world that will still be needed long-term, then pl"
+    "content": "《華爾街日報》訪問了五位 AI 產業領袖，詢問他們如何建議自己的孩子面對未來職涯。受訪者包括 Paid.AI、SAP、Wharton、Microsoft、Anthropic 的高階主管或學者。共同浮現的關鍵詞： 彈性 (Flexibility) 、 能力組合 (Skill Combinations) 、 元認知 (Metacognition) 、 責任 (Accountability) 、 同理心 (Empathy) 。這些不是特定技能，而是在變動環境中維持調整空間的結構性能力。 Learning Objectives 辨識 AI 時代的「韌性能力」 理解五位高管建議背後的共同模式：不押注特定技術，而是培養可轉移的結構性能力。 連結到 CDMO 產業情境 將「責任」「監管判斷」「能力組合」對應到製藥業的 O-Ring 瓶頸，理解為何高門檻產業的人類價值更突出。 批判性檢視「特權視角」 辨識這些建議的適用條件與限制：誰有資源培養這些能力？在不同經濟基礎下，策略如何調整？ Five Pillars of AI-Era Career Resilience Flexibility 適應變動 Hanke / SAP + Skill Mix 能力組合 Mollick / Wharton + Metacognition 元認知 Teevan / Microsoft + Accountability 責任承擔 Teevan / Medina + Empathy 人類連結 Amodei / Anthropic Part I ~ V: 五位 AI 領袖的建議 Part I Manny Medina (Paid.AI) -- 產業與價值 Medina 在報導中提到 能源與醫療 ，特別講到核能（\"the atom\"）以及核醫學。他的孩子也投入相關領域。他給孩子三個判準：你喜歡嗎？你擅長嗎？它對別人有用嗎？ He mentioned energy and healthcare, specifically nuclear energy (\"the atom\") and nuclear medicine. His three criteria: Do you like it? Are you good at it? Is it useful to other people? 這三個問題放在任何時代都成立，但放回他談的兩個產業背景，味道就不一樣了。能源與醫療有幾個共同特徵： 需求長期存在、牽涉安全與監管、專業門檻高、社會價值難以被一筆勾銷 。 These three questions work in any era, but placed against the industries he mentioned — energy and healthcare — they carry a different weight: long-term demand, safety/regulatory complexity, high barriers, enduring social value. 換成職涯語言：先選擇一個 長期仍會被需要的世界 ，再把自己的能力與價值放進去。三個判準看似簡單，其實是一套篩選方式：你會不會願意投入？投入後能不能站得住？站得住之後能不能對別人有用？ In career terms: first choose a world that will still be needed long-term, then place your skills and va"
   },
   {
     "docFile": "2026-03-05_claude-code-scraping-nine-ways.html",
@@ -13916,7 +13792,7 @@ const searchIndex = [
     "docFile": "2026-03-06_labor-market-ai-impact.html",
     "docTitle": "AI 勞動市場影響 - Observed Exposure 新指標",
     "docDate": "2026-03-06",
-    "docSource": "Massenkoff &amp; McCrory / Anthropic Research",
+    "docSource": "Massenkoff & McCrory / Anthropic Research",
     "docRating": 4.4,
     "docTags": [
       "Anthropic-Eng",
@@ -13927,7 +13803,7 @@ const searchIndex = [
     ],
     "sectionId": "main",
     "sectionTitle": "Main Content",
-    "content": "Anthropic-Eng Research Analysis LLM Framework AI 勞動市場影響：新衡量指標與初步證據 Labor Market Impacts of AI: A New Measure and Early Evidence Massenkoff & McCrory / Anthropic Research | 2026-03-05 Executive Summary ★★★★☆ 4.4/5 ↑ Research Methodology, Framework Rigor ↓ Practical Tools, Single-Platform Bias Anthropic 研究團隊提出一個全新的 AI 就業影響衡量框架： Observed Exposure（觀測曝險度） 。不同於過去純粹基於理論可行性的預測，這個指標結合了 LLM 理論能力（來自 Eloundou et al. 的 beta 指標）與 Claude 平台的真實使用數據，並加權「自動化用途」高於「增強用途」。 核心發現： AI 遠未達到理論能力天花板 -- 實際覆蓋率只是理論可行範圍的一小部分。電腦程式設計師以 75% 覆蓋率居首，客服代表和資料輸入員緊隨其後。目前沒有發現高曝險職業的系統性失業增加，但有初步跡象顯示 22-25 歲年輕人進入高曝險職業的 招聘速度正在放緩 。 Learning Objectives 📊 理解 Observed Exposure 指標的構建邏輯：理論能力 x 實際使用 x 自動化權重 🔍 掌握「理論可行 vs 實際採用」之間的差距，及其對 AI 衝擊預測的啟示 ⚖ 評估研究方法論的優勢與局限，特別是單一平台數據的代表性問題 Observed Exposure Framework 📚 O*NET Tasks 800 職業的任務清單 → 🔬 Theoretical Beta Eloundou et al. LLM 可行性 → 📈 Claude Usage Economic Index 實際使用 → 🎯 Observed Exposure 加權自動化 > 增強 Content Part I 研究動機：為什麼過去的預測方法不夠好 AI 的快速擴散正引發大量研究試圖衡量和預測其對勞動市場的影響。但 過去的方法記錄讓人需要保持謙遜 。 The rapid diffusion of AI is generating a wave of research measuring and forecasting its impacts on labor markets. But the track record of past approaches gives reason for humility. 例如，一個知名的「工作可離岸外包性」研究認定約四分之一的美國工作面臨風險，但十年後，這些工作大多仍維持健康的就業成長。政府自己的職業成長預測雖然方向正確，但預測價值 幾乎沒有超過簡單的線性外推 。 A prominent attempt to measure job offshorability identified roughly a quarter of US jobs as vulnerable, but a decade on, most of those jobs maintained healthy employment growth. The government's own occupational growth for"
+    "content": "Anthropic-Eng Research Analysis LLM Framework AI 勞動市場影響：新衡量指標與初步證據 Labor Market Impacts of AI: A New Measure and Early Evidence Massenkoff & McCrory / Anthropic Research | 2026-03-05 Executive Summary 4.4/5 Research Methodology, Framework Rigor Practical Tools, Single-Platform Bias Anthropic 研究團隊提出一個全新的 AI 就業影響衡量框架： Observed Exposure（觀測曝險度） 。不同於過去純粹基於理論可行性的預測，這個指標結合了 LLM 理論能力（來自 Eloundou et al. 的 beta 指標）與 Claude 平台的真實使用數據，並加權「自動化用途」高於「增強用途」。 核心發現： AI 遠未達到理論能力天花板 -- 實際覆蓋率只是理論可行範圍的一小部分。電腦程式設計師以 75% 覆蓋率居首，客服代表和資料輸入員緊隨其後。目前沒有發現高曝險職業的系統性失業增加，但有初步跡象顯示 22-25 歲年輕人進入高曝險職業的 招聘速度正在放緩 。 Learning Objectives 理解 Observed Exposure 指標的構建邏輯：理論能力 x 實際使用 x 自動化權重 掌握「理論可行 vs 實際採用」之間的差距，及其對 AI 衝擊預測的啟示 評估研究方法論的優勢與局限，特別是單一平台數據的代表性問題 Observed Exposure Framework O*NET Tasks 800 職業的任務清單 Theoretical Beta Eloundou et al. LLM 可行性 Claude Usage Economic Index 實際使用 Observed Exposure 加權自動化 > 增強 Content Part I 研究動機：為什麼過去的預測方法不夠好 AI 的快速擴散正引發大量研究試圖衡量和預測其對勞動市場的影響。但 過去的方法記錄讓人需要保持謙遜 。 The rapid diffusion of AI is generating a wave of research measuring and forecasting its impacts on labor markets. But the track record of past approaches gives reason for humility. 例如，一個知名的「工作可離岸外包性」研究認定約四分之一的美國工作面臨風險，但十年後，這些工作大多仍維持健康的就業成長。政府自己的職業成長預測雖然方向正確，但預測價值 幾乎沒有超過簡單的線性外推 。 A prominent attempt to measure job offshorability identified roughly a quarter of US jobs as vulnerable, but a decade on, most of those jobs maintained healthy employment growth. The government's own occupational growth forecasts have added little predictive "
   },
   {
     "docFile": "2026-03-06_morris-discovering-talent.html",
@@ -13941,7 +13817,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.6/5 ↑ 學習曲線, 實務應用 ↓ 技術深度, 工具生態 Morris 重新定義天賦：不是「天生就會」，而是「更容易變強的方向」。提出三個自我觀察方法——注意力方向、「過度」特質轉化、停不下來的行為——作為天賦發現的線索。核心觀點是認知優勢（理解速度）× 興趣偏好（投入動力）× 時間複利（成長速度）三者疊加形成真正的天賦。文章結構清晰、比喻易懂，但缺乏實證研究支撐和具體工具框架。適合作為自我反思的起點，但需要搭配更系統化的評估方法。 Learning Objectives 🔍 重新理解天賦定義 區分「天生就會」vs.「更容易變強的方向」，建立成長型天賦觀 🧭 掌握三個自我觀察法 注意力追蹤、過度特質轉化、自發投入辨識 📈 連結複利效應思維 理解天賦 × 時間如何產生指數級成長差距 天賦發現與放大模型 🔍 觀察信號 注意力 / 過度特質 / 停不下來 → 🔄 驗證匹配 理解速度 / 投入動力 / 成長曲線 → 📊 持續積累 時間複利 / 優勢放大 / 差距顯現 Part I 天賦的真正定義：更容易變強的方向 天賦並不是某種神秘的、與生俱來的超能力。更準確地說，天賦是一種 認知優勢和興趣偏好的結合 。它意味著在某個領域中，你理解問題的速度更快、投入的動力更強、積累能力更高。 \"天赋并不是某种神秘的、与生俱来的超能力。更准确地说，天赋是一种认知优势和兴趣偏好的结合。它意味着在某个领域中，你理解问题的速度更快、投入的动力更强、积累能力更高。\" 天賦的三個特徵：第一，你在某些事情上 理解得比別人更快 ；第二，你在某些事情上更容易持續投入；第三，你在某些領域的成長速度明顯更快。當這三個因素疊加時，就形成了一種複合優勢。 \"简单来说，天赋往往表现为三个特征：第一，你在某些事情上理解得比别人更快。...第二，你在某些事情上更容易持续投入。...第三，你在某些领域的成长速度明显更快。\" 📚 核心概念 天賦三要素模型： 1. 理解速度 — 同樣內容，你比別人更快抓住核心 2. 投入動力 — 別人覺得累，你覺得有趣 3. 成長斜率 — 同樣時間投入，你的能力曲線更陡 這三者不是獨立運作，而是交互放大：理解快 → 更有成就感 → 更願意投入 → 成長更快 → 形成正向飛輪。 💡 比喻說明 想像學習一門技能像是在不同地形上跑步。天賦不是讓你跑得比別人快（那是訓練），而是讓你跑在 下坡路 上——同樣的努力，你前進的距離就是比在平地上跑的人更遠。問題在於，很多人還沒找到自己的「下坡路」在哪裡。 Part II 為什麼很多人的天賦沒有從小被發現 在學校教育中，最被強調的是考試成績，而考試主要考察的是記憶能力、理解能力和標準化解題能力。但人的 能力結構非常多樣 ，比如洞察力、創造力、系統思維、溝通能力、空間想象力等，這些能力往往很難在標準化考試中體現出來。 \"在学校教育中，最被强调的是考试成绩，而考试主要考察的是记忆能力、理解能力和标准化解题能力。但人的能力结构非常多样，比如洞察力、创造力、系统思维、沟通能力、空间想象力等，这些能力往往很难在标准化考试中体现出来。\" 很多天賦需要長期積累才能顯現。例如寫作能力、商業判斷力、戰略思維、研究能力等，這些能力通常需要大量閱讀、觀察和實踐。而且，很多人早期接觸的領域太少，如果從未接觸過某個領域，自然也很難發現自己在這個領域是否有優勢。 \"很多天赋需要长期积累才能显现。例如写作能力、商业判断力、战略思维、研究能力等...很多人早期接触的领域太少。如果一个人从未接触过某个领域，自然也很难发现自己在这个领域是否"
+    "content": "★★★★☆ 3.6/5 ↑ 學習曲線, 實務應用 ↓ 技術深度, 工具生態 Morris 重新定義天賦：不是「天生就會」，而是「更容易變強的方向」。提出三個自我觀察方法——注意力方向、「過度」特質轉化、停不下來的行為——作為天賦發現的線索。核心觀點是認知優勢（理解速度）× 興趣偏好（投入動力）× 時間複利（成長速度）三者疊加形成真正的天賦。文章結構清晰、比喻易懂，但缺乏實證研究支撐和具體工具框架。適合作為自我反思的起點，但需要搭配更系統化的評估方法。 Learning Objectives 重新理解天賦定義 區分「天生就會」vs.「更容易變強的方向」，建立成長型天賦觀 掌握三個自我觀察法 注意力追蹤、過度特質轉化、自發投入辨識 連結複利效應思維 理解天賦 × 時間如何產生指數級成長差距 天賦發現與放大模型 觀察信號 注意力 / 過度特質 / 停不下來 驗證匹配 理解速度 / 投入動力 / 成長曲線 持續積累 時間複利 / 優勢放大 / 差距顯現 Part I 天賦的真正定義：更容易變強的方向 天賦並不是某種神秘的、與生俱來的超能力。更準確地說，天賦是一種 認知優勢和興趣偏好的結合 。它意味著在某個領域中，你理解問題的速度更快、投入的動力更強、積累能力更高。 \"天赋并不是某种神秘的、与生俱来的超能力。更准确地说，天赋是一种认知优势和兴趣偏好的结合。它意味着在某个领域中，你理解问题的速度更快、投入的动力更强、积累能力更高。\" 天賦的三個特徵：第一，你在某些事情上 理解得比別人更快 ；第二，你在某些事情上更容易持續投入；第三，你在某些領域的成長速度明顯更快。當這三個因素疊加時，就形成了一種複合優勢。 \"简单来说，天赋往往表现为三个特征：第一，你在某些事情上理解得比别人更快。...第二，你在某些事情上更容易持续投入。...第三，你在某些领域的成长速度明显更快。\" 核心概念 天賦三要素模型： 1. 理解速度 — 同樣內容，你比別人更快抓住核心 2. 投入動力 — 別人覺得累，你覺得有趣 3. 成長斜率 — 同樣時間投入，你的能力曲線更陡 這三者不是獨立運作，而是交互放大：理解快 → 更有成就感 → 更願意投入 → 成長更快 → 形成正向飛輪。 比喻說明 想像學習一門技能像是在不同地形上跑步。天賦不是讓你跑得比別人快（那是訓練），而是讓你跑在 下坡路 上——同樣的努力，你前進的距離就是比在平地上跑的人更遠。問題在於，很多人還沒找到自己的「下坡路」在哪裡。 Part II 為什麼很多人的天賦沒有從小被發現 在學校教育中，最被強調的是考試成績，而考試主要考察的是記憶能力、理解能力和標準化解題能力。但人的 能力結構非常多樣 ，比如洞察力、創造力、系統思維、溝通能力、空間想象力等，這些能力往往很難在標準化考試中體現出來。 \"在学校教育中，最被强调的是考试成绩，而考试主要考察的是记忆能力、理解能力和标准化解题能力。但人的能力结构非常多样，比如洞察力、创造力、系统思维、沟通能力、空间想象力等，这些能力往往很难在标准化考试中体现出来。\" 很多天賦需要長期積累才能顯現。例如寫作能力、商業判斷力、戰略思維、研究能力等，這些能力通常需要大量閱讀、觀察和實踐。而且，很多人早期接觸的領域太少，如果從未接觸過某個領域，自然也很難發現自己在這個領域是否有優勢。 \"很多天赋需要长期积累才能显现。例如写作能力、商业判断力、战略思维、研究能力等...很多人早期接触的领域太少。如果一个人从未接触过某个领域，自然也很难发现自己在这个领域是否有优势。\" 重點提示 天賦被隱藏的三個原因： 1. 評價"
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -13957,7 +13833,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.6/5 ↑ 實務應用, 工具生態 ↓ 技術深度, 學習曲線 Yanhua 以超過一年、100+ 小時的 Claude 使用經驗，寫成一篇針對新手到中階用戶的全面入門指南。文章涵蓋 Claude 與 ChatGPT 的產品設計差異、三級訂閱方案比較、三段式 Prompt 公式、三模型選擇策略（Sonnet/Opus/Haiku）、基礎功能（Connectors、Projects、Research Mode）、以及進階工具鏈（Claude Code、Cowork、Skills）。 文章最大價值在於提供了一個 經過實戰驗證的使用框架 ：從「問答工具」進化到「工作流核心」。但技術深度偏淺，對有經驗的用戶而言屬於查漏補缺的定位。適合作為推薦給同事或剛接觸 AI 的朋友的「第一篇 Claude 文章」。 Learning Objectives 📊 訂閱決策框架 理解 Free / Pro / Max 三級方案差異，根據使用強度做出合理訂閱決策 🎯 三段式 Prompt 公式 掌握 Context + Task + Rules 提示工程框架，提升 90% 的輸出品質 🔧 進階工"
+    "content": "★★★★☆ 3.6/5 實務應用, 工具生態 技術深度, 學習曲線 Yanhua 以超過一年、100+ 小時的 Claude 使用經驗，寫成一篇針對新手到中階用戶的全面入門指南。文章涵蓋 Claude 與 ChatGPT 的產品設計差異、三級訂閱方案比較、三段式 Prompt 公式、三模型選擇策略（Sonnet/Opus/Haiku）、基礎功能（Connectors、Projects、Research Mode）、以及進階工具鏈（Claude Code、Cowork、Skills）。 文章最大價值在於提供了一個 經過實戰驗證的使用框架 ：從「問答工具」進化到「工作流核心」。但技術深度偏淺，對有經驗的用戶而言屬於查漏補缺的定位。適合作為推薦給同事或剛接觸 AI 的朋友的「第一篇 Claude 文章」。 Learning Objectives 訂閱決策框架 理解 Free / Pro / Max 三級方案差異，根據使用強度做出合理訂閱決策 三段式 Prompt 公式 掌握 Context + Task + Rules 提示工程框架，提升 90% 的輸出品質 進階工具鏈 了解 Claude "
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -13973,7 +13849,7 @@ const searchIndex = [
     ],
     "sectionId": "part-i-claude-與-chatgpt-的本質差異",
     "sectionTitle": "Part I: Claude 與 ChatGPT 的本質差異",
-    "content": "最本質的區別在於： ChatGPT 告訴你怎麼做，Claude 直接幫你做 。你讓 ChatGPT「幫我搭一個博客網站」，它會給你一份詳細的步驟說明。你讓 Claude Code 做同樣的事，它會直接打開你的專案目錄，建立檔案，寫程式碼，跑起來，遇到報錯自己修復。 \"ChatGPT tells you how to do things, Claude actually does them for you... The gap isn't in model intelligence, but in product design philosophy.\" 差距不在模型智力，在 產品設計哲學 。Anthropic 從第一天就奔著「幫你幹活」去的，回答問題只是順帶的事。 \"Anthropic from day one was aiming for 'doing the work for you' — answering questions is just a side effect.\" 💡 比喻說明 想像你要裝修房子。ChatGPT 像一本很好的裝修指南書，告訴你每一步怎麼做。Claude "
+    "content": "最本質的區別在於： ChatGPT 告訴你怎麼做，Claude 直接幫你做 。你讓 ChatGPT「幫我搭一個博客網站」，它會給你一份詳細的步驟說明。你讓 Claude Code 做同樣的事，它會直接打開你的專案目錄，建立檔案，寫程式碼，跑起來，遇到報錯自己修復。 \"ChatGPT tells you how to do things, Claude actually does them for you... The gap isn't in model intelligence, but in product design philosophy.\" 差距不在模型智力，在 產品設計哲學 。Anthropic 從第一天就奔著「幫你幹活」去的，回答問題只是順帶的事。 \"Anthropic from day one was aiming for 'doing the work for you' — answering questions is just a side effect.\" 比喻說明 想像你要裝修房子。ChatGPT 像一本很好的裝修指南書，告訴你每一步怎麼做。Claude 更像一"
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -13989,7 +13865,7 @@ const searchIndex = [
     ],
     "sectionId": "analysis-commentary",
     "sectionTitle": "Analysis & Commentary",
-    "content": "⚠️ 重點提示 作者的觀點需要加上脈絡理解。 這裡比較的不是「模型能力」，而是「產品形態」。ChatGPT 最近也推出了 Canvas、GPT-4o with tools 等執行型功能。真正的差異在於 Claude Code 作為 terminal-native agent 的設計，以及 Cowork 的背景執行模式。 對 CDMO 的啟示： 這種「告訴你 vs 幫你做」的區分，對應到我們的場景就是「AI 給你偏差報告建議」vs「AI 直接幫你起草偏差報告初稿」。在 GMP 環境中，後者需要 100% 人工審查（copilot mode），但初稿自動化的價值已經很大。"
+    "content": "重點提示 作者的觀點需要加上脈絡理解。 這裡比較的不是「模型能力」，而是「產品形態」。ChatGPT 最近也推出了 Canvas、GPT-4o with tools 等執行型功能。真正的差異在於 Claude Code 作為 terminal-native agent 的設計，以及 Cowork 的背景執行模式。 對 CDMO 的啟示： 這種「告訴你 vs 幫你做」的區分，對應到我們的場景就是「AI 給你偏差報告建議」vs「AI 直接幫你起草偏差報告初稿」。在 GMP 環境中，後者需要 100% 人工審查（copilot mode），但初稿自動化的價值已經很大。"
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -14021,7 +13897,7 @@ const searchIndex = [
     ],
     "sectionId": "analysis-commentary",
     "sectionTitle": "Analysis & Commentary",
-    "content": "💰 成本分析 Pro vs Max 的決策點： 作者建議大多數人選 Pro。但如果你像我一樣每天高強度使用（文件處理 + Claude Code + Cowork），Pro 的用量額度經常在月底吃緊。Max 的 5 倍用量差距在重度使用下非常明顯。 隱藏成本： 文章沒提到 Claude Code 使用 API 計費（非訂閱用量），以及 Max 方案包含的 Claude Code 額度。這對開發者是重要的成本考量。 🛠️ 實務應用 訂閱升級時機判斷： 當你連續 3 天在月中就遇到用量限制，就是該升級的信號。不要等到月底才後悔。"
+    "content": "成本分析 Pro vs Max 的決策點： 作者建議大多數人選 Pro。但如果你像我一樣每天高強度使用（文件處理 + Claude Code + Cowork），Pro 的用量額度經常在月底吃緊。Max 的 5 倍用量差距在重度使用下非常明顯。 隱藏成本： 文章沒提到 Claude Code 使用 API 計費（非訂閱用量），以及 Max 方案包含的 Claude Code 額度。這對開發者是重要的成本考量。 實務應用 訂閱升級時機判斷： 當你連續 3 天在月中就遇到用量限制，就是該升級的信號。不要等到月底才後悔。"
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -14053,7 +13929,7 @@ const searchIndex = [
     ],
     "sectionId": "analysis-commentary",
     "sectionTitle": "Analysis & Commentary",
-    "content": "📚 核心概念 Context + Task + Rules 是入門版的 Prompt Engineering。 這個框架有效但過度簡化。更進階的做法是 Anthropic 自己提倡的 Context Engineering（上下文工程），把重點從「寫好提示詞」轉移到「準備好完整的上下文」——包括 System Prompt、Knowledge Files、Examples、Memory 等多層結構。 作者沒提到的關鍵技巧： 1. XML 結構化標籤 ：Claude 對 XML 標籤有特別好的理解能力，用 <context>、<task>、<rules> 包裹比純文字更有效。 2. Few-shot Examples ：給 1-2 個輸出範例，效果往往比長篇描述更好。 3. Projects 的 Custom Instructions ：把常用的 Context 和 Rules 寫進 Project Instructions，每次對話自動注入。 ⚠️ 重點提示 上下文管理是真正的進階技能。 作者提到「對話變長就開新聊天」，這個建議正確但不完整。更好的做法是：利用 Projects 保持"
+    "content": "核心概念 Context + Task + Rules 是入門版的 Prompt Engineering。 這個框架有效但過度簡化。更進階的做法是 Anthropic 自己提倡的 Context Engineering（上下文工程），把重點從「寫好提示詞」轉移到「準備好完整的上下文」——包括 System Prompt、Knowledge Files、Examples、Memory 等多層結構。 作者沒提到的關鍵技巧： 1. XML 結構化標籤 ：Claude 對 XML 標籤有特別好的理解能力，用 <context>、<task>、<rules> 包裹比純文字更有效。 2. Few-shot Examples ：給 1-2 個輸出範例，效果往往比長篇描述更好。 3. Projects 的 Custom Instructions ：把常用的 Context 和 Rules 寫進 Project Instructions，每次對話自動注入。 重點提示 上下文管理是真正的進階技能。 作者提到「對話變長就開新聊天」，這個建議正確但不完整。更好的做法是：利用 Projects 保持持久上下文、"
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -14085,7 +13961,7 @@ const searchIndex = [
     ],
     "sectionId": "analysis-commentary",
     "sectionTitle": "Analysis & Commentary",
-    "content": "⚖️ 工具比較 模型選擇更精確的思考框架： Sonnet = 80% 場景的最佳性價比。寫作、分析、一般程式碼、對話互動。回應速度和品質的最佳平衡點。 Opus = 需要「深度推理」或「複雜判斷」時。偏差調查根因分析、多因素決策、長文件綜合分析。Extended Thinking 在需要可追溯推理鏈的場景特別有價值。 Haiku = 批次處理、格式轉換、分類任務。在自動化 workflow 中（如 Make.com trigger 後的快速處理），Haiku 的速度和成本優勢最明顯。 🛠️ 實務應用 Extended Thinking 的真正價值： 作者說它是「質檢工具」，這個比喻精準。在 CDMO 情境中，當你讓 Claude 分析一個偏差事件的根因時，Extended Thinking 讓你看到它的推理過程——哪些因素被考慮、哪些被排除、結論的邏輯鏈是否成立。這比直接看結論更重要。"
+    "content": "工具比較 模型選擇更精確的思考框架： Sonnet = 80% 場景的最佳性價比。寫作、分析、一般程式碼、對話互動。回應速度和品質的最佳平衡點。 Opus = 需要「深度推理」或「複雜判斷」時。偏差調查根因分析、多因素決策、長文件綜合分析。Extended Thinking 在需要可追溯推理鏈的場景特別有價值。 Haiku = 批次處理、格式轉換、分類任務。在自動化 workflow 中（如 Make.com trigger 後的快速處理），Haiku 的速度和成本優勢最明顯。 實務應用 Extended Thinking 的真正價值： 作者說它是「質檢工具」，這個比喻精準。在 CDMO 情境中，當你讓 Claude 分析一個偏差事件的根因時，Extended Thinking 讓你看到它的推理過程——哪些因素被考慮、哪些被排除、結論的邏輯鏈是否成立。這比直接看結論更重要。"
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -14117,7 +13993,7 @@ const searchIndex = [
     ],
     "sectionId": "analysis-commentary",
     "sectionTitle": "Analysis & Commentary",
-    "content": "📚 核心概念 Projects 是 Claude 生態系統的核心架構。 作者說「被嚴重低估」完全正確。Projects = 持久上下文 + Custom Instructions + Knowledge Files。我的 Master Prompt 系統就是建立在 Projects 上的。 關鍵理解：Projects 是 全量上下文注入 （full context injection）。每次對話開始時，Project 裡所有的 Instructions 和 Knowledge Files 都會被載入 context window。這意味著你需要精心管理文件大小和數量。 ⚠️ 重點提示 Research Mode 的限制： 作者的「初級分析師半天水平」描述有 2-3x discount 的空間。Research Mode 擅長資訊匯整，但在深度分析、因果推論、行業 nuance 方面仍需人工把關。把它當作「初稿生成器」而非「最終報告」更安全。"
+    "content": "核心概念 Projects 是 Claude 生態系統的核心架構。 作者說「被嚴重低估」完全正確。Projects = 持久上下文 + Custom Instructions + Knowledge Files。我的 Master Prompt 系統就是建立在 Projects 上的。 關鍵理解：Projects 是 全量上下文注入 （full context injection）。每次對話開始時，Project 裡所有的 Instructions 和 Knowledge Files 都會被載入 context window。這意味著你需要精心管理文件大小和數量。 重點提示 Research Mode 的限制： 作者的「初級分析師半天水平」描述有 2-3x discount 的空間。Research Mode 擅長資訊匯整，但在深度分析、因果推論、行業 nuance 方面仍需人工把關。把它當作「初稿生成器」而非「最終報告」更安全。"
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -14149,7 +14025,7 @@ const searchIndex = [
     ],
     "sectionId": "analysis-commentary",
     "sectionTitle": "Analysis & Commentary",
-    "content": "🛠️ 實務應用 Claude Code 的工作模式轉變： 作者的「你描述需求，AI 寫程式碼，你審查」精準描述了 Agent Mode。但在 GMP 環境中需要謹慎：AI 生成的任何輸出（程式碼、報告、文件）都必須經過人工審查。這是 Copilot Mode 的核心原則。 Skills 的真正威力： 我的 Master Prompt v1.5.0 本質上就是一個巨大的 Skill。差別在於 Skills 是 Anthropic 產品層面的封裝，而 Project Instructions 是更底層的上下文注入。兩者可以疊加使用。 💡 比喻說明 三大工具的角色定位： Claude Code = 你的專屬程式設計師，坐在你旁邊的終端機前，你說什麼它做什麼。 Cowork = 你的遠端助理，你交代任務後去做其他事，它做完通知你。 Skills = 你的 SOP 手冊，把重複性工作標準化，誰來都能執行。"
+    "content": "實務應用 Claude Code 的工作模式轉變： 作者的「你描述需求，AI 寫程式碼，你審查」精準描述了 Agent Mode。但在 GMP 環境中需要謹慎：AI 生成的任何輸出（程式碼、報告、文件）都必須經過人工審查。這是 Copilot Mode 的核心原則。 Skills 的真正威力： 我的 Master Prompt v1.5.0 本質上就是一個巨大的 Skill。差別在於 Skills 是 Anthropic 產品層面的封裝，而 Project Instructions 是更底層的上下文注入。兩者可以疊加使用。 比喻說明 三大工具的角色定位： Claude Code = 你的專屬程式設計師，坐在你旁邊的終端機前，你說什麼它做什麼。 Cowork = 你的遠端助理，你交代任務後去做其他事，它做完通知你。 Skills = 你的 SOP 手冊，把重複性工作標準化，誰來都能執行。"
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -14181,7 +14057,7 @@ const searchIndex = [
     ],
     "sectionId": "analysis-commentary",
     "sectionTitle": "Analysis & Commentary",
-    "content": "⚠️ 重點提示 「不要跟 AI 客氣」的 nuance： 這個建議的核心是對的——精確比禮貌更重要。但 Anthropic 的研究實際上顯示，適度的「合作語氣」（如「讓我們一起...」）有時能引導更好的輸出。重點不是去掉禮貌用語，而是確保指令的 精確度和完整度 不被禮貌用語稀釋。 🛠️ 實務應用 「一個固定場景切入」的 CDMO 版本： 最適合作為切入點的 CDMO 場景： 偏差報告初稿 ：結構化程度高、模板固定、AI 容易標準化 文獻回顧摘要 ：Research Mode 可直接使用 SOP 翻譯/在地化 ：雙語需求明確、品質容易驗證"
+    "content": "重點提示 「不要跟 AI 客氣」的 nuance： 這個建議的核心是對的——精確比禮貌更重要。但 Anthropic 的研究實際上顯示，適度的「合作語氣」（如「讓我們一起...」）有時能引導更好的輸出。重點不是去掉禮貌用語，而是確保指令的 精確度和完整度 不被禮貌用語稀釋。 實務應用 「一個固定場景切入」的 CDMO 版本： 最適合作為切入點的 CDMO 場景： 偏差報告初稿 ：結構化程度高、模板固定、AI 容易標準化 文獻回顧摘要 ：Research Mode 可直接使用 SOP 翻譯/在地化 ：雙語需求明確、品質容易驗證"
   },
   {
     "docFile": "2026-03-07_yanhua-claude-ultimate-guide.html",
@@ -14213,7 +14089,7 @@ const searchIndex = [
     ],
     "sectionId": "analysis-commentary",
     "sectionTitle": "Analysis & Commentary",
-    "content": "📚 核心概念 這是全文最有價值的一段話。 「從問答工具到工作流核心」這個進化框架，精準描述了 AI 使用成熟度的分水嶺。對應到我的學習系統：我的 Master Prompt + Projects + Skills 就是把 Claude 從「每次重新開始」變成「帶著完整記憶和標準化流程持續運作」。 但缺少關鍵的一環： 作者沒有提到 Memory 功能。Memory 讓 Claude 跨對話記住你的偏好和背景，是「內嵌到工作流」的重要膠水層。沒有 Memory，每個新對話仍然需要重新建立個人化上下文。 Key Takeaways 🎯 產品哲學差異定位 Claude 的核心差異不在模型智力，而在產品設計哲學：從「告訴你怎麼做」到「直接幫你做」。理解這一點才能正確設定使用期望。 📝 Context + Task + Rules 公式 三段式 Prompt 是入門的有效框架。進階時加入 XML 結構化、Few-shot Examples、Project Instructions 三層，從 Prompt Engineering 進化到 Context Engineering。 ⚙️ 三模型切"
+    "content": "核心概念 這是全文最有價值的一段話。 「從問答工具到工作流核心」這個進化框架，精準描述了 AI 使用成熟度的分水嶺。對應到我的學習系統：我的 Master Prompt + Projects + Skills 就是把 Claude 從「每次重新開始」變成「帶著完整記憶和標準化流程持續運作」。 但缺少關鍵的一環： 作者沒有提到 Memory 功能。Memory 讓 Claude 跨對話記住你的偏好和背景，是「內嵌到工作流」的重要膠水層。沒有 Memory，每個新對話仍然需要重新建立個人化上下文。 Key Takeaways 產品哲學差異定位 Claude 的核心差異不在模型智力，而在產品設計哲學：從「告訴你怎麼做」到「直接幫你做」。理解這一點才能正確設定使用期望。 Context + Task + Rules 公式 三段式 Prompt 是入門的有效框架。進階時加入 XML 結構化、Few-shot Examples、Project Instructions 三層，從 Prompt Engineering 進化到 Context Engineering。 三模型切換策略 Sonnet 8"
   },
   {
     "docFile": "2026-03-09_building-skills-guide.html",
@@ -14262,7 +14138,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🧭 理解 AI 時代的四大護城河分類，評估自身工作/產業的防禦力 🎲 掌握「不對稱下注」思維框架，在不完整資訊下做出合理決策 🎯 識別自身工作中「可被 AI 取代」vs「深度人類防禦」的任務比例 Reasoning Under Uncertainty Framework 🔍 Read Inputs 辨識已可見的信號 → 🧭 Find Direction 方向正確 > 精準預測 → ⚖️ Structure Bets 不對稱風險/報酬 → 🏃 Act & Learn 行動產生資訊"
+    "content": "理解 AI 時代的四大護城河分類，評估自身工作/產業的防禦力 掌握「不對稱下注」思維框架，在不完整資訊下做出合理決策 識別自身工作中「可被 AI 取代」vs「深度人類防禦」的任務比例 Reasoning Under Uncertainty Framework Read Inputs 辨識已可見的信號 Find Direction 方向正確 > 精準預測 Structure Bets 不對稱風險/報酬 Act & Learn 行動產生資訊"
   },
   {
     "docFile": "2026-03-10_reasoning-messy-future.html",
@@ -14278,7 +14154,7 @@ const searchIndex = [
     ],
     "sectionId": "content",
     "sectionTitle": "Content",
-    "content": "Origin Story Four Moats Framework Action Part I — The Trigger + Part II — Writing On The Wall 我第一次意識到我們正走向轉折點，是在我聽到音樂在我前一份工作中逐漸停下，即使周圍的人都假裝什麼都不會改變。我在一家對沖基金管理著近 20 人的團隊，做著我多年來一直在做的事。 The first time I realized we were heading towards an inflection point was when I heard the music slowing down at my previous role, even as everyone around me pretended nothing would change. I was managing a team of close to 20 pax in a hedge fund, doing the thing I had been doing for years. 然而， 我從一個人人夢寐以求的職位，轉向從零開始建立"
+    "content": "Origin Story Four Moats Framework Action Part I The Trigger + Part II Writing On The Wall 我第一次意識到我們正走向轉折點，是在我聽到音樂在我前一份工作中逐漸停下，即使周圍的人都假裝什麼都不會改變。我在一家對沖基金管理著近 20 人的團隊，做著我多年來一直在做的事。 The first time I realized we were heading towards an inflection point was when I heard the music slowing down at my previous role, even as everyone around me pretended nothing would change. I was managing a team of close to 20 pax in a hedge fund, doing the thing I had been doing for years. 然而， 我從一個人人夢寐以求的職位，轉向從零開始建立一家新創"
   },
   {
     "docFile": "2026-03-10_reasoning-messy-future.html",
@@ -14294,7 +14170,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "🎯 方向正確 > 精準預測 在高度不確定的環境中，你不需要知道確切會發生什麼。你需要的是方向性判斷，以及結構化的不對稱下注——早且錯可存活，早且對回報巨大。 🛡️ 四大護城河只爭取時間 Proprietary Data、Regulatory Friction、Authority as Service、Physical Intelligence Lag 都是真實的防禦，但沒有一個是永久的。它們的價值在於給你準備的時間。 🏃 行動創造資訊 在不完整資訊中保持靜止就是衰退。行動會產生回饋，回饋驅動迭代，迭代產生更好的行動。等待「完美時機」本身就是一種代價高昂的選擇。 📋 審計你的工作組成 區分「深度人類防禦」vs「即將被取代」的任務。多做需要長期策略思維、跨系統範圍理解、和人類權威背書的工作。"
+    "content": "方向正確 > 精準預測 在高度不確定的環境中，你不需要知道確切會發生什麼。你需要的是方向性判斷，以及結構化的不對稱下注——早且錯可存活，早且對回報巨大。 四大護城河只爭取時間 Proprietary Data、Regulatory Friction、Authority as Service、Physical Intelligence Lag 都是真實的防禦，但沒有一個是永久的。它們的價值在於給你準備的時間。 行動創造資訊 在不完整資訊中保持靜止就是衰退。行動會產生回饋，回饋驅動迭代，迭代產生更好的行動。等待「完美時機」本身就是一種代價高昂的選擇。 審計你的工作組成 區分「深度人類防禦」vs「即將被取代」的任務。多做需要長期策略思維、跨系統範圍理解、和人類權威背書的工作。"
   },
   {
     "docFile": "2026-03-10_reasoning-messy-future.html",
@@ -14310,7 +14186,7 @@ const searchIndex = [
     ],
     "sectionId": "practice-questions",
     "sectionTitle": "Practice Questions",
-    "content": "Q1 產業應用 用作者的四大護城河框架分析你的 CDMO 工廠。哪個護城河最強？哪個可能最先被侵蝕？具體侵蝕的路徑是什麼？ 分析框架： 最強護城河：Regulatory Friction。 製藥 CDMO 的每一步都需要人類簽署——batch record review、偏差調查、CAPA 結案、QP 放行。這些不只是「蓋章」，而是法律責任的承擔。PIC/S 和 FDA 的查核框架短期內不會接受 AI 簽署。 最先被侵蝕的可能是 Proprietary Data 護城河。 隨著更多 CDMO 將製程數據數位化，前沿模型提供商可能與大型 CDMO 合作，取得製程開發的一般性知識。你的特定設備參數和偏差模式仍然是獨特的，但「如何設計凍乾曲線」這類知識會逐漸商品化。 侵蝕路徑： AI 先處理文件工作（80% 可自動化）→ 然後進入初步分析（趨勢偵測、偏差分類）→ 最終挑戰判斷層面（但被法規瓶頸阻擋）。 Q2 批判思考 作者聲稱「行動創造資訊」是不完整資訊下的最佳策略。但在 GMP 環境中，「錯誤的行動」可能導致患者安全風險。如何調和這兩個原則？ 這是一個絕佳的張力點。作者的「行動創造資訊」原"
+    "content": "Q1 產業應用 用作者的四大護城河框架分析你的 CDMO 工廠。哪個護城河最強？哪個可能最先被侵蝕？具體侵蝕的路徑是什麼？ 分析框架： 最強護城河：Regulatory Friction。 製藥 CDMO 的每一步都需要人類簽署——batch record review、偏差調查、CAPA 結案、QP 放行。這些不只是「蓋章」，而是法律責任的承擔。PIC/S 和 FDA 的查核框架短期內不會接受 AI 簽署。 最先被侵蝕的可能是 Proprietary Data 護城河。 隨著更多 CDMO 將製程數據數位化，前沿模型提供商可能與大型 CDMO 合作，取得製程開發的一般性知識。你的特定設備參數和偏差模式仍然是獨特的，但「如何設計凍乾曲線」這類知識會逐漸商品化。 侵蝕路徑： AI 先處理文件工作（80% 可自動化） 然後進入初步分析（趨勢偵測、偏差分類） 最終挑戰判斷層面（但被法規瓶頸阻擋）。 Q2 批判思考 作者聲稱「行動創造資訊」是不完整資訊下的最佳策略。但在 GMP 環境中，「錯誤的行動」可能導致患者安全風險。如何調和這兩個原則？ 這是一個絕佳的張力點。作者的「行動創造資訊」原則來"
   },
   {
     "docFile": "2026-03-11_claude-code-interactive-mode.html",
@@ -14342,7 +14218,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "⌨ 掌握核心快捷鍵 學習 Ctrl+C/D/L/R/B 等基礎控制和文字編輯快捷鍵，提升 CLI 操作效率 🛠 理解 50+ 內建指令 熟悉 /compact、/diff、/resume、/mcp 等指令的用途和使用時機 ⚙ 善用背景任務與進階功能 掌握 Ctrl+B 背景執行、/btw 側問、Task List 等進階互動模式 Part I-II: 快捷鍵 Part III-IV: 指令與 Vim Part V-VI: 進階功能 Part I 通用控制與文字編輯快捷鍵 Claude Code 的鍵盤快捷鍵可能因 平台和終端機 而異。按下 ? 可查看當前環境可用的快捷鍵。 Keyboard shortcuts may vary by platform and terminal. Press ? to see available shortcuts for your environment. macOS 用戶注意： Option/Alt 鍵快捷鍵（ Alt+B 、 Alt+F 等）需要在終端機中 將 Option 設定為 Meta 鍵 。iTerm2 在 Settings → Prof"
+    "content": "掌握核心快捷鍵 學習 Ctrl+C/D/L/R/B 等基礎控制和文字編輯快捷鍵，提升 CLI 操作效率 理解 50+ 內建指令 熟悉 /compact、/diff、/resume、/mcp 等指令的用途和使用時機 善用背景任務與進階功能 掌握 Ctrl+B 背景執行、/btw 側問、Task List 等進階互動模式 Part I-II: 快捷鍵 Part III-IV: 指令與 Vim Part V-VI: 進階功能 Part I 通用控制與文字編輯快捷鍵 Claude Code 的鍵盤快捷鍵可能因 平台和終端機 而異。按下 ? 可查看當前環境可用的快捷鍵。 Keyboard shortcuts may vary by platform and terminal. Press ? to see available shortcuts for your environment. macOS 用戶注意： Option/Alt 鍵快捷鍵（ Alt+B 、 Alt+F 等）需要在終端機中 將 Option 設定為 Meta 鍵 。iTerm2 在 Settings → Profiles → "
   },
   {
     "docFile": "2026-03-11_claude-code-interactive-mode.html",
@@ -14358,7 +14234,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "⌨ Ctrl+B 是最被低估的快捷鍵 把長時間 bash 指令放到背景執行，繼續跟 Claude 對話。這改變了 CLI 工具「等待 → 繼續」的線性工作模式。 🔍 /btw 是 Subagent 的反面 Subagent 有工具但沒有對話脈絡；/btw 有完整脈絡但沒有工具。理解這個設計哲學，才能選擇正確的功能。 📝 50+ 指令暗示 CLI-first 設計哲學 Claude Code 不只是「終端機裡的聊天」，而是完整的開發環境。/diff、/security-review、/insights 等指令證明它是專業工具鏈。 🎯 Vim 模式是開發者親和力指標 內建 Vim 支援（含 text objects）表明目標使用者是重度終端機用戶。這也暗示 Claude Code 團隊自己就是這類用戶。"
+    "content": "Ctrl+B 是最被低估的快捷鍵 把長時間 bash 指令放到背景執行，繼續跟 Claude 對話。這改變了 CLI 工具「等待 → 繼續」的線性工作模式。 /btw 是 Subagent 的反面 Subagent 有工具但沒有對話脈絡；/btw 有完整脈絡但沒有工具。理解這個設計哲學，才能選擇正確的功能。 50+ 指令暗示 CLI-first 設計哲學 Claude Code 不只是「終端機裡的聊天」，而是完整的開發環境。/diff、/security-review、/insights 等指令證明它是專業工具鏈。 Vim 模式是開發者親和力指標 內建 Vim 支援（含 text objects）表明目標使用者是重度終端機用戶。這也暗示 Claude Code 團隊自己就是這類用戶。"
   },
   {
     "docFile": "2026-03-11_claude-code-interactive-mode.html",
@@ -14406,7 +14282,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🎯 理解四大新能力 掌握評估系統、基準測試、多代理並行、描述調優的功能定位與使用時機 🔧 執行 Skill 評估流程 學會用新版 Skill-creator 對既有 Skills 進行觸發率優化和品質評估的完整工作流 📊 區分兩種 Skill 類型 區分「能力提升型」與「編碼偏好型」Skill 的不同評估方向與策略 Skill-creator 完整評估閉環 📝 建立 Skill 用 Skill-creator 生成 → 🎯 描述調優 優化觸發準確率 → 🧪 多代理測試 乾淨環境並行跑 → 📊 量化評估 基準測試 + 迭代"
+    "content": "理解四大新能力 掌握評估系統、基準測試、多代理並行、描述調優的功能定位與使用時機 執行 Skill 評估流程 學會用新版 Skill-creator 對既有 Skills 進行觸發率優化和品質評估的完整工作流 區分兩種 Skill 類型 區分「能力提升型」與「編碼偏好型」Skill 的不同評估方向與策略 Skill-creator 完整評估閉環 建立 Skill 用 Skill-creator 生成 描述調優 優化觸發準確率 多代理測試 乾淨環境並行跑 量化評估 基準測試 + 迭代"
   },
   {
     "docFile": "2026-03-11_skill-creator-epic-update.html",
@@ -14581,7 +14457,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "成大資工系教授蘇文鈺自 2013 年起推動 Program the World 計畫，以 Scratch 視覺化程式教學為起點，深入嘉義東石、台南左鎮、台東、花蓮等偏鄉，累計影響超過上萬名學童。文章核心論點不在「教程式」，而在填補弱勢孩子因資訊不對稱造成的「夢想斷層」(Dream Gap)。蘇文鈺的運作模式更像弱勢教育孵化器：發現缺口、做起來、有人接手後轉身去下一個需求點。對 AI/科技從業者而言，這篇文章提供的不是技術框架，而是一個關於「科技如何真正改變人的生命」的深層思考案例。 Learning Objectives 🎯 夢想斷層理論 理解偏鄉教育的核心問題不是成績，而是資訊不對稱造成的想像力空白 🔄 孵化器運作模式 分析「發現缺口 → 建立 → 移交 → 轉向」的非營利組織擴展策略 💡 科技教育的本質 反思程式教育的目的是「學習技能」而非「學習知識」的差異 蘇文鈺的弱勢教育孵化器模式 🔍 發現缺口 看見孩子需求 先做再說 → 🌱 建立課程 帶學生下鄉 播種教學 → 🤝 培養接班 學生成師資 移交營運 → 🔄 轉向下一站 新需求出現 重啟循環 Part I — 起點：一場手術與一個啟示 2014 年，嘉義東石有一名失去雙親、被教會收容的國中少年，正跟著成大資工系教授蘇文鈺學寫程式。沒有父母照顧的他常在街上閒晃，因此成了 地方宮廟幫派覬覦的對象 。 In 2014, in Dongshi, Chiayi, an orphaned junior high student sheltered by a local church was learning to code with NCKU CS professor Su Wen-yu. Without parental care, his street-wandering made him a target for local temple-affiliated gangs. 少年晚上住在教會，門外則有宮廟派來的人徘徊守候，這場搶孩子的大戰沒有煙硝味，教會老師只能一次次堅定的關上大門，靜靜陪孩子上課、生活。 At night, the boy stayed in the church while gang-affiliated men lingered outside. The teachers could only close the door firmly, quietly accompanying the child through lessons and daily life. 對蘇文鈺而言，學科表現不是重點， 孩子平安長大才是首要目標 。後來少年考進崑山科技大學汽修科，畢業後回到嘉義，開了一間自己的汽車修理公司。 For Su, academic performance was secondary — the child's safe upbringing was the primary goal. The boy later enrolled in automotive repair at Kun Shan University, and eventually returned to Chiayi to open his own car repair business. 時間回到 2012 年，蘇文鈺因為一場手術在病床上躺了三個月。他看到歐巴馬說「每個美國小孩都要學會寫程式」，彷彿天啟般覺悟：既然程式將成為未來世界的基本能力，那麼偏鄉孩子若沒有機會接觸， 差距只會越來越大 "
+    "content": "成大資工系教授蘇文鈺自 2013 年起推動 Program the World 計畫，以 Scratch 視覺化程式教學為起點，深入嘉義東石、台南左鎮、台東、花蓮等偏鄉，累計影響超過上萬名學童。文章核心論點不在「教程式」，而在填補弱勢孩子因資訊不對稱造成的「夢想斷層」(Dream Gap)。蘇文鈺的運作模式更像弱勢教育孵化器：發現缺口、做起來、有人接手後轉身去下一個需求點。對 AI/科技從業者而言，這篇文章提供的不是技術框架，而是一個關於「科技如何真正改變人的生命」的深層思考案例。 Learning Objectives 夢想斷層理論 理解偏鄉教育的核心問題不是成績，而是資訊不對稱造成的想像力空白 孵化器運作模式 分析「發現缺口 → 建立 → 移交 → 轉向」的非營利組織擴展策略 科技教育的本質 反思程式教育的目的是「學習技能」而非「學習知識」的差異 蘇文鈺的弱勢教育孵化器模式 發現缺口 看見孩子需求 先做再說 → 建立課程 帶學生下鄉 播種教學 → 培養接班 學生成師資 移交營運 → 轉向下一站 新需求出現 重啟循環 Part I — 起點：一場手術與一個啟示 2014 年，嘉義東石有一名失去雙親、被教會收容的國中少年，正跟著成大資工系教授蘇文鈺學寫程式。沒有父母照顧的他常在街上閒晃，因此成了 地方宮廟幫派覬覦的對象 。 In 2014, in Dongshi, Chiayi, an orphaned junior high student sheltered by a local church was learning to code with NCKU CS professor Su Wen-yu. Without parental care, his street-wandering made him a target for local temple-affiliated gangs. 少年晚上住在教會，門外則有宮廟派來的人徘徊守候，這場搶孩子的大戰沒有煙硝味，教會老師只能一次次堅定的關上大門，靜靜陪孩子上課、生活。 At night, the boy stayed in the church while gang-affiliated men lingered outside. The teachers could only close the door firmly, quietly accompanying the child through lessons and daily life. 對蘇文鈺而言，學科表現不是重點， 孩子平安長大才是首要目標 。後來少年考進崑山科技大學汽修科，畢業後回到嘉義，開了一間自己的汽車修理公司。 For Su, academic performance was secondary — the child's safe upbringing was the primary goal. The boy later enrolled in automotive repair at Kun Shan University, and eventually returned to Chiayi to open his own car repair business. 時間回到 2012 年，蘇文鈺因為一場手術在病床上躺了三個月。他看到歐巴馬說「每個美國小孩都要學會寫程式」，彷彿天啟般覺悟：既然程式將成為未來世界的基本能力，那麼偏鄉孩子若沒有機會接觸， 差距只會越來越大 。 Back in 2012, Su sp"
   },
   {
     "docFile": "2026-03-13_claude-code-architecture-governance.html",
@@ -14613,7 +14489,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🏠 六層架構模型 理解 Claude Code 從上下文到驗證的完整運作堆疊 📊 上下文成本計算 掌握 200K 上下文的實際分配與 MCP 隱形開銷 🔧 Skills / Hooks / Subagents 區分三種機制的設計邊界與正確用法 💰 Prompt Caching 架構 理解快取對成本與會話設計的深層影響 📝 CLAUDE.md 契約寫法 從空白開始，用減法原則建立有效協作契約 ✅ 驗證閉環設計 建立 Agent 可靠運行的判定標準與回退機制 Claude Code 六層架構模型 📚 Context CLAUDE.md / Skills / Memory → 🔒 Control Hooks / Permissions / Sandbox → 🔧 Tools MCP / Built-in / Custom → ⚙ Execute Subagents / Plan Mode → ✅ Verify Test / Lint / Screenshots → 📈 Govern Health Check / Iteration Architecture & Contex"
+    "content": "六層架構模型 理解 Claude Code 從上下文到驗證的完整運作堆疊 上下文成本計算 掌握 200K 上下文的實際分配與 MCP 隱形開銷 Skills / Hooks / Subagents 區分三種機制的設計邊界與正確用法 Prompt Caching 架構 理解快取對成本與會話設計的深層影響 CLAUDE.md 契約寫法 從空白開始，用減法原則建立有效協作契約 驗證閉環設計 建立 Agent 可靠運行的判定標準與回退機制 Claude Code 六層架構模型 Context CLAUDE.md / Skills / Memory Control Hooks / Permissions / Sandbox Tools MCP / Built-in / Custom Execute Subagents / Plan Mode Verify Test / Lint / Screenshots Govern Health Check / Iteration Architecture & Context Skills & Tools Hooks & Subagents Caching "
   },
   {
     "docFile": "2026-03-13_claude-code-architecture-governance.html",
@@ -14660,7 +14536,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★☆☆ 3.4/5 ↑ 時效性, 學習曲線 ↓ 技術深度, 工具生態 蘋果在 2026 年推出 $599 的 iPhone 17e 和 MacBook Neo，表面是「降價搶市場」，實質是一場 AI 平台圈地戰。核心邏輯：先用便宜硬體把新用戶拉進 Apple Intelligence 生態系，讓 AI 花時間學習你、懂你，兩年後你面對的不是「要不要換手機」，而是「要不要放棄一個已經懂你的 AI」。這是比 App 生態更深的護城河。 文章是一篇結構清晰的商業策略分析，把蘋果的產品線動作串成一個完整敘事。但缺乏技術細節（Apple Intelligence 實際能力、on-device model 規模）、未提供第三方數據佐證「AI 鎖定效應」的強度，且對 Google Gemini 合作的風險分析偏淺。本文件補充批判視角與 CDMO 產業類比。 🔒 AI 鎖定效應 理解「AI 個人化」如何成為比 App 生態更深的 switching cost ⚙ 飛輪經濟學 拆解「硬體虧損 → 生態獲利」的平台策略邏輯 🔍 批判分析 識別文章的敘事盲點與未驗證假設，建立獨立判斷 Apple A"
+    "content": "3.4/5 時效性, 學習曲線 技術深度, 工具生態 蘋果在 2026 年推出 $599 的 iPhone 17e 和 MacBook Neo，表面是「降價搶市場」，實質是一場 AI 平台圈地戰。核心邏輯：先用便宜硬體把新用戶拉進 Apple Intelligence 生態系，讓 AI 花時間學習你、懂你，兩年後你面對的不是「要不要換手機」，而是「要不要放棄一個已經懂你的 AI」。這是比 App 生態更深的護城河。 文章是一篇結構清晰的商業策略分析，把蘋果的產品線動作串成一個完整敘事。但缺乏技術細節（Apple Intelligence 實際能力、on-device model 規模）、未提供第三方數據佐證「AI 鎖定效應」的強度，且對 Google Gemini 合作的風險分析偏淺。本文件補充批判視角與 CDMO 產業類比。 AI 鎖定效應 理解「AI 個人化」如何成為比 App 生態更深的 switching cost 飛輪經濟學 拆解「硬體虧損 → 生態獲利」的平台策略邏輯 批判分析 識別文章的敘事盲點與未驗證假設，建立獨立判斷 Apple AI Lock-in Flywheel"
   },
   {
     "docFile": "2026-03-14_apple-ai-affordable-strategy.html",
@@ -14849,7 +14725,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "使用 Claude Code、Codex 或 Gemini CLI 等 AI coding agent 時，對話越長，模型的幻覺 (Hallucination) 和錯誤率會明顯上升。周尔复提出「繼任者 Prompt」(Successor Prompt) 技巧：在結束過長對話前，讓 AI 產出一份結構化的「交接文件」給下一個新會話中的 AI，確保工作脈絡不丟失。v2.0 版本提供了完整的七段式交接模板，涵蓋任務目標、進展、上下文、發現、未完成事項、建議路徑和風險提醒。同時延伸出「Prompt 自舉」(Prompt Bootstrap) 的 meta 技巧 — 先寫粗稿 Prompt，再讓 AI 自己打磨。 Learning Objectives 🔎 辨識長上下文退化問題 理解為什麼 agent 對話越長越容易出錯，以及何時該「斷點重啟」 📄 掌握結構化交接模板 學會使用七段式繼任者 Prompt v2.0，確保跨會話的知識無損傳遞 ⚡ 應用 Prompt 自舉技巧 理解「先寫粗稿，再讓 AI 打磨」的迭代式 Prompt 開發方法論 Agent Handoff Workflow 🚨 Detect 辨識上下文退化 幻覺增多、問題反覆 → 📝 Handoff 產出交接文件 七段式結構化摘要 → 🚀 Resume 新會話接手 讀取交接 → 繼續推進 Part I — 問題：長上下文退化 (Long Context Degradation) 使用 Codex / Claude Code / Gemini CLI 的一個技巧：如果對話太長， AI 的幻覺越來越多，問題越來越難以解決 ，不妨開一個新的會話。 A tip for Codex / Claude Code / Gemini CLI: if the conversation gets too long and AI hallucinations increase, making problems harder to solve, consider starting a new session. 這不是模型本身變笨了，而是 Context Window 中累積的噪音（失敗嘗試、重複指令、矛盾信息）稀釋了有效上下文的「 信噪比 」(Signal-to-Noise Ratio)。 The model hasn't gotten dumber — accumulated noise in the Context Window (failed attempts, repeated instructions, contradictory information) dilutes the signal-to-noise ratio of effective context. 💡 比喻說明 想像你在一間白板上寫滿字的會議室裡討論。當白板上 70% 的內容是已經被否定的方案和過時的筆記時，你不斷回頭參照這些內容只會越來越混亂。最有效的做法是：把結論記下來，擦掉白板，從乾淨的狀態重新開始。繼任者 Prompt 就是那份「結論筆記」。 📚 核心概念：Context Window 的 Attention 機制 LLM 的 Transformer 架構使用 Attention 機制處理上下文。當上下文長度增加，模型需要在更多 token 之間分配注意力權重。關鍵信息被「淹沒」在無關 token 中，導致： 1. Lost in the Middle 效應 — 上下文中間的信息容易被忽略 2. 矛盾累積 — 早期的"
+    "content": "使用 Claude Code、Codex 或 Gemini CLI 等 AI coding agent 時，對話越長，模型的幻覺 (Hallucination) 和錯誤率會明顯上升。周尔复提出「繼任者 Prompt」(Successor Prompt) 技巧：在結束過長對話前，讓 AI 產出一份結構化的「交接文件」給下一個新會話中的 AI，確保工作脈絡不丟失。v2.0 版本提供了完整的七段式交接模板，涵蓋任務目標、進展、上下文、發現、未完成事項、建議路徑和風險提醒。同時延伸出「Prompt 自舉」(Prompt Bootstrap) 的 meta 技巧 先寫粗稿 Prompt，再讓 AI 自己打磨。 Learning Objectives 辨識長上下文退化問題 理解為什麼 agent 對話越長越容易出錯，以及何時該「斷點重啟」 掌握結構化交接模板 學會使用七段式繼任者 Prompt v2.0，確保跨會話的知識無損傳遞 應用 Prompt 自舉技巧 理解「先寫粗稿，再讓 AI 打磨」的迭代式 Prompt 開發方法論 Agent Handoff Workflow Detect 辨識上下文退化 幻覺增多、問題反覆 Handoff 產出交接文件 七段式結構化摘要 Resume 新會話接手 讀取交接 → 繼續推進 Part I 問題：長上下文退化 (Long Context Degradation) 使用 Codex / Claude Code / Gemini CLI 的一個技巧：如果對話太長， AI 的幻覺越來越多，問題越來越難以解決 ，不妨開一個新的會話。 A tip for Codex / Claude Code / Gemini CLI: if the conversation gets too long and AI hallucinations increase, making problems harder to solve, consider starting a new session. 這不是模型本身變笨了，而是 Context Window 中累積的噪音（失敗嘗試、重複指令、矛盾信息）稀釋了有效上下文的「 信噪比 」(Signal-to-Noise Ratio)。 The model hasn't gotten dumber accumulated noise in the Context Window (failed attempts, repeated instructions, contradictory information) dilutes the signal-to-noise ratio of effective context. 比喻說明 想像你在一間白板上寫滿字的會議室裡討論。當白板上 70% 的內容是已經被否定的方案和過時的筆記時，你不斷回頭參照這些內容只會越來越混亂。最有效的做法是：把結論記下來，擦掉白板，從乾淨的狀態重新開始。繼任者 Prompt 就是那份「結論筆記」。 核心概念：Context Window 的 Attention 機制 LLM 的 Transformer 架構使用 Attention 機制處理上下文。當上下文長度增加，模型需要在更多 token 之間分配注意力權重。關鍵信息被「淹沒」在無關 token 中，導致： 1. Lost in the Middle 效應 上下文中間的信息容易被忽略 2. 矛盾累積 早期的錯誤嘗試和後來的修正共存，模型難以判斷哪個版本有效 3. 指令稀釋 原始意"
   },
   {
     "docFile": "2026-03-16_claude-architect-certification.html",
@@ -14865,7 +14741,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 4.3/5 ↑ Practical Value, Timeliness ↓ Learning Curve (info density extreme) @hooeem 將 Claude Certified Architect (Foundations) 認證考試的完整考綱拆解為 5 大 Domain，涵蓋 Agentic Architecture (27%)、Tool Design & MCP (18%)、Claude Code Configuration (20%)、Prompt Engineering (20%)、Context Management (15%)。每個 Domain 附帶反模式辨識、建構練習、學習資源連結，以及一個完整的 Domain-specific study prompt。 核心觀點：你不需要認證資格才能成為 Claude Architect，你需要的是 理解這些知識並能實作 。文章的最大價值在於將散落的 Anthropic 文件、SDK 文件、工程部落格，整合成一條結構化的學習路徑。 批判觀察： 文章本身不教概念，而是「教你怎麼學」——提供學習地"
+    "content": "4.3/5 Practical Value, Timeliness Learning Curve (info density extreme) @hooeem 將 Claude Certified Architect (Foundations) 認證考試的完整考綱拆解為 5 大 Domain，涵蓋 Agentic Architecture (27%)、Tool Design & MCP (18%)、Claude Code Configuration (20%)、Prompt Engineering (20%)、Context Management (15%)。每個 Domain 附帶反模式辨識、建構練習、學習資源連結，以及一個完整的 Domain-specific study prompt。 核心觀點：你不需要認證資格才能成為 Claude Architect，你需要的是 理解這些知識並能實作 。文章的最大價值在於將散落的 Anthropic 文件、SDK 文件、工程部落格，整合成一條結構化的學習路徑。 批判觀察： 文章本身不教概念，而是「教你怎麼學」——提供學習地圖和 study p"
   },
   {
     "docFile": "2026-03-16_claude-architect-certification.html",
@@ -14881,7 +14757,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🏗 Agentic Architecture 掌握 agentic loop、multi-agent orchestration、hooks、session management 的設計模式與反模式 🔧 Tool & MCP Design 理解 tool description 的關鍵作用、error response 結構、tool_choice 配置、MCP server 整合 ⚙ Production Configuration 學會 CLAUDE.md hierarchy、path-specific rules、plan mode、CI/CD integration 的實務配置 Claude Certified Architect - 5 Domain Exam Map 🤖 D1: Agentic 27% - Loops, Orchestration, Hooks → 🔧 D2: Tools 18% - MCP, Descriptions, Errors → ⚙ D3: Config 20% - CLAUDE.md, Rules, CI/CD → 📝 D4: Prom"
+    "content": "Agentic Architecture 掌握 agentic loop、multi-agent orchestration、hooks、session management 的設計模式與反模式 Tool & MCP Design 理解 tool description 的關鍵作用、error response 結構、tool_choice 配置、MCP server 整合 Production Configuration 學會 CLAUDE.md hierarchy、path-specific rules、plan mode、CI/CD integration 的實務配置 Claude Certified Architect - 5 Domain Exam Map D1: Agentic 27% - Loops, Orchestration, Hooks D2: Tools 18% - MCP, Descriptions, Errors D3: Config 20% - CLAUDE.md, Rules, CI/CD D4: Prompt 20% - Criteria, Schema"
   },
   {
     "docFile": "2026-03-16_claude-architect-certification.html",
@@ -14897,7 +14773,7 @@ const searchIndex = [
     ],
     "sectionId": "domain-1-agentic-architecture-orchestration-27",
     "sectionTitle": "Domain 1: Agentic Architecture & Orchestration 27%",
-    "content": "1.1 Agentic Loops — stop_reason 是唯一的真理 Agentic loop 的生命週期很簡單：送 request 給 Claude → 檢查 stop_reason → 如果是 \"tool_use\" 就執行工具、把結果附回對話歷史、再送回 Claude → 如果是 \"end_turn\" 就結束。 工具結果必須 append 到對話歷史 ，模型才能在下一輪推理新資訊。 \"Tool results must be appended to conversation history so the model can reason about new information on the next iteration.\" 考試測試三個你必須一眼辨認的 反模式 ： ❌ 反模式 1： 解析自然語言判斷迴圈結束（例如檢查助手是否說了「I'm done」）。自然語言模糊不可靠，stop_reason 才是正解。 ❌ 反模式 2： 任意迭代次數上限作為主要停止機制（例如「跑 10 次就停」）。要嘛截斷有用工作，要嘛跑不必要的迭代。 ❌ 反模式 3： 檢查助手回覆是否包含 tex"
+    "content": "1.1 Agentic Loops stop_reason 是唯一的真理 Agentic loop 的生命週期很簡單：送 request 給 Claude 檢查 stop_reason 如果是 \"tool_use\" 就執行工具、把結果附回對話歷史、再送回 Claude 如果是 \"end_turn\" 就結束。 工具結果必須 append 到對話歷史 ，模型才能在下一輪推理新資訊。 \"Tool results must be appended to conversation history so the model can reason about new information on the next iteration.\" 考試測試三個你必須一眼辨認的 反模式 ： 反模式 1： 解析自然語言判斷迴圈結束（例如檢查助手是否說了「I'm done」）。自然語言模糊不可靠，stop_reason 才是正解。 反模式 2： 任意迭代次數上限作為主要停止機制（例如「跑 10 次就停」）。要嘛截斷有用工作，要嘛跑不必要的迭代。 反模式 3： 檢查助手回覆是否包含 text 作為完成指標。模型可以同"
   },
   {
     "docFile": "2026-03-16_claude-architect-certification.html",
@@ -14913,7 +14789,7 @@ const searchIndex = [
     ],
     "sectionId": "domain-2-tool-design-mcp-integration-18",
     "sectionTitle": "Domain 2: Tool Design & MCP Integration 18%",
-    "content": "2.1 Tool Interface Design — 描述決定一切 Tool descriptions 是 Claude 選擇工具的主要機制。 不是輔助功能，就是「那個」機制。如果描述模糊或重疊，選擇就會不可靠。 \"Tool descriptions are the primary mechanism Claude uses for tool selection.\" 考試的 Q2 情境： get_customer 和 lookup_order 的描述幾乎一樣，導致持續 misrouting。正確修正不是 few-shot examples、不是 routing classifier、不是 tool consolidation—— 而是改善 descriptions 。好的描述包含：工具用途、輸入格式、適用查詢範例、邊界情況、與相似工具的明確區分。 Tool 拆分原則： 把 analyze_document 這種通用工具拆成 extract_data_points 、 summarize_content 、 verify_claim_against_source ，每個有明確的 inp"
+    "content": "2.1 Tool Interface Design 描述決定一切 Tool descriptions 是 Claude 選擇工具的主要機制。 不是輔助功能，就是「那個」機制。如果描述模糊或重疊，選擇就會不可靠。 \"Tool descriptions are the primary mechanism Claude uses for tool selection.\" 考試的 Q2 情境： get_customer 和 lookup_order 的描述幾乎一樣，導致持續 misrouting。正確修正不是 few-shot examples、不是 routing classifier、不是 tool consolidation—— 而是改善 descriptions 。好的描述包含：工具用途、輸入格式、適用查詢範例、邊界情況、與相似工具的明確區分。 Tool 拆分原則： 把 analyze_document 這種通用工具拆成 extract_data_points 、 summarize_content 、 verify_claim_against_source ，每個有明確的 input"
   },
   {
     "docFile": "2026-03-16_claude-architect-certification.html",
@@ -14929,7 +14805,7 @@ const searchIndex = [
     ],
     "sectionId": "domain-3-claude-code-configuration-workflows-20",
     "sectionTitle": "Domain 3: Claude Code Configuration & Workflows 20%",
-    "content": "3.1-3.2 CLAUDE.md Hierarchy & Custom Commands CLAUDE.md 有三個層級， 層級決定誰能看到指令 ： User-level ~/.claude/CLAUDE.md ：只有你自己。不受版控、不共享。新團隊成員 clone repo 不會 得到這些指令。 Project-level .claude/CLAUDE.md ：所有人。版控、共享。團隊標準放這裡。 Directory-level （子目錄 CLAUDE.md）：在該目錄工作時才適用。 ❌ 考試最愛的陷阱： 新團隊成員沒收到指令。根本原因：指令在 user-level config 而非 project-level。 Commands vs Skills 的區分： .claude/commands/ = project-scoped，版控共享 ~/.claude/commands/ = 個人，不共享 .claude/skills/ + SKILL.md = on-demand invocation，有 frontmatter 配置 Skills 是任務特定的 workflow（需要時"
+    "content": "3.1-3.2 CLAUDE.md Hierarchy & Custom Commands CLAUDE.md 有三個層級， 層級決定誰能看到指令 ： User-level ~/.claude/CLAUDE.md ：只有你自己。不受版控、不共享。新團隊成員 clone repo 不會 得到這些指令。 Project-level .claude/CLAUDE.md ：所有人。版控、共享。團隊標準放這裡。 Directory-level （子目錄 CLAUDE.md）：在該目錄工作時才適用。 考試最愛的陷阱： 新團隊成員沒收到指令。根本原因：指令在 user-level config 而非 project-level。 Commands vs Skills 的區分： .claude/commands/ = project-scoped，版控共享 ~/.claude/commands/ = 個人，不共享 .claude/skills/ + SKILL.md = on-demand invocation，有 frontmatter 配置 Skills 是任務特定的 workflow（需要時調用"
   },
   {
     "docFile": "2026-03-16_claude-architect-certification.html",
@@ -14945,7 +14821,7 @@ const searchIndex = [
     ],
     "sectionId": "domain-4-prompt-engineering-structured-output-20",
     "sectionTitle": "Domain 4: Prompt Engineering & Structured Output 20%",
-    "content": "4.1-4.2 Explicit Criteria & Few-Shot Prompting 整個 Domain 4 的核心兩個字： be explicit 。「Be conservative」不會改善精確度。「Only report high-confidence findings」不會降低 false positives。 ❌ 無效指令： \"Be conservative.\" / \"Only report high-confidence findings.\" ✅ 有效指令： \"Flag comments only when claimed behaviour contradicts actual code behaviour. Report bugs and security vulnerabilities. Skip minor style preferences and local patterns.\" False positive trust 問題： 某一類別的高 false positive rate 會摧毀 所有類別 的信任。解法：暫時停用高 false positive"
+    "content": "4.1-4.2 Explicit Criteria & Few-Shot Prompting 整個 Domain 4 的核心兩個字： be explicit 。「Be conservative」不會改善精確度。「Only report high-confidence findings」不會降低 false positives。 無效指令： \"Be conservative.\" / \"Only report high-confidence findings.\" 有效指令： \"Flag comments only when claimed behaviour contradicts actual code behaviour. Report bugs and security vulnerabilities. Skip minor style preferences and local patterns.\" False positive trust 問題： 某一類別的高 false positive rate 會摧毀 所有類別 的信任。解法：暫時停用高 false positive 的類別"
   },
   {
     "docFile": "2026-03-16_claude-architect-certification.html",
@@ -14961,7 +14837,7 @@ const searchIndex = [
     ],
     "sectionId": "domain-5-context-management-reliability-15",
     "sectionTitle": "Domain 5: Context Management & Reliability 15%",
-    "content": "5.1-5.2 Context Preservation & Escalation Progressive Summarisation 陷阱： 壓縮對話歷史會把「客戶要求退款 $247.83，訂單 #8891，3月3日」變成「客戶想退款」。數字、日期、百分比、客戶期望全消失。 ✅ 解法： 把交易事實提取到 persistent \"case facts\" block，每次 prompt 都帶入，永不壓縮。 \"Lost in the middle\" 效應： 模型可靠處理長輸入的 開頭和結尾 ，中間的 findings 可能被遺漏。解法：關鍵摘要放開頭，全文用明確 section headers。 三個有效的 escalation triggers： 1. 客戶明確要求人工（ 立即執行 ，不要先嘗試解決） 2. 政策例外或空白（請求超出文件化政策） 3. 無法取得實質進展 ❌ 兩個不可靠的 triggers： Sentiment-based escalation（挫折感 ≠ 案件複雜度）、Self-reported confidence scores（模型在困難案件上常過度自信，簡單案件上反"
+    "content": "5.1-5.2 Context Preservation & Escalation Progressive Summarisation 陷阱： 壓縮對話歷史會把「客戶要求退款 $247.83，訂單 #8891，3月3日」變成「客戶想退款」。數字、日期、百分比、客戶期望全消失。 解法： 把交易事實提取到 persistent \"case facts\" block，每次 prompt 都帶入，永不壓縮。 \"Lost in the middle\" 效應： 模型可靠處理長輸入的 開頭和結尾 ，中間的 findings 可能被遺漏。解法：關鍵摘要放開頭，全文用明確 section headers。 三個有效的 escalation triggers： 1. 客戶明確要求人工（ 立即執行 ，不要先嘗試解決） 2. 政策例外或空白（請求超出文件化政策） 3. 無法取得實質進展 兩個不可靠的 triggers： Sentiment-based escalation（挫折感 ≠ 案件複雜度）、Self-reported confidence scores（模型在困難案件上常過度自信，簡單案件上反而不確定"
   },
   {
     "docFile": "2026-03-16_claude-architect-certification.html",
@@ -14977,7 +14853,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "🤖 Deterministic > Probabilistic 高風險場景（財務、安全、合規）必須用 programmatic enforcement（hooks / gates），不能只靠 prompt。這是整份考試最一致的設計哲學，也是 production AI 系統與 demo AI 系統的根本分界線。 🔧 Tool Description 就是一切 Claude 選擇工具的唯一機制是 tool description。描述模糊 = misrouting。修正 description 是第一優先步驟，在 routing classifier 或 few-shot examples 之前。每個 agent 限 4-5 tools。 ⚙ Configuration 必須 Team-Visible CLAUDE.md 的三層 hierarchy 是考試高頻考點。指令放 user-level = 新成員看不到。Path-specific rules 用 glob pattern 跨目錄生效，比 directory-level CLAUDE.md 更精確且省 token。 🧠 Co"
+    "content": "Deterministic > Probabilistic 高風險場景（財務、安全、合規）必須用 programmatic enforcement（hooks / gates），不能只靠 prompt。這是整份考試最一致的設計哲學，也是 production AI 系統與 demo AI 系統的根本分界線。 Tool Description 就是一切 Claude 選擇工具的唯一機制是 tool description。描述模糊 = misrouting。修正 description 是第一優先步驟，在 routing classifier 或 few-shot examples 之前。每個 agent 限 4-5 tools。 Configuration 必須 Team-Visible CLAUDE.md 的三層 hierarchy 是考試高頻考點。指令放 user-level = 新成員看不到。Path-specific rules 用 glob pattern 跨目錄生效，比 directory-level CLAUDE.md 更精確且省 token。 Context 是有限資源"
   },
   {
     "docFile": "2026-03-16_claude-architect-certification.html",
@@ -14993,7 +14869,7 @@ const searchIndex = [
     ],
     "sectionId": "practice-questions",
     "sectionTitle": "Practice Questions",
-    "content": "Q1 概念理解 一個 customer support agent 在 8% 的案例中未驗證帳戶所有權就處理退款。最佳修正方案是什麼？ 正確答案： Programmatic prerequisite gate（hooks），在退款工具執行前強制要求帳戶驗證完成。 為什麼不是其他選項： Enhanced system prompt — 概率性解決方案，8% 失敗率意味著真實財務損失，不可接受。 Few-shot examples — 高 token overhead，而且根本原因不是模型不理解（它理解），是偶爾跳過步驟。 Routing classifier — 過度工程化，問題不在路由而在流程控制。 考試原則： 財務/安全後果 = 確定性 enforcement，不接受概率性方案。 Q2 產業應用 你在設計 CDMO 的 deviation triage agent。如何確保 Critical deviation 一定經過 QA Head review，而不只是「偶爾」經過？ 套用 Domain 1 (Task 1.4) 的 enforcement spectrum： GMP 環境中，"
+    "content": "Q1 概念理解 一個 customer support agent 在 8% 的案例中未驗證帳戶所有權就處理退款。最佳修正方案是什麼？ 正確答案： Programmatic prerequisite gate（hooks），在退款工具執行前強制要求帳戶驗證完成。 為什麼不是其他選項： Enhanced system prompt 概率性解決方案，8% 失敗率意味著真實財務損失，不可接受。 Few-shot examples 高 token overhead，而且根本原因不是模型不理解（它理解），是偶爾跳過步驟。 Routing classifier 過度工程化，問題不在路由而在流程控制。 考試原則： 財務/安全後果 = 確定性 enforcement，不接受概率性方案。 Q2 產業應用 你在設計 CDMO 的 deviation triage agent。如何確保 Critical deviation 一定經過 QA Head review，而不只是「偶爾」經過？ 套用 Domain 1 (Task 1.4) 的 enforcement spectrum： GMP 環境中，deviat"
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15027,7 +14903,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details-code",
     "sectionTitle": "Technical Details & Code",
-    "content": "💻 Agent 隔離模型演進 # v2.1.49: Worktree 啟動 claude --worktree # Agent 定義 (YAML frontmatter) --- name: code-reviewer isolation: worktree background: true --- # v2.1.50: 列出所有 agents claude agents # v2.1.72: ExitWorktree 工具 # Agent 可主動離開 worktree # v2.1.76: Sparse worktree # settings.json { \"worktree\": { \"sparsePaths\": [\"packages/core\", \"libs/shared\"] } } ⚠️ Agent 記憶體修復清單 v2.1.50 : Completed teammate tasks 未被 GC v2.1.50 : Completed task state 未從 AppState 移除 v2.1.59 : Completed subagent task state 未釋放 v2"
+    "content": "Agent 隔離模型演進 # v2.1.49: Worktree 啟動 claude --worktree # Agent 定義 (YAML frontmatter) --- name: code-reviewer isolation: worktree background: true --- # v2.1.50: 列出所有 agents claude agents # v2.1.72: ExitWorktree 工具 # Agent 可主動離開 worktree # v2.1.76: Sparse worktree # settings.json { \"worktree\": { \"sparsePaths\": [\"packages/core\", \"libs/shared\"] } } Agent 記憶體修復清單 v2.1.50 : Completed teammate tasks 未被 GC v2.1.50 : Completed task state 未從 AppState 移除 v2.1.59 : Completed subagent task state 未釋放 v2.1.63 "
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15061,7 +14937,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "💻 效能改善量化 # 記憶體管理策略演進 v2.1.49: Tree-sitter parser 定期重置 v2.1.50: File history snapshots 加上上限 v2.1.50: Tool results > 50K 持久化到磁碟 (v2.1.51 降低至 50K, 原為 100K) v2.1.63: Compaction 後清理內部快取 v2.1.63: Heavy progress payloads 被剝離 v2.1.69: React memoCache 舊版本清理 v2.1.76: Auto-compaction 斷路器 (連續失敗 3 次後停止) # 啟動效能改善 v2.1.49: MCP auth 失敗快取 v2.1.49: Analytics token counting 減少 v2.1.49: MCP tool counting 批量化 v2.1.50: Yoga WASM 延遲匯入 v2.1.70: 啟動記憶體 -426KB v2.1.72: Bundle size -510KB ⚠️ Compaction 改進 v2.1.70 : Compac"
+    "content": "效能改善量化 # 記憶體管理策略演進 v2.1.49: Tree-sitter parser 定期重置 v2.1.50: File history snapshots 加上上限 v2.1.50: Tool results > 50K 持久化到磁碟 (v2.1.51 降低至 50K, 原為 100K) v2.1.63: Compaction 後清理內部快取 v2.1.63: Heavy progress payloads 被剝離 v2.1.69: React memoCache 舊版本清理 v2.1.76: Auto-compaction 斷路器 (連續失敗 3 次後停止) # 啟動效能改善 v2.1.49: MCP auth 失敗快取 v2.1.49: Analytics token counting 減少 v2.1.49: MCP tool counting 批量化 v2.1.50: Yoga WASM 延遲匯入 v2.1.70: 啟動記憶體 -426KB v2.1.72: Bundle size -510KB Compaction 改進 v2.1.70 : Compaction 現"
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15078,7 +14954,7 @@ const searchIndex = [
     ],
     "sectionId": "概念解析-原文對照",
     "sectionTitle": "概念解析 + 原文對照",
-    "content": "Plugin 系統在這批版本中快速迭代。v2.1.49 開始讓 plugin 附帶 settings.json 作為預設配置。v2.1.51 支援自訂 npm registry 和版本固定。v2.1.63 加入了關鍵的 HTTP Hooks — 可以 POST JSON 到外部 URL 並接收 JSON 回應，而非僅能執行本機 shell 指令。 \"Plugins can ship settings.json for default configuration\" / \"Added HTTP hooks, which can POST JSON to a URL and receive JSON instead of running a shell command\" Hooks 事件持續擴充： ConfigChange （v2.1.49）、 WorktreeCreate/Remove （v2.1.50）、 InstructionsLoaded （v2.1.69）、 PostCompact （v2.1.76）、 Elicitation/ElicitationResult （v2.1.76）"
+    "content": "Plugin 系統在這批版本中快速迭代。v2.1.49 開始讓 plugin 附帶 settings.json 作為預設配置。v2.1.51 支援自訂 npm registry 和版本固定。v2.1.63 加入了關鍵的 HTTP Hooks 可以 POST JSON 到外部 URL 並接收 JSON 回應，而非僅能執行本機 shell 指令。 \"Plugins can ship settings.json for default configuration\" / \"Added HTTP hooks, which can POST JSON to a URL and receive JSON instead of running a shell command\" Hooks 事件持續擴充： ConfigChange （v2.1.49）、 WorktreeCreate/Remove （v2.1.50）、 InstructionsLoaded （v2.1.69）、 PostCompact （v2.1.76）、 Elicitation/ElicitationResult （v2.1.76）。這"
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15095,7 +14971,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details-code",
     "sectionTitle": "Technical Details & Code",
-    "content": "💻 Hook Events 完整清單 # 生命週期 Hooks（截至 v2.1.76） SessionStart # 工作階段啟動 SessionEnd # 工作階段結束（可設 timeout） ConfigChange # 設定檔變更 InstructionsLoaded # CLAUDE.md / rules 載入 PostCompact # Compaction 完成後 # Agent Hooks WorktreeCreate # Worktree 建立 WorktreeRemove # Worktree 移除 TeammateIdle # 隊友閒置 TaskCompleted # 任務完成 # MCP Hooks (v2.1.76 NEW) Elicitation # MCP 請求使用者輸入 ElicitationResult # 使用者回應 # Hook 類型 Shell Hook: 執行本機指令 HTTP Hook: POST JSON 到 URL (v2.1.63+) # Hook 事件欄位 (v2.1.69+) agent_id, agent_type, worktr"
+    "content": "Hook Events 完整清單 # 生命週期 Hooks（截至 v2.1.76） SessionStart # 工作階段啟動 SessionEnd # 工作階段結束（可設 timeout） ConfigChange # 設定檔變更 InstructionsLoaded # CLAUDE.md / rules 載入 PostCompact # Compaction 完成後 # Agent Hooks WorktreeCreate # Worktree 建立 WorktreeRemove # Worktree 移除 TeammateIdle # 隊友閒置 TaskCompleted # 任務完成 # MCP Hooks (v2.1.76 NEW) Elicitation # MCP 請求使用者輸入 ElicitationResult # 使用者回應 # Hook 類型 Shell Hook: 執行本機指令 HTTP Hook: POST JSON 到 URL (v2.1.63+) # Hook 事件欄位 (v2.1.69+) agent_id, agent_type, worktree "
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15112,7 +14988,7 @@ const searchIndex = [
     ],
     "sectionId": "概念解析-原文對照",
     "sectionTitle": "概念解析 + 原文對照",
-    "content": "MCP（Model Context Protocol）在這批版本中經歷了從「能用」到「可靠」的轉變。v2.1.49 開始快取 MCP auth 失敗；v2.1.59 修復了多實例同時運行時的 OAuth token refresh 競爭條件；v2.1.63 修復了大量 MCP 相關的記憶體洩漏。 \"Fixed MCP OAuth token refresh race condition when running multiple Claude Code instances simultaneously\" / \"Fixed MCP tool/resource cache leak on server reconnect\" v2.1.76 帶來了架構級突破： MCP Elicitation 。MCP server 現在可以在任務執行中途，透過互動式對話框向使用者請求結構化輸入。這不再是單純的「工具呼叫 → 結果回傳」，而是 MCP server 主動發起的雙向對話。 \"Added MCP elicitation support — MCP servers can now request s"
+    "content": "MCP（Model Context Protocol）在這批版本中經歷了從「能用」到「可靠」的轉變。v2.1.49 開始快取 MCP auth 失敗；v2.1.59 修復了多實例同時運行時的 OAuth token refresh 競爭條件；v2.1.63 修復了大量 MCP 相關的記憶體洩漏。 \"Fixed MCP OAuth token refresh race condition when running multiple Claude Code instances simultaneously\" / \"Fixed MCP tool/resource cache leak on server reconnect\" v2.1.76 帶來了架構級突破： MCP Elicitation 。MCP server 現在可以在任務執行中途，透過互動式對話框向使用者請求結構化輸入。這不再是單純的「工具呼叫 結果回傳」，而是 MCP server 主動發起的雙向對話。 \"Added MCP elicitation support MCP servers can now request struc"
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15129,7 +15005,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "💻 MCP 改善時間線 # OAuth 與連線穩定性 v2.1.49: Auth failure caching v2.1.59: Multi-instance OAuth 競爭修復 v2.1.63: Manual URL paste fallback v2.1.69: macOS keychain 損壞修復 v2.1.69: oauth.authServerMetadataUrl 選項 v2.1.74: OAuth refresh token 過期處理 v2.1.74: Callback port 佔用處理 # 記憶體與效能 v2.1.63: Tool/resource cache leak 修復 v2.1.63: Server fetch cache 斷開清理 v2.1.70: Prompt-cache bust 修復 # 功能擴展 v2.1.63: HTTP hooks (POST JSON) v2.1.69: Binary content (PDF, Office, Audio) v2.1.76: Elicitation (結構化互動對話) v2.1.76: Elicitat"
+    "content": "MCP 改善時間線 # OAuth 與連線穩定性 v2.1.49: Auth failure caching v2.1.59: Multi-instance OAuth 競爭修復 v2.1.63: Manual URL paste fallback v2.1.69: macOS keychain 損壞修復 v2.1.69: oauth.authServerMetadataUrl 選項 v2.1.74: OAuth refresh token 過期處理 v2.1.74: Callback port 佔用處理 # 記憶體與效能 v2.1.63: Tool/resource cache leak 修復 v2.1.63: Server fetch cache 斷開清理 v2.1.70: Prompt-cache bust 修復 # 功能擴展 v2.1.63: HTTP hooks (POST JSON) v2.1.69: Binary content (PDF, Office, Audio) v2.1.76: Elicitation (結構化互動對話) v2.1.76: Elicitation"
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15163,7 +15039,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "💻 Remote Control 演進 # Remote Control 使用 claude remote-control # 基本啟動 claude remote-control --name \"batch-review\" # v2.1.76 修復項目 - Sessions 靜默死亡 - 快速訊息排隊為逐一處理 - JWT refresh 後 stale work items - WebSocket 長時間斷線恢復 - 圖片經 Remote Control 傳送時 media_type 錯誤 # Voice Mode 語言支援 (v2.1.69+) # 新增：RU, PL, TR, NL, UK, EL, CS, DA, SV, NO # 合計 20 種語言 # Push-to-talk 自訂 (v2.1.71) # keybindings.json { \"voice:pushToTalk\": \"ctrl+shift+v\" } 🛠️ CDMO 應用情境 移動辦公場景 ：在工廠巡檢時，用手機 Claude App 透過 Remote Control 連接家中 MacBook Air"
+    "content": "Remote Control 演進 # Remote Control 使用 claude remote-control # 基本啟動 claude remote-control --name \"batch-review\" # v2.1.76 修復項目 - Sessions 靜默死亡 - 快速訊息排隊為逐一處理 - JWT refresh 後 stale work items - WebSocket 長時間斷線恢復 - 圖片經 Remote Control 傳送時 media_type 錯誤 # Voice Mode 語言支援 (v2.1.69+) # 新增：RU, PL, TR, NL, UK, EL, CS, DA, SV, NO # 合計 20 種語言 # Push-to-talk 自訂 (v2.1.71) # keybindings.json { \"voice:pushToTalk\": \"ctrl+shift+v\" } CDMO 應用情境 移動辦公場景 ：在工廠巡檢時，用手機 Claude App 透過 Remote Control 連接家中 MacBook Air 上的 Cla"
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15197,7 +15073,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "💻 新指令速查表 # 記憶體管理 /memory # 管理 auto-memory /context # 檢視 context 使用狀況 # v2.1.74: 識別 context-heavy # tools、memory bloat # 排程與迴圈 /loop # 定期執行 prompt (v2.1.71) CLAUDE_CODE_DISABLE_CRON=true # 停用 cron # 檔案與輸出 /copy # 互動式選取 code blocks /copy # 'w' 鍵直接寫入檔案 (v2.1.72) /export # 匯出完整路徑 (v2.1.76 修復) # 模型與效能 /effort # 設定 effort level (v2.1.76) /model # 含 human-readable labels /color # 設定 prompt-bar 顏色 (v2.1.75) # 其他 /plan [desc] # 可選描述 (v2.1.72) /rename # prompt bar 顯示名稱 /simplify # 簡化模式 (v2.1.63) /batch #"
+    "content": "新指令速查表 # 記憶體管理 /memory # 管理 auto-memory /context # 檢視 context 使用狀況 # v2.1.74: 識別 context-heavy # tools、memory bloat # 排程與迴圈 /loop # 定期執行 prompt (v2.1.71) CLAUDE_CODE_DISABLE_CRON=true # 停用 cron # 檔案與輸出 /copy # 互動式選取 code blocks /copy # 'w' 鍵直接寫入檔案 (v2.1.72) /export # 匯出完整路徑 (v2.1.76 修復) # 模型與效能 /effort # 設定 effort level (v2.1.76) /model # 含 human-readable labels /color # 設定 prompt-bar 顏色 (v2.1.75) # 其他 /plan [desc] # 可選描述 (v2.1.72) /rename # prompt bar 顯示名稱 /simplify # 簡化模式 (v2.1.63) /batch # 批次"
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15214,7 +15090,7 @@ const searchIndex = [
     ],
     "sectionId": "概念解析-原文對照",
     "sectionTitle": "概念解析 + 原文對照",
-    "content": "Managed Settings 是企業治理的核心機制。v2.1.51 開始支援 macOS plist 和 Windows Registry 管理設定，v2.1.69 加入 pluginTrustMessage 和 strictKnownMarketplaces 。v2.1.74 修復了 managed policy 的 ask 規則被使用者 allow 規則繞過的問題 — 這是嚴重的合規漏洞。 \"Managed settings can now be set via macOS plist or Windows Registry\" / \"Fixed managed policy ask rules being bypassed by user allow rules or skill allowed-tools\" 模型遷移也是企業關注點。v2.1.49 移除 Sonnet 4.5（1M context），改為 Sonnet 4.6。v2.1.68 移除 Opus 4 和 4.1，使用者自動遷移至 Opus 4.6。v2.1.69 修復了 --model claude-opus-4-"
+    "content": "Managed Settings 是企業治理的核心機制。v2.1.51 開始支援 macOS plist 和 Windows Registry 管理設定，v2.1.69 加入 pluginTrustMessage 和 strictKnownMarketplaces 。v2.1.74 修復了 managed policy 的 ask 規則被使用者 allow 規則繞過的問題 這是嚴重的合規漏洞。 \"Managed settings can now be set via macOS plist or Windows Registry\" / \"Fixed managed policy ask rules being bypassed by user allow rules or skill allowed-tools\" 模型遷移也是企業關注點。v2.1.49 移除 Sonnet 4.5（1M context），改為 Sonnet 4.6。v2.1.68 移除 Opus 4 和 4.1，使用者自動遷移至 Opus 4.6。v2.1.69 修復了 --model claude-opus-4-0 "
   },
   {
     "docFile": "2026-03-16_claude-code-release-evolution.html",
@@ -15231,7 +15107,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-details",
     "sectionTitle": "Technical Details",
-    "content": "💻 模型遷移時間線 # Sonnet 系列 v2.1.49: Sonnet 4.5 (1M) removed -> Sonnet 4.6 (1M) replaced v2.1.69: Sonnet 4.5 Pro/Max/Team -> auto-migrated to 4.6 # Opus 系列 v2.1.49: Opus 4.6 available v2.1.50: Opus 4.6 fast mode (1M) v2.1.68: Opus 4/4.1 removed -> auto-migrated to 4.6 v2.1.68: Default effort = medium v2.1.73: Bedrock/Vertex/Foundry default Opus -> 4.6 v2.1.75: Opus 4.6 1M context (Max/Team/Enterprise) ⚠️ 跨平台修復亮點 Windows : panic 修復、大量 spawn crash、RTL 文字渲染、CMD 2>nul 處理、WSL clipboard Linux : glibc 2.26+"
+    "content": "模型遷移時間線 # Sonnet 系列 v2.1.49: Sonnet 4.5 (1M) removed -> Sonnet 4.6 (1M) replaced v2.1.69: Sonnet 4.5 Pro/Max/Team -> auto-migrated to 4.6 # Opus 系列 v2.1.49: Opus 4.6 available v2.1.50: Opus 4.6 fast mode (1M) v2.1.68: Opus 4/4.1 removed -> auto-migrated to 4.6 v2.1.68: Default effort = medium v2.1.73: Bedrock/Vertex/Foundry default Opus -> 4.6 v2.1.75: Opus 4.6 1M context (Max/Team/Enterprise) 跨平台修復亮點 Windows : panic 修復、大量 spawn crash、RTL 文字渲染、CMD 2>nul 處理、WSL clipboard Linux : glibc 2.26+ 相容（Am"
   },
   {
     "docFile": "2026-03-16_karpathy-autoresearch.html",
@@ -15247,7 +15123,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "Andrej Karpathy 於 2026 年 3 月釋出 autoresearch ，一個僅 630 行 Python + 40 行 Markdown 的極簡框架，讓 AI Agent 在單顆 GPU 上自主進行機器學習實驗。核心理念： 人類寫研究策略（program.md），Agent 執行局部搜索（train.py） 。5 天內超過 32K GitHub stars，Shopify CEO Tobi Lutke 用同一模式一夜之間讓 0.8B 模型超越手動調校的 1.6B 模型（+19%），更進一步將 Liquid 模板引擎效能提升 53%。本文深度拆解 repo 架構、program.md 設計哲學，並連結到 CDMO 環境中的 Feedback Loop 應用。 Learning Objectives 學習目標 🛠 三檔案架構設計 理解 prepare.py / train.py / program.md 的分工與約束，以及為何極簡設計是 Agent 成功的前提 📝 program.md 設計哲學 掌握「用 Markdown 寫給 Agent 的研究規則」這個新型態的 human-agent interface 設計 📈 Feedback Loop 泛化應用 將 autoresearch 的 ratchet 機制拆解為可套用於營運、品質優化等非 ML 場景的通用框架 autoresearch Ratchet Loop 📝 program.md Human 定義策略與約束 → ✍ Agent 改 train.py 修改架構/超參數 → ⏱ 5 min 訓練 固定時間預算 → 📊 val_bpb 評估 改善? git commit : git reset → 🔁 Loop Forever ~12 實驗/hr, ~100/夜 Part I Karpathy 是誰？為什麼他做的東西值得認真看 Andrej Karpathy 是 OpenAI 早期成員 之一，曾在 Tesla 主導自駕 AI 團隊，後來做了大量對開發者影響深遠的 AI 教學與開源專案：nanoGPT、micrograd、nanochat 等。他不只是研究者，更是少數能 同時橋接研究與工程落地 的人。 Former co-founder of OpenAI, former Director of AI at Tesla. Creator of nanoGPT, micrograd, nanochat — projects that bridged research and engineering practice. 所以這次他釋出 autoresearch，不只是又一個 AI demo，而是一個深刻理解模型訓練、研究流程和工程落地的人， 親自示範 AI 參與研究本身的最小可行架構 。repo 發布 5 天內達到 32.6K stars，成為 2026 年成長最快的 GitHub 專案之一。 The repo hit 32,600+ GitHub stars in five days, becoming one of the fastest-growing repositories of 2026. Not just a demo — a minimal viable architecture for AI participating in research itself. 📚 核心概念 為什麼 Karpathy 的背景很重要？ autoresearch 不是一個理論"
+    "content": "Andrej Karpathy 於 2026 年 3 月釋出 autoresearch ，一個僅 630 行 Python + 40 行 Markdown 的極簡框架，讓 AI Agent 在單顆 GPU 上自主進行機器學習實驗。核心理念： 人類寫研究策略（program.md），Agent 執行局部搜索（train.py） 。5 天內超過 32K GitHub stars，Shopify CEO Tobi Lutke 用同一模式一夜之間讓 0.8B 模型超越手動調校的 1.6B 模型（+19%），更進一步將 Liquid 模板引擎效能提升 53%。本文深度拆解 repo 架構、program.md 設計哲學，並連結到 CDMO 環境中的 Feedback Loop 應用。 Learning Objectives 學習目標 三檔案架構設計 理解 prepare.py / train.py / program.md 的分工與約束，以及為何極簡設計是 Agent 成功的前提 program.md 設計哲學 掌握「用 Markdown 寫給 Agent 的研究規則」這個新型態的 human-agent interface 設計 Feedback Loop 泛化應用 將 autoresearch 的 ratchet 機制拆解為可套用於營運、品質優化等非 ML 場景的通用框架 autoresearch Ratchet Loop program.md Human 定義策略與約束 Agent 改 train.py 修改架構/超參數 5 min 訓練 固定時間預算 val_bpb 評估 改善? git commit : git reset Loop Forever ~12 實驗/hr, ~100/夜 Part I Karpathy 是誰？為什麼他做的東西值得認真看 Andrej Karpathy 是 OpenAI 早期成員 之一，曾在 Tesla 主導自駕 AI 團隊，後來做了大量對開發者影響深遠的 AI 教學與開源專案：nanoGPT、micrograd、nanochat 等。他不只是研究者，更是少數能 同時橋接研究與工程落地 的人。 Former co-founder of OpenAI, former Director of AI at Tesla. Creator of nanoGPT, micrograd, nanochat — projects that bridged research and engineering practice. 所以這次他釋出 autoresearch，不只是又一個 AI demo，而是一個深刻理解模型訓練、研究流程和工程落地的人， 親自示範 AI 參與研究本身的最小可行架構 。repo 發布 5 天內達到 32.6K stars，成為 2026 年成長最快的 GitHub 專案之一。 The repo hit 32,600+ GitHub stars in five days, becoming one of the fastest-growing repositories of 2026. Not just a demo — a minimal viable architecture for AI participating in research itself. 核心概念 為什麼 Karpathy 的背景很重要？ autoresearch 不是一個理論概念，而是一個 已經被創建者自己驗證過的系統 。Karpathy "
   },
   {
     "docFile": "2026-03-16_yc-founder-strategic-prompting.html",
@@ -15262,7 +15138,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "一位 YC 創辦人展示了四層戰略提問法，將 Claude 從「更快的 Google」變成「沒有自尊心的戰略思考夥伴」。核心方法：先餵入大量一手資料（競爭對手頁面、財報電話會議、客戶評論），再用層層遞進的提問挖掘市場的 隱性假設 、 脆弱共識 和 攻擊面 。 批判提醒 這是匿名社群貼文，無法驗證具體案例。「3小時 vs 3個月」的說法屬於行銷誇大——真正的市場研究需要客戶訪談、數據驗證和迭代測試，LLM 無法替代。但提問框架本身有實用價值。 Learning Objectives 1 理解「Context Loading（上下文裝載）」為什麼比直接提問更重要，以及如何選擇正確的一手資料 2 掌握四層戰略提問的遞進邏輯：從隱性洞察 → 假設解構 → 壓力測試 → 最強反論 3 將此框架遷移到 CDMO 場景：客戶可行性評估、市場進入策略、競爭分析 Four-Layer Strategic Prompting Framework 1 Context Load 餵入一手資料 → 2 Unspoken Insight 挖隱性共識 → 3 Assumption Attack 解構市場假設 → 4 Stress Test 投資人級壓力測試 Part I: Context Loading — 上下文裝載的藝術 Part I 先餵資料，不要先問問題 這位創辦人的第一步不是叫 Claude 去「研究市場」。他 餵入了 8 個競爭對手的 landing page、3 份財報電話會議逐字稿、12 則客戶評論，和一個 Reddit 抱怨串 。 First: he didn't ask Claude to \"research the market.\" He fed it 8 competitor landing pages, 3 earnings call transcripts, 12 customer reviews, and a Reddit thread of complaints. 這是 Context Engineering（上下文工程）的核心原則： 你給 LLM 的資料品質，決定了它思考的品質 。大多數人給 Claude 一個模糊問題，然後對模糊答案感到失望。這位創辦人反過來——他先把自己會看的資料全部灌進去，讓 Claude 站在和他一樣的資訊起點。 Most people treat Claude like a faster Google. These founders are using it like a thinking partner who has read everything and has no ego about being wrong. Context Loading 原則 一手資料優先： 不是叫 AI 去搜尋（AI 會給你平均觀點），而是餵入你自己策展的原始資料。競爭對手怎麼向客戶說話（landing page）、管理層對投資人說什麼（earnings call）、客戶真正的痛點是什麼（reviews + Reddit）——這三者的交叉比對，才能產出有價值的洞察。 比喻：偵探的案件卷宗 想像你是一個偵探。你不會跟助手說「去查一下這個案子」——你會把所有證物、證詞、監視器畫面攤在桌上，然後問助手：「你看到什麼我沒看到的？」Context Loading 就是把案件卷宗攤開的動作。 CDMO 場景遷移 評估新客戶的可行性時，同樣可以把一手資料先載入：客戶的 CMC 文件摘要、FDA/EMA 審查歷史、同類產品的市場規模資料、類似案例的 d"
+    "content": "一位 YC 創辦人展示了四層戰略提問法，將 Claude 從「更快的 Google」變成「沒有自尊心的戰略思考夥伴」。核心方法：先餵入大量一手資料（競爭對手頁面、財報電話會議、客戶評論），再用層層遞進的提問挖掘市場的 隱性假設 、 脆弱共識 和 攻擊面 。 批判提醒 這是匿名社群貼文，無法驗證具體案例。「3小時 vs 3個月」的說法屬於行銷誇大——真正的市場研究需要客戶訪談、數據驗證和迭代測試，LLM 無法替代。但提問框架本身有實用價值。 Learning Objectives 1 理解「Context Loading（上下文裝載）」為什麼比直接提問更重要，以及如何選擇正確的一手資料 2 掌握四層戰略提問的遞進邏輯：從隱性洞察 → 假設解構 → 壓力測試 → 最強反論 3 將此框架遷移到 CDMO 場景：客戶可行性評估、市場進入策略、競爭分析 Four-Layer Strategic Prompting Framework 1 Context Load 餵入一手資料 2 Unspoken Insight 挖隱性共識 3 Assumption Attack 解構市場假設 4 Stress Test 投資人級壓力測試 Part I: Context Loading — 上下文裝載的藝術 Part I 先餵資料，不要先問問題 這位創辦人的第一步不是叫 Claude 去「研究市場」。他 餵入了 8 個競爭對手的 landing page、3 份財報電話會議逐字稿、12 則客戶評論，和一個 Reddit 抱怨串 。 First: he didn't ask Claude to \"research the market.\" He fed it 8 competitor landing pages, 3 earnings call transcripts, 12 customer reviews, and a Reddit thread of complaints. 這是 Context Engineering（上下文工程）的核心原則： 你給 LLM 的資料品質，決定了它思考的品質 。大多數人給 Claude 一個模糊問題，然後對模糊答案感到失望。這位創辦人反過來——他先把自己會看的資料全部灌進去，讓 Claude 站在和他一樣的資訊起點。 Most people treat Claude like a faster Google. These founders are using it like a thinking partner who has read everything and has no ego about being wrong. Context Loading 原則 一手資料優先： 不是叫 AI 去搜尋（AI 會給你平均觀點），而是餵入你自己策展的原始資料。競爭對手怎麼向客戶說話（landing page）、管理層對投資人說什麼（earnings call）、客戶真正的痛點是什麼（reviews + Reddit）——這三者的交叉比對，才能產出有價值的洞察。 比喻：偵探的案件卷宗 想像你是一個偵探。你不會跟助手說「去查一下這個案子」——你會把所有證物、證詞、監視器畫面攤在桌上，然後問助手：「你看到什麼我沒看到的？」Context Loading 就是把案件卷宗攤開的動作。 CDMO 場景遷移 評估新客戶的可行性時，同樣可以把一手資料先載入：客戶的 CMC 文件摘要、FDA/EMA 審查歷史、同類產品的市場規模資料、類似案例的 deviati"
   },
   {
     "docFile": "2026-03-18_claude-code-skills-lessons.html",
@@ -15294,7 +15170,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "📂 9 大 Skill 類型 掌握 Library Reference 到 Runbook 的完整分類框架，識別自己組織缺少哪些類型 🔧 撰寫最佳實踐 學會 Gotchas Section、Progressive Disclosure、On-Demand Hooks 等進階技巧 🚀 分發與管理 理解 Repo check-in vs Plugin Marketplace 的取捨，以及有機品質管控流程 Skill Lifecycle: Identify → Write → Distribute → Measure 🔍 Identify Type 9 categories taxonomy → ✍️ Write Well Gotchas, progressive disclosure → 📦 Distribute Repo vs Marketplace → 📊 Measure PreToolUse hook logging"
+    "content": "9 大 Skill 類型 掌握 Library Reference 到 Runbook 的完整分類框架，識別自己組織缺少哪些類型 撰寫最佳實踐 學會 Gotchas Section、Progressive Disclosure、On-Demand Hooks 等進階技巧 分發與管理 理解 Repo check-in vs Plugin Marketplace 的取捨，以及有機品質管控流程 Skill Lifecycle: Identify Write Distribute Measure Identify Type 9 categories taxonomy Write Well Gotchas, progressive disclosure Distribute Repo vs Marketplace Measure PreToolUse hook logging"
   },
   {
     "docFile": "2026-03-18_claude-code-skills-lessons.html",
@@ -15358,7 +15234,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★☆☆ 3.4/5 ↑ Practical Value, Tool Ecosystem ↓ Technical Depth, Timeliness Google NotebookLM 除了基本的上傳文件 + 聊天功能外，還能透過三條「隱藏連接」擴展能力：(1) Gemini Canvas 把筆記本內容直接轉成互動 App，(2) Gems 建立具有永久記憶的專屬 AI 助手，(3) Antigravity IDE + MCP 實現 32 種 NotebookLM 功能的程式化自動控制。文章以 Prompt Advisor 為貫穿範例，演示三種連接的操作流程。屬於 Google 生態系整合教學，對非 Google 生態的使用者直接價值有限。 Learning Objectives 🏗 NotebookLM + Gemini Canvas 理解如何將 NotebookLM 資料轉為互動 Web App，及其能力邊界 🧠 Gems 永久記憶助手 比較 Gems vs Claude Projects vs CustomGPT 的知識持久化架構差異 ⚙ MCP 自動化研究 評估 NotebookLM MCP 的 32 個函數在自動化研究工作流中的實際價值 NotebookLM 三層連接架構 📚 NotebookLM 上傳來源 + 訓練 → 🎨 Gemini Canvas 即時建 App → 💎 Gems 永久記憶助手 → 🚀 Antigravity MCP 32 函數自動化 Part I: NotebookLM 基礎與訓練方法 NotebookLM 是 Google 的 AI 學習工具，能從 任何來源 進行學習和研究。你可以上傳 YouTube 影片、PDF、Google Docs、網站、文字，甚至 Gemini 深度研究報告。它會讀取所有內容並儲存到記憶體中。 \"NotebookLM is Google's AI tool for learning from any source. Or doing research. You can upload sources like: YT Videos, PDFs, Google Docs, Websites, Text, Deep research (done by Gemini). It reads everything and saves it to memory.\" 兩個核心優勢讓它值得使用： 更少幻覺 （它只根據你的來源回答，不會憑空捏造）以及 完全免費 （無需信用卡，無使用限制）。 \"Two reasons make it worth your time: Less hallucination: It sticks to your sources. No making things up. It's free: Full access. No credit card. No usage limits.\" 訓練方式很簡單：建立新的 Notebook，加入來源，它會自動開始訓練。文章以 Anthropic 官方 Prompt Engineering 影片作為範例來源，訓練一個 Prompt Advisor 。設定 Custom Instructions：「Act as a prompt advisor and optimize the given prompts based on your sources.」 \"In this scenario, we'll use Anthropic'"
+    "content": "3.4/5 Practical Value, Tool Ecosystem Technical Depth, Timeliness Google NotebookLM 除了基本的上傳文件 + 聊天功能外，還能透過三條「隱藏連接」擴展能力：(1) Gemini Canvas 把筆記本內容直接轉成互動 App，(2) Gems 建立具有永久記憶的專屬 AI 助手，(3) Antigravity IDE + MCP 實現 32 種 NotebookLM 功能的程式化自動控制。文章以 Prompt Advisor 為貫穿範例，演示三種連接的操作流程。屬於 Google 生態系整合教學，對非 Google 生態的使用者直接價值有限。 Learning Objectives NotebookLM + Gemini Canvas 理解如何將 NotebookLM 資料轉為互動 Web App，及其能力邊界 Gems 永久記憶助手 比較 Gems vs Claude Projects vs CustomGPT 的知識持久化架構差異 MCP 自動化研究 評估 NotebookLM MCP 的 32 個函數在自動化研究工作流中的實際價值 NotebookLM 三層連接架構 NotebookLM 上傳來源 + 訓練 Gemini Canvas 即時建 App Gems 永久記憶助手 Antigravity MCP 32 函數自動化 Part I: NotebookLM 基礎與訓練方法 NotebookLM 是 Google 的 AI 學習工具，能從 任何來源 進行學習和研究。你可以上傳 YouTube 影片、PDF、Google Docs、網站、文字，甚至 Gemini 深度研究報告。它會讀取所有內容並儲存到記憶體中。 \"NotebookLM is Google's AI tool for learning from any source. Or doing research. You can upload sources like: YT Videos, PDFs, Google Docs, Websites, Text, Deep research (done by Gemini). It reads everything and saves it to memory.\" 兩個核心優勢讓它值得使用： 更少幻覺 （它只根據你的來源回答，不會憑空捏造）以及 完全免費 （無需信用卡，無使用限制）。 \"Two reasons make it worth your time: Less hallucination: It sticks to your sources. No making things up. It's free: Full access. No credit card. No usage limits.\" 訓練方式很簡單：建立新的 Notebook，加入來源，它會自動開始訓練。文章以 Anthropic 官方 Prompt Engineering 影片作為範例來源，訓練一個 Prompt Advisor 。設定 Custom Instructions：「Act as a prompt advisor and optimize the given prompts based on your sources.」 \"In this scenario, we'll use Anthropic's official prompt engineering video "
   },
   {
     "docFile": "2026-03-19_claude-dispatch-ecosystem.html",
@@ -15582,7 +15458,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🏗 理解頂級 Skill 的三層架構：姿態定義 → 元問題 → 結構化流程 🔄 掌握「領域無關 Meta-Prompt」的設計原理及其跨領域遷移機制 🎯 萃取可應用於 CDMO 環境的 Skill 設計模式（如 deviation triage） plan-ceo-review 三層設計架構 🎭 Layer 1: 姿態 定義審查態度 不是橡皮章 → ❓ Layer 2: 元問題 領域無關的 底層質問 → 📋 Layer 3: 結構 10 環節檢查清單 不可跳過"
+    "content": "理解頂級 Skill 的三層架構：姿態定義 → 元問題 → 結構化流程 掌握「領域無關 Meta-Prompt」的設計原理及其跨領域遷移機制 萃取可應用於 CDMO 環境的 Skill 設計模式（如 deviation triage） plan-ceo-review 三層設計架構 Layer 1: 姿態 定義審查態度 不是橡皮章 Layer 2: 元問題 領域無關的 底層質問 Layer 3: 結構 10 環節檢查清單 不可跳過"
   },
   {
     "docFile": "2026-03-20_garry-tan-gstack-skill-anatomy.html",
@@ -15710,7 +15586,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 4.0/5 ↑ Practical Value, Tool Ecosystem ↓ Technical Depth, Learning Curve Browser Use CLI 是一款開源命令列瀏覽器自動化工具，讓 AI Agent 或開發者直接從終端機操控瀏覽器。它的核心設計是 多 Session Daemon 架構 ——第一個命令啟動背景 daemon，後續命令透過 Unix socket 溝通，延遲僅約 50ms。支援三種瀏覽器模式（Headless Chromium、帶 Profile 的 Chrome、Cloud 瀏覽器），並提供完整的 Cloud API passthrough 用於管理任務和遠端瀏覽器。 這份文件是 工具參考手冊型 官方文件，涵蓋安裝、所有命令語法、Cloud API、Tunnel、Profile 同步等功能。對於需要在自動化 Pipeline 中加入瀏覽器操作的開發者來說，這是不可或缺的參考。"
+    "content": "4.0/5 Practical Value, Tool Ecosystem Technical Depth, Learning Curve Browser Use CLI 是一款開源命令列瀏覽器自動化工具，讓 AI Agent 或開發者直接從終端機操控瀏覽器。它的核心設計是 多 Session Daemon 架構 ——第一個命令啟動背景 daemon，後續命令透過 Unix socket 溝通，延遲僅約 50ms。支援三種瀏覽器模式（Headless Chromium、帶 Profile 的 Chrome、Cloud 瀏覽器），並提供完整的 Cloud API passthrough 用於管理任務和遠端瀏覽器。 這份文件是 工具參考手冊型 官方文件，涵蓋安裝、所有命令語法、Cloud API、Tunnel、Profile 同步等功能。對於需要在自動化 Pipeline 中加入瀏覽器操作的開發者來說，這是不可或缺的參考。"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15726,7 +15602,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🏗 理解 Daemon 架構 掌握 Browser Use CLI 的多 Session daemon 設計，以及為何它能達到 ~50ms 延遲 🔌 掌握三種瀏覽器模式 Headless Chromium、Profile Chrome、Cloud Browser 的使用場景與切換 ⚡ 活用命令體系 Navigation、Inspection、Interaction、Cloud API 等完整命令分類及 CDMO 應用場景 Browser Use CLI 核心工作流程 💻 Open 啟動 daemon + 開啟頁面 → 🔎 State 取得元素索引清單 → 👉 Interact click / type / input → 📷 Capture screenshot / eval / get"
+    "content": "理解 Daemon 架構 掌握 Browser Use CLI 的多 Session daemon 設計，以及為何它能達到 ~50ms 延遲 掌握三種瀏覽器模式 Headless Chromium、Profile Chrome、Cloud Browser 的使用場景與切換 活用命令體系 Navigation、Inspection、Interaction、Cloud API 等完整命令分類及 CDMO 應用場景 Browser Use CLI 核心工作流程 Open 啟動 daemon + 開啟頁面 State 取得元素索引清單 Interact click / type / input Capture screenshot / eval / get"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15741,8 +15617,8 @@ const searchIndex = [
       "API"
     ],
     "sectionId": "定位與核心功能",
-    "sectionTitle": "🌐 定位與核心功能",
-    "content": "Browser Use CLI（指令 browser-use ）是 Browser Use 平台的命令列介面。它做兩件事： 直接瀏覽器控制 （導航頁面、點擊元素、填表、上傳檔案、執行 JavaScript）和 Cloud 平台管理 （透過 REST passthrough 存取 Browser Use Cloud API）。 The Browser Use CLI (browser-use) is the command-line interface for the Browser Use platform. It does two things: direct browser control and cloud platform management. 背後靠一個 持久背景 daemon 保持瀏覽器在命令間持續運行，因此每次命令的延遲約 50ms，不用每次重新啟動瀏覽器。 A persistent background daemon keeps the browser alive between commands for fast ~50ms latency. 💡 比喻說明 想像你"
+    "sectionTitle": "定位與核心功能",
+    "content": "Browser Use CLI（指令 browser-use ）是 Browser Use 平台的命令列介面。它做兩件事： 直接瀏覽器控制 （導航頁面、點擊元素、填表、上傳檔案、執行 JavaScript）和 Cloud 平台管理 （透過 REST passthrough 存取 Browser Use Cloud API）。 The Browser Use CLI (browser-use) is the command-line interface for the Browser Use platform. It does two things: direct browser control and cloud platform management. 背後靠一個 持久背景 daemon 保持瀏覽器在命令間持續運行，因此每次命令的延遲約 50ms，不用每次重新啟動瀏覽器。 A persistent background daemon keeps the browser alive between commands for fast ~50ms latency. 比喻說明 想像你在工廠"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15757,8 +15633,8 @@ const searchIndex = [
       "API"
     ],
     "sectionId": "關鍵架構",
-    "sectionTitle": "🛠 關鍵架構",
-    "content": "📚 核心概念：Multi-Session Daemon Architecture 運作原理： 1. 第一個命令自動啟動該 session 的背景 daemon（瀏覽器保持開啟） 2. 後續命令透過 Unix socket（Windows 用 TCP）與 daemon 溝通 3. 每個 --session 擁有獨立的 daemon、socket 和 PID 檔案 4. Daemon 在瀏覽器關閉時自動退出，或可手動 browser-use close ⚠️ 重點提示 所有 CLI 相關檔案存放在 ~/.browser-use/ 目錄下，包括 config.json（API 金鑰）、daemon 的 socket 和 PID 檔案、tunnel 的 metadata 和日誌。可用 BROWSER_USE_HOME 環境變數自訂路徑。"
+    "sectionTitle": "關鍵架構",
+    "content": "核心概念：Multi-Session Daemon Architecture 運作原理： 1. 第一個命令自動啟動該 session 的背景 daemon（瀏覽器保持開啟） 2. 後續命令透過 Unix socket（Windows 用 TCP）與 daemon 溝通 3. 每個 --session 擁有獨立的 daemon、socket 和 PID 檔案 4. Daemon 在瀏覽器關閉時自動退出，或可手動 browser-use close 重點提示 所有 CLI 相關檔案存放在 ~/.browser-use/ 目錄下，包括 config.json（API 金鑰）、daemon 的 socket 和 PID 檔案、tunnel 的 metadata 和日誌。可用 BROWSER_USE_HOME 環境變數自訂路徑。"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15773,8 +15649,8 @@ const searchIndex = [
       "API"
     ],
     "sectionId": "安裝方式",
-    "sectionTitle": "📦 安裝方式",
-    "content": "安裝需要 Python 3.11+ 。macOS/Linux 可用一行指令安裝，Windows 需要先安裝 Git for Windows。 Prerequisites: Python 3.11+ on all platforms. macOS/Linux uses a one-line installer; Windows requires Git for Windows. 安裝完成後，強烈建議同時安裝 CLI Skill ，這會給你的 coding agent（如 Claude Code）完整的命令上下文，讓 AI 輔助更精準。 It is highly recommended to install the skill alongside the CLI, which gives your coding agent full context on every command, flag, and workflow. 🛠️ 實務應用：CDMO 情境 在製藥環境中，Browser Use CLI 可以用於自動化登入內部品質系統（QMS）、定期擷取環境監測報告、或從供應商入口網站抓取 "
+    "sectionTitle": "安裝方式",
+    "content": "安裝需要 Python 3.11+ 。macOS/Linux 可用一行指令安裝，Windows 需要先安裝 Git for Windows。 Prerequisites: Python 3.11+ on all platforms. macOS/Linux uses a one-line installer; Windows requires Git for Windows. 安裝完成後，強烈建議同時安裝 CLI Skill ，這會給你的 coding agent（如 Claude Code）完整的命令上下文，讓 AI 輔助更精準。 It is highly recommended to install the skill alongside the CLI, which gives your coding agent full context on every command, flag, and workflow. 實務應用：CDMO 情境 在製藥環境中，Browser Use CLI 可以用於自動化登入內部品質系統（QMS）、定期擷取環境監測報告、或從供應商入口網站抓取 CoA "
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15789,8 +15665,8 @@ const searchIndex = [
       "API"
     ],
     "sectionId": "安裝指令",
-    "sectionTitle": "💻 安裝指令",
-    "content": "macOS / Linux 一行安裝： curl -fsSL https://browser-use.com/cli/install.sh | bash Windows（PowerShell）： & \"C:\\Program Files\\Git\\bin\\bash.exe\" -c \\ 'curl -fsSL https://browser-use.com/cli/install.sh | bash' 安裝 Skill（給 Claude Code 等 coding agent）： npx skills add https://github.com/browser-use/browser-use \\ --skill browser-use 安裝後驗證： browser-use doctor # 驗證安裝 browser-use setup # 設定精靈（可選） ⚠️ 重點提示：手動安裝 若不想用一行安裝腳本，可以手動用 uv pip install browser-use ，再執行 browser-use install 安裝 Chromium，最後 browser-use doctor 驗證"
+    "sectionTitle": "安裝指令",
+    "content": "macOS / Linux 一行安裝： curl -fsSL https://browser-use.com/cli/install.sh | bash Windows（PowerShell）： & \"C:\\Program Files\\Git\\bin\\bash.exe\" -c \\ 'curl -fsSL https://browser-use.com/cli/install.sh | bash' 安裝 Skill（給 Claude Code 等 coding agent）： npx skills add https://github.com/browser-use/browser-use \\ --skill browser-use 安裝後驗證： browser-use doctor # 驗證安裝 browser-use setup # 設定精靈（可選） 重點提示：手動安裝 若不想用一行安裝腳本，可以手動用 uv pip install browser-use ，再執行 browser-use install 安裝 Chromium，最後 browser-use doctor 驗證。"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15805,8 +15681,8 @@ const searchIndex = [
       "API"
     ],
     "sectionId": "模式選擇邏輯",
-    "sectionTitle": "🌐 模式選擇邏輯",
-    "content": "Browser Use CLI 支援 三種瀏覽器模式 ，各自適用不同場景：Headless Chromium（預設，適合自動化腳本）、帶 Profile 的 Chrome（可沿用現有登入和 cookies）、Cloud Browser（透過 Browser Use Cloud API 遠端託管）。 Supports three browser modes: managed headless Chromium, real Chrome with existing user profiles and logins, and cloud-hosted browsers via the Browser Use Cloud API. 還可以透過 --connect 自動偵測已運行的 Chrome，或用 --cdp-url 直接連接到指定的 CDP（Chrome DevTools Protocol）位址。 Auto-discover and connect to running Chrome, or connect to an existing browser via CDP URL. ⚖️ 工具"
+    "sectionTitle": "模式選擇邏輯",
+    "content": "Browser Use CLI 支援 三種瀏覽器模式 ，各自適用不同場景：Headless Chromium（預設，適合自動化腳本）、帶 Profile 的 Chrome（可沿用現有登入和 cookies）、Cloud Browser（透過 Browser Use Cloud API 遠端託管）。 Supports three browser modes: managed headless Chromium, real Chrome with existing user profiles and logins, and cloud-hosted browsers via the Browser Use Cloud API. 還可以透過 --connect 自動偵測已運行的 Chrome，或用 --cdp-url 直接連接到指定的 CDP（Chrome DevTools Protocol）位址。 Auto-discover and connect to running Chrome, or connect to an existing browser via CDP URL. 工具比較："
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15821,8 +15697,8 @@ const searchIndex = [
       "API"
     ],
     "sectionId": "模式切換範例",
-    "sectionTitle": "💻 模式切換範例",
-    "content": "# 預設：headless Chromium browser-use open https://example.com # 帶視窗的瀏覽器（除錯用） browser-use --headed open https://example.com # 用你的 Chrome Default profile（保留登入狀態） browser-use --profile \"Default\" open https://gmail.com # 用特定 Chrome profile browser-use --profile \"Profile 1\" open https://gmail.com # 自動偵測已運行的 Chrome browser-use --connect open https://example.com # 透過 CDP URL 連接 browser-use --cdp-url http://localhost:9222 open https://example.com 💡 比喻說明：Profile 模式 Profile 模式就像借用同事已經刷好門禁卡的電腦——你不用重新登入，所有 s"
+    "sectionTitle": "模式切換範例",
+    "content": "# 預設：headless Chromium browser-use open https://example.com # 帶視窗的瀏覽器（除錯用） browser-use --headed open https://example.com # 用你的 Chrome Default profile（保留登入狀態） browser-use --profile \"Default\" open https://gmail.com # 用特定 Chrome profile browser-use --profile \"Profile 1\" open https://gmail.com # 自動偵測已運行的 Chrome browser-use --connect open https://example.com # 透過 CDP URL 連接 browser-use --cdp-url http://localhost:9222 open https://example.com 比喻說明：Profile 模式 Profile 模式就像借用同事已經刷好門禁卡的電腦——你不用重新登入，所有 sess"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15837,8 +15713,8 @@ const searchIndex = [
       "API"
     ],
     "sectionId": "核心命令分類",
-    "sectionTitle": "⚡ 核心命令分類",
-    "content": "Browser Use CLI 的命令分為七大類：Navigation（導航）、Inspection（檢查）、Interaction（互動）、Tabs（分頁）、Cookies、Wait（等待）、Get（資訊擷取）。核心工作流程是： open → state → interact 。 state 回傳頁面上可互動元素的編號索引，後續用索引號操作。 The core browser workflow is: navigate to a page, run state to get numbered element indices, then interact using those indices. Navigation (導航) Command Description open <url> 導航到指定 URL back 返回上一頁 scroll down/up 頁面滾動（可加 --amount 1000 指定像素） Inspection (檢查) Command Description state 取得 URL、標題、可點擊元素清單及索引 screenshot [path] 截圖（不指定"
+    "sectionTitle": "核心命令分類",
+    "content": "Browser Use CLI 的命令分為七大類：Navigation（導航）、Inspection（檢查）、Interaction（互動）、Tabs（分頁）、Cookies、Wait（等待）、Get（資訊擷取）。核心工作流程是： open state interact 。 state 回傳頁面上可互動元素的編號索引，後續用索引號操作。 The core browser workflow is: navigate to a page, run state to get numbered element indices, then interact using those indices. Navigation (導航) Command Description open <url> 導航到指定 URL back 返回上一頁 scroll down/up 頁面滾動（可加 --amount 1000 指定像素） Inspection (檢查) Command Description state 取得 URL、標題、可點擊元素清單及索引 screenshot [path] 截圖（不指定路徑則輸"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15853,8 +15729,8 @@ const searchIndex = [
       "API"
     ],
     "sectionId": "cloud-api",
-    "sectionTitle": "☁ Cloud API",
-    "content": "Browser Use CLI 提供 通用 REST passthrough 到 Browser Use Cloud API（v2/v3），可以從終端機管理 agent 任務、雲端瀏覽器 session、profiles、workspaces 等。Cloud dashboard 上能做的事，CLI 都能做。 A generic REST passthrough to the Browser Use API (v2 and v3) for managing agent tasks, cloud browser sessions, profiles, workspaces, files, skills, and billing. 💻 程式碼/API：Cloud 操作範例 # 儲存 API 金鑰 browser-use cloud login sk-abc123... # 配置雲端瀏覽器並連接 browser-use cloud connect # 帶地理代理的雲端瀏覽器 browser-use cloud connect --proxy-country US # 列出瀏覽器 browse"
+    "sectionTitle": "Cloud API",
+    "content": "Browser Use CLI 提供 通用 REST passthrough 到 Browser Use Cloud API（v2/v3），可以從終端機管理 agent 任務、雲端瀏覽器 session、profiles、workspaces 等。Cloud dashboard 上能做的事，CLI 都能做。 A generic REST passthrough to the Browser Use API (v2 and v3) for managing agent tasks, cloud browser sessions, profiles, workspaces, files, skills, and billing. 程式碼/API：Cloud 操作範例 # 儲存 API 金鑰 browser-use cloud login sk-abc123... # 配置雲端瀏覽器並連接 browser-use cloud connect # 帶地理代理的雲端瀏覽器 browser-use cloud connect --proxy-country US # 列出瀏覽器 browser-u"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15869,7 +15745,7 @@ const searchIndex = [
       "API"
     ],
     "sectionId": "session-與-profile-管理",
-    "sectionTitle": "👤 Session 與 Profile 管理",
+    "sectionTitle": "Session 與 Profile 管理",
     "content": "Session 管理 讓你同時運行多個獨立的瀏覽器 session。每個 session 有自己的 daemon，互不干擾。 Each --session gets its own daemon, socket, and PID file. # 預設 session browser-use open https://example.com # 命名 session browser-use --session work open https://app.example.com browser-use --session work state # 列出所有活躍 session browser-use sessions # 關閉特定 session browser-use --session work close # 關閉全部 browser-use close --all Profile 管理 使用 profile-use Go binary 將本地瀏覽器 cookies 同步到 Browser Use Cloud。首次使用時自動下載。 The profile subcommand del"
   },
   {
@@ -15886,7 +15762,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "🏗 Daemon 架構 = 速度 Multi-session daemon 讓瀏覽器持續運行，命令間延遲僅 ~50ms。每個 session 獨立，支援多任務並行。這是它和傳統「每次啟動新瀏覽器」工具最大的差異。 🔌 三種模式覆蓋全場景 Headless 給 CI/CD、Profile 沿用登入狀態、Cloud 給遠端與跨地域測試。加上 CDP 連接，幾乎所有瀏覽器自動化場景都能處理。 ⚡ State-Index 是核心 Pattern open → state → interact 是所有操作的基礎模式。state 回傳元素索引，後續所有互動以索引為基準——這個設計對 AI agent 非常友善（結構化可解析）。 🔗 MCP + Cloud = Agent 整合 --mcp flag 讓 CLI 成為 MCP server，可直接與 Claude Code 等 AI 工具整合。Cloud API passthrough 讓所有 dashboard 功能都能腳本化。79k+ GitHub stars 代表活躍的社群支援。"
+    "content": "Daemon 架構 = 速度 Multi-session daemon 讓瀏覽器持續運行，命令間延遲僅 ~50ms。每個 session 獨立，支援多任務並行。這是它和傳統「每次啟動新瀏覽器」工具最大的差異。 三種模式覆蓋全場景 Headless 給 CI/CD、Profile 沿用登入狀態、Cloud 給遠端與跨地域測試。加上 CDP 連接，幾乎所有瀏覽器自動化場景都能處理。 State-Index 是核心 Pattern open state interact 是所有操作的基礎模式。state 回傳元素索引，後續所有互動以索引為基準——這個設計對 AI agent 非常友善（結構化可解析）。 MCP + Cloud = Agent 整合 --mcp flag 讓 CLI 成為 MCP server，可直接與 Claude Code 等 AI 工具整合。Cloud API passthrough 讓所有 dashboard 功能都能腳本化。79k+ GitHub stars 代表活躍的社群支援。"
   },
   {
     "docFile": "2026-03-21_browser-use-cli.html",
@@ -15934,7 +15810,7 @@ const searchIndex = [
     ],
     "sectionId": "openclaw-風險全景",
     "sectionTitle": "OpenClaw 風險全景",
-    "content": "理解開源 AI Agent 的安全模型缺陷，包含 Cisco 實測的資料外洩風險 🔗"
+    "content": "理解開源 AI Agent 的安全模型缺陷，包含 Cisco 實測的資料外洩風險"
   },
   {
     "docFile": "2026-03-21_claude-code-channels-vs-openclaw.html",
@@ -15950,7 +15826,7 @@ const searchIndex = [
     ],
     "sectionId": "channels-架構原理",
     "sectionTitle": "Channels 架構原理",
-    "content": "掌握 MCP 事件推送機制、sender allowlist 安全設計、本機執行模型 ⚖"
+    "content": "掌握 MCP 事件推送機制、sender allowlist 安全設計、本機執行模型"
   },
   {
     "docFile": "2026-03-21_claude-code-channels-vs-openclaw.html",
@@ -15966,7 +15842,7 @@ const searchIndex = [
     ],
     "sectionId": "安全邊界決策",
     "sectionTitle": "安全邊界決策",
-    "content": "建立「bounded autonomy」思維框架，區分何時該用 Copilot 何時用 Agent Remote AI Development: Security Decision Framework 📱 Mobile Trigger Telegram / Discord → 🔌 MCP Channel Allowlist + Pairing → 💻 Local Session Project Dir Only → 🔒 Bounded Output Reply via Same Channel"
+    "content": "建立「bounded autonomy」思維框架，區分何時該用 Copilot 何時用 Agent Remote AI Development: Security Decision Framework Mobile Trigger Telegram / Discord MCP Channel Allowlist + Pairing Local Session Project Dir Only Bounded Output Reply via Same Channel"
   },
   {
     "docFile": "2026-03-21_claude-code-channels-vs-openclaw.html",
@@ -15998,7 +15874,7 @@ const searchIndex = [
     ],
     "sectionId": "analysis-supplementary-context",
     "sectionTitle": "Analysis & Supplementary Context",
-    "content": "⚠️ 重點提示：OpenClaw 安全事件時間線 作者提到的「Cisco 報告」遠比他描述的嚴重。根據 Cisco AI Threat & Security Research 團隊的完整評估： 1. 資料外洩實測： Cisco 測試了一個名為「What Would Elon Do?」的第三方 skill，發現它會靜默執行 curl 指令將使用者資料發送到外部伺服器，且完全不通知使用者。 2. 漏洞規模： 安全研究員發現超過 42,000 個公開暴露的 OpenClaw 實例，洩漏 API 金鑰、對話記錄和帳號憑證。 3. 供應鏈攻擊： ClawHub（OpenClaw 的 skill 市場）中約 12% 的 skills 被發現是惡意的（341/2,857），代號「ClawHavoc」事件。 💡 比喻說明：Simon Willison 的「致命三角」 安全專家 Simon Willison（提出 prompt injection 一詞的人）定義了 AI Agent 的「致命三角」(Lethal Trifecta)： 1. 存取私人資料 （郵件、文件）+ 2. 接觸不受信任的內容 （第"
+    "content": "重點提示：OpenClaw 安全事件時間線 作者提到的「Cisco 報告」遠比他描述的嚴重。根據 Cisco AI Threat & Security Research 團隊的完整評估： 1. 資料外洩實測： Cisco 測試了一個名為「What Would Elon Do?」的第三方 skill，發現它會靜默執行 curl 指令將使用者資料發送到外部伺服器，且完全不通知使用者。 2. 漏洞規模： 安全研究員發現超過 42,000 個公開暴露的 OpenClaw 實例，洩漏 API 金鑰、對話記錄和帳號憑證。 3. 供應鏈攻擊： ClawHub（OpenClaw 的 skill 市場）中約 12% 的 skills 被發現是惡意的（341/2,857），代號「ClawHavoc」事件。 比喻說明：Simon Willison 的「致命三角」 安全專家 Simon Willison（提出 prompt injection 一詞的人）定義了 AI Agent 的「致命三角」(Lethal Trifecta)： 1. 存取私人資料 （郵件、文件）+ 2. 接觸不受信任的內容 （第三方 ski"
   },
   {
     "docFile": "2026-03-21_claude-code-channels-vs-openclaw.html",
@@ -16030,7 +15906,7 @@ const searchIndex = [
     ],
     "sectionId": "technical-architecture-deep-dive",
     "sectionTitle": "Technical Architecture Deep Dive",
-    "content": "📚 核心概念：Channel = MCP Server + Event Push Channel 本質上是一個 MCP (Model Context Protocol) 伺服器，以 事件推送 模式運作。與傳統的 request-response 不同，Channel 會在你的 Claude Code session 中「注入」外部事件。 技術流程： 1. 你安裝 Channel plugin（如 Telegram）→ plugin 作為 MCP server 運行 2. 啟動 Claude Code 時加上 --channels flag → 啟動 plugin 3. MCP server 連接到 Telegram（polling 模式）或 Discord（WebSocket 模式） 4. 收到訊息 → 包裝為 <channel> event → 推入 Claude Code session 5. Claude 用本機環境處理 → 透過 MCP server 提供的 reply tool 回覆 ⚖️ 工具比較：Channels vs Remote Control vs OpenCla"
+    "content": "核心概念：Channel = MCP Server + Event Push Channel 本質上是一個 MCP (Model Context Protocol) 伺服器，以 事件推送 模式運作。與傳統的 request-response 不同，Channel 會在你的 Claude Code session 中「注入」外部事件。 技術流程： 1. 你安裝 Channel plugin（如 Telegram）→ plugin 作為 MCP server 運行 2. 啟動 Claude Code 時加上 --channels flag → 啟動 plugin 3. MCP server 連接到 Telegram（polling 模式）或 Discord（WebSocket 模式） 4. 收到訊息 → 包裝為 <channel> event → 推入 Claude Code session 5. Claude 用本機環境處理 → 透過 MCP server 提供的 reply tool 回覆 工具比較：Channels vs Remote Control vs OpenClaw 維度 C"
   },
   {
     "docFile": "2026-03-21_claude-code-channels-vs-openclaw.html",
@@ -16094,7 +15970,7 @@ const searchIndex = [
     ],
     "sectionId": "critical-analysis",
     "sectionTitle": "Critical Analysis",
-    "content": "⚠️ 重點提示：研究預覽的限制 Channels 目前仍是 Research Preview，有幾個實際限制需要注意： 1. Plugin 白名單： 只能使用 Anthropic 官方維護的 claude-plugins-official 中的 plugin。自建 channel 需要用 --dangerously-load-development-channels flag。 2. 無持久化： session 關閉就斷線。要 always-on 需要搭配 tmux 、 screen 或 VPS 背景 process。 3. 無語音： Telegram plugin 不支援語音訊息。照片有壓縮。 4. 認證限制： 必須用 claude.ai 帳號，Console 和 API key 認證不支援。 💡 比喻說明：Bounded Autonomy 與 GMP 思維 Claude Code Channels 的安全設計體現了 「有界自主」(Bounded Autonomy) 原則： 想像一個藥廠的生產線。OpenClaw 像是給外包商一把萬能鑰匙，能開所有門、存取所有系統。Claude C"
+    "content": "重點提示：研究預覽的限制 Channels 目前仍是 Research Preview，有幾個實際限制需要注意： 1. Plugin 白名單： 只能使用 Anthropic 官方維護的 claude-plugins-official 中的 plugin。自建 channel 需要用 --dangerously-load-development-channels flag。 2. 無持久化： session 關閉就斷線。要 always-on 需要搭配 tmux 、 screen 或 VPS 背景 process。 3. 無語音： Telegram plugin 不支援語音訊息。照片有壓縮。 4. 認證限制： 必須用 claude.ai 帳號，Console 和 API key 認證不支援。 比喻說明：Bounded Autonomy 與 GMP 思維 Claude Code Channels 的安全設計體現了 「有界自主」(Bounded Autonomy) 原則： 想像一個藥廠的生產線。OpenClaw 像是給外包商一把萬能鑰匙，能開所有門、存取所有系統。Claude Code Ch"
   },
   {
     "docFile": "2026-03-21_claude-code-channels-vs-openclaw.html",
@@ -16141,7 +16017,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 3.8/5 ↑ 實務應用, 學習曲線 ↓ 技術深度, 工具生態 本文介紹 Claude Code (CC) 的四層配置文件體系，重點說明如何透過 CLAUDE.md 和 .claude/rules/ 目錄建立「入職手冊」，讓 CC 每次 session 都帶著完整上下文啟動。核心原則是 Context over Instruction ——規則不只寫「做什麼」，更要寫「為什麼」。文章結構清晰、入門友善，但缺乏進階配置範例和多工具比較。 0 Learning Objectives 📚 理解四層配置架構 全域、專案、本地、模組四層的用途與優先順序 🧩 掌握 Rules 拆分策略 identity / principles / user / regression 四檔分工 💡 應用 Context over Instruction 為規則加上「為什麼」，提升泛化遵守率 Claude Code 配置四層架構 🌐 Global ~/.claude/CLAUDE.md 跨所有專案 → 📁 Project 根目錄/CLAUDE.md 專案級設定 → 💻 Local .claude/local.CLAUDE.md 個人本地覆寫 → 📝 Module .claude/rules/*.md 關注點拆分 1 配置文件全貌：四層體系 Claude Code 的配置文件有 四層結構 ，各自的作用範圍不同。理解這個層次關係，才能把正確的內容放在正確的位置。 CC has four configuration layers, each with a different scope: global, project, local, and module rules. 全域層 ~/.claude/CLAUDE.md 跨所有專案生效，適合放你的通用偏好。 專案層 放在專案根目錄，是 最核心的配置 。 本地層 僅在你的電腦上生效，不會提交到 Git。 模組層 是 .claude/rules/ 裡的獨立檔案，用來拆分關注點。 Global layer (~/.claude/CLAUDE.md) applies across all projects. Project layer sits at root. Local layer is machine-specific (not committed). Module rules split concerns into separate files. 📚 核心概念：優先順序 四層是 疊加式 的，不是覆蓋式。CC 啟動時會把四層內容合併注入 context window。如果有衝突，越具體的層級優先（Module > Local > Project > Global）。 💡 比喻說明 想像你在公司工作： 全域 是公司員工手冊（對所有人適用）、 專案 是部門 SOP（只對這個團隊）、 本地 是你桌上的便利貼（只有你看得到）、 模組 是每個職能各自的 checklist。 🛠️ 實務應用：CDMO 映射 CDMO 情境中，Global 相當於 GMP 通則（全廠適用），Project 相當於產品特定的批次紀錄（Batch Record），Local 是你個人的執行筆記，Module 則是各工站的 SOP 集合。這種分層治理邏輯完全一致。 2 CLAUDE.md：專案的入職手冊 CLAUDE.md 是最核心的配置文件，放在專案根目錄。CC 每次啟動都會讀它。它要回答一個簡單的問題： 這個專案是什麼，你在這裡應該怎麼"
+    "content": "3.8/5 實務應用, 學習曲線 技術深度, 工具生態 本文介紹 Claude Code (CC) 的四層配置文件體系，重點說明如何透過 CLAUDE.md 和 .claude/rules/ 目錄建立「入職手冊」，讓 CC 每次 session 都帶著完整上下文啟動。核心原則是 Context over Instruction ——規則不只寫「做什麼」，更要寫「為什麼」。文章結構清晰、入門友善，但缺乏進階配置範例和多工具比較。 0 Learning Objectives 理解四層配置架構 全域、專案、本地、模組四層的用途與優先順序 掌握 Rules 拆分策略 identity / principles / user / regression 四檔分工 應用 Context over Instruction 為規則加上「為什麼」，提升泛化遵守率 Claude Code 配置四層架構 Global ~/.claude/CLAUDE.md 跨所有專案 Project 根目錄/CLAUDE.md 專案級設定 Local .claude/local.CLAUDE.md 個人本地覆寫 Module .claude/rules/*.md 關注點拆分 1 配置文件全貌：四層體系 Claude Code 的配置文件有 四層結構 ，各自的作用範圍不同。理解這個層次關係，才能把正確的內容放在正確的位置。 CC has four configuration layers, each with a different scope: global, project, local, and module rules. 全域層 ~/.claude/CLAUDE.md 跨所有專案生效，適合放你的通用偏好。 專案層 放在專案根目錄，是 最核心的配置 。 本地層 僅在你的電腦上生效，不會提交到 Git。 模組層 是 .claude/rules/ 裡的獨立檔案，用來拆分關注點。 Global layer (~/.claude/CLAUDE.md) applies across all projects. Project layer sits at root. Local layer is machine-specific (not committed). Module rules split concerns into separate files. 核心概念：優先順序 四層是 疊加式 的，不是覆蓋式。CC 啟動時會把四層內容合併注入 context window。如果有衝突，越具體的層級優先（Module > Local > Project > Global）。 比喻說明 想像你在公司工作： 全域 是公司員工手冊（對所有人適用）、 專案 是部門 SOP（只對這個團隊）、 本地 是你桌上的便利貼（只有你看得到）、 模組 是每個職能各自的 checklist。 實務應用：CDMO 映射 CDMO 情境中，Global 相當於 GMP 通則（全廠適用），Project 相當於產品特定的批次紀錄（Batch Record），Local 是你個人的執行筆記，Module 則是各工站的 SOP 集合。這種分層治理邏輯完全一致。 2 CLAUDE.md：專案的入職手冊 CLAUDE.md 是最核心的配置文件，放在專案根目錄。CC 每次啟動都會讀它。它要回答一個簡單的問題： 這個專案是什麼，你在這裡應該怎麼幹活 。 CLAUDE.md is the core config file at proje"
   },
   {
     "docFile": "2026-03-23_obsidian-claude-code-stack.html",
@@ -16157,7 +16033,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★☆☆ 3.2/5 ↑ 實務應用, 學習曲線 ↓ 技術深度, 工具生態 CyrilXBT 提出一個引人注目的概念：用 Obsidian（本地 Markdown 知識庫）搭配 Claude Code（Anthropic CLI 工具），打造類似 JARVIS 的個人 AI 助手。核心論點是：當 AI 能直接讀取你長期累積的筆記資料，它就從「通用搜尋引擎」升級為「你的思維延伸」。概念方向正確，但文章停留在願景層，缺乏技術實作細節、安全考量、以及替代方案比較。適合作為入門啟發，需自行補充實作深度。 Learning Objectives 📚 理解本地知識庫 + AI 的價值主張 為什麼純文字檔案是 AI 整合的最佳基礎 🔧 掌握 Obsidian + Claude Code 的實際架構 從安裝到指向 vault 的完整工作流程 ⚠️ 批判性評估文章的限制與盲點 識別行銷語言背後的實際技術限制 Personal AI Assistant Stack 🗒 Capture Obsidian Vault 本地 Markdown 檔案 → 🔗 Connect Claude Code CLI 讀取本地檔案系統 → 🧠 Amplify 個人化 AI 輸出 基於你的知識產出 Part I - Obsidian 的真正價值：資料主權 PART I 為什麼 Obsidian 改變了一切 Obsidian 是一款筆記應用程式。但這樣說就像把 Bitcoin 說成儲蓄帳戶一樣 — 技術上沒錯，但嚴重低估了它的能力。 Obsidian is a note taking app. But calling it that is like calling Bitcoin a savings account. Technically true but wildly underselling it. 你在 Obsidian 裡寫的所有東西都以 純文字 Markdown 檔案 的形式存在你的裝置上。沒有雲端鎖定，沒有訂閱綁架你的資料。就是一堆裝滿你想法、研究和點子的資料夾，以任何程式都能讀取的格式儲存。 Everything you write in Obsidian lives locally on your device as plain text markdown files. No cloud lock in. No subscription holding your data hostage. 最後那一點才是關鍵。因為 當你的知識庫只是一個文字檔案的資料夾時，你可以把任何 AI 指向它 。 Because when your knowledge base is just a folder of text files, you can point any AI at it. 📚 核心概念 資料主權 (Data Sovereignty) 是這個堆疊的基礎假設：你的知識應該以開放格式存在本地端，不被任何平台綁定。Markdown (.md) 是純文字，任何文字編輯器、任何 AI 工具、任何腳本都能直接讀取和處理。這跟 Notion（資料在雲端資料庫）或 Evernote（專有格式）是根本性的架構差異。 💡 比喻說明 想像你的筆記是一箱實體書。Notion 就像圖書館 — 書很整齊，但你不能帶回家。Obsidian 像是你自己的書房 — 書都在你手邊，你想怎麼整理就怎麼整理，想讓誰來翻閱都可以。Claude Code 就是那個你邀請進書房的極度聰明的研究助理。 Part"
+    "content": "3.2/5 實務應用, 學習曲線 技術深度, 工具生態 CyrilXBT 提出一個引人注目的概念：用 Obsidian（本地 Markdown 知識庫）搭配 Claude Code（Anthropic CLI 工具），打造類似 JARVIS 的個人 AI 助手。核心論點是：當 AI 能直接讀取你長期累積的筆記資料，它就從「通用搜尋引擎」升級為「你的思維延伸」。概念方向正確，但文章停留在願景層，缺乏技術實作細節、安全考量、以及替代方案比較。適合作為入門啟發，需自行補充實作深度。 Learning Objectives 理解本地知識庫 + AI 的價值主張 為什麼純文字檔案是 AI 整合的最佳基礎 掌握 Obsidian + Claude Code 的實際架構 從安裝到指向 vault 的完整工作流程 批判性評估文章的限制與盲點 識別行銷語言背後的實際技術限制 Personal AI Assistant Stack Capture Obsidian Vault 本地 Markdown 檔案 Connect Claude Code CLI 讀取本地檔案系統 Amplify 個人化 AI 輸出 基於你的知識產出 Part I - Obsidian 的真正價值：資料主權 PART I 為什麼 Obsidian 改變了一切 Obsidian 是一款筆記應用程式。但這樣說就像把 Bitcoin 說成儲蓄帳戶一樣 — 技術上沒錯，但嚴重低估了它的能力。 Obsidian is a note taking app. But calling it that is like calling Bitcoin a savings account. Technically true but wildly underselling it. 你在 Obsidian 裡寫的所有東西都以 純文字 Markdown 檔案 的形式存在你的裝置上。沒有雲端鎖定，沒有訂閱綁架你的資料。就是一堆裝滿你想法、研究和點子的資料夾，以任何程式都能讀取的格式儲存。 Everything you write in Obsidian lives locally on your device as plain text markdown files. No cloud lock in. No subscription holding your data hostage. 最後那一點才是關鍵。因為 當你的知識庫只是一個文字檔案的資料夾時，你可以把任何 AI 指向它 。 Because when your knowledge base is just a folder of text files, you can point any AI at it. 核心概念 資料主權 (Data Sovereignty) 是這個堆疊的基礎假設：你的知識應該以開放格式存在本地端，不被任何平台綁定。Markdown (.md) 是純文字，任何文字編輯器、任何 AI 工具、任何腳本都能直接讀取和處理。這跟 Notion（資料在雲端資料庫）或 Evernote（專有格式）是根本性的架構差異。 比喻說明 想像你的筆記是一箱實體書。Notion 就像圖書館 — 書很整齊，但你不能帶回家。Obsidian 像是你自己的書房 — 書都在你手邊，你想怎麼整理就怎麼整理，想讓誰來翻閱都可以。Claude Code 就是那個你邀請進書房的極度聰明的研究助理。 Part II - Claude Code：不只是聊天機器人 PART II Cla"
   },
   {
     "docFile": "2026-03-23_roche-nvidia-ai-factory-pharma.html",
@@ -16435,7 +16311,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "📋 Plan-First 方法論 理解為何「先規劃後執行」能顛覆傳統開發流程，以及 plan.md 如何成為跨 session 的檢查點 ⚙ 關鍵設定與工具鏈 掌握三項核心設定（bypass permissions、完成音效、autosave）及語音輸入工具 🔄 多路並行工作流 學習 4-6 路 Claude Code session 並行執行的方法，以及 Research-Plan-Build 循環 Van Horn 核心工作流循環：Research → Plan → Build 🔍 Research /last30days 搜集 社群即時資訊 → 📝 Plan /ce:plan 產出 結構化 plan.md → 🔨 Build /ce:work 執行 任務並勾選完成 → 🔁 Iterate 語音微調 持續迭代 3 tab groups) -->"
+    "content": "Plan-First 方法論 理解為何「先規劃後執行」能顛覆傳統開發流程，以及 plan.md 如何成為跨 session 的檢查點 關鍵設定與工具鏈 掌握三項核心設定（bypass permissions、完成音效、autosave）及語音輸入工具 多路並行工作流 學習 4-6 路 Claude Code session 並行執行的方法，以及 Research-Plan-Build 循環 Van Horn 核心工作流循環：Research Plan Build Research /last30days 搜集 社群即時資訊 Plan /ce:plan 產出 結構化 plan.md Build /ce:work 執行 任務並勾選完成 Iterate 語音微調 持續迭代 3 tab groups) -->"
   },
   {
     "docFile": "2026-03-24_claude-code-power-user.html",
@@ -16515,7 +16391,7 @@ const searchIndex = [
     ],
     "sectionId": "part-iv-三項關鍵設定-解放-claude-code-的枷鎖",
     "sectionTitle": "Part IV: 三項關鍵設定 — 解放 Claude Code 的枷鎖",
-    "content": "Claude Code 預設模式對每次編輯、每個指令都要求權限確認。Van Horn 認為需要三項設定改變才能真正發揮效率。 \"Claude Code's default mode asks permission for every edit, every command. You need three config changes.\" 💻 設定 1：Dangerously Skip Permissions 在 ~/.claude/settings.json 中加入： { \"permissions\": { \"allow\": [ \"WebSearch\", \"WebFetch\", \"Bash\", \"Read\", \"Write\", \"Edit\", \"Glob\", \"Grep\", \"Task\", \"TodoWrite\" ], \"deny\": [], \"defaultMode\": \"bypassPermissions\" }, \"skipDangerousModePermissionPrompt\": true } skipDangerousModePermissionPrompt: true 是"
+    "content": "Claude Code 預設模式對每次編輯、每個指令都要求權限確認。Van Horn 認為需要三項設定改變才能真正發揮效率。 \"Claude Code's default mode asks permission for every edit, every command. You need three config changes.\" 設定 1：Dangerously Skip Permissions 在 ~/.claude/settings.json 中加入： { \"permissions\": { \"allow\": [ \"WebSearch\", \"WebFetch\", \"Bash\", \"Read\", \"Write\", \"Edit\", \"Glob\", \"Grep\", \"Task\", \"TodoWrite\" ], \"deny\": [], \"defaultMode\": \"bypassPermissions\" }, \"skipDangerousModePermissionPrompt\": true } skipDangerousModePermissionPrompt: true 是關鍵。"
   },
   {
     "docFile": "2026-03-24_claude-code-power-user.html",
@@ -16595,7 +16471,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "Plan-First 是系統，不是習慣 plan.md 不只是「先想清楚」的好建議 — 它是跨 session 的狀態保存機制、AI Agent 的任務規格書、以及 Git 回滾時的參考基準。70 份 plan 檔案 + 263 commits 在 30 天內，量化了這套方法的產出規模。 語音 + LLM 容錯 = 新的輸入典範 語音輸入之所以能用，是因為 LLM 的上下文理解能力彌補了語音轉錄的錯誤。這不是語音辨識技術的進步，而是「接收端智慧」的質變。Van Horn 的整篇文章、策略文件、甚至程式碼都是口述完成的。 並行工作需要系統級設定 4-6 路並行不是打開更多終端機就能實現的。它需要 bypass permissions（自主執行）、音效通知（狀態感知）、autosave（即時同步）三者配合。缺少任何一項，並行效率就會崩潰。 工作流框架的通用性 Research → Plan → Build 循環適用於程式碼、策略文件、開源貢獻、文章寫作、旅遊規劃。框架的價值在於可遷移性 — 一旦建立，每個新領域的適應成本趨近於零。"
+    "content": "Plan-First 是系統，不是習慣 plan.md 不只是「先想清楚」的好建議 — 它是跨 session 的狀態保存機制、AI Agent 的任務規格書、以及 Git 回滾時的參考基準。70 份 plan 檔案 + 263 commits 在 30 天內，量化了這套方法的產出規模。 語音 + LLM 容錯 = 新的輸入典範 語音輸入之所以能用，是因為 LLM 的上下文理解能力彌補了語音轉錄的錯誤。這不是語音辨識技術的進步，而是「接收端智慧」的質變。Van Horn 的整篇文章、策略文件、甚至程式碼都是口述完成的。 並行工作需要系統級設定 4-6 路並行不是打開更多終端機就能實現的。它需要 bypass permissions（自主執行）、音效通知（狀態感知）、autosave（即時同步）三者配合。缺少任何一項，並行效率就會崩潰。 工作流框架的通用性 Research Plan Build 循環適用於程式碼、策略文件、開源貢獻、文章寫作、旅遊規劃。框架的價值在於可遷移性 — 一旦建立，每個新領域的適應成本趨近於零。"
   },
   {
     "docFile": "2026-03-24_claude-code-power-user.html",
@@ -16628,7 +16504,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "★★★★☆ 4.5/5 ↑ 技術深度, 實務應用 ↓ 學習曲線 這篇 Anthropic 工程部落格詳述了如何突破單一代理人（Solo Agent）的效能天花板。核心洞察：借鑒 GAN（生成對抗網路）的對抗結構，將「生成」與「評估」分離成獨立代理人，解決了 LLM 自我評估時過度寬容的根本問題。文章從前端設計的主觀品質評分出發，發展出 Planner-Generator-Evaluator 三代理人架構，最終實現了多小時自主編碼產出完整全端應用。從 Opus 4.5 到 Opus 4.6 的模型升級過程中，作者也展示了「簡化 Harness」的原則：移除不再必要的腳手架，保留真正 load-bearing 的元件。 Bias Flag: 本文為 Anthropic 第一方工程內容，展示自家模型能力，需以 2-3x Discount 評估宣稱的效能提升。成本數據（$124-$200/次）為真實數據但屬最佳案例展示。"
+    "content": "4.5/5 技術深度, 實務應用 學習曲線 這篇 Anthropic 工程部落格詳述了如何突破單一代理人（Solo Agent）的效能天花板。核心洞察：借鑒 GAN（生成對抗網路）的對抗結構，將「生成」與「評估」分離成獨立代理人，解決了 LLM 自我評估時過度寬容的根本問題。文章從前端設計的主觀品質評分出發，發展出 Planner-Generator-Evaluator 三代理人架構，最終實現了多小時自主編碼產出完整全端應用。從 Opus 4.5 到 Opus 4.6 的模型升級過程中，作者也展示了「簡化 Harness」的原則：移除不再必要的腳手架，保留真正 load-bearing 的元件。 Bias Flag: 本文為 Anthropic 第一方工程內容，展示自家模型能力，需以 2-3x Discount 評估宣稱的效能提升。成本數據（$124-$200/次）為真實數據但屬最佳案例展示。"
   },
   {
     "docFile": "2026-03-25_harness-design-long-running-apps.html",
@@ -16645,7 +16521,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🎯 GAN 式多代理人架構 理解 Generator-Evaluator 分離為何能解決自我評估偏差，以及如何校準 Evaluator 的判斷標準 🛠 Harness 設計原則 掌握 Context Reset vs Compaction 的取捨、Sprint Contract 協商機制、以及隨模型升級簡化架構的方法 📈 品質評估框架 學習將主觀判斷（設計好不好？）轉化為可評分標準的方法論，以及 Evaluator 校準的實務技巧 Three-Agent Architecture (Planner-Generator-Evaluator) 📜 Planner 1-4 句 Prompt 展開為完整 Product Spec → ⚙ Generator 逐 Sprint 實作功能 + 自評 + 版本控制 → 🔍 Evaluator Playwright MCP 實際操作測試 + 品質評分 ↻ 🔄 Feedback Loop 未達門檻則退回 Generator 修正"
+    "content": "GAN 式多代理人架構 理解 Generator-Evaluator 分離為何能解決自我評估偏差，以及如何校準 Evaluator 的判斷標準 Harness 設計原則 掌握 Context Reset vs Compaction 的取捨、Sprint Contract 協商機制、以及隨模型升級簡化架構的方法 品質評估框架 學習將主觀判斷（設計好不好？）轉化為可評分標準的方法論，以及 Evaluator 校準的實務技巧 Three-Agent Architecture (Planner-Generator-Evaluator) Planner 1-4 句 Prompt 展開為完整 Product Spec Generator 逐 Sprint 實作功能 + 自評 + 版本控制 Evaluator Playwright MCP 實際操作測試 + 品質評分 Feedback Loop 未達門檻則退回 Generator 修正"
   },
   {
     "docFile": "2026-03-25_harness-design-long-running-apps.html",
@@ -16662,7 +16538,7 @@ const searchIndex = [
     ],
     "sectionId": "part-i-為什麼天真實作會失敗",
     "sectionTitle": "Part I: 為什麼天真實作會失敗",
-    "content": "Harness 設計對長時間自主代理編碼的有效性有 實質性影響 。早期實驗使用 Initializer Agent 將產品規格分解為任務清單，再由 Coding Agent 逐一實作功能，並在 session 之間傳遞產出物以保持上下文。社群也發展出類似方法，如「Ralph Wiggum」方法使用 hooks 或 scripts 讓代理人持續迭代。 \"We've previously shown that harness design has a substantial impact on the effectiveness of long running agentic coding.\" 但問題依然存在。對於更複雜的任務，代理人仍然會隨時間 脫軌 。分析後發現兩個常見的失敗模式。 \"For more complex tasks, the agent still tends to go off the rails over time.\" 📚 核心概念：兩大失敗模式 1. Context Window 填滿導致失去連貫性 模型在長任務中隨上下文窗口填滿而失去連貫性。部分模型還會出現 C"
+    "content": "Harness 設計對長時間自主代理編碼的有效性有 實質性影響 。早期實驗使用 Initializer Agent 將產品規格分解為任務清單，再由 Coding Agent 逐一實作功能，並在 session 之間傳遞產出物以保持上下文。社群也發展出類似方法，如「Ralph Wiggum」方法使用 hooks 或 scripts 讓代理人持續迭代。 \"We've previously shown that harness design has a substantial impact on the effectiveness of long running agentic coding.\" 但問題依然存在。對於更複雜的任務，代理人仍然會隨時間 脫軌 。分析後發現兩個常見的失敗模式。 \"For more complex tasks, the agent still tends to go off the rails over time.\" 核心概念：兩大失敗模式 1. Context Window 填滿導致失去連貫性 模型在長任務中隨上下文窗口填滿而失去連貫性。部分模型還會出現 Cont"
   },
   {
     "docFile": "2026-03-25_harness-design-long-running-apps.html",
@@ -16730,7 +16606,7 @@ const searchIndex = [
     ],
     "sectionId": "part-v-sprint-contract-與代理人間溝通",
     "sectionTitle": "Part V: Sprint Contract 與代理人間溝通",
-    "content": "每個 Sprint 開始前，Generator 和 Evaluator 會 協商 Sprint Contract ——在寫任何程式碼之前，先同意這塊工作「完成」長什麼樣。Product Spec 刻意保持高階，Sprint Contract 填補了使用者故事與可測試實作之間的鴻溝。 \"The generator proposed what it would build and how success would be verified, and the evaluator reviewed that proposal.\" 溝通透過 檔案 處理：一個代理人寫檔案，另一個讀取並在該檔案或新檔案中回應。這讓工作忠於 Spec，同時不過早指定實作細節。 \"Communication was handled via files: one agent would write a file, another agent would read it and respond.\" 💡 比喻說明：Sprint Contract = 施工前的圖審 這就像 CDMO 在批次生產前的 Batch Record "
+    "content": "每個 Sprint 開始前，Generator 和 Evaluator 會 協商 Sprint Contract ——在寫任何程式碼之前，先同意這塊工作「完成」長什麼樣。Product Spec 刻意保持高階，Sprint Contract 填補了使用者故事與可測試實作之間的鴻溝。 \"The generator proposed what it would build and how success would be verified, and the evaluator reviewed that proposal.\" 溝通透過 檔案 處理：一個代理人寫檔案，另一個讀取並在該檔案或新檔案中回應。這讓工作忠於 Spec，同時不過早指定實作細節。 \"Communication was handled via files: one agent would write a file, another agent would read it and respond.\" 比喻說明：Sprint Contract = 施工前的圖審 這就像 CDMO 在批次生產前的 Batch Record Rev"
   },
   {
     "docFile": "2026-03-25_harness-design-long-running-apps.html",
@@ -16798,7 +16674,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "🎯 Generator-Evaluator 分離是關鍵槓桿 讓生成者自我批評幾乎不可能——LLM 天然傾向寬容自己的產出。但校準一個獨立的 Evaluator 使其嚴格，比讓 Generator 自我批判要容易得多。這是 GAN 結構的核心洞察。 🛠 Harness 元件應隨模型升級重新審視 每個元件都是對模型弱點的假設。Opus 4.5 需要 Sprint 分解和 Context Reset；Opus 4.6 不需要。逐一移除元件測試影響，比一次大幅重寫更有效。 📈 主觀品質可以被操作化 「這個設計好不好？」無法一致回答，但「這是否符合我們的設計原則？」可以。四維度評分標準加上 few-shot 校準，讓主觀判斷變得可靠且可重複。 💰 成本是真實的但可能值得 完整 Harness 比 Solo 貴 10-20x（$9 vs $124-200），但差異是「核心功能壞掉」vs「完整可用的應用」。對需要可靠輸出的場景，Evaluator 的邊際成本遠低於人工 debug。"
+    "content": "Generator-Evaluator 分離是關鍵槓桿 讓生成者自我批評幾乎不可能——LLM 天然傾向寬容自己的產出。但校準一個獨立的 Evaluator 使其嚴格，比讓 Generator 自我批判要容易得多。這是 GAN 結構的核心洞察。 Harness 元件應隨模型升級重新審視 每個元件都是對模型弱點的假設。Opus 4.5 需要 Sprint 分解和 Context Reset；Opus 4.6 不需要。逐一移除元件測試影響，比一次大幅重寫更有效。 主觀品質可以被操作化 「這個設計好不好？」無法一致回答，但「這是否符合我們的設計原則？」可以。四維度評分標準加上 few-shot 校準，讓主觀判斷變得可靠且可重複。 成本是真實的但可能值得 完整 Harness 比 Solo 貴 10-20x（$9 vs $124-200），但差異是「核心功能壞掉」vs「完整可用的應用」。對需要可靠輸出的場景，Evaluator 的邊際成本遠低於人工 debug。"
   },
   {
     "docFile": "2026-03-25_harness-design-long-running-apps.html",
@@ -16849,7 +16725,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "🎯 理解 Auto Mode 架構 掌握雙階段分類器（快速篩選 + CoT 推理）的運作機制及設計取捨 🛡 威脅模型分析 識別四種危險行為類型：過度積極、誤判、提示注入、模型失準 ⚖ 安全與自主的平衡 評估 0.4% FPR vs 17% FNR 的真實取捨，以及 GMP 環境的啟示 Auto Mode Permission Pipeline ✅ Tier 1 安全清單 + 使用者規則 → 📂 Tier 2 專案內檔案 自動放行 → 🤖 Tier 3 分類器判斷 Stage 1 → 2 → 🚧 Deny Flow 拒絕+繼續 3/20 上限"
+    "content": "理解 Auto Mode 架構 掌握雙階段分類器（快速篩選 + CoT 推理）的運作機制及設計取捨 威脅模型分析 識別四種危險行為類型：過度積極、誤判、提示注入、模型失準 安全與自主的平衡 評估 0.4% FPR vs 17% FNR 的真實取捨，以及 GMP 環境的啟示 Auto Mode Permission Pipeline Tier 1 安全清單 + 使用者規則 Tier 2 專案內檔案 自動放行 Tier 3 分類器判斷 Stage 1 2 Deny Flow 拒絕+繼續 3/20 上限"
   },
   {
     "docFile": "2026-03-26_claude-code-auto-mode.html",
@@ -16951,7 +16827,7 @@ const searchIndex = [
     ],
     "sectionId": "part-v-評估結果",
     "sectionTitle": "Part V: 評估結果",
-    "content": "團隊在三個資料集上評估了完整管道：真實內部流量 (n=10,000)、真實過度積極行為 (n=52)、合成資料外洩 (n=1,000)。 We evaluated on three datasets: real internal traffic (n=10,000), real overeager actions (n=52), and synthetic data exfiltration (n=1,000). Real Traffic n=10,000 Real Overeager n=52 Synthetic Exfil n=1,000 Stage 1 (fast filter) 8.5% FPR 6.6% FNR 1.8% FNR Stage 1→2 (full pipeline) 0.4% FPR 17% FNR 5.7% FNR 17% 的漏報率是誠實的數字。 在大多數漏報案例中，分類器正確識別了危險。它出錯的地方是判斷 會話中的真實同意信號是否涵蓋了「這個」操作 。分類器找到了「看起來像批准的證據」，但沒有進一步檢查它是否是對操作影響範圍的同意。 The 17% fals"
+    "content": "團隊在三個資料集上評估了完整管道：真實內部流量 (n=10,000)、真實過度積極行為 (n=52)、合成資料外洩 (n=1,000)。 We evaluated on three datasets: real internal traffic (n=10,000), real overeager actions (n=52), and synthetic data exfiltration (n=1,000). Real Traffic n=10,000 Real Overeager n=52 Synthetic Exfil n=1,000 Stage 1 (fast filter) 8.5% FPR 6.6% FNR 1.8% FNR Stage 1 2 (full pipeline) 0.4% FPR 17% FNR 5.7% FNR 17% 的漏報率是誠實的數字。 在大多數漏報案例中，分類器正確識別了危險。它出錯的地方是判斷 會話中的真實同意信號是否涵蓋了「這個」操作 。分類器找到了「看起來像批准的證據」，但沒有進一步檢查它是否是對操作影響範圍的同意。 The 17% fals"
   },
   {
     "docFile": "2026-03-26_claude-code-auto-mode.html",
@@ -16985,7 +16861,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "🎯 分類器取代審批，不取代人工判斷 Auto mode 的目標是取代 --dangerously-skip-permissions ，而不是取代仔細的人工審查。它是「比沒有好很多」的中間路線，不是「完美的自動化」。 🛡 雙層防禦 + 推理盲目設計 輸入層掃描提示注入，輸出層分類器判斷操作安全性。分類器刻意不看代理的自我解釋，防止被「說服」-- 獨立審查原則的工程實現。 📊 誠實的 17% 漏報率 分類器能看到危險操作，但在推斷「使用者授權範圍」時出錯。過度積極行為（overeager behavior）是最難捕捉的威脅類型，因為看起來像合理的問題解決。 ⚙ Prompt Cache 驅動的成本效率 Stage 1 和 Stage 2 共享相同 Prompt，只改最後一行指令。Stage 2 幾乎是免費的 cache hit。拒絕後繼續（deny-and-continue）讓誤報不會終止整個會話。"
+    "content": "分類器取代審批，不取代人工判斷 Auto mode 的目標是取代 --dangerously-skip-permissions ，而不是取代仔細的人工審查。它是「比沒有好很多」的中間路線，不是「完美的自動化」。 雙層防禦 + 推理盲目設計 輸入層掃描提示注入，輸出層分類器判斷操作安全性。分類器刻意不看代理的自我解釋，防止被「說服」-- 獨立審查原則的工程實現。 誠實的 17% 漏報率 分類器能看到危險操作，但在推斷「使用者授權範圍」時出錯。過度積極行為（overeager behavior）是最難捕捉的威脅類型，因為看起來像合理的問題解決。 Prompt Cache 驅動的成本效率 Stage 1 和 Stage 2 共享相同 Prompt，只改最後一行指令。Stage 2 幾乎是免費的 cache hit。拒絕後繼續（deny-and-continue）讓誤報不會終止整個會話。"
   },
   {
     "docFile": "2026-03-26_claude-code-auto-mode.html",
@@ -17529,7 +17405,7 @@ const searchIndex = [
     ],
     "sectionId": "learning-objectives",
     "sectionTitle": "Learning Objectives",
-    "content": "1 Workflow 思維模式 理解「可重複 Prompt 系統」vs「一次性提問」的根本差異，以及如何將日常任務 Workflow 化 2 Prompt 品質控制技巧 掌握反向指令、品質錨定、輸出格式固定等 Prompt Engineering 實戰模式 3 批判性效益評估 學會用 2-3x 折扣原則評估 AI 生產力宣稱，區分真實省時與認知偏誤 Workflow 設計四步驟 1 識別重複任務 追蹤時間花在哪裡 → 2 固定輸入格式 標準化資料輸入 → 3 設計 Prompt 模板 含品質錨定指令 → 4 迭代優化 追蹤實際效果"
+    "content": "1 Workflow 思維模式 理解「可重複 Prompt 系統」vs「一次性提問」的根本差異，以及如何將日常任務 Workflow 化 2 Prompt 品質控制技巧 掌握反向指令、品質錨定、輸出格式固定等 Prompt Engineering 實戰模式 3 批判性效益評估 學會用 2-3x 折扣原則評估 AI 生產力宣稱，區分真實省時與認知偏誤 Workflow 設計四步驟 1 識別重複任務 追蹤時間花在哪裡 2 固定輸入格式 標準化資料輸入 3 設計 Prompt 模板 含品質錨定指令 4 迭代優化 追蹤實際效果"
   },
   {
     "docFile": "2026-03-28_claude-10-workflows.html",
@@ -17656,8 +17532,8 @@ const searchIndex = [
       "Framework"
     ],
     "sectionId": "wf7-long-content-short-content",
-    "sectionTitle": "WF7: Long Content ↔ Short Content",
-    "content": "經營多個社群媒體帳號（X、Telegram、Instagram）最痛苦的是為每個平台寫不同版本。此 Workflow 是 一對多的內容轉換引擎 ：一篇長文 → tweet hook、TG 貼文、quote-tweet caption、獨立推文。 \"One prompt, 10 minutes of editing. Used to be 2 hours of work.\" 關鍵設計： 「Each piece must work independently. Someone who never read the article should still get value.」 ——這防止 AI 產出需要原文上下文才能理解的碎片。 作者也提到 反向操作 ：將一週的短文貼文全部輸入，請 Claude 找出連結主題，起草長文大綱。短 → 長同樣有價值。 \"I'll take 5-6 short TG posts from the week... and ask Claude to find the connecting thread and draft a long-form article "
+    "sectionTitle": "WF7: Long Content Short Content",
+    "content": "經營多個社群媒體帳號（X、Telegram、Instagram）最痛苦的是為每個平台寫不同版本。此 Workflow 是 一對多的內容轉換引擎 ：一篇長文 tweet hook、TG 貼文、quote-tweet caption、獨立推文。 \"One prompt, 10 minutes of editing. Used to be 2 hours of work.\" 關鍵設計： 「Each piece must work independently. Someone who never read the article should still get value.」 ——這防止 AI 產出需要原文上下文才能理解的碎片。 作者也提到 反向操作 ：將一週的短文貼文全部輸入，請 Claude 找出連結主題，起草長文大綱。短 長同樣有價值。 \"I'll take 5-6 short TG posts from the week... and ask Claude to find the connecting thread and draft a long-form article outl"
   },
   {
     "docFile": "2026-03-28_claude-10-workflows.html",
@@ -17737,7 +17613,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "Workflow = System, Not Prompt Workflow 的定義是「可重複的 Prompt + 固定結構 + 可預測的輸出」。一次性提問是工具使用，Workflow 是系統設計。真正的價值在於從 ad-hoc 使用轉向系統化生產力。 反向指令 > 正向指令 告訴 AI「不要做什麼」（Don't speculate / Don't pad / No corporate speak）比描述「要做什麼」更有效。這覆蓋了 LLM 的預設禮貌偏差和填充行為，是 Prompt Engineering 的高槓桿技巧。 Context About You 是差異化關鍵 在 Prompt 中加入「關於我」的上下文（受眾定義、角色定位、專業背景），將 AI 輸出從通用建議轉化為個人化洞察。這正是 Claude Projects 的 System Prompt 和 Memory 功能設計的核心理念。 AI 做篩選，人類做判斷 最有效的 Workflow 遵循「AI 預處理 + 人類終審」模式（1,000 repos → 80 候選 → 40 精選）。這是 Copilot Mode 的本質"
+    "content": "Workflow = System, Not Prompt Workflow 的定義是「可重複的 Prompt + 固定結構 + 可預測的輸出」。一次性提問是工具使用，Workflow 是系統設計。真正的價值在於從 ad-hoc 使用轉向系統化生產力。 反向指令 > 正向指令 告訴 AI「不要做什麼」（Don't speculate / Don't pad / No corporate speak）比描述「要做什麼」更有效。這覆蓋了 LLM 的預設禮貌偏差和填充行為，是 Prompt Engineering 的高槓桿技巧。 Context About You 是差異化關鍵 在 Prompt 中加入「關於我」的上下文（受眾定義、角色定位、專業背景），將 AI 輸出從通用建議轉化為個人化洞察。這正是 Claude Projects 的 System Prompt 和 Memory 功能設計的核心理念。 AI 做篩選，人類做判斷 最有效的 Workflow 遵循「AI 預處理 + 人類終審」模式（1,000 repos 80 候選 40 精選）。這是 Copilot Mode 的本質——AI"
   },
   {
     "docFile": "2026-03-28_claude-10-workflows.html",
@@ -17769,7 +17645,7 @@ const searchIndex = [
     ],
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
-    "content": "2026 年 AI 工程領域的最新關鍵詞： Harness Engineering（韁繩工程） 。這不是另一個行銷新詞 — 它描述的是一個真實且正在發生的範式轉移： 工程師的核心工作從「寫程式碼」轉向「設計 AI Agent 運行的環境」 。本文以花叔的微博長文為核心，交叉驗證 OpenAI Codex 團隊的百萬行程式碼實驗、Anthropic 三 Agent 架構、LangChain 的 Terminal Bench 突破（同模型僅換 harness，排名從 Top 30 跳到 Top 5），以及 Mitchell Hashimoto 的實踐哲學。核心洞察：模型可能不再是瓶頸， 你給它搭的環境才是 。 📍 理解三層定位 Prompt / Context / Harness 的層級關係與各自邊界 📊 掌握實證數據 LangChain、OpenAI、Anthropic 三方案例的具體成效與方法論 🔧 建構個人 Harness 將 CLAUDE.md、Hooks、Skills 映射為 Harness 架構的組件 Prompt → Context → Harness：三層演進模型 \ud83d"
+    "content": "2026 年 AI 工程領域的最新關鍵詞： Harness Engineering（韁繩工程） 。這不是另一個行銷新詞 — 它描述的是一個真實且正在發生的範式轉移： 工程師的核心工作從「寫程式碼」轉向「設計 AI Agent 運行的環境」 。本文以花叔的微博長文為核心，交叉驗證 OpenAI Codex 團隊的百萬行程式碼實驗、Anthropic 三 Agent 架構、LangChain 的 Terminal Bench 突破（同模型僅換 harness，排名從 Top 30 跳到 Top 5），以及 Mitchell Hashimoto 的實踐哲學。核心洞察：模型可能不再是瓶頸， 你給它搭的環境才是 。 理解三層定位 Prompt / Context / Harness 的層級關係與各自邊界 掌握實證數據 LangChain、OpenAI、Anthropic 三方案例的具體成效與方法論 建構個人 Harness 將 CLAUDE.md、Hooks、Skills 映射為 Harness 架構的組件 Prompt → Context → Harness：三層演進模型 Prompt Eng"
   },
   {
     "docFile": "2026-03-28_harness-engineering.html",
@@ -17785,7 +17661,7 @@ const searchIndex = [
     ],
     "sectionId": "key-takeaways",
     "sectionTitle": "Key Takeaways",
-    "content": "🎯 模型是商品，Harness 是護城河 LangChain 同模型從 Top 30 跳到 Top 5。效能差異不在模型，在環境設計。投資 harness 的回報率遠高於等待下一代模型。 🔄 Harness 隨模型進化而簡化 Anthropic 從 Sonnet 4.5 升級到 Opus 4.6 時移除了 sprint 分解。每個 harness 組件都編碼一個假設 — 模型變強時要重新測試。 🛡️ 約束 > 建議 Prompt 裡寫「請注意品質」是建議。Hooks 裡設定 linter 檢查是約束。一個是口頭叮嚀，一個是物理攔截。效果天差地別。 🧠 設計 Harness 需要足夠的踩坑經驗 不管你積累的是程式碼經驗還是 AI 協作經驗，足夠多的經驗本身就是設計 harness 的前提。沒有捷徑，賽道不同而已。"
+    "content": "模型是商品，Harness 是護城河 LangChain 同模型從 Top 30 跳到 Top 5。效能差異不在模型，在環境設計。投資 harness 的回報率遠高於等待下一代模型。 Harness 隨模型進化而簡化 Anthropic 從 Sonnet 4.5 升級到 Opus 4.6 時移除了 sprint 分解。每個 harness 組件都編碼一個假設 — 模型變強時要重新測試。 約束 > 建議 Prompt 裡寫「請注意品質」是建議。Hooks 裡設定 linter 檢查是約束。一個是口頭叮嚀，一個是物理攔截。效果天差地別。 設計 Harness 需要足夠的踩坑經驗 不管你積累的是程式碼經驗還是 AI 協作經驗，足夠多的經驗本身就是設計 harness 的前提。沒有捷徑，賽道不同而已。"
   },
   {
     "docFile": "2026-03-28_harness-engineering.html",
@@ -17802,5 +17678,165 @@ const searchIndex = [
     "sectionId": "practice-questions",
     "sectionTitle": "Practice Questions",
     "content": "Q1 概念理解 Context Engineering 和 Harness Engineering 的邊界在哪裡？你的 Master Prompt 屬於哪一層？ Context Engineering 管「給模型看什麼資訊」，Harness Engineering 則包含 context + 約束 + 反饋迴圈 + 品質檢查。 Master Prompt 本身是 context（告訴模型文件該怎麼生成），但它搭配的 present_files 流程、meta tag 驗證、Dashboard 索引重建等機制，整體構成了一個 harness。單獨的 prompt 是 context，prompt + 檢查機制 + 自動化流程 = harness。 HumanLayer 的定義更精確：Harness Engineering 是 Context Engineering 的子集，專注於 harness 配置點管理。但在實踐中，兩者的邊界是模糊的 — 重要的是整套系統一起運作。 Q2 產業應用 如果你要為 CDMO 的偏差調查流程設計一個 AI Harness，Generator-Evaluat"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "GitLab 共同創辦人 Sid Sijbrandij 在 2022 年確診骨肉瘤（Osteosarcoma），經歷標準治療失敗後，於 2024 年被醫療系統「放棄」。他隨即將科技創業的 Founder Mode 思維應用到自己的癌症治療——組建專屬醫療 SWAT 團隊、用 ChatGPT 分析 RNA 測序數據、飛往中國做 B7H3 實驗性掃描、赴德國做放射配體治療（Radioligand Therapy）。截至 2026 年初，他的體內已經 檢測不到癌細胞（NED, No Evidence of Disease） 。同時，他還創辦了開源 AI 編程平台 Kilo Code，提出「2026 是 Parallel Agents 元年」的判斷。這篇教學文件從工程思維、AI 應用、創業哲學三個維度拆解他的故事，萃取可遷移到 CDMO 營運和個人 AI 學習的方法論。 2-3x Discount 提醒 來源偏差聲明 ：本文的核心素材來自推特線索（二手轉述，含戲劇化修辭）、Sid 本人的 Substack（第一人稱，有自我呈現偏差）、以及 OpenAI Forum 演講（由 OpenAI 主辦"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "Founder Mode 方法論 理解如何將軟體工程的系統化思維（Maximal Diagnostics、Parallel Treatments、Therapeutic Ladder）應用到非軟體領域 AI 作為 Polymath 助手 理解 LLM 在跨學科知識整合中的 Copilot 角色：分析 RNA 測序、建立研究迴圈、與醫療團隊協作 Parallel Agents 未來觀 掌握 Sid 對 AI 編程未來的預測：從單一 Agent 到並行多 Agent、從 IDE 到 Slack、從 Vibe Coding 到工程效率百倍提升 Sid 的「Founder Mode 抗癌堆疊」(Care Stack) Maximal Docs 1,000+ 頁健康筆記 GitLab Handbook 式記錄 Maximal Diagnostics RNA 測序 / 單細胞分析 B7H3 掃描 / 類器官建模 Therapeutic Ladder 30+ 備選藥物梯隊 並行而非串行治療 AI + Team ChatGPT 分析基因通路 跨學科 SWAT 團隊"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-i-從確診到標準治療失敗",
+    "sectionTitle": "Part I: 從確診到標準治療失敗",
+    "content": "2022 年 11 月，Sid Sijbrandij 在例行健身時感到胸口劇痛。經急診檢查後，發現一顆 六公分的腫瘤 從他的 T5 脊椎長出。確診為 骨肉瘤（Osteosarcoma） ——一種極為罕見的骨癌，在美國每年影響不到 1,000 人，且如果標準治療後復發，存活率通常以月計算。 \"He had a six centimeter mass extending from his T5 vertebrae... diagnosed with osteosarcoma, a form of bone cancer that is rare for an otherwise healthy 45 year old.\" 第一階段治療極為慘烈：外科手術切除含腫瘤的脊椎，以鈦合金框架融合脊柱；接受放射治療和多輪高強度化療，化療副作用嚴重到需要 四次輸血 才能保命。Sid 形容：「它摧毀了我。」更長期的後果包括心臟柔韌性下降、貧血，以及化療對大腦的毒性影響。 \"The chemotherapy was so intense that he needed four separate blood "
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-ii-founder-mode-啟動-從-ceo-到自己身體的-cto",
+    "sectionTitle": "Part II: Founder Mode 啟動 — 從 CEO 到自己身體的 CTO",
+    "content": "面對標準治療用盡的困境，Sid 做了兩個關鍵決定：第一，正式卸任 GitLab CEO（轉任執行主席），把 100% 的 Founder 能量投入抗癌；第二，從第一性原理出發，建立自己的 「治療堆疊」（Care Stack） 。 \"Sid was leading GitLab in founder mode and his cancer care in manager mode. It was time to flip that before it was too late.\" 他的 Care Stack 有三層： 第一層：Maximal Documentation ——在一份名為 \"Sid Health Notes\" 的 Google Doc 中，他和團隊記錄每一次醫療互動、每一場與癌症研究者的會議。光是 2025 年，這份文件就超過了 1,000 頁 。 第二層：Maximal Diagnostics ——做所有能做的診斷，盡可能頻繁地做。包括單細胞 RNA 測序、bulk RNA 測序、高解析度顯微鏡影像、類器官建模（Organoid）、微殘留疾病檢測（MRD）。 第三層：The"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-iii-ai-作為超級軍師-chatgpt-分析-rna-測序的真實用法",
+    "sectionTitle": "Part III: AI 作為超級軍師 — ChatGPT 分析 RNA 測序的真實用法",
+    "content": "在 Sid 的抗癌流程中，AI 扮演了 「跨學科整合者」 的角色。他將癌細胞的 RNA 測序數據（電子表格格式）直接輸入 ChatGPT，讓模型分析 MDM2 等複雜的基因通路（Gene Pathway）。AI 的價值不是取代醫生的判斷，而是把極度碎片化的醫學文獻、基因組學數據、和藥物資訊快速整合起來。 \"Sid used ChatGPT to help track and understand his cancer and health data. He inputted scans, blood tests, and tissue samples to build a personal research and development loop.\" Sid 指出一個關鍵痛點：你想湊齊八個頂尖人類醫學專家同時開會幾乎是不可能的——他們分屬不同醫院、不同時區、不同專科。但 AI 就像一個終極 「博學家」（Polymath） ，能瞬間跨學科把知識串聯起來，幫助患者「更快行動、提出更尖銳的問題、並在複雜的醫療環境中協調照護」。 \"The result helped him move fas"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-iv-全球治療網絡-從中國到德國的效率套利",
+    "sectionTitle": "Part IV: 全球治療網絡 — 從中國到德國的效率套利",
+    "content": "Sid 把全球當成了他的測試網絡。他飛往中國做前沿的 B7H3 蛋白掃描 ，因為在中國從登記、配藥到出結果的效率遠高於美國的醫療體系。他也前往德國做實驗性的 放射配體治療（Radioligand Therapy） ——將 Lutetium-177 綁定到特定蛋白質上，精準攻擊表達該蛋白的癌細胞。 \"These scans combine a protein binder, for example, for B7H3, but also IFAR-2 FAP with a scan.\" 這背後反映了一個深層趨勢：中國已經對測試實驗性藥物採取了截然不同的立場，這 威脅到美國生技產業的未來競爭力 。在美國，FDA 的嚴格監管意味著新藥審批成本高達 10 億美元；但在中國和其他地區，政策窗口正在快速打開。Sid 的全球治療旅程本質上是在做「醫療監管套利」——在不同國家的監管框架下獲取不同的治療選項。 \"China has adopted a dramatically different posture towards testing experimental medicines that no"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "part-v-kilo-code-與-parallel-agents-抗癌創業家的-ai-編程哲學",
+    "sectionTitle": "Part V: Kilo Code 與 Parallel Agents — 抗癌創業家的 AI 編程哲學",
+    "content": "在瘋狂抗癌的同時，Sid 與 Scott Breitenother 共同創辦了 Kilo Code ——一個開源的 AI 編程平台，支援 500+ AI 模型、零加價定價、跨平台（VS Code、JetBrains、CLI、Slack）。2025 年 12 月完成 800 萬美元種子輪融資，投資方包括 General Catalyst、Cota Capital 等。截至 2026 年初，已有約 150 萬用戶，每月處理超過 6 兆個 Token。 \"The company was co-founded by Sid Sijbrandij and Scott Breitenother... raised $8 million in seed funding.\" Sid 斷言： 「2026 年是並行智能體（Parallel Agents）的元年。」 目前大多數開發者一次只能讓一個 Agent 保持忙碌，但 Kilo 的 Orchestrator 模式允許將任務分派到多個 Agent 在不同工作流中並發執行。這本質上就是他「並行治療」思維的軟體版本。 \"I think 2026 is goi"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Founder Mode 是一種可遷移的方法論 Sid 證明了「Maximal Documentation → Maximal Diagnostics → Therapeutic Ladder」的三層堆疊不僅適用於癌症，更是一個通用的複雜問題解決框架。在 CDMO 中，這映射為「完整記錄 → 全面調查 → 多路線 CAPA」的偏差處理升級版。 AI 是 Polymath Copilot，不是 Agent AI 在性命攸關場景中的最佳角色是跨學科知識整合者：加速文獻搜索、連結碎片化數據、提出假設供人類驗證。不是取代專家判斷，而是讓專家的判斷覆蓋面更廣、反應速度更快。 並行思維是下一個效率邊疆 無論是並行治療方案還是並行 AI Agent，核心邏輯一致：在時間緊迫且資源允許的情況下，同時推進多條路線比逐一測試更有效。但在 GMP 環境中，並行的每條路線仍需獨立驗證。 資源門檻不可忽視 Sid 的成功高度依賴億級富翁的經濟資源、全球頂尖醫療人脈、和他作為科技創業者的系統化能力。這不是任何人都能複製的路徑。故事的價值在於方法論啟發，而非治療方案的直接複製。"
+  },
+  {
+    "docFile": "2026-04-01_sid-founder-mode-cancer.html",
+    "docTitle": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
+    "docDate": "2026-04-01",
+    "docSource": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Analysis",
+      "Tool"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Sid 的 Care Stack 三層架構（Documentation / Diagnostics / Therapeutic Ladder）如何對映到 CDMO 的品質系統？ Documentation → Batch Record + Deviation Log ：完整記錄每一個事件和決策，但 Sid 的記錄是前瞻性的（尋找下一步），而 GMP 記錄偏向回顧性（證明合規）。升級方向：讓偏差調查記錄也包含「探索性假設」欄位。 Diagnostics → OOS/OOT 調查 + 環境監控 ：做所有能做的檢測，盡可能頻繁。在 CDMO 中，這等於提高環境監控頻率、增加過程分析技術（PAT）的部署密度、對異常趨勢做更深層的根因分析。 Therapeutic Ladder → CAPA 多路線驗證 ：不只有一條修正路線，而是準備多條備選方案並排序優先級。這對「反覆偏差」類問題特別有價值——當第一輪 CAPA 失效時，第二輪已經準備好了。 Q2 產業應用 如果你要在 CDMO 偏差調查中引入 AI Copilot（類似 Sid 用 ChatGPT 分析 RNA 數據），你會如"
+  },
+  {
+    "docFile": "2026-04-04_claw-code-open-source-cli.html",
+    "docTitle": "Claw Code - 開源 AI CLI 架構深度解析",
+    "docDate": "2026-04-04",
+    "docSource": "ultraworkers/claw-code GitHub Repository",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Framework",
+      "Architecture"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Claw Code Rust AI CLI Claude Code AI Agent CLI SystemPromptBuilder ConfigLoader MCP Claude Code 理解模組架構 SystemPromptBuilder、ConfigLoader、ProjectContext 三大核心模組的職責與協作方式 掌握 MCP 協議 Model Context Protocol 的六種傳輸模式（Stdio/SSE/HTTP/WS/SDK/ManagedProxy）與適用場景 權限與安全設計 ReadOnly → WorkspaceWrite → DangerFullAccess 三級權限模型與 Hooks 攔截機制 Claw Code 核心架構流程 ProjectContext 探索工作目錄 Git 狀態 + CLAW.md ConfigLoader 多層配置合併 User → Project → Local PromptBuilder 組裝系統提示詞 靜態 + 動態段落 Agent Runtime MCP 工具執行 權限檢查 + Hooks Part I ProjectContext — 專案環境探索引擎 Claw Code 啟動時做的第一件事就是 探索專案環境 。 ProjectContext 結構體負責收集四類關鍵資訊：工作目錄路徑、當前日期、Git 狀態（status + diff）、以及指令檔案（instruction files）。 On startup, Claw Code discovers project context: working directory, date, git state, and instruction files — all fed into the system prompt. 指令檔案的探索邏輯特別精巧： 從當前目錄向上遍歷所有祖先目錄 ，尋找 CLAW.md 、 CLAW.local.md 和 .claw/instructions.md 。找到後以內容雜湊去重，避免 symlink 或重複掛載導致同一份指令被載入兩次。 discover_instruction_files() traverses ancestor directories for CLAW.md, CLAW.local.md, and .claw/instructions.md, deduplicating by stable content hash. 每個指令檔案有 字元預算：單檔 4,000 字元、總計 12,000 字元 。超過就截斷。這是一個務實的設計 — 避免用戶放了一本百科全書進 CLAW.md 就把上下文窗口塞爆。 Character budgets: 4,000 per file, 12,000 total — preventing context window overflow from oversized instruction files. 核心概念 — Instruction File 層級 三種指令檔案，三種用途： 1. CLAW.md — 團隊共享的專案規則，應提交到 Git（等同 Claude Code 的 CLAUDE.md ） 2. CLAW.local.md — 個人偏好，不提交到 Git（等同 CLAUDE.local.md ） 3. .claw/instructions.md — 目錄層級的指令，適合 monorepo 中不同子專案有不同規則 類比 — 對照 Claude Co"
   }
 ];

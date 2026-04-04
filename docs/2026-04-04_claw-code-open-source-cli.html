@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claw Code - 開源 AI CLI 架構深度解析</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-04-04">
+<meta name="doc-title" content="Claw Code - 開源 AI CLI 架構深度解析">
+<meta name="doc-source" content="ultraworkers/claw-code GitHub Repository">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Tool,Agent,Framework,Architecture">
+<meta name="doc-rating" content="4.2">
+<meta name="doc-summary" content="Claw Code 開源 Rust CLI 架構拆解：SystemPromptBuilder、ConfigLoader、MCP 多傳輸協議、權限分級與 Hooks 系統，對照 Claude Code 理解 AI Agent CLI 設計模式。">
+<meta name="doc-file" content="2026-04-04_claw-code-open-source-cli.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Header Elements */
+.tag-container { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 500; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-framework { background: #fde68a; color: #92400e; }
+.tag-architecture { background: #e9d5ff; color: #6b21a8; }
+.header h1 { font-size: 1.8rem; margin: 0 0 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
+.header .source { font-size: 0.85rem; opacity: 0.8; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+.exec-summary h2 { color: #1e3a5f; font-size: 1.2rem; margin-top: 0; }
+.exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-item .obj-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-item .obj-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.25rem; }
+.objective-item .obj-desc { font-size: 0.85rem; color: #64748b; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Content Grid */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.section-label { font-size: 0.75rem; font-weight: 600; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.part-title { font-size: 1.15rem; font-weight: 700; color: #1e3a5f; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+
+/* Bilingual */
+.bilingual-block { margin-bottom: 1.25rem; }
+.zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+.en-text { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
+
+/* Highlight */
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 0.75rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 0.75rem; font-size: 0.9rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+
+/* Code blocks */
+code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 3px; }
+pre { font-family: 'Source Code Pro', monospace; font-size: 0.82rem; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; line-height: 1.6; }
+pre code { background: none; padding: 0; color: inherit; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card .card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.summary-card .card-title { font-weight: 700; color: #1e3a5f; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.summary-card .card-text { font-size: 0.9rem; color: #475569; line-height: 1.6; }
+
+/* Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Data Table */
+.data-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+.data-table th { background: #1e3a5f; color: white; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; }
+.data-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
+.data-table tr:nth-child(even) { background: #f8fafc; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+    .objectives-grid { grid-template-columns: 1fr; }
+    .takeaways-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-framework">Framework</span>
+        <span class="tag tag-architecture">Architecture</span>
+    </div>
+    <h1>Claw Code &#x2014; &#x958b;&#x6e90; AI CLI &#x67b6;&#x69cb;&#x6df1;&#x5ea6;&#x89e3;&#x6790;</h1>
+    <div class="subtitle">Open-Source Rust CLI for AI Agents: Architecture, Config, MCP &amp; Permission Design Patterns</div>
+    <div class="source">Source: ultraworkers/claw-code GitHub Repository | 2026-04-04</div>
+</div>
+
+<!-- Container -->
+<div class="container">
+
+<!-- Executive Summary -->
+<div class="exec-summary">
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2606;</span> 4.2/5</span>
+        <span class="rating-high">&#x2191; &#x67b6;&#x69cb;&#x8a2d;&#x8a08;, &#x958b;&#x6e90;&#x53c3;&#x8003;&#x50f9;&#x503c;</span>
+        <span class="rating-low">&#x2193; &#x6587;&#x4ef6;&#x4e0d;&#x8db3;, &#x751f;&#x614b;&#x65e9;&#x671f;</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p><span class="highlight-concept">Claw Code</span> &#x662f;&#x4e00;&#x500b;&#x7528; Rust &#x5beb;&#x7684;&#x958b;&#x6e90; AI CLI &#x5de5;&#x5177;&#xff0c;&#x67b6;&#x69cb;&#x8207; Claude Code &#x9ad8;&#x5ea6;&#x76f8;&#x4f3c;&#x3002;&#x5b83;&#x63d0;&#x4f9b;&#x4e86;&#x4e00;&#x500b;&#x5b8c;&#x6574;&#x7684;&#x53c3;&#x8003;&#x5be6;&#x4f5c;&#xff0c;&#x8b93;&#x6211;&#x5011;&#x53ef;&#x4ee5;&#x300c;&#x958b;&#x84cb;&#x5b50;&#x300d;&#x7814;&#x7a76; AI Agent CLI &#x7684;&#x6838;&#x5fc3;&#x8a2d;&#x8a08;&#x6a21;&#x5f0f;&#xff1a;<span class="highlight-key">SystemPromptBuilder &#x5982;&#x4f55;&#x52d5;&#x614b;&#x7d44;&#x88dd;&#x7cfb;&#x7d71;&#x63d0;&#x793a;&#x8a5e;</span>&#x3001;ConfigLoader &#x5982;&#x4f55;&#x591a;&#x5c64;&#x5408;&#x4f75;&#x914d;&#x7f6e;&#x3001;MCP &#x5354;&#x8b70;&#x5982;&#x4f55;&#x652f;&#x63f4;&#x591a;&#x7a2e;&#x50b3;&#x8f38;&#x3001;&#x4ee5;&#x53ca;&#x6b0a;&#x9650;&#x7cfb;&#x7d71;&#x5982;&#x4f55;&#x5206;&#x7d1a;&#x63a7;&#x5236;&#x5de5;&#x5177;&#x5b58;&#x53d6;&#x3002;&#x5c0d;&#x65bc;&#x5df2;&#x7d93;&#x4f7f;&#x7528; Claude Code &#x7684;&#x4eba;&#x4f86;&#x8aaa;&#xff0c;&#x9019;&#x7bc7;&#x89e3;&#x6790;&#x80fd;&#x8b93;&#x4f60;<span class="highlight-practical">&#x5f9e;&#x300c;&#x7528;&#x6236;&#x300d;&#x8996;&#x89d2;&#x5207;&#x63db;&#x5230;&#x300c;&#x67b6;&#x69cb;&#x5e2b;&#x300d;&#x8996;&#x89d2;</span>&#xff0c;&#x7406;&#x89e3;&#x6bcf;&#x500b;&#x529f;&#x80fd;&#x80cc;&#x5f8c;&#x7684;&#x5de5;&#x7a0b;&#x6c7a;&#x7b56;&#x3002;</p>
+</div>
+
+<!-- Learning Objectives -->
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="obj-icon">&#x1f9e9;</div>
+        <div class="obj-title">理解模組架構</div>
+        <div class="obj-desc">SystemPromptBuilder、ConfigLoader、ProjectContext 三大核心模組的職責與協作方式</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #10b981;">
+        <div class="obj-icon">&#x1f50c;</div>
+        <div class="obj-title">掌握 MCP 協議</div>
+        <div class="obj-desc">Model Context Protocol 的六種傳輸模式（Stdio/SSE/HTTP/WS/SDK/ManagedProxy）與適用場景</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #8b5cf6;">
+        <div class="obj-icon">&#x1f512;</div>
+        <div class="obj-title">權限與安全設計</div>
+        <div class="obj-desc">ReadOnly → WorkspaceWrite → DangerFullAccess 三級權限模型與 Hooks 攔截機制</div>
+    </div>
+</div>
+
+<!-- Framework Visual -->
+<div class="framework-visual">
+    <div class="framework-title">Claw Code 核心架構流程</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#x1f4c1;</div>
+            <div class="framework-step-title">ProjectContext</div>
+            <div class="framework-step-desc">探索工作目錄<br>Git 狀態 + CLAW.md</div>
+        </div>
+        <div class="framework-arrow">&#x2192;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x2699;</div>
+            <div class="framework-step-title">ConfigLoader</div>
+            <div class="framework-step-desc">多層配置合併<br>User → Project → Local</div>
+        </div>
+        <div class="framework-arrow">&#x2192;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1f4dd;</div>
+            <div class="framework-step-title">PromptBuilder</div>
+            <div class="framework-step-desc">組裝系統提示詞<br>靜態 + 動態段落</div>
+        </div>
+        <div class="framework-arrow">&#x2192;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1f916;</div>
+            <div class="framework-step-title">Agent Runtime</div>
+            <div class="framework-step-desc">MCP 工具執行<br>權限檢查 + Hooks</div>
+        </div>
+    </div>
+</div>
+
+<!-- Part I: Project Context Discovery -->
+<div class="content-grid">
+<div class="content-left">
+    <div class="section-label">Part I</div>
+    <div class="part-title">ProjectContext — 專案環境探索引擎</div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">Claw Code 啟動時做的第一件事就是<span class="highlight-concept">探索專案環境</span>。<code>ProjectContext</code> 結構體負責收集四類關鍵資訊：工作目錄路徑、當前日期、Git 狀態（status + diff）、以及指令檔案（instruction files）。</p>
+        <p class="en-text">On startup, Claw Code discovers project context: working directory, date, git state, and instruction files — all fed into the system prompt.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">指令檔案的探索邏輯特別精巧：<span class="highlight-key">從當前目錄向上遍歷所有祖先目錄</span>，尋找 <code>CLAW.md</code>、<code>CLAW.local.md</code> 和 <code>.claw/instructions.md</code>。找到後以內容雜湊去重，避免 symlink 或重複掛載導致同一份指令被載入兩次。</p>
+        <p class="en-text">discover_instruction_files() traverses ancestor directories for CLAW.md, CLAW.local.md, and .claw/instructions.md, deduplicating by stable content hash.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">每個指令檔案有<span class="highlight-practical">字元預算：單檔 4,000 字元、總計 12,000 字元</span>。超過就截斷。這是一個務實的設計 — 避免用戶放了一本百科全書進 CLAW.md 就把上下文窗口塞爆。</p>
+        <p class="en-text">Character budgets: 4,000 per file, 12,000 total — preventing context window overflow from oversized instruction files.</p>
+    </div>
+</div>
+<div class="content-right">
+    <div class="info-box box-concept">
+        <div class="info-box-header">&#x1f4da; 核心概念 — Instruction File 層級</div>
+        <div class="info-box-content">
+            <p><strong>三種指令檔案，三種用途：</strong></p>
+            <p>1. <code>CLAW.md</code> — 團隊共享的專案規則，應提交到 Git（等同 Claude Code 的 <code>CLAUDE.md</code>）</p>
+            <p>2. <code>CLAW.local.md</code> — 個人偏好，不提交到 Git（等同 <code>CLAUDE.local.md</code>）</p>
+            <p>3. <code>.claw/instructions.md</code> — 目錄層級的指令，適合 monorepo 中不同子專案有不同規則</p>
+        </div>
+    </div>
+
+    <div class="info-box box-analogy">
+        <div class="info-box-header">&#x1f4a1; 類比 — 對照 Claude Code</div>
+        <div class="info-box-content">
+            <p>Claw Code 的 <code>CLAW.md</code> 就是 Claude Code 的 <code>CLAUDE.md</code>。檔名不同，機制幾乎一模一樣。兩者都支援：祖先目錄遍歷、local 覆蓋、內容去重。最大差異是 Claw Code 明確設了字元上限（4K/12K），Claude Code 的截斷策略則未公開。</p>
+        </div>
+    </div>
+
+    <div class="info-box box-code">
+        <div class="info-box-header">&#x1f4bb; 關鍵結構體</div>
+        <div class="info-box-content">
+<pre><code>struct ProjectContext {
+    working_directory: PathBuf,
+    date: String,
+    git_status: Option&lt;String&gt;,
+    git_diff: Option&lt;String&gt;,
+    instruction_files: Vec&lt;ContextFile&gt;,
+}
+
+struct ContextFile {
+    path: PathBuf,
+    content: String,
+}</code></pre>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Part II: ConfigLoader -->
+<div class="content-grid">
+<div class="content-left">
+    <div class="section-label">Part II</div>
+    <div class="part-title">ConfigLoader — 多層配置合併系統</div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">配置系統是 Claw Code 最精密的模組之一。<span class="highlight-concept">ConfigLoader</span> 按優先順序從五個位置載入配置：User legacy <code>.claw.json</code>、User <code>~/.claw/settings.json</code>、Project <code>.claw.json</code>、Project <code>.claw/settings.json</code>、Local <code>.claw/settings.local.json</code>。</p>
+        <p class="en-text">ConfigLoader discovers and loads config files from 5 locations in precedence order, with later files overriding earlier ones via deep merge.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">合併策略是<span class="highlight-key">深度合併（deep merge）</span>，不是簡單覆蓋。如果 User config 設了 MCP server A，Project config 設了 MCP server B，最終結果是兩個都有。只有同一個 key 的值才會被後者覆蓋。這讓團隊配置和個人偏好能無衝突共存。</p>
+        <p class="en-text">Deep merge preserves nested objects — team and personal configs coexist without conflict.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">每個配置來源都標記了 <code>ConfigSource</code> 枚舉：<span class="highlight-practical">User、Project、Local</span>。這不只是元資料 — 權限系統會根據來源決定信任等級。例如，Project config 不能覆蓋 User 的安全設定。</p>
+        <p class="en-text">Each config entry is tagged with its source (User/Project/Local), enabling trust-level decisions in the permission system.</p>
+    </div>
+</div>
+<div class="content-right">
+    <div class="info-box box-key">
+        <div class="info-box-header">&#x26A0;&#xFE0F; 配置載入順序（後者覆蓋前者）</div>
+        <div class="info-box-content">
+            <table class="data-table">
+                <tr><th>#</th><th>位置</th><th>來源</th></tr>
+                <tr><td>1</td><td><code>~/.claw.json</code></td><td>User (legacy)</td></tr>
+                <tr><td>2</td><td><code>~/.claw/settings.json</code></td><td>User</td></tr>
+                <tr><td>3</td><td><code>.claw.json</code> (project root)</td><td>Project</td></tr>
+                <tr><td>4</td><td><code>.claw/settings.json</code></td><td>Project</td></tr>
+                <tr><td>5</td><td><code>.claw/settings.local.json</code></td><td>Local</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="info-box box-practical">
+        <div class="info-box-header">&#x1f6e0;&#xFE0F; 實務應用 — RuntimeFeatureConfig</div>
+        <div class="info-box-content">
+            <p>合併後的配置會被轉換為 <code>RuntimeFeatureConfig</code>，聚合了：</p>
+            <p>&#x2022; <strong>Hooks</strong> — pre/post tool-use 攔截器</p>
+            <p>&#x2022; <strong>Plugins</strong> — 插件狀態與目錄</p>
+            <p>&#x2022; <strong>MCP Servers</strong> — 命名的 MCP 服務器集合</p>
+            <p>&#x2022; <strong>OAuth</strong> — 認證配置</p>
+            <p>&#x2022; <strong>Permissions</strong> — 權限模式</p>
+            <p>&#x2022; <strong>Sandbox</strong> — 沙箱隔離設定</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Part III: SystemPromptBuilder -->
+<div class="content-grid">
+<div class="content-left">
+    <div class="section-label">Part III</div>
+    <div class="part-title">SystemPromptBuilder — 動態提示詞組裝器</div>
+
+    <div class="bilingual-block">
+        <p class="zh-text"><span class="highlight-concept">SystemPromptBuilder</span> 是整個系統的大腦 — 它把 ProjectContext、RuntimeConfig、和多個靜態段落組裝成最終的系統提示詞。採用經典的 <span class="highlight-key">Builder Pattern</span>，依序累加：輸出風格、OS 資訊、專案上下文、運行時配置、附加段落。</p>
+        <p class="en-text">SystemPromptBuilder uses the Builder Pattern to accumulate output style, OS info, project context, runtime config, and append sections into the final system prompt.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">系統提示詞有明確的<span class="highlight-practical">靜態/動態邊界</span>，用 <code>SYSTEM_PROMPT_DYNAMIC_BOUNDARY</code> 常數標記。靜態部分（工具使用規則、行為準則）每次都一樣；動態部分（Git 狀態、指令檔案、日期）每次啟動都重新生成。這個設計允許快取靜態部分，減少 token 計算成本。</p>
+        <p class="en-text">A boundary marker separates static (cacheable) and dynamic (regenerated per session) prompt sections — enabling token cost optimization.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">最終輸出有兩種格式：<code>build()</code> 返回段落向量（用於需要結構化處理的場景），<code>render()</code> 返回合併後的純文字（用於直接傳給 API）。</p>
+        <p class="en-text">Two output formats: build() returns a vector of sections, render() joins them into a single string for the API.</p>
+    </div>
+</div>
+<div class="content-right">
+    <div class="info-box box-code">
+        <div class="info-box-header">&#x1f4bb; Builder Pattern 實作</div>
+        <div class="info-box-content">
+<pre><code>struct SystemPromptBuilder {
+    output_style: Option&lt;String&gt;,
+    os_info: Option&lt;String&gt;,
+    project_context: Option&lt;ProjectContext&gt;,
+    runtime_config: Option&lt;RuntimeConfig&gt;,
+    append_sections: Vec&lt;String&gt;,
+}
+
+impl SystemPromptBuilder {
+    fn new() -&gt; Self { ... }
+    fn with_project_context(mut self, ctx: ProjectContext) -&gt; Self { ... }
+    fn with_runtime_config(mut self, cfg: RuntimeConfig) -&gt; Self { ... }
+    fn build(self) -&gt; Vec&lt;String&gt; { ... }
+    fn render(self) -&gt; String { ... }
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="info-box box-concept">
+        <div class="info-box-header">&#x1f4da; 靜態段落清單</div>
+        <div class="info-box-content">
+            <p>Claw Code 的系統提示詞包含這些靜態段落：</p>
+            <p>&#x2022; <code>get_simple_intro_section()</code> — 自我介紹與角色定位</p>
+            <p>&#x2022; <code>get_simple_system_section()</code> — 系統能力描述</p>
+            <p>&#x2022; <code>get_simple_doing_tasks_section()</code> — 任務執行準則</p>
+            <p>&#x2022; <code>get_actions_section()</code> — 工具使用規範</p>
+            <p>&#x2022; <code>render_config_section()</code> — 動態配置渲染</p>
+            <p>常數 <code>FRONTIER_MODEL_NAME</code> 設為 "Opus 4.6" — 表示此版本針對最新模型最佳化。</p>
+        </div>
+    </div>
+
+    <div class="info-box box-analogy">
+        <div class="info-box-header">&#x1f4a1; 類比 — 樂高積木式提示詞</div>
+        <div class="info-box-content">
+            <p>把系統提示詞想像成樂高：靜態段落是預製模組（每盒都有），動態段落是你自己加的零件（CLAW.md 內容、Git diff）。Builder Pattern 讓你可以選擇性組裝 — 不需要 Git 的場景就跳過，不需要 OS 資訊的場景也能省略。</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Part IV: MCP Protocol Support -->
+<div class="content-grid">
+<div class="content-left">
+    <div class="section-label">Part IV</div>
+    <div class="part-title">MCP 多傳輸協議 — 工具擴展的六條通道</div>
+
+    <div class="bilingual-block">
+        <p class="zh-text"><span class="highlight-concept">Model Context Protocol (MCP)</span> 是 AI Agent 連接外部工具的標準協議。Claw Code 支援六種傳輸模式，這是目前開源實作中覆蓋最全面的之一。每種模式對應不同的部署場景。</p>
+        <p class="en-text">Claw Code supports 6 MCP transport modes — one of the most comprehensive open-source implementations available.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text"><span class="highlight-key">Stdio</span> 是最常見的本地模式：啟動一個子程序，透過 stdin/stdout 通訊。配置包含 command、args、環境變數。<span class="highlight-key">SSE</span> 和 <span class="highlight-key">HTTP</span> 用於遠端服務器。<span class="highlight-key">WebSocket</span> 用於需要雙向即時通訊的場景。<span class="highlight-key">SDK</span> 是按名稱引用已註冊的服務器。<span class="highlight-key">ManagedProxy</span> 則由平台代管。</p>
+        <p class="en-text">Stdio for local processes, SSE/HTTP for remote servers, WebSocket for bidirectional real-time, SDK for named references, ManagedProxy for platform-managed services.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">每個 MCP Server 配置都包裹在 <code>ScopedMcpServerConfig</code> 中，標記了<span class="highlight-practical">來源範圍（scope）</span>。這意味著 Project 配置裡定義的 MCP server 和 User 配置裡定義的有不同的信任等級 — 避免惡意 repo 透過 .claw.json 注入危險工具。</p>
+        <p class="en-text">Each MCP server is scoped to its config source — preventing malicious repos from injecting dangerous tools via project config.</p>
+    </div>
+</div>
+<div class="content-right">
+    <div class="info-box box-compare">
+        <div class="info-box-header">&#x1f50c; MCP 六種傳輸模式對照表</div>
+        <div class="info-box-content">
+            <table class="data-table">
+                <tr><th>傳輸模式</th><th>場景</th><th>配置重點</th></tr>
+                <tr><td><strong>Stdio</strong></td><td>本地 CLI 工具</td><td>command, args, env</td></tr>
+                <tr><td><strong>SSE</strong></td><td>遠端串流服務</td><td>url, headers</td></tr>
+                <tr><td><strong>HTTP</strong></td><td>遠端 REST API</td><td>url, headers, OAuth</td></tr>
+                <tr><td><strong>WebSocket</strong></td><td>即時雙向通訊</td><td>url, headers</td></tr>
+                <tr><td><strong>SDK</strong></td><td>內建服務引用</td><td>server name</td></tr>
+                <tr><td><strong>ManagedProxy</strong></td><td>平台代管</td><td>url, id</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="info-box box-code">
+        <div class="info-box-header">&#x1f4bb; MCP 配置範例（Stdio）</div>
+        <div class="info-box-content">
+<pre><code>{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="info-box box-key">
+        <div class="info-box-header">&#x26A0;&#xFE0F; OAuth 支援</div>
+        <div class="info-box-content">
+            <p>HTTP 和 SSE 模式支援完整的 OAuth 配置（<code>OAuthConfig</code>），包含 authorization URI、token URI、client ID、scopes。MCP 專用的 <code>McpOAuthConfig</code> 還能設定自動刷新。這讓 Claw Code 可以安全連接需要認證的企業級工具。</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Part V: Permission & Security -->
+<div class="content-grid">
+<div class="content-left">
+    <div class="section-label">Part V</div>
+    <div class="part-title">權限系統與 Hooks — 安全的三層防線</div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">Claw Code 的權限模型分三級：<span class="highlight-concept">ReadOnly</span>（只能讀取檔案和執行查詢）、<span class="highlight-key">WorkspaceWrite</span>（可以修改工作區內的檔案）、<span class="highlight-practical">DangerFullAccess</span>（完全存取，包括網路和系統操作）。</p>
+        <p class="en-text">Three permission levels: ReadOnly (queries only), WorkspaceWrite (modify workspace files), DangerFullAccess (full system access).</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">這不只是 UI 選項 — 權限等級直接影響哪些工具可以被呼叫。在 ReadOnly 模式下，即使模型要求執行 <code>rm -rf /</code>，runtime 層就會攔截。這是<span class="highlight-key">硬約束（hard constraint）</span>，不是靠 prompt 告訴模型「不要做壞事」的軟約束。</p>
+        <p class="en-text">Permission levels enforce hard constraints at the runtime layer — not soft prompt-based suggestions.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text"><span class="highlight-concept">Hooks 系統</span>提供了額外的攔截層。<code>RuntimeHookConfig</code> 支援 pre-tool-use 和 post-tool-use 兩種掛鉤。Pre-hook 可以在工具執行前檢查參數、記錄日誌、甚至阻止執行。Post-hook 可以在執行後驗證結果、觸發通知。</p>
+        <p class="en-text">Pre/post tool-use hooks provide an additional interception layer — inspect, log, block, or validate tool calls.</p>
+    </div>
+</div>
+<div class="content-right">
+    <div class="info-box box-concept">
+        <div class="info-box-header">&#x1f4da; 三級權限模型</div>
+        <div class="info-box-content">
+            <p><strong>Level 1: ReadOnly</strong><br>適合瀏覽程式碼、問問題。不能修改任何檔案，不能執行有副作用的命令。最安全。</p>
+            <p><strong>Level 2: WorkspaceWrite</strong><br>日常開發的最佳選擇。可以讀寫工作區檔案、執行測試、建置專案。不能存取工作區外的系統資源。</p>
+            <p><strong>Level 3: DangerFullAccess</strong><br>完全信任模式。可以安裝套件、修改系統配置、存取網路。名稱裡的 "Danger" 就是提醒。</p>
+        </div>
+    </div>
+
+    <div class="info-box box-practical">
+        <div class="info-box-header">&#x1f6e0;&#xFE0F; Hooks 的實際用途</div>
+        <div class="info-box-content">
+            <p><strong>Pre-tool-use Hook 範例：</strong></p>
+            <p>&#x2022; 在每次 Bash 執行前記錄命令到審計日誌</p>
+            <p>&#x2022; 阻止包含敏感路徑（如 <code>~/.ssh/</code>）的檔案讀取</p>
+            <p>&#x2022; 自動在 git commit 前執行 linter</p>
+            <p><strong>Post-tool-use Hook 範例：</strong></p>
+            <p>&#x2022; 工具執行失敗時發送 Slack 通知</p>
+            <p>&#x2022; 統計每個工具的呼叫頻率用於效能分析</p>
+        </div>
+    </div>
+
+    <div class="info-box box-analogy">
+        <div class="info-box-header">&#x1f4a1; 類比 — 對照 Harness Engineering</div>
+        <div class="info-box-content">
+            <p>如果把 Claw Code 映射到 Harness Engineering 的三層模型：權限系統 = <strong>圍欄</strong>（硬邊界）、Hooks = <strong>韁繩</strong>（可調節的控制力）、CLAW.md = <strong>對馬說的話</strong>（prompt 層指引）。三者結合才構成完整的 harness。</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Part VI: Design Patterns & Rust Choices -->
+<div class="content-grid">
+<div class="content-left">
+    <div class="section-label">Part VI</div>
+    <div class="part-title">設計模式與 Rust 語言選擇</div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">Claw Code 選擇 <span class="highlight-concept">Rust</span> 而非 TypeScript（Claude Code 的語言）有幾個工程理由：零成本抽象帶來的啟動速度、記憶體安全保證（不會因為 null pointer 掛掉）、以及強大的枚舉（enum）系統讓狀態機建模極為自然。</p>
+        <p class="en-text">Rust was chosen for startup speed, memory safety guarantees, and expressive enum types for state machine modeling.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">幾個值得注意的設計模式：<span class="highlight-key">Builder Pattern</span>（SystemPromptBuilder）、<span class="highlight-key">Strategy Pattern</span>（MCP 傳輸模式的枚舉分派）、<span class="highlight-key">Chain of Responsibility</span>（配置載入的優先順序鏈）。每個模式都不是為了「設計模式」而用，而是因為 Rust 的型別系統讓這些模式幾乎是自然浮現的。</p>
+        <p class="en-text">Builder, Strategy, and Chain of Responsibility patterns emerge naturally from Rust's type system rather than being imposed.</p>
+    </div>
+
+    <div class="bilingual-block">
+        <p class="zh-text">錯誤處理也很 Rust 風格：<code>PromptBuildError</code> 和 <code>ConfigError</code> 都是枚舉，包裹了 IO 和解析兩種錯誤。實作了 <code>Display</code> 和 <code>Error</code> trait，讓錯誤可以自動向上傳播。<span class="highlight-practical">沒有 try-catch，只有 Result 和 ? 運算子</span> — 每個可能失敗的操作都必須被明確處理。</p>
+        <p class="en-text">Error handling via enum variants (IO/Parse) with Display and Error trait implementations — no exceptions, only explicit Result types.</p>
+    </div>
+</div>
+<div class="content-right">
+    <div class="info-box box-compare">
+        <div class="info-box-header">&#x1f50d; Claw Code vs Claude Code 技術對比</div>
+        <div class="info-box-content">
+            <table class="data-table">
+                <tr><th>面向</th><th>Claw Code</th><th>Claude Code</th></tr>
+                <tr><td><strong>語言</strong></td><td>Rust</td><td>TypeScript</td></tr>
+                <tr><td><strong>指令檔</strong></td><td>CLAW.md</td><td>CLAUDE.md</td></tr>
+                <tr><td><strong>配置</strong></td><td>.claw/settings.json</td><td>.claude/settings.json</td></tr>
+                <tr><td><strong>MCP</strong></td><td>6 種傳輸</td><td>Stdio + SSE + HTTP</td></tr>
+                <tr><td><strong>權限</strong></td><td>3 級</td><td>相似 3 級</td></tr>
+                <tr><td><strong>開源</strong></td><td>完全開源</td><td>部分開源</td></tr>
+                <tr><td><strong>Hooks</strong></td><td>Pre/Post</td><td>Pre/Post</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="info-box box-code">
+        <div class="info-box-header">&#x1f4bb; Rust 枚舉的優雅 — Error Handling</div>
+        <div class="info-box-content">
+<pre><code>enum PromptBuildError {
+    Io(std::io::Error),
+    Config(ConfigError),
+}
+
+enum ConfigError {
+    Io(std::io::Error),
+    Parse(String),
+}
+
+// 用法：每個 ? 都是一次明確的錯誤傳播
+let ctx = ProjectContext::discover()?;
+let prompt = SystemPromptBuilder::new()
+    .with_project_context(ctx)
+    .render()?;</code></pre>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Key Takeaways -->
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="card-icon">&#x1f9e9;</div>
+        <div class="card-title">模組化架構</div>
+        <div class="card-text">ProjectContext、ConfigLoader、SystemPromptBuilder 三大模組職責清晰、邊界明確。每個模組可以獨立測試、獨立演化。這是好的 CLI 架構應有的樣子。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="card-icon">&#x1f512;</div>
+        <div class="card-title">安全優先設計</div>
+        <div class="card-text">三級權限 + Hooks + Config 來源標記 + MCP Scope — 四層安全機制。不是在 prompt 裡說「請小心」，而是在 runtime 層硬性攔截。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="card-icon">&#x1f50c;</div>
+        <div class="card-title">MCP 生態橋樑</div>
+        <div class="card-text">六種 MCP 傳輸模式 + OAuth 支援，讓 Claw Code 能連接從本地 CLI 工具到企業級雲端服務的任何工具。協議標準化是 Agent 生態的基礎設施。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="card-icon">&#x1f4d6;</div>
+        <div class="card-title">開源學習價值</div>
+        <div class="card-text">作為 Claude Code 的開源替代品，Claw Code 讓你看到「黑盒子裡面是什麼」。對於想建構自己的 AI Agent CLI 的團隊來說，這是最好的參考實作。</div>
+    </div>
+</div>
+
+<!-- Q&A Accordion -->
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">架構設計</span>
+        <span class="question-text">為什麼 SystemPromptBuilder 要區分靜態和動態段落？直接每次全部重新生成不是更簡單嗎？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>效能考量：</strong>靜態段落（行為準則、工具規範）每次會話都一樣，可以利用 API 的 prompt caching 機制。Anthropic 的 API 會對 system prompt 的前綴進行快取 — 如果靜態部分放在前面且不變，就能大幅減少首次回應的 token 處理時間和成本。</p>
+        <p><strong>除錯考量：</strong>用 SYSTEM_PROMPT_DYNAMIC_BOUNDARY 標記邊界，讓開發者可以快速定位「這個 bug 是靜態規則的問題還是動態上下文的問題」。</p>
+        <p><strong>測試考量：</strong>靜態段落可以用 snapshot test 驗證（內容固定，diff 就是 bug）；動態段落需要 property-based test（格式正確就行，內容每次不同）。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">安全實務</span>
+        <span class="question-text">MCP Server 的 ScopedConfig 如何防止「惡意 repo 注入」攻擊？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>攻擊場景：</strong>惡意 repo 在 .claw.json 裡配置了一個 MCP server，指向攻擊者控制的端點。開發者 clone 這個 repo 後啟動 Claw Code，攻擊者的 MCP server 就能被 Agent 呼叫。</p>
+        <p><strong>防禦機制：</strong>每個 MCP server 配置都標記了 ConfigSource（User/Project/Local）。Project 來源的 MCP server 在高敏感操作（如存取檔案系統、網路請求）時會被額外審核或限制。只有 User 來源的配置才被視為完全信任。</p>
+        <p><strong>對照 Claude Code：</strong>Claude Code 也有類似機制 — project-level 的 MCP server 首次使用時會提示用戶確認。Claw Code 把這個模式做成了型別系統的一部分，編譯期就能確保 scope 資訊不會丟失。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">Claw Code 是 Claude Code 的「完美複製品」嗎？它有什麼本質性的限制？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>不是。</strong>Claw Code 重現了架構和配置系統，但 Claude Code 的核心競爭力在於 Anthropic 對自家模型行為的深度調校 — 例如 tool use 的微調、回應格式的最佳化、以及與 Anthropic 內部基礎設施的整合。這些不是靠讀原始碼就能複製的。</p>
+        <p><strong>生態差距：</strong>Claude Code 背後有 Anthropic 的持續迭代和社群支援。Claw Code 作為開源專案，更新頻率和穩定性取決於社群貢獻。目前文件不足、issue 追蹤不活躍，是早期開源專案的常見問題。</p>
+        <p><strong>但學習價值極高：</strong>正因為是開源的，你可以看到每一行程式碼的設計決策。這就像讀 Linux 原始碼來理解作業系統 — 你不會因此造出 Windows，但你會成為更好的系統工程師。</p>
+    </div>
+</details>
+
+<!-- Bottom Line -->
+<div class="bottom-line">
+    <div class="bottom-line-header">&#x1f3af; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x2714; 核心洞察</div>
+        <div class="bottom-line-text">Claw Code 證明了 AI Agent CLI 的核心架構已經收斂到一個相對穩定的模式：ProjectContext 探索 + 多層 Config 合併 + Builder Pattern 提示詞組裝 + MCP 工具擴展 + 分級權限控制。這不是 Claude Code 獨有的設計 — 而是解決「讓 AI 安全且有效地操作開發環境」這個問題的自然解。理解這個模式，比學會用任何一個特定工具更有長期價值。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x1f4c8; 立即應用</div>
+        <div class="bottom-line-text">（1）重新審視自己的 CLAUDE.md — 對照 Claw Code 的 4K/12K 字元預算，檢查是否塞了太多指令導致上下文效率下降。（2）用 Claw Code 的三級權限模型作為框架，評估目前使用 Claude Code 時的權限設定是否合理。（3）參考 MCP 六種傳輸模式表格，盤點現有的 MCP server 是否選了最適合的傳輸方式。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x26A0; 注意事項</div>
+        <div class="bottom-line-text">Claw Code 是逆向工程 + 參考實作，不是 Anthropic 官方產品。程式碼品質和架構決策可能不完全反映 Claude Code 的真實實作。將其視為「設計靈感」而非「權威參考」。另外，Rust 程式碼範例需要 Rust 基礎知識才能完全理解 — 如果不熟悉所有權系統和 trait，建議先讀 Rust Book 的相關章節。</div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>製作日期：2026-04-04 | 原始碼：<a href="https://github.com/ultraworkers/claw-code" target="_blank">ultraworkers/claw-code</a></p>
+    <p>建議 Chat Title：2026-04-04 [Tool] Claw Code - Open Source AI CLI Architecture</p>
+</div>
+
+</div><!-- end container -->
+
+</body>
+</html>

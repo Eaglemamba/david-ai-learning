@@ -1,348 +1,524 @@
 <!DOCTYPE html>
-
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Obsidian + Claude Code 個人 AI 助手堆疊</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&amp;family=Source+Code+Pro:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="styles.css" rel="stylesheet"/>
-<!-- Dashboard Index Meta -->
-<meta content="2026-03-23" name="doc-date"/>
-<meta content="Obsidian + Claude Code - 個人 AI 知識引擎堆疊" name="doc-title"/>
-<meta content="CyrilXBT / X (Twitter)" name="doc-source"/>
-<meta content="" name="doc-source-type"/>
-<meta content="Tool,Agent,Automation,Framework" name="doc-tags"/>
-<meta content="3.2" name="doc-rating"/>
-<meta content="Obsidian 本地知識庫 + Claude Code CLI 打造個人化 AI 助手。概念清晰但缺技術深度。" name="doc-summary"/>
-<meta content="2026-03-23_obsidian-claude-code-stack.html" name="doc-file"/><meta content="v1" name="normalized"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidian + Claude Code 個人 AI 助手堆疊</title>
 
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-03-23">
+    <meta name="doc-title" content="Obsidian + Claude Code - 個人 AI 知識引擎堆疊">
+    <meta name="doc-source" content="CyrilXBT / X (Twitter)">
+    <meta name="doc-source-type" content="">
+    <meta name="doc-tags" content="Tool,Agent,Automation,Framework">
+    <meta name="doc-rating" content="3.2">
+    <meta name="doc-summary" content="Obsidian 本地知識庫 + Claude Code CLI 打造個人化 AI 助手。概念清晰但缺技術深度。">
+    <meta name="doc-file" content="2026-03-23_obsidian-claude-code-stack.html">
 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* === v1.4.3 MANDATORY PAGE LAYOUT === */
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+            color: white;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .content-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Header */
+        .tag-container { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tag { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+        .tag-tool { background: #fecdd3; color: #9f1239; }
+        .tag-agent { background: #c7d2fe; color: #3730a3; }
+        .tag-automation { background: #a7f3d0; color: #065f46; }
+        .tag-framework { background: #ddd6fe; color: #4c1d95; }
+        .header h1 { font-size: 1.8rem; margin: 0 0 0.5rem 0; font-weight: 700; }
+        .header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.75rem; }
+        .header .source { font-size: 0.85rem; opacity: 0.7; }
+
+        /* Executive Summary */
+        .exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+        .exec-summary h2 { color: #1e3a8a; font-size: 1.2rem; margin-top: 0; }
+        .exec-summary p { font-size: 0.95rem; color: #475569; }
+
+        /* Rating Bar */
+        .rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+        .rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+        .rating-stars { color: #f59e0b; letter-spacing: 1px; }
+        .rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+        .rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        /* Learning Objectives */
+        .objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .objective-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .objective-desc { font-size: 0.8rem; color: #64748b; }
+        @media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+
+        /* Section headers */
+        .section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+        /* Content grid cells */
+        .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+        .content-right { padding: 1.5rem; background: #f8fafc; }
+        .part-label { font-weight: 700; color: #3b82f6; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .part-title { font-weight: 700; color: #1e293b; font-size: 1.1rem; margin-bottom: 1rem; }
+
+        /* Bilingual blocks */
+        .bilingual-block { margin-bottom: 1.25rem; }
+        .zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+        .en-text { font-size: 0.9rem; line-height: 1.6; color: #64748b; font-style: italic; }
+        .highlight-concept { background: #a5d6a7; padding: 0 3px; border-radius: 3px; }
+        .highlight-key { background: #ffcc80; padding: 0 3px; border-radius: 3px; }
+        .highlight-practical { background: #6ee7b7; padding: 0 3px; border-radius: 3px; }
+
+        /* Info boxes */
+        .info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+        .info-box-header { padding: 0.5rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+        .box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+        .box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+        .box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+        .box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+        .box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+        .box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+        .box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; border-radius: 0 0 0.75rem 0.75rem; }
+
+        /* Key Takeaways */
+        .takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+        .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .summary-card-title { font-weight: 700; color: #1e3a8a; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+        @media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+
+        /* Accordion */
+        .question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+        .question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+        .question-header::-webkit-details-marker { display: none; }
+        .question-number { font-weight: 700; color: #6d28d9; }
+        .question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+        .question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+        .accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+        details[open] .accordion-icon { transform: rotate(180deg); }
+        .question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+        .question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+        .question-answer p:last-child { margin-bottom: 0; }
+
+        /* Bottom Line */
+        .bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+        .bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .bottom-line-item { margin-bottom: 1rem; }
+        .bottom-line-item:last-child { margin-bottom: 0; }
+        .bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+        .footer a { color: #3b82f6; text-decoration: none; }
+
+        /* Framework Visual */
+        .framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+        .framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+        .framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .framework-step { text-align: center; min-width: 120px; }
+        .framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+        .framework-step-title { font-weight: 700; font-size: 0.95rem; }
+        .framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+        @media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+        /* Code blocks */
+        code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; color: #7c3aed; }
+    </style>
 </head>
 <body>
+
 <!-- Header -->
-<header class="header">
-<div class="tag-container">
-<span class="tag tag-tool">Tool</span>
-<span class="tag tag-agent">Agent</span>
-<span class="tag tag-automation">Automation</span>
-<span class="tag tag-framework">Framework</span>
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-automation">Automation</span>
+        <span class="tag tag-framework">Framework</span>
+    </div>
+    <h1>Obsidian + Claude Code：打造個人 JARVIS 知識引擎</h1>
+    <div class="subtitle">本地知識庫 + AI CLI 工具的生產力堆疊解析</div>
+    <div class="source">CyrilXBT / X (Twitter) | 2026-03</div>
 </div>
-<h1>Obsidian + Claude Code：打造個人 JARVIS 知識引擎</h1>
-<div class="subtitle">本地知識庫 + AI CLI 工具的生產力堆疊解析</div>
-<div class="source">CyrilXBT / X (Twitter) | 2026-03</div>
-</header>
+
 <!-- Container -->
 <div class="container">
-<!-- Executive Summary -->
-<div class="exec-summary">
-<h2>Executive Summary</h2>
-<div class="rating-bar">
-<span class="rating-score"><span class="rating-stars">★★★☆☆</span> 3.2/5</span>
-<span class="rating-high">↑ 實務應用, 學習曲線</span>
-<span class="rating-low">↓ 技術深度, 工具生態</span>
-</div>
-<p>CyrilXBT 提出一個引人注目的概念：用 Obsidian（本地 Markdown 知識庫）搭配 Claude Code（Anthropic CLI 工具），打造類似 JARVIS 的個人 AI 助手。核心論點是：當 AI 能直接讀取你長期累積的筆記資料，它就從「通用搜尋引擎」升級為「你的思維延伸」。概念方向正確，但文章停留在願景層，缺乏技術實作細節、安全考量、以及替代方案比較。適合作為入門啟發，需自行補充實作深度。</p>
-</div>
-<!-- Learning Objectives -->
-<div class="section-title">Learning Objectives</div>
-<div class="objectives-grid">
-<div class="objective-item">
-<div class="objective-icon">📚</div>
-<div class="objective-title">理解本地知識庫 + AI 的價值主張</div>
-<div class="objective-desc">為什麼純文字檔案是 AI 整合的最佳基礎</div>
-</div>
-<div class="objective-item" style="border-left-color: #10b981;">
-<div class="objective-icon">🔧</div>
-<div class="objective-title">掌握 Obsidian + Claude Code 的實際架構</div>
-<div class="objective-desc">從安裝到指向 vault 的完整工作流程</div>
-</div>
-<div class="objective-item" style="border-left-color: #f59e0b;">
-<div class="objective-icon">⚠️</div>
-<div class="objective-title">批判性評估文章的限制與盲點</div>
-<div class="objective-desc">識別行銷語言背後的實際技術限制</div>
-</div>
-</div>
-<!-- Framework Visual -->
-<div class="framework-visual">
-<div class="framework-title">Personal AI Assistant Stack</div>
-<div class="framework-steps">
-<div class="framework-step">
-<div class="framework-icon">🗒</div>
-<div class="framework-step-title">Capture</div>
-<div class="framework-step-desc">Obsidian Vault<br/>本地 Markdown 檔案</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🔗</div>
-<div class="framework-step-title">Connect</div>
-<div class="framework-step-desc">Claude Code CLI<br/>讀取本地檔案系統</div>
-</div>
-<div class="framework-arrow">→</div>
-<div class="framework-step">
-<div class="framework-icon">🧠</div>
-<div class="framework-step-title">Amplify</div>
-<div class="framework-step-desc">個人化 AI 輸出<br/>基於你的知識產出</div>
-</div>
-</div>
-</div>
-<!-- Part I -->
-<div class="section-title">Part I - Obsidian 的真正價值：資料主權</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">PART I</div>
-<div class="part-title">為什麼 Obsidian 改變了一切</div>
-<div class="bilingual-block">
-<div class="zh-text">Obsidian 是一款筆記應用程式。但這樣說就像把 Bitcoin 說成儲蓄帳戶一樣 — 技術上沒錯，但嚴重低估了它的能力。</div>
-<div class="en-text">Obsidian is a note taking app. But calling it that is like calling Bitcoin a savings account. Technically true but wildly underselling it.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">你在 Obsidian 裡寫的所有東西都以<span class="highlight-concept">純文字 Markdown 檔案</span>的形式存在你的裝置上。沒有雲端鎖定，沒有訂閱綁架你的資料。就是一堆裝滿你想法、研究和點子的資料夾，以任何程式都能讀取的格式儲存。</div>
-<div class="en-text">Everything you write in Obsidian lives locally on your device as plain text markdown files. No cloud lock in. No subscription holding your data hostage.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">最後那一點才是關鍵。因為<span class="highlight-key">當你的知識庫只是一個文字檔案的資料夾時，你可以把任何 AI 指向它</span>。</div>
-<div class="en-text">Because when your knowledge base is just a folder of text files, you can point any AI at it.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>資料主權 (Data Sovereignty)</strong> 是這個堆疊的基礎假設：你的知識應該以開放格式存在本地端，不被任何平台綁定。Markdown (.md) 是純文字，任何文字編輯器、任何 AI 工具、任何腳本都能直接讀取和處理。這跟 Notion（資料在雲端資料庫）或 Evernote（專有格式）是根本性的架構差異。
+
+    <!-- Executive Summary -->
+    <div class="exec-summary">
+        <h2>Executive Summary</h2>
+        <div class="rating-bar">
+            <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span> 3.2/5</span>
+            <span class="rating-high">&uarr; 實務應用, 學習曲線</span>
+            <span class="rating-low">&darr; 技術深度, 工具生態</span>
+        </div>
+        <p>CyrilXBT 提出一個引人注目的概念：用 Obsidian（本地 Markdown 知識庫）搭配 Claude Code（Anthropic CLI 工具），打造類似 JARVIS 的個人 AI 助手。核心論點是：當 AI 能直接讀取你長期累積的筆記資料，它就從「通用搜尋引擎」升級為「你的思維延伸」。概念方向正確，但文章停留在願景層，缺乏技術實作細節、安全考量、以及替代方案比較。適合作為入門啟發，需自行補充實作深度。</p>
+    </div>
+
+    <!-- Learning Objectives -->
+    <div class="section-title">Learning Objectives</div>
+    <div class="objectives-grid">
+        <div class="objective-item">
+            <div class="objective-icon">&#128218;</div>
+            <div class="objective-title">理解本地知識庫 + AI 的價值主張</div>
+            <div class="objective-desc">為什麼純文字檔案是 AI 整合的最佳基礎</div>
+        </div>
+        <div class="objective-item" style="border-left-color: #10b981;">
+            <div class="objective-icon">&#128295;</div>
+            <div class="objective-title">掌握 Obsidian + Claude Code 的實際架構</div>
+            <div class="objective-desc">從安裝到指向 vault 的完整工作流程</div>
+        </div>
+        <div class="objective-item" style="border-left-color: #f59e0b;">
+            <div class="objective-icon">&#9888;&#65039;</div>
+            <div class="objective-title">批判性評估文章的限制與盲點</div>
+            <div class="objective-desc">識別行銷語言背後的實際技術限制</div>
+        </div>
+    </div>
+
+    <!-- Framework Visual -->
+    <div class="framework-visual">
+        <div class="framework-title">Personal AI Assistant Stack</div>
+        <div class="framework-steps">
+            <div class="framework-step">
+                <div class="framework-icon">&#128466;</div>
+                <div class="framework-step-title">Capture</div>
+                <div class="framework-step-desc">Obsidian Vault<br>本地 Markdown 檔案</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#128279;</div>
+                <div class="framework-step-title">Connect</div>
+                <div class="framework-step-desc">Claude Code CLI<br>讀取本地檔案系統</div>
+            </div>
+            <div class="framework-arrow">&rarr;</div>
+            <div class="framework-step">
+                <div class="framework-icon">&#129504;</div>
+                <div class="framework-step-title">Amplify</div>
+                <div class="framework-step-desc">個人化 AI 輸出<br>基於你的知識產出</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part I -->
+    <div class="section-title">Part I - Obsidian 的真正價值：資料主權</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="part-label">PART I</div>
+            <div class="part-title">為什麼 Obsidian 改變了一切</div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">Obsidian 是一款筆記應用程式。但這樣說就像把 Bitcoin 說成儲蓄帳戶一樣 — 技術上沒錯，但嚴重低估了它的能力。</div>
+                <div class="en-text">Obsidian is a note taking app. But calling it that is like calling Bitcoin a savings account. Technically true but wildly underselling it.</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">你在 Obsidian 裡寫的所有東西都以<span class="highlight-concept">純文字 Markdown 檔案</span>的形式存在你的裝置上。沒有雲端鎖定，沒有訂閱綁架你的資料。就是一堆裝滿你想法、研究和點子的資料夾，以任何程式都能讀取的格式儲存。</div>
+                <div class="en-text">Everything you write in Obsidian lives locally on your device as plain text markdown files. No cloud lock in. No subscription holding your data hostage.</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">最後那一點才是關鍵。因為<span class="highlight-key">當你的知識庫只是一個文字檔案的資料夾時，你可以把任何 AI 指向它</span>。</div>
+                <div class="en-text">Because when your knowledge base is just a folder of text files, you can point any AI at it.</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念</div>
+                <div class="info-box-content">
+                    <strong>資料主權 (Data Sovereignty)</strong> 是這個堆疊的基礎假設：你的知識應該以開放格式存在本地端，不被任何平台綁定。Markdown (.md) 是純文字，任何文字編輯器、任何 AI 工具、任何腳本都能直接讀取和處理。這跟 Notion（資料在雲端資料庫）或 Evernote（專有格式）是根本性的架構差異。
                 </div>
-</div>
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
+            </div>
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
                     想像你的筆記是一箱實體書。Notion 就像圖書館 — 書很整齊，但你不能帶回家。Obsidian 像是你自己的書房 — 書都在你手邊，你想怎麼整理就怎麼整理，想讓誰來翻閱都可以。Claude Code 就是那個你邀請進書房的極度聰明的研究助理。
                 </div>
-</div>
-</div>
-</div>
-<!-- Part II -->
-<div class="section-title">Part II - Claude Code：不只是聊天機器人</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">PART II</div>
-<div class="part-title">Claude Code 與瀏覽器版 Claude 的關鍵差異</div>
-<div class="bilingual-block">
-<div class="zh-text">Claude Code 是 Anthropic 為開發者打造的<span class="highlight-concept">命令列工具</span>。它不只是回答問題，它能讀取檔案、寫程式、編輯文件，直接在你的本地環境中工作。</div>
-<div class="en-text">Claude Code is Anthropic's command line tool built for builders and developers. It does not just answer questions. It reads files, writes code, edits documents, and works directly inside your local environment.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">這是 Claude Code 和瀏覽器版 Claude 的關鍵差異。在瀏覽器中，Claude 每次開新分頁時<span class="highlight-key">對你一無所知</span>。而 Claude Code 在本地運行時，你可以讓它直接存取你的 Obsidian vault。</div>
-<div class="en-text">This is the key difference between Claude Code and using Claude in a browser. In a browser, Claude knows nothing about you when you open a new tab. With Claude Code running locally, you can give it direct access to your Obsidian vault.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">你的<span class="highlight-practical">整個知識庫都變成它的上下文</span>。你寫過的每一篇筆記、捕捉的每一個想法、追蹤過的每一條研究線索，都變成 Claude 可以參考、連結、延伸的素材。</div>
-<div class="en-text">Your entire knowledge base becomes its context. Every note you have ever written, every idea you captured, every research thread you followed becomes something Claude can reference, connect, and build on.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-compare">
-<div class="info-box-header">⚖️ 工具比較</div>
-<div class="info-box-content">
-<table style="width:100%; font-size:0.85rem; border-collapse:collapse;">
-<tr style="border-bottom:1px solid #a5b4fc;">
-<td style="padding:0.4rem; font-weight:600;"></td>
-<td style="padding:0.4rem; font-weight:600;">Claude (瀏覽器)</td>
-<td style="padding:0.4rem; font-weight:600;">Claude Code (CLI)</td>
-</tr>
-<tr style="border-bottom:1px solid #e2e8f0;">
-<td style="padding:0.4rem;">Context</td>
-<td style="padding:0.4rem;">單次對話</td>
-<td style="padding:0.4rem;">本地檔案系統</td>
-</tr>
-<tr style="border-bottom:1px solid #e2e8f0;">
-<td style="padding:0.4rem;">記憶</td>
-<td style="padding:0.4rem;">Memory 功能</td>
-<td style="padding:0.4rem;">CLAUDE.md + 檔案</td>
-</tr>
-<tr style="border-bottom:1px solid #e2e8f0;">
-<td style="padding:0.4rem;">操作</td>
-<td style="padding:0.4rem;">對話輸出</td>
-<td style="padding:0.4rem;">讀寫檔案 / 執行指令</td>
-</tr>
-<tr>
-<td style="padding:0.4rem;">適合</td>
-<td style="padding:0.4rem;">快速問答 / 創作</td>
-<td style="padding:0.4rem;">專案級工作流程</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>Context Window 限制：</strong>文章說「你的整個知識庫都變成它的上下文」，這在技術上是<strong>不精確</strong>的。Claude Code 仍受 context window 限制（目前約 200K tokens）。一個大型 Obsidian vault 可能有數百萬 tokens 的內容。實際上 Claude Code 會智慧地選擇載入哪些檔案，而非真的「讀取全部」。這是文章最大的技術盲點之一。
+            </div>
+        </div>
+    </div>
+
+    <!-- Part II -->
+    <div class="section-title">Part II - Claude Code：不只是聊天機器人</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="part-label">PART II</div>
+            <div class="part-title">Claude Code 與瀏覽器版 Claude 的關鍵差異</div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">Claude Code 是 Anthropic 為開發者打造的<span class="highlight-concept">命令列工具</span>。它不只是回答問題，它能讀取檔案、寫程式、編輯文件，直接在你的本地環境中工作。</div>
+                <div class="en-text">Claude Code is Anthropic's command line tool built for builders and developers. It does not just answer questions. It reads files, writes code, edits documents, and works directly inside your local environment.</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">這是 Claude Code 和瀏覽器版 Claude 的關鍵差異。在瀏覽器中，Claude 每次開新分頁時<span class="highlight-key">對你一無所知</span>。而 Claude Code 在本地運行時，你可以讓它直接存取你的 Obsidian vault。</div>
+                <div class="en-text">This is the key difference between Claude Code and using Claude in a browser. In a browser, Claude knows nothing about you when you open a new tab. With Claude Code running locally, you can give it direct access to your Obsidian vault.</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">你的<span class="highlight-practical">整個知識庫都變成它的上下文</span>。你寫過的每一篇筆記、捕捉的每一個想法、追蹤過的每一條研究線索，都變成 Claude 可以參考、連結、延伸的素材。</div>
+                <div class="en-text">Your entire knowledge base becomes its context. Every note you have ever written, every idea you captured, every research thread you followed becomes something Claude can reference, connect, and build on.</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-compare">
+                <div class="info-box-header">&#9878;&#65039; 工具比較</div>
+                <div class="info-box-content">
+                    <table style="width:100%; font-size:0.85rem; border-collapse:collapse;">
+                        <tr style="border-bottom:1px solid #a5b4fc;">
+                            <td style="padding:0.4rem; font-weight:600;"></td>
+                            <td style="padding:0.4rem; font-weight:600;">Claude (瀏覽器)</td>
+                            <td style="padding:0.4rem; font-weight:600;">Claude Code (CLI)</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;">
+                            <td style="padding:0.4rem;">Context</td>
+                            <td style="padding:0.4rem;">單次對話</td>
+                            <td style="padding:0.4rem;">本地檔案系統</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;">
+                            <td style="padding:0.4rem;">記憶</td>
+                            <td style="padding:0.4rem;">Memory 功能</td>
+                            <td style="padding:0.4rem;">CLAUDE.md + 檔案</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid #e2e8f0;">
+                            <td style="padding:0.4rem;">操作</td>
+                            <td style="padding:0.4rem;">對話輸出</td>
+                            <td style="padding:0.4rem;">讀寫檔案 / 執行指令</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.4rem;">適合</td>
+                            <td style="padding:0.4rem;">快速問答 / 創作</td>
+                            <td style="padding:0.4rem;">專案級工作流程</td>
+                        </tr>
+                    </table>
                 </div>
-</div>
-</div>
-</div>
-<!-- Part III -->
-<div class="section-title">Part III - 實際設定與應用場景</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">PART III</div>
-<div class="part-title">從安裝到提問的工作流程</div>
-<div class="bilingual-block">
-<div class="zh-text">這沒有聽起來那麼技術。你透過終端機安裝 Claude Code，把它指向你的 Obsidian vault 資料夾，然後開始提問。</div>
-<div class="en-text">This is not as technical as it sounds. You install Claude Code through your terminal. You point it at your Obsidian vault folder. You start asking it questions.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">在最基本的層次，你可以問「<span class="highlight-practical">摘要我今年寫的所有關於 DeFi 的內容</span>」或「找出所有提到 AI Agent 的筆記並提取關鍵想法」。它讀取你的檔案、處理它們，然後基於你自己的思考回覆實際的答案。</div>
-<div class="en-text">At the most basic level you can ask things like "summarize everything I have written about DeFi this year" or "find all my notes that mention AI agents and pull out the key ideas."</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">但它遠不止檢索。你可以讓 Claude Code <span class="highlight-key">找出你研究中的缺口</span>，連結你數月前寫的不同筆記中的想法，根據你的現有筆記、用你的風格和框架起草文章。你甚至可以讓它在你的 vault 上面建構工具 — 自訂儀表板、自動摘要、直接從你自己的知識庫生成的每日簡報。</div>
-<div class="en-text">You can ask Claude Code to find gaps in your research. You can ask it to connect ideas across notes you wrote months apart. You can ask it to draft an article based entirely on your existing notes, in your voice, using your frameworks.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-practical">
-<div class="info-box-header">🔧 實務應用</div>
-<div class="info-box-content">
-<strong>實際指令範例：</strong><br/>
-<code>cd ~/obsidian-vault &amp;&amp; claude</code><br/>
-                    然後在 Claude Code 中直接提問：<br/>
-<code>"Read my notes in /research and summarize the recurring themes"</code><br/><br/>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                <div class="info-box-content">
+                    <strong>Context Window 限制：</strong>文章說「你的整個知識庫都變成它的上下文」，這在技術上是<strong>不精確</strong>的。Claude Code 仍受 context window 限制（目前約 200K tokens）。一個大型 Obsidian vault 可能有數百萬 tokens 的內容。實際上 Claude Code 會智慧地選擇載入哪些檔案，而非真的「讀取全部」。這是文章最大的技術盲點之一。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part III -->
+    <div class="section-title">Part III - 實際設定與應用場景</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="part-label">PART III</div>
+            <div class="part-title">從安裝到提問的工作流程</div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">這沒有聽起來那麼技術。你透過終端機安裝 Claude Code，把它指向你的 Obsidian vault 資料夾，然後開始提問。</div>
+                <div class="en-text">This is not as technical as it sounds. You install Claude Code through your terminal. You point it at your Obsidian vault folder. You start asking it questions.</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">在最基本的層次，你可以問「<span class="highlight-practical">摘要我今年寫的所有關於 DeFi 的內容</span>」或「找出所有提到 AI Agent 的筆記並提取關鍵想法」。它讀取你的檔案、處理它們，然後基於你自己的思考回覆實際的答案。</div>
+                <div class="en-text">At the most basic level you can ask things like "summarize everything I have written about DeFi this year" or "find all my notes that mention AI agents and pull out the key ideas."</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">但它遠不止檢索。你可以讓 Claude Code <span class="highlight-key">找出你研究中的缺口</span>，連結你數月前寫的不同筆記中的想法，根據你的現有筆記、用你的風格和框架起草文章。你甚至可以讓它在你的 vault 上面建構工具 — 自訂儀表板、自動摘要、直接從你自己的知識庫生成的每日簡報。</div>
+                <div class="en-text">You can ask Claude Code to find gaps in your research. You can ask it to connect ideas across notes you wrote months apart. You can ask it to draft an article based entirely on your existing notes, in your voice, using your frameworks.</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-practical">
+                <div class="info-box-header">&#128295; 實務應用</div>
+                <div class="info-box-content">
+                    <strong>實際指令範例：</strong><br>
+                    <code>cd ~/obsidian-vault && claude</code><br>
+                    然後在 Claude Code 中直接提問：<br>
+                    <code>"Read my notes in /research and summarize the recurring themes"</code><br><br>
                     更進階的用法是搭配 <code>CLAUDE.md</code> 記憶檔，讓 Claude Code 每次啟動時自動載入你的偏好設定、常用框架、以及 vault 的資料夾結構說明。
                 </div>
-</div>
-<div class="info-box box-key">
-<div class="info-box-header">⚠️ 重點提示</div>
-<div class="info-box-content">
-<strong>文章未提及的技術現實：</strong><br/>
-                    1. Claude Code 需要 <strong>API 訂閱</strong>（Max Plan 或 API Key），不是免費的<br/>
-                    2. 每次對話的 token 用量可觀，大量筆記檢索會快速消耗配額<br/>
-                    3. 本地檔案存取需要明確的<strong>權限授予</strong>（安全考量）<br/>
+            </div>
+            <div class="info-box box-key">
+                <div class="info-box-header">&#9888;&#65039; 重點提示</div>
+                <div class="info-box-content">
+                    <strong>文章未提及的技術現實：</strong><br>
+                    1. Claude Code 需要 <strong>API 訂閱</strong>（Max Plan 或 API Key），不是免費的<br>
+                    2. 每次對話的 token 用量可觀，大量筆記檢索會快速消耗配額<br>
+                    3. 本地檔案存取需要明確的<strong>權限授予</strong>（安全考量）<br>
                     4. 沒有提到 <strong>MCP (Model Context Protocol)</strong> 這個更結構化的整合方式
                 </div>
-</div>
-</div>
-</div>
-<!-- Part IV -->
-<div class="section-title">Part IV - 思維模式的轉變</div>
-<div class="content-grid">
-<div class="content-left">
-<div class="part-label">PART IV</div>
-<div class="part-title">從搜尋引擎替代品到思維延伸</div>
-<div class="bilingual-block">
-<div class="zh-text">現在大多數人把 AI 當作<span class="highlight-concept">搜尋引擎的替代品</span>。他們問問題，然後照單全收 AI 的輸出。</div>
-<div class="en-text">Right now the majority of people using AI are using it as a search engine replacement. They ask questions and take the output at face value.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">下一個層次是<span class="highlight-key">把 AI 當作你自己思維的延伸</span>。當 Claude 能存取你的 Obsidian vault 時，它不是從網路上回答問題，而是從「你」回答 — 你的框架、你的研究、你的觀點、你數月或數年累積的知識。</div>
-<div class="en-text">The next level is using AI as an extension of your own thinking. When Claude has access to your Obsidian vault it is not answering from the internet. It is answering from you.</div>
-</div>
-<div class="bilingual-block">
-<div class="zh-text">這就是擁有一個聰明助手和擁有 JARVIS 之間的差異。</div>
-<div class="en-text">That is the difference between having a smart assistant and having JARVIS.</div>
-</div>
-</div>
-<div class="content-right">
-<div class="info-box box-analogy">
-<div class="info-box-header">💡 比喻說明</div>
-<div class="info-box-content">
-<strong>AI 使用的三個層次：</strong><br/>
-<strong>Level 1 - 搜尋替代：</strong>「幫我查 X 是什麼」— AI 用網路知識回答<br/>
-<strong>Level 2 - 思維延伸：</strong>「根據我的筆記，X 跟 Y 有什麼關聯」— AI 用你的知識回答<br/>
-<strong>Level 3 - 自主代理：</strong>「監控我的 vault 並主動提醒我遺漏的連結」— AI 主動行動<br/><br/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Part IV -->
+    <div class="section-title">Part IV - 思維模式的轉變</div>
+    <div class="content-grid">
+        <div class="content-left">
+            <div class="part-label">PART IV</div>
+            <div class="part-title">從搜尋引擎替代品到思維延伸</div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">現在大多數人把 AI 當作<span class="highlight-concept">搜尋引擎的替代品</span>。他們問問題，然後照單全收 AI 的輸出。</div>
+                <div class="en-text">Right now the majority of people using AI are using it as a search engine replacement. They ask questions and take the output at face value.</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">下一個層次是<span class="highlight-key">把 AI 當作你自己思維的延伸</span>。當 Claude 能存取你的 Obsidian vault 時，它不是從網路上回答問題，而是從「你」回答 — 你的框架、你的研究、你的觀點、你數月或數年累積的知識。</div>
+                <div class="en-text">The next level is using AI as an extension of your own thinking. When Claude has access to your Obsidian vault it is not answering from the internet. It is answering from you.</div>
+            </div>
+
+            <div class="bilingual-block">
+                <div class="zh-text">這就是擁有一個聰明助手和擁有 JARVIS 之間的差異。</div>
+                <div class="en-text">That is the difference between having a smart assistant and having JARVIS.</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="info-box box-analogy">
+                <div class="info-box-header">&#128161; 比喻說明</div>
+                <div class="info-box-content">
+                    <strong>AI 使用的三個層次：</strong><br>
+                    <strong>Level 1 - 搜尋替代：</strong>「幫我查 X 是什麼」— AI 用網路知識回答<br>
+                    <strong>Level 2 - 思維延伸：</strong>「根據我的筆記，X 跟 Y 有什麼關聯」— AI 用你的知識回答<br>
+                    <strong>Level 3 - 自主代理：</strong>「監控我的 vault 並主動提醒我遺漏的連結」— AI 主動行動<br><br>
                     文章主要描述 Level 2，偶爾觸及 Level 3 的願景。但在 GMP 法規環境中，Level 3 仍需要人類監督（Copilot Mode）。
                 </div>
-</div>
-<div class="info-box box-concept">
-<div class="info-box-header">📚 核心概念</div>
-<div class="info-box-content">
-<strong>O-Ring Bottleneck Theory 的應用：</strong>這篇文章的核心主張其實可以用 O-Ring 理論解讀 — AI 能加速「檢索」和「連結」環節，但真正的價值瓶頸在於<strong>你的原始思考品質</strong>。如果 vault 裡全是複製貼上的內容而非你自己的分析，那 AI 放大的只是噪音。Vault 的品質 = 輸出的品質。
+            </div>
+            <div class="info-box box-concept">
+                <div class="info-box-header">&#128218; 核心概念</div>
+                <div class="info-box-content">
+                    <strong>O-Ring Bottleneck Theory 的應用：</strong>這篇文章的核心主張其實可以用 O-Ring 理論解讀 — AI 能加速「檢索」和「連結」環節，但真正的價值瓶頸在於<strong>你的原始思考品質</strong>。如果 vault 裡全是複製貼上的內容而非你自己的分析，那 AI 放大的只是噪音。Vault 的品質 = 輸出的品質。
                 </div>
-</div>
-</div>
-</div>
-<!-- Key Takeaways -->
-<div class="section-title">Key Takeaways</div>
-<div class="takeaways-grid">
-<div class="summary-card">
-<div class="summary-card-title">🔑 資料格式決定 AI 整合潛力</div>
-<div class="summary-card-text">Obsidian 用純文字 Markdown 儲存筆記，這是 AI 整合的理想格式。任何工具都能讀取，不被平台鎖定。選擇筆記工具時，「你的資料能不能被其他程式直接讀取」是最重要的評估標準。</div>
-</div>
-<div class="summary-card" style="border-left-color: #10b981;">
-<div class="summary-card-title">🚀 Claude Code 把 AI 從雲端帶到本地</div>
-<div class="summary-card-text">瀏覽器版 AI 每次對話都重新開始。Claude Code 能讀取本地檔案系統，讓 AI 直接理解你的專案和筆記脈絡。這是「通用助手」到「個人化助手」的關鍵跳板。</div>
-</div>
-<div class="summary-card" style="border-left-color: #f59e0b;">
-<div class="summary-card-title">⚠️ 願景很美，但技術細節需要自己補</div>
-<div class="summary-card-text">文章沒有提到 context window 限制、API 成本、MCP 協議、安全性考量、或替代工具（如 Cursor、Windsurf）。作為啟發性內容閱讀，但實作前需要深入研究具體技術限制。</div>
-</div>
-<div class="summary-card" style="border-left-color: #8b5cf6;">
-<div class="summary-card-title">🧠 輸入品質 = 輸出品質</div>
-<div class="summary-card-text">AI 放大的是你 vault 中的思考品質。如果筆記只是複製貼上的內容，AI 輸出也只是重新整理的二手資訊。真正的 leverage 來自你自己的分析、框架和原創觀點的累積。</div>
-</div>
-</div>
-<!-- Practice Questions -->
-<div class="section-title">Practice Questions</div>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q1</span>
-<span class="question-type">概念理解</span>
-<span class="question-text">文章說「你的整個知識庫都變成 Claude 的上下文」，這個說法在技術上有什麼不精確之處？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>這個說法忽略了 <strong>Context Window 限制</strong>。目前 Claude 的 context window 約 200K tokens，而一個使用多年的 Obsidian vault 可能包含數百萬 tokens 的內容。實際上 Claude Code 會根據提問的相關性<strong>選擇性地載入</strong>部分檔案，而非一次載入全部。此外，即使用了搜尋或嵌入向量（Embedding）來篩選相關內容，仍然可能遺漏重要的跨主題連結。</p>
-<p>更準確的說法應該是：「你的知識庫成為 Claude <strong>可搜尋的資源池</strong>，它會根據每次對話智慧地選取相關內容作為上下文。」</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q2</span>
-<span class="question-type">產業應用</span>
-<span class="question-text">如果你要在 CDMO 無塵室環境中應用「Obsidian + AI」的概念，有哪些法規和實務限制需要考慮？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>在 GMP 環境中應用此概念時，至少需要考慮以下限制：</p>
-<p><strong>1. 21 CFR Part 11 合規：</strong>如果 vault 中的筆記涉及批次記錄、偏差調查、或品質決策，這些資料需要符合電子記錄法規 — 包括稽核軌跡（audit trail）、電子簽章、以及存取控制。純 Markdown 檔案無法滿足這些要求。</p>
-<p><strong>2. 資料分類 (Data Classification)：</strong>AI 工具不能接觸 GxP 關鍵資料（如批次記錄、穩定性數據）。適合放入 vault 的是個人學習筆記、SOP 改善想法、流程優化觀察等非 GxP 內容。</p>
-<p><strong>3. Copilot Mode 限制：</strong>AI 在法規環境中只能作為「副駕駛」— 提供建議和草稿，但所有輸出都必須經過人類專業判斷審核。自主代理模式在 GMP 環境中是不適當的。</p>
-</div>
-</details>
-<details class="question-accordion">
-<summary class="question-header">
-<span class="question-number">Q3</span>
-<span class="question-type">批判思考</span>
-<span class="question-text">文章使用了大量的 JARVIS 類比和「比別人早兩年」的語言。這種敘事框架有什麼潛在偏見？</span>
-<span class="accordion-icon"></span>
-</summary>
-<div class="question-answer">
-<p>幾個值得注意的偏見：</p>
-<p><strong>生存者偏差 (Survivorship Bias)：</strong>文章假設「捕捉所有資訊並組織它」就會產生優勢，但忽略了大量人認真做筆記卻沒有產生顯著成果的情況。工具不是瓶頸，思考品質才是。</p>
-<p><strong>FOMO 行銷框架：</strong>「比別人早兩年」是典型的稀缺性框架（Scarcity Frame），在加密貨幣社群中特別有效。它迴避了「這個工具組合是否真的適合你的工作流程」的理性評估。</p>
-<p><strong>簡化複雜性：</strong>JARVIS 類比讓讀者對「本地 AI」產生不切實際的期望。實際的 Claude Code + Obsidian 體驗涉及 token 管理、提示工程、檔案組織策略等大量摩擦成本，這些都被敘事省略了。</p>
-<p><strong>利益衝突信號：</strong>作為加密貨幣/AI 領域的 KOL，推薦工具組合可能帶有流量動機。文章沒有提及任何替代方案或限制，這本身就是一個紅旗。</p>
-</div>
-</details>
-<!-- Bottom Line -->
-<div class="section-title">Bottom Line</div>
-<div class="bottom-line">
-<div class="bottom-line-header">🎯 我的行動結論</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">✔ 核心洞察</div>
-<div class="bottom-line-text">文章的核心概念 — 「本地純文字知識庫 + AI CLI 工具 = 個人化 AI 助手」— 跟我現在用 Claude.ai Projects + GitHub repo 的架構本質相同。差別在於 Obsidian 強調的是<strong>持續累積的個人思考資料庫</strong>，而我的 repo 偏重<strong>結構化教育文件</strong>。這提醒我：vault/repo 的價值不在於量，在於你放進去的是原創思考還是二手整理。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">📈 立即應用</div>
-<div class="bottom-line-text">本週在我的 Claude Code 環境中檢視現有的 <code>CLAUDE.md</code> 記憶檔，確認是否已包含 GitHub repo 結構說明和我的常用框架。測試用 Claude Code 直接對我的教育文件 repo 提問：「列出過去一個月所有文件的 doc-tags 分布」— 驗證 AI 能否有效檢索我自己的知識庫。</div>
-</div>
-<div class="bottom-line-item">
-<div class="bottom-line-label">⚠ 需要補充</div>
-<div class="bottom-line-text">文章完全沒有提到：(1) MCP 協議作為更結構化的 Obsidian-Claude 整合方式、(2) context window 的實際限制和應對策略、(3) API 成本估算（大量筆記檢索的 token 消耗）、(4) 安全性考量（本地檔案存取的權限管理）。這些技術細節需要另外研究。另外，對於 CDMO 場景，需要明確區分「個人學習 vault」和「GMP 相關工作資料」的邊界。</div>
-</div>
-</div>
-<!-- Footer -->
-<footer class="footer">
-<p>📄 製作日期：2026-03-23 | 原文來源：<a href="https://x.com/cyrilXBT" target="_blank">CyrilXBT / X (Twitter)</a></p>
-<p>💬 Suggested Chat Title: 2026-03-23 [Tool] CyrilXBT - Obsidian Claude Code Stack</p>
-</footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Takeaways -->
+    <div class="section-title">Key Takeaways</div>
+    <div class="takeaways-grid">
+        <div class="summary-card">
+            <div class="summary-card-title">&#128273; 資料格式決定 AI 整合潛力</div>
+            <div class="summary-card-text">Obsidian 用純文字 Markdown 儲存筆記，這是 AI 整合的理想格式。任何工具都能讀取，不被平台鎖定。選擇筆記工具時，「你的資料能不能被其他程式直接讀取」是最重要的評估標準。</div>
+        </div>
+        <div class="summary-card" style="border-left-color: #10b981;">
+            <div class="summary-card-title">&#128640; Claude Code 把 AI 從雲端帶到本地</div>
+            <div class="summary-card-text">瀏覽器版 AI 每次對話都重新開始。Claude Code 能讀取本地檔案系統，讓 AI 直接理解你的專案和筆記脈絡。這是「通用助手」到「個人化助手」的關鍵跳板。</div>
+        </div>
+        <div class="summary-card" style="border-left-color: #f59e0b;">
+            <div class="summary-card-title">&#9888;&#65039; 願景很美，但技術細節需要自己補</div>
+            <div class="summary-card-text">文章沒有提到 context window 限制、API 成本、MCP 協議、安全性考量、或替代工具（如 Cursor、Windsurf）。作為啟發性內容閱讀，但實作前需要深入研究具體技術限制。</div>
+        </div>
+        <div class="summary-card" style="border-left-color: #8b5cf6;">
+            <div class="summary-card-title">&#129504; 輸入品質 = 輸出品質</div>
+            <div class="summary-card-text">AI 放大的是你 vault 中的思考品質。如果筆記只是複製貼上的內容，AI 輸出也只是重新整理的二手資訊。真正的 leverage 來自你自己的分析、框架和原創觀點的累積。</div>
+        </div>
+    </div>
+
+    <!-- Practice Questions -->
+    <div class="section-title">Practice Questions</div>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">文章說「你的整個知識庫都變成 Claude 的上下文」，這個說法在技術上有什麼不精確之處？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>這個說法忽略了 <strong>Context Window 限制</strong>。目前 Claude 的 context window 約 200K tokens，而一個使用多年的 Obsidian vault 可能包含數百萬 tokens 的內容。實際上 Claude Code 會根據提問的相關性<strong>選擇性地載入</strong>部分檔案，而非一次載入全部。此外，即使用了搜尋或嵌入向量（Embedding）來篩選相關內容，仍然可能遺漏重要的跨主題連結。</p>
+            <p>更準確的說法應該是：「你的知識庫成為 Claude <strong>可搜尋的資源池</strong>，它會根據每次對話智慧地選取相關內容作為上下文。」</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">產業應用</span>
+            <span class="question-text">如果你要在 CDMO 無塵室環境中應用「Obsidian + AI」的概念，有哪些法規和實務限制需要考慮？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>在 GMP 環境中應用此概念時，至少需要考慮以下限制：</p>
+            <p><strong>1. 21 CFR Part 11 合規：</strong>如果 vault 中的筆記涉及批次記錄、偏差調查、或品質決策，這些資料需要符合電子記錄法規 — 包括稽核軌跡（audit trail）、電子簽章、以及存取控制。純 Markdown 檔案無法滿足這些要求。</p>
+            <p><strong>2. 資料分類 (Data Classification)：</strong>AI 工具不能接觸 GxP 關鍵資料（如批次記錄、穩定性數據）。適合放入 vault 的是個人學習筆記、SOP 改善想法、流程優化觀察等非 GxP 內容。</p>
+            <p><strong>3. Copilot Mode 限制：</strong>AI 在法規環境中只能作為「副駕駛」— 提供建議和草稿，但所有輸出都必須經過人類專業判斷審核。自主代理模式在 GMP 環境中是不適當的。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">文章使用了大量的 JARVIS 類比和「比別人早兩年」的語言。這種敘事框架有什麼潛在偏見？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p>幾個值得注意的偏見：</p>
+            <p><strong>生存者偏差 (Survivorship Bias)：</strong>文章假設「捕捉所有資訊並組織它」就會產生優勢，但忽略了大量人認真做筆記卻沒有產生顯著成果的情況。工具不是瓶頸，思考品質才是。</p>
+            <p><strong>FOMO 行銷框架：</strong>「比別人早兩年」是典型的稀缺性框架（Scarcity Frame），在加密貨幣社群中特別有效。它迴避了「這個工具組合是否真的適合你的工作流程」的理性評估。</p>
+            <p><strong>簡化複雜性：</strong>JARVIS 類比讓讀者對「本地 AI」產生不切實際的期望。實際的 Claude Code + Obsidian 體驗涉及 token 管理、提示工程、檔案組織策略等大量摩擦成本，這些都被敘事省略了。</p>
+            <p><strong>利益衝突信號：</strong>作為加密貨幣/AI 領域的 KOL，推薦工具組合可能帶有流量動機。文章沒有提及任何替代方案或限制，這本身就是一個紅旗。</p>
+        </div>
+    </details>
+
+    <!-- Bottom Line -->
+    <div class="section-title">Bottom Line</div>
+    <div class="bottom-line">
+        <div class="bottom-line-header">&#127919; 我的行動結論</div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#10004; 核心洞察</div>
+            <div class="bottom-line-text">文章的核心概念 — 「本地純文字知識庫 + AI CLI 工具 = 個人化 AI 助手」— 跟我現在用 Claude.ai Projects + GitHub repo 的架構本質相同。差別在於 Obsidian 強調的是<strong>持續累積的個人思考資料庫</strong>，而我的 repo 偏重<strong>結構化教育文件</strong>。這提醒我：vault/repo 的價值不在於量，在於你放進去的是原創思考還是二手整理。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#128200; 立即應用</div>
+            <div class="bottom-line-text">本週在我的 Claude Code 環境中檢視現有的 <code>CLAUDE.md</code> 記憶檔，確認是否已包含 GitHub repo 結構說明和我的常用框架。測試用 Claude Code 直接對我的教育文件 repo 提問：「列出過去一個月所有文件的 doc-tags 分布」— 驗證 AI 能否有效檢索我自己的知識庫。</div>
+        </div>
+        <div class="bottom-line-item">
+            <div class="bottom-line-label">&#9888; 需要補充</div>
+            <div class="bottom-line-text">文章完全沒有提到：(1) MCP 協議作為更結構化的 Obsidian-Claude 整合方式、(2) context window 的實際限制和應對策略、(3) API 成本估算（大量筆記檢索的 token 消耗）、(4) 安全性考量（本地檔案存取的權限管理）。這些技術細節需要另外研究。另外，對於 CDMO 場景，需要明確區分「個人學習 vault」和「GMP 相關工作資料」的邊界。</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&#128196; 製作日期：2026-03-23 | 原文來源：<a href="https://x.com/cyrilXBT" target="_blank">CyrilXBT / X (Twitter)</a></p>
+        <p>&#128172; Suggested Chat Title: 2026-03-23 [Tool] CyrilXBT - Obsidian Claude Code Stack</p>
+    </div>
+
 </div><!-- end container -->
 </body>
 </html>
