@@ -17843,143 +17843,342 @@ const searchIndex = [
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "執行摘要",
-    "sectionTitle": "📋 執行摘要",
-    "content": "本文件涵蓋 Claude Code v2.1.77 至 v2.1.96 ，時間跨度約 2026 年 3 月下旬至 4 月上旬。 此階段是繼 v2.1.49–v2.1.76「多 Agent 架構奠基期」之後的 生態系統成熟期 —— Hooks 從少數事件擴張為覆蓋整個工作流程的條件式監控系統；Plugin 從基本腳本演化為具備狀態管理、 可執行檔、離線快取的完整生態；企業端引入 drop-in 設定目錄與遠端政策強制刷新； Bedrock/Mantle 整合趨於穩定並修正多個授權漏洞。整體而言，這 20 個版本展現了 Claude Code 從「功能探索」邁向「生產就緒」的關鍵轉型。 20 版本數量 (v2.1.77–96) 7 主要演進主題 5+ 新 Hook 事件類型 64K Opus 4.6 輸出上限 (Token) 整體架構成熟度評估（相較前一階段 v2.1.49–76） ⭐ 成熟期 82 / 100 🎣 Hooks 條件式監控系統 新增 StopFailure、CwdChanged、FileChanged、TaskCreated、PermissionDenied 等事件，並支"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "版本目錄-table-of-contents",
+    "sectionTitle": "版本目錄 Table of Contents",
+    "content": "v2.1.96 — Bedrock 緊急修正 v2.1.94 — Mantle 正式化 / CJK 修正 v2.1.92 — /cost 細分 / Bedrock 精靈 v2.1.91 — MCP 500K 持久化 v2.1.90 — /powerup 課程 v2.1.89 — defer 決策 / NO_FLICKER v2.1.87 — Cowork 修正 v2.1.86 — Session-Id / Windows IO v2.1.85 — 條件式 Hook / RFC 9728 v2.1.84 — TaskCreated Hook / PowerShell v2.1.83 — managed-settings.d/ / CwdChanged v2.1.82 — Bedrock Mantle / effort → High v2.1.81 — --bare / --channels v2.1.80 — rate_limits / effort frontmatter v2.1.79 — --console / 啟動記憶體 -18MB v2.1.78 — StopFailure H"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "新-hook-事件一覽",
-    "sectionTitle": "新 Hook 事件一覽",
-    "content": "從 v2.1.77 到 v2.1.96，Claude Code 的 Hook 系統新增了 五個關鍵事件類型 ， 讓外部系統得以精確響應 AI 代理的每一個動作節點。最重要的是 v2.1.85 引入的 條件式 if 欄位 ，允許使用者透過 Permission Rule 語法篩選 Hook 的觸發條件，大幅減少不必要的 Hook 調用。 \"Hooks can now be conditionally triggered using the same permission rule syntax, reducing noise and enabling precise workflow automation.\" StopFailure （v2.1.78）在代理因錯誤停止時觸發， 可用於自動發送告警或執行清理腳本。 CwdChanged 與 FileChanged （v2.1.83） 則實現了工作目錄與檔案的即時監控——類似 GMP 環境中的環境監測系統（Environmental Monitoring System）。 \"CwdChanged and FileChanged hooks m"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2196",
+    "sectionTitle": "v2.1.96",
+    "content": "2026-04-08 繁體中文 English 應用場景 Scenario Bug Fixes 錯誤修復 修正使用 AWS_BEARER_TOKEN_BEDROCK 或 CLAUDE_CODE_SKIP_BEDROCK_AUTH 時 Bedrock 請求回傳 403 授權錯誤（v2.1.94 引入的回歸） Fixed Bedrock requests failing with 403 \"Authorization header is missing\" when using AWS_BEARER_TOKEN_BEDROCK or CLAUDE_CODE_SKIP_BEDROCK_AUTH — regression from v2.1.94 你用 Anthropic 直連 — 不影響；若未來評估 AWS 部署，此版才是穩定版 v2.1.95 — 無公開 changelog 記錄（minor patch）"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "hook-事件版本時序",
-    "sectionTitle": "Hook 事件版本時序",
-    "content": "v2.1.78 StopFailure — 代理因失敗停止時觸發 新事件 v2.1.83 CwdChanged 、 FileChanged — 工作目錄與檔案變更 新事件 v2.1.84 TaskCreated — 任務建立時觸發 新事件 v2.1.84 WorktreeCreate 擴充支援 HTTP 類型 Hook 擴充 v2.1.85 條件式 if 欄位，使用 Permission Rule 語法 重大更新 v2.1.89 PermissionDenied — 自動模式拒絕時觸發 新事件 💻 條件式 Hook 設定範例 { \"hooks\": { \"FileChanged\": [{ \"if\": \"path:src/**\", \"command\": \"scripts/lint-on-change.sh\" }], \"PermissionDenied\": [{ \"command\": \"scripts/audit-log.sh\" }] } } Part II 🧩 Plugin 生態系統全面成熟"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2194",
+    "sectionTitle": "v2.1.94",
+    "content": "2026-04-07 繁體中文 English 應用場景 Scenario Features 新功能 Amazon Bedrock via Mantle 正式支援 — 設定 CLAUDE_CODE_USE_MANTLE=1 啟用 Amazon Bedrock support powered by Mantle — set CLAUDE_CODE_USE_MANTLE=1 你用 Anthropic 直連 — 若未來 Amaran 評估 AWS 部署可用此整合路徑 Plugin Skill 使用 frontmatter name 欄位作為穩定呼叫識別符，無論安裝方式 Plugin skills now use frontmatter name field for stable invocation names across install methods 你的 /daily、/weekly skill 呼叫名稱從此穩定，不因安裝路徑改變 新增 keep-coding-instructions frontmatter — Plugin 輸出可保留程式碼撰寫指引 Added keep-codi"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "從腳本到完整應用的躍升",
-    "sectionTitle": "從腳本到完整應用的躍升",
-    "content": "這個階段的 Plugin 系統發生了質的轉變。v2.1.78 引入的 ${CLAUDE_PLUGIN_DATA} 變數讓 Plugin 首次擁有 持久化狀態管理 能力——Plugin 不再是無狀態的腳本，而是可以記住跨工作階段資料的「微應用」。 \"${CLAUDE_PLUGIN_DATA} transforms plugins from stateless scripts into stateful micro-applications with persistent memory across sessions.\" v2.1.80 新增 effort frontmatter ，讓每個 Skill 可以宣告自己 所需的 effort 等級，避免高精度任務被低 effort 設定影響品質。v2.1.82 的 keep-coding-instructions frontmatter 則允許 Plugin 在輸出時保留程式碼撰寫指引， 確保生成內容符合專案規範。 \"Per-skill effort declarations prevent quality degradation — a va"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2192",
+    "sectionTitle": "v2.1.92",
+    "content": "2026-04-05 繁體中文 English 應用場景 Scenario Features 新功能 新增 forceRemoteSettingsRefresh 管理政策 — 強制所有終端即時同步最新設定 Added forceRemoteSettingsRefresh managed policy for forcing remote settings sync 企業管理功能 — Amaran IT 遇到安全事件時可緊急推送修補政策給所有裝置 互動式 Bedrock 設定精靈 — 簡化第三方驗證設定流程 Interactive Bedrock setup wizard for third-party authentication Bedrock 設定不再需要手動組合環境變數 — 精靈引導完成 /cost 新增依模型與快取命中細分的費用統計 Enhanced /cost command with per-model and cache-hit breakdowns 可清楚看到 Opus vs Sonnet 各用多少費用、快取省了多少 — 月底帳單更透明 /release-notes 升"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "plugin-能力演進里程碑",
-    "sectionTitle": "Plugin 能力演進里程碑",
-    "content": "🌱 v2.1.78 — 狀態管理誕生 ${CLAUDE_PLUGIN_DATA} 變數 + Agent frontmatter 支援，Plugin 可儲存跨 Session 資料並定義 Agent 行為 ⚙️ v2.1.80–82 — 精細化控制 effort frontmatter（技能級 effort 宣告）、 keep-coding-instructions （輸出規範保留）、 source: 'settings' （設定檔驅動 Marketplace） 🏛️ v2.1.84 — 企業管控 Channel Plugin 白名單（managed settings）、組織政策封鎖安裝（v2.1.85），IT 部門可精確控管哪些 Plugin 可用 📦 v2.1.90–94 — 生態完整 離線 Marketplace 快取（v2.1.90）、 bin/ 可執行檔支援（v2.1.91）、 frontmatter name 作為穩定呼叫識別符（v2.1.94） Part III 🏢 企業受管設定強化"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2191",
+    "sectionTitle": "v2.1.91",
+    "content": "2026-04-03 繁體中文 English 應用場景 Scenario Features 新功能 MCP 工具結果持久化覆寫 — 透過 metadata 標注可保留至 500K token MCP tool result persistence override via metadata annotations — up to 500K tokens 大型 CTD 文件或 PDA TR 分析結果可在整個工作流程中持久存在，不需重複查詢 Settings 新增 Shell 執行開關 — Skills 與 Custom Commands 各自獨立控制 Shell execution toggle in settings for skills and custom commands independently 可分別為 /daily（允許 shell）和其他 skills（限制 shell）設定不同安全權限 Deep Link 支援多行提示 — 使用 encoded newlines Deep link support for multi-line prompts using encod"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "三層管理架構完善",
-    "sectionTitle": "三層管理架構完善",
-    "content": "v2.1.83 引入的 managed-settings.d/ drop-in 目錄 是企業部署的重大突破。IT 管理員可以將不同政策拆分為獨立檔案放入此目錄， Claude Code 啟動時會自動合併所有設定——如同 Linux 的 /etc/nginx/conf.d/ 機制。 這讓不同部門的政策可以各自維護，不再需要手動合併單一大型設定檔。 \"managed-settings.d/ enables policy-as-code: each department maintains its own settings fragment, merged at startup without conflicts.\" v2.1.83 同步推出的 sandbox.failIfUnavailable 設定確保沙箱在無法啟用時 拒絕執行 而非靜默降級，對安全合規（如 21 CFR Part 11 的存取控制要求）至關重要。 \"sandbox.failIfUnavailable enforces a fail-safe posture — in regulated environments, sil"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2190",
+    "sectionTitle": "v2.1.90",
+    "content": "2026-04-01 繁體中文 English 應用場景 Scenario Features 新功能 推出 /powerup 互動式功能課程，含動畫演示 Launched /powerup interactive lessons with animated feature demonstrations 快速探索 Claude Code 你還沒用過的功能 — 值得執行一次看看 Plugin 離線支援強化 — Marketplace 快取保留，無網路時仍可使用 Enhanced plugin offline support with marketplace cache preservation 在無網路環境（如藥廠管制區或飛機上）Plugin 仍可正常運作 Improvements 改進 Protected directories 擴充，新增 .husky Expanded protected directories to include .husky Git hooks 設定目錄受保護 — Claude 不會意外修改你的 commit hooks 改善 --resume 對 deferr"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "企業管理能力對照",
-    "sectionTitle": "企業管理能力對照",
-    "content": "🏭 GMP 類比：變更管控 managed-settings.d/ ≈ SOP 分冊管理：每個部門各自維護自己的 SOP 章節， 品保部門（QA）負責整合並確保無衝突。修改某部門的規定只需更新對應分冊，不影響其他部門。 ⚠️ v2.1.83 — 安全強制設定 sandbox.failIfUnavailable: true 沙箱不可用時拒絕執行，避免在非隔離環境下意外執行危險操作。 建議所有生產環境與受管設備啟用。 📡 v2.1.92 — 即時政策同步 forceRemoteSettingsRefresh 政策 + 互動式 Bedrock 設定精靈， 企業端佈署與政策更新的摩擦力大幅降低。 /release-notes 升級為互動式版本選擇器， 讓管理員快速查看特定版本的變更內容。 Part IV ☁️ Bedrock 平台整合與穩定化"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2189",
+    "sectionTitle": "v2.1.89",
+    "content": "2026-03-30 繁體中文 English 應用場景 Scenario Features 新功能 新增 \"defer\" 權限決策 — Headless Session 可在工具呼叫時暫停等待人工確認 Introduced \"defer\" permission decision enabling headless session pausing at tool calls CI 流水線或自動化 /daily 任務可在需要確認時暫停，不再直接失敗 新增 CLAUDE_CODE_NO_FLICKER=1 無閃爍渲染選項 Added flicker-free rendering option via CLAUDE_CODE_NO_FLICKER=1 長時間 /weekly 分析時終端機畫面不再抖動 — 在 .zshrc 加上此環境變數即可 新增 PermissionDenied Hook — 自動模式分類器拒絕操作時觸發 Implemented PermissionDenied hook for auto-mode classifier denials 可搭配 hook 自動記錄每次被拒絕"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "mantle-整合與授權修正歷程",
-    "sectionTitle": "Mantle 整合與授權修正歷程",
-    "content": "Bedrock/Mantle 整合是這個階段最具戲劇性的演進——從功能引入到回歸（Regression）， 再到緊急修正，歷經三個版本。v2.1.82 首次引入 Mantle 支援 （ CLAUDE_CODE_USE_MANTLE=1 ），同時修正了 Bedrock Bearer Token 的授權問題。 \"The Bedrock integration journey illustrates the challenge of platform abstraction — v2.1.94 introduced Mantle natively but also regressed auth, fixed by v2.1.96.\" v2.1.94 將 Mantle 支援提升為 正式功能 ，並同步將 預設 effort 等級從 Medium 提升至 High ， 適用於 API Key、Bedrock、Vertex 及 Enterprise 用戶。然而此版本同時引入了 Bedrock 請求 403 錯誤的回歸問題，由 v2.1.96 緊急修正。 \"Default effort elevati"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2187",
+    "sectionTitle": "v2.1.87",
+    "content": "2026-03-28 繁體中文 English 應用場景 Scenario Bug Fixes 錯誤修復 修正 Cowork Dispatch 訊息傳遞失敗 Fixed Cowork Dispatch message delivery failures 你用 Telegram 接收 Cowork 通知 — 此修正確保訊息可靠送達"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "bedrock-整合版本時序",
-    "sectionTitle": "Bedrock 整合版本時序",
-    "content": "v2.1.82 首次 Mantle 支援 CLAUDE_CODE_USE_MANTLE=1 + Bearer Token 修正 Bedrock v2.1.82 預設 effort 改為 High（API/平台用戶） 行為變更 v2.1.92 互動式 Bedrock 設定精靈（第三方驗證） 新功能 v2.1.94 Mantle 升為正式功能 + Sonnet 3.5 v2 inference profile 修正 重大更新 v2.1.94 預設 effort → High 擴至 Enterprise 用戶 行為變更 v2.1.96 修正 AWS_BEARER_TOKEN_BEDROCK 403 授權失敗（v2.1.94 回歸） 緊急修正 Part V 🔌 MCP 協議標準化進化"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2186",
+    "sectionTitle": "v2.1.86",
+    "content": "2026-03-27 繁體中文 English 應用場景 Scenario Features 新功能 API 請求新增 X-Claude-Code-Session-Id Header — 改善 Proxy 聚合分析 Added X-Claude-Code-Session-Id header to API requests for improved proxy aggregation 企業 Proxy 可用此 Header 追蹤特定 session 的所有 API 請求 — 便於 GMP Audit Trail Improvements 改進 VCS 排除目錄清單擴充，新增 .jj （Jujutsu）與 .sl （Sapling） Extended VCS directory exclusion lists to include .jj and .sl metadata 使用新興 VCS 工具的團隊 — 元資料目錄不再被 Claude Code 掃描 Marketplace Plugin 腳本功能強化（macOS/Linux） Enhanced marketplace plugin sc"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "從專屬實作到-rfc-標準",
-    "sectionTitle": "從專屬實作到 RFC 標準",
-    "content": "v2.1.85 的 MCP OAuth 遵循 RFC 9728 Protected Resource Metadata 探索機制，標誌著 MCP 認證從私有實作轉向開放標準。 這意味著任何支援 RFC 9728 的 OAuth 伺服器都可以直接為 MCP 提供身份驗證， 無需針對 Claude Code 進行特殊適配。 \"RFC 9728 compliance transforms MCP OAuth from a proprietary handshake into a standard protocol — any compliant OAuth server works out of the box.\" v2.1.85 同步為 headersHelper 腳本新增 MCP 伺服器名稱與 URL 環境變數 ， 讓一個 headersHelper 腳本可以根據不同的 MCP Server 動態產生對應的請求頭， 實現真正的多 Server 統一認證管理。 v2.1.91 最受矚目的更新是 MCP 工具結果持久化覆寫 ： 透過 metadata 標注，單次工具呼叫的結果可保留至 500"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2185",
+    "sectionTitle": "v2.1.85",
+    "content": "2026-03-26 繁體中文 English 應用場景 Scenario Features 新功能 headersHelper 腳本可取得 MCP Server 名稱（ MCP_SERVER_NAME ）與 URL 環境變數 Added MCP server name and URL environment variables for headersHelper scripts 一個 headersHelper 腳本可依 MCP Server 名稱動態產生對應的 Auth Header — Gmail 和 Telegram 各自認證 Hook 新增條件式 if 欄位 — 使用 Permission Rule 語法篩選觸發條件 Introduced conditional if field for hooks using permission rule syntax FileChanged hook 加 if: \"path:src/**\" — 只有 src/ 底下的檔案變更才觸發 lint，減少不必要觸發 Deep Link 查詢字串上限提升至 5,000 字元，超長提示加入捲動警告 "
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "mcp-進化關鍵里程碑",
-    "sectionTitle": "MCP 進化關鍵里程碑",
-    "content": "📜 v2.1.85 — RFC 9728 標準化 MCP OAuth 遵循 RFC 9728 Protected Resource Metadata 探索機制。 headersHelper 腳本可透過 MCP_SERVER_NAME 、 MCP_SERVER_URL 環境變數動態識別呼叫來源。 💾 v2.1.91 — 500K 結果持久化 MCP 工具結果可透過 metadata 標注覆寫持久化上限至 500,000 token。 Shell 執行開關（skills/custom commands 各自獨立控制）同步推出。 🔄 前後對比 v2.1.49–76 時期： MCP 以私有 OAuth、單一 headersHelper 為主 v2.1.77–96 時期： RFC 9728 標準 OAuth + 多 Server 動態 Header + 500K 持久化 Part VI ✨ 開發者體驗全面躍升 CLI 新功能 互動體驗 Windows 平台 效能優化 v2.1.77 /copy 指令支援可選 index 參數，可複製特定輪次輸出 新功能 v2.1.79 --console "
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2184",
+    "sectionTitle": "v2.1.84",
+    "content": "2026-03-25 繁體中文 English 應用場景 Scenario Features 新功能 Windows 推出 PowerShell 工具（opt-in 預覽版） Launched PowerShell tool for Windows as opt-in preview 你用 macOS — 不影響；Windows 同事可讓 Claude 直接執行 PowerShell 腳本 新增環境變數自訂模型能力偵測（effort/thinking 支援、model picker 標籤、串流 timeout） Added environment variables for custom model capability detection 可在 .zshrc 設定串流 timeout — 長時間 /weekly 分析不被誤判為斷線 新增 TaskCreated Hook 事件 Introduced TaskCreated hook event subagent 啟動時自動 hook 記錄到 insight.md — 追蹤所有背景任務的建立時間 WorktreeCreate Hook "
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "跨版本重要修正",
-    "sectionTitle": "跨版本重要修正",
-    "content": "--resume 系列修正 ：v2.1.80 修正了 --resume 遺失平行工具結果的問題；v2.1.86 修正了對 v2.1.85 之前建立的工作階段執行 --resume 時失敗的問題；v2.1.90 改善了 deferred 工具與 MCP 伺服器 的 --resume 快取行為。 身份驗證穩定性 ：v2.1.79 修正了 claude -p 在無明確 stdin 時卡住的問題；v2.1.81 修正了並行工作階段需重複重新驗證的問題； v2.1.94 修正了 macOS keychain 鎖定時 Console 登入失敗並改善 claude doctor 的診斷能力。 VCS 整合改善 ：v2.1.78 修正了沙箱 Bash 中 git 指令失敗的問題；v2.1.83 修正了 --worktree 在非 git 倉庫中報錯的問題； v2.1.86 擴充了 VCS 目錄排除清單，新增 .jj （Jujutsu）與 .sl （Sapling） 兩個新興 VCS 系統的元資料目錄。"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2183",
+    "sectionTitle": "v2.1.83",
+    "content": "2026-03-24 繁體中文 English 應用場景 Scenario Features 新功能 新增 managed-settings.d/ drop-in 目錄 — 各團隊可維護獨立政策片段，啟動時自動合併 Added managed-settings.d/ drop-in directory support for independent policy fragments Amaran IT 可將安全政策、模型設定、Plugin 白名單分別放入獨立片段檔案版本控制 新增 CwdChanged 和 FileChanged Hook 事件 Introduced CwdChanged and FileChanged hook events 切換 david-ai-learning 與 Health-Check 目錄時可自動 hook 載入對應的設定環境 新增 sandbox.failIfUnavailable — sandbox 無法啟動時拒絕執行，不靜默降級 Implemented sandbox.failIfUnavailable setting 安全合規設定 — 確保沙箱失敗"
   },
   {
     "docFile": "2026-04-08_claude-code-release-evolution.html",
     "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
     "docDate": "2026-04-08",
-    "docSource": "",
-    "docRating": 0,
-    "docTags": [],
-    "sectionId": "版本快速索引",
-    "sectionTitle": "版本快速索引",
-    "content": "📋 各版本主題速查 v2.1.77 Token 上限 64K、沙箱 allowRead、記憶體修正 v2.1.78 StopFailure Hook、Plugin 狀態變數、逐行串流 v2.1.79 --console 旗標、啟動記憶體 -18MB v2.1.80 rate_limits statusline、effort frontmatter v2.1.81 --bare 旗標、--channels 旗標 v2.1.82 Bedrock Mantle、effort → High、Slack MCP 改善 v2.1.83 managed-settings.d/、CwdChanged/FileChanged Hook v2.1.84 PowerShell 工具(Preview)、TaskCreated Hook v2.1.85 條件式 Hook if 欄位、RFC 9728 MCP OAuth v2.1.86 Session-Id Header、VCS .jj/.sl 排除、Windows IO 修正 v2.1.87 Cowork Dispatch 訊息修正 v2.1.89 defe"
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2182",
+    "sectionTitle": "v2.1.82",
+    "content": "2026-03-22 繁體中文 English 應用場景 Scenario Features 新功能 新增 Mantle 支援 — 設定 CLAUDE_CODE_USE_MANTLE=1 啟用 Bedrock via Mantle Added Mantle support via CLAUDE_CODE_USE_MANTLE=1 AWS 企業部署預備 — Amaran 評估 AWS 部署時可用此整合路徑 新增 keep-coding-instructions frontmatter — Plugin 輸出可保留程式碼指引 Implemented keep-coding-instructions frontmatter field support SOP 生成 Plugin 可宣告保留格式規範，確保每次輸出符合 GMP 標準 Improvements 改進 API Key 與平台用戶預設 effort 改為 High Changed default effort level to high for API-key and platform users 你的 API Key 預設提升 — "
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2181",
+    "sectionTitle": "v2.1.81",
+    "content": "2026-03-21 繁體中文 English 應用場景 Scenario Features 新功能 新增 --bare 旗標 — 腳本化 -p 呼叫時省略歡迎介面 Introduced --bare flag for scripted -p calls cron job 或 shell script 中呼叫 claude -p --bare ，輸出更乾淨、易於解析 新增 --channels Permission 中繼能力 Added --channels permission relay capability 多頻道管理時可精確控制各頻道的 permission relay Bug Fixes 錯誤修復 修正並行 Session 需重複重新驗證 Fixed concurrent session authentication requiring repeated re-authentication 同時開多個 Claude Code session 不再需要重複登入 — 多工作流並行更順暢 修正語音模式重試失敗處理 Resolved voice mode retry failure "
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2180",
+    "sectionTitle": "v2.1.80",
+    "content": "2026-03-20 繁體中文 English 應用場景 Scenario Features 新功能 Statusline 腳本新增 rate_limits 欄位 — 即時顯示 API 速率限制狀態 Added rate_limits field to statusline scripts 在 HUD statusline 即時看到 API 用量比例 — 接近限速時提早知道 Plugin Marketplace 新增 source: 'settings' 選項 Introduced source: 'settings' plugin marketplace option 在 settings.json 直接管理 Plugin 來源 — 版本控制更方便 Skill frontmatter 新增 effort 欄位 — 每個 Skill 可宣告所需 effort 等級 Added effort frontmatter support for skills 你的 /daily（需要高品質）可宣告 effort: high ，不受全域設定影響 擴充 CLI 工具使用偵測用於 Plugin 提示"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2179",
+    "sectionTitle": "v2.1.79",
+    "content": "2026-03-19 繁體中文 English 應用場景 Scenario Features 新功能 新增 --console 旗標 — 直接以 Anthropic Console 身份驗證啟動 Added --console flag for Anthropic Console authentication 需要切換 Console 與 API Key 身份時， claude --console 一行搞定 /config 新增「顯示每輪耗時」開關（Show turn duration） Introduced \"Show turn duration\" toggle in /config 開啟後可看到每輪 /daily 分析花了多少秒 — 優化 skill 效率的好工具 語音模式啟動時強化激活機制 Enhanced voice mode startup activation 你用 /voice 英文聽寫 — 啟動成功率提升，不再需要重試 Improvements 改進 啟動記憶體用量降低 ~18MB Improved startup memory usage by ~18MB 每次開 C"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2178",
+    "sectionTitle": "v2.1.78",
+    "content": "2026-03-18 繁體中文 English 應用場景 Scenario Features 新功能 新增 StopFailure Hook 事件 — 代理因失敗停止時觸發 Introduced StopFailure hook event subagent 失敗時自動 hook 發送 Telegram 告警並記錄錯誤日誌 新增 ${CLAUDE_PLUGIN_DATA} 變數 — Plugin 首次擁有持久化狀態管理 Added ${CLAUDE_PLUGIN_DATA} variable for plugin state 你的 /daily skill 可記住昨天討論的重點，跨 Session 保留學習進度 Agent frontmatter 支援擴充 Extended frontmatter support for agents 自訂 Agent 可在 frontmatter 定義更豐富的行為設定 實作逐行串流回應（macOS/Linux；Windows 因渲染問題暫時停用） Implemented line-by-line response streaming (disable"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "GitHub / Anthropic Claude Code Releases",
+    "docRating": 4.3,
+    "docTags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "sectionId": "v2177",
+    "sectionTitle": "v2.1.77",
+    "content": "2026-03-17 繁體中文 English 應用場景 Scenario Features 新功能 Opus 4.6 輸出 Token 上限提升至 64,000 （從 32K 翻倍） Increased Opus 4.6 output token limits to 64K 一次輸出完整 CTD Module 2 摘要或完整 SOP 文件不再被截斷 — 對長篇文件生成意義重大 沙箱新增 allowRead 檔案系統設定 Added allowRead sandbox filesystem setting 可精確指定沙箱內允許讀取的目錄 — 只開放必要路徑，安全合規更嚴謹 /copy 指令支援可選 index 參數 — 可複製特定輪次輸出 Extended /copy command with optional index parameter 複製第 3 輪的分析結果： /copy 3 — 不需要手動捲回去選取 Bug Fixes 錯誤修復 修正複合 bash 指令的 Permission Rules 判斷 Fixed compound bash command permission "
   }
 ];

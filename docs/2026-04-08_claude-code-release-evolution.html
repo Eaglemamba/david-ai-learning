@@ -1,1296 +1,407 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Code 版本演進分析 v2.1.77–v2.1.96</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-    line-height: 1.8;
-    font-size: 16px;
-  }
-
-  code, pre {
-    font-family: 'Source Code Pro', monospace;
-  }
-
-  /* ── Header ── */
-  .header {
-    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 55%, #5b7fb5 100%);
-    color: #fff;
-    padding: 2.5rem 2rem;
-    text-align: center;
-  }
-  .header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .header-subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.35rem; }
-  .header-source  { font-size: 0.85rem; opacity: 0.7; }
-  .version-badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.35);
-    border-radius: 20px;
-    padding: 0.25rem 1rem;
-    font-size: 0.85rem;
-    margin-top: 0.75rem;
-  }
-
-  /* ── Container ── */
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-  }
-
-  /* ── Executive Summary ── */
-  .exec-summary {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.75rem 1.5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .exec-summary h2 {
-    font-size: 1.1rem;
-    color: #1e3a8a;
-    border-bottom: 2px solid #3b82f6;
-    padding-bottom: 0.4rem;
-    margin-bottom: 1rem;
-  }
-  .exec-summary p { font-size: 0.95rem; color: #334155; line-height: 1.8; }
-
-  /* ── Stats Bar ── */
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem;
-    margin: 1.25rem 0;
-  }
-  .stat-item {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
-  .stat-number { font-size: 1.6rem; font-weight: 700; color: #1e3a8a; }
-  .stat-label  { font-size: 0.78rem; color: #64748b; margin-top: 0.2rem; }
-
-  /* ── Rating bar ── */
-  .rating-bar {
-    background: linear-gradient(135deg, #1e3a8a, #3b82f6);
-    color: #fff;
-    border-radius: 10px;
-    padding: 1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-  }
-  .rating-label { font-size: 0.85rem; opacity: 0.85; flex: 1 1 120px; }
-  .rating-score { font-size: 1.4rem; font-weight: 700; white-space: nowrap; }
-  .rating-bar-inner {
-    flex: 1 1 200px;
-    height: 8px;
-    background: rgba(255,255,255,0.25);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .rating-fill { height: 100%; background: #fff; border-radius: 4px; }
-
-  /* ── Objectives Grid ── */
-  .objectives-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-  .objective-item {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-left: 4px solid #3b82f6;
-    border-radius: 10px;
-    padding: 1.1rem 1.1rem;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .objective-item:nth-child(2) { border-left-color: #6366f1; }
-  .objective-item:nth-child(3) { border-left-color: #10b981; }
-  .objective-item:nth-child(4) { border-left-color: #f59e0b; }
-  .objective-item:nth-child(5) { border-left-color: #ef4444; }
-  .objective-item:nth-child(6) { border-left-color: #8b5cf6; }
-  .objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-  .objective-icon { font-size: 1.3rem; margin-bottom: 0.4rem; }
-  .objective-title { font-size: 0.85rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.25rem; }
-  .objective-text  { font-size: 0.85rem; color: #334155; line-height: 1.6; }
-
-  /* ── Framework Visual ── */
-  .framework-visual {
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e40af 100%);
-    color: #fff;
-    border-radius: 12px;
-    padding: 1.75rem 1.5rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  .framework-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 1.25rem;
-    opacity: 0.95;
-  }
-  .framework-steps {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  .framework-step {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 10px;
-    padding: 0.75rem 0.75rem;
-    min-width: 130px;
-    text-align: center;
-  }
-  .framework-icon       { font-size: 1.5rem; margin-bottom: 0.35rem; }
-  .framework-step-title { font-size: 0.88rem; font-weight: 700; }
-  .framework-step-ver   { font-size: 0.75rem; opacity: 0.7; margin-top: 0.15rem; font-family: 'Source Code Pro', monospace; }
-  .framework-step-desc  { font-size: 0.75rem; opacity: 0.85; margin-top: 0.2rem; line-height: 1.4; }
-  .framework-arrow      { font-size: 1.3rem; color: #93c5fd; }
-
-  /* ── Section Titles ── */
-  .section-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1e3a8a;
-    border-bottom: 2px solid #3b82f6;
-    padding-bottom: 0.4rem;
-    margin: 2rem 0 1rem;
-  }
-  .part-label {
-    font-size: 0.78rem;
-    color: #6366f1;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-weight: 700;
-    margin-bottom: 0.2rem;
-  }
-
-  /* ── Content Grid ── */
-  .content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    margin-bottom: 1.25rem;
-  }
-  .content-left  { background: #fff; padding: 1.5rem; border-right: 1px solid #e2e8f0; }
-  .content-right { background: #f8fafc; padding: 1.5rem; }
-  .content-left  h3 { font-size: 1rem; color: #1e3a8a; margin-bottom: 0.75rem; }
-  .content-right h3 { font-size: 1rem; color: #475569; margin-bottom: 0.75rem; }
-
-  /* ── Bilingual Block ── */
-  .bilingual-block { margin-bottom: 1rem; }
-  .zh-text { font-size: 0.93rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.2rem; }
-  .en-text { font-size: 0.88rem; color: #64748b; font-style: italic; line-height: 1.6; }
-
-  /* ── Info Boxes ── */
-  .info-box {
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 0.85rem;
-    border: 1px solid rgba(0,0,0,0.06);
-  }
-  .info-box-header {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 1rem;
-    font-size: 0.82rem;
-    font-weight: 700;
-  }
-  .info-box-content {
-    padding: 0.75rem 1rem;
-    font-size: 0.88rem;
-    line-height: 1.75;
-  }
-  .box-concept .info-box-header  { background: #bbf7d0; color: #14532d; }
-  .box-concept .info-box-content { background: #f0fdf4; }
-  .box-key .info-box-header      { background: #fed7aa; color: #7c2d12; }
-  .box-key .info-box-content     { background: #fff7ed; }
-  .box-code .info-box-header     { background: #ddd6fe; color: #2e1065; }
-  .box-code .info-box-content    { background: #f5f3ff; }
-  .box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
-  .box-practical .info-box-content{ background: #ecfdf5; }
-  .box-compare .info-box-header  { background: #c7d2fe; color: #1e1b4b; }
-  .box-compare .info-box-content { background: #eef2ff; }
-  .box-analogy .info-box-header  { background: #fef3c7; color: #78350f; }
-  .box-analogy .info-box-content { background: #fffbeb; }
-  .box-warning .info-box-header  { background: #fecaca; color: #7f1d1d; }
-  .box-warning .info-box-content { background: #fef2f2; }
-
-  /* ── Code Block ── */
-  pre {
-    background: #1e293b;
-    color: #e2e8f0;
-    padding: 1rem;
-    border-radius: 8px;
-    font-size: 0.82rem;
-    line-height: 1.6;
-    overflow-x: auto;
-    margin-bottom: 0.85rem;
-  }
-  pre code { background: none; padding: 0; color: inherit; }
-  code {
-    background: #f1f5f9;
-    color: #7c3aed;
-    padding: 0.1em 0.35em;
-    border-radius: 4px;
-    font-size: 0.88em;
-  }
-
-  /* ── Inline Highlights ── */
-  .highlight-concept  { background: #a5d6a7; color: #1b5e20; padding: 0.05em 0.4em; border-radius: 3px; font-size: 0.85em; font-weight: 700; }
-  .highlight-key      { background: #ffcc80; color: #7c2d12; padding: 0.05em 0.4em; border-radius: 3px; font-size: 0.85em; font-weight: 700; }
-  .highlight-practical{ background: #6ee7b7; color: #065f46; padding: 0.05em 0.4em; border-radius: 3px; font-size: 0.85em; font-weight: 700; }
-
-  /* ── Tags ── */
-  .tag { display: inline-block; border-radius: 4px; padding: 0.1em 0.5em; font-size: 0.78rem; font-weight: 700; margin: 0.1rem; }
-  .tag-version    { background: #dbeafe; color: #1e3a8a; }
-  .tag-hook       { background: #fecdd3; color: #9f1239; }
-  .tag-plugin     { background: #c7d2fe; color: #3730a3; }
-  .tag-mcp        { background: #ddd6fe; color: #4c1d95; }
-  .tag-enterprise { background: #fef3c7; color: #d97706; }
-  .tag-bedrock    { background: #bfdbfe; color: #1e3a8a; }
-  .tag-perf       { background: #bbf7d0; color: #14532d; }
-  .tag-fix        { background: #fecaca; color: #7f1d1d; }
-
-  /* ── Timeline ── */
-  .timeline { margin: 0.5rem 0 1rem; }
-  .timeline-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    padding: 0.4rem 0;
-    border-bottom: 1px solid #f1f5f9;
-  }
-  .timeline-item:last-child { border-bottom: none; }
-  .timeline-version {
-    font-family: 'Source Code Pro', monospace;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #1e3a8a;
-    min-width: 68px;
-    padding-top: 0.1rem;
-  }
-  .timeline-desc { font-size: 0.88rem; color: #334155; line-height: 1.6; }
-
-  /* ── Tab Container ── */
-  .tab-container {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .tab-nav {
-    display: flex;
-    background: #f1f5f9;
-    border-bottom: 1px solid #e2e8f0;
-    gap: 0.25rem;
-    padding: 0.4rem;
-  }
-  .tab-btn {
-    flex: 1;
-    padding: 0.6rem 0.5rem;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-family: inherit;
-    color: #64748b;
-    border-radius: 6px;
-    transition: all 0.2s;
-    font-weight: 500;
-  }
-  .tab-btn.active { background: #fff; color: #1e3a8a; font-weight: 700; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-  .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.6); color: #334155; }
-  .tab-content { display: none; padding: 1.5rem; }
-  .tab-content.active { display: block; }
-
-  /* ── Accordion ── */
-  .question-accordion {
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    margin-bottom: 0.75rem;
-    overflow: hidden;
-    background: #fff;
-  }
-  .question-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.9rem 1.1rem;
-    cursor: pointer;
-    list-style: none;
-    flex-wrap: wrap;
-    user-select: none;
-    transition: background 0.15s;
-  }
-  .question-header:hover { background: #f8fafc; }
-  .question-number { font-weight: 700; color: #6d28d9; min-width: 1.5rem; }
-  .question-type   { font-size: 0.72rem; background: #ede9fe; color: #4c1d95; padding: 0.1em 0.5em; border-radius: 4px; font-weight: 700; }
-  .question-text   { flex: 1; font-size: 0.92rem; color: #1e293b; line-height: 1.5; }
-  .accordion-icon  { width: 20px; height: 20px; transition: transform 0.25s; flex-shrink: 0; }
-  details[open] .accordion-icon { transform: rotate(180deg); }
-  .question-answer {
-    padding: 1rem 1.5rem;
-    background: #faf5ff;
-    border-top: 1px solid #ede9fe;
-  }
-  .question-answer p { font-size: 0.9rem; line-height: 1.75; color: #1e293b; margin-bottom: 0.6rem; }
-  .question-answer p:last-child { margin-bottom: 0; }
-
-  /* ── Takeaways Grid ── */
-  .takeaways-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  .takeaway-card {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 1.25rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .takeaway-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-  .takeaway-icon  { font-size: 1.5rem; margin-bottom: 0.5rem; }
-  .takeaway-title { font-size: 0.95rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.4rem; }
-  .takeaway-text  { font-size: 0.88rem; color: #334155; line-height: 1.7; }
-
-  /* ── Bottom Line ── */
-  .bottom-line {
-    background: linear-gradient(135deg, #faf5ff, #f0f9ff);
-    border: 1px solid #ddd6fe;
-    border-left: 4px solid #7c3aed;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  .bottom-line-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #5b21b6;
-    margin-bottom: 1rem;
-  }
-  .bottom-line-item { margin-bottom: 0.75rem; }
-  .bottom-line-label { font-size: 0.82rem; font-weight: 700; color: #6d28d9; margin-bottom: 0.2rem; }
-  .bottom-line-text  { font-size: 0.92rem; color: #1e293b; line-height: 1.75; }
-
-  /* ── Footer ── */
-  .footer {
-    border-top: 1px solid #e2e8f0;
-    padding: 1.5rem;
-    text-align: center;
-    font-size: 0.82rem;
-    color: #64748b;
-    line-height: 1.8;
-  }
-
-  /* ── Responsive ── */
-  @media (max-width: 768px) {
-    .stat-grid        { grid-template-columns: repeat(2, 1fr); }
-    .objectives-grid  { grid-template-columns: 1fr; }
-    .content-grid     { grid-template-columns: 1fr; }
-    .content-left     { border-right: none; border-bottom: 1px solid #e2e8f0; }
-    .takeaways-grid   { grid-template-columns: 1fr; }
-    .framework-steps  { gap: 0.35rem; }
-    .framework-arrow  { display: none; }
-    .container        { padding: 1rem; }
-    .header h1        { font-size: 1.4rem; }
-  }
-  @media (max-width: 600px) {
-    .tab-btn { font-size: 0.72rem; padding: 0.5rem 0.3rem; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="doc-date" content="2026-04-08">
+    <meta name="doc-title" content="Claude Code 版本演進分析 v2.1.77–v2.1.96">
+    <meta name="doc-source" content="GitHub / Anthropic Claude Code Releases">
+    <meta name="doc-source-type" content="Anthropic-Docs">
+    <meta name="doc-tags" content="Anthropic-Docs,Tool,Hook,Plugin,Enterprise,Bedrock,MCP">
+    <meta name="doc-rating" content="4.3">
+    <meta name="doc-summary" content="Claude Code v2.1.77–v2.1.96 共 20 版本完整更新紀錄，涵蓋 Hooks 條件式事件系統成熟、Plugin 生態完整化、企業受管設定強化、Bedrock/Mantle 整合與 MCP RFC 9728 標準化">
+    <meta name="doc-file" content="2026-04-08_claude-code-release-evolution.html">
+    <title>Claude Code 版本演進分析 v2.1.77–v2.1.96</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .version-section { margin-bottom: 2.5rem; }
+        .version-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem 0.5rem 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .version-header h3 { color: white; margin: 0; font-size: 1.1rem; }
+        .version-date { font-size: 0.85rem; opacity: 0.85; }
+        .changelog-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+            border: 1px solid var(--border);
+            border-top: none;
+        }
+        .changelog-table th {
+            background: #334155;
+            color: white;
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+            font-size: 0.8rem;
+        }
+        .changelog-table td {
+            padding: 0.5rem 0.8rem;
+            vertical-align: top;
+            border: 1px solid var(--border);
+            line-height: 1.6;
+        }
+        .changelog-table tr:nth-child(even) { background: #f8fafc; }
+        .changelog-table tr:hover { background: #f1f5f9; }
+        .category-row td {
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.6rem 0.8rem;
+        }
+        .cat-feature td { background: var(--concept-bg) !important; color: var(--concept-text); border-bottom: 2px solid var(--concept-border); }
+        .cat-improve td { background: var(--compare-bg) !important; color: var(--compare-text); border-bottom: 2px solid var(--compare-border); }
+        .cat-bugfix td { background: var(--warning-bg) !important; color: var(--warning-text); border-bottom: 2px solid var(--warning-border); }
+        .item-zh { color: var(--text); }
+        .item-en { color: var(--text-light); font-size: 0.82rem; }
+        .item-scenario { color: #065f46; font-size: 0.82rem; font-style: italic; }
+        .badge { display: inline-block; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 9999px; font-weight: 600; }
+        .badge-feature { background: #bbf7d0; color: #166534; }
+        .badge-improve { background: #c7d2fe; color: #3730a3; }
+        .badge-bugfix { background: #fecaca; color: #991b1b; }
+        .stats-bar { display: flex; gap: 1rem; margin-top: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .stat-item { background: white; border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.75rem 1.25rem; text-align: center; flex: 1; min-width: 120px; }
+        .stat-number { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; }
+        .toc { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 0.75rem; padding: 1rem 1.5rem; margin-bottom: 2rem; }
+        .toc h3 { margin-top: 0; font-size: 1rem; color: var(--primary); }
+        .toc ul { list-style: none; padding-left: 0; margin-bottom: 0; columns: 3; }
+        .toc li { margin-bottom: 0.3rem; }
+        .toc a { font-size: 0.85rem; }
+        .skipped-note { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 0.5rem; padding: 0.5rem 1rem; font-size: 0.82rem; color: #92400e; text-align: center; margin-bottom: 2.5rem; }
+        @media (max-width: 768px) { .toc ul { columns: 1; } .stats-bar { flex-direction: column; } }
+    </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════ HEADER -->
-<div class="header">
-  <h1>Claude Code 版本演進深度分析</h1>
-  <p class="header-subtitle">Hooks 生態成熟・Plugin 擴張・企業就緒・平台整合</p>
-  <p class="header-source">資料來源：Claude Code 官方 CHANGELOG · 分析日期：2026-04-08</p>
-  <span class="version-badge">v2.1.77 → v2.1.96 ｜ 20 個版本</span>
+<header class="article-header">
+    <h1>Claude Code 版本演進分析</h1>
+    <p class="article-subtitle">v2.1.77 – v2.1.96 完整 Changelog｜Hooks 成熟・Plugin 生態・企業就緒・Bedrock 整合</p>
+    <div class="header-meta">
+        <span>📅 2026-04-08</span>
+        <span>📦 20 Versions</span>
+        <span>🔗 Source: GitHub anthropics/claude-code</span>
+    </div>
+</header>
+
+<div class="stats-bar">
+    <div class="stat-item"><div class="stat-number">20</div><div class="stat-label">版本 Versions</div></div>
+    <div class="stat-item"><div class="stat-number">5+</div><div class="stat-label">新 Hook 事件</div></div>
+    <div class="stat-item"><div class="stat-number">64K</div><div class="stat-label">Opus 輸出上限 Token</div></div>
+    <div class="stat-item"><div class="stat-number">500K</div><div class="stat-label">MCP 結果持久化上限</div></div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════ CONTAINER -->
-<div class="container">
+<div class="toc">
+    <h3>版本目錄 Table of Contents</h3>
+    <ul>
+        <li><a href="#v2196">v2.1.96 — Bedrock 緊急修正</a></li>
+        <li><a href="#v2194">v2.1.94 — Mantle 正式化 / CJK 修正</a></li>
+        <li><a href="#v2192">v2.1.92 — /cost 細分 / Bedrock 精靈</a></li>
+        <li><a href="#v2191">v2.1.91 — MCP 500K 持久化</a></li>
+        <li><a href="#v2190">v2.1.90 — /powerup 課程</a></li>
+        <li><a href="#v2189">v2.1.89 — defer 決策 / NO_FLICKER</a></li>
+        <li><a href="#v2187">v2.1.87 — Cowork 修正</a></li>
+        <li><a href="#v2186">v2.1.86 — Session-Id / Windows IO</a></li>
+        <li><a href="#v2185">v2.1.85 — 條件式 Hook / RFC 9728</a></li>
+        <li><a href="#v2184">v2.1.84 — TaskCreated Hook / PowerShell</a></li>
+        <li><a href="#v2183">v2.1.83 — managed-settings.d/ / CwdChanged</a></li>
+        <li><a href="#v2182">v2.1.82 — Bedrock Mantle / effort → High</a></li>
+        <li><a href="#v2181">v2.1.81 — --bare / --channels</a></li>
+        <li><a href="#v2180">v2.1.80 — rate_limits / effort frontmatter</a></li>
+        <li><a href="#v2179">v2.1.79 — --console / 啟動記憶體 -18MB</a></li>
+        <li><a href="#v2178">v2.1.78 — StopFailure Hook / Plugin 狀態</a></li>
+        <li><a href="#v2177">v2.1.77 — Opus 64K / allowRead</a></li>
+    </ul>
+</div>
 
-  <!-- Executive Summary -->
-  <div class="exec-summary">
-    <h2>📋 執行摘要</h2>
-    <p>
-      本文件涵蓋 Claude Code <strong>v2.1.77 至 v2.1.96</strong>，時間跨度約 2026 年 3 月下旬至 4 月上旬。
-      此階段是繼 v2.1.49–v2.1.76「多 Agent 架構奠基期」之後的<strong>生態系統成熟期</strong>——
-      Hooks 從少數事件擴張為覆蓋整個工作流程的條件式監控系統；Plugin 從基本腳本演化為具備狀態管理、
-      可執行檔、離線快取的完整生態；企業端引入 drop-in 設定目錄與遠端政策強制刷新；
-      Bedrock/Mantle 整合趨於穩定並修正多個授權漏洞。整體而言，這 20 個版本展現了
-      Claude Code 從「功能探索」邁向「生產就緒」的關鍵轉型。
-    </p>
-  </div>
+<!-- v2.1.96 -->
+<div class="version-section" id="v2196">
+<div class="version-header"><h3>v2.1.96</h3><span class="version-date">2026-04-08</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正使用 <code>AWS_BEARER_TOKEN_BEDROCK</code> 或 <code>CLAUDE_CODE_SKIP_BEDROCK_AUTH</code> 時 Bedrock 請求回傳 403 授權錯誤（v2.1.94 引入的回歸）</td><td class="item-en">Fixed Bedrock requests failing with 403 "Authorization header is missing" when using <code>AWS_BEARER_TOKEN_BEDROCK</code> or <code>CLAUDE_CODE_SKIP_BEDROCK_AUTH</code> — regression from v2.1.94</td><td class="item-scenario">你用 Anthropic 直連 — 不影響；若未來評估 AWS 部署，此版才是穩定版</td></tr>
+</table>
+</div>
 
-  <!-- Stats -->
-  <div class="stat-grid">
-    <div class="stat-item">
-      <div class="stat-number">20</div>
-      <div class="stat-label">版本數量<br>(v2.1.77–96)</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">7</div>
-      <div class="stat-label">主要演進主題</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">5+</div>
-      <div class="stat-label">新 Hook 事件類型</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">64K</div>
-      <div class="stat-label">Opus 4.6 輸出上限<br>(Token)</div>
-    </div>
-  </div>
+<div class="skipped-note">v2.1.95 — 無公開 changelog 記錄（minor patch）</div>
 
-  <!-- Rating Bar -->
-  <div class="rating-bar">
-    <span class="rating-label">整體架構成熟度評估（相較前一階段 v2.1.49–76）</span>
-    <span class="rating-score">⭐ 成熟期</span>
-    <div class="rating-bar-inner"><div class="rating-fill" style="width:82%"></div></div>
-    <span style="font-size:0.85rem;opacity:0.85;">82 / 100</span>
-  </div>
+<!-- v2.1.94 -->
+<div class="version-section" id="v2194">
+<div class="version-header"><h3>v2.1.94</h3><span class="version-date">2026-04-07</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">Amazon Bedrock via Mantle 正式支援 — 設定 <code>CLAUDE_CODE_USE_MANTLE=1</code> 啟用</td><td class="item-en">Amazon Bedrock support powered by Mantle — set <code>CLAUDE_CODE_USE_MANTLE=1</code></td><td class="item-scenario">你用 Anthropic 直連 — 若未來 Amaran 評估 AWS 部署可用此整合路徑</td></tr>
+<tr><td class="item-zh">Plugin Skill 使用 frontmatter <code>name</code> 欄位作為穩定呼叫識別符，無論安裝方式</td><td class="item-en">Plugin skills now use frontmatter <code>name</code> field for stable invocation names across install methods</td><td class="item-scenario">你的 /daily、/weekly skill 呼叫名稱從此穩定，不因安裝路徑改變</td></tr>
+<tr><td class="item-zh">新增 <code>keep-coding-instructions</code> frontmatter — Plugin 輸出可保留程式碼撰寫指引</td><td class="item-en">Added <code>keep-coding-instructions</code> frontmatter field for plugin output styles</td><td class="item-scenario">SOP 生成 skill 可在 frontmatter 標記，確保輸出格式符合 GMP 規範</td></tr>
+<tr><td class="item-zh">新增 <code>hookSpecificOutput.sessionTitle</code>，Hook 可設定 Session 標題</td><td class="item-en">Added <code>hookSpecificOutput.sessionTitle</code> for session titles from hooks</td><td class="item-scenario">可在 /daily 結束後 hook 自動設定 session 標題，便於 Telegram 顯示</td></tr>
+<tr class="category-row cat-improve"><td colspan="3"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">API Key、Bedrock、Vertex、Enterprise 用戶預設 effort 從 Medium 提升至 High；可用 <code>/effort</code> 調整</td><td class="item-en">Default effort level elevated to high for API-key, Bedrock, Vertex, and Enterprise users; control with <code>/effort</code></td><td class="item-scenario">你的 API Key 預設提升 — /daily、/weekly 分析品質自動提升，無需額外設定</td></tr>
+<tr><td class="item-zh">Slack MCP 輸出改為緊湊標頭並附可點擊頻道連結</td><td class="item-en">Enhanced Slack MCP tool output with compact "Slacked #channel" header and clickable links</td><td class="item-scenario">Slack 通知輸出更整潔 — 點擊即跳到對應頻道確認送達</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 429 限速時 Agent 卡住不動（現在立即顯示錯誤）</td><td class="item-en">Fixed agents appearing stuck after 429 rate-limit responses — errors now surface immediately</td><td class="item-scenario">背景 subagent 遇到限速立即通知 — 不會再等很久才知道卡住了</td></tr>
+<tr><td class="item-zh">修正 macOS Keychain 鎖定時 Console 登入失敗；<code>claude doctor</code> 現在可診斷此問題</td><td class="item-en">Fixed Console login failures on macOS when keychain is locked; claude doctor now diagnoses the issue</td><td class="item-scenario">macOS 鎖屏後開啟 Claude Code 不再莫名登入失敗</td></tr>
+<tr><td class="item-zh">修正 stream-json 中 UTF-8 序列跨 chunk 邊界時 CJK/多位元組文字損毀</td><td class="item-en">Fixed CJK and multibyte text corruption in stream-json when UTF-8 sequences split across chunk boundaries</td><td class="item-scenario">繁體中文輸出不再出現亂碼 — 直接影響你所有中文 session 的輸出品質</td></tr>
+<tr><td class="item-zh">修正終端機游標追蹤與 UI 渲染問題</td><td class="item-en">Fixed terminal cursor tracking and various UI rendering issues</td><td class="item-scenario">一般穩定性修復 — 終端機輸入游標位置不再偏移</td></tr>
+<tr><td class="item-zh">修正 Bedrock 上 Sonnet 3.5 v2 呼叫（改用 <code>us.</code> inference profile ID）</td><td class="item-en">Fixed Bedrock invocation of Sonnet 3.5 v2 by using the us. inference profile ID</td><td class="item-scenario">Bedrock 用戶 — 你用直連不影響</td></tr>
+<tr><td class="item-zh">修正 Plugin hooks 在 YAML frontmatter 中被靜默忽略</td><td class="item-en">Fixed plugin skill hooks in YAML frontmatter being silently ignored</td><td class="item-scenario">你的 Plugin hooks 設定現在確實生效 — 之前可能有 hook 未觸發的問題</td></tr>
+<tr><td class="item-zh">修正 <code>CLAUDE_PLUGIN_ROOT</code> 未設定時 Plugin hooks 回傳路徑錯誤</td><td class="item-en">Fixed plugin hooks failing with "No such file or directory" when CLAUDE_PLUGIN_ROOT was not set</td><td class="item-scenario">Plugin hook 路徑解析修正 — 不需要強制設定 CLAUDE_PLUGIN_ROOT</td></tr>
+<tr><td class="item-zh">修正長時間 Session scrollback 顯示重複 diff 與空白頁面</td><td class="item-en">Fixed scrollback showing repeated diffs and blank pages in long-running sessions</td><td class="item-scenario">長時間 /weekly 分析 session 不再出現重複內容或空白畫面</td></tr>
+</table>
+</div>
 
-  <!-- Objectives Grid -->
-  <div class="objectives-grid">
-    <div class="objective-item">
-      <div class="objective-icon">🎣</div>
-      <div class="objective-title">Hooks 條件式監控系統</div>
-      <div class="objective-text">新增 StopFailure、CwdChanged、FileChanged、TaskCreated、PermissionDenied 等事件，並支援 <code>if</code> 條件過濾</div>
-    </div>
-    <div class="objective-item">
-      <div class="objective-icon">🧩</div>
-      <div class="objective-title">Plugin 生態系統成熟</div>
-      <div class="objective-text">狀態變數、Agent frontmatter、bin/ 可執行檔、離線快取、穩定呼叫名稱，Plugin 從腳本升級為應用</div>
-    </div>
-    <div class="objective-item">
-      <div class="objective-icon">🏢</div>
-      <div class="objective-title">企業受管設定強化</div>
-      <div class="objective-text">managed-settings.d/ drop-in 目錄、forceRemoteSettingsRefresh、組織政策封鎖 Plugin，三層管理更完整</div>
-    </div>
-    <div class="objective-item">
-      <div class="objective-icon">☁️</div>
-      <div class="objective-title">Bedrock / 雲端平台整合</div>
-      <div class="objective-text">Mantle 原生支援、互動式 Bedrock 設定精靈、Bearer Token 授權修正，企業雲端部署趨於穩定</div>
-    </div>
-    <div class="objective-item">
-      <div class="objective-icon">🔌</div>
-      <div class="objective-title">MCP 協議進化</div>
-      <div class="objective-text">RFC 9728 OAuth 探索、headersHelper 環境變數、工具結果持久化至 500K，MCP 走向標準化</div>
-    </div>
-    <div class="objective-item">
-      <div class="objective-icon">✨</div>
-      <div class="objective-title">開發者體驗躍升</div>
-      <div class="objective-text">/powerup 互動課程、/cost 細分統計、defer 決策暫停、無閃爍渲染、PowerShell 工具，體驗全面提升</div>
-    </div>
-  </div>
+<div class="skipped-note">v2.1.93 — 無公開 changelog 記錄（minor patch）</div>
 
-  <!-- Framework Visual -->
-  <div class="framework-visual">
-    <div class="framework-title">📈 v2.1.77–v2.1.96 五階段演進路線圖</div>
-    <div class="framework-steps">
-      <div class="framework-step">
-        <div class="framework-icon">🏗️</div>
-        <div class="framework-step-title">基礎強化</div>
-        <div class="framework-step-ver">v2.1.77–78</div>
-        <div class="framework-step-desc">Token 上限提升<br>Hooks 事件擴充<br>Plugin 狀態管理</div>
-      </div>
-      <div class="framework-arrow">→</div>
-      <div class="framework-step">
-        <div class="framework-icon">🚀</div>
-        <div class="framework-step-title">平台擴展</div>
-        <div class="framework-step-ver">v2.1.79–82</div>
-        <div class="framework-step-desc">Bedrock/Mantle<br>預設 effort → high<br>CLI 旗標豐富化</div>
-      </div>
-      <div class="framework-arrow">→</div>
-      <div class="framework-step">
-        <div class="framework-icon">🏢</div>
-        <div class="framework-step-title">企業就緒</div>
-        <div class="framework-step-ver">v2.1.83–86</div>
-        <div class="framework-step-desc">managed-settings.d/<br>條件式 Hooks<br>PowerShell 工具</div>
-      </div>
-      <div class="framework-arrow">→</div>
-      <div class="framework-step">
-        <div class="framework-icon">🎯</div>
-        <div class="framework-step-title">體驗革新</div>
-        <div class="framework-step-ver">v2.1.87–90</div>
-        <div class="framework-step-desc">defer 決策暫停<br>/powerup 課程<br>無閃爍渲染</div>
-      </div>
-      <div class="framework-arrow">→</div>
-      <div class="framework-step">
-        <div class="framework-icon">🤝</div>
-        <div class="framework-step-title">智能整合</div>
-        <div class="framework-step-ver">v2.1.91–96</div>
-        <div class="framework-step-desc">MCP 500K 持久化<br>/cost 細分<br>Bedrock 穩定修正</div>
-      </div>
-    </div>
-  </div>
+<!-- v2.1.92 -->
+<div class="version-section" id="v2192">
+<div class="version-header"><h3>v2.1.92</h3><span class="version-date">2026-04-05</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 <code>forceRemoteSettingsRefresh</code> 管理政策 — 強制所有終端即時同步最新設定</td><td class="item-en">Added forceRemoteSettingsRefresh managed policy for forcing remote settings sync</td><td class="item-scenario">企業管理功能 — Amaran IT 遇到安全事件時可緊急推送修補政策給所有裝置</td></tr>
+<tr><td class="item-zh">互動式 Bedrock 設定精靈 — 簡化第三方驗證設定流程</td><td class="item-en">Interactive Bedrock setup wizard for third-party authentication</td><td class="item-scenario">Bedrock 設定不再需要手動組合環境變數 — 精靈引導完成</td></tr>
+<tr><td class="item-zh"><code>/cost</code> 新增依模型與快取命中細分的費用統計</td><td class="item-en">Enhanced /cost command with per-model and cache-hit breakdowns</td><td class="item-scenario">可清楚看到 Opus vs Sonnet 各用多少費用、快取省了多少 — 月底帳單更透明</td></tr>
+<tr><td class="item-zh"><code>/release-notes</code> 升級為互動式版本選擇器</td><td class="item-en">Improved /release-notes as interactive version picker</td><td class="item-scenario">快速查看特定版本的變更 — 不需要每次搜尋 GitHub CHANGELOG</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 tmux 視窗變更後 subagent 無法啟動</td><td class="item-en">Fixed subagent spawning issues after tmux window modifications</td><td class="item-scenario">你在 tmux 多視窗工作時 subagent 更穩定 — 不再因視窗切換導致 agent 失敗</td></tr>
+</table>
+</div>
 
-  <!-- ═══════════════════════════════════════════ PART I -->
-  <div class="part-label">Part I</div>
-  <div class="section-title">🎣 Hooks 條件式事件監控系統</div>
+<!-- v2.1.91 -->
+<div class="version-section" id="v2191">
+<div class="version-header"><h3>v2.1.91</h3><span class="version-date">2026-04-03</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">MCP 工具結果持久化覆寫 — 透過 metadata 標注可保留至 <strong>500K token</strong></td><td class="item-en">MCP tool result persistence override via metadata annotations — up to 500K tokens</td><td class="item-scenario">大型 CTD 文件或 PDA TR 分析結果可在整個工作流程中持久存在，不需重複查詢</td></tr>
+<tr><td class="item-zh">Settings 新增 Shell 執行開關 — Skills 與 Custom Commands 各自獨立控制</td><td class="item-en">Shell execution toggle in settings for skills and custom commands independently</td><td class="item-scenario">可分別為 /daily（允許 shell）和其他 skills（限制 shell）設定不同安全權限</td></tr>
+<tr><td class="item-zh">Deep Link 支援多行提示 — 使用 encoded newlines</td><td class="item-en">Deep link support for multi-line prompts using encoded newlines</td><td class="item-scenario">從瀏覽器書籤一鍵帶入多行複雜提示到 Claude Code — 快速啟動特定分析任務</td></tr>
+<tr><td class="item-zh">Plugin 可在 <code>bin/</code> 目錄放置可執行檔並直接呼叫</td><td class="item-en">Plugins can now include executables in bin/ directories for command invocation</td><td class="item-scenario">自訂 Plugin 可封裝任意 CLI 工具（如 PDF 轉換、資料驗證腳本）並在 skill 中直接呼叫</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 resume 操作時 transcript 鏈斷裂</td><td class="item-en">Fixed transcript chain breaks during resume operations</td><td class="item-scenario">--resume 恢復長時間 session 不再遺失對話脈絡</td></tr>
+</table>
+</div>
 
-  <div class="content-grid">
-    <div class="content-left">
-      <h3>新 Hook 事件一覽</h3>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          從 v2.1.77 到 v2.1.96，Claude Code 的 Hook 系統新增了<strong>五個關鍵事件類型</strong>，
-          讓外部系統得以精確響應 AI 代理的每一個動作節點。最重要的是 v2.1.85 引入的
-          <span class="highlight-key">條件式 if 欄位</span>，允許使用者透過 Permission Rule 語法篩選
-          Hook 的觸發條件，大幅減少不必要的 Hook 調用。
-        </p>
-        <p class="en-text">"Hooks can now be conditionally triggered using the same permission rule syntax, reducing noise and enabling precise workflow automation."</p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          <span class="highlight-concept">StopFailure</span>（v2.1.78）在代理因錯誤停止時觸發，
-          可用於自動發送告警或執行清理腳本。
-          <span class="highlight-concept">CwdChanged</span> 與 <span class="highlight-concept">FileChanged</span>（v2.1.83）
-          則實現了工作目錄與檔案的即時監控——類似 GMP 環境中的環境監測系統（Environmental Monitoring System）。
-        </p>
-        <p class="en-text">"CwdChanged and FileChanged hooks mirror real-time environmental monitoring — any deviation from expected state can trigger automated corrective action."</p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          <span class="highlight-concept">TaskCreated</span>（v2.1.84）讓每個新任務的建立都可以被外部系統追蹤，
-          而 <span class="highlight-concept">PermissionDenied</span>（v2.1.89）則在自動模式下分類器拒絕某個操作時觸發，
-          可用於記錄稽核軌跡（Audit Trail）。
-        </p>
-        <p class="en-text">"PermissionDenied hook creates an automatic audit trail — every denied action is recorded, supporting compliance review workflows."</p>
-      </div>
-    </div>
-    <div class="content-right">
-      <h3>Hook 事件版本時序</h3>
-      <div class="timeline">
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.78</span>
-          <span class="timeline-desc"><code>StopFailure</code> — 代理因失敗停止時觸發 <span class="tag tag-hook">新事件</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.83</span>
-          <span class="timeline-desc"><code>CwdChanged</code>、<code>FileChanged</code> — 工作目錄與檔案變更 <span class="tag tag-hook">新事件</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.84</span>
-          <span class="timeline-desc"><code>TaskCreated</code> — 任務建立時觸發 <span class="tag tag-hook">新事件</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.84</span>
-          <span class="timeline-desc"><code>WorktreeCreate</code> 擴充支援 HTTP 類型 Hook <span class="tag tag-hook">擴充</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.85</span>
-          <span class="timeline-desc">條件式 <code>if</code> 欄位，使用 Permission Rule 語法 <span class="tag tag-hook">重大更新</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.89</span>
-          <span class="timeline-desc"><code>PermissionDenied</code> — 自動模式拒絕時觸發 <span class="tag tag-hook">新事件</span></span>
-        </div>
-      </div>
-      <div class="info-box box-code">
-        <div class="info-box-header">💻 條件式 Hook 設定範例</div>
-        <div class="info-box-content">
-<pre><code>{
-  "hooks": {
-    "FileChanged": [{
-      "if": "path:src/**",
-      "command": "scripts/lint-on-change.sh"
-    }],
-    "PermissionDenied": [{
-      "command": "scripts/audit-log.sh"
-    }]
-  }
-}</code></pre>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- v2.1.90 -->
+<div class="version-section" id="v2190">
+<div class="version-header"><h3>v2.1.90</h3><span class="version-date">2026-04-01</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">推出 <code>/powerup</code> 互動式功能課程，含動畫演示</td><td class="item-en">Launched /powerup interactive lessons with animated feature demonstrations</td><td class="item-scenario">快速探索 Claude Code 你還沒用過的功能 — 值得執行一次看看</td></tr>
+<tr><td class="item-zh">Plugin 離線支援強化 — Marketplace 快取保留，無網路時仍可使用</td><td class="item-en">Enhanced plugin offline support with marketplace cache preservation</td><td class="item-scenario">在無網路環境（如藥廠管制區或飛機上）Plugin 仍可正常運作</td></tr>
+<tr class="category-row cat-improve"><td colspan="3"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">Protected directories 擴充，新增 <code>.husky</code></td><td class="item-en">Expanded protected directories to include .husky</td><td class="item-scenario">Git hooks 設定目錄受保護 — Claude 不會意外修改你的 commit hooks</td></tr>
+<tr><td class="item-zh">改善 <code>--resume</code> 對 deferred 工具與 MCP server 的快取行為</td><td class="item-en">Improved --resume cache behavior for deferred tools and MCP servers</td><td class="item-scenario">恢復包含 Gmail/Telegram MCP 的 session 時載入更快、更穩定</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正限速對話框自動無限循環開啟</td><td class="item-en">Resolved rate-limit dialog auto-opening infinite loop</td><td class="item-scenario">遇到 API 限速時不再出現無限彈窗 — 高使用量時段更穩定</td></tr>
+</table>
+</div>
 
-  <!-- ═══════════════════════════════════════════ PART II -->
-  <div class="part-label">Part II</div>
-  <div class="section-title">🧩 Plugin 生態系統全面成熟</div>
+<!-- v2.1.89 -->
+<div class="version-section" id="v2189">
+<div class="version-header"><h3>v2.1.89</h3><span class="version-date">2026-03-30</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 "defer" 權限決策 — Headless Session 可在工具呼叫時暫停等待人工確認</td><td class="item-en">Introduced "defer" permission decision enabling headless session pausing at tool calls</td><td class="item-scenario">CI 流水線或自動化 /daily 任務可在需要確認時暫停，不再直接失敗</td></tr>
+<tr><td class="item-zh">新增 <code>CLAUDE_CODE_NO_FLICKER=1</code> 無閃爍渲染選項</td><td class="item-en">Added flicker-free rendering option via CLAUDE_CODE_NO_FLICKER=1</td><td class="item-scenario">長時間 /weekly 分析時終端機畫面不再抖動 — 在 .zshrc 加上此環境變數即可</td></tr>
+<tr><td class="item-zh">新增 <code>PermissionDenied</code> Hook — 自動模式分類器拒絕操作時觸發</td><td class="item-en">Implemented PermissionDenied hook for auto-mode classifier denials</td><td class="item-scenario">可搭配 hook 自動記錄每次被拒絕的操作到 audit.log — 便於 GMP 稽核追蹤</td></tr>
+<tr><td class="item-zh">Subagent typeahead 強化 — 支援具名建議</td><td class="item-en">Enhanced subagent typeahead with named suggestions</td><td class="item-scenario">呼叫 subagent 時自動補全名稱 — 減少拼寫錯誤</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 Permission Rules 中的 symlink 目標路徑解析錯誤</td><td class="item-en">Corrected symlink target resolution in permission rules</td><td class="item-scenario">symlink 指向的目錄現在正確套用 permission rules</td></tr>
+</table>
+</div>
 
-  <div class="content-grid">
-    <div class="content-left">
-      <h3>從腳本到完整應用的躍升</h3>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          這個階段的 Plugin 系統發生了質的轉變。v2.1.78 引入的
-          <span class="highlight-key">${CLAUDE_PLUGIN_DATA}</span> 變數讓 Plugin 首次擁有
-          <strong>持久化狀態管理</strong>能力——Plugin 不再是無狀態的腳本，而是可以記住跨工作階段資料的「微應用」。
-        </p>
-        <p class="en-text">"${CLAUDE_PLUGIN_DATA} transforms plugins from stateless scripts into stateful micro-applications with persistent memory across sessions."</p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.80 新增 <span class="highlight-concept">effort frontmatter</span>，讓每個 Skill 可以宣告自己
-          所需的 effort 等級，避免高精度任務被低 effort 設定影響品質。v2.1.82 的
-          <code>keep-coding-instructions</code> frontmatter 則允許 Plugin 在輸出時保留程式碼撰寫指引，
-          確保生成內容符合專案規範。
-        </p>
-        <p class="en-text">"Per-skill effort declarations prevent quality degradation — a validation skill can demand high effort even when global settings are relaxed."</p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.91 允許 Plugin 在 <code>bin/</code> 目錄下放置可執行檔並直接呼叫，使 Plugin 得以
-          封裝任意 CLI 工具。v2.1.90 的<span class="highlight-concept">離線快取</span>確保
-          Marketplace Plugin 即使在網路中斷時仍可運作——對受控環境（如藥廠內網）尤為重要。
-        </p>
-        <p class="en-text">"Offline marketplace cache is critical for air-gapped or restricted-network environments — plugins remain functional without internet access."</p>
-      </div>
-    </div>
-    <div class="content-right">
-      <h3>Plugin 能力演進里程碑</h3>
-      <div class="info-box box-concept">
-        <div class="info-box-header">🌱 v2.1.78 — 狀態管理誕生</div>
-        <div class="info-box-content">
-          <code>${CLAUDE_PLUGIN_DATA}</code> 變數 + Agent frontmatter 支援，Plugin 可儲存跨 Session 資料並定義 Agent 行為
-        </div>
-      </div>
-      <div class="info-box box-key">
-        <div class="info-box-header">⚙️ v2.1.80–82 — 精細化控制</div>
-        <div class="info-box-content">
-          <code>effort</code> frontmatter（技能級 effort 宣告）、<code>keep-coding-instructions</code>（輸出規範保留）、
-          <code>source: 'settings'</code>（設定檔驅動 Marketplace）
-        </div>
-      </div>
-      <div class="info-box box-practical">
-        <div class="info-box-header">🏛️ v2.1.84 — 企業管控</div>
-        <div class="info-box-content">
-          Channel Plugin 白名單（managed settings）、組織政策封鎖安裝（v2.1.85），IT 部門可精確控管哪些 Plugin 可用
-        </div>
-      </div>
-      <div class="info-box box-compare">
-        <div class="info-box-header">📦 v2.1.90–94 — 生態完整</div>
-        <div class="info-box-content">
-          離線 Marketplace 快取（v2.1.90）、<code>bin/</code> 可執行檔支援（v2.1.91）、
-          frontmatter name 作為穩定呼叫識別符（v2.1.94）
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="skipped-note">v2.1.88 — 無公開 changelog 記錄（minor patch）</div>
 
-  <!-- ═══════════════════════════════════════════ PART III -->
-  <div class="part-label">Part III</div>
-  <div class="section-title">🏢 企業受管設定強化</div>
+<!-- v2.1.87 -->
+<div class="version-section" id="v2187">
+<div class="version-header"><h3>v2.1.87</h3><span class="version-date">2026-03-28</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 Cowork Dispatch 訊息傳遞失敗</td><td class="item-en">Fixed Cowork Dispatch message delivery failures</td><td class="item-scenario">你用 Telegram 接收 Cowork 通知 — 此修正確保訊息可靠送達</td></tr>
+</table>
+</div>
 
-  <div class="content-grid">
-    <div class="content-left">
-      <h3>三層管理架構完善</h3>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.83 引入的 <span class="highlight-key">managed-settings.d/ drop-in 目錄</span>
-          是企業部署的重大突破。IT 管理員可以將不同政策拆分為獨立檔案放入此目錄，
-          Claude Code 啟動時會自動合併所有設定——如同 Linux 的 <code>/etc/nginx/conf.d/</code> 機制。
-          這讓不同部門的政策可以各自維護，不再需要手動合併單一大型設定檔。
-        </p>
-        <p class="en-text">"managed-settings.d/ enables policy-as-code: each department maintains its own settings fragment, merged at startup without conflicts."</p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.83 同步推出的 <code>sandbox.failIfUnavailable</code> 設定確保沙箱在無法啟用時
-          <strong>拒絕執行</strong>而非靜默降級，對安全合規（如 21 CFR Part 11 的存取控制要求）至關重要。
-        </p>
-        <p class="en-text">"sandbox.failIfUnavailable enforces a fail-safe posture — in regulated environments, silent degradation is unacceptable."</p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.92 加入的 <span class="highlight-concept">forceRemoteSettingsRefresh</span> 政策
-          允許管理員強制所有終端即時同步最新政策，無需使用者手動重啟——這對需要緊急下發安全政策的場景（如發現安全漏洞後的快速修補）特別重要。
-        </p>
-        <p class="en-text">"forceRemoteSettingsRefresh enables zero-touch emergency policy updates — critical for rapid security patch distribution across all endpoints."</p>
-      </div>
-    </div>
-    <div class="content-right">
-      <h3>企業管理能力對照</h3>
-      <div class="info-box box-analogy">
-        <div class="info-box-header">🏭 GMP 類比：變更管控</div>
-        <div class="info-box-content">
-          <strong>managed-settings.d/</strong> ≈ SOP 分冊管理：每個部門各自維護自己的 SOP 章節，
-          品保部門（QA）負責整合並確保無衝突。修改某部門的規定只需更新對應分冊，不影響其他部門。
-        </div>
-      </div>
-      <div class="info-box box-warning">
-        <div class="info-box-header">⚠️ v2.1.83 — 安全強制設定</div>
-        <div class="info-box-content">
-          <code>sandbox.failIfUnavailable: true</code><br>
-          沙箱不可用時拒絕執行，避免在非隔離環境下意外執行危險操作。
-          建議所有生產環境與受管設備啟用。
-        </div>
-      </div>
-      <div class="info-box box-key">
-        <div class="info-box-header">📡 v2.1.92 — 即時政策同步</div>
-        <div class="info-box-content">
-          <code>forceRemoteSettingsRefresh</code> 政策 + 互動式 Bedrock 設定精靈，
-          企業端佈署與政策更新的摩擦力大幅降低。<code>/release-notes</code> 升級為互動式版本選擇器，
-          讓管理員快速查看特定版本的變更內容。
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- v2.1.86 -->
+<div class="version-section" id="v2186">
+<div class="version-header"><h3>v2.1.86</h3><span class="version-date">2026-03-27</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">API 請求新增 <code>X-Claude-Code-Session-Id</code> Header — 改善 Proxy 聚合分析</td><td class="item-en">Added X-Claude-Code-Session-Id header to API requests for improved proxy aggregation</td><td class="item-scenario">企業 Proxy 可用此 Header 追蹤特定 session 的所有 API 請求 — 便於 GMP Audit Trail</td></tr>
+<tr class="category-row cat-improve"><td colspan="3"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">VCS 排除目錄清單擴充，新增 <code>.jj</code>（Jujutsu）與 <code>.sl</code>（Sapling）</td><td class="item-en">Extended VCS directory exclusion lists to include .jj and .sl metadata</td><td class="item-scenario">使用新興 VCS 工具的團隊 — 元資料目錄不再被 Claude Code 掃描</td></tr>
+<tr><td class="item-zh">Marketplace Plugin 腳本功能強化（macOS/Linux）</td><td class="item-en">Enhanced marketplace plugin script functionality on macOS/Linux</td><td class="item-scenario">Plugin 在 macOS 上執行更穩定</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正對 v2.1.85 之前建立的 Session 執行 <code>--resume</code> 失敗</td><td class="item-en">Fixed --resume failures on sessions created before v2.1.85</td><td class="item-scenario">恢復較舊的 session 不再失敗 — 你積累的長時間對話都能正常恢復</td></tr>
+<tr><td class="item-zh">修正 Write/Edit/Read 工具在專案根目錄以外的檔案操作失敗</td><td class="item-en">Resolved Write/Edit/Read tool issues on files outside project root</td><td class="item-scenario">跨目錄操作（如修改 ~/.claude/ 下的設定檔）不再報錯</td></tr>
+<tr><td class="item-zh">修正 Windows 不必要的設定磁碟寫入導致效能降級</td><td class="item-en">Addressed unnecessary config disk writes causing performance degradation on Windows</td><td class="item-scenario">你用 macOS — 不影響；Windows 同事效能大幅提升</td></tr>
+<tr><td class="item-zh">修正超長 Session 使用 <code>/feedback</code> 可能導致 OOM 崩潰</td><td class="item-en">Fixed potential out-of-memory crash with /feedback on lengthy sessions</td><td class="item-scenario">長時間 /weekly 分析後送 /feedback 不再崩潰</td></tr>
+</table>
+</div>
 
-  <!-- ═══════════════════════════════════════════ PART IV -->
-  <div class="part-label">Part IV</div>
-  <div class="section-title">☁️ Bedrock 平台整合與穩定化</div>
+<!-- v2.1.85 -->
+<div class="version-section" id="v2185">
+<div class="version-header"><h3>v2.1.85</h3><span class="version-date">2026-03-26</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh"><code>headersHelper</code> 腳本可取得 MCP Server 名稱（<code>MCP_SERVER_NAME</code>）與 URL 環境變數</td><td class="item-en">Added MCP server name and URL environment variables for headersHelper scripts</td><td class="item-scenario">一個 headersHelper 腳本可依 MCP Server 名稱動態產生對應的 Auth Header — Gmail 和 Telegram 各自認證</td></tr>
+<tr><td class="item-zh">Hook 新增條件式 <code>if</code> 欄位 — 使用 Permission Rule 語法篩選觸發條件</td><td class="item-en">Introduced conditional if field for hooks using permission rule syntax</td><td class="item-scenario">FileChanged hook 加 <code>if: "path:src/**"</code> — 只有 src/ 底下的檔案變更才觸發 lint，減少不必要觸發</td></tr>
+<tr><td class="item-zh">Deep Link 查詢字串上限提升至 5,000 字元，超長提示加入捲動警告</td><td class="item-en">Extended deep link query support to 5,000 characters with scroll warnings</td><td class="item-scenario">從書籤或 Telegram 發送長提示到 Claude Code 不再被截斷</td></tr>
+<tr><td class="item-zh">MCP OAuth 遵循 RFC 9728 Protected Resource Metadata 探索機制</td><td class="item-en">MCP OAuth now follows RFC 9728 Protected Resource Metadata discovery</td><td class="item-scenario">任何支援 RFC 9728 的標準 OAuth Server 可直接為 MCP 提供驗證，無需特殊適配</td></tr>
+<tr class="category-row cat-improve"><td colspan="3"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">組織政策停用時封鎖 Plugin 安裝</td><td class="item-en">Blocked plugins from installation when disabled by organization policy</td><td class="item-scenario">IT 管理員設定封鎖後，使用者即使嘗試也無法安裝未授權的 Plugin</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正超大對話執行 <code>/compact</code> 失敗</td><td class="item-en">Fixed /compact failures with oversized conversations</td><td class="item-scenario">超長 /weekly 對話執行 /compact 壓縮不再失敗</td></tr>
+<tr><td class="item-zh">修正 <code>--worktree</code> 在非 git 倉庫中報錯</td><td class="item-en">Resolved --worktree errors in non-git repositories</td><td class="item-scenario">在非 git 目錄（如 PDA 文件資料夾）使用 worktree 不再報錯</td></tr>
+</table>
+</div>
 
-  <div class="content-grid">
-    <div class="content-left">
-      <h3>Mantle 整合與授權修正歷程</h3>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          Bedrock/Mantle 整合是這個階段最具戲劇性的演進——從功能引入到回歸（Regression），
-          再到緊急修正，歷經三個版本。v2.1.82 首次引入 <span class="highlight-key">Mantle 支援</span>
-          （<code>CLAUDE_CODE_USE_MANTLE=1</code>），同時修正了 Bedrock Bearer Token 的授權問題。
-        </p>
-        <p class="en-text">"The Bedrock integration journey illustrates the challenge of platform abstraction — v2.1.94 introduced Mantle natively but also regressed auth, fixed by v2.1.96."</p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.94 將 Mantle 支援提升為<strong>正式功能</strong>，並同步將
-          <span class="highlight-concept">預設 effort 等級從 Medium 提升至 High</span>，
-          適用於 API Key、Bedrock、Vertex 及 Enterprise 用戶。然而此版本同時引入了
-          Bedrock 請求 403 錯誤的回歸問題，由 v2.1.96 緊急修正。
-        </p>
-        <p class="en-text">"Default effort elevation to High signals confidence in cost efficiency — the quality improvement outweighs the token cost for production use cases."</p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.92 推出的<span class="highlight-concept">互動式 Bedrock 設定精靈</span>
-          大幅降低了第三方驗證的設定門檻，不再需要手動設定複雜的環境變數組合。
-          v2.1.94 也修正了 Sonnet 3.5 v2 在 Bedrock 上的呼叫問題（改用 <code>us.</code> inference profile ID）。
-        </p>
-      </div>
-    </div>
-    <div class="content-right">
-      <h3>Bedrock 整合版本時序</h3>
-      <div class="timeline">
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.82</span>
-          <span class="timeline-desc">首次 Mantle 支援 <code>CLAUDE_CODE_USE_MANTLE=1</code> + Bearer Token 修正 <span class="tag tag-bedrock">Bedrock</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.82</span>
-          <span class="timeline-desc">預設 effort 改為 High（API/平台用戶）<span class="tag tag-bedrock">行為變更</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.92</span>
-          <span class="timeline-desc">互動式 Bedrock 設定精靈（第三方驗證）<span class="tag tag-bedrock">新功能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.94</span>
-          <span class="timeline-desc">Mantle 升為正式功能 + Sonnet 3.5 v2 inference profile 修正 <span class="tag tag-bedrock">重大更新</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.94</span>
-          <span class="timeline-desc">預設 effort → High 擴至 Enterprise 用戶 <span class="tag tag-bedrock">行為變更</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.96</span>
-          <span class="timeline-desc">修正 <code>AWS_BEARER_TOKEN_BEDROCK</code> 403 授權失敗（v2.1.94 回歸）<span class="tag tag-fix">緊急修正</span></span>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- v2.1.84 -->
+<div class="version-section" id="v2184">
+<div class="version-header"><h3>v2.1.84</h3><span class="version-date">2026-03-25</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">Windows 推出 PowerShell 工具（opt-in 預覽版）</td><td class="item-en">Launched PowerShell tool for Windows as opt-in preview</td><td class="item-scenario">你用 macOS — 不影響；Windows 同事可讓 Claude 直接執行 PowerShell 腳本</td></tr>
+<tr><td class="item-zh">新增環境變數自訂模型能力偵測（effort/thinking 支援、model picker 標籤、串流 timeout）</td><td class="item-en">Added environment variables for custom model capability detection</td><td class="item-scenario">可在 .zshrc 設定串流 timeout — 長時間 /weekly 分析不被誤判為斷線</td></tr>
+<tr><td class="item-zh">新增 <code>TaskCreated</code> Hook 事件</td><td class="item-en">Introduced TaskCreated hook event</td><td class="item-scenario">subagent 啟動時自動 hook 記錄到 insight.md — 追蹤所有背景任務的建立時間</td></tr>
+<tr><td class="item-zh"><code>WorktreeCreate</code> Hook 支援 <code>type: "http"</code>；可回傳 worktree 路徑</td><td class="item-en">Extended WorktreeCreate hook to support HTTP type; return worktree path via hookSpecificOutput</td><td class="item-scenario">平行處理 david-ai-learning 與 coo-track 時，HTTP hook 可回傳路徑供後續使用</td></tr>
+<tr><td class="item-zh">頻道 Plugin 白名單：<code>allowedChannelPlugins</code> managed settings</td><td class="item-en">Implemented channel plugin allowlist via managed settings</td><td class="item-scenario">企業管理功能 — 個人使用暫不影響</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 OpenTelemetry events 中工具參數被截斷</td><td class="item-en">Fixed tool parameter truncation in OpenTelemetry events</td><td class="item-scenario">一般穩定性修復 — 可觀測性資料更完整</td></tr>
+<tr><td class="item-zh">修正多螢幕設定下 computer-use 工具顯示計算錯誤</td><td class="item-en">Addressed computer-use tool display issues on multi-monitor setups</td><td class="item-scenario">你用多螢幕工作 — GUI 自動化操作座標計算現在正確</td></tr>
+</table>
+</div>
 
-  <!-- ═══════════════════════════════════════════ PART V -->
-  <div class="part-label">Part V</div>
-  <div class="section-title">🔌 MCP 協議標準化進化</div>
+<!-- v2.1.83 -->
+<div class="version-section" id="v2183">
+<div class="version-header"><h3>v2.1.83</h3><span class="version-date">2026-03-24</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 <code>managed-settings.d/</code> drop-in 目錄 — 各團隊可維護獨立政策片段，啟動時自動合併</td><td class="item-en">Added managed-settings.d/ drop-in directory support for independent policy fragments</td><td class="item-scenario">Amaran IT 可將安全政策、模型設定、Plugin 白名單分別放入獨立片段檔案版本控制</td></tr>
+<tr><td class="item-zh">新增 <code>CwdChanged</code> 和 <code>FileChanged</code> Hook 事件</td><td class="item-en">Introduced CwdChanged and FileChanged hook events</td><td class="item-scenario">切換 david-ai-learning 與 Health-Check 目錄時可自動 hook 載入對應的設定環境</td></tr>
+<tr><td class="item-zh">新增 <code>sandbox.failIfUnavailable</code> — sandbox 無法啟動時拒絕執行，不靜默降級</td><td class="item-en">Implemented sandbox.failIfUnavailable setting</td><td class="item-scenario">安全合規設定 — 確保沙箱失敗時不繼續執行，避免意外操作</td></tr>
+<tr><td class="item-zh">Transcript 搜尋：按 <code>/</code> 鍵啟動，<code>n/N</code> 跳轉（vim 風格）</td><td class="item-en">Added transcript search functionality with / key</td><td class="item-scenario">長 /daily 或 /weekly 對話中快速找特定討論 — 按 / 搜尋，vim 風格跳轉</td></tr>
+<tr><td class="item-zh">新增 <code>Ctrl+X Ctrl+E</code> 開啟外部編輯器快捷鍵</td><td class="item-en">Fixed alias for opening external editor via Ctrl+X Ctrl+E</td><td class="item-scenario">長指令可跳到 vim 編輯再送出 — 複雜提示撰寫更方便</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正退出後滑鼠追蹤跳脫序列洩漏到 shell</td><td class="item-en">Resolved mouse tracking escape sequence leakage</td><td class="item-scenario">退出 Claude Code 後終端機不再出現亂碼</td></tr>
+<tr><td class="item-zh">修正 macOS 退出時掛起</td><td class="item-en">Addressed Claude Code hanging on macOS exit</td><td class="item-scenario">macOS 退出 Claude Code 不再卡住 — 直接影響你的日常使用</td></tr>
+</table>
+</div>
 
-  <div class="content-grid">
-    <div class="content-left">
-      <h3>從專屬實作到 RFC 標準</h3>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.85 的 <span class="highlight-key">MCP OAuth 遵循 RFC 9728</span>
-          Protected Resource Metadata 探索機制，標誌著 MCP 認證從私有實作轉向開放標準。
-          這意味著任何支援 RFC 9728 的 OAuth 伺服器都可以直接為 MCP 提供身份驗證，
-          無需針對 Claude Code 進行特殊適配。
-        </p>
-        <p class="en-text">"RFC 9728 compliance transforms MCP OAuth from a proprietary handshake into a standard protocol — any compliant OAuth server works out of the box."</p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.85 同步為 <code>headersHelper</code> 腳本新增
-          <span class="highlight-concept">MCP 伺服器名稱與 URL 環境變數</span>，
-          讓一個 headersHelper 腳本可以根據不同的 MCP Server 動態產生對應的請求頭，
-          實現真正的多 Server 統一認證管理。
-        </p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          v2.1.91 最受矚目的更新是 <span class="highlight-key">MCP 工具結果持久化覆寫</span>：
-          透過 metadata 標注，單次工具呼叫的結果可保留至 <strong>500K token</strong>，
-          突破了原本的上下文限制。這對需要長時間保存大型分析結果的場景（如基因組數據分析、
-          大型文件審查）具有重要意義。
-        </p>
-        <p class="en-text">"500K MCP result persistence enables long-horizon tasks — a genomic analysis result stays in context across the entire workflow without re-fetching."</p>
-      </div>
-    </div>
-    <div class="content-right">
-      <h3>MCP 進化關鍵里程碑</h3>
-      <div class="info-box box-concept">
-        <div class="info-box-header">📜 v2.1.85 — RFC 9728 標準化</div>
-        <div class="info-box-content">
-          MCP OAuth 遵循 RFC 9728 Protected Resource Metadata 探索機制。
-          headersHelper 腳本可透過 <code>MCP_SERVER_NAME</code>、<code>MCP_SERVER_URL</code>
-          環境變數動態識別呼叫來源。
-        </div>
-      </div>
-      <div class="info-box box-key">
-        <div class="info-box-header">💾 v2.1.91 — 500K 結果持久化</div>
-        <div class="info-box-content">
-          MCP 工具結果可透過 metadata 標注覆寫持久化上限至 500,000 token。
-          Shell 執行開關（skills/custom commands 各自獨立控制）同步推出。
-        </div>
-      </div>
-      <div class="info-box box-compare">
-        <div class="info-box-header">🔄 前後對比</div>
-        <div class="info-box-content">
-          <strong>v2.1.49–76 時期：</strong>MCP 以私有 OAuth、單一 headersHelper 為主<br><br>
-          <strong>v2.1.77–96 時期：</strong>RFC 9728 標準 OAuth + 多 Server 動態 Header + 500K 持久化
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- v2.1.82 -->
+<div class="version-section" id="v2182">
+<div class="version-header"><h3>v2.1.82</h3><span class="version-date">2026-03-22</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 Mantle 支援 — 設定 <code>CLAUDE_CODE_USE_MANTLE=1</code> 啟用 Bedrock via Mantle</td><td class="item-en">Added Mantle support via CLAUDE_CODE_USE_MANTLE=1</td><td class="item-scenario">AWS 企業部署預備 — Amaran 評估 AWS 部署時可用此整合路徑</td></tr>
+<tr><td class="item-zh">新增 <code>keep-coding-instructions</code> frontmatter — Plugin 輸出可保留程式碼指引</td><td class="item-en">Implemented keep-coding-instructions frontmatter field support</td><td class="item-scenario">SOP 生成 Plugin 可宣告保留格式規範，確保每次輸出符合 GMP 標準</td></tr>
+<tr class="category-row cat-improve"><td colspan="3"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">API Key 與平台用戶預設 effort 改為 High</td><td class="item-en">Changed default effort level to high for API-key and platform users</td><td class="item-scenario">你的 API Key 預設提升 — /daily 分析品質自動提升，但 token 用量也略增</td></tr>
+<tr><td class="item-zh">Slack MCP 工具輸出加入可點擊頻道連結</td><td class="item-en">Enhanced Slack MCP tool output with clickable channel links</td><td class="item-scenario">Claude Code 發送 Slack 訊息後，輸出顯示可點擊連結確認送達</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 Bedrock Bearer Token 授權問題</td><td class="item-en">Fixed Bedrock authorization issues with bearer tokens</td><td class="item-scenario">Bedrock 用戶 — 你用直連不影響</td></tr>
+<tr><td class="item-zh">修正限速對話框無限循環崩潰</td><td class="item-en">Resolved rate-limit dialog infinite loop crashes</td><td class="item-scenario">遇到 API 限速不再無限循環崩潰 — 高使用量時段更穩定</td></tr>
+<tr><td class="item-zh">修正遠端控制 Session 狀態持久性問題</td><td class="item-en">Fixed Remote Control session status persistence issues</td><td class="item-scenario">遠端控制更穩定 — Session 狀態不再丟失</td></tr>
+</table>
+</div>
 
-  <!-- ═══════════════════════════════════════════ PART VI -->
-  <div class="part-label">Part VI</div>
-  <div class="section-title">✨ 開發者體驗全面躍升</div>
+<!-- v2.1.81 -->
+<div class="version-section" id="v2181">
+<div class="version-header"><h3>v2.1.81</h3><span class="version-date">2026-03-21</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 <code>--bare</code> 旗標 — 腳本化 <code>-p</code> 呼叫時省略歡迎介面</td><td class="item-en">Introduced --bare flag for scripted -p calls</td><td class="item-scenario">cron job 或 shell script 中呼叫 <code>claude -p --bare</code>，輸出更乾淨、易於解析</td></tr>
+<tr><td class="item-zh">新增 <code>--channels</code> Permission 中繼能力</td><td class="item-en">Added --channels permission relay capability</td><td class="item-scenario">多頻道管理時可精確控制各頻道的 permission relay</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正並行 Session 需重複重新驗證</td><td class="item-en">Fixed concurrent session authentication requiring repeated re-authentication</td><td class="item-scenario">同時開多個 Claude Code session 不再需要重複登入 — 多工作流並行更順暢</td></tr>
+<tr><td class="item-zh">修正語音模式重試失敗處理</td><td class="item-en">Resolved voice mode retry failure handling</td><td class="item-scenario">你用 /voice 時遇到連線問題，現在會正確重試而非直接失敗</td></tr>
+<tr><td class="item-zh">修正 <code>CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS</code> Header 被抑制</td><td class="item-en">Addressed CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS header suppression</td><td class="item-scenario">Beta 功能控制旗標現在正常運作</td></tr>
+<tr><td class="item-zh">修正 Plugin 目錄刪除後 Plugin hooks 繼續執行</td><td class="item-en">Fixed plugin hook execution after plugin directory deletion</td><td class="item-scenario">刪除 Plugin 後其 hooks 不再殘留執行 — 避免孤兒 hook 觸發意外操作</td></tr>
+</table>
+</div>
 
-  <!-- Tab Container -->
-  <div class="tab-container">
-    <div class="tab-nav">
-      <button class="tab-btn active" onclick="showTab('tab-cli')">CLI 新功能</button>
-      <button class="tab-btn" onclick="showTab('tab-ux')">互動體驗</button>
-      <button class="tab-btn" onclick="showTab('tab-windows')">Windows 平台</button>
-      <button class="tab-btn" onclick="showTab('tab-perf')">效能優化</button>
-    </div>
+<!-- v2.1.80 -->
+<div class="version-section" id="v2180">
+<div class="version-header"><h3>v2.1.80</h3><span class="version-date">2026-03-20</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">Statusline 腳本新增 <code>rate_limits</code> 欄位 — 即時顯示 API 速率限制狀態</td><td class="item-en">Added rate_limits field to statusline scripts</td><td class="item-scenario">在 HUD statusline 即時看到 API 用量比例 — 接近限速時提早知道</td></tr>
+<tr><td class="item-zh">Plugin Marketplace 新增 <code>source: 'settings'</code> 選項</td><td class="item-en">Introduced source: 'settings' plugin marketplace option</td><td class="item-scenario">在 settings.json 直接管理 Plugin 來源 — 版本控制更方便</td></tr>
+<tr><td class="item-zh">Skill frontmatter 新增 <code>effort</code> 欄位 — 每個 Skill 可宣告所需 effort 等級</td><td class="item-en">Added effort frontmatter support for skills</td><td class="item-scenario">你的 /daily（需要高品質）可宣告 <code>effort: high</code>，不受全域設定影響</td></tr>
+<tr><td class="item-zh">擴充 CLI 工具使用偵測用於 Plugin 提示</td><td class="item-en">Extended CLI tool usage detection for plugin tips</td><td class="item-scenario">Claude Code 更聰明地根據你的使用模式建議相關 Plugin</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 <code>--resume</code> 遺失平行工具結果</td><td class="item-en">Fixed --resume dropping parallel tool results</td><td class="item-scenario">恢復包含平行工具呼叫的 session，不再遺失部分工具執行結果</td></tr>
+<tr><td class="item-zh">修正語音模式 WebSocket 因 bot 偵測導致連線失敗</td><td class="item-en">Resolved voice mode WebSocket failures from bot detection</td><td class="item-scenario">你用 /voice 時 WebSocket 連線更穩定 — 不再被誤判為 bot 而中斷</td></tr>
+<tr><td class="item-zh">改善 <code>@</code> 檔案自動補全回應速度</td><td class="item-en">Enhanced @ file autocomplete responsiveness</td><td class="item-scenario">@docs/ 或 @src/ 自動補全更快 — 不再有明顯延遲</td></tr>
+</table>
+</div>
 
-    <div id="tab-cli" class="tab-content active">
-      <div class="timeline">
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.77</span>
-          <span class="timeline-desc"><code>/copy</code> 指令支援可選 index 參數，可複製特定輪次輸出 <span class="tag tag-version">新功能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.79</span>
-          <span class="timeline-desc"><code>--console</code> 旗標：直接以 Anthropic Console 身份驗證啟動 <span class="tag tag-version">新功能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.79</span>
-          <span class="timeline-desc"><code>/config</code> 新增「顯示每輪耗時」開關（Show turn duration） <span class="tag tag-version">新功能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.80</span>
-          <span class="timeline-desc">Statusline 腳本新增 <code>rate_limits</code> 欄位（即時顯示 API 速率限制狀態）<span class="tag tag-version">新功能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.81</span>
-          <span class="timeline-desc"><code>--bare</code> 旗標：適合腳本化 <code>-p</code> 呼叫，省略歡迎界面 <span class="tag tag-version">新功能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.81</span>
-          <span class="timeline-desc"><code>--channels</code> 旗標：Permission 中繼能力 <span class="tag tag-version">新功能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.83</span>
-          <span class="timeline-desc">逐字搜尋 Transcript：按 <kbd>/</kbd> 鍵啟動搜尋 <span class="tag tag-version">新功能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.85</span>
-          <span class="timeline-desc">Deep Link 查詢字串上限提升至 5,000 字元（含超長提示捲動警告）<span class="tag tag-version">擴充</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.91</span>
-          <span class="timeline-desc">Deep Link 支援多行提示（使用 encoded newlines）<span class="tag tag-version">擴充</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.92</span>
-          <span class="timeline-desc"><code>/cost</code> 細分統計：依模型與快取命中分別顯示費用 <span class="tag tag-version">重大改進</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.92</span>
-          <span class="timeline-desc"><code>/release-notes</code> 升級為互動式版本選擇器 <span class="tag tag-version">改進</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.90</span>
-          <span class="timeline-desc"><code>/powerup</code> 互動式功能課程，含動畫演示 <span class="tag tag-version">新功能</span></span>
-        </div>
-      </div>
-    </div>
+<!-- v2.1.79 -->
+<div class="version-section" id="v2179">
+<div class="version-header"><h3>v2.1.79</h3><span class="version-date">2026-03-19</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 <code>--console</code> 旗標 — 直接以 Anthropic Console 身份驗證啟動</td><td class="item-en">Added --console flag for Anthropic Console authentication</td><td class="item-scenario">需要切換 Console 與 API Key 身份時，<code>claude --console</code> 一行搞定</td></tr>
+<tr><td class="item-zh"><code>/config</code> 新增「顯示每輪耗時」開關（Show turn duration）</td><td class="item-en">Introduced "Show turn duration" toggle in /config</td><td class="item-scenario">開啟後可看到每輪 /daily 分析花了多少秒 — 優化 skill 效率的好工具</td></tr>
+<tr><td class="item-zh">語音模式啟動時強化激活機制</td><td class="item-en">Enhanced voice mode startup activation</td><td class="item-scenario">你用 /voice 英文聽寫 — 啟動成功率提升，不再需要重試</td></tr>
+<tr class="category-row cat-improve"><td colspan="3"><span class="badge badge-improve">Improvements</span> 改進</td></tr>
+<tr><td class="item-zh">啟動記憶體用量降低 <strong>~18MB</strong></td><td class="item-en">Improved startup memory usage by ~18MB</td><td class="item-scenario">每次開 Claude Code 少用 18MB 記憶體 — 多 session 並行時更流暢</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正 <code>claude -p</code> 在無明確 stdin 時卡住</td><td class="item-en">Fixed claude -p hanging when spawned without explicit stdin</td><td class="item-scenario">腳本呼叫 <code>claude -p</code> 不再需要手動指定 stdin — cron 自動化更穩定</td></tr>
+<tr><td class="item-zh">修正 print 模式下 Ctrl+C 失效</td><td class="item-en">Resolved Ctrl+C malfunction in print mode</td><td class="item-scenario">腳本模式下 Ctrl+C 中斷現在正常運作</td></tr>
+<tr><td class="item-zh">修正 <code>/btw</code> 在串流時回傳錯誤輸出</td><td class="item-en">Fixed /btw returning incorrect output during streaming</td><td class="item-scenario">你用 /btw 補充上下文時，串流中的輸出不再錯亂</td></tr>
+</table>
+</div>
 
-    <div id="tab-ux" class="tab-content">
-      <div class="info-box box-key">
-        <div class="info-box-header">⏸️ v2.1.89 — defer 決策暫停機制</div>
-        <div class="info-box-content">
-          在 Headless 模式（無人值守）下，Claude Code 遇到需要人工確認的工具呼叫時，
-          可以選擇「defer」決策——暫停工作階段並等待人工恢復，而非直接失敗或跳過。
-          這對 CI/CD 流水線中的半自動化任務特別重要。
-        </div>
-      </div>
-      <div class="info-box box-concept">
-        <div class="info-box-header">🚫 v2.1.89 — 無閃爍渲染 CLAUDE_CODE_NO_FLICKER=1</div>
-        <div class="info-box-content">
-          設定環境變數 <code>CLAUDE_CODE_NO_FLICKER=1</code> 啟用無閃爍渲染模式，
-          消除長時間輸出時終端機畫面的視覺抖動問題，改善長工作階段的使用舒適度。
-        </div>
-      </div>
-      <div class="info-box box-practical">
-        <div class="info-box-header">📖 v2.1.78 — 逐行串流輸出</div>
-        <div class="info-box-content">
-          v2.1.78 實作逐行串流回應（line-by-line streaming），讓使用者可以更即時地看到
-          Claude 的輸出，而非等待整段完成後才顯示。（注意：Windows 因渲染問題暫時停用此功能）
-        </div>
-      </div>
-      <div class="info-box box-compare">
-        <div class="info-box-header">🎓 v2.1.90 — /powerup 互動課程</div>
-        <div class="info-box-content">
-          全新 <code>/powerup</code> 指令提供互動式功能學習，內含動畫演示各項 Claude Code
-          進階功能。設計上特別適合新用戶快速上手，以及舊用戶探索不熟悉的功能。
-        </div>
-      </div>
-      <div class="info-box box-analogy">
-        <div class="info-box-header">🔤 v2.1.94 — CJK 多位元組文字修正</div>
-        <div class="info-box-content">
-          修正 stream-json 在 UTF-8 序列跨 chunk 邊界時中文/日文/韓文字元損毀的問題。
-          此修正對繁體中文、日文等 CJK 用戶具有直接意義——之前在長輸出中可能出現亂碼。
-        </div>
-      </div>
-    </div>
+<!-- v2.1.78 -->
+<div class="version-section" id="v2178">
+<div class="version-header"><h3>v2.1.78</h3><span class="version-date">2026-03-18</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">新增 <code>StopFailure</code> Hook 事件 — 代理因失敗停止時觸發</td><td class="item-en">Introduced StopFailure hook event</td><td class="item-scenario">subagent 失敗時自動 hook 發送 Telegram 告警並記錄錯誤日誌</td></tr>
+<tr><td class="item-zh">新增 <code>${CLAUDE_PLUGIN_DATA}</code> 變數 — Plugin 首次擁有持久化狀態管理</td><td class="item-en">Added ${CLAUDE_PLUGIN_DATA} variable for plugin state</td><td class="item-scenario">你的 /daily skill 可記住昨天討論的重點，跨 Session 保留學習進度</td></tr>
+<tr><td class="item-zh">Agent frontmatter 支援擴充</td><td class="item-en">Extended frontmatter support for agents</td><td class="item-scenario">自訂 Agent 可在 frontmatter 定義更豐富的行為設定</td></tr>
+<tr><td class="item-zh">實作逐行串流回應（macOS/Linux；Windows 因渲染問題暫時停用）</td><td class="item-en">Implemented line-by-line response streaming (disabled on Windows due to rendering issues)</td><td class="item-scenario">你用 macOS — Claude 輸出更即時，不需等整段完成才顯示</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正沙箱 Bash 中 git 指令執行失敗</td><td class="item-en">Fixed git command failures in sandboxed Bash</td><td class="item-scenario">Sandbox 模式下 git 操作（commit、push）現在正常運作</td></tr>
+<tr><td class="item-zh">強化 Permission 提示的上下文顯示</td><td class="item-en">Enhanced permission prompt context display</td><td class="item-scenario">Permission 確認提示顯示更多上下文 — 更容易判斷是否授權</td></tr>
+</table>
+</div>
 
-    <div id="tab-windows" class="tab-content">
-      <div class="info-box box-key">
-        <div class="info-box-header">🖥️ v2.1.84 — PowerShell 工具（Preview）</div>
-        <div class="info-box-content">
-          Windows 平台推出 PowerShell 工具作為 opt-in 預覽功能。Windows 用戶可以讓
-          Claude 直接執行 PowerShell 腳本，不再局限於 Bash 模擬環境。這是 Claude Code
-          Windows 原生化支援的重要里程碑。
-        </div>
-      </div>
-      <div class="info-box box-concept">
-        <div class="info-box-header">⚡ v2.1.86 — Windows 設定磁碟寫入優化</div>
-        <div class="info-box-content">
-          修正了 Windows 上不必要的設定檔磁碟寫入問題（每次操作都會寫入設定，即使設定
-          未改變），顯著改善 Windows 平台的整體效能，特別是在 HDD 或網路磁碟機上。
-        </div>
-      </div>
-      <div class="info-box box-warning">
-        <div class="info-box-header">⚠️ v2.1.78 — Windows 串流暫時停用</div>
-        <div class="info-box-content">
-          逐行串流輸出功能在 Windows 上因渲染問題被停用。Windows 用戶仍使用整段輸出模式，
-          待渲染問題解決後將重新啟用。
-        </div>
-      </div>
-      <div class="info-box box-practical">
-        <div class="info-box-header">✅ v2.1.84 — 多螢幕 computer-use 修正</div>
-        <div class="info-box-content">
-          修正 computer-use 工具在多螢幕設定下的顯示計算問題，Windows 多顯示器用戶
-          的 GUI 自動化操作準確性大幅提升。
-        </div>
-      </div>
-    </div>
+<!-- v2.1.77 -->
+<div class="version-section" id="v2177">
+<div class="version-header"><h3>v2.1.77</h3><span class="version-date">2026-03-17</span></div>
+<table class="changelog-table">
+<tr><th>繁體中文</th><th>English</th><th>應用場景 Scenario</th></tr>
+<tr class="category-row cat-feature"><td colspan="3"><span class="badge badge-feature">Features</span> 新功能</td></tr>
+<tr><td class="item-zh">Opus 4.6 輸出 Token 上限提升至 <strong>64,000</strong>（從 32K 翻倍）</td><td class="item-en">Increased Opus 4.6 output token limits to 64K</td><td class="item-scenario">一次輸出完整 CTD Module 2 摘要或完整 SOP 文件不再被截斷 — 對長篇文件生成意義重大</td></tr>
+<tr><td class="item-zh">沙箱新增 <code>allowRead</code> 檔案系統設定</td><td class="item-en">Added allowRead sandbox filesystem setting</td><td class="item-scenario">可精確指定沙箱內允許讀取的目錄 — 只開放必要路徑，安全合規更嚴謹</td></tr>
+<tr><td class="item-zh"><code>/copy</code> 指令支援可選 index 參數 — 可複製特定輪次輸出</td><td class="item-en">Extended /copy command with optional index parameter</td><td class="item-scenario">複製第 3 輪的分析結果：<code>/copy 3</code> — 不需要手動捲回去選取</td></tr>
+<tr class="category-row cat-bugfix"><td colspan="3"><span class="badge badge-bugfix">Bug Fixes</span> 錯誤修復</td></tr>
+<tr><td class="item-zh">修正複合 bash 指令的 Permission Rules 判斷</td><td class="item-en">Fixed compound bash command permission rules</td><td class="item-scenario">複合指令（如 <code>cd /tmp && rm *.log</code>）的 permission 現在正確評估每個子指令</td></tr>
+<tr><td class="item-zh">修正自動更新程式下載重疊問題</td><td class="item-en">Resolved auto-updater binary download overlaps</td><td class="item-scenario">自動更新不再重複下載 — 節省頻寬</td></tr>
+<tr><td class="item-zh">修正長時間 Session 記憶體持續增長</td><td class="item-en">Fixed memory growth in long-running sessions</td><td class="item-scenario">長時間 /weekly 深度分析 Session 不再記憶體洩漏 — 穩定性大幅提升</td></tr>
+<tr><td class="item-zh">強化 Write 工具的 CRLF 換行處理</td><td class="item-en">Enhanced Write tool functionality for CRLF handling</td><td class="item-scenario">Windows 格式文件的換行符處理更正確 — 跨平台編輯無亂碼</td></tr>
+</table>
+</div>
 
-    <div id="tab-perf" class="tab-content">
-      <div class="timeline">
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.77</span>
-          <span class="timeline-desc">Opus 4.6 輸出 Token 上限提升至 <strong>64,000</strong>（原 32K）<span class="tag tag-perf">效能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.77</span>
-          <span class="timeline-desc">修正長時間工作階段的記憶體持續增長問題 <span class="tag tag-fix">修正</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.79</span>
-          <span class="timeline-desc">啟動記憶體使用量降低 <strong>~18MB</strong> <span class="tag tag-perf">效能</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.83</span>
-          <span class="timeline-desc">修正 macOS 上 Claude Code 退出時卡住的問題 <span class="tag tag-fix">修正</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.86</span>
-          <span class="timeline-desc">修正 Windows 不必要的設定磁碟寫入（效能降級問題）<span class="tag tag-fix">修正</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.86</span>
-          <span class="timeline-desc">API 請求新增 <code>X-Claude-Code-Session-Id</code> Header（改善 Proxy 聚合分析）<span class="tag tag-perf">監控</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.86</span>
-          <span class="timeline-desc">修正 <code>/feedback</code> 在超長工作階段可能導致 OOM 崩潰 <span class="tag tag-fix">修正</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.94</span>
-          <span class="timeline-desc">修正 CJK/多位元組文字在 stream-json chunk 邊界損毀 <span class="tag tag-fix">修正</span></span>
-        </div>
-        <div class="timeline-item">
-          <span class="timeline-version">v2.1.94</span>
-          <span class="timeline-desc">修正終端機游標追蹤與 UI 渲染問題 <span class="tag tag-fix">修正</span></span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════ PART VII -->
-  <div class="part-label">Part VII</div>
-  <div class="section-title">🔧 值得關注的其他修正與細節</div>
-
-  <div class="content-grid">
-    <div class="content-left">
-      <h3>跨版本重要修正</h3>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          <span class="highlight-key">--resume 系列修正</span>：v2.1.80 修正了 <code>--resume</code>
-          遺失平行工具結果的問題；v2.1.86 修正了對 v2.1.85 之前建立的工作階段執行
-          <code>--resume</code> 時失敗的問題；v2.1.90 改善了 deferred 工具與 MCP 伺服器
-          的 <code>--resume</code> 快取行為。
-        </p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          <span class="highlight-concept">身份驗證穩定性</span>：v2.1.79 修正了 <code>claude -p</code>
-          在無明確 stdin 時卡住的問題；v2.1.81 修正了並行工作階段需重複重新驗證的問題；
-          v2.1.94 修正了 macOS keychain 鎖定時 Console 登入失敗並改善 <code>claude doctor</code>
-          的診斷能力。
-        </p>
-      </div>
-      <div class="bilingual-block">
-        <p class="zh-text">
-          <span class="highlight-concept">VCS 整合改善</span>：v2.1.78 修正了沙箱 Bash 中
-          git 指令失敗的問題；v2.1.83 修正了 <code>--worktree</code> 在非 git 倉庫中報錯的問題；
-          v2.1.86 擴充了 VCS 目錄排除清單，新增 <code>.jj</code>（Jujutsu）與 <code>.sl</code>（Sapling）
-          兩個新興 VCS 系統的元資料目錄。
-        </p>
-      </div>
-    </div>
-    <div class="content-right">
-      <h3>版本快速索引</h3>
-      <div class="info-box box-compare">
-        <div class="info-box-header">📋 各版本主題速查</div>
-        <div class="info-box-content">
-          <div class="timeline" style="margin:0">
-            <div class="timeline-item"><span class="timeline-version">v2.1.77</span><span class="timeline-desc">Token 上限 64K、沙箱 allowRead、記憶體修正</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.78</span><span class="timeline-desc">StopFailure Hook、Plugin 狀態變數、逐行串流</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.79</span><span class="timeline-desc">--console 旗標、啟動記憶體 -18MB</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.80</span><span class="timeline-desc">rate_limits statusline、effort frontmatter</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.81</span><span class="timeline-desc">--bare 旗標、--channels 旗標</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.82</span><span class="timeline-desc">Bedrock Mantle、effort → High、Slack MCP 改善</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.83</span><span class="timeline-desc">managed-settings.d/、CwdChanged/FileChanged Hook</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.84</span><span class="timeline-desc">PowerShell 工具(Preview)、TaskCreated Hook</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.85</span><span class="timeline-desc">條件式 Hook if 欄位、RFC 9728 MCP OAuth</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.86</span><span class="timeline-desc">Session-Id Header、VCS .jj/.sl 排除、Windows IO 修正</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.87</span><span class="timeline-desc">Cowork Dispatch 訊息修正</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.89</span><span class="timeline-desc">defer 決策、NO_FLICKER、PermissionDenied Hook</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.90</span><span class="timeline-desc">/powerup 課程、離線 Plugin 快取</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.91</span><span class="timeline-desc">MCP 500K 持久化、bin/ 可執行、shell 執行開關</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.92</span><span class="timeline-desc">forceRemoteSettingsRefresh、/cost 細分、Bedrock 精靈</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.94</span><span class="timeline-desc">Mantle 正式化、effort 全面 High、CJK 修正</span></div>
-            <div class="timeline-item"><span class="timeline-version">v2.1.96</span><span class="timeline-desc">Bedrock 403 授權修正（緊急）</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════ TAKEAWAYS -->
-  <div class="section-title">💡 核心觀察與應用建議</div>
-
-  <div class="takeaways-grid">
-    <div class="takeaway-card">
-      <div class="takeaway-icon">🎣</div>
-      <div class="takeaway-title">Hooks 已成為完整監控框架</div>
-      <div class="takeaway-text">
-        從 v2.1.77 到 v2.1.96，Hook 事件從補充性功能演化為覆蓋整個工作流程的條件式監控系統。
-        建議企業用戶結合 <code>PermissionDenied</code> 與 <code>FileChanged</code> 建立完整的稽核軌跡系統，
-        以符合法規要求（如 21 CFR Part 11）。
-      </div>
-    </div>
-    <div class="takeaway-card">
-      <div class="takeaway-icon">☁️</div>
-      <div class="takeaway-title">Bedrock 整合趨於穩定但需謹慎升級</div>
-      <div class="takeaway-text">
-        v2.1.94 引入 Mantle 正式支援的同時帶來授權回歸，v2.1.96 緊急修正。
-        建議 Bedrock 用戶<strong>跳過 v2.1.94/95，直接升級至 v2.1.96</strong>，
-        或在測試環境驗證授權流程後再升級。
-      </div>
-    </div>
-    <div class="takeaway-card">
-      <div class="takeaway-icon">🏢</div>
-      <div class="takeaway-title">企業管理能力達到生產就緒</div>
-      <div class="takeaway-text">
-        managed-settings.d/ drop-in 目錄 + forceRemoteSettingsRefresh + 沙箱強制設定，
-        三者結合已足以支撐受管環境的合規部署。IT 管理員可以維護細粒度的政策分冊，
-        並在安全事件發生時快速強制推送修補政策。
-      </div>
-    </div>
-    <div class="takeaway-card">
-      <div class="takeaway-icon">🔤</div>
-      <div class="takeaway-title">CJK 用戶升級至 v2.1.94+ 的必要性</div>
-      <div class="takeaway-text">
-        v2.1.94 修正了 CJK/多位元組文字在串流輸出中被截斷損毀的問題。
-        對繁體中文、日文、韓文用戶而言，此修正具有直接影響——長輸出中出現亂碼的問題
-        將在升級後消失（建議升級至 v2.1.96 以同時獲得 Bedrock 修正）。
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════ Q&A -->
-  <div class="section-title">❓ 深度理解問題集</div>
-
-  <details class="question-accordion">
-    <summary class="question-header">
-      <span class="question-number">Q1</span>
-      <span class="question-type">概念理解</span>
-      <span class="question-text">managed-settings.d/ drop-in 目錄的設計邏輯為何？與單一設定檔相比有哪些優勢？</span>
-      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-    </summary>
-    <div class="question-answer">
-      <p>managed-settings.d/ 遵循 Unix 的「drop-in configuration」慣例（如 <code>/etc/nginx/conf.d/</code>、<code>systemd</code> 的 override 機制）。每個設定片段是獨立的 JSON/YAML 檔案，Claude Code 啟動時自動合併所有片段。</p>
-      <p>主要優勢有三：第一，<strong>模組化管理</strong>——安全政策、模型設定、Plugin 白名單可以分別由不同團隊維護，修改某片段不影響其他；第二，<strong>版本控制友好</strong>——每個設定片段可以獨立進入 Git 倉庫，有清晰的變更歷史；第三，<strong>緊急修補簡單</strong>——發生安全事件時只需替換或刪除特定片段，不需要手動編輯大型設定檔並承擔語法錯誤風險。</p>
-    </div>
-  </details>
-
-  <details class="question-accordion">
-    <summary class="question-header">
-      <span class="question-number">Q2</span>
-      <span class="question-type">實務應用</span>
-      <span class="question-text">MCP 工具結果 500K 持久化在藥廠研究場景中有哪些具體應用？</span>
-      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-    </summary>
-    <div class="question-answer">
-      <p>在生命科學研究中，MCP 工具結果 500K 持久化有幾個關鍵應用場景：</p>
-      <p><strong>1. 大型臨床試驗數據分析</strong>：一次 MCP 查詢可能返回數千筆患者記錄或試驗結果，500K 持久化允許這些結果在整個分析工作流程中保持可用，不需要重複查詢資料庫。</p>
-      <p><strong>2. 文件審查工作流</strong>：藥品申請文件（如 NDA/BLA）通常包含大量技術文件，MCP 工具一次讀取後可持久保留在上下文中，支援後續的交叉引用和一致性檢查。</p>
-      <p><strong>3. 序列分析（Sequence Analysis）</strong>：基因序列或蛋白質結構資料量大，持久化避免了反覆呼叫計算密集型的分析 API，顯著提升工作流效率。</p>
-    </div>
-  </details>
-
-  <details class="question-accordion">
-    <summary class="question-header">
-      <span class="question-number">Q3</span>
-      <span class="question-type">問題診斷</span>
-      <span class="question-text">使用 AWS Bedrock 且升級了 v2.1.94 的團隊，如何快速確認是否受到 403 授權回歸問題影響？</span>
-      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-    </summary>
-    <div class="question-answer">
-      <p>受影響的條件：使用 <code>AWS_BEARER_TOKEN_BEDROCK</code> 環境變數設定 Bearer Token 驗證，<strong>或</strong>使用 <code>CLAUDE_CODE_SKIP_BEDROCK_AUTH=1</code> 跳過預設授權流程的環境。</p>
-      <p>快速確認方法：執行 <code>claude --version</code> 確認版本號；若為 v2.1.94 或 v2.1.95，嘗試執行任何 Bedrock API 請求，若回傳 <code>403 "Authorization header is missing"</code> 錯誤，即為受影響。</p>
-      <p>解決方案：直接升級至 <strong>v2.1.96</strong>（<code>claude update</code>），此版本已修正回歸問題。若無法立即升級，可臨時回退至 v2.1.93 或更早的穩定版本。</p>
-    </div>
-  </details>
-
-  <details class="question-accordion">
-    <summary class="question-header">
-      <span class="question-number">Q4</span>
-      <span class="question-type">架構設計</span>
-      <span class="question-text">條件式 Hook（if 欄位）如何與 v2.1.76 引入的 MCP Elicitation 協同工作，設計更智能的工作流？</span>
-      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-    </summary>
-    <div class="question-answer">
-      <p>MCP Elicitation（v2.1.76）允許 MCP 伺服器在任務執行中途請求使用者輸入；條件式 Hook（v2.1.85）允許根據上下文自動觸發外部動作。兩者結合可以設計出「事件驅動 + 人工確認」的混合工作流。</p>
-      <p>實例設計：在藥品批次放行流程中，MCP Server 執行品質檢驗計算（QC calculation）後，若發現偏差（OOS — Out of Specification），可透過 Elicitation 請求品管人員確認；同時 <code>FileChanged</code> Hook 設定條件 <code>if: "path:**/qc-results/**"</code>，自動觸發通知腳本向品保主管發送告警。整個流程做到：自動計算 → 自動監控 → 人工確認關鍵決策 → 自動通知。</p>
-    </div>
-  </details>
-
-  <details class="question-accordion">
-    <summary class="question-header">
-      <span class="question-number">Q5</span>
-      <span class="question-type">效能優化</span>
-      <span class="question-text">Opus 4.6 輸出 Token 從 32K 提升至 64K 對實際工作流有何影響？何時應使用高 Token 上限？</span>
-      <svg class="accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-    </summary>
-    <div class="question-answer">
-      <p>64K Token 輸出上限的實際意義：以繁體中文計算，1 Token ≈ 1–1.5 個中文字，64K Token 約相當於 <strong>4–6 萬字</strong>的純文字輸出，或等同於一份完整的藥品申請技術文件（CTD Module 2/3 摘要部分）的長度。</p>
-      <p>適合高 Token 輸出的場景：一次性生成完整的 SOP 文件、長篇技術評估報告、大型程式碼重構（單次輸出完整重寫版本）、複雜法規文件的逐條分析回應。</p>
-      <p>需要注意的是：高輸出 Token 不代表更好的品質，對話輸入上下文（Context）仍有限制。建議將高 Token 輸出搭配清晰的結構化提示使用，並在輸出完整文件後再進行細部調整，而非迭代式生成。</p>
-    </div>
-  </details>
-
-  <!-- ═══════════════════════════════════════════ BOTTOM LINE -->
-  <div class="bottom-line">
-    <div class="bottom-line-header">🎯 結語：v2.1.77–96 的歷史定位</div>
-    <div class="bottom-line-item">
-      <div class="bottom-line-label">階段定性</div>
-      <div class="bottom-line-text">
-        若將 v2.1.49–76 稱為「多 Agent 架構奠基期」，則 v2.1.77–96 是
-        <strong>「生態系統成熟期」</strong>——核心功能不再是實驗性的，而是具備企業生產環境所需的
-        完整管控、監控、合規能力。Hooks 成為完整事件框架，Plugin 成為完整應用平台，
-        企業管理三層架構完善，Bedrock 整合趨於穩定。
-      </div>
-    </div>
-    <div class="bottom-line-item">
-      <div class="bottom-line-label">升級建議</div>
-      <div class="bottom-line-text">
-        建議所有用戶升級至 <strong>v2.1.96</strong>（目前最新穩定版本）。
-        Bedrock 用戶應跳過 v2.1.94–95 直接升級。CJK 用戶升級後可解決長期存在的多位元組字元損毀問題。
-        企業管理員應優先評估 <code>managed-settings.d/</code> 與條件式 Hook 的導入，以建立符合法規要求的自動化稽核機制。
-      </div>
-    </div>
-    <div class="bottom-line-item">
-      <div class="bottom-line-label">下一個里程碑預測</div>
-      <div class="bottom-line-text">
-        根據演進趨勢，v2.2.x 可能聚焦於：多 Agent 協作的進一步標準化、
-        MCP 協議的生態系統擴張（更多官方 MCP Server）、以及語音模式與遠端控制的
-        深度整合。Bedrock/Vertex 等企業雲端平台的支援將持續強化。
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div class="footer">
-    <p>Claude Code 版本演進分析 · v2.1.77–v2.1.96 · 分析日期：2026-04-08</p>
-    <p>資料來源：<a href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md" style="color:#3b82f6">Claude Code 官方 CHANGELOG</a> · 本文件為技術分析整理，供學習與參考使用</p>
-    <p style="margin-top:0.5rem;opacity:0.7">涵蓋版本：v2.1.77 / 78 / 79 / 80 / 81 / 82 / 83 / 84 / 85 / 86 / 87 / 89 / 90 / 91 / 92 / 94 / 96（共 20 個版本，v2.1.88/93/95 無 changelog 記錄）</p>
-  </div>
-
-</div><!-- /container -->
-
-<script>
-function showTab(id) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.currentTarget.classList.add('active');
-}
-</script>
 </body>
 </html>

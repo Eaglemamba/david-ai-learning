@@ -2,11 +2,19 @@ const documents = [
   {
     "date": "2026-04-08",
     "title": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
-    "source": "",
-    "tags": [],
-    "rating": 0,
-    "summary": "",
-    "lines": 1297,
+    "source": "GitHub / Anthropic Claude Code Releases",
+    "tags": [
+      "Anthropic-Docs",
+      "Tool",
+      "Hook",
+      "Plugin",
+      "Enterprise",
+      "Bedrock",
+      "MCP"
+    ],
+    "rating": 4.3,
+    "summary": "Claude Code v2.1.77–v2.1.96 共 20 版本完整更新紀錄，涵蓋 Hooks 條件式事件系統成熟、Plugin 生態完整化、企業受管設定強化、Bedrock/Mantle 整合與 MCP RFC 9728 標準化",
+    "lines": 408,
     "file": "2026-04-08_claude-code-release-evolution.html"
   },
   {
