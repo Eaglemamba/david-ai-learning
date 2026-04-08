@@ -77,6 +77,7 @@ const stages = [
       { file: '2026-03-11_claude-code-interactive-mode.html', title: 'Claude Code 互動模式完全指南 ★4.0', required: false, why: '鍵盤快捷鍵、Vim 模式、內建指令、背景任務完整參考' },
       { file: '2026-03-16_claude-architect-certification.html', title: 'Claude Architect 認證自學 ★4.3', required: false, why: 'Claude Certified Architect 五大 Domain 完整拆解' },
       { file: '2026-03-16_claude-code-release-evolution.html', title: 'Claude Code v2.1.49-76 釋出演進 ★4.2', required: false, why: '28 版本深度分析：Multi-Agent、記憶體工程、Plugin 生態' },
+      { file: '2026-04-08_claude-code-release-evolution.html', title: 'Claude Code v2.1.77-96 釋出演進 ★4.3', required: false, why: '20 版本深度分析：Hooks 成熟、Plugin 生態完整化、企業就緒、Bedrock 整合' },
       { file: '2026-03-18_notebooklm-hidden-features.html', title: 'NotebookLM 三大隱藏連接 ★3.4', required: false, why: '從研究工具到 AI 指揮中心：三大隱藏整合功能' },
     ]
   },
@@ -165,6 +166,7 @@ const topicClusters = [
           { title: '互動模式完全指南 ★4.0', file: '2026-03-11_claude-code-interactive-mode.html' },
           { title: '架構治理與工程實踐 Tw93 ★4.5', file: '2026-03-13_claude-code-architecture-governance.html' },
           { title: 'v2.1.49-76 釋出演進 28 版本分析 ★4.2', file: '2026-03-16_claude-code-release-evolution.html' },
+          { title: 'v2.1.77-96 釋出演進 20 版本分析 ★4.3', file: '2026-04-08_claude-code-release-evolution.html' },
         ]
       },
       {

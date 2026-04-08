@@ -1,5 +1,15 @@
 const documents = [
   {
+    "date": "2026-04-08",
+    "title": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "source": "",
+    "tags": [],
+    "rating": 0,
+    "summary": "",
+    "lines": 1297,
+    "file": "2026-04-08_claude-code-release-evolution.html"
+  },
+  {
     "date": "2026-04-01",
     "title": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
     "source": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",

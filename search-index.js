@@ -17822,5 +17822,148 @@ const searchIndex = [
     "sectionId": "practice-questions",
     "sectionTitle": "Practice Questions",
     "content": "Q1 概念理解 Sid 的 Care Stack 三層架構（Documentation / Diagnostics / Therapeutic Ladder）如何對映到 CDMO 的品質系統？ Documentation → Batch Record + Deviation Log ：完整記錄每一個事件和決策，但 Sid 的記錄是前瞻性的（尋找下一步），而 GMP 記錄偏向回顧性（證明合規）。升級方向：讓偏差調查記錄也包含「探索性假設」欄位。 Diagnostics → OOS/OOT 調查 + 環境監控 ：做所有能做的檢測，盡可能頻繁。在 CDMO 中，這等於提高環境監控頻率、增加過程分析技術（PAT）的部署密度、對異常趨勢做更深層的根因分析。 Therapeutic Ladder → CAPA 多路線驗證 ：不只有一條修正路線，而是準備多條備選方案並排序優先級。這對「反覆偏差」類問題特別有價值——當第一輪 CAPA 失效時，第二輪已經準備好了。 Q2 產業應用 如果你要在 CDMO 偏差調查中引入 AI Copilot（類似 Sid 用 ChatGPT 分析 RNA 數據），你會如"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "執行摘要",
+    "sectionTitle": "📋 執行摘要",
+    "content": "本文件涵蓋 Claude Code v2.1.77 至 v2.1.96 ，時間跨度約 2026 年 3 月下旬至 4 月上旬。 此階段是繼 v2.1.49–v2.1.76「多 Agent 架構奠基期」之後的 生態系統成熟期 —— Hooks 從少數事件擴張為覆蓋整個工作流程的條件式監控系統；Plugin 從基本腳本演化為具備狀態管理、 可執行檔、離線快取的完整生態；企業端引入 drop-in 設定目錄與遠端政策強制刷新； Bedrock/Mantle 整合趨於穩定並修正多個授權漏洞。整體而言，這 20 個版本展現了 Claude Code 從「功能探索」邁向「生產就緒」的關鍵轉型。 20 版本數量 (v2.1.77–96) 7 主要演進主題 5+ 新 Hook 事件類型 64K Opus 4.6 輸出上限 (Token) 整體架構成熟度評估（相較前一階段 v2.1.49–76） ⭐ 成熟期 82 / 100 🎣 Hooks 條件式監控系統 新增 StopFailure、CwdChanged、FileChanged、TaskCreated、PermissionDenied 等事件，並支"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "新-hook-事件一覽",
+    "sectionTitle": "新 Hook 事件一覽",
+    "content": "從 v2.1.77 到 v2.1.96，Claude Code 的 Hook 系統新增了 五個關鍵事件類型 ， 讓外部系統得以精確響應 AI 代理的每一個動作節點。最重要的是 v2.1.85 引入的 條件式 if 欄位 ，允許使用者透過 Permission Rule 語法篩選 Hook 的觸發條件，大幅減少不必要的 Hook 調用。 \"Hooks can now be conditionally triggered using the same permission rule syntax, reducing noise and enabling precise workflow automation.\" StopFailure （v2.1.78）在代理因錯誤停止時觸發， 可用於自動發送告警或執行清理腳本。 CwdChanged 與 FileChanged （v2.1.83） 則實現了工作目錄與檔案的即時監控——類似 GMP 環境中的環境監測系統（Environmental Monitoring System）。 \"CwdChanged and FileChanged hooks m"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "hook-事件版本時序",
+    "sectionTitle": "Hook 事件版本時序",
+    "content": "v2.1.78 StopFailure — 代理因失敗停止時觸發 新事件 v2.1.83 CwdChanged 、 FileChanged — 工作目錄與檔案變更 新事件 v2.1.84 TaskCreated — 任務建立時觸發 新事件 v2.1.84 WorktreeCreate 擴充支援 HTTP 類型 Hook 擴充 v2.1.85 條件式 if 欄位，使用 Permission Rule 語法 重大更新 v2.1.89 PermissionDenied — 自動模式拒絕時觸發 新事件 💻 條件式 Hook 設定範例 { \"hooks\": { \"FileChanged\": [{ \"if\": \"path:src/**\", \"command\": \"scripts/lint-on-change.sh\" }], \"PermissionDenied\": [{ \"command\": \"scripts/audit-log.sh\" }] } } Part II 🧩 Plugin 生態系統全面成熟"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "從腳本到完整應用的躍升",
+    "sectionTitle": "從腳本到完整應用的躍升",
+    "content": "這個階段的 Plugin 系統發生了質的轉變。v2.1.78 引入的 ${CLAUDE_PLUGIN_DATA} 變數讓 Plugin 首次擁有 持久化狀態管理 能力——Plugin 不再是無狀態的腳本，而是可以記住跨工作階段資料的「微應用」。 \"${CLAUDE_PLUGIN_DATA} transforms plugins from stateless scripts into stateful micro-applications with persistent memory across sessions.\" v2.1.80 新增 effort frontmatter ，讓每個 Skill 可以宣告自己 所需的 effort 等級，避免高精度任務被低 effort 設定影響品質。v2.1.82 的 keep-coding-instructions frontmatter 則允許 Plugin 在輸出時保留程式碼撰寫指引， 確保生成內容符合專案規範。 \"Per-skill effort declarations prevent quality degradation — a va"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "plugin-能力演進里程碑",
+    "sectionTitle": "Plugin 能力演進里程碑",
+    "content": "🌱 v2.1.78 — 狀態管理誕生 ${CLAUDE_PLUGIN_DATA} 變數 + Agent frontmatter 支援，Plugin 可儲存跨 Session 資料並定義 Agent 行為 ⚙️ v2.1.80–82 — 精細化控制 effort frontmatter（技能級 effort 宣告）、 keep-coding-instructions （輸出規範保留）、 source: 'settings' （設定檔驅動 Marketplace） 🏛️ v2.1.84 — 企業管控 Channel Plugin 白名單（managed settings）、組織政策封鎖安裝（v2.1.85），IT 部門可精確控管哪些 Plugin 可用 📦 v2.1.90–94 — 生態完整 離線 Marketplace 快取（v2.1.90）、 bin/ 可執行檔支援（v2.1.91）、 frontmatter name 作為穩定呼叫識別符（v2.1.94） Part III 🏢 企業受管設定強化"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "三層管理架構完善",
+    "sectionTitle": "三層管理架構完善",
+    "content": "v2.1.83 引入的 managed-settings.d/ drop-in 目錄 是企業部署的重大突破。IT 管理員可以將不同政策拆分為獨立檔案放入此目錄， Claude Code 啟動時會自動合併所有設定——如同 Linux 的 /etc/nginx/conf.d/ 機制。 這讓不同部門的政策可以各自維護，不再需要手動合併單一大型設定檔。 \"managed-settings.d/ enables policy-as-code: each department maintains its own settings fragment, merged at startup without conflicts.\" v2.1.83 同步推出的 sandbox.failIfUnavailable 設定確保沙箱在無法啟用時 拒絕執行 而非靜默降級，對安全合規（如 21 CFR Part 11 的存取控制要求）至關重要。 \"sandbox.failIfUnavailable enforces a fail-safe posture — in regulated environments, sil"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "企業管理能力對照",
+    "sectionTitle": "企業管理能力對照",
+    "content": "🏭 GMP 類比：變更管控 managed-settings.d/ ≈ SOP 分冊管理：每個部門各自維護自己的 SOP 章節， 品保部門（QA）負責整合並確保無衝突。修改某部門的規定只需更新對應分冊，不影響其他部門。 ⚠️ v2.1.83 — 安全強制設定 sandbox.failIfUnavailable: true 沙箱不可用時拒絕執行，避免在非隔離環境下意外執行危險操作。 建議所有生產環境與受管設備啟用。 📡 v2.1.92 — 即時政策同步 forceRemoteSettingsRefresh 政策 + 互動式 Bedrock 設定精靈， 企業端佈署與政策更新的摩擦力大幅降低。 /release-notes 升級為互動式版本選擇器， 讓管理員快速查看特定版本的變更內容。 Part IV ☁️ Bedrock 平台整合與穩定化"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "mantle-整合與授權修正歷程",
+    "sectionTitle": "Mantle 整合與授權修正歷程",
+    "content": "Bedrock/Mantle 整合是這個階段最具戲劇性的演進——從功能引入到回歸（Regression）， 再到緊急修正，歷經三個版本。v2.1.82 首次引入 Mantle 支援 （ CLAUDE_CODE_USE_MANTLE=1 ），同時修正了 Bedrock Bearer Token 的授權問題。 \"The Bedrock integration journey illustrates the challenge of platform abstraction — v2.1.94 introduced Mantle natively but also regressed auth, fixed by v2.1.96.\" v2.1.94 將 Mantle 支援提升為 正式功能 ，並同步將 預設 effort 等級從 Medium 提升至 High ， 適用於 API Key、Bedrock、Vertex 及 Enterprise 用戶。然而此版本同時引入了 Bedrock 請求 403 錯誤的回歸問題，由 v2.1.96 緊急修正。 \"Default effort elevati"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "bedrock-整合版本時序",
+    "sectionTitle": "Bedrock 整合版本時序",
+    "content": "v2.1.82 首次 Mantle 支援 CLAUDE_CODE_USE_MANTLE=1 + Bearer Token 修正 Bedrock v2.1.82 預設 effort 改為 High（API/平台用戶） 行為變更 v2.1.92 互動式 Bedrock 設定精靈（第三方驗證） 新功能 v2.1.94 Mantle 升為正式功能 + Sonnet 3.5 v2 inference profile 修正 重大更新 v2.1.94 預設 effort → High 擴至 Enterprise 用戶 行為變更 v2.1.96 修正 AWS_BEARER_TOKEN_BEDROCK 403 授權失敗（v2.1.94 回歸） 緊急修正 Part V 🔌 MCP 協議標準化進化"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "從專屬實作到-rfc-標準",
+    "sectionTitle": "從專屬實作到 RFC 標準",
+    "content": "v2.1.85 的 MCP OAuth 遵循 RFC 9728 Protected Resource Metadata 探索機制，標誌著 MCP 認證從私有實作轉向開放標準。 這意味著任何支援 RFC 9728 的 OAuth 伺服器都可以直接為 MCP 提供身份驗證， 無需針對 Claude Code 進行特殊適配。 \"RFC 9728 compliance transforms MCP OAuth from a proprietary handshake into a standard protocol — any compliant OAuth server works out of the box.\" v2.1.85 同步為 headersHelper 腳本新增 MCP 伺服器名稱與 URL 環境變數 ， 讓一個 headersHelper 腳本可以根據不同的 MCP Server 動態產生對應的請求頭， 實現真正的多 Server 統一認證管理。 v2.1.91 最受矚目的更新是 MCP 工具結果持久化覆寫 ： 透過 metadata 標注，單次工具呼叫的結果可保留至 500"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "mcp-進化關鍵里程碑",
+    "sectionTitle": "MCP 進化關鍵里程碑",
+    "content": "📜 v2.1.85 — RFC 9728 標準化 MCP OAuth 遵循 RFC 9728 Protected Resource Metadata 探索機制。 headersHelper 腳本可透過 MCP_SERVER_NAME 、 MCP_SERVER_URL 環境變數動態識別呼叫來源。 💾 v2.1.91 — 500K 結果持久化 MCP 工具結果可透過 metadata 標注覆寫持久化上限至 500,000 token。 Shell 執行開關（skills/custom commands 各自獨立控制）同步推出。 🔄 前後對比 v2.1.49–76 時期： MCP 以私有 OAuth、單一 headersHelper 為主 v2.1.77–96 時期： RFC 9728 標準 OAuth + 多 Server 動態 Header + 500K 持久化 Part VI ✨ 開發者體驗全面躍升 CLI 新功能 互動體驗 Windows 平台 效能優化 v2.1.77 /copy 指令支援可選 index 參數，可複製特定輪次輸出 新功能 v2.1.79 --console "
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "跨版本重要修正",
+    "sectionTitle": "跨版本重要修正",
+    "content": "--resume 系列修正 ：v2.1.80 修正了 --resume 遺失平行工具結果的問題；v2.1.86 修正了對 v2.1.85 之前建立的工作階段執行 --resume 時失敗的問題；v2.1.90 改善了 deferred 工具與 MCP 伺服器 的 --resume 快取行為。 身份驗證穩定性 ：v2.1.79 修正了 claude -p 在無明確 stdin 時卡住的問題；v2.1.81 修正了並行工作階段需重複重新驗證的問題； v2.1.94 修正了 macOS keychain 鎖定時 Console 登入失敗並改善 claude doctor 的診斷能力。 VCS 整合改善 ：v2.1.78 修正了沙箱 Bash 中 git 指令失敗的問題；v2.1.83 修正了 --worktree 在非 git 倉庫中報錯的問題； v2.1.86 擴充了 VCS 目錄排除清單，新增 .jj （Jujutsu）與 .sl （Sapling） 兩個新興 VCS 系統的元資料目錄。"
+  },
+  {
+    "docFile": "2026-04-08_claude-code-release-evolution.html",
+    "docTitle": "Claude Code 版本演進分析 v2.1.77–v2.1.96",
+    "docDate": "2026-04-08",
+    "docSource": "",
+    "docRating": 0,
+    "docTags": [],
+    "sectionId": "版本快速索引",
+    "sectionTitle": "版本快速索引",
+    "content": "📋 各版本主題速查 v2.1.77 Token 上限 64K、沙箱 allowRead、記憶體修正 v2.1.78 StopFailure Hook、Plugin 狀態變數、逐行串流 v2.1.79 --console 旗標、啟動記憶體 -18MB v2.1.80 rate_limits statusline、effort frontmatter v2.1.81 --bare 旗標、--channels 旗標 v2.1.82 Bedrock Mantle、effort → High、Slack MCP 改善 v2.1.83 managed-settings.d/、CwdChanged/FileChanged Hook v2.1.84 PowerShell 工具(Preview)、TaskCreated Hook v2.1.85 條件式 Hook if 欄位、RFC 9728 MCP OAuth v2.1.86 Session-Id Header、VCS .jj/.sl 排除、Windows IO 修正 v2.1.87 Cowork Dispatch 訊息修正 v2.1.89 defe"
   }
 ];
