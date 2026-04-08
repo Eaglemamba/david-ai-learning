@@ -94,6 +94,7 @@ body {
 .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
 .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
 .content-right { padding: 1.5rem; background: #f8fafc; }
+        .col-full { padding: 1.5rem; background: #f8fafc; grid-column: 1 / -1; }
 .content-label { font-size: 0.7rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
 .part-title { font-size: 1.1rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
 
@@ -409,7 +410,18 @@ details[open] .accordion-icon { transform: rotate(180deg); }
                 <div class="info-box box-code">
                     <div class="info-box-header">&#128187; 200K 上下文實際分配</div>
                     <div class="info-box-content">
-<pre class="code-block">200K Total Context
+
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; 壓縮機制的陷阱</div>
+                    <div class="info-box-content">
+                        預設壓縮演算法按「可重新讀取」判斷，早期的 Tool Output 和檔案內容會被優先刪掉，連帶把架構決策和約束理由也丟了。解法：在 CLAUDE.md 裡寫 <code>Compact Instructions</code>，明確指定壓縮時必須保留的優先順序。另一個更主動的方案：讓 Claude 寫一份 <code>HANDOFF.md</code>，記錄當前進度和決策，開新會話時直接讀這個檔案。
+                    </div>
+                </div>
+            </div>
+            <div class="col-full">
+              <pre class="code-block">200K Total Context
 &#9500;&#9472;&#9472; Fixed Overhead (~15-20K)
 &#9474;   &#9500;&#9472;&#9472; System Instructions: ~2K
 &#9474;   &#9500;&#9472;&#9472; Skill Descriptors: ~1-5K
@@ -424,14 +436,6 @@ details[open] .accordion-icon { transform: rotate(180deg); }
     &#9500;&#9472;&#9472; Conversation History
     &#9500;&#9472;&#9472; File Contents
     &#9492;&#9472;&#9472; Tool Call Results</pre>
-                    </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#9888;&#65039; 壓縮機制的陷阱</div>
-                    <div class="info-box-content">
-                        預設壓縮演算法按「可重新讀取」判斷，早期的 Tool Output 和檔案內容會被優先刪掉，連帶把架構決策和約束理由也丟了。解法：在 CLAUDE.md 裡寫 <code>Compact Instructions</code>，明確指定壓縮時必須保留的優先順序。另一個更主動的方案：讓 Claude 寫一份 <code>HANDOFF.md</code>，記錄當前進度和決策，開新會話時直接讀這個檔案。
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -575,7 +579,13 @@ details[open] .accordion-icon { transform: rotate(180deg); }
                 <div class="info-box box-code">
                     <div class="info-box-header">&#128187; PostToolUse Hook 範例</div>
                     <div class="info-box-content">
-<pre class="code-block">{
+
+                        <strong>Note:</strong> 限制輸出長度（<code>| head -30</code>），避免 Hook 輸出反而污染上下文。
+                    </div>
+                </div>
+            </div>
+            <div class="col-full">
+              <pre class="code-block">{
   "hooks": {
     "PostToolUse": [{
       "matcher": "Edit",
@@ -592,9 +602,6 @@ details[open] .accordion-icon { transform: rotate(180deg); }
     }]
   }
 }</pre>
-                        <strong>Note:</strong> 限制輸出長度（<code>| head -30</code>），避免 Hook 輸出反而污染上下文。
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -669,18 +676,7 @@ details[open] .accordion-icon { transform: rotate(180deg); }
                 <div class="info-box box-code">
                     <div class="info-box-header">&#128187; Prompt Layout for Caching</div>
                     <div class="info-box-content">
-<pre class="code-block"><span class="comment">// Claude Code Prompt Order (cache-optimized)</span>
-1. System Prompt     <span class="keyword">&#8594; Static, locked</span>
-2. Tool Definitions  <span class="keyword">&#8594; Static, locked</span>
-3. Chat History      <span class="keyword">&#8594; Dynamic, appended</span>
-4. Current Input     <span class="keyword">&#8594; Last position</span>
 
-<span class="comment">// Dynamic info goes in user message,</span>
-<span class="comment">// NOT in system prompt:</span>
-&lt;system-reminder&gt;
-  Current time: 2026-03-13T10:00:00Z
-  Branch: feature/new-ui
-&lt;/system-reminder&gt;</pre>
                     </div>
                 </div>
                 <div class="info-box box-concept">
@@ -693,6 +689,20 @@ details[open] .accordion-icon { transform: rotate(180deg); }
                         <strong>defer_loading 機制：</strong>數十個 MCP 工具不全量包含，發送輕量級 stub（只有工具名 + <code>defer_loading: true</code>），模型通過 ToolSearch 工具「發現」它們，完整 schema 只在選擇後才載入。快取前綴保持穩定。
                     </div>
                 </div>
+            </div>
+            <div class="col-full">
+              <pre class="code-block"><span class="comment">// Claude Code Prompt Order (cache-optimized)</span>
+1. System Prompt     <span class="keyword">&#8594; Static, locked</span>
+2. Tool Definitions  <span class="keyword">&#8594; Static, locked</span>
+3. Chat History      <span class="keyword">&#8594; Dynamic, appended</span>
+4. Current Input     <span class="keyword">&#8594; Last position</span>
+
+<span class="comment">// Dynamic info goes in user message,</span>
+<span class="comment">// NOT in system prompt:</span>
+&lt;system-reminder&gt;
+  Current time: 2026-03-13T10:00:00Z
+  Branch: feature/new-ui
+&lt;/system-reminder&gt;</pre>
             </div>
         </div>
 
@@ -725,7 +735,12 @@ details[open] .accordion-icon { transform: rotate(180deg); }
                 <div class="info-box box-code">
                     <div class="info-box-header">&#128187; 驗證定義範例</div>
                     <div class="info-box-content">
-<pre class="code-block"><span class="comment">## Verification (in CLAUDE.md)</span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-full">
+              <pre class="code-block"><span class="comment">## Verification (in CLAUDE.md)</span>
 
 For backend changes:
 - Run `make test` and `make lint`
@@ -738,8 +753,6 @@ Definition of done:
 - All tests pass
 - Lint passes
 - No TODO left behind</pre>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -811,7 +824,22 @@ Definition of done:
                 <div class="info-box box-code">
                     <div class="info-box-header">&#128187; 高品質模板結構</div>
                     <div class="info-box-content">
-<pre class="code-block"><span class="comment"># Project Contract</span>
+
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#9888;&#65039; 不該放的內容</div>
+                    <div class="info-box-content">
+                        &#8226; 大段背景介紹<br>
+                        &#8226; 完整 API 文件<br>
+                        &#8226; 空泛原則如「寫高品質程式碼」<br>
+                        &#8226; Claude 讀 repo 即可推斷的資訊<br>
+                        &#8226; 大量背景資料和低頻任務知識（放 Skills）
+                    </div>
+                </div>
+            </div>
+            <div class="col-full">
+              <pre class="code-block"><span class="comment"># Project Contract</span>
 
 <span class="keyword">## Build And Test</span>
 - Install: `pnpm install`
@@ -834,18 +862,6 @@ UI: before/after screenshots
 Preserve: architecture decisions,
 modified files, verification status,
 open TODOs, rollback notes</pre>
-                    </div>
-                </div>
-                <div class="info-box box-key">
-                    <div class="info-box-header">&#9888;&#65039; 不該放的內容</div>
-                    <div class="info-box-content">
-                        &#8226; 大段背景介紹<br>
-                        &#8226; 完整 API 文件<br>
-                        &#8226; 空泛原則如「寫高品質程式碼」<br>
-                        &#8226; Claude 讀 repo 即可推斷的資訊<br>
-                        &#8226; 大量背景資料和低頻任務知識（放 Skills）
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -871,7 +887,12 @@ open TODOs, rollback notes</pre>
                 <div class="info-box box-code">
                     <div class="info-box-header">&#128187; 完整工程化佈局</div>
                     <div class="info-box-content">
-<pre class="code-block">Project/
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-full">
+              <pre class="code-block">Project/
 &#9500;&#9472;&#9472; CLAUDE.md
 &#9500;&#9472;&#9472; .claude/
 &#9474;   &#9500;&#9472;&#9472; rules/
@@ -886,8 +907,6 @@ open TODOs, rollback notes</pre>
 &#9474;   &#9500;&#9472;&#9472; agents/
 &#9474;   &#9492;&#9472;&#9472; settings.json
 &#9492;&#9472;&#9472; docs/ai/</pre>
-                    </div>
-                </div>
             </div>
         </div>
 

@@ -85,6 +85,7 @@
         .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
         .content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
         .content-right { padding: 1.5rem; background: #f8fafc; }
+        .col-full { padding: 1.5rem; background: #f8fafc; grid-column: 1 / -1; }
         .part-title { font-size: 1.1rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .part-number { background: #1e3a8a; color: white; width: 2rem; height: 2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; }
 
@@ -488,7 +489,12 @@ API 路由必須包含輸入驗證和錯誤處理。</code></pre>
         <div class="info-box box-code">
             <div class="info-box-header">&#128187; 三種進入方式</div>
             <div class="info-box-content">
-<pre><code># 啟動時直接進入
+
+            </div>
+        </div>
+    </div>
+    <div class="col-full">
+      <pre><code># 啟動時直接進入
 claude --permission-mode plan
 
 # 對話中切換
@@ -496,8 +502,6 @@ Shift+Tab Shift+Tab
 
 # 在提示詞裡說
 「先不要改程式碼，幫我做個計畫」</code></pre>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -555,7 +559,12 @@ Shift+Tab Shift+Tab
         <div class="info-box box-code">
             <div class="info-box-header">&#128187; 自訂 Agent 範例</div>
             <div class="info-box-content">
-<pre><code># .claude/agents/code-reviewer.md
+
+            </div>
+        </div>
+    </div>
+    <div class="col-full">
+      <pre><code># .claude/agents/code-reviewer.md
 ---
 name: code-reviewer
 description: 代碼審查專家
@@ -567,8 +576,6 @@ model: sonnet
 - 錯誤處理是否完整
 - 有沒有暴露敏感資訊
 - 輸入驗證 / 效能隱患</code></pre>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -659,7 +666,21 @@ model: sonnet
         <div class="info-box box-code">
             <div class="info-box-header">&#128187; 權限設定範例</div>
             <div class="info-box-content">
-<pre><code>{
+
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; Settings 分層建議</div>
+            <div class="info-box-content">
+                <p><strong>.claude/settings.json</strong>：團隊共享規則（提交到 Git）</p>
+                <p><strong>~/.claude/settings.json</strong>：個人偏好（全域）</p>
+                <p><strong>.claude/settings.local.json</strong>：敏感配置（加入 .gitignore）</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-full">
+      <pre><code>{
   "permissions": {
     "allow": [
       "Bash(npm run *)",
@@ -673,17 +694,6 @@ model: sonnet
     ]
   }
 }</code></pre>
-            </div>
-        </div>
-
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#128736;&#65039; Settings 分層建議</div>
-            <div class="info-box-content">
-                <p><strong>.claude/settings.json</strong>：團隊共享規則（提交到 Git）</p>
-                <p><strong>~/.claude/settings.json</strong>：個人偏好（全域）</p>
-                <p><strong>.claude/settings.local.json</strong>：敏感配置（加入 .gitignore）</p>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -723,7 +733,21 @@ model: sonnet
         <div class="info-box box-code">
             <div class="info-box-header">&#128187; 自動格式化 Hook</div>
             <div class="info-box-content">
-<pre><code>{
+
+                <p>每次編輯後自動跑 Prettier，確保格式一致。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">&#128736;&#65039; 壓縮後重新注入關鍵資訊</div>
+            <div class="info-box-content">
+
+                <p>解決常見痛點：對話壓縮後重要指令丟失。</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-full">
+      <pre><code>{
   "hooks": {
     "PostToolUse": [{
       "matcher": "Edit|Write",
@@ -734,23 +758,15 @@ model: sonnet
     }]
   }
 }</code></pre>
-                <p>每次編輯後自動跑 Prettier，確保格式一致。</p>
-            </div>
-        </div>
-
-        <div class="info-box box-practical">
-            <div class="info-box-header">&#128736;&#65039; 壓縮後重新注入關鍵資訊</div>
-            <div class="info-box-content">
-<pre><code>"SessionStart": [{
+    </div>
+    <div class="col-full">
+      <pre><code>"SessionStart": [{
   "matcher": "compact",
   "hooks": [{
     "type": "command",
     "command": "echo '用 Bun 不用 npm。提交前跑 bun test。'"
   }]
 }]</code></pre>
-                <p>解決常見痛點：對話壓縮後重要指令丟失。</p>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -778,15 +794,7 @@ model: sonnet
         <div class="info-box box-code">
             <div class="info-box-header">&#128187; Worktree 使用方式</div>
             <div class="info-box-content">
-<pre><code># 指定名稱的隔離工作空間
-claude --worktree feature-auth
-claude --worktree bugfix-123
 
-# 自動產生名稱
-claude --worktree
-
-# 從 PR 恢復上下文
-claude --from-pr 123</code></pre>
             </div>
         </div>
 
@@ -799,6 +807,17 @@ claude --from-pr 123</code></pre>
                 <p><strong>4.</strong> 可以在權限規則裡直接 deny 這些危險命令</p>
             </div>
         </div>
+    </div>
+    <div class="col-full">
+      <pre><code># 指定名稱的隔離工作空間
+claude --worktree feature-auth
+claude --worktree bugfix-123
+
+# 自動產生名稱
+claude --worktree
+
+# 從 PR 恢復上下文
+claude --from-pr 123</code></pre>
     </div>
 </div>
 

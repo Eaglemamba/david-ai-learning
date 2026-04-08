@@ -43,6 +43,35 @@ docs/*.html (source files)
   └── docs-workflow/       MD essence/cheatsheet summaries
 ```
 
+## Terminal / Code Block Layout Rule
+
+When a `content-grid` section has a large terminal or code block on the right side, do **not** put it in `content-right` if the block is wider than ~50% of the page (i.e., more than ~60 characters per line, or the block has multiple long lines).
+
+Instead, restructure the section so the code block spans both columns:
+
+```html
+<div class="content-grid">
+  <div class="content-left"><!-- text / bilingual block --></div>
+  <div class="content-right"><!-- small callout or leave empty --></div>
+  <div class="col-full">
+    <div class="code-block">...</div>
+  </div>
+</div>
+```
+
+If there is no meaningful content for `content-right`, omit it entirely and place the code block in `col-full` directly after `content-left`:
+
+```html
+<div class="content-grid">
+  <div class="content-left"><!-- text --></div>
+  <div class="col-full">
+    <div class="code-block">...</div>
+  </div>
+</div>
+```
+
+**Rule of thumb**: a terminal/code block that would make the right column taller than the left column → move it to `col-full`.
+
 ## Conventions
 
 - HTML doc filenames: `YYYY-MM-DD_slug.html`

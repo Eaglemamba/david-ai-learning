@@ -10,6 +10,21 @@ const documents = [
     "file": "2026-04-08_claude-code-release-evolution.html"
   },
   {
+    "date": "2026-04-04",
+    "title": "Claw Code - 開源 AI CLI 架構深度解析",
+    "source": "ultraworkers/claw-code GitHub Repository",
+    "tags": [
+      "Tool",
+      "Agent",
+      "Framework",
+      "Architecture"
+    ],
+    "rating": 4.2,
+    "summary": "Claw Code 開源 Rust CLI 架構拆解：SystemPromptBuilder、ConfigLoader、MCP 多傳輸協議、權限分級與 Hooks 系統，對照 Claude Code 理解 AI Agent CLI 設計模式。",
+    "lines": 707,
+    "file": "2026-04-04_claw-code-open-source-cli.html"
+  },
+  {
     "date": "2026-04-01",
     "title": "Sid Sijbrandij Founder Mode Cancer - AI Personalized Medicine",
     "source": "Elliot Hershberg / Century of Biology + OpenAI Forum + The Changelog",
@@ -51,7 +66,7 @@ const documents = [
     ],
     "rating": 3.6,
     "summary": "10 個可重複使用的 Claude prompt workflow，涵蓋研究、內容、程式碼審查、數據分析。實測追蹤每週省 13 小時。",
-    "lines": 807,
+    "lines": 838,
     "file": "2026-03-28_claude-10-workflows.html"
   },
   {
@@ -169,7 +184,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Claude Code .claude/ 資料夾完整解析：CLAUDE.md、commands、skills、agents、permissions 設定指南",
-    "lines": 900,
+    "lines": 925,
     "file": "2026-03-24_claude-code-dot-claude-folder.html"
   },
   {
@@ -243,7 +258,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Browser Use CLI 完整指南：daemon 架構、三種瀏覽器模式、命令體系、Cloud API 整合與 MCP 應用。",
-    "lines": 713,
+    "lines": 720,
     "file": "2026-03-21_browser-use-cli.html"
   },
   {
@@ -272,7 +287,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Claude Code 四層配置架構：CLAUDE.md 入職手冊、rules 模組拆分、Context over Instruction 原則。",
-    "lines": 572,
+    "lines": 582,
     "file": "2026-03-21_claude-code-config-files.html"
   },
   {
@@ -347,7 +362,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "三種 context rot 失敗模式、Compaction API 設定、CLAUDE.md 記憶層級架構，實戰操作清單。",
-    "lines": 772,
+    "lines": 785,
     "file": "2026-03-16_1m-context-compaction.html"
   },
   {
@@ -392,7 +407,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "28 個版本釋出分析：Multi-Agent 架構、記憶體工程、Plugin 生態、MCP Elicitation、Remote Control 演進",
-    "lines": 1033,
+    "lines": 1055,
     "file": "2026-03-16_claude-code-release-evolution.html"
   },
   {
@@ -407,7 +422,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "Karpathy autoresearch 拆解：三檔案極簡架構、program.md 核心設計、Shopify 53% 效能提升實證、CDMO 閉環應用",
-    "lines": 760,
+    "lines": 767,
     "file": "2026-03-16_karpathy-autoresearch.html"
   },
   {
@@ -450,7 +465,7 @@ const documents = [
     ],
     "rating": 4.5,
     "summary": "Tw93 半年 Claude Code 深度使用經驗。六層架構、上下文治理、Skills/Hooks/Subagents 設計、Prompt Caching 與 CLAUDE.md 最佳實踐。",
-    "lines": 1047,
+    "lines": 1066,
     "file": "2026-03-13_claude-code-architecture-governance.html"
   },
   {
@@ -525,7 +540,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Anthropic 官方 Skill 建構指南。涵蓋設計原則、YAML 規格、5 大 Pattern、MCP 整合與測試迭代。",
-    "lines": 924,
+    "lines": 940,
     "file": "2026-03-09_building-skills-guide.html"
   },
   {
@@ -693,7 +708,7 @@ const documents = [
     ],
     "rating": 4,
     "summary": "Claude Agent Skills 三層漸進式載入架構、跨平台部署、自訂 Skill 建構指南。",
-    "lines": 589,
+    "lines": 596,
     "file": "2026-02-27_agent-skills-architecture.html"
   },
   {
@@ -739,7 +754,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Cowork 五大功能完整解析：File System、AskUserQuestion、Plugins、Instructions、Connectors 設定與實戰。",
-    "lines": 697,
+    "lines": 701,
     "file": "2026-02-27_claude-cowork-setup.html"
   },
   {
@@ -875,7 +890,7 @@ const documents = [
     ],
     "rating": 4.4,
     "summary": "Boris Tane 九個月 Claude Code 工作流：Research → Plan → Annotate → Implement 四階段紀律。",
-    "lines": 566,
+    "lines": 576,
     "file": "2026-02-22_boris-tane-claude-code-workflow.html"
   },
   {
@@ -891,7 +906,7 @@ const documents = [
     ],
     "rating": 4.3,
     "summary": "Claude Code 完整最佳實踐：驗證迴路、Context 管理、CLAUDE.md、平行工作流。",
-    "lines": 630,
+    "lines": 640,
     "file": "2026-02-22_claude-code-best-practices.html"
   },
   {
@@ -921,7 +936,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Cowork 桌面 Agent 完整指南：Skills/Plugins、MCP 連接、跨 Session 記憶、與 Chat/Code 比較。",
-    "lines": 576,
+    "lines": 583,
     "file": "2026-02-22_claude-cowork-guide.html"
   },
   {
@@ -1137,7 +1152,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "OpenClaw安全強化三層防護實作指南，涵蓋MCP Server權限控制、API Key分級管理與Allowlist思維",
-    "lines": 927,
+    "lines": 940,
     "file": "2026-02-11_openclaw-security-hardening.html"
   },
   {
@@ -1208,7 +1223,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "OpenClaw開源AI Agent框架完整評測，涵蓋架構解析、安全風險評估、五大VPS託管平台比較及實際使用案例",
-    "lines": 636,
+    "lines": 643,
     "file": "2026-02-06_openclaw-agent-review.html"
   },
   {
@@ -1309,7 +1324,7 @@ const documents = [
     ],
     "rating": 3.2,
     "summary": "示範用 Claude Code 建立 AI 產品導師系統，將名人思維轉化為可互動的角色檔",
-    "lines": 555,
+    "lines": 562,
     "file": "2026-02-03_claude-code-product-mentors.html"
   },
   {
@@ -1353,7 +1368,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "CLAUDE.md 的 PDCA 持續改善方法論，教你如何系統性優化 Claude Code 的行為設定",
-    "lines": 763,
+    "lines": 776,
     "file": "2026-02-01_claude-md-pdca-optimization.html"
   },
   {
@@ -1931,7 +1946,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "提出Skill Graph概念，用Markdown+Wikilinks+YAML frontmatter建構AI Agent可自主導航的結構化知識網路",
-    "lines": 598,
+    "lines": 602,
     "file": "2025-12-20_skill-graphs-knowledge.html"
   },
   {
@@ -2199,7 +2214,7 @@ const documents = [
     ],
     "rating": 4.2,
     "summary": "Claude Code 實戰經驗總結。CLAUDE.md 寫法、Plan Mode、子 Agent、上下文管理、權限控制等 14 項核心技巧。",
-    "lines": 1126,
+    "lines": 1145,
     "file": "2025-03-25_claude-code-best-practices.html"
   },
   {
@@ -2213,7 +2228,7 @@ const documents = [
     ],
     "rating": 3.5,
     "summary": "Markdown 起源、AI 協作優勢、10分鐘高頻語法速成、工具推薦。",
-    "lines": 516,
+    "lines": 520,
     "file": "2025-03-25_markdown-ai-era.html"
   },
   {
@@ -2228,7 +2243,7 @@ const documents = [
     ],
     "rating": 3.8,
     "summary": "Markdown 在 AI 時代的戰略定位。90/10 核心語法、AI 友善文件格式、結構決定理解精度。",
-    "lines": 1068,
+    "lines": 1081,
     "file": "2025-02-13_markdown_ai_guide.html"
   }
 ];
