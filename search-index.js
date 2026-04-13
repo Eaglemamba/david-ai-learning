@@ -17824,6 +17824,150 @@ const searchIndex = [
     "content": "Q1 概念理解 Sid 的 Care Stack 三層架構（Documentation / Diagnostics / Therapeutic Ladder）如何對映到 CDMO 的品質系統？ Documentation → Batch Record + Deviation Log ：完整記錄每一個事件和決策，但 Sid 的記錄是前瞻性的（尋找下一步），而 GMP 記錄偏向回顧性（證明合規）。升級方向：讓偏差調查記錄也包含「探索性假設」欄位。 Diagnostics → OOS/OOT 調查 + 環境監控 ：做所有能做的檢測，盡可能頻繁。在 CDMO 中，這等於提高環境監控頻率、增加過程分析技術（PAT）的部署密度、對異常趨勢做更深層的根因分析。 Therapeutic Ladder → CAPA 多路線驗證 ：不只有一條修正路線，而是準備多條備選方案並排序優先級。這對「反覆偏差」類問題特別有價值——當第一輪 CAPA 失效時，第二輪已經準備好了。 Q2 產業應用 如果你要在 CDMO 偏差調查中引入 AI Copilot（類似 Sid 用 ChatGPT 分析 RNA 數據），你會如"
   },
   {
+    "docFile": "processed/2026-04-03_tradingview-mcp-claude.html",
+    "docTitle": "TradingView MCP - Claude 連接交易圖表平台",
+    "docDate": "2026-04-03",
+    "docSource": "Trades Dont Lie (@Tradesdontlie)",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Integration",
+      "MCP",
+      "API"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "這篇文章介紹一個開源研究專案：透過 Chrome DevTools Protocol (CDP) 將 Claude Code 連接到 TradingView Desktop 應用程式。TradingView 沒有公開 API，但因為桌面版基於 Electron（Chromium 核心），開啟 debug port 後就能透過 CDP 讀取圖表上所有資料。 專案提供 78 個 MCP 工具和完整 CLI ( tv 指令)，核心應用場景是 Pine Script AI 輔助開發迴圈 ：描述需求 → Claude 寫腳本 → 自動注入編譯 → 讀取錯誤修正 → 重新編譯。所有資料都在本地端處理，不會離開你的電腦。 來源偏差提醒： 作者是該工具的開發者，文章本質上是專案介紹文。技術描述可信度高（可從 GitHub 原始碼驗證），但「改變工作流程」等主觀評價需保留判斷。此外，使用此工具可能涉及 TradingView 服務條款（作者也明確提到這點），需自行評估風險。"
+  },
+  {
+    "docFile": "processed/2026-04-03_tradingview-mcp-claude.html",
+    "docTitle": "TradingView MCP - Claude 連接交易圖表平台",
+    "docDate": "2026-04-03",
+    "docSource": "Trades Dont Lie (@Tradesdontlie)",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Integration",
+      "MCP",
+      "API"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "🔗 理解 MCP + CDP 架構如何讓 LLM 存取非 API 應用程式 📊 掌握 Claude 能從 TradingView 讀取哪些結構化圖表資料 🔄 評估 Pine Script AI 開發迴圈的模式與 GMP 文件自動化類比 TradingView MCP 架構流程 🤖 Claude Code 自然語言指令 → ⚙️ MCP Server Node.js 中介層 → 🔌 CDP (Port 9222) Chrome DevTools Protocol → 📈 TradingView Electron Desktop App"
+  },
+  {
+    "docFile": "processed/2026-04-03_tradingview-mcp-claude.html",
+    "docTitle": "TradingView MCP - Claude 連接交易圖表平台",
+    "docDate": "2026-04-03",
+    "docSource": "Trades Dont Lie (@Tradesdontlie)",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Integration",
+      "MCP",
+      "API"
+    ],
+    "sectionId": "part-i運作原理-三層架構",
+    "sectionTitle": "Part I：運作原理 — 三層架構",
+    "content": "Part I How It Works 整個系統由三個部分組成，全部在你的本地機器上運行。 Claude Code 與 Node.js MCP 伺服器溝通 ，該伺服器透過 Chrome DevTools Protocol 在 port 9222 連接到你正在執行的 TradingView Desktop 應用程式。 Claude Code talks to a Node.js MCP server. That server connects to your running TradingView Desktop app over Chrome DevTools Protocol on port 9222. CDP 是 Google 內建於每個 Chromium 應用程式的標準除錯介面 。預設關閉，一個啟動旗標就能開啟它。沒有任何資料離開你的電腦。 CDP is a standard Google debugging interface built into every Chromium app. Off by default. One flag turns it on. Nothing"
+  },
+  {
+    "docFile": "processed/2026-04-03_tradingview-mcp-claude.html",
+    "docTitle": "TradingView MCP - Claude 連接交易圖表平台",
+    "docDate": "2026-04-03",
+    "docSource": "Trades Dont Lie (@Tradesdontlie)",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Integration",
+      "MCP",
+      "API"
+    ],
+    "sectionId": "part-iiclaude-能看到什麼",
+    "sectionTitle": "Part II：Claude 能看到什麼",
+    "content": "Part II What Claude Can Actually See 除了明顯的商品代碼、時間框架和指標數值之外，Claude 能讀取 Pine Script 指標在圖表上繪製的實際繪圖物件 。line.new()、label.new()、table.new()、box.new() — 你的指標在螢幕上畫的任何東西，Claude 都能以結構化資料讀回。 Beyond the obvious stuff like symbol, timeframe, and indicator values, Claude can read the actual drawing objects that Pine Script indicators put on your chart. The line.new() calls, label.new(), table.new(), box.new(). 這對受保護的指標也有效 。你只需傳入以指標名稱為目標的篩選器，就能取得每個價格水平、每個文字標註、完整表格內容、每個繪製的區域。 This works on protected indicators "
+  },
+  {
+    "docFile": "processed/2026-04-03_tradingview-mcp-claude.html",
+    "docTitle": "TradingView MCP - Claude 連接交易圖表平台",
+    "docDate": "2026-04-03",
+    "docSource": "Trades Dont Lie (@Tradesdontlie)",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Integration",
+      "MCP",
+      "API"
+    ],
+    "sectionId": "part-iii技術上的可能性",
+    "sectionTitle": "Part III：技術上的可能性",
+    "content": "Part III What's Technically Possible 1. 帶有 AI 迴圈的 Pine Script 開發。 你描述你想要的東西， Claude 寫腳本、注入 Pine 編輯器、編譯、讀取錯誤、修復、重新編譯 。這個迴圈持續運行直到腳本乾淨。整個過程中它都有你當前圖表和上面所有指標的完整上下文。 Pine Script development with AI in the loop. You describe what you want, Claude writes the script, injects it into the Pine editor, compiles it, reads the errors back, fixes them, and recompiles. That loop runs until the script is clean. 2. 你的圖表作為本地資料來源。 串流指令透過 CDP 在 localhost 上輪詢你正在執行的 TradingView Desktop， 輸出 JSONL — 每行一個 JSON 物件 。你可以把它管"
+  },
+  {
+    "docFile": "processed/2026-04-03_tradingview-mcp-claude.html",
+    "docTitle": "TradingView MCP - Claude 連接交易圖表平台",
+    "docDate": "2026-04-03",
+    "docSource": "Trades Dont Lie (@Tradesdontlie)",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Integration",
+      "MCP",
+      "API"
+    ],
+    "sectionId": "part-ivcli-工具集",
+    "sectionTitle": "Part IV：CLI 工具集",
+    "content": "Part IV The CLI 每個 MCP 工具同時也是一個終端機指令。整套工具包裝為 tv CLI，JSON 輸出可管道到任何地方。 Every MCP tool is also a terminal command. The whole thing ships as a tv CLI with JSON output that pipes anywhere. # 讀取圖表狀態 tv status # 連線狀態 tv quote # 即時報價 tv ohlcv --summary # OHLCV 精簡摘要 tv data lines # Pine 繪圖物件 tv data values # 資料視窗數值 # 導航 tv symbol AAPL # 切換商品 tv timeframe D # 切換時間框架 tv pane layout 2x2 # 設定多窗格版面 tv pane symbol 1 ES1! # 指定窗格商品 # Pine Script 操作 tv pine set < script.pine # 注入腳本 tv pine compile # 編譯 tv pine an"
+  },
+  {
+    "docFile": "processed/2026-04-03_tradingview-mcp-claude.html",
+    "docTitle": "TradingView MCP - Claude 連接交易圖表平台",
+    "docDate": "2026-04-03",
+    "docSource": "Trades Dont Lie (@Tradesdontlie)",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Integration",
+      "MCP",
+      "API"
+    ],
+    "sectionId": "part-v安裝與開始使用",
+    "sectionTitle": "Part V：安裝與開始使用",
+    "content": "Part V Getting It Running 你需要 Node.js 18+ 和安裝了有效訂閱的 TradingView Desktop。之後，只要給 Claude 一段安裝提示，它就會處理整個安裝過程。 You need Node.js 18+ installed and TradingView Desktop with a valid subscription. After that, just give Claude this prompt and it handles the whole install. 安裝完成後，用 tv_health_check 確認連線。然後你就可以用自然語言操作：「我的圖表上現在有什麼？」「寫一個 Pine Script VWAP 指標並加到我的圖表上。」「設定一個 2x2 網格，放 NQ、ES、YM 和 GC。」 \"What's on my chart right now?\" \"Write a Pine Script VWAP indicator and add it to my chart.\" \"Set up a 2x2 grid with"
+  },
+  {
+    "docFile": "processed/2026-04-03_tradingview-mcp-claude.html",
+    "docTitle": "TradingView MCP - Claude 連接交易圖表平台",
+    "docDate": "2026-04-03",
+    "docSource": "Trades Dont Lie (@Tradesdontlie)",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Integration",
+      "MCP",
+      "API"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "🔗 CDP 是通用的 Electron 後門 任何基於 Electron 的桌面應用程式都能透過 Chrome DevTools Protocol 被 LLM 存取。這個模式不僅限於 TradingView — 它是一個可複製的架構。開啟 debug port，建立 MCP 伺服器，LLM 就能讀取應用程式狀態。 🔄 AI-in-the-Loop 開發迴圈 Pine Script 的「寫 → 編譯 → 讀錯誤 → 修正 → 重編譯」自動迴圈是 Copilot Mode 的教科書案例。人類負責描述需求和驗證結果，AI 處理中間的重複性迭代。這個模式可以遷移到任何有「撰寫 → 驗證 → 修正」迴圈的工作流程。 📊 圖表資料程式化 將視覺資料轉換為結構化 JSONL 串流，讓下游腳本可以消費。這不是新的資料來源，而是改變資料的消費介面 — 從「人眼看圖表」到「程式讀 JSON」。Unix 管道哲學的資料工程應用。 ⚠️ 未公開 API 的代價 78 個工具建構在未公開內部 API 上，任何版本更新都可能導致全部失效。這是「快速獲得能力」與「長期維護成本」的經典取捨。生產環境使用需釘選版"
+  },
+  {
+    "docFile": "processed/2026-04-03_tradingview-mcp-claude.html",
+    "docTitle": "TradingView MCP - Claude 連接交易圖表平台",
+    "docDate": "2026-04-03",
+    "docSource": "Trades Dont Lie (@Tradesdontlie)",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Integration",
+      "MCP",
+      "API"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼 TradingView 的 Electron 架構讓 CDP 整合成為可能？如果 TradingView 改用原生桌面應用程式（非 Electron），這個方案還能運作嗎？ Electron 是基於 Chromium 的框架，因此繼承了 Chrome DevTools Protocol。CDP 是 Chromium 的內建除錯介面，可以透過 WebSocket 連線讀取和操控瀏覽器/應用程式的狀態。 如果 TradingView 改用原生應用程式（如 Qt、Swift），CDP 就不可用了。你需要找到該平台的等效除錯介面（如 Windows 的 UI Automation API、macOS 的 Accessibility API），但這些介面通常提供的資料粒度遠低於 CDP，且更難以取得應用程式內部的結構化數據。Electron 的「一切都是網頁」本質是這個方案成立的前提。 Q2 產業應用 這篇文章中的「CDP 存取 Electron 應用程式」模式，能否應用到 CDMO 環境中使用的 Electron-based 軟體（如某些 LIMS 或 ELN 的桌面版"
+  },
+  {
     "docFile": "processed/2026-04-04_claw-code-open-source-cli.html",
     "docTitle": "Claw Code - 開源 AI CLI 架構深度解析",
     "docDate": "2026-04-04",
@@ -17838,6 +17982,580 @@ const searchIndex = [
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
     "content": "Claw Code Rust AI CLI Claude Code AI Agent CLI SystemPromptBuilder ConfigLoader MCP Claude Code 理解模組架構 SystemPromptBuilder、ConfigLoader、ProjectContext 三大核心模組的職責與協作方式 掌握 MCP 協議 Model Context Protocol 的六種傳輸模式（Stdio/SSE/HTTP/WS/SDK/ManagedProxy）與適用場景 權限與安全設計 ReadOnly → WorkspaceWrite → DangerFullAccess 三級權限模型與 Hooks 攔截機制 Claw Code 核心架構流程 ProjectContext 探索工作目錄 Git 狀態 + CLAW.md ConfigLoader 多層配置合併 User → Project → Local PromptBuilder 組裝系統提示詞 靜態 + 動態段落 Agent Runtime MCP 工具執行 權限檢查 + Hooks Part I ProjectContext — 專案環境探索引擎 Claw Code 啟動時做的第一件事就是 探索專案環境 。 ProjectContext 結構體負責收集四類關鍵資訊：工作目錄路徑、當前日期、Git 狀態（status + diff）、以及指令檔案（instruction files）。 On startup, Claw Code discovers project context: working directory, date, git state, and instruction files — all fed into the system prompt. 指令檔案的探索邏輯特別精巧： 從當前目錄向上遍歷所有祖先目錄 ，尋找 CLAW.md 、 CLAW.local.md 和 .claw/instructions.md 。找到後以內容雜湊去重，避免 symlink 或重複掛載導致同一份指令被載入兩次。 discover_instruction_files() traverses ancestor directories for CLAW.md, CLAW.local.md, and .claw/instructions.md, deduplicating by stable content hash. 每個指令檔案有 字元預算：單檔 4,000 字元、總計 12,000 字元 。超過就截斷。這是一個務實的設計 — 避免用戶放了一本百科全書進 CLAW.md 就把上下文窗口塞爆。 Character budgets: 4,000 per file, 12,000 total — preventing context window overflow from oversized instruction files. 核心概念 — Instruction File 層級 三種指令檔案，三種用途： 1. CLAW.md — 團隊共享的專案規則，應提交到 Git（等同 Claude Code 的 CLAUDE.md ） 2. CLAW.local.md — 個人偏好，不提交到 Git（等同 CLAUDE.local.md ） 3. .claw/instructions.md — 目錄層級的指令，適合 monorepo 中不同子專案有不同規則 類比 — 對照 Claude Co"
+  },
+  {
+    "docFile": "processed/2026-04-04_github-search-guide.html",
+    "docTitle": "GitHub 搜索指南 - 四種方式與資源分類",
+    "docDate": "2026-04-04",
+    "docSource": "Sac (@Saccc_c) / X (Twitter)",
+    "docRating": 3,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Tutorial"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★☆☆ 3.0/5 ↑ 學習曲線, 實務應用 ↓ 技術深度, 時效性 這篇 Twitter 長文介紹 GitHub 的四種搜索方式（閒逛 Explore、直接搜索、高級搜索、Copilot AI 搜索）以及 GitHub 作為資源網站、資訊網站、代碼網站的三重定位。內容面向完全初學者，步驟清晰但深度有限。 批判性評估：本文為社交媒體內容，以入門科普為主。對已熟悉 GitHub 的開發者價值有限，但「awesome-*」搜索技巧和高級搜索功能對非開發者用戶仍有參考價值。文章缺少 GitHub Topics、GitHub Actions、Issues/Discussions 搜索等進階功能。"
+  },
+  {
+    "docFile": "processed/2026-04-04_github-search-guide.html",
+    "docTitle": "GitHub 搜索指南 - 四種方式與資源分類",
+    "docDate": "2026-04-04",
+    "docSource": "Sac (@Saccc_c) / X (Twitter)",
+    "docRating": 3,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Tutorial"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "掌握四種搜索方式 Explore 閒逛、直接搜索、高級搜索、Copilot AI 搜索的差異與適用場景 理解 GitHub 資源分類 學習資源、資訊動態、代碼庫三大類別的搜索策略 建立實用搜索習慣 awesome-* 模式、stars 篩選、企業追蹤等高效搜索技巧 GitHub 搜索四層模型 Explore 演算法推薦 Direct Search 關鍵字搜索 Advanced 多維度篩選 Copilot AI 自然語言查詢"
+  },
+  {
+    "docFile": "processed/2026-04-04_github-search-guide.html",
+    "docTitle": "GitHub 搜索指南 - 四種方式與資源分類",
+    "docDate": "2026-04-04",
+    "docSource": "Sac (@Saccc_c) / X (Twitter)",
+    "docRating": 3,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Tutorial"
+    ],
+    "sectionId": "content",
+    "sectionTitle": "Content",
+    "content": "搜索方式 (1-4) 資源類型 (5-7) Part I 閒逛搜索 (Explore) GitHub 主頁點擊左上角三條橫線（漢堡選單），再選擇 Explore ，即可進入 GitHub 的推薦區域。這裡有兩個核心區塊： 演算法推薦項目 和 Trending 榜單 。 Click the hamburger menu on the GitHub homepage, then select Explore. You'll find two key areas: algorithm-recommended projects and the Trending leaderboard. Trending 榜單按語言和時間範圍（今日/本週/本月）分類，是發現熱門開源項目最快速的方式。 The Trending section is categorized by language and time range (daily/weekly/monthly), making it the fastest way to discover popular open-source projects. 比喻說"
+  },
+  {
+    "docFile": "processed/2026-04-04_github-search-guide.html",
+    "docTitle": "GitHub 搜索指南 - 四種方式與資源分類",
+    "docDate": "2026-04-04",
+    "docSource": "Sac (@Saccc_c) / X (Twitter)",
+    "docRating": 3,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Tutorial"
+    ],
+    "sectionId": "四層搜索漸進模型",
+    "sectionTitle": "四層搜索漸進模型",
+    "content": "從被動瀏覽（Explore）到主動搜索（Direct）到精準篩選（Advanced）到 AI 輔助（Copilot），搜索效率遞增，學習門檻也遞增。 2"
+  },
+  {
+    "docFile": "processed/2026-04-04_github-search-guide.html",
+    "docTitle": "GitHub 搜索指南 - 四種方式與資源分類",
+    "docDate": "2026-04-04",
+    "docSource": "Sac (@Saccc_c) / X (Twitter)",
+    "docRating": 3,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Tutorial"
+    ],
+    "sectionId": "awesome--是最大槓桿",
+    "sectionTitle": "awesome-* 是最大槓桿",
+    "content": "一個 awesome list 相當於社群幫你做完了研究和篩選。在任何新領域，先搜 awesome-{topic} 是最高 ROI 的起點。 3"
+  },
+  {
+    "docFile": "processed/2026-04-04_github-search-guide.html",
+    "docTitle": "GitHub 搜索指南 - 四種方式與資源分類",
+    "docDate": "2026-04-04",
+    "docSource": "Sac (@Saccc_c) / X (Twitter)",
+    "docRating": 3,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Tutorial"
+    ],
+    "sectionId": "github-不只是代碼",
+    "sectionTitle": "GitHub 不只是代碼",
+    "content": "學習資源、企業動態追蹤、社群策展清單 — GitHub 的「注意力窗口」價值被嚴重低估，特別是對非開發者用戶。 4"
+  },
+  {
+    "docFile": "processed/2026-04-04_github-search-guide.html",
+    "docTitle": "GitHub 搜索指南 - 四種方式與資源分類",
+    "docDate": "2026-04-04",
+    "docSource": "Sac (@Saccc_c) / X (Twitter)",
+    "docRating": 3,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Tutorial"
+    ],
+    "sectionId": "搜索語法-表單介面",
+    "sectionTitle": "搜索語法 > 表單介面",
+    "content": "掌握 stars:>100 language:python 等搜索語法後，可以跳過 Advanced Search 表單，直接在搜索欄完成精確查詢。"
+  },
+  {
+    "docFile": "processed/2026-04-04_github-search-guide.html",
+    "docTitle": "GitHub 搜索指南 - 四種方式與資源分類",
+    "docDate": "2026-04-04",
+    "docSource": "Sac (@Saccc_c) / X (Twitter)",
+    "docRating": 3,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Tutorial"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 GitHub 的四種搜索方式各適用於什麼情境？請用一句話描述每種方式的最佳使用場景。 Explore： 「我不知道有什麼好東西」— 適合靈感探索和跟蹤趨勢。 Direct Search： 「我知道我要找什麼」— 已有明確關鍵字時快速定位。 Advanced Search： 「我要最精確的結果」— 需要多維度篩選（語言+Stars+日期）時使用。 Copilot： 「我有需求但不知道關鍵字」— 用自然語言描述模糊需求。 Q2 產業應用 假設你要為 CDMO 工廠導入一個 GMP 偏差調查的自動化工具，你會如何在 GitHub 上搜索？請列出你的搜索策略。 Step 1 — Awesome List： 搜索 awesome-pharmaceutical 或 awesome-gmp ，看是否有策展清單。 Step 2 — 直接搜索： 嘗試 GMP deviation investigation 、 CAPA management 、 pharmaceutical quality 。 Step 3 — 高級搜索： 限定 stars:>5 （製藥領域開源項目通常較少 stars）"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "executive-summary-執行摘要",
+    "sectionTitle": "Executive Summary / 執行摘要",
+    "content": "這是一本由 AI 輔助撰寫、開源共建的技術書籍，作者 AlexZ（ZhangHanDong）以 Claude Code v2.1.88 的公開發布包與 source map 還原結果為分析材料，系統性拆解了一個生產級 AI Coding Agent 的完整工程架構。全書 7 篇正文 + 4 個附錄，覆蓋從 三層架構 、 Agent Loop 狀態機 、 89 個 Feature Flags 、到 權限模型、Prompt Cache 優化 的完整鏈路。 本書最大的價值不在於「複製 Claude Code」，而在於從真實工程實現中提煉出 可遷移的 AI Agent 架構模式 ——無論你用什麼框架，這些模式都適用。書的生產過程本身就是一個 harness engineering 案例：DESIGN.md → 每章 spec → plan → 技術寫作 skill → AI 寫作。 Source Bias Assessment / 來源偏差評估 來源性質： 基於洩露源碼的逆向工程分析。非 Anthropic 官方授權或認可。 潛在偏差： (1) 源碼為 v2.1.88 快照，不反映最新版本變化"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-i-架構篇-ch1-4",
+    "sectionTitle": "Part I: 架構篇 (Ch.1-4)",
+    "content": "Claude Code 的技術棧選擇揭示了一個核心理念： AI 編碼 Agent 不是傳統的 CLI 工具，它是一個「在分發狀態下運行」的系統 ——模型不僅使用工具，還能編寫自己的工具。整個技術棧必須為「模型作為一等公民」而設計。 The tech stack choice reveals a core principle: an AI coding agent is a system that runs \"on distribution\" — the model not only uses tools but can write its own tools. 全書以 三層架構 為核心概念：應用層（TypeScript 1,902 個文件 + React Ink + Agent Loop）、運行時層（Bun + Zig + JavaScriptCore）、外部依賴層（Anthropic API + MCP + GrowthBook）。層間信息流方向是理解整個系統的關鍵。 The book centers on a three-layer architecture: Applicatio"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "analysis-patterns-分析與模式",
+    "sectionTitle": "Analysis & Patterns / 分析與模式",
+    "content": "核心概念：On Distribution 傳統 CLI 工具在開發時定義好所有功能再分發。AI Agent 不同——它在被使用時，行為由模型動態決定。這意味著 Feature Flag 不僅控制代碼路徑，還控制模型能「看到」哪些工具。當 feature('WEB_BROWSER_TOOL') 為 false 時，整個模組從 bundle 中消失，模型永遠不知道它的存在。 重點提示：雙軌 Feature Flag CC 有兩套並行的 Feature Flag： 構建時 feature() ：bun:bundle 提供，編譯時替換為 true/false 字面量，死代碼消除移除不可達分支。89 個 Flag 控制「功能是否存在」。 運行時 GrowthBook tengu_* ：會話啟動時從服務端拉取，控制 A/B 測試和灰度。控制「功能對誰開放」。 CDMO 映射 三層架構 → GMP 分層驗證：應用層 = SOP 層（業務邏輯）、運行時層 = 設備/系統層（IQ/OQ）、外部依賴 = 原物料/供應商（Vendor Qualification）。Feature Flag 機制 → 變更管"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-ii-提示工程篇-ch5-7",
+    "sectionTitle": "Part II: 提示工程篇 (Ch.5-7)",
+    "content": "系統提示詞不是一個單一字串，而是 分段式組合（segmented composition） 的架構。 constants/prompts.ts 將提示詞分為多個可組合的片段：角色定義、工具使用指引、安全約束、輸出格式等，根據上下文動態組裝。 System prompts use a segmented composition architecture — multiple combinable segments (role, tool guidance, safety constraints, format) dynamically assembled based on context. 工具提示詞 是這本書的一個關鍵洞察——每個工具的 description 本質上是給模型的微型指令集。工具的 JSON Schema 同時服務三個目的：類型定義、運行時驗證、模型指令。TypeScript 的類型系統讓這三者合一成為可能。 Tool descriptions are essentially micro-instruction sets for the model. Each tool'"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "analysis-patterns-分析與模式",
+    "sectionTitle": "Analysis & Patterns / 分析與模式",
+    "content": "比喻說明：分段式提示詞 = 樂高積木 想像系統提示詞不是一篇完整的作文，而是一盒樂高積木。每個積木（segment）有固定形狀和功能：「角色積木」定義身份、「安全積木」設定邊界、「工具積木」描述可用工具。根據不同場景（一般對話 vs 代碼編輯 vs 文件操作），你組裝不同的積木組合。這比寫一篇超長提示詞更靈活，也更容易維護。 工具描述即指令 工具的 description 不只是文檔——它是模型行為的關鍵驅動。CC 團隊在工具描述中嵌入了使用限制、最佳實踐、邊界條件。這呼應了 Context over Instruction 原則：告訴模型「為什麼」比告訴它「什麼」更有效。"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-iii-上下文管理篇-ch8-10",
+    "sectionTitle": "Part III: 上下文管理篇 (Ch.8-10)",
+    "content": "上下文管理是 Agent 工程中最被低估但最關鍵的子系統。CC 使用 多層壓縮體系 ：自動壓縮（Compaction）根據上下文動態觸發，微壓縮（Microcompact）進行更細粒度的修剪，Token 預算追踪器控制總量，History Snip 精確裁剪歷史記錄。 Context management uses a multi-layer compression system: auto-compaction, microcompact for fine-grained trimming, token budget tracking, and history snipping for precise pruning. 上下文折疊（Context Collapse） 是更激進的策略——結構化地修剪上下文，保留關鍵信息的語義結構同時大幅減少 token 數。壓縮後的上下文提醒注入（Compaction Reminders）確保模型在壓縮後不會「忘記」重要指令。 Context Collapse is a more aggressive strategy — structurally p"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "analysis-patterns-分析與模式",
+    "sectionTitle": "Analysis & Patterns / 分析與模式",
+    "content": "核心概念：Token 經濟學 Context Window 是稀缺資源。CC 的多層壓縮策略就像工廠的庫存管理：Token Budget = 倉庫容量上限，Compaction = 定期盤點清理，Microcompact = 即時空間回收，History Snip = 過期品處理。每一層都在成本與信息保留之間做取捨。 重點：模型管理自己的上下文 這是最反直覺的設計——模型參與管理自己的上下文窗口。壓縮、折疊、裁剪都涉及模型的「自我感知」能力。這意味著上下文管理不是純工程問題，它是模型能力與工程設計的交叉地帶。"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-iv-提示詞緩存篇-ch11-15",
+    "sectionTitle": "Part IV: 提示詞緩存篇 (Ch.11-15)",
+    "content": "Prompt Cache 是 CC 成本優化的核心機制。系統提示詞和工具描述這些不變的前綴部分被緩存在服務端，避免每次 API 調用都重新處理。 CacheSafeParams 的五維度共享確保緩存命中率最大化。 Prompt Cache is the core cost optimization — invariant prefix content (system prompts, tool descriptions) is cached server-side. CacheSafeParams ensures maximum cache hit rates. 緩存中斷檢測（ PROMPT_CACHE_BREAK_DETECTION ）是一個精巧的 Feature Flag——它監控何時緩存被意外中斷，幫助工程師優化提示詞結構以維持高緩存命中率。 skipCacheWrite 用於一次性 fork 場景，避免汙染緩存。 Cache break detection monitors unexpected cache invalidation. skipCacheWrite preven"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "analysis-patterns-分析與模式",
+    "sectionTitle": "Analysis & Patterns / 分析與模式",
+    "content": "實務應用：你的 Harness 也需要緩存策略 即使你不直接操作 Prompt Cache API，理解其原理也很重要：把不變的內容（系統提示、工具描述）放在消息序列的最前面，把變化的內容（用戶輸入、動態上下文）放在後面。這個排列順序直接影響 API 成本。你的 headless pipeline 的 CLAUDE.md 結構也應遵循此原則。"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-v-安全與權限篇-ch16-18",
+    "sectionTitle": "Part V: 安全與權限篇 (Ch.16-18)",
+    "content": "CC 的安全架構是 分層防禦 設計：Permission Pipeline 控制每個工具調用的授權流程、YOLO 分類器用正則而非 LLM 推理來檢測安全 vs 危險的 bash 命令（用最便宜的工具解決問題）、Hooks 系統讓用戶在 Agent 生命週期的關鍵節點注入自定義腳本。 Security uses layered defense: Permission Pipeline for tool authorization, YOLO Classifier using regex (not LLM) for bash safety, and Hooks for user-injected scripts at lifecycle points. 規則系統（Rules System）讓用戶通過 CLAUDE.md 文件提供持久的項目上下文，但這些規則本身也有安全邊界——CC 會驗證規則不會繞過核心安全約束。 反蒸馏保護 （Anti-Distillation）防止用戶通過特殊提示提取模型的系統提示詞。 The Rules System (CLAUDE.md) provides per"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "analysis-patterns-分析與模式",
+    "sectionTitle": "Analysis & Patterns / 分析與模式",
+    "content": "比喻說明：YOLO 分類器 = GMP 風險分級 YOLO 分類器的思路類似 GMP 偏差分級：不是每個操作都需要最高級別的審查。 ls 命令就像日常環境監測——風險極低，自動放行。 rm -rf 就像重大偏差——必須人工審批。用正則而非 LLM 做分類，就像用 SOP checklist 而非完整調查來處理 minor deviation。 Agent 安全 ≠ 沙箱 Agent 安全是「每個邊界的對抗性輸入強化」。如果 Agent 可以執行 shell 命令，就假設有人會試圖讓它執行錯誤的命令。CC 用 regex 偵測用戶挫敗感（\"wtf\"、\"so frustrating\"），這聽起來簡單，但體現了核心原則：用最便宜、最快的工具解決問題。"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-vi-高級子系統篇-ch19",
+    "sectionTitle": "Part VI: 高級子系統篇 (Ch.19)",
+    "content": "多 Agent 編排 是最前沿的章節。CC 的 Coordinator Mode 支持多 Worker 編排，子 Agent 可以通過 fork 機制分叉執行。KAIROS（6 個 Flag 構成的最大集群）指向一個完整的「助手模式」——後台自主運行、記憶整理、推送通知、GitHub Webhook 集成。 Multi-agent orchestration with Coordinator Mode for multi-worker orchestration. KAIROS (6-flag cluster) points to a complete \"assistant mode\" — background autonomous operation with memory, notifications, webhooks. 技能系統（Skill System）讓模型可以加載和執行用戶定義的提示詞模板。MCP Skills Bridge 將外部 MCP 工具映射為技能。 Feature Flags 的全景圖 揭示了產品路線圖：89 個 Flag 按功能分為 14 個分類，從核心循環到"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "analysis-patterns-分析與模式",
+    "sectionTitle": "Analysis & Patterns / 分析與模式",
+    "content": "Feature Flag 產品路線圖解讀 KAIROS 家族 (6 Flags) ：背後是「助手模式」產品。不是 CLI 增強，是完全不同的產品形態。 COORDINATOR_MODE + TEAMMEM ：多 Agent 協作。UDS Inbox 用 Unix Domain Socket 做消息傳遞。 AGENT_TRIGGERS + BG_SESSIONS ：定時觸發 + 後台會話 = 你的 headless cron pipeline 的官方版。 VOICE_MODE + BUDDY ：語音模式 + 動畫伴侶精靈，指向更豐富的互動體驗。 CDMO 映射：多 Agent = 多部門協作 Coordinator Mode 就像跨部門偏差調查：一個主調查員（coordinator）分派任務給 QA、生產、工程（workers），每個 worker 執行自己的調查範圍，結果匯回 coordinator 做最終判定。UDS Inbox 相當於 LIMS 中的任務分派佇列。"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "part-vii-ai-agent-構建者的經驗教訓-ch20",
+    "sectionTitle": "Part VII: AI Agent 構建者的經驗教訓 (Ch.20)",
+    "content": "最後一篇提煉了 可遷移的經驗教訓 ：Harness 設計比模型選擇更重要、「用最便宜的工具解決問題」（regex vs LLM）、安全是每個邊界的對抗性輸入強化、Feature Flag 是管理複雜性的關鍵工具。 Transferable lessons: harness design matters more than model choice, use the cheapest tool that works, security is adversarial input hardening at every boundary. 書中指出的局限也很有價值：CC 的 React Ink 終端 UI 使用「遊戲引擎式渲染優化」，REPL.tsx 超過 5,000 行——這不一定是好的工程實踐。洩露源碼的 source map 還原有精度限制。AI 生成的架構分析需要工程師驗證。 The book honestly notes limitations: React Ink's 5000+ line REPL.tsx may not be ideal engineering practice"
+  },
+  {
+    "docFile": "processed/2026-04-04_harness-engineering-cc-book.html",
+    "docTitle": "驾驭工程 - CC 源码逆向 Harness Engineering",
+    "docDate": "2026-04-04",
+    "docSource": "AlexZ (ZhangHanDong) / GitHub",
+    "docRating": 4.3,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Tool",
+      "API"
+    ],
+    "sectionId": "analysis-patterns-分析與模式",
+    "sectionTitle": "Analysis & Patterns / 分析與模式",
+    "content": "核心概念：Harness > Model 這呼應了你的 Harness Engineering 學習原則：性能提升來自 harness 設計而非模型升級。CC 的 89 個 Feature Flag、分段式提示詞、多層上下文壓縮——這些都是 harness 層面的優化。同一個模型在不同 harness 中表現可以天差地別。 重要反思：模型與 Harness 的耦合 前沿模型被 post-trained 在它們的 harness 上（Claude 在 CC 中，GPT-5 Codex 在 Codex 中）。這意味著模型在其原生 harness 中表現最好，但也可能過度擬合。OpenCode 需要為 Codex 模型專門添加 apply_patch 工具來模擬 Codex harness。這是 Tool Decay 原則的新面向。 Key Takeaways / 重點整理 1. 三層架構是通用模式 應用層（業務邏輯）、運行時層（執行引擎）、外部依賴層（模型/工具）的分離不是 CC 專屬設計，而是任何生產級 AI Agent 都需要的架構基礎。層間信息流方向和穿透路徑決定了系統的可觀測性和可"
+  },
+  {
+    "docFile": "processed/2026-04-04_health-guide-after-40.html",
+    "docTitle": "40歲後身體保養 - 飲食運動作息科學方案",
+    "docDate": "2026-04-04",
+    "docSource": "Mr Panda / @PandaTalk8",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.6/5 Practical Value, Learning Curve Technical Depth, Timeliness 本文從飲食、運動、作息三個維度，彙整 40 歲後身體管理的循證醫學建議。核心論點： 蛋白質優先、力量訓練不可替代、睡眠是一切的地基 。文章由 AI 生成、作者審閱，屬於健康科普整理型內容，引用了多項期刊研究但未附完整文獻連結。對於 40+ 歲的知識工作者，提供了可直接落地的行動框架。 批判性提醒： 本文為 AI 生成內容，雖引用了《Lancet》、《BJSM》、《JAMA Internal Medicine》等期刊結論，但未提供完整文獻 DOI 連結，具體數據（如「運動降低全因死亡率 15%-30%」）需獨立驗證。營養補充劑建議應諮詢醫師後個人化調整。"
+  },
+  {
+    "docFile": "processed/2026-04-04_health-guide-after-40.html",
+    "docTitle": "40歲後身體保養 - 飲食運動作息科學方案",
+    "docDate": "2026-04-04",
+    "docSource": "Mr Panda / @PandaTalk8",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "飲食結構優化 理解 40 歲後蛋白質需求上升、碳水策略調整、關鍵微量營養素補充的科學依據 運動方案設計 掌握力量訓練、有氧運動、柔韌性與平衡訓練的優先級和具體方案 作息與修復系統 建立科學睡眠衛生、晝夜節律校準、壓力管理的完整框架 40+ Health Management Framework Eat Right Protein First + Low GI + Micronutrients Train Smart Strength #1 + Zone 2 + Mobility Sleep Deep 7-9h + Circadian + Stress Mgmt Monitor Annual Checkups + Data-Driven 5, use tabs) -->"
+  },
+  {
+    "docFile": "processed/2026-04-04_health-guide-after-40.html",
+    "docTitle": "40歲後身體保養 - 飲食運動作息科學方案",
+    "docDate": "2026-04-04",
+    "docSource": "Mr Panda / @PandaTalk8",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework"
+    ],
+    "sectionId": "content",
+    "sectionTitle": "Content",
+    "content": "Part I-V: Diet Part VI-IX: Exercise Part X-XII: Sleep Part I 蛋白質：最容易被忽視的關鍵營養素 40 歲後蛋白質攝入量應 提高而非減少 。中年後肌肉對蛋白質的合成反應變得遲鈍，學術上稱為「 合成代謝抵抗 」(anabolic resistance)，同樣的攝入量產生的肌肉合成效果不如年輕時，需要更高攝入來維持同等效果。 After 40, protein intake should increase, not decrease. Muscles develop \"anabolic resistance\" — the same protein intake produces less muscle synthesis than in younger years. ISSN 和 ESPEN 共識建議：一般成人每公斤體重 0.8g（最低需求），40 歲以上建議 1.0-1.2g/kg ，有運動習慣者 1.2-1.6g/kg。 ISSN and ESPEN consensus: general adults 0.8g/kg (mini"
+  },
+  {
+    "docFile": "processed/2026-04-04_health-guide-after-40.html",
+    "docTitle": "40歲後身體保養 - 飲食運動作息科學方案",
+    "docDate": "2026-04-04",
+    "docSource": "Mr Panda / @PandaTalk8",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Protein First 40 歲後面臨合成代謝抵抗，蛋白質需求不降反升。每餐 25-40g 優質蛋白是對抗肌少症的基礎，早餐尤其不能只吃碳水。 Strength Training is Non-Negotiable 力量訓練是 40 歲後的第一優先運動。它同時解決肌肉流失、骨密度、胰島素敏感性、基礎代謝和激素水平五個問題，有氧運動無法替代。 Sleep is the Foundation 飲食和運動的效果都建立在充足睡眠之上。深度睡眠在 40 歲後大幅減少，需要主動優化睡眠環境和晝夜節律。睡眠不足時一切打折。 Consistency Over Intensity 每週穩定訓練 3 次持續 10 年，遠勝猛練 3 個月然後放棄。每兩週加入一個新習慣，12 個月後生活方式完全不同。"
+  },
+  {
+    "docFile": "processed/2026-04-04_health-guide-after-40.html",
+    "docTitle": "40歲後身體保養 - 飲食運動作息科學方案",
+    "docDate": "2026-04-04",
+    "docSource": "Mr Panda / @PandaTalk8",
+    "docRating": 3.6,
+    "docTags": [
+      "Analysis",
+      "Framework"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼 40 歲後需要「更多」而非「更少」的蛋白質？這與年輕時有何本質區別？ 關鍵在於「合成代謝抵抗」(anabolic resistance)。40 歲後肌肉對蛋白質的合成反應效率下降——同樣攝入 20g 蛋白質，年輕人可能啟動充分的肌肉蛋白質合成 (MPS)，但中年人的 MPS 反應明顯減弱。因此需要更高的攝入量（1.0-1.6g/kg vs 0.8g/kg）來達到同等的肌肉維持效果。這不是「老了要大吃」，而是「同樣的投入產出比下降了，需要增加投入」。 Q2 產業應用 作為製藥 CDMO 的營運主管，長時間的高壓工作和不規律排班是常態。如何在這種情境下優先落實本文的建議？ 優先級策略：(1) 睡眠衛生是投資報酬率最高的項目——固定就寢時間即使只差 30 分鐘也有意義，下午 2 點後戒咖啡因對不規律排班者尤其關鍵；(2) 力量訓練每週 2 次、每次 45 分鐘，用複合動作覆蓋全身，是時間效率最高的運動方式；(3) 蛋白質可以用乳清蛋白粉解決便利性問題，辦公室備一罐即可。GMP 環境中工作的人容易忽視自己的「身體 GMP」——同樣需要 SOP、監控和偏差調查。 Q3 批"
+  },
+  {
+    "docFile": "processed/2026-04-07_kv-cache-token-savings.html",
+    "docTitle": "KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token",
+    "docDate": "2026-04-07",
+    "docSource": "实践哥MinLi / @MinLiBuilds",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 4.2/5 ↑ Technical Depth, Practical Value ↓ Tool Ecosystem, Learning Curve 本文從本地 Gemma4 實驗出發，揭示 Transformer KV Cache 的運作原理，再逆向 Claude Code 原始碼，拆解 Anthropic 在快取上的多層前綴匹配架構。核心結論：理解快取機制後，同樣的訂閱方案可以多做 3-5 倍的工作量。文章技術深度高，有原始碼級別的佐證，但部分段落對初學者門檻較高。 Learning Objectives 🧠 理解 KV Cache 為何能加速 Transformer 推論，以及 Decoder-only 架構與此的關聯 🔧 掌握 Claude Code 的多層快取結構（Block 3/4、TTL、前綴匹配）與斷裂原因 💰 將快取知識轉化為具體省 Token 策略，應用於日常 Claude Code 開發流程 KV Cache 從原理到實戰的四步框架 🔬 本地實驗 Gemma4 vs Qwen3.5 快取實測 → 📐 QKV 原理 Decoder-only 因果"
+  },
+  {
+    "docFile": "processed/2026-04-07_kv-cache-token-savings.html",
+    "docTitle": "KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token",
+    "docDate": "2026-04-07",
+    "docSource": "实践哥MinLi / @MinLiBuilds",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "kv-cache-已計算的注意力快取",
+    "sectionTitle": "KV Cache = 已計算的注意力快取",
+    "content": "Decoder-only 架構的因果遮罩保證歷史 token 的 K/V 一旦算完就固定。模型越大，快取收益越大（Gemma4 達 148 倍加速）。"
+  },
+  {
+    "docFile": "processed/2026-04-07_kv-cache-token-savings.html",
+    "docTitle": "KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token",
+    "docDate": "2026-04-07",
+    "docSource": "实践哥MinLi / @MinLiBuilds",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "前綴匹配是快取的生命線",
+    "sectionTitle": "前綴匹配是快取的生命線",
+    "content": "快取像鏈條，斷在哪裡後面全廢。Block 3 (全域) → Block 4 (CLAUDE.md) → tools → messages，任何一環改變都會導致後續失效。"
+  },
+  {
+    "docFile": "processed/2026-04-07_kv-cache-token-savings.html",
+    "docTitle": "KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token",
+    "docDate": "2026-04-07",
+    "docSource": "实践哥MinLi / @MinLiBuilds",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "持續對話-vs-開新-session-5-倍差距",
+    "sectionTitle": "持續對話 vs 開新 Session = 5 倍差距",
+    "content": "10 輪對話中，持續 session 只需 1.9 份等價 token，開新 session 需要 10 份。理解這點就理解了「怎麼讓方案多撐 3-5 倍」。"
+  },
+  {
+    "docFile": "processed/2026-04-07_kv-cache-token-savings.html",
+    "docTitle": "KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token",
+    "docDate": "2026-04-07",
+    "docSource": "实践哥MinLi / @MinLiBuilds",
+    "docRating": 4.2,
+    "docTags": [
+      "LLM",
+      "Tool",
+      "API",
+      "Framework"
+    ],
+    "sectionId": "sub-agent-有獨立快取開銷",
+    "sectionTitle": "Sub-agent 有獨立快取開銷",
+    "content": "每個 sub-agent 工具集、訊息歷史、甚至模型都可能不同，幾乎無法複用主執行緒快取。合理使用 agent 要權衡快取代價。 Practice Questions Q1 概念理解 為什麼 BERT 架構不能有效利用 KV Cache，而 GPT/Claude 可以？ BERT 使用 雙向注意力 ，每個 token 同時看前後所有 token。加入新 token 後，所有已有 token 的 Key/Value 都會改變，快取全部作廢。GPT/Claude 使用 Decoder-only 的 因果遮罩 (causal mask) ，每個 token 只看前面的 token，因此前面 token 的 KV 算完就固定，新增 token 不影響它們。這是 KV Cache 能成立的結構性前提。 Q2 產業應用 在 CDMO 的 GMP 環境中，如果要用 Claude Code 建立一個偏差調查的自動化工具，你會如何設計 session 策略來最大化快取效益？ 關鍵策略： 按調查階段維持單一 session ，不要每個小任務都開新對話。具體做法： 1. 在 session 開始時把 CLA"
+  },
+  {
+    "docFile": "processed/2026-04-07_mempalace-ai-memory.html",
+    "docTitle": "MemPalace AI 記憶系統 - Palace 架構與 AAAK 壓縮",
+    "docDate": "2026-04-07",
+    "docSource": "milla-jovovich / GitHub",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "MemPalace 是一個開源的 AI 記憶系統，核心理念是 「儲存一切，再讓它可搜尋」 ，而非讓 AI 決定什麼值得記住。系統由三大支柱構成：(1) Palace 階層結構（Wings/Halls/Rooms）提供 +34% 的檢索提升；(2) AAAK 壓縮方言實現 30x 壓縮、零資訊遺失；(3) 本地優先架構，完全離線運行，無需 API 金鑰。在 LongMemEval 標準測試中，零 API 模式即達 96.6% R@5，加上 Haiku rerank 達 100%。 2-3x Discount 提醒：專案方自行公布的 benchmark，附有可重現 runner 但尚未經第三方驗證。專案僅 6 commits，成熟度有限。"
+  },
+  {
+    "docFile": "processed/2026-04-07_mempalace-ai-memory.html",
+    "docTitle": "MemPalace AI 記憶系統 - Palace 架構與 AAAK 壓縮",
+    "docDate": "2026-04-07",
+    "docSource": "milla-jovovich / GitHub",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "Palace 記憶架構 Wings / Halls / Rooms / Tunnels 階層設計如何提升檢索精準度 34% AAAK 壓縮方言 AAAK 無損壓縮原理，120 tokens 載入數月工作脈絡 記憶系統設計取捨 「AI 萃取摘要」vs.「原文全存 + 結構搜尋」兩種範式 MemPalace 記憶堆疊 (Memory Stack) L0 Identity ~50 tokens AI 是誰？ L1 Critical Facts ~120 tokens (AAAK) 團隊、專案、偏好 L2 Room Recall On demand 當前主題記憶 L3 Deep Search On demand 跨 closet 語意搜尋 PART I 核心問題：AI 對話記憶的消失 每一次你與 AI 的對話 — 每個決策、每次除錯、每場架構辯論 — 都在 對話結束時消失 。六個月的工作，歸零。每次都從頭來過。 Every conversation you have with an AI — every decision, every debugging session — disappear"
+  },
+  {
+    "docFile": "processed/2026-04-07_mempalace-ai-memory.html",
+    "docTitle": "MemPalace AI 記憶系統 - Palace 架構與 AAAK 壓縮",
+    "docDate": "2026-04-07",
+    "docSource": "milla-jovovich / GitHub",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "結構 > 智能 Palace 階層結構帶來 34% 檢索提升。好的分類 + 簡單搜尋 > 複雜 AI 萃取 + 平面搜尋。 全存 vs 摘要 LLM 萃取摘要丟掉了「為什麼」。原文全存 + 結構搜尋在 benchmark 上擊敗更複雜的系統。 AAAK = Context Engineering 120 tokens 載入完整脈絡。英文壓縮到 AI 最易消化的格式。任何 LLM 皆可讀。 本地優先 完全離線 + $0。GMP 製藥等高隱私環境中，本地優先是合規需求而非功能選項。"
+  },
+  {
+    "docFile": "processed/2026-04-07_mempalace-ai-memory.html",
+    "docTitle": "MemPalace AI 記憶系統 - Palace 架構與 AAAK 壓縮",
+    "docDate": "2026-04-07",
+    "docSource": "milla-jovovich / GitHub",
+    "docRating": 4.2,
+    "docTags": [
+      "Tool",
+      "Agent",
+      "Framework",
+      "LLM"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 為什麼「原文全存」策略能勝過 LLM 萃取系統？ 核心在於 資訊完整性 。LLM 萃取做了不可逆判斷 — 萃取錯誤，記憶永遠消失。MemPalace 保留原文，embedding 模型可升級、搜尋策略可改進，但 原始資料從未損壞 。如同 GMP「原始資料不可覆寫」原則。 含義：AI 記憶領域可能過度工程化了「萃取」。好的 embedding + 結構化索引是被低估的 baseline。 Q2 產業應用 用 Palace 架構組織 CDMO 偏差調查記錄，如何設計 Wings/Halls/Rooms？ Wings — 按產品線：wing_product_A、wing_client_pfizer。 Halls — hall_root_causes、hall_capas、hall_trends、hall_regulatory、hall_lessons。 Rooms — particulate-contamination、fill-volume-oos、environmental-monitoring。 當不同產品線都有 particulate-contamination Ro"
   },
   {
     "docFile": "processed/2026-04-08_claude-code-release-evolution.html",
@@ -18180,5 +18898,316 @@ const searchIndex = [
     "sectionId": "v2177",
     "sectionTitle": "v2.1.77",
     "content": "2026-03-17 繁體中文 English 應用場景 Scenario Features 新功能 Opus 4.6 輸出 Token 上限提升至 64,000 （從 32K 翻倍） Increased Opus 4.6 output token limits to 64K 一次輸出完整 CTD Module 2 摘要或完整 SOP 文件不再被截斷 — 對長篇文件生成意義重大 沙箱新增 allowRead 檔案系統設定 Added allowRead sandbox filesystem setting 可精確指定沙箱內允許讀取的目錄 — 只開放必要路徑，安全合規更嚴謹 /copy 指令支援可選 index 參數 — 可複製特定輪次輸出 Extended /copy command with optional index parameter 複製第 3 輪的分析結果： /copy 3 — 不需要手動捲回去選取 Bug Fixes 錯誤修復 修正複合 bash 指令的 Permission Rules 判斷 Fixed compound bash command permission "
+  },
+  {
+    "docFile": "processed/2026-04-08_elite-speaking-clarity-texture-comfort.html",
+    "docTitle": "菁英溝通三支柱 - Joseph Elite Speaking Framework",
+    "docDate": "2026-04-08",
+    "docSource": "Joseph (YouTube)",
+    "docRating": 3.6,
+    "docTags": [
+      "Framework",
+      "Content",
+      "Analysis"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "★★★★☆ 3.6/5 ↑ 學習曲線, 實務應用 ↓ 技術深度, 工具生態 Joseph 提出菁英溝通的三大支柱框架： Clarity（清晰） 來自思維整理，透過控制輸入、增加輸出來磨練； Texture（質地） 取決於詞彙的精準度與驚喜感，透過 Surface/Deep Lexicon 管理和 Vocal Ego（AI 語音教練）來訓練； Comfort（自在） 建立在說話之前的身心靈準備 —— 呼吸、使命感、以及價值觀的錨定。 影片的核心立場是： 清晰的表達是清晰思維的結果 ，而非技巧的堆砌。98% 的人是「Babbler（嘮叨者）」，因為社會結構不培養清晰的思考者。本文將這個框架拆解為可操作的練習系統。 清晰的公式 理解 Clarity = Bad Output x Frequency，掌握輸入過濾與輸出系統的設計方法 詞彙質地工程 區分 Surface Lexicon 與 Deep Lexicon，運用 TAKES 公式與 Vocal Ego 提升表達力 說話前的準備 掌握 Body-Mind-Spirit 三層自在系統：呼吸法、心理引導語、價值觀錨定 Elite Speaking 三支柱框架 $ Clarity 清晰 控制輸入 + 增加輸出 Texture 質地 精準 + 驚喜的詞彙選擇 Comfort 自在 身心靈準備 + 價值觀錨定 Part I Clarity 清晰 —— 最值錢的貨幣 Joseph 開場就定調： 清晰的表達是清晰思維的結果 。大多數人是「Babbler」—— 一個無法控制自己舌頭的人。他們說話模糊、思緒混亂，沒有整理想法的流程。這不是個人的錯，而是 社會結構的產物 ：現代教育不再像古希臘那樣重視修辭學和辯論。 \"Clear speaking is the result of clear thinking... A babbler is someone who doesn't have good control over their tongue... Society is not set up to produce clear thinkers or clear speakers.\" 他用兩隻獅子和藍鴉的寓言來說明兩個真理：第一， 觀點的代價是攀爬 —— 清晰是你必須用掙扎去贏得的，ChatGPT 無法用冰冷的金屬雙手遞給你。第二，清晰需要 謙卑 ，承認總有人站在更高的枝頭。 \"The price of the view is the climb... You can sharpen your words but you cannot speedrun clarifying the heart... Clarity becomes poisonous the second that you think you're the singing blue jay on the top branch.\" 清晰受兩個轉盤影響： 輸入（Inputs） 和 輸出（Outputs） 。大多數人不知道自己的輸入是什麼，任何音樂、任何內容、任何想法都照單全收。菁英講者懂得建立「認知安全」—— 保衛心智領土不受有害輸入侵蝕。 \"Most people don't know what their inputs are... An elite speaker knows how to establish good cognitive security... When things don't get digested the mind g"
+  },
+  {
+    "docFile": "processed/2026-04-08_hermes-agent-self-improving.html",
+    "docTitle": "Hermes Agent - Self-Improving AI Agent Guide",
+    "docDate": "2026-04-08",
+    "docSource": "Will Yang / X Thread",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "3.2/5 Tool Ecosystem, Timeliness Technical Depth, Learning Curve 2-3x Discount Applied: X/Twitter Influencer Thread - 來源為社群推文，非技術文件或同行評審內容 - 大量促銷性語言（\"爆了\"、\"碾壓\"、\"殺手鐧\"），需降低可信度 - \"指數級提升\"等宣稱無基準測試佐證，標記為未驗證 - 與 OpenClaw 的比較明顯傾斜，缺乏對等分析 - 評分已從基礎 4.0 折扣至 3.2（社群推文類打八折） Hermes Agent 是 Nous Research 開發的開源自我進化 AI Agent，核心賣點是 內建學習閉環 ：透過持久記憶 (SQLite + FTS5) 和自動 Skill 生成 (Markdown Skill Files) 實現跨對話的能力累積。支援 200+ 模型（OpenRouter）、CLI/Telegram/Discord 多平台部署、MIT 授權完全開源。本文整理其架構概念、安裝流程、與 OpenClaw 的比較，並從 CDMO 營運視角評估其模式的"
+  },
+  {
+    "docFile": "processed/2026-04-08_hermes-agent-self-improving.html",
+    "docTitle": "Hermes Agent - Self-Improving AI Agent Guide",
+    "docDate": "2026-04-08",
+    "docSource": "Will Yang / X Thread",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "1 理解 Self-Improving Agent 的記憶與 Skill 自動生成架構模式 2 比較 Hermes vs OpenClaw 的設計哲學差異與適用場景 3 評估自我進化模式對現有 Claude Code Skills 工作流的啟示 Hermes Self-Improving Loop T Task Execution Execute with tools S Skill Generation Auto-create .md skill M Memory Store SQLite + FTS5 R Recall & Improve Next task uses learnings"
+  },
+  {
+    "docFile": "processed/2026-04-08_hermes-agent-self-improving.html",
+    "docTitle": "Hermes Agent - Self-Improving AI Agent Guide",
+    "docDate": "2026-04-08",
+    "docSource": "Will Yang / X Thread",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-i-hermes-agent-核心架構",
+    "sectionTitle": "Part I: Hermes Agent 核心架構",
+    "content": "Part I 自我進化 Agent 的四大支柱 Hermes Agent 最核心的設計理念是 學習閉環 (Closed Learning Loop) ：每次任務完成後，Agent 不是「歸零」重來，而是將經驗沉澱為可復用的資產。這與傳統 AI 工具「用完即棄」的模式根本不同。 \"Core innovation lies in its built-in closed learning loop.\" 1. 持久多層記憶 (Persistent Multi-Layer Memory) ：使用 SQLite + FTS5 全文搜索 儲存對話歷史、使用者偏好、行為模式。LLM 自動摘要長期記憶，避免 Context Window 溢出。跨會話永久保存，不會「健忘」。 \"Uses SQLite + FTS5 full-text search + LLM auto-summarization, permanently remembers your preferences, style and history across sessions.\" 2. 自動技能進化 (Auto Skill Evolut"
+  },
+  {
+    "docFile": "processed/2026-04-08_hermes-agent-self-improving.html",
+    "docTitle": "Hermes Agent - Self-Improving AI Agent Guide",
+    "docDate": "2026-04-08",
+    "docSource": "Will Yang / X Thread",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-ii-hermes-vs-openclaw-比較",
+    "sectionTitle": "Part II: Hermes vs OpenClaw 比較",
+    "content": "Part II 設計哲學差異與場景選擇 原文將兩者定位為「進化型個人助理 vs 多平台自動化工具箱」。這個框架有一定道理，但比較角度明顯偏向 Hermes： 維度 Hermes Agent OpenClaw 核心定位 自我進化個人 Agent 多平台整合工具箱 記憶系統 SQLite + FTS5 + LLM 摘要 記憶存在但深度較淺（原文說法） Skill 管理 自動生成 + 自我迭代 手動管理 + 社區共享 部署需求 輕量（$5 VPS 可跑） 較重（完整生態系統） 模型支援 OpenRouter 200+ 類似多模型支援 遷移路徑 hermes claw migrate 一鍵導入 N/A 授權 MIT 開源 原文建議「兩者並用：OpenClaw 做執行，Hermes 做大腦」。這是一個有趣但 未經驗證的架構模式 -- 雙 Agent 協作的 overhead 和一致性問題被完全忽略。 Bias Check: One-Sided Comparison 這個比較有幾個明顯偏差： OpenClaw 記憶「較淺」 -- 這是原文說法，未提供技術對比依據 「社區共識」 -- 未引用具體調查"
+  },
+  {
+    "docFile": "processed/2026-04-08_hermes-agent-self-improving.html",
+    "docTitle": "Hermes Agent - Self-Improving AI Agent Guide",
+    "docDate": "2026-04-08",
+    "docSource": "Will Yang / X Thread",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-iii-安裝與核心命令",
+    "sectionTitle": "Part III: 安裝與核心命令",
+    "content": "Part III 快速部署指南（概念整理，非照搬原文） Hermes Agent 的安裝流程相當精簡，一條 curl 命令完成所有依賴安裝。以下是核心步驟概述： Installation & Setup Flow Step 1: 一鍵安裝 -- 使用 curl 執行官方安裝腳本，自動處理 Python 3.11、Node.js、依賴、全域 hermes 命令 Step 2: 首次設定 -- hermes setup 啟動互動式設定精靈，包含模型選擇、工具設定、API Key 配置 Step 3: 驗證 -- hermes doctor 檢查環境健康度， hermes version 確認版本 核心命令結構： 類別 命令 用途 基礎 hermes 啟動互動式聊天 設定 hermes setup / model / tools 設定精靈 / 模型切換 / 工具管理 技能 hermes skills search 搜尋安裝 Skill 平台 hermes gateway setup/start 連接 Telegram/Discord 安全 hermes config set terminal"
+  },
+  {
+    "docFile": "processed/2026-04-08_hermes-agent-self-improving.html",
+    "docTitle": "Hermes Agent - Self-Improving AI Agent Guide",
+    "docDate": "2026-04-08",
+    "docSource": "Will Yang / X Thread",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "part-iv-架構模式的可借鏡之處",
+    "sectionTitle": "Part IV: 架構模式的可借鏡之處",
+    "content": "Part IV 從 Hermes 學到的設計思考 即使 Hermes 不適合直接採用，其架構中有幾個值得反思的設計模式： 1. 記憶的三層架構 ：短期（Context Window）→ 中期（Session Summary）→ 長期（SQLite 持久化 + FTS5 檢索）。這比單純的「把所有東西塞進 Context」更有結構感。你的 index.md routing target 設計已經朝這個方向走了。 2. Skill 的生命週期管理 ：Create → Use → Evaluate → Iterate。Hermes 自動化了整個流程，但缺乏品質關卡。 理想模式可能是：自動 Draft + 人工 Review + 版本控制 。 3. 遷移工具的設計思維 ： hermes claw migrate 支援 dry-run，這是良好的 DevOps 實踐。任何從系統 A 到系統 B 的遷移，都應該有預覽模式。 Key Insight: Auto-Draft + Human-Review Hybrid 結合 Hermes 和你現有的 Claude Code Skills 模式，最佳實踐"
+  },
+  {
+    "docFile": "processed/2026-04-08_hermes-agent-self-improving.html",
+    "docTitle": "Hermes Agent - Self-Improving AI Agent Guide",
+    "docDate": "2026-04-08",
+    "docSource": "Will Yang / X Thread",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "1. Self-Improving Loop is the Core Innovation Hermes 的 Task → Skill → Memory → Recall 閉環是與傳統 Agent 的關鍵區隔。概念有效，但「指數級成長」的宣稱需打折理解。 2. Auto-Skill vs Manual-Skill is a Design Tradeoff 自動生成快但品質不可控，手動管理慢但可靠。最佳路徑：Auto-Draft + Human-Review 混合模式。 3. Hermes is Explore, Not Adopt 對已有 Claude Projects + Claude Code + GitHub 工具鏈的使用者而言，Hermes 的獨特價值被現有工具部分覆蓋。屬於 explore/demo 類別。 4. Source Quality Matters X/Twitter 推文的促銷性語言和單方面比較，再次提醒：Source Discount 是知識管理的必要步驟。"
+  },
+  {
+    "docFile": "processed/2026-04-08_hermes-agent-self-improving.html",
+    "docTitle": "Hermes Agent - Self-Improving AI Agent Guide",
+    "docDate": "2026-04-08",
+    "docSource": "Will Yang / X Thread",
+    "docRating": 3.2,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Automation"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Hermes Agent 的「自我進化」具體包含哪兩個機制？它們分別解決什麼問題？ 兩個核心機制： (1) 持久多層記憶 （SQLite + FTS5）-- 解決傳統 Agent 跨對話「健忘」的問題，讓 Agent 記住使用者偏好、歷史互動。 (2) 自動 Skill 生成 （Markdown Skill Files）-- 解決重複任務需要每次從頭設定的問題，任務完成後自動沉澱為可復用的能力模組。 關鍵區分：記憶解決的是「認識你」，Skill 解決的是「會做事」。兩者結合形成學習閉環。 Q2 產業應用 如果將 Hermes 的自動 Skill 生成模式應用到 CDMO 的偏差調查流程，需要加上什麼限制條件才能符合 GMP 要求？ 至少需要以下限制： (1) Human-in-the-Loop 審批 ：自動生成的 Skill（調查模板、CAPA 範本）必須經過 QA 審核後才能正式啟用，不得自動上線。 (2) 變更控制整合 ：每個 Skill 的建立、修改、廢除都要走變更控制流程（Change Control），有版本號和審核簽名。 (3) 驗證記錄 ：Skill 的使"
+  },
+  {
+    "docFile": "processed/2026-04-11_garrytan-gbrain.html",
+    "docTitle": "GBrain - Garry Tan 個人知識大腦架構",
+    "docDate": "2026-04-11",
+    "docSource": "Garry Tan / GitHub garrytan/gbrain",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "GBrain 是 Y Combinator 總裁 Garry Tan 開源的個人知識管理系統，將散落在各處的 Markdown 文件轉化為可搜尋的「第二大腦」。核心技術是 Postgres + pgvector 混合搜尋 （結合 keyword + vector + RRF fusion），加上 Compiled Truth + Timeline 雙層知識模型 。AI Agent 透過 Brain-Agent Loop 自動偵測實體、enrichment、建立交叉引用，讓知識隨每次對話自動複利累積。 這不只是一個搜尋工具 -- 是一套完整的 AI Agent 知識骨幹架構 ，包含 entity detection、7 步 enrichment pipeline、meeting ingestion、cron-based 自動化，以及 MCP server 整合。基於真實部署（14,700+ 文件、40+ skills、20+ cron jobs）的實戰經驗。 Note: 此專案剛開源（2026-04-08），生態系仍在早期階段。Garry Tan 的使用情境（VC/CEO 社交網絡管理）"
+  },
+  {
+    "docFile": "processed/2026-04-11_garrytan-gbrain.html",
+    "docTitle": "GBrain - Garry Tan 個人知識大腦架構",
+    "docDate": "2026-04-11",
+    "docSource": "Garry Tan / GitHub garrytan/gbrain",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "learning-objectives",
+    "sectionTitle": "Learning Objectives",
+    "content": "知識模型 理解 Compiled Truth + Timeline 雙層頁面結構，以及為何這比 RAG 更強大 混合搜尋 掌握 Keyword + Vector + RRF Fusion + Multi-query Expansion 的搜尋架構 Agent 整合 學習 Brain-Agent Loop、Entity Detection、Enrichment Pipeline 的運作模式 Brain-Agent Loop: 知識複利循環 Signal In 訊息/會議/Email READ Brain 搜尋既有知識 Respond 帶上下文回應 WRITE Brain 更新知識頁面 Sync 索引供下次查詢"
+  },
+  {
+    "docFile": "processed/2026-04-11_garrytan-gbrain.html",
+    "docTitle": "GBrain - Garry Tan 個人知識大腦架構",
+    "docDate": "2026-04-11",
+    "docSource": "Garry Tan / GitHub garrytan/gbrain",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-i-compiled-truth-timeline----知識的雙層結構",
+    "sectionTitle": "Part I: Compiled Truth + Timeline -- 知識的雙層結構",
+    "content": "PART I GBrain 的核心設計理念是每個知識頁面都有一條 水平分隔線 將內容分為兩個區域。這不是隨便的排版決定 -- 這是整個系統最重要的架構選擇。 Every page in the brain follows the compiled truth + timeline pattern, separated by a horizontal rule. 分隔線上方：Compiled Truth（編譯真相）。 你目前對這件事的最佳理解。當新證據改變了整體圖景時，整段重寫。如果你只讀這個部分，就知道所有你需要知道的。 Above the line: Compiled truth. Your current best understanding. Gets rewritten when new evidence changes the picture. 分隔線下方：Timeline（時間軸）。 只能追加、永不修改的證據記錄。反向時間順序排列。每條 compiled truth 的主張都應該可以追溯到一或多條 timeline entries。 Below the line: Time"
+  },
+  {
+    "docFile": "processed/2026-04-11_garrytan-gbrain.html",
+    "docTitle": "GBrain - Garry Tan 個人知識大腦架構",
+    "docDate": "2026-04-11",
+    "docSource": "Garry Tan / GitHub garrytan/gbrain",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-ii-混合搜尋架構----keyword-vector-rrf",
+    "sectionTitle": "Part II: 混合搜尋架構 -- Keyword + Vector + RRF",
+    "content": "PART II GBrain 的搜尋不是單純的 keyword 或 vector -- 它結合了兩者，再用 Reciprocal Rank Fusion (RRF) 融合排名。這是因為兩種搜尋各有盲區。 Keyword search alone misses conceptual matches. Vector search alone misses exact phrases when the embedding is diluted. RRF fusion gets both right. Keyword 搜尋的盲區： 搜「ignore conventional wisdom」不會找到一篇標題叫「The Bus Ticket Theory of Genius」的文章，即使它完全在講這件事。因為精確字詞不匹配。 \"Ignore conventional wisdom\" won't find \"The Bus Ticket Theory of Genius\" even though it's exactly about that. Vector 搜尋的盲區： 當 embedding 被"
+  },
+  {
+    "docFile": "processed/2026-04-11_garrytan-gbrain.html",
+    "docTitle": "GBrain - Garry Tan 個人知識大腦架構",
+    "docDate": "2026-04-11",
+    "docSource": "Garry Tan / GitHub garrytan/gbrain",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-iii-entity-detection-enrichment-pipeline",
+    "sectionTitle": "Part III: Entity Detection + Enrichment Pipeline",
+    "content": "PART III GBrain 要求在 每一條訊息 上觸發 Entity Detection -- 沒有例外（除非是純操作性訊息如「OK」「do it」）。用一個輕量子代理（cheap model 如 Claude Sonnet）捕捉兩類訊號。 Spawn a lightweight sub-agent on EVERY inbound message. The sub-agent captures two things with equal priority. 第一優先：Original Thinking。 使用者的原創想法、觀察、論點、框架。這是整個系統中 最高價值的訊號 。要用使用者的原話逐字捕捉 -- 因為 語言本身就是洞察 。不要清理、不要改述。 Original Thinking is the highest-value signal. Capture the user's EXACT phrasing. The language IS the insight. 第二優先：Entity Mentions。 人名、公司、媒體引用。對每個偵測到的實體：(1) 檢查 brain "
+  },
+  {
+    "docFile": "processed/2026-04-11_garrytan-gbrain.html",
+    "docTitle": "GBrain - Garry Tan 個人知識大腦架構",
+    "docDate": "2026-04-11",
+    "docSource": "Garry Tan / GitHub garrytan/gbrain",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-iv-mece-目錄架構-knowledge-schema",
+    "sectionTitle": "Part IV: MECE 目錄架構 + Knowledge Schema",
+    "content": "PART IV GBrain 的知識庫遵循 MECE 原則 （Mutually Exclusive, Collectively Exhaustive）：每一塊知識通過決策樹，落在正好一個目錄裡。沒有重複頁面、沒有歸屬模糊。 Every piece of knowledge passes through a decision tree and lands in exactly one directory. No duplicated pages, no ambiguity. 這是最重要的結構決策。沒有它，知識庫會腐爛 -- 同一個事實存在三個地方、三個版本，沒人知道哪個是最新的。每個目錄都有一個 README.md 解答兩個問題：(1) 什麼放這裡 (2) 什麼 不 放這裡。 Without it, knowledge bases rot — the same fact lives in three places with three different versions. 重要細微差異：MECE 適用於目錄，不適用於現實。 一個真實的人可能同時是政治創辦人、朋友、捐贈者。MECE 選擇"
+  },
+  {
+    "docFile": "processed/2026-04-11_garrytan-gbrain.html",
+    "docTitle": "GBrain - Garry Tan 個人知識大腦架構",
+    "docDate": "2026-04-11",
+    "docSource": "Garry Tan / GitHub garrytan/gbrain",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "part-v-運營架構----cronmeeting-ingestiondream-cycle",
+    "sectionTitle": "Part V: 運營架構 -- Cron、Meeting Ingestion、Dream Cycle",
+    "content": "PART V GBrain 的生產部署跑了 20+ 個 cron jobs ，自動化處理 email 監控（每 30 分鐘）、社群媒體攝取（每小時）、會議處理（每日 3 次）、晨間簡報（每日）、大腦維護（每週）。 A production agent runs 20+ recurring jobs that interact with the brain. Meeting Ingestion 是最豐富的訊號來源。 每次會議的處理流程：(1) 拉完整轉錄稿（不要 AI 摘要 -- AI 摘要會虛構框架）(2) 建立會議頁面，用 Agent 自己的分析重構（針對使用者的優先順序）(3) 強制傳播到 entity pages -- 更新所有出席者、公司、交易的頁面 (4) 提取行動項目。 Always pull the complete transcript, not just the AI summary. AI summaries hallucinate framing. Propagate to entity pages is MANDATORY. Dream Cycle（夢境循環）是"
+  },
+  {
+    "docFile": "processed/2026-04-11_garrytan-gbrain.html",
+    "docTitle": "GBrain - Garry Tan 個人知識大腦架構",
+    "docDate": "2026-04-11",
+    "docSource": "Garry Tan / GitHub garrytan/gbrain",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "key-takeaways",
+    "sectionTitle": "Key Takeaways",
+    "content": "Compiled Truth > RAG GBrain 的核心洞察：知識應該在「寫入時」就編譯成綜合結論，而不是每次查詢時讓 LLM 從碎片重新推導。pre-computed synthesis + immutable timeline = 可追溯、持續改善的知識品質。 Brain-Agent Loop 是複利引擎 每個訊號都要 READ before respond + WRITE after learn。六個月後的 compound effect 是：Agent 對你的世界的理解超過你自己的工作記憶，因為它從不遺忘、從不停止索引。 混合搜尋是必要架構 Keyword 抓精確名字，Vector 抓語義概念，RRF Fusion 統計融合兩者排名。加上 Multi-query Expansion 擴展搜尋意圖。任何單一搜尋模式都有盲區。 知識管理 30 年失敗的根因被 LLM 解決 知識管理失敗是因為維護成本落在人類身上。LLM Agent 不會無聊、不會忘記更新交叉引用、可以一次觸碰 50 個文件。維護成本趨近於零時，wiki 才能真正存活。"
+  },
+  {
+    "docFile": "processed/2026-04-11_garrytan-gbrain.html",
+    "docTitle": "GBrain - Garry Tan 個人知識大腦架構",
+    "docDate": "2026-04-11",
+    "docSource": "Garry Tan / GitHub garrytan/gbrain",
+    "docRating": 4.5,
+    "docTags": [
+      "Agent",
+      "Tool",
+      "Framework",
+      "Automation"
+    ],
+    "sectionId": "practice-questions",
+    "sectionTitle": "Practice Questions",
+    "content": "Q1 概念理解 Compiled Truth + Timeline 模式和傳統 RAG 的根本差異是什麼？為什麼 Garry Tan 說「synthesis is pre-computed」？ RAG 是「讀取時計算」：每次查詢都要從 chunk 庫中檢索碎片，然後讓 LLM 即時綜合出答案。答案品質取決於當次檢索的 chunk 質量和 LLM 的推理能力。 GBrain 是「寫入時計算」：每當新資訊進入系統，Agent 就會更新 Compiled Truth -- 把新證據整合進已有的綜合結論中。查詢時直接命中已經編譯好的知識，交叉引用和矛盾在寫入時就處理完了。 實際差異：RAG 在第 100 次查詢時的品質和第 1 次差不多（甚至可能更差因為 chunk 庫變大了）。GBrain 的 Compiled Truth 品質隨每次寫入穩定提升，因為每次都是在既有綜合結論上迭代。 Q2 產業應用 如果要將 GBrain 的 Compiled Truth + Timeline 模式應用到 CDMO 的偏差管理（Deviation Management），你會如何設計？ Compiled Tr"
+  },
+  {
+    "docFile": "processed/2026-04-12_claude-token-saving-habits.html",
+    "docTitle": "Claude Token 節省技巧 - Hassid 23 Habits",
+    "docDate": "2026-04-12",
+    "docSource": "Ruben Hassid / AI-Natived Newsletter",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Framework",
+      "Analysis"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "Ruben Hassid 整理了 23 個減少 Claude token 消耗的實用習慣，從「冷門但高效」到「基本但重要」分級排列。核心概念很簡單：Claude 每次回覆前會重讀整段對話歷史，因此 對話越長、每則訊息的成本呈指數成長 。所有技巧都圍繞「如何避免浪費 token」這一原則展開。文章以個人經驗為主，部分數據未附來源，需要以 2-3x 折扣原則看待具體數字宣稱。 來源評估： Ruben Hassid 是 AI 領域 influencer / newsletter 作者，非 Anthropic 官方。文中引用的 token 數字（如「單頁 PDF 花費 1,500-3,000 tokens」）多為個人經驗估算，部分聲稱「Anthropic 確認」但未附文件連結。依據 2-3x Discount Principle，具體數字應視為粗略參考而非精確基準。實用建議本身多數合理，但需與 Anthropic 官方文件交叉驗證。 Learning Objectives 理解 Claude token 累計消耗機制與對話歷史重讀成本 掌握 10+ 個可立即執行的 token 節省技巧 建立依使用情境選擇正確產品 / 模型的決策框架 Token 節省心智模型 Input 精簡 轉檔、裁切、減少上傳 對話管理 分段、編輯、換新對話 產品匹配 正確工具做正確的事 流程優化 Projects、快取、排程 Part I：Token 消耗的核心機制 Foundation Claude 計算的是 token 。一個 token 大約等於一個英文單字。你送出一則訊息，Claude 會 從頭重讀你整段對話 。每一則先前的訊息、每一段先前的回答，全部。 \"You send one message, and Claude re-reads your entire conversation from the top. Every previous message. Every previous answer. All of it.\" 所以第 1 則訊息成本很低，但 第 30 則訊息？Claude 要先重讀 29 輪先前的交流 ，然後才開始思考你的新問題。這就是你的額度消失的原因——對話越長，每則訊息越貴。 \"So message 1 costs very little. But message 30? Claude is re-reading 29 previous exchanges before it even starts thinking about your new question.\" 比喻說明 想像你每次問同事問題時，他必須先從頭重讀你們所有的 email 往來。第一封信很快，但到了第 30 封，他光是「重讀歷史」就花了 95% 的時間，實際回答只佔 5%。這就是 LLM 的 context window 運作方式——它沒有「記憶」，每次都是全量重讀。 成本分析 文中引用的數據（需獨立驗證）： 20 則訊息對話 ≈ 105,000 tokens 30 則訊息對話 ≈ 232,000 tokens 一位開發者追蹤發現 98.5% 的 token 花在重讀歷史，僅 1.5% 用於實際產出 注意：這些數字未附原始來源，僅作為量級參考。 Part II：冷門但高效的技巧 (Habits 1-9) Advanced Habits 1 上傳前先轉檔。 單頁 PDF 約花費 1,500-3,000 tokens，截圖更貴（1000x1000 圖片約 1,300 tokens）"
+  },
+  {
+    "docFile": "processed/2026-04-12_tw93-learning-workflow.html",
+    "docTitle": "AI 時代學習工作流 - Tw93 Learning as Code",
+    "docDate": "2026-04-12",
+    "docSource": "Tw93 (@HiTw93) / X",
+    "docRating": 4,
+    "docTags": [
+      "Framework",
+      "Prompt",
+      "LLM",
+      "Content"
+    ],
+    "sectionId": "executive-summary",
+    "sectionTitle": "Executive Summary",
+    "content": "中國知名開源開發者 Tw93 分享他在 AI 時代的學習方法論：將學習視為一套可重複的工程流程（workflow），而非模糊的「多讀多看」。核心六步驟為：蒐集優質素材 閱讀篩選 建立大綱 逐段撰寫 AI 精煉 發布。文章最關鍵的洞察是 Output over Input 你能產出的才真正屬於你，以及 AI 的最佳定位不是替你思考，而是精煉你已經完成的思考。 Learning Objectives 學習 = 工程化 理解為何將學習流程當作寫程式一樣有步驟、可重複、可優化 篩選 > 累積 掌握「刪掉一半素材是正常的」背後的學習品質哲學 AI 精煉定位 辨識 AI 在學習流程中的正確切入點：精煉而非替代 Tw93 Learning Workflow Collect 蒐集優質素材 Filter 閱讀+篩選 Outline 建立大綱 Draft 逐段撰寫 Refine AI 精煉 Publish 發布產出 Part I 學習品味不變，工具改變 AI 出現之前，Tw93 的學習方式非常傳統：讀書、追蹤領域大神的部落格、持續做筆記。過程很慢，但有真正的樂趣。他花了半年業餘時間學 WebGL， 每一分鐘都是享受 。 Before AI, my way of learning was much more old school. I would read books, go through the blogs of well-known people in a field... Understanding it took me almost half a year of spare time, and I loved every bit of it. AI 時代來臨後，他的品味沒有改變。他依然不喜歡 速食式學習 「三分鐘讀懂百年孤寂」或倍速播放課程不是他的風格。他寧願選擇好素材，花真正的時間去理解。 Now that AI is here, my taste has not really changed. I still dislike the fast-food style of learning online... I still prefer to choose good material and spend real time with it. 慢慢走、真正理解，勝過匆忙讀完一堆摘要卻什麼都不紮實 。 Moving slower and truly understanding something beats rushing through a pile of summaries and ending up with nothing solid. 比喻說明 這就像烹飪：微波爐能在三分鐘加熱一餐，但你不會因此學會做菜。真正的廚藝來自慢火燉煮的過程 聞味道、調火候、理解食材之間的反應。AI 是你廚房裡的新工具，但品味和判斷力還是你自己的。 核心概念 Learning Taste (學習品味) ：不因工具改變而降低對素材品質的要求。AI 改變的是流程效率，不是學習的基本標準。這呼應 Tw93 一貫的開源作品風格 注重品質勝過數量。 Part II Output over Input 產出才是真正的學習 在寫「你不知道的 Claude Code」系列文章時，Tw93 發現自己對很多領域的理解還不夠深。幸運的是，他之前存了大量相關素材，這成了清理積壓、真正理解主題、 轉化為產出 的好機會。 Recently, while writing my \"You Don't Kn"
   }
 ];
