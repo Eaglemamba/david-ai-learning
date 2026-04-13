@@ -49,6 +49,7 @@ const stages = [
       { file: 'processed/2025-02-13_markdown_ai_guide.html', title: 'Markdown 終極指南 ★3.8', required: false, why: 'Markdown 是 AI 的母語，掌握格式提升溝通效率' },
       { file: 'processed/2026-03-16_agent-handoff-successor-prompt.html', title: 'Agent 繼任者 Prompt ★4.0', required: false, why: '長上下文退化時的 Agent 交接 Prompt 模板' },
       { file: 'processed/2026-03-16_yc-founder-strategic-prompting.html', title: 'YC 創辦人戰略提問框架 ★3.6', required: false, why: '3 小時完成 3 個月研究的戰略級提問設計' },
+      { file: 'processed/2026-04-08_elite-speaking-clarity-texture-comfort.html', title: '菁英溝通三支柱 - Joseph Elite Speaking Framework ★3.6', required: false, why: '菁英說話三要素：清晰（輸入/輸出系統）、質地（詞彙層級與驚喜）、自在（身心靈準備）。含 Vocal Ego AI 練習法' },
     ]
   },
   {
@@ -79,6 +80,10 @@ const stages = [
       { file: 'processed/2026-03-16_claude-code-release-evolution.html', title: 'Claude Code v2.1.49-76 釋出演進 ★4.2', required: false, why: '28 版本深度分析：Multi-Agent、記憶體工程、Plugin 生態' },
       { file: 'processed/2026-04-08_claude-code-release-evolution.html', title: 'Claude Code v2.1.77-96 釋出演進 ★4.3', required: false, why: '20 版本深度分析：Hooks 成熟、Plugin 生態完整化、企業就緒、Bedrock 整合' },
       { file: 'processed/2026-03-18_notebooklm-hidden-features.html', title: 'NotebookLM 三大隱藏連接 ★3.4', required: false, why: '從研究工具到 AI 指揮中心：三大隱藏整合功能' },
+      { file: 'processed/2026-04-03_tradingview-mcp-claude.html', title: 'TradingView MCP - Claude 連接交易圖表平台 ★4.0', required: false, why: '透過 Chrome DevTools Protocol 將 Claude 連接 TradingView Desktop，實現自然語言技術分析' },
+      { file: 'processed/2026-04-04_github-search-guide.html', title: 'GitHub 搜索指南 - 四種方式與資源分類 ★3.0', required: false, why: 'GitHub 四種搜索方式（閒逛/直接/高級/Copilot）與三類資源（學習/資訊/代碼）入門指南' },
+      { file: 'processed/2026-04-07_kv-cache-token-savings.html', title: 'KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token ★4.2', required: false, why: '從 Transformer KV Cache 原理到 Claude Code 快取工程逆向，含實測數據與省 Token 技巧' },
+      { file: 'processed/2026-04-12_claude-token-saving-habits.html', title: 'Claude Token 節省技巧 - Hassid 23 Habits ★3.6', required: false, why: '23 個減少 Claude token 消耗的實用習慣，從檔案轉換到對話管理全面涵蓋' },
     ]
   },
   {
@@ -111,6 +116,11 @@ const stages = [
       { file: 'processed/2026-03-16_1m-context-compaction.html', title: '1M Context Compaction Runbook ★4.0', required: false, why: 'Context rot 失敗模式與 Compaction API 實戰操作' },
       { file: 'processed/2026-03-16_karpathy-autoresearch.html', title: 'Karpathy autoresearch Agent 自主研究 ★4.5', required: false, why: 'Agent 自主研究的 Feedback Loop 設計典範' },
       { file: 'processed/2026-03-18_claude-code-skills-lessons.html', title: 'Lessons from Building Claude Code Skills ★4.4', required: false, why: 'Anthropic Engineering：Skills 設計原則與 Pattern 實戰' },
+      { file: 'processed/2026-04-04_harness-engineering-cc-book.html', title: '驾驭工程 - CC 源码逆向 Harness Engineering ★4.3', required: false, why: 'CC v2.1.88 源码逆向工程書。三層架構、Agent Loop、89 Feature Flags、權限模型深度解析' },
+      { file: 'processed/2026-04-07_mempalace-ai-memory.html', title: 'MemPalace AI 記憶系統 - Palace 架構與 AAAK 壓縮 ★4.2', required: false, why: '開源 AI 記憶系統。Palace 階層檢索、AAAK 30x 壓縮、LongMemEval 96.6% 零 API' },
+      { file: 'processed/2026-04-08_hermes-agent-self-improving.html', title: 'Hermes Agent - Self-Improving AI Agent Guide ★3.2', required: false, why: 'Nous Research Hermes Agent：自我進化 Agent 架構分析，SQLite 記憶、自動 Skill 生成' },
+      { file: 'processed/2026-04-11_garrytan-gbrain.html', title: 'GBrain - Garry Tan 個人知識大腦架構 ★4.5', required: false, why: 'Garry Tan 開源個人知識大腦。Postgres+pgvector 混合搜尋、Compiled Truth 知識管理' },
+      { file: 'processed/2026-04-12_tw93-learning-workflow.html', title: 'AI 時代學習工作流 - Tw93 Learning as Code ★4.0', required: false, why: 'Tw93 分享 AI 時代學習方法：蒐集、篩選、大綱、草稿、精煉、發布六步驟工作流' },
     ]
   },
   {
@@ -135,31 +145,10 @@ const stages = [
       { file: 'processed/2026-02-27_block-ai-layoffs.html', title: 'Block 裁員 40% AI 組織重構 ★4.0', required: false, why: 'AI 裁員敘事 vs 現實的領導決策框架' },
       { file: 'processed/2026-02-28_anthropic-pentagon-supply-chain.html', title: 'Anthropic vs Pentagon ★4.6', required: false, why: 'AI 產業倫理紅線與供應鏈風險' },
       { file: 'processed/2026-03-06_labor-market-ai-impact.html', title: 'AI 勞動市場影響 Observed Exposure ★4.4', required: false, why: 'Anthropic 新指標衡量 AI 對就業市場實際影響' },
+      { file: 'processed/2026-04-04_health-guide-after-40.html', title: '40歲後身體保養 - 飲食運動作息科學方案 ★3.6', required: false, why: '40歲後飲食(蛋白質優先)、運動(力量訓練第一)、作息(睡眠為地基)的循證醫學行動方案。' },
     ]
   }
-
-      { file: 'processed/2026-04-03_tradingview-mcp-claude.html', title: 'TradingView MCP - Claude 連接交易圖表平台 ★4.0', required: false, why: '透過 Chrome DevTools Protocol 將 Claude 連接 TradingView Desktop，' },
-    
-      { file: 'processed/2026-04-04_github-search-guide.html', title: 'GitHub 搜索指南 - 四種方式與資源分類 ★3.0', required: false, why: 'GitHub 四種搜索方式（閒逛/直接/高級/Copilot）與三類資源（學習/資訊/代碼）入門指南。' },
-    
-      { file: 'processed/2026-04-04_harness-engineering-cc-book.html', title: '驾驭工程 - CC 源码逆向 Harness Engineering ★4.3', required: false, why: 'CC v2.1.88 源码逆向工程書。三層架構、Agent Loop、89 Feature Flags、權限模型、Pro' },
-    
-      { file: 'processed/2026-04-04_health-guide-after-40.html', title: '40歲後身體保養 - 飲食運動作息科學方案 ★3.6', required: false, why: '40歲後飲食(蛋白質優先)、運動(力量訓練第一)、作息(睡眠為地基)的循證醫學行動方案。' },
-    
-      { file: 'processed/2026-04-07_kv-cache-token-savings.html', title: 'KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token ★4.2', required: false, why: '從 Transformer KV Cache 原理到 Claude Code 快取工程逆向，含實測數據與省 Token ' },
-    
-      { file: 'processed/2026-04-07_mempalace-ai-memory.html', title: 'MemPalace AI 記憶系統 - Palace 架構與 AAAK 壓縮 ★4.2', required: false, why: '開源 AI 記憶系統。Palace 階層檢索、AAAK 30x 壓縮、LongMemEval 96.6% 零 API。' },
-    
-      { file: 'processed/2026-04-08_elite-speaking-clarity-texture-comfort.html', title: '菁英溝通三支柱 - Joseph Elite Speaking Framework ★3.6', required: false, why: '菁英說話三要素：清晰（輸入/輸出系統）、質地（詞彙層級與驚喜）、自在（身心靈準備）。含 Vocal Ego AI 練習法' },
-    
-      { file: 'processed/2026-04-08_hermes-agent-self-improving.html', title: 'Hermes Agent - Self-Improving AI Agent Guide ★3.2', required: false, why: 'Nous Research Hermes Agent：自我進化 Agent 架構分析，SQLite 記憶、自動 Skil' },
-    
-      { file: 'processed/2026-04-11_garrytan-gbrain.html', title: 'GBrain - Garry Tan 個人知識大腦架構 ★4.5', required: false, why: 'Garry Tan 開源個人知識大腦。Postgres+pgvector 混合搜尋、Compiled Truth+Tim' },
-    
-      { file: 'processed/2026-04-12_claude-token-saving-habits.html', title: 'Claude Token 節省技巧 - Hassid 23 Habits ★3.6', required: false, why: '23 個減少 Claude token 消耗的實用習慣，從檔案轉換到對話管理全面涵蓋。' },
-    
-      { file: 'processed/2026-04-12_tw93-learning-workflow.html', title: 'AI 時代學習工作流 - Tw93 Learning as Code ★4.0', required: false, why: 'Tw93 分享 AI 時代學習方法：蒐集、篩選、大綱、草稿、精煉、發布六步驟工作流。' },
-    ];
+];
 
 // ─── Topic Clusters (for mindmap topic view) ───
 const topicClusters = [
@@ -242,13 +231,7 @@ const topicClusters = [
           { title: 'Obsidian + Claude Code 知識引擎 ★3.2', file: 'processed/2026-03-23_obsidian-claude-code-stack.html' },
         ]
       }
-    
-          { title: '驾驭工程 - CC 源码逆向 Harness Engineering ★4.3', file: 'processed/2026-04-04_harness-engineering-cc-book.html' },
-        
-          { title: 'KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token ★4.2', file: 'processed/2026-04-07_kv-cache-token-savings.html' },
-        
-          { title: 'Hermes Agent - Self-Improving AI Agent Guide ★3.2', file: 'processed/2026-04-08_hermes-agent-self-improving.html' },
-        ]
+    ]
   },
   {
     name: 'Prompt 工程',
@@ -277,9 +260,7 @@ const topicClusters = [
           { title: 'Agent 繼任者 Prompt ★4.0', file: 'processed/2026-03-16_agent-handoff-successor-prompt.html' },
         ]
       }
-    
-          { title: 'Claude Token 節省技巧 - Hassid 23 Habits ★3.6', file: 'processed/2026-04-12_claude-token-saving-habits.html' },
-        ]
+    ]
   },
   {
     name: 'Agent 架構',
@@ -323,21 +304,7 @@ const topicClusters = [
           { title: 'Agent Ecologies & Automation ★4.0', file: 'processed/2026-02-03_agent-ecology-automation.html' },
         ]
       }
-    
-          { title: 'TradingView MCP - Claude 連接交易圖表平台 ★4.0', file: 'processed/2026-04-03_tradingview-mcp-claude.html' },
-        
-          { title: 'GitHub 搜索指南 - 四種方式與資源分類 ★3.0', file: 'processed/2026-04-04_github-search-guide.html' },
-        
-          { title: '40歲後身體保養 - 飲食運動作息科學方案 ★3.6', file: 'processed/2026-04-04_health-guide-after-40.html' },
-        
-          { title: 'MemPalace AI 記憶系統 - Palace 架構與 AAAK 壓縮 ★4.2', file: 'processed/2026-04-07_mempalace-ai-memory.html' },
-        
-          { title: '菁英溝通三支柱 - Joseph Elite Speaking Framework ★3.6', file: 'processed/2026-04-08_elite-speaking-clarity-texture-comfort.html' },
-        
-          { title: 'GBrain - Garry Tan 個人知識大腦架構 ★4.5', file: 'processed/2026-04-11_garrytan-gbrain.html' },
-        
-          { title: 'AI 時代學習工作流 - Tw93 Learning as Code ★4.0', file: 'processed/2026-04-12_tw93-learning-workflow.html' },
-        ]
+    ]
   },
   {
     name: '自動化 & 整合',
