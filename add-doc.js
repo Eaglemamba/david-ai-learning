@@ -659,22 +659,32 @@ async function main() {
   }
   console.log('   ✅ curriculum-data.js validation passed');
 
+  // Detect available JS runner (node or bun)
+  const { execSync } = require('child_process');
+  const runner = (() => {
+    try { execSync('node --version', { stdio: 'ignore' }); return 'node'; } catch {}
+    try { execSync('bun --version', { stdio: 'ignore' }); return 'bun'; } catch {}
+    return null;
+  })();
+
   // 4. Rebuild dashboard-data.js
-  try {
-    const { execSync } = require('child_process');
-    execSync('node build-dashboard-data.js', { cwd: ROOT, stdio: 'inherit' });
-    console.log('   ✅ dashboard-data.js rebuilt');
-  } catch (e) {
-    console.error(`   ❌ dashboard-data.js rebuild failed: ${e.message}`);
+  if (runner) {
+    try {
+      execSync(`${runner} build-dashboard-data.js`, { cwd: ROOT, stdio: 'inherit' });
+      console.log('   ✅ dashboard-data.js rebuilt');
+    } catch (e) {
+      console.error(`   ❌ dashboard-data.js rebuild failed: ${e.message}`);
+    }
   }
 
   // 5. Rebuild search index
-  try {
-    const { execSync } = require('child_process');
-    execSync('node build-search-index.js', { cwd: ROOT, stdio: 'inherit' });
-    console.log('   ✅ search-index.js rebuilt');
-  } catch (e) {
-    console.error(`   ❌ search-index.js rebuild failed: ${e.message}`);
+  if (runner) {
+    try {
+      execSync(`${runner} build-search-index.js`, { cwd: ROOT, stdio: 'inherit' });
+      console.log('   ✅ search-index.js rebuilt');
+    } catch (e) {
+      console.error(`   ❌ search-index.js rebuild failed: ${e.message}`);
+    }
   }
 
   // Move file to docs/processed/ if it's currently in docs/ root

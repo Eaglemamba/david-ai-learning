@@ -311,10 +311,16 @@ function main() {
   }
 
   // Rebuild dashboard-data.js and search-index.js
+  // Use 'bun' if 'node' is not available (Windows without Node.js in PATH)
   const { execSync } = require('child_process');
+  const runner = (() => {
+    try { execSync('node --version', { stdio: 'ignore' }); return 'node'; } catch {}
+    try { execSync('bun --version', { stdio: 'ignore' }); return 'bun'; } catch {}
+    throw new Error('Neither node nor bun found in PATH');
+  })();
   try {
-    execSync('node build-dashboard-data.js', { cwd: ROOT, stdio: 'inherit' });
-    execSync('node build-search-index.js', { cwd: ROOT, stdio: 'inherit' });
+    execSync(`${runner} build-dashboard-data.js`, { cwd: ROOT, stdio: 'inherit' });
+    execSync(`${runner} build-search-index.js`, { cwd: ROOT, stdio: 'inherit' });
     console.log('Indexes rebuilt successfully.');
   } catch (e) {
     console.error(`Index rebuild failed: ${e.message}`);
