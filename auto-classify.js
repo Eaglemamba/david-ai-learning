@@ -17,6 +17,7 @@ const path = require('path');
 
 const ROOT = __dirname;
 const DOCS_DIR = path.join(ROOT, 'docs');
+const PROCESSED_DIR = path.join(DOCS_DIR, 'processed');
 const CURRICULUM_DATA = path.join(ROOT, 'curriculum-data.js');
 
 // ─── Stage definitions (same as add-doc.js) ───
@@ -163,6 +164,7 @@ function bestTopic(title, tags, summary, bodyText) {
 
 function findNewDocs() {
   const currSrc = fs.readFileSync(CURRICULUM_DATA, 'utf-8');
+  // Only scan docs/ root — processed/ files are already classified
   const docFiles = fs.readdirSync(DOCS_DIR).filter(f => f.endsWith('.html'));
   const newDocs = [];
 
@@ -189,7 +191,8 @@ function findNewDocs() {
 
 function insertStageDoc(src, doc) {
   const stageId = doc.stage.id;
-  const entry = `      { file: '${doc.file}', title: '${doc.title.replace(/'/g, "\\'")} ★${doc.rating}', required: false, why: '${doc.summary.slice(0, 60).replace(/'/g, "\\'")}' },`;
+  // Store with processed/ prefix since file will be moved there
+  const entry = `      { file: 'processed/${doc.file}', title: '${doc.title.replace(/'/g, "\\'")} ★${doc.rating}', required: false, why: '${doc.summary.slice(0, 60).replace(/'/g, "\\'")}' },`;
 
   // Find the stage's docs array closing bracket
   const stagePattern = new RegExp(`id:\\s*${stageId},`);
@@ -217,7 +220,8 @@ function insertTopicDoc(src, doc) {
   const tc = TOPIC_CLUSTERS.find(t => t.id === doc.topic.id);
   if (!tc) return src;
 
-  const entry = `          { title: '${doc.title.replace(/'/g, "\\'")} ★${doc.rating}', file: '${doc.file}' },`;
+  // Store with processed/ prefix since file will be moved there
+  const entry = `          { title: '${doc.title.replace(/'/g, "\\'")} ★${doc.rating}', file: 'processed/${doc.file}' },`;
 
   // Find the subcluster by heading name
   let searchName = `name: '${tc.heading}'`;
@@ -294,6 +298,26 @@ function main() {
     console.log(`Successfully classified ${newDocs.length} doc(s) into curriculum-data.js`);
   } catch (e) {
     console.error(`Validation failed: ${e.message}`);
+    process.exit(1);
+  }
+
+  // Move processed files to docs/processed/
+  if (!fs.existsSync(PROCESSED_DIR)) fs.mkdirSync(PROCESSED_DIR, { recursive: true });
+  for (const doc of newDocs) {
+    const src = path.join(DOCS_DIR, doc.file);
+    const dest = path.join(PROCESSED_DIR, doc.file);
+    fs.renameSync(src, dest);
+    console.log(`  → Moved ${doc.file} to processed/`);
+  }
+
+  // Rebuild dashboard-data.js and search-index.js
+  const { execSync } = require('child_process');
+  try {
+    execSync('node build-dashboard-data.js', { cwd: ROOT, stdio: 'inherit' });
+    execSync('node build-search-index.js', { cwd: ROOT, stdio: 'inherit' });
+    console.log('Indexes rebuilt successfully.');
+  } catch (e) {
+    console.error(`Index rebuild failed: ${e.message}`);
     process.exit(1);
   }
 }

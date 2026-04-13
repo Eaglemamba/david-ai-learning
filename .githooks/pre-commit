@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# pre-commit hook — auto-process any HTML files staged outside docs/processed/
+#
+# Detects .html files staged in docs/ root (unprocessed),
+# runs auto-classify.js to index them, then moves to docs/processed/.
+# Rebuilt index files are auto-staged so the commit stays complete.
+
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# Find staged .html files in docs/ root (not in docs/processed/)
+UNPROCESSED=$(git diff --cached --name-only --diff-filter=A | grep -E '^docs/[^/]+\.html$' || true)
+
+if [ -z "$UNPROCESSED" ]; then
+  exit 0
+fi
+
+echo ""
+echo "┌─────────────────────────────────────────────────────┐"
+echo "│  pre-commit: unprocessed HTML detected — processing  │"
+echo "└─────────────────────────────────────────────────────┘"
+echo ""
+
+for FILE in $UNPROCESSED; do
+  echo "  Processing: $FILE"
+done
+echo ""
+
+# Run auto-classify (non-interactive: classifies + moves to processed/ + rebuilds indexes)
+# Try node first, fall back to bun
+if command -v node &>/dev/null; then
+  node auto-classify.js
+else
+  bun run auto-classify.js
+fi
+
+# Re-stage everything that changed (moved files + rebuilt indexes)
+git add docs/processed/
+git add dashboard-data.js
+git add search-index.js
+git add curriculum-data.js
+
+# Unstage the original docs/ root .html files (they've been moved)
+for FILE in $UNPROCESSED; do
+  git rm --cached "$FILE" 2>/dev/null || true
+done
+
+echo ""
+echo "  All new docs processed and staged. Continuing commit."
+echo ""

@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const DOCS_DIR = path.join(__dirname, 'docs');
+const PROCESSED_DIR = path.join(DOCS_DIR, 'processed');
 const OUTPUT_FILE = path.join(__dirname, 'search-index.js');
 const MAX_CONTENT_LENGTH = 500;
 const MAX_CONTENT_LENGTH_SINGLE = 1500;
@@ -17,10 +18,15 @@ const args = process.argv.slice(2);
 const limitIdx = args.indexOf('--limit');
 const LIMIT = limitIdx !== -1 ? parseInt(args[limitIdx + 1], 10) : Infinity;
 
-// Get all HTML files sorted by name
-const htmlFiles = fs.readdirSync(DOCS_DIR)
+// Get all HTML files: processed/ (existing) + docs/ root (new, unprocessed)
+const processedFiles = fs.existsSync(PROCESSED_DIR)
+  ? fs.readdirSync(PROCESSED_DIR).filter(f => f.endsWith('.html')).map(f => ({ file: f, dir: 'processed' }))
+  : [];
+const newFiles = fs.readdirSync(DOCS_DIR)
   .filter(f => f.endsWith('.html'))
-  .sort()
+  .map(f => ({ file: f, dir: '' }));
+const htmlFiles = [...processedFiles, ...newFiles]
+  .sort((a, b) => a.file.localeCompare(b.file))
   .slice(0, LIMIT);
 
 console.log(`Processing ${htmlFiles.length} files...`);
@@ -142,8 +148,8 @@ function extractSections(bodyHtml) {
 // Process all files
 const searchIndex = [];
 
-for (const file of htmlFiles) {
-  const filePath = path.join(DOCS_DIR, file);
+for (const { file, dir } of htmlFiles) {
+  const filePath = path.join(dir ? path.join(DOCS_DIR, dir) : DOCS_DIR, file);
   const html = fs.readFileSync(filePath, 'utf-8');
 
   // Extract metadata
@@ -154,7 +160,8 @@ for (const file of htmlFiles) {
   const docRating = parseFloat(docRatingStr);
   const docTagsStr = getMeta(html, 'doc-tags') || '';
   const docTags = docTagsStr ? docTagsStr.split(',').map(t => t.trim()) : [];
-  const docFile = getMeta(html, 'doc-file') || file;
+  // Store path relative to docs/ for correct link construction
+  const docFile = dir ? `${dir}/${file}` : (getMeta(html, 'doc-file') || file);
 
   // Extract body and sections
   const body = getBody(html);
@@ -194,7 +201,7 @@ for (const file of htmlFiles) {
     }
   }
 
-  console.log(`  ✓ ${file} → ${sections.length} sections`);
+  console.log(`  ✓ ${dir ? dir + '/' : ''}${file} → ${sections.length} sections`);
 }
 
 // Write output

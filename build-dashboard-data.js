@@ -11,12 +11,17 @@ const fs = require('fs');
 const path = require('path');
 
 const DOCS_DIR = path.join(__dirname, 'docs');
+const PROCESSED_DIR = path.join(DOCS_DIR, 'processed');
 const OUTPUT_FILE = path.join(__dirname, 'dashboard-data.js');
 
-// Get all HTML files
-const htmlFiles = fs.readdirSync(DOCS_DIR)
+// Get all HTML files: processed/ first (existing), then docs/ root (new, unprocessed)
+const processedFiles = fs.existsSync(PROCESSED_DIR)
+  ? fs.readdirSync(PROCESSED_DIR).filter(f => f.endsWith('.html')).map(f => ({ file: f, dir: 'processed' }))
+  : [];
+const newFiles = fs.readdirSync(DOCS_DIR)
   .filter(f => f.endsWith('.html'))
-  .sort();
+  .map(f => ({ file: f, dir: '' }));
+const htmlFiles = [...processedFiles, ...newFiles].sort((a, b) => a.file.localeCompare(b.file));
 
 console.log(`Processing ${htmlFiles.length} files for dashboard...`);
 
@@ -42,8 +47,8 @@ function getTitle(html) {
 // Process all files
 const documents = [];
 
-for (const file of htmlFiles) {
-  const filePath = path.join(DOCS_DIR, file);
+for (const { file, dir } of htmlFiles) {
+  const filePath = path.join(dir ? path.join(DOCS_DIR, dir) : DOCS_DIR, file);
   const html = fs.readFileSync(filePath, 'utf-8');
   const lines = html.split('\n').length;
 
@@ -54,7 +59,8 @@ for (const file of htmlFiles) {
   const docTagsStr = getMeta(html, 'doc-tags') || '';
   const docTags = docTagsStr ? docTagsStr.split(',').map(t => t.trim()) : [];
   const docSummary = getMeta(html, 'doc-summary') || '';
-  const docFile = getMeta(html, 'doc-file') || file;
+  // Store path relative to docs/ so index.html href="docs/${file}" resolves correctly
+  const docFile = dir ? `${dir}/${file}` : (getMeta(html, 'doc-file') || file);
 
   documents.push({
     date: docDate,
@@ -67,7 +73,7 @@ for (const file of htmlFiles) {
     file: docFile,
   });
 
-  console.log(`  ✓ ${file} (${lines} lines)`);
+  console.log(`  ✓ ${dir ? dir + '/' : ''}${file} (${lines} lines)`);
 }
 
 // Sort by date descending (newest first)

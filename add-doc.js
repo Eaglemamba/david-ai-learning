@@ -20,6 +20,8 @@ const readline = require('readline');
 
 // ─── Paths ───
 const ROOT = __dirname;
+const DOCS_DIR = path.join(ROOT, 'docs');
+const PROCESSED_DIR = path.join(DOCS_DIR, 'processed');
 const INDEX_HTML = path.join(ROOT, 'index.html');
 const CURRICULUM_DATA = path.join(ROOT, 'curriculum-data.js');
 
@@ -501,6 +503,8 @@ async function main() {
   // Read and parse the doc
   const html = fs.readFileSync(fullPath, 'utf-8');
   const fileName = path.basename(fullPath);
+  // Determine if file is in docs/ root (unprocessed) or already in processed/
+  const isInProcessed = fullPath.includes(path.sep + 'processed' + path.sep);
 
   const meta = {
     date: getMeta(html, 'doc-date') || fileName.substring(0, 10),
@@ -509,7 +513,8 @@ async function main() {
     tags: (getMeta(html, 'doc-tags') || '').split(',').map(t => t.trim()).filter(Boolean),
     rating: parseFloat(getMeta(html, 'doc-rating') || '0'),
     summary: getMeta(html, 'doc-summary') || '',
-    file: getMeta(html, 'doc-file') || fileName,
+    // Always store as processed/filename.html so links resolve correctly
+    file: isInProcessed ? `processed/${fileName}` : `processed/${fileName}`,
     lines: countLines(html)
   };
 
@@ -670,6 +675,14 @@ async function main() {
     console.log('   ✅ search-index.js rebuilt');
   } catch (e) {
     console.error(`   ❌ search-index.js rebuild failed: ${e.message}`);
+  }
+
+  // Move file to docs/processed/ if it's currently in docs/ root
+  if (!isInProcessed) {
+    if (!fs.existsSync(PROCESSED_DIR)) fs.mkdirSync(PROCESSED_DIR, { recursive: true });
+    const dest = path.join(PROCESSED_DIR, fileName);
+    fs.renameSync(fullPath, dest);
+    console.log(`   ✅ Moved ${fileName} → docs/processed/`);
   }
 
   console.log('\n   🎉 Done! All files updated.\n');
