@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent 自我進化 AI Agent 完全指南</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-04-08">
+<meta name="doc-title" content="Hermes Agent - Self-Improving AI Agent Guide">
+<meta name="doc-source" content="Will Yang / X Thread">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Agent,Tool,Automation">
+<meta name="doc-rating" content="3.2">
+<meta name="doc-summary" content="Nous Research Hermes Agent：自我進化 Agent 架構分析，SQLite 記憶、自動 Skill 生成、vs OpenClaw 比較。">
+<meta name="doc-file" content="2026-04-08_hermes-agent-self-improving.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
+
+/* Tags */
+.tag-container { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.8rem; font-weight: 500; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+
+.header h1 { font-size: 1.6rem; margin: 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-top: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Discount Warning */
+.discount-warning { background: linear-gradient(135deg, #fef2f2, #fff7ed); border: 1px solid #fca5a5; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+.discount-warning .dw-header { font-weight: 700; color: #991b1b; font-size: 0.95rem; margin-bottom: 0.5rem; }
+.discount-warning .dw-item { font-size: 0.85rem; color: #7f1d1d; line-height: 1.7; margin-bottom: 0.25rem; }
+
+/* Executive Summary */
+.executive-summary { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 2rem; }
+.executive-summary h2 { color: #1e3a5f; font-size: 1.2rem; margin-top: 0; }
+.executive-summary p { font-size: 0.95rem; line-height: 1.8; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-text { font-size: 0.9rem; color: #334155; font-weight: 500; }
+
+/* Section Title */
+.section-title { font-size: 1.2rem; font-weight: 700; color: #1e3a5f; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* Content Grid internals */
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.part-label { font-size: 0.75rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.part-title { font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; }
+
+/* Bilingual blocks */
+.bilingual-block { margin-bottom: 1.25rem; }
+.zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.25rem; }
+.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
+
+/* Highlights */
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.6rem 1rem; font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content ul { margin: 0.5rem 0; padding-left: 1.25rem; }
+.info-box-content li { margin-bottom: 0.3rem; }
+
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+
+.box-critical { border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+.box-critical .info-box-header { background: #fecaca; color: #991b1b; }
+.box-critical .info-box-content { background: #fef2f2; border: 1px solid #fca5a5; border-top: none; padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+
+/* Comparison Table */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1rem 0; }
+.compare-table th { background: #1e3a5f; color: white; padding: 0.75rem; text-align: left; }
+.compare-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #e2e8f0; }
+.compare-table tr:nth-child(even) { background: #f8fafc; }
+.compare-table tr:hover { background: #e0f2fe; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card .card-title { font-weight: 700; color: #1e3a5f; margin-bottom: 0.5rem; font-size: 0.95rem; }
+.summary-card .card-text { font-size: 0.85rem; color: #475569; line-height: 1.7; }
+
+/* Practice Questions */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Code blocks */
+code { font-family: 'Source Code Pro', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; line-height: 1.6; }
+pre code { background: none; padding: 0; color: inherit; }
+</style>
+</head>
+
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-automation">Automation</span>
+    </div>
+    <h1>Hermes Agent 自我進化 AI Agent 完全指南</h1>
+    <div class="subtitle">Self-Improving Agent 架構解析：記憶系統、自動 Skill 生成、與 OpenClaw 比較</div>
+    <div class="source">Source: Will Yang (@Will_Yang_) / X Thread | Nous Research GitHub</div>
+</div>
+
+<!-- Container -->
+<div class="container">
+
+<!-- Executive Summary -->
+<div class="executive-summary">
+    <h2>Executive Summary</h2>
+
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span> 3.2/5</span>
+        <span class="rating-high">&uarr; Tool Ecosystem, Timeliness</span>
+        <span class="rating-low">&darr; Technical Depth, Learning Curve</span>
+    </div>
+
+    <div class="discount-warning">
+        <div class="dw-header">2-3x Discount Applied: X/Twitter Influencer Thread</div>
+        <div class="dw-item">- 來源為社群推文，非技術文件或同行評審內容</div>
+        <div class="dw-item">- 大量促銷性語言（"爆了"、"碾壓"、"殺手鐧"），需降低可信度</div>
+        <div class="dw-item">- "指數級提升"等宣稱無基準測試佐證，標記為未驗證</div>
+        <div class="dw-item">- 與 OpenClaw 的比較明顯傾斜，缺乏對等分析</div>
+        <div class="dw-item">- 評分已從基礎 4.0 折扣至 3.2（社群推文類打八折）</div>
+    </div>
+
+    <p>Hermes Agent 是 Nous Research 開發的開源自我進化 AI Agent，核心賣點是<span class="highlight-concept">內建學習閉環</span>：透過持久記憶 (SQLite + FTS5) 和自動 Skill 生成 (Markdown Skill Files) 實現跨對話的能力累積。支援 200+ 模型（OpenRouter）、CLI/Telegram/Discord 多平台部署、MIT 授權完全開源。本文整理其架構概念、安裝流程、與 OpenClaw 的比較，並從 CDMO 營運視角評估其模式的可借鏡之處。</p>
+</div>
+
+<!-- Learning Objectives -->
+<h2 class="section-title">Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-icon">1</div>
+        <div class="objective-text">理解 Self-Improving Agent 的記憶與 Skill 自動生成架構模式</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #10b981;">
+        <div class="objective-icon">2</div>
+        <div class="objective-text">比較 Hermes vs OpenClaw 的設計哲學差異與適用場景</div>
+    </div>
+    <div class="objective-item" style="border-left-color: #8b5cf6;">
+        <div class="objective-icon">3</div>
+        <div class="objective-text">評估自我進化模式對現有 Claude Code Skills 工作流的啟示</div>
+    </div>
+</div>
+
+<!-- Framework Visual -->
+<div class="framework-visual" style="background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0;">
+    <div style="text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem;">Hermes Self-Improving Loop</div>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <div style="text-align: center; min-width: 120px;">
+            <div style="font-size: 1.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">T</div>
+            <div style="font-weight: 700; font-size: 0.95rem;">Task Execution</div>
+            <div style="font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem;">Execute with tools</div>
+        </div>
+        <div style="font-size: 1.5rem; color: #93c5fd;">&#8594;</div>
+        <div style="text-align: center; min-width: 120px;">
+            <div style="font-size: 1.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">S</div>
+            <div style="font-weight: 700; font-size: 0.95rem;">Skill Generation</div>
+            <div style="font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem;">Auto-create .md skill</div>
+        </div>
+        <div style="font-size: 1.5rem; color: #93c5fd;">&#8594;</div>
+        <div style="text-align: center; min-width: 120px;">
+            <div style="font-size: 1.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">M</div>
+            <div style="font-weight: 700; font-size: 0.95rem;">Memory Store</div>
+            <div style="font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem;">SQLite + FTS5</div>
+        </div>
+        <div style="font-size: 1.5rem; color: #93c5fd;">&#8594;</div>
+        <div style="text-align: center; min-width: 120px;">
+            <div style="font-size: 1.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem;">R</div>
+            <div style="font-weight: 700; font-size: 0.95rem;">Recall & Improve</div>
+            <div style="font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem;">Next task uses learnings</div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART I ==================== -->
+<h2 class="section-title">Part I: Hermes Agent 核心架構</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="part-label">Part I</div>
+        <div class="part-title">自我進化 Agent 的四大支柱</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">Hermes Agent 最核心的設計理念是<span class="highlight-concept">學習閉環 (Closed Learning Loop)</span>：每次任務完成後，Agent 不是「歸零」重來，而是將經驗沉澱為可復用的資產。這與傳統 AI 工具「用完即棄」的模式根本不同。</div>
+            <div class="en-text">"Core innovation lies in its built-in closed learning loop."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>1. 持久多層記憶 (Persistent Multi-Layer Memory)</strong>：使用 <span class="highlight-key">SQLite + FTS5 全文搜索</span>儲存對話歷史、使用者偏好、行為模式。LLM 自動摘要長期記憶，避免 Context Window 溢出。跨會話永久保存，不會「健忘」。</div>
+            <div class="en-text">"Uses SQLite + FTS5 full-text search + LLM auto-summarization, permanently remembers your preferences, style and history across sessions."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>2. 自動技能進化 (Auto Skill Evolution)</strong>：任務完成後<span class="highlight-practical">自動生成 Markdown Skill 文件</span>，下次遇到類似任務直接調用。更進一步，Agent 會自我迭代優化已有的 Skill。</div>
+            <div class="en-text">"After task completion, automatically generates Markdown Skill files; will self-iterate to optimize existing Skills."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>3. 自主執行力 (Autonomous Execution)</strong>：支援終端命令、瀏覽器操作、檔案處理、程式碼生成、Web 搜尋等工具鏈。可在 CLI 或 Telegram/Discord 等平台運行。</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>4. 模型靈活性 (Model Flexibility)</strong>：透過 OpenRouter 支援 200+ 模型，也支援 OpenAI、Anthropic、本地 Ollama，切換成本趨近於零。MIT 開源授權。</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-analogy">
+            <div class="info-box-header">Analogy: Chef vs Recipe Book</div>
+            <div class="info-box-content">
+                <p>傳統 AI Agent 像是每天到廚房都要重新看食譜的廚師 -- 昨天做過的菜今天完全不記得。Hermes Agent 像是一位會<strong>寫自己的食譜書</strong>的廚師：做完一道菜就記下來，下次不用從頭開始，還會根據經驗改良配方。</p>
+                <p>但注意：這位廚師的「食譜品質」取決於他用的食材（底層 LLM 能力）和廚房設備（工具鏈）。自動記錄不代表自動變好。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-critical">
+            <div class="info-box-header">Unverified Claim Flag</div>
+            <div class="info-box-content">
+                <p><strong>原文宣稱：</strong>「記憶和能力指數級提升」</p>
+                <p><strong>實際評估：</strong>指數級成長需要量化基準。Skill 文件累積是線性的（每完成一個任務 +1），記憶檢索效率取決於 FTS5 索引品質。「指數級」更可能是修辭誇張，而非技術描述。<span class="highlight-key">建議打折理解為「隨使用時間有明顯累積改善」。</span></p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">CDMO Mapping: Deviation Investigation Memory</div>
+            <div class="info-box-content">
+                <p>Hermes 的記憶 + Skill 自動生成模式，概念上類似你規劃中的 <code>/triage-deviation</code> 工作流：每次偏差調查完成後，將調查模式（root cause pattern、CAPA template）沉澱為可復用的 Skill。差異在於 GMP 環境需要 <strong>Copilot Mode</strong>（人工 100% 審核），不能讓 Agent 自主迭代 Skill 而不經驗證。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART II ==================== -->
+<h2 class="section-title">Part II: Hermes vs OpenClaw 比較</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="part-label">Part II</div>
+        <div class="part-title">設計哲學差異與場景選擇</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">原文將兩者定位為「進化型個人助理 vs 多平台自動化工具箱」。這個框架有一定道理，但比較角度明顯偏向 Hermes：</div>
+        </div>
+
+        <table class="compare-table">
+            <tr>
+                <th>維度</th>
+                <th>Hermes Agent</th>
+                <th>OpenClaw</th>
+            </tr>
+            <tr>
+                <td>核心定位</td>
+                <td>自我進化個人 Agent</td>
+                <td>多平台整合工具箱</td>
+            </tr>
+            <tr>
+                <td>記憶系統</td>
+                <td>SQLite + FTS5 + LLM 摘要</td>
+                <td>記憶存在但深度較淺（原文說法）</td>
+            </tr>
+            <tr>
+                <td>Skill 管理</td>
+                <td>自動生成 + 自我迭代</td>
+                <td>手動管理 + 社區共享</td>
+            </tr>
+            <tr>
+                <td>部署需求</td>
+                <td>輕量（$5 VPS 可跑）</td>
+                <td>較重（完整生態系統）</td>
+            </tr>
+            <tr>
+                <td>模型支援</td>
+                <td>OpenRouter 200+</td>
+                <td>類似多模型支援</td>
+            </tr>
+            <tr>
+                <td>遷移路徑</td>
+                <td>hermes claw migrate 一鍵導入</td>
+                <td>N/A</td>
+            </tr>
+            <tr>
+                <td>授權</td>
+                <td>MIT</td>
+                <td>開源</td>
+            </tr>
+        </table>
+
+        <div class="bilingual-block">
+            <div class="zh-text">原文建議「兩者並用：OpenClaw 做執行，Hermes 做大腦」。這是一個有趣但<span class="highlight-key">未經驗證的架構模式</span> -- 雙 Agent 協作的 overhead 和一致性問題被完全忽略。</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-critical">
+            <div class="info-box-header">Bias Check: One-Sided Comparison</div>
+            <div class="info-box-content">
+                <p>這個比較有幾個明顯偏差：</p>
+                <ul>
+                    <li><strong>OpenClaw 記憶「較淺」</strong>-- 這是原文說法，未提供技術對比依據</li>
+                    <li><strong>「社區共識」</strong>-- 未引用具體調查或用戶數據</li>
+                    <li><strong>只列 Hermes 優勢</strong>-- OpenClaw 的多平台整合、成熟生態等優勢被輕描淡寫</li>
+                    <li>遷移工具 <code>hermes claw migrate</code> 的存在暗示 Hermes 是後來者，需要搶 OpenClaw 用戶</li>
+                </ul>
+                <p>建議在實際評估時，分別查看兩者的 GitHub Issues、Star 趨勢、和獨立用戶評測。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">Pattern Recognition: Auto-Skill vs Manual-Skill</div>
+            <div class="info-box-content">
+                <p>這裡的核心設計取捨值得關注：</p>
+                <ul>
+                    <li><strong>自動生成 Skill</strong>（Hermes 模式）：低摩擦、快速累積，但品質不可控 -- 垃圾任務也會生成垃圾 Skill</li>
+                    <li><strong>手動管理 Skill</strong>（OpenClaw/Claude Code 模式）：品質可控、有人工審核，但累積速度慢</li>
+                </ul>
+                <p>你的 Claude Code Skills 採用的是後者。Hermes 的自動模式在非 GMP 場景可能有效，但在需要驗證的環境（你的 CDMO 場景）中，自動生成未經審核的 SOP 是不可接受的。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART III ==================== -->
+<h2 class="section-title">Part III: 安裝與核心命令</h2>
+<div class="content-grid" style="grid-template-columns: 1fr;">
+    <div class="content-left" style="border-right: none;">
+        <div class="part-label">Part III</div>
+        <div class="part-title">快速部署指南（概念整理，非照搬原文）</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">Hermes Agent 的安裝流程相當精簡，一條 <code>curl</code> 命令完成所有依賴安裝。以下是核心步驟概述：</div>
+        </div>
+
+        <div class="info-box box-code">
+            <div class="info-box-header">Installation & Setup Flow</div>
+            <div class="info-box-content">
+                <p><strong>Step 1: 一鍵安裝</strong> -- 使用 curl 執行官方安裝腳本，自動處理 Python 3.11、Node.js、依賴、全域 <code>hermes</code> 命令</p>
+                <p><strong>Step 2: 首次設定</strong> -- <code>hermes setup</code> 啟動互動式設定精靈，包含模型選擇、工具設定、API Key 配置</p>
+                <p><strong>Step 3: 驗證</strong> -- <code>hermes doctor</code> 檢查環境健康度，<code>hermes version</code> 確認版本</p>
+            </div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>核心命令結構：</strong></div>
+        </div>
+
+        <table class="compare-table">
+            <tr><th>類別</th><th>命令</th><th>用途</th></tr>
+            <tr><td>基礎</td><td><code>hermes</code></td><td>啟動互動式聊天</td></tr>
+            <tr><td>設定</td><td><code>hermes setup / model / tools</code></td><td>設定精靈 / 模型切換 / 工具管理</td></tr>
+            <tr><td>技能</td><td><code>hermes skills search</code></td><td>搜尋安裝 Skill</td></tr>
+            <tr><td>平台</td><td><code>hermes gateway setup/start</code></td><td>連接 Telegram/Discord</td></tr>
+            <tr><td>安全</td><td><code>hermes config set terminal.backend docker</code></td><td>Docker 沙箱隔離</td></tr>
+            <tr><td>遷移</td><td><code>hermes claw migrate</code></td><td>從 OpenClaw 匯入</td></tr>
+            <tr><td>診斷</td><td><code>hermes doctor</code></td><td>環境健康檢查</td></tr>
+        </table>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">Evaluate Before Adopting: Removal Test</div>
+            <div class="info-box-content">
+                <p>在考慮將 Hermes 加入你的工具鏈之前，套用 Removal Test：</p>
+                <ul>
+                    <li><strong>現有工具鏈</strong>：Claude Projects + Claude Code + GitHub + Make.com 已覆蓋大部分需求</li>
+                    <li><strong>Hermes 的獨特價值</strong>：自動 Skill 生成和持久記憶。但 Claude Projects 已有 Memory，Claude Code 已有 Skills</li>
+                    <li><strong>結論</strong>：Hermes 更適合「非 Claude 生態」的使用者，或需要在本地完全離線運作的場景。對你而言，屬於 <strong>explore/demo</strong> 類工具，非 production/daily-use</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART IV ==================== -->
+<h2 class="section-title">Part IV: 架構模式的可借鏡之處</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="part-label">Part IV</div>
+        <div class="part-title">從 Hermes 學到的設計思考</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">即使 Hermes 不適合直接採用，其架構中有幾個值得反思的設計模式：</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>1. 記憶的三層架構</strong>：短期（Context Window）→ 中期（Session Summary）→ 長期（SQLite 持久化 + FTS5 檢索）。這比單純的「把所有東西塞進 Context」更有結構感。你的 <span class="highlight-practical">index.md routing target</span> 設計已經朝這個方向走了。</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>2. Skill 的生命週期管理</strong>：Create → Use → Evaluate → Iterate。Hermes 自動化了整個流程，但缺乏品質關卡。<span class="highlight-key">理想模式可能是：自動 Draft + 人工 Review + 版本控制</span>。</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>3. 遷移工具的設計思維</strong>：<code>hermes claw migrate</code> 支援 dry-run，這是良好的 DevOps 實踐。任何從系統 A 到系統 B 的遷移，都應該有預覽模式。</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">Key Insight: Auto-Draft + Human-Review Hybrid</div>
+            <div class="info-box-content">
+                <p>結合 Hermes 和你現有的 Claude Code Skills 模式，最佳實踐可能是：</p>
+                <ul>
+                    <li><strong>Step 1</strong>：任務完成後，AI 自動生成 Skill Draft（草稿）</li>
+                    <li><strong>Step 2</strong>：Knowledge Linting Level 1 (結構檢查) 自動通過</li>
+                    <li><strong>Step 3</strong>：Knowledge Linting Level 2 (LLM 語意檢查) 標記需人工審核的部分</li>
+                    <li><strong>Step 4</strong>：人工 Review + Commit + 版本控制</li>
+                </ul>
+                <p>這保留了自動化的速度優勢，同時維持了品質關卡 -- 特別是在 GMP 環境中，這個 human-in-the-loop 是不可省略的。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">GMP Lens: Copilot vs Agent Mode</div>
+            <div class="info-box-content">
+                <p>Hermes 的自動 Skill 迭代本質上是 <strong>Agent Mode</strong>（自主運作，無人審核）。在 GMP 製藥環境中，這等同於讓 AI 自行修改 SOP 而不經過變更控制 -- 任何稽核員看到這種做法都會開 Critical Observation。</p>
+                <p>你的原則仍然正確：AI 在 GMP 環境中只能以 <strong>Copilot Mode</strong> 運作。Hermes 的模式在研究/個人項目中合理，但在受管制環境中需要加上審批層。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Key Takeaways -->
+<h2 class="section-title">Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="card-title">1. Self-Improving Loop is the Core Innovation</div>
+        <div class="card-text">Hermes 的 Task → Skill → Memory → Recall 閉環是與傳統 Agent 的關鍵區隔。概念有效，但「指數級成長」的宣稱需打折理解。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="card-title">2. Auto-Skill vs Manual-Skill is a Design Tradeoff</div>
+        <div class="card-text">自動生成快但品質不可控，手動管理慢但可靠。最佳路徑：Auto-Draft + Human-Review 混合模式。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="card-title">3. Hermes is Explore, Not Adopt</div>
+        <div class="card-text">對已有 Claude Projects + Claude Code + GitHub 工具鏈的使用者而言，Hermes 的獨特價值被現有工具部分覆蓋。屬於 explore/demo 類別。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="card-title">4. Source Quality Matters</div>
+        <div class="card-text">X/Twitter 推文的促銷性語言和單方面比較，再次提醒：Source Discount 是知識管理的必要步驟。</div>
+    </div>
+</div>
+
+<!-- Practice Questions -->
+<h2 class="section-title">Practice Questions</h2>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">Hermes Agent 的「自我進化」具體包含哪兩個機制？它們分別解決什麼問題？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>兩個核心機制：<strong>(1) 持久多層記憶</strong>（SQLite + FTS5）-- 解決傳統 Agent 跨對話「健忘」的問題，讓 Agent 記住使用者偏好、歷史互動。<strong>(2) 自動 Skill 生成</strong>（Markdown Skill Files）-- 解決重複任務需要每次從頭設定的問題，任務完成後自動沉澱為可復用的能力模組。</p>
+        <p>關鍵區分：記憶解決的是「認識你」，Skill 解決的是「會做事」。兩者結合形成學習閉環。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">如果將 Hermes 的自動 Skill 生成模式應用到 CDMO 的偏差調查流程，需要加上什麼限制條件才能符合 GMP 要求？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>至少需要以下限制：</p>
+        <p><strong>(1) Human-in-the-Loop 審批</strong>：自動生成的 Skill（調查模板、CAPA 範本）必須經過 QA 審核後才能正式啟用，不得自動上線。</p>
+        <p><strong>(2) 變更控制整合</strong>：每個 Skill 的建立、修改、廢除都要走變更控制流程（Change Control），有版本號和審核簽名。</p>
+        <p><strong>(3) 驗證記錄</strong>：Skill 的使用結果必須可追溯（ALCOA+ 原則），AI 生成的建議和人工修改的差異要有 Audit Trail。</p>
+        <p><strong>(4) 定期回顧</strong>：Skill 不能無限累積 -- 需要定期 Review 淘汰過時或不適用的模板，類似 SOP 的定期覆核。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">原文宣稱「很多人從 OpenClaw 轉投 Hermes」-- 這個說法有哪些可信度問題？你會如何驗證？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>可信度問題包括：</p>
+        <p><strong>(1) 樣本偏差</strong>：原文引用「社區共識」但未提供數據來源。X 上的討論可能只代表少數活躍用戶的意見。</p>
+        <p><strong>(2) 比較偏向性</strong>：文章明顯站在 Hermes 一方，OpenClaw 的優勢（成熟生態、社區 Skill 庫）被輕描淡寫。</p>
+        <p><strong>(3) 遷移工具的存在</strong>：<code>hermes claw migrate</code> 的存在恰恰說明 Hermes 是挑戰者，需要降低轉換門檻 -- 這通常是後來者的策略。</p>
+        <p><strong>驗證方法</strong>：(a) 比較兩者的 GitHub Stars / Issues 活躍度趨勢；(b) 搜尋獨立第三方評測，而非只看官方或推廣者說法；(c) 在 Reddit、HN 等社區搜尋真實用戶反饋；(d) 實際安裝兩者做同一任務的 A/B 測試。</p>
+    </div>
+</details>
+
+<!-- Bottom Line -->
+<div class="bottom-line">
+    <div class="bottom-line-header">My Bottom Line</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">Core Insight</div>
+        <div class="bottom-line-text">Self-Improving Agent 的核心價值不在於「自動化」本身，而在於<strong>經驗的結構化沉澱</strong>。Hermes 用 SQLite + Markdown Skill 實現了一種粗糙但有效的知識累積機制。我的 Claude Code Skills + Knowledge Linting 系統其實走的是同一條路，只是在品質控制上更嚴格。關鍵洞察：Auto-Draft + Human-Review 的混合模式可能是下一步優化方向。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">Immediate Action</div>
+        <div class="bottom-line-text">本週不需要安裝 Hermes（Removal Test 結果：explore 而非 adopt）。但可以在 Claude Code Skills 的工作流中加入一個實驗：讓 Claude Code 在完成 artifact 文件後，自動生成一份 Skill Draft 提案，放在 <code>/drafts/</code> 資料夾待人工 Review。測試「Auto-Draft」概念是否能加速 Skill 建立。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">Gap to Fill</div>
+        <div class="bottom-line-text">原文是社群推文等級的概述，缺乏：(1) FTS5 記憶檢索的實際延遲和準確度數據；(2) 自動生成 Skill 的品質分佈（有多少是有用的 vs 垃圾的）；(3) 與 Claude Code Memory/Skills 的直接技術對比。如果 Hermes 未來出現嚴謹的技術評測，值得重新閱讀。</div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>Production Date: 2026-04-08 | Source: <a href="https://github.com/nousresearch/hermes-agent" target="_blank">Hermes Agent GitHub</a> | <a href="https://hermes-agent.nousresearch.com/docs/" target="_blank">Official Docs</a></p>
+    <p>Suggested Chat Title: 2026-04-08 [Agent] Hermes Agent - Self-Improving Architecture</p>
+    <p>Generated with AI Expert Learning System v1.5.0</p>
+</div>
+
+</div><!-- end container -->
+</body>
+</html>

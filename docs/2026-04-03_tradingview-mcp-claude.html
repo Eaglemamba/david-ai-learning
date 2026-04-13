@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradingView MCP 整合 - 用 Claude 連接交易圖表平台</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-04-03">
+<meta name="doc-title" content="TradingView MCP - Claude 連接交易圖表平台">
+<meta name="doc-source" content="Trades Dont Lie (@Tradesdontlie)">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Tool,Integration,MCP,API">
+<meta name="doc-rating" content="4.0">
+<meta name="doc-summary" content="透過 Chrome DevTools Protocol 將 Claude 連接 TradingView Desktop，78 個 MCP 工具 + CLI 實現 Pine Script AI 開發迴圈。">
+<meta name="doc-file" content="2026-04-03_tradingview-mcp-claude.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Tags */
+.tag-container { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-integration { background: #99f6e4; color: #134e4a; }
+.tag-mcp { background: #c7d2fe; color: #3730a3; }
+.tag-api { background: #ddd6fe; color: #4c1d95; }
+
+.header h1 { font-size: 1.8rem; margin: 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+.header .source { font-size: 0.85rem; opacity: 0.8; }
+.header .source a { color: #93c5fd; text-decoration: none; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid #3b82f6; }
+.exec-summary h2 { color: #1e3a8a; margin-top: 0; font-size: 1.2rem; }
+.exec-summary p { font-size: 0.95rem; color: #334155; margin-bottom: 0.75rem; }
+
+/* Section Headers */
+.section-title { font-size: 1.3rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-text { font-size: 0.9rem; color: #334155; font-weight: 500; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+
+/* Content Grid */
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; }
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+
+.part-label { font-size: 0.75rem; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+.part-title { font-size: 1.15rem; font-weight: 700; color: #1e293b; margin-bottom: 1rem; }
+
+/* Bilingual */
+.bilingual-block { margin-bottom: 1.25rem; }
+.zh-text { font-size: 0.95rem; color: #1e293b; line-height: 1.8; margin-bottom: 0.25rem; }
+.en-text { font-size: 0.9rem; color: #64748b; font-style: italic; line-height: 1.6; }
+
+/* Highlights */
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin: 1rem 0; }
+.info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+.info-box-content li { margin-bottom: 0.3rem; }
+
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+.box-critical .info-box-header { background: #fecdd3; color: #9f1239; }
+.box-critical .info-box-content { background: #fff1f2; border: 1px solid #fda4af; border-top: none; }
+
+/* Code blocks */
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; margin: 0.75rem 0; }
+code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
+.inline-code { background: #f1f5f9; color: #e11d48; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem; font-size: 0.95rem; }
+.summary-card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+
+/* Practice Accordion */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer { text-align: center; padding: 2rem 0; margin-top: 2rem; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 0.85rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+    .objectives-grid { grid-template-columns: 1fr; }
+    .takeaways-grid { grid-template-columns: 1fr; }
+    .framework-arrow { display: none; }
+    .framework-steps { gap: 1.5rem; }
+    .header h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-integration">Integration</span>
+        <span class="tag tag-mcp">MCP</span>
+        <span class="tag tag-api">API</span>
+    </div>
+    <h1>TradingView MCP 整合：用 Claude 連接交易圖表平台</h1>
+    <div class="subtitle">78 個 MCP 工具 + CLI，透過 Chrome DevTools Protocol 實現 Pine Script AI 開發迴圈</div>
+    <div class="source">Source: Trades Dont Lie (@Tradesdontlie) | <a href="https://github.com/tradesdontlie/tradingview-mcp" target="_blank">GitHub Repo</a> | 2026-04-01</div>
+</div>
+
+<!-- CONTAINER -->
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="exec-summary">
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+        <span class="rating-high">↑ 實務應用, 工具生態</span>
+        <span class="rating-low">↓ 技術深度, 學習曲線</span>
+    </div>
+    <h2>Executive Summary</h2>
+    <p>這篇文章介紹一個開源研究專案：透過 <span class="highlight-concept">Chrome DevTools Protocol (CDP)</span> 將 Claude Code 連接到 TradingView Desktop 應用程式。TradingView 沒有公開 API，但因為桌面版基於 Electron（Chromium 核心），開啟 debug port 後就能透過 CDP 讀取圖表上所有資料。</p>
+    <p>專案提供 78 個 MCP 工具和完整 CLI (<span class="inline-code">tv</span> 指令)，核心應用場景是 <span class="highlight-key">Pine Script AI 輔助開發迴圈</span>：描述需求 → Claude 寫腳本 → 自動注入編譯 → 讀取錯誤修正 → 重新編譯。所有資料都在本地端處理，不會離開你的電腦。</p>
+    <p><strong>來源偏差提醒：</strong>作者是該工具的開發者，文章本質上是專案介紹文。技術描述可信度高（可從 GitHub 原始碼驗證），但「改變工作流程」等主觀評價需保留判斷。此外，使用此工具可能涉及 TradingView 服務條款（作者也明確提到這點），需自行評估風險。</p>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<h2 class="section-title">Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-icon">🔗</div>
+        <div class="objective-text">理解 MCP + CDP 架構如何讓 LLM 存取非 API 應用程式</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">📊</div>
+        <div class="objective-text">掌握 Claude 能從 TradingView 讀取哪些結構化圖表資料</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-icon">🔄</div>
+        <div class="objective-text">評估 Pine Script AI 開發迴圈的模式與 GMP 文件自動化類比</div>
+    </div>
+</div>
+
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+    <div class="framework-title">TradingView MCP 架構流程</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">🤖</div>
+            <div class="framework-step-title">Claude Code</div>
+            <div class="framework-step-desc">自然語言指令</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">⚙️</div>
+            <div class="framework-step-title">MCP Server</div>
+            <div class="framework-step-desc">Node.js 中介層</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">🔌</div>
+            <div class="framework-step-title">CDP (Port 9222)</div>
+            <div class="framework-step-desc">Chrome DevTools Protocol</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">📈</div>
+            <div class="framework-step-title">TradingView</div>
+            <div class="framework-step-desc">Electron Desktop App</div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART I ==================== -->
+<h2 class="section-title">Part I：運作原理 — 三層架構</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="part-label">Part I</div>
+        <div class="part-title">How It Works</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">整個系統由三個部分組成，全部在你的本地機器上運行。<span class="highlight-concept">Claude Code 與 Node.js MCP 伺服器溝通</span>，該伺服器透過 Chrome DevTools Protocol 在 port 9222 連接到你正在執行的 TradingView Desktop 應用程式。</div>
+            <div class="en-text">Claude Code talks to a Node.js MCP server. That server connects to your running TradingView Desktop app over Chrome DevTools Protocol on port 9222.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="highlight-key">CDP 是 Google 內建於每個 Chromium 應用程式的標準除錯介面</span>。預設關閉，一個啟動旗標就能開啟它。沒有任何資料離開你的電腦。</div>
+            <div class="en-text">CDP is a standard Google debugging interface built into every Chromium app. Off by default. One flag turns it on. Nothing touches TradingView's servers. No data leaves your machine.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">整套工具也包裝成 <span class="inline-code">tv</span> CLI，JSON 輸出，支援管道串接，可在任何終端機或 shell 腳本中使用。</div>
+            <div class="en-text">The whole tool set also ships as a tv CLI, JSON output, pipe-friendly, works from any terminal or shell script.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="highlight-key">這會存取 TradingView 未公開的內部 API</span>。TradingView 可以在任何更新中不經通知就更改這些內部介面。如果你希望保持穩定，請釘選你的 TradingView Desktop 版本。</div>
+            <div class="en-text">This accesses undocumented internal TradingView APIs through the Electron debug interface. TradingView can change those internals in any update without notice. If you use this and want it to stay stable, pin your TradingView Desktop version.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 核心概念：Chrome DevTools Protocol (CDP)</div>
+            <div class="info-box-content">
+                <p>CDP 不是什麼神秘技術 — 它就是你在瀏覽器按 F12 打開開發者工具時使用的同一個協議。每個基於 Chromium 的應用程式（VS Code、Slack、Discord）都內建這個介面。差別只是有沒有在啟動時開啟 debug port。</p>
+                <p>這意味著理論上，<strong>任何 Electron 應用程式</strong>都可以用類似方法被 LLM 存取 — 不只是 TradingView。這個模式本身比單一工具更有價值。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">💡 比喻說明：旁聽者模式</div>
+            <div class="info-box-content">
+                <p>想像 TradingView 是一個正在進行的即時簡報。CDP 就像讓你坐在旁邊，不干擾簡報進行，但可以看到螢幕上所有投影片、數據和標註。你沒有修改任何東西，只是「讀取」已經顯示的資訊。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-critical">
+            <div class="info-box-header">⚠️ 風險提醒：未公開 API 的脆弱性</div>
+            <div class="info-box-content">
+                <p>使用未公開內部 API 的最大風險是<strong>隨時可能失效</strong>。TradingView 的任何版本更新都可能改變內部資料結構，導致所有 78 個工具需要逐一修復。這就是為什麼作者建議「釘選版本」。</p>
+                <p>此外，這是否違反 TradingView 服務條款是灰色地帶。作者坦承需要使用者自行評估。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART II ==================== -->
+<h2 class="section-title">Part II：Claude 能看到什麼</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="part-label">Part II</div>
+        <div class="part-title">What Claude Can Actually See</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">除了明顯的商品代碼、時間框架和指標數值之外，Claude 能讀取 <span class="highlight-concept">Pine Script 指標在圖表上繪製的實際繪圖物件</span>。line.new()、label.new()、table.new()、box.new() — 你的指標在螢幕上畫的任何東西，Claude 都能以結構化資料讀回。</div>
+            <div class="en-text">Beyond the obvious stuff like symbol, timeframe, and indicator values, Claude can read the actual drawing objects that Pine Script indicators put on your chart. The line.new() calls, label.new(), table.new(), box.new().</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="highlight-key">這對受保護的指標也有效</span>。你只需傳入以指標名稱為目標的篩選器，就能取得每個價格水平、每個文字標註、完整表格內容、每個繪製的區域。</div>
+            <div class="en-text">This works on protected indicators too. You just pass a filter targeting the indicator by name and you get back every price level, every text annotation, full table contents, every drawn zone.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">完整可用資料清單：目前商品和時間框架、所有指標名稱和 ID、即時 OHLC 和成交量、最多 500 根 K 線或精簡摘要、所有資料視窗數值、<span class="highlight-practical">所有類型的 Pine 繪圖</span>、委買委賣簿深度、策略測試器結果和交易清單、商品後設資料，以及任何圖表區域的截圖。</div>
+            <div class="en-text">The full picture: current symbol and timeframe, all indicator names and IDs, real-time OHLC and volume, up to 500 price bars or a compact summary, all data window values, Pine drawings of every type, order book depth, strategy tester results and trade list, symbol metadata, and screenshots of any chart region.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">值得明確說明：<span class="highlight-key">所有這些資料在 TradingView 開啟的那一刻就已經顯示在你的螢幕上</span>。這個工具只是讓 LLM 能夠讀取它。</div>
+            <div class="en-text">All of this data is already on your screen the moment TradingView is open. The app is displaying it. This tool just makes it readable to an LLM.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 實務應用：可讀取的資料類型</div>
+            <div class="info-box-content">
+                <ul>
+                    <li><strong>價格資料：</strong>即時 OHLCV、最多 500 根 K 線</li>
+                    <li><strong>指標資料：</strong>名稱、ID、所有計算值</li>
+                    <li><strong>Pine 繪圖：</strong>線、標籤、表格、方框等所有物件</li>
+                    <li><strong>策略測試：</strong>回測結果、交易清單、績效指標</li>
+                    <li><strong>委買委賣簿：</strong>深度資料</li>
+                    <li><strong>截圖：</strong>任何圖表區域的視覺擷取</li>
+                    <li><strong>後設資料：</strong>商品資訊、時間框架等</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 重點提示：「受保護指標」的意涵</div>
+            <div class="info-box-content">
+                <p>作者提到可以讀取「受保護指標」的繪圖資料。這意味著即使指標的原始碼被鎖定，<strong>只要它在圖表上產生視覺輸出</strong>（線條、標籤、表格），CDP 就能讀取這些渲染後的數值。</p>
+                <p>這是合理的 — 因為資料已經被渲染到螢幕上。但這也是 TradingView 可能在服務條款中限制的行為之一。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">⚖️ CDMO 類比：設備資料讀取</div>
+            <div class="info-box-content">
+                <p>這個模式類似製藥設備的 OPC-UA 或 SCADA 整合：設備（TradingView）已經在運行並產生資料，你只是建立一個讀取通道讓另一個系統（Claude）能消費這些資料。差別在於 GMP 環境的資料整合需要驗證（CSV/21 CFR Part 11），而這個工具是未驗證的研究級工具。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART III ==================== -->
+<h2 class="section-title">Part III：技術上的可能性</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="part-label">Part III</div>
+        <div class="part-title">What's Technically Possible</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>1. 帶有 AI 迴圈的 Pine Script 開發。</strong>你描述你想要的東西，<span class="highlight-concept">Claude 寫腳本、注入 Pine 編輯器、編譯、讀取錯誤、修復、重新編譯</span>。這個迴圈持續運行直到腳本乾淨。整個過程中它都有你當前圖表和上面所有指標的完整上下文。</div>
+            <div class="en-text">Pine Script development with AI in the loop. You describe what you want, Claude writes the script, injects it into the Pine editor, compiles it, reads the errors back, fixes them, and recompiles. That loop runs until the script is clean.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>2. 你的圖表作為本地資料來源。</strong>串流指令透過 CDP 在 localhost 上輪詢你正在執行的 TradingView Desktop，<span class="highlight-practical">輸出 JSONL — 每行一個 JSON 物件</span>。你可以把它管道到 Python、Node、shell 腳本、jq 篩選器，任何你想在本地建構的東西。</div>
+            <div class="en-text">Your chart as a local data source. The streaming commands poll your running TradingView Desktop via CDP on localhost and output JSONL, one JSON object per line. You can pipe that into Python, Node, shell scripts, jq filters, whatever you want to build locally.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>3. 腳本化重複性圖表任務。</strong>每個工具都可以作為 CLI 命令使用，具有一致的 JSON 輸出。任何你手動重複做的事情都是腳本化的候選對象。多商品畫面、截圖執行、<span class="highlight-practical">早晨版面設定、圖表狀態快照、批次指標配置</span>。</div>
+            <div class="en-text">Scripting repetitive chart tasks. Every tool is available as a CLI command with consistent JSON output. Anything you do manually on repeat is a candidate for a script. Multi-symbol screens, screenshot runs, morning layout setup, chart state snapshots, batch indicator configuration.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>4. 指標驗證。</strong>寫腳本、編譯、讀回數值、<span class="highlight-key">檢查數學是否符合你的預期</span>。循環各種輸入參數並在每次讀取輸出。在多個商品和時間框架上執行相同指標。讀取每次編譯後的策略測試器指標。</div>
+            <div class="en-text">Indicator validation. Write a script, compile it, read the values back, check that the math matches your expectations. Loop through input parameters and read the output each time.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><strong>5. 帶有結構化日誌的回放。</strong>逐步走過歷史 K 線，在每一步記錄指標數值到 JSONL，記錄你的交易決策，在進場和出場時擷取截圖。一份正式的練習記錄。</div>
+            <div class="en-text">Replay with structured logging. Step through historical bars, log the indicator values at each step to JSONL, record your trade decisions, capture screenshots at entries and exits.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 核心概念：AI-in-the-Loop 開發迴圈</div>
+            <div class="info-box-content">
+                <p>Pine Script 開發迴圈是這個工具最有價值的模式。傳統流程是：在文字編輯器寫 → 複製到 Pine 編輯器 → 手動編譯 → 看錯誤 → 回去改 → 再複製。每次迭代需要人工介入多個步驟。</p>
+                <p>有了 MCP 工具後：描述需求 → Claude 產生程式碼 → 自動注入 + 編譯 → 自動讀取錯誤 → 自動修正 → 重新編譯。人類只在最初描述需求和最後驗證結果時介入。</p>
+                <p>這是典型的 <strong>Copilot Mode</strong> 而非 Agent Mode — 人類保持最終控制權，AI 處理重複性的編譯除錯迴圈。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 實務應用：五大應用場景</div>
+            <div class="info-box-content">
+                <ul>
+                    <li><strong>Pine Script AI 開發：</strong>寫 → 編譯 → 除錯全自動迴圈</li>
+                    <li><strong>即時資料串流：</strong>JSONL 管道到任何本地腳本</li>
+                    <li><strong>圖表任務自動化：</strong>版面設定、截圖、批次配置</li>
+                    <li><strong>指標驗證：</strong>跨商品/時間框架的參數測試</li>
+                    <li><strong>回放記錄：</strong>結構化交易練習日誌</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">⚖️ CDMO 類比：文件迴圈自動化</div>
+            <div class="info-box-content">
+                <p>Pine Script 的 AI 開發迴圈模式與我們的 GMP 文件工作流程類比：</p>
+                <ul>
+                    <li>Pine Script 寫 → 編譯 → 除錯迴圈 ≈ SOP 草擬 → 審查 → 修正迴圈</li>
+                    <li>指標驗證（跨參數測試）≈ 設備確效（IQ/OQ/PQ 多條件測試）</li>
+                    <li>結構化回放日誌 ≈ 批次紀錄的結構化數據擷取</li>
+                </ul>
+                <p>關鍵差異：交易場景容許 Agent 自主迭代直到成功；GMP 環境的每一步修改都需要人工審核和文件記錄。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART IV ==================== -->
+<h2 class="section-title">Part IV：CLI 工具集</h2>
+<div class="content-grid" style="grid-template-columns: 1fr;">
+    <div class="content-left" style="border-right: none;">
+        <div class="part-label">Part IV</div>
+        <div class="part-title">The CLI</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">每個 MCP 工具同時也是一個終端機指令。整套工具包裝為 <span class="inline-code">tv</span> CLI，JSON 輸出可管道到任何地方。</div>
+            <div class="en-text">Every MCP tool is also a terminal command. The whole thing ships as a tv CLI with JSON output that pipes anywhere.</div>
+        </div>
+
+<pre><span style="color:#94a3b8;"># 讀取圖表狀態</span>
+tv status              <span style="color:#94a3b8;"># 連線狀態</span>
+tv quote               <span style="color:#94a3b8;"># 即時報價</span>
+tv ohlcv --summary     <span style="color:#94a3b8;"># OHLCV 精簡摘要</span>
+tv data lines          <span style="color:#94a3b8;"># Pine 繪圖物件</span>
+tv data values         <span style="color:#94a3b8;"># 資料視窗數值</span>
+
+<span style="color:#94a3b8;"># 導航</span>
+tv symbol AAPL         <span style="color:#94a3b8;"># 切換商品</span>
+tv timeframe D         <span style="color:#94a3b8;"># 切換時間框架</span>
+tv pane layout 2x2     <span style="color:#94a3b8;"># 設定多窗格版面</span>
+tv pane symbol 1 ES1!  <span style="color:#94a3b8;"># 指定窗格商品</span>
+
+<span style="color:#94a3b8;"># Pine Script 操作</span>
+tv pine set &lt; script.pine   <span style="color:#94a3b8;"># 注入腳本</span>
+tv pine compile              <span style="color:#94a3b8;"># 編譯</span>
+tv pine analyze              <span style="color:#94a3b8;"># 離線靜態分析</span>
+tv pine check                <span style="color:#94a3b8;"># 伺服器端編譯檢查</span>
+tv pine save                 <span style="color:#94a3b8;"># 儲存</span>
+
+<span style="color:#94a3b8;"># 串流</span>
+tv stream quote | jq '.close'               <span style="color:#94a3b8;"># 串流收盤價</span>
+tv stream bars                               <span style="color:#94a3b8;"># 串流 K 線</span>
+tv stream lines --filter "NY Levels"         <span style="color:#94a3b8;"># 篩選指標線條</span>
+tv stream tables --filter Profiler           <span style="color:#94a3b8;"># 篩選表格資料</span>
+tv stream all                                <span style="color:#94a3b8;"># 串流所有資料</span>
+
+<span style="color:#94a3b8;"># Pine CI 單行指令</span>
+cat script.pine | tv pine analyze && cat script.pine | tv pine check</pre>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 重點提示：tv stream all 的研究價值</div>
+            <div class="info-box-content">
+                <p>作者特別標出 <span class="inline-code">tv stream all</span> 是「從研究角度最有趣的指令」。設定多窗格版面後，執行這個指令就能同時串流所有商品的 JSONL 資料到下游任何處理程序。這本質上是把 TradingView 變成一個本地端的即時資料源 — 無需付費 API，無需第三方資料供應商。</p>
+                <p><strong>注意：</strong>這不是「免費獲取資料」— 你仍然需要 TradingView 的付費訂閱。這只是改變了資料的消費方式（從視覺 → 程式化）。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">⚖️ CLI 設計模式：Unix 哲學</div>
+            <div class="info-box-content">
+                <p>這個 CLI 的設計遵循經典 Unix 哲學：每個指令做一件事、JSON 輸出、支援管道組合。這與我們在 Claude Code 自動化管線中使用的模式完全一致 — <span class="inline-code">claude -p</span> 的 headless mode 也是用管道串接輸入輸出。</p>
+                <p>關鍵學習：<strong>好的 CLI 工具設計 = 可組合性（composability）</strong>。每個指令的輸出都能成為另一個指令的輸入，這比單一的 monolithic 工具更有彈性。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PART V ==================== -->
+<h2 class="section-title">Part V：安裝與開始使用</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="part-label">Part V</div>
+        <div class="part-title">Getting It Running</div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">你需要 Node.js 18+ 和安裝了有效訂閱的 TradingView Desktop。之後，只要給 Claude 一段安裝提示，它就會處理整個安裝過程。</div>
+            <div class="en-text">You need Node.js 18+ installed and TradingView Desktop with a valid subscription. After that, just give Claude this prompt and it handles the whole install.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text">安裝完成後，用 <span class="inline-code">tv_health_check</span> 確認連線。然後你就可以用自然語言操作：「我的圖表上現在有什麼？」「寫一個 Pine Script VWAP 指標並加到我的圖表上。」「設定一個 2x2 網格，放 NQ、ES、YM 和 GC。」</div>
+            <div class="en-text">"What's on my chart right now?" "Write a Pine Script VWAP indicator and add it to my chart." "Set up a 2x2 grid with NQ, ES, YM, and GC."</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="zh-text"><span class="highlight-key">這不是一個會解決你所有問題的萬能方案。這只是一個將你的圖表平台連接到大型語言模型的工具。</span>你仍然需要能夠自己想出指標概念或交易模型，或知道如何在你的交易方法論中使用指標資料。</div>
+            <div class="en-text">This isn't an end-all, be-all solution that's going to solve all your problems. This is just a tool to connect your charting platform to your large language model. You're still going to need to be able to logically come up with your own indicators ideas or models.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">💻 安裝指令（給 Claude 的 Prompt）</div>
+            <div class="info-box-content">
+<pre style="font-size: 0.8rem; margin: 0;">"Install the TradingView MCP server.
+Clone and explore
+github.com/tradesdontlie/tradingview-mcp,
+run npm install,
+add to my MCP config at
+~/.claude/.mcp.json,
+and launch TradingView with
+the debug port."</pre>
+                <p style="margin-top: 0.75rem;">驗證連線：</p>
+<pre style="font-size: 0.8rem; margin: 0;">"Use tv_health_check to confirm
+TradingView is connected."</pre>
+            </div>
+        </div>
+
+        <div class="info-box box-critical">
+            <div class="info-box-header">⚠️ 2-3x Discount 提醒</div>
+            <div class="info-box-content">
+                <p>作者的免責聲明值得認真看待：</p>
+                <ul>
+                    <li><strong>個人研究專案</strong> — 非 TradingView 官方</li>
+                    <li><strong>未公開 API</strong> — 任何更新都可能破壞功能</li>
+                    <li><strong>服務條款灰色地帶</strong> — 使用者自負風險</li>
+                    <li><strong>非投資建議</strong> — 工具不會讓你變成更好的交易者</li>
+                </ul>
+                <p>作者的誠實態度值得肯定（沒有過度行銷），但「78 個 MCP 工具」的數量可能包含大量細粒度的簡單操作。實際常用的核心工具可能只有 10-15 個。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== KEY TAKEAWAYS ==================== -->
+<h2 class="section-title">Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-title">🔗 CDP 是通用的 Electron 後門</div>
+        <div class="summary-card-text">任何基於 Electron 的桌面應用程式都能透過 Chrome DevTools Protocol 被 LLM 存取。這個模式不僅限於 TradingView — 它是一個可複製的架構。開啟 debug port，建立 MCP 伺服器，LLM 就能讀取應用程式狀態。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="summary-card-title">🔄 AI-in-the-Loop 開發迴圈</div>
+        <div class="summary-card-text">Pine Script 的「寫 → 編譯 → 讀錯誤 → 修正 → 重編譯」自動迴圈是 Copilot Mode 的教科書案例。人類負責描述需求和驗證結果，AI 處理中間的重複性迭代。這個模式可以遷移到任何有「撰寫 → 驗證 → 修正」迴圈的工作流程。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="summary-card-title">📊 圖表資料程式化</div>
+        <div class="summary-card-text">將視覺資料轉換為結構化 JSONL 串流，讓下游腳本可以消費。這不是新的資料來源，而是改變資料的消費介面 — 從「人眼看圖表」到「程式讀 JSON」。Unix 管道哲學的資料工程應用。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="summary-card-title">⚠️ 未公開 API 的代價</div>
+        <div class="summary-card-text">78 個工具建構在未公開內部 API 上，任何版本更新都可能導致全部失效。這是「快速獲得能力」與「長期維護成本」的經典取捨。生產環境使用需釘選版本並準備好隨時修復的心理準備。</div>
+    </div>
+</div>
+
+<!-- ==================== PRACTICE ==================== -->
+<h2 class="section-title">Practice Questions</h2>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">為什麼 TradingView 的 Electron 架構讓 CDP 整合成為可能？如果 TradingView 改用原生桌面應用程式（非 Electron），這個方案還能運作嗎？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>Electron 是基於 Chromium 的框架，因此繼承了 Chrome DevTools Protocol。CDP 是 Chromium 的內建除錯介面，可以透過 WebSocket 連線讀取和操控瀏覽器/應用程式的狀態。</p>
+        <p>如果 TradingView 改用原生應用程式（如 Qt、Swift），CDP 就不可用了。你需要找到該平台的等效除錯介面（如 Windows 的 UI Automation API、macOS 的 Accessibility API），但這些介面通常提供的資料粒度遠低於 CDP，且更難以取得應用程式內部的結構化數據。Electron 的「一切都是網頁」本質是這個方案成立的前提。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">這篇文章中的「CDP 存取 Electron 應用程式」模式，能否應用到 CDMO 環境中使用的 Electron-based 軟體（如某些 LIMS 或 ELN 的桌面版本）？有哪些 GMP 合規性障礙？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>技術上可行 — 如果 LIMS/ELN 的桌面版本基於 Electron，CDP 存取的原理完全相同。但 GMP 環境的障礙遠超技術層面：</p>
+        <p><strong>合規障礙：</strong>(1) 21 CFR Part 11 要求系統驗證 — 未公開 API 的讀取通道無法通過 CSV（電腦系統驗證）；(2) 資料完整性 (ALCOA+) — 透過 debug port 讀取的資料缺乏審計追蹤；(3) 變更控制 — 開啟 debug port 需要經過完整的變更管理流程。</p>
+        <p><strong>結論：</strong>在 GMP 環境中，這種「黑客式」整合方式與合規要求根本矛盾。正確做法是要求供應商提供經過驗證的 API 介面。但<em>概念驗證階段</em>可以用 CDP 快速驗證「AI 讀取系統資料」的可行性，再推動正式 API 開發。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">作者聲稱「所有資料都已經顯示在你的螢幕上，這個工具只是讓它可被 LLM 讀取」。這個論點是否足以證明繞過未公開 API 的合理性？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>這個論點有技術上的事實基礎但在法律/倫理層面不完整。</p>
+        <p><strong>技術事實：</strong>確實，CDP 讀取的資料就是已經渲染到螢幕上的資料。沒有存取「隱藏的」伺服器端資料。從技術角度，這和截圖然後 OCR 沒有本質區別。</p>
+        <p><strong>不完整之處：</strong>(1) 服務條款通常區分「人類使用」和「自動化存取」— 同樣的資料，自動化讀取可能違反 ToS 但手動查看不會；(2) 「受保護指標」的繪圖數據讀取可能違反指標作者的預期 — 他們鎖定原始碼是假設輸出不會被程式化擷取；(3) 批量化、高頻率的資料擷取可能對 TradingView 的服務產生負載影響。</p>
+        <p>這是典型的「技術上可以做到」≠「應該這樣做」的問題。作者的坦誠態度值得肯定，但使用者需要自行評估風險而非依賴這個論點作為免責盾牌。</p>
+    </div>
+</details>
+
+<!-- ==================== BOTTOM LINE ==================== -->
+<div class="bottom-line">
+    <div class="bottom-line-header">🎯 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">CDP + MCP 是一個可複製的架構模式：任何 Electron 桌面應用程式都可以透過 debug port 被 LLM 存取。這比 TradingView 本身更重要 — 它意味著 MCP 生態系的整合對象不限於有公開 API 的服務。對於我的自動化管線，這提供了一個應對「無 API 可用」場景的備選路徑（如 Browser Use 的 CDP 模式處理 JS-rendered 網站，概念相同）。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用</div>
+        <div class="bottom-line-text">不直接安裝此工具（我不做交易），但記錄 CDP + Electron MCP 整合模式到技術筆記。下次遇到「這個桌面軟體沒有 API」的場景時，先檢查它是否基於 Electron — 如果是，CDP 就是潛在的整合路徑。同時，這篇文章的 CLI 設計（JSON 輸出、管道友善、單一 binary）是我設計 Claude Code Skill CLI 介面的參考範本。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠️ 需要補充</div>
+        <div class="bottom-line-text">文章缺少穩定性數據（78 個工具中有多少在 TradingView 更新後需要修復？頻率？）。也沒有討論 CDP 連線的安全性考量（port 9222 暴露是否有本地端攻擊面？）。未來如果要在 CDMO 環境探索類似模式，需要研究 CDP 連線的安全強化（TLS、認證）和審計追蹤能力。</div>
+    </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="footer">
+    <p>製作日期：2026-04-03 | 來源：<a href="https://github.com/tradesdontlie/tradingview-mcp" target="_blank">TradingView MCP GitHub</a></p>
+    <p>建議 Chat Title：2026-04-03 [Tool] TradingView MCP - Claude CDP Integration</p>
+    <p>建議檔名：2026-04-03_tradingview-mcp-claude.html</p>
+</div>
+
+</div><!-- end container -->
+</body>
+</html>

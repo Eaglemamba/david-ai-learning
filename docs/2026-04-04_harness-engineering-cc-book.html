@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>驾驭工程：从 Claude Code 源码到 AI 编码最佳实践</title>
+    
+    <!-- Dashboard Index Meta -->
+    <meta name="doc-date" content="2026-04-04">
+    <meta name="doc-title" content="驾驭工程 - CC 源码逆向 Harness Engineering">
+    <meta name="doc-source" content="AlexZ (ZhangHanDong) / GitHub">
+    <meta name="doc-source-type" content="">
+    <meta name="doc-tags" content="Agent,Framework,Tool,API">
+    <meta name="doc-rating" content="4.3">
+    <meta name="doc-summary" content="CC v2.1.88 源码逆向工程書。三層架構、Agent Loop、89 Feature Flags、權限模型、Prompt Cache。">
+    <meta name="doc-file" content="2026-04-04_harness-engineering-cc-book.html">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+}
+
+/* Tags */
+.tag-container { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-framework { background: #fde68a; color: #92400e; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-api { background: #ddd6fe; color: #4c1d95; }
+.tag-llm { background: #bfdbfe; color: #1e3a8a; }
+.tag-security { background: #fee2e2; color: #dc2626; }
+
+.header h1 { font-size: 1.6rem; font-weight: 700; margin: 0.5rem 0; line-height: 1.3; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; }
+.header .source-info { font-size: 0.85rem; opacity: 0.8; }
+.header .source-info a { color: #93c5fd; text-decoration: none; }
+
+/* Rating Bar */
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Executive Summary */
+.exec-summary { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.exec-summary h2 { color: #1e3a8a; font-size: 1.15rem; margin-bottom: 0.75rem; }
+.exec-summary p { font-size: 0.95rem; line-height: 1.8; color: #334155; margin-bottom: 0.75rem; }
+
+/* Section Headers */
+.section-title { font-size: 1.2rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* Learning Objectives */
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+.objective-item { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-item .obj-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.objective-item .obj-title { font-weight: 700; color: #1e3a8a; font-size: 0.9rem; margin-bottom: 0.3rem; }
+.objective-item .obj-desc { font-size: 0.85rem; color: #475569; line-height: 1.6; }
+
+/* Framework Visual */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 120px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Content Grid (Two-Column) */
+.content-left { padding: 1.5rem; background: white; border-right: 1px solid #e2e8f0; }
+.content-right { padding: 1.5rem; background: #f8fafc; }
+.content-left h3, .content-right h3 { font-size: 1rem; font-weight: 700; color: #1e3a8a; margin-bottom: 0.75rem; }
+
+/* Bilingual Blocks */
+.bilingual-block { margin-bottom: 1.25rem; }
+.zh-text { font-size: 0.95rem; line-height: 1.8; color: #1e293b; margin-bottom: 0.3rem; }
+.en-text { font-size: 0.9rem; line-height: 1.7; color: #64748b; font-style: italic; }
+
+/* Highlights */
+.hl-concept { background: #a5d6a7; padding: 0 3px; border-radius: 3px; }
+.hl-key { background: #ffcc80; padding: 0 3px; border-radius: 3px; }
+.hl-practical { background: #6ee7b7; padding: 0 3px; border-radius: 3px; }
+
+/* Info Boxes */
+.info-box { border-radius: 0.75rem; overflow: hidden; margin-bottom: 1rem; }
+.info-box-header { padding: 0.5rem 1rem; font-weight: 700; font-size: 0.85rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; border: 1px solid #86efac; border-top: none; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; border: 1px solid #fcd34d; border-top: none; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; border: 1px solid #fdba74; border-top: none; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; border: 1px solid #c4b5fd; border-top: none; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; border: 1px solid #6ee7b7; border-top: none; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; border: 1px solid #a5b4fc; border-top: none; }
+
+/* Code */
+pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; margin: 0.75rem 0; }
+code { font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
+.inline-code { background: #f1f5f9; color: #7c3aed; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
+
+/* Tabs */
+.tab-container { margin: 1.5rem 0; }
+.tab-nav { display: flex; gap: 0.25rem; background: #f1f5f9; padding: 0.25rem; border-radius: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tab-btn { flex: 1; padding: 0.75rem 1rem; border: none; background: transparent; border-radius: 0.5rem; font-weight: 500; color: #64748b; cursor: pointer; transition: all 0.2s; font-family: inherit; font-size: 0.85rem; min-width: 100px; }
+.tab-btn:hover { color: #334155; }
+.tab-btn.active { background: white; color: #1e3a8a; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Key Takeaways */
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+.summary-card { background: white; border-radius: 0.75rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card .card-title { font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem; font-size: 0.95rem; }
+.summary-card .card-text { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+
+/* Accordion (Practice) */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+
+/* Bottom Line */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Source Bias */
+.source-bias { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 0.75rem; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+.source-bias-title { font-weight: 700; color: #92400e; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.source-bias-text { font-size: 0.85rem; color: #78350f; line-height: 1.7; }
+
+/* Footer */
+.footer { text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.85rem; }
+th { background: #f1f5f9; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; color: #334155; border: 1px solid #e2e8f0; }
+td { padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; color: #475569; }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+    <div class="tag-container">
+        <span class="tag tag-agent">Agent</span>
+        <span class="tag tag-framework">Framework</span>
+        <span class="tag tag-tool">Tool</span>
+        <span class="tag tag-api">API</span>
+        <span class="tag tag-security">Security</span>
+    </div>
+    <h1>驾驭工程：从 Claude Code 源码到 AI 编码最佳实践</h1>
+    <div class="subtitle">Harness Engineering: From Claude Code Source to AI Coding Best Practices</div>
+    <div class="source-info">
+        Source: AlexZ (@blackanger) / <a href="https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding" target="_blank">GitHub Repo</a> | 基於 Claude Code v2.1.88 source map 逆向分析 | 2026-04 開源
+    </div>
+</div>
+
+<!-- Container -->
+<div class="container">
+
+<!-- Executive Summary -->
+<div class="exec-summary">
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span> 4.3/5</span>
+        <span class="rating-high">&uarr; 技術深度, 工具生態</span>
+        <span class="rating-low">&darr; 時效性 (基於洩露源碼), 學習曲線 (需 TS/Agent 背景)</span>
+    </div>
+    <h2>Executive Summary / 執行摘要</h2>
+    <p>這是一本由 AI 輔助撰寫、開源共建的技術書籍，作者 AlexZ（ZhangHanDong）以 Claude Code v2.1.88 的公開發布包與 source map 還原結果為分析材料，系統性拆解了一個生產級 AI Coding Agent 的完整工程架構。全書 7 篇正文 + 4 個附錄，覆蓋從<span class="hl-concept">三層架構</span>、<span class="hl-concept">Agent Loop 狀態機</span>、<span class="hl-key">89 個 Feature Flags</span>、到<span class="hl-practical">權限模型、Prompt Cache 優化</span>的完整鏈路。</p>
+    <p>本書最大的價值不在於「複製 Claude Code」，而在於從真實工程實現中提煉出<span class="hl-key">可遷移的 AI Agent 架構模式</span>——無論你用什麼框架，這些模式都適用。書的生產過程本身就是一個 harness engineering 案例：DESIGN.md → 每章 spec → plan → 技術寫作 skill → AI 寫作。</p>
+</div>
+
+<!-- Source Bias Assessment -->
+<div class="source-bias">
+    <div class="source-bias-title">Source Bias Assessment / 來源偏差評估</div>
+    <div class="source-bias-text">
+        <strong>來源性質：</strong>基於洩露源碼的逆向工程分析。非 Anthropic 官方授權或認可。<br>
+        <strong>潛在偏差：</strong>(1) 源碼為 v2.1.88 快照，不反映最新版本變化；(2) AI 生成內容可能存在推測性解釋（作者已明確說明）；(3) source map 還原不等於原始源碼，可能有遺漏或誤讀。<br>
+        <strong>2-3x Discount：</strong>書中對架構設計動機的推測需要打折。實際工程決策可能有源碼無法體現的產品/商業考量。Feature Flag 名稱推測的功能可能與實際用途不完全一致。
+    </div>
+</div>
+
+<!-- Learning Objectives -->
+<div class="section-title">Learning Objectives / 學習目標</div>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="obj-icon">&#x1F3D7;</div>
+        <div class="obj-title">三層架構模型</div>
+        <div class="obj-desc">理解 Application / Runtime / External Dependencies 三層如何協作，以及層間信息流方向</div>
+    </div>
+    <div class="objective-item">
+        <div class="obj-icon">&#x1F504;</div>
+        <div class="obj-title">Agent Loop 編排</div>
+        <div class="obj-desc">掌握 query.ts 狀態機的「模型調用 - 工具執行 - 繼續判定」循環機制</div>
+    </div>
+    <div class="objective-item">
+        <div class="obj-icon">&#x1F6E1;</div>
+        <div class="obj-title">權限與安全模型</div>
+        <div class="obj-desc">學習 Permission Pipeline、YOLO 分類器、Hooks 系統如何實現分層安全</div>
+    </div>
+    <div class="objective-item">
+        <div class="obj-icon">&#x1F4DD;</div>
+        <div class="obj-title">提示工程架構</div>
+        <div class="obj-desc">理解系統提示詞的分段式組合、工具描述即指令、模型特定調優</div>
+    </div>
+    <div class="objective-item">
+        <div class="obj-icon">&#x1F9E0;</div>
+        <div class="obj-title">上下文管理策略</div>
+        <div class="obj-desc">掌握 Compaction / Microcompact / Token Budget / History Snip 的多層壓縮體系</div>
+    </div>
+    <div class="objective-item">
+        <div class="obj-icon">&#x1F527;</div>
+        <div class="obj-title">AI 寫書方法論</div>
+        <div class="obj-desc">學習「DESIGN.md → spec → plan → skill → 寫作」的 AI 輔助內容生產流程</div>
+    </div>
+</div>
+
+<!-- Framework Visual -->
+<div class="framework-visual">
+    <div class="framework-title">AI 寫書工程流程（本書的生產方法論）</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F4CB;</div>
+            <div class="framework-step-title">DESIGN.md</div>
+            <div class="framework-step-desc">與 AI 聊清楚大綱</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F4D0;</div>
+            <div class="framework-step-title">Chapter Spec</div>
+            <div class="framework-step-desc">agent-spec 約束邊界</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x1F5FA;</div>
+            <div class="framework-step-title">Plan</div>
+            <div class="framework-step-desc">拆解執行步驟</div>
+        </div>
+        <div class="framework-arrow">&rarr;</div>
+        <div class="framework-step">
+            <div class="framework-icon">&#x270D;</div>
+            <div class="framework-step-title">Skill + Write</div>
+            <div class="framework-step-desc">疊加寫作 skill 生成</div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabbed Content: 7 Parts grouped into 3 tabs -->
+<div class="section-title">Core Content / 核心內容（7 篇分組導航）</div>
+
+<div class="tab-container">
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-arch')">Part I-II: 架構與提示</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-ctx')">Part III-V: 上下文與安全</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-adv')">Part VI-VII: 進階與教訓</button>
+    </div>
+
+    <!-- TAB 1: Architecture + Prompt -->
+    <div id="tab-arch" class="tab-content active">
+        <!-- Part I -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part I: 架構篇 (Ch.1-4)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">Claude Code 的技術棧選擇揭示了一個核心理念：<span class="hl-concept">AI 編碼 Agent 不是傳統的 CLI 工具，它是一個「在分發狀態下運行」的系統</span>——模型不僅使用工具，還能編寫自己的工具。整個技術棧必須為「模型作為一等公民」而設計。</div>
+                    <div class="en-text">The tech stack choice reveals a core principle: an AI coding agent is a system that runs "on distribution" — the model not only uses tools but can write its own tools.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">全書以<span class="hl-key">三層架構</span>為核心概念：應用層（TypeScript 1,902 個文件 + React Ink + Agent Loop）、運行時層（Bun + Zig + JavaScriptCore）、外部依賴層（Anthropic API + MCP + GrowthBook）。層間信息流方向是理解整個系統的關鍵。</div>
+                    <div class="en-text">The book centers on a three-layer architecture: Application Layer (TypeScript + React Ink + Agent Loop), Runtime Layer (Bun + Zig + JSC), External Dependencies (API + MCP + GrowthBook).</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">Agent Loop（Ch.3）是最核心的章節——<span class="hl-concept">query.ts 狀態機</span>編排「模型調用 → 工具執行 → 繼續判定」的循環。工具系統（Ch.2）包含 40+ 個工具，每個工具的 <span class="inline-code">description</span> 和 <span class="inline-code">inputSchema</span> 不僅是文檔，更是發送給模型的指令。</div>
+                    <div class="en-text">The Agent Loop (query.ts state machine) orchestrates the "model call → tool execution → continue decision" cycle. Tool descriptions serve as both documentation and model instructions.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis & Patterns / 分析與模式</h3>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念：On Distribution</div>
+                    <div class="info-box-content">
+                        傳統 CLI 工具在開發時定義好所有功能再分發。AI Agent 不同——它在被使用時，行為由模型動態決定。這意味著 Feature Flag 不僅控制代碼路徑，還控制模型能「看到」哪些工具。當 <span class="inline-code">feature('WEB_BROWSER_TOOL')</span> 為 false 時，整個模組從 bundle 中消失，模型永遠不知道它的存在。
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點提示：雙軌 Feature Flag</div>
+                    <div class="info-box-content">
+                        CC 有兩套並行的 Feature Flag：<br>
+                        <strong>構建時 <span class="inline-code">feature()</span></strong>：bun:bundle 提供，編譯時替換為 true/false 字面量，死代碼消除移除不可達分支。89 個 Flag 控制「功能是否存在」。<br>
+                        <strong>運行時 GrowthBook <span class="inline-code">tengu_*</span></strong>：會話啟動時從服務端拉取，控制 A/B 測試和灰度。控制「功能對誰開放」。
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; CDMO 映射</div>
+                    <div class="info-box-content">
+                        三層架構 → GMP 分層驗證：應用層 = SOP 層（業務邏輯）、運行時層 = 設備/系統層（IQ/OQ）、外部依賴 = 原物料/供應商（Vendor Qualification）。Feature Flag 機制 → 變更管控的分級系統。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part II -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part II: 提示工程篇 (Ch.5-7)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">系統提示詞不是一個單一字串，而是<span class="hl-concept">分段式組合（segmented composition）</span>的架構。<span class="inline-code">constants/prompts.ts</span> 將提示詞分為多個可組合的片段：角色定義、工具使用指引、安全約束、輸出格式等，根據上下文動態組裝。</div>
+                    <div class="en-text">System prompts use a segmented composition architecture — multiple combinable segments (role, tool guidance, safety constraints, format) dynamically assembled based on context.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="hl-key">工具提示詞</span>是這本書的一個關鍵洞察——每個工具的 description 本質上是給模型的微型指令集。工具的 JSON Schema 同時服務三個目的：類型定義、運行時驗證、模型指令。TypeScript 的類型系統讓這三者合一成為可能。</div>
+                    <div class="en-text">Tool descriptions are essentially micro-instruction sets for the model. Each tool's JSON Schema serves triple duty: type definition, runtime validation, and model instruction.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">模型特定調優（model-specific tuning）確保同一個 harness 能適配不同模型的行為特性。這對應到 harness engineering 的核心原則：<span class="hl-practical">性能提升來自 harness 設計而非模型升級</span>。</div>
+                    <div class="en-text">Model-specific tuning ensures the same harness adapts to different models' behavioral characteristics — performance gains come from harness design, not model upgrades.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis & Patterns / 分析與模式</h3>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明：分段式提示詞 = 樂高積木</div>
+                    <div class="info-box-content">
+                        想像系統提示詞不是一篇完整的作文，而是一盒樂高積木。每個積木（segment）有固定形狀和功能：「角色積木」定義身份、「安全積木」設定邊界、「工具積木」描述可用工具。根據不同場景（一般對話 vs 代碼編輯 vs 文件操作），你組裝不同的積木組合。這比寫一篇超長提示詞更靈活，也更容易維護。
+                    </div>
+                </div>
+                <div class="info-box box-code">
+                    <div class="info-box-header">&#x1F4BB; 工具描述即指令</div>
+                    <div class="info-box-content">
+                        工具的 <span class="inline-code">description</span> 不只是文檔——它是模型行為的關鍵驅動。CC 團隊在工具描述中嵌入了使用限制、最佳實踐、邊界條件。這呼應了 Context over Instruction 原則：告訴模型「為什麼」比告訴它「什麼」更有效。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: Context + Security -->
+    <div id="tab-ctx" class="tab-content">
+        <!-- Part III -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part III: 上下文管理篇 (Ch.8-10)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">上下文管理是 Agent 工程中最被低估但最關鍵的子系統。CC 使用<span class="hl-concept">多層壓縮體系</span>：自動壓縮（Compaction）根據上下文動態觸發，微壓縮（Microcompact）進行更細粒度的修剪，Token 預算追踪器控制總量，History Snip 精確裁剪歷史記錄。</div>
+                    <div class="en-text">Context management uses a multi-layer compression system: auto-compaction, microcompact for fine-grained trimming, token budget tracking, and history snipping for precise pruning.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="hl-key">上下文折疊（Context Collapse）</span>是更激進的策略——結構化地修剪上下文，保留關鍵信息的語義結構同時大幅減少 token 數。壓縮後的上下文提醒注入（Compaction Reminders）確保模型在壓縮後不會「忘記」重要指令。</div>
+                    <div class="en-text">Context Collapse is a more aggressive strategy — structurally pruning context while preserving semantic structure. Compaction Reminders ensure the model doesn't "forget" key instructions after compression.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis & Patterns / 分析與模式</h3>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念：Token 經濟學</div>
+                    <div class="info-box-content">
+                        Context Window 是稀缺資源。CC 的多層壓縮策略就像工廠的庫存管理：Token Budget = 倉庫容量上限，Compaction = 定期盤點清理，Microcompact = 即時空間回收，History Snip = 過期品處理。每一層都在成本與信息保留之間做取捨。
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重點：模型管理自己的上下文</div>
+                    <div class="info-box-content">
+                        這是最反直覺的設計——模型參與管理自己的上下文窗口。壓縮、折疊、裁剪都涉及模型的「自我感知」能力。這意味著上下文管理不是純工程問題，它是模型能力與工程設計的交叉地帶。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part IV -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part IV: 提示詞緩存篇 (Ch.11-15)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="hl-concept">Prompt Cache</span> 是 CC 成本優化的核心機制。系統提示詞和工具描述這些不變的前綴部分被緩存在服務端，避免每次 API 調用都重新處理。<span class="inline-code">CacheSafeParams</span> 的五維度共享確保緩存命中率最大化。</div>
+                    <div class="en-text">Prompt Cache is the core cost optimization — invariant prefix content (system prompts, tool descriptions) is cached server-side. CacheSafeParams ensures maximum cache hit rates.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">緩存中斷檢測（<span class="inline-code">PROMPT_CACHE_BREAK_DETECTION</span>）是一個精巧的 Feature Flag——它監控何時緩存被意外中斷，幫助工程師優化提示詞結構以維持高緩存命中率。<span class="inline-code">skipCacheWrite</span> 用於一次性 fork 場景，避免汙染緩存。</div>
+                    <div class="en-text">Cache break detection monitors unexpected cache invalidation. skipCacheWrite prevents cache pollution in one-off fork scenarios.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis & Patterns / 分析與模式</h3>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; 實務應用：你的 Harness 也需要緩存策略</div>
+                    <div class="info-box-content">
+                        即使你不直接操作 Prompt Cache API，理解其原理也很重要：把不變的內容（系統提示、工具描述）放在消息序列的最前面，把變化的內容（用戶輸入、動態上下文）放在後面。這個排列順序直接影響 API 成本。你的 headless pipeline 的 CLAUDE.md 結構也應遵循此原則。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part V -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part V: 安全與權限篇 (Ch.16-18)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">CC 的安全架構是<span class="hl-key">分層防禦</span>設計：Permission Pipeline 控制每個工具調用的授權流程、YOLO 分類器用正則而非 LLM 推理來檢測安全 vs 危險的 bash 命令（用最便宜的工具解決問題）、Hooks 系統讓用戶在 Agent 生命週期的關鍵節點注入自定義腳本。</div>
+                    <div class="en-text">Security uses layered defense: Permission Pipeline for tool authorization, YOLO Classifier using regex (not LLM) for bash safety, and Hooks for user-injected scripts at lifecycle points.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">規則系統（Rules System）讓用戶通過 <span class="inline-code">CLAUDE.md</span> 文件提供持久的項目上下文，但這些規則本身也有安全邊界——CC 會驗證規則不會繞過核心安全約束。<span class="hl-practical">反蒸馏保護</span>（Anti-Distillation）防止用戶通過特殊提示提取模型的系統提示詞。</div>
+                    <div class="en-text">The Rules System (CLAUDE.md) provides persistent project context with security boundaries. Anti-distillation protection prevents extraction of system prompts.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis & Patterns / 分析與模式</h3>
+                <div class="info-box box-analogy">
+                    <div class="info-box-header">&#x1F4A1; 比喻說明：YOLO 分類器 = GMP 風險分級</div>
+                    <div class="info-box-content">
+                        YOLO 分類器的思路類似 GMP 偏差分級：不是每個操作都需要最高級別的審查。<span class="inline-code">ls</span> 命令就像日常環境監測——風險極低，自動放行。<span class="inline-code">rm -rf</span> 就像重大偏差——必須人工審批。用正則而非 LLM 做分類，就像用 SOP checklist 而非完整調查來處理 minor deviation。
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; Agent 安全 ≠ 沙箱</div>
+                    <div class="info-box-content">
+                        Agent 安全是「每個邊界的對抗性輸入強化」。如果 Agent 可以執行 shell 命令，就假設有人會試圖讓它執行錯誤的命令。CC 用 regex 偵測用戶挫敗感（"wtf"、"so frustrating"），這聽起來簡單，但體現了核心原則：用最便宜、最快的工具解決問題。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: Advanced + Lessons -->
+    <div id="tab-adv" class="tab-content">
+        <!-- Part VI -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part VI: 高級子系統篇 (Ch.19)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text"><span class="hl-concept">多 Agent 編排</span>是最前沿的章節。CC 的 Coordinator Mode 支持多 Worker 編排，子 Agent 可以通過 fork 機制分叉執行。KAIROS（6 個 Flag 構成的最大集群）指向一個完整的「助手模式」——後台自主運行、記憶整理、推送通知、GitHub Webhook 集成。</div>
+                    <div class="en-text">Multi-agent orchestration with Coordinator Mode for multi-worker orchestration. KAIROS (6-flag cluster) points to a complete "assistant mode" — background autonomous operation with memory, notifications, webhooks.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">技能系統（Skill System）讓模型可以加載和執行用戶定義的提示詞模板。MCP Skills Bridge 將外部 MCP 工具映射為技能。<span class="hl-key">Feature Flags 的全景圖</span>揭示了產品路線圖：89 個 Flag 按功能分為 14 個分類，從核心循環到實驗性功能。</div>
+                    <div class="en-text">The Skill System loads user-defined prompt templates. MCP Skills Bridge maps external tools as skills. 89 Feature Flags across 14 categories reveal the product roadmap.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis & Patterns / 分析與模式</h3>
+                <div class="info-box box-compare">
+                    <div class="info-box-header">&#x2696;&#xFE0F; Feature Flag 產品路線圖解讀</div>
+                    <div class="info-box-content">
+                        <strong>KAIROS 家族 (6 Flags)</strong>：背後是「助手模式」產品。不是 CLI 增強，是完全不同的產品形態。<br>
+                        <strong>COORDINATOR_MODE + TEAMMEM</strong>：多 Agent 協作。UDS Inbox 用 Unix Domain Socket 做消息傳遞。<br>
+                        <strong>AGENT_TRIGGERS + BG_SESSIONS</strong>：定時觸發 + 後台會話 = 你的 headless cron pipeline 的官方版。<br>
+                        <strong>VOICE_MODE + BUDDY</strong>：語音模式 + 動畫伴侶精靈，指向更豐富的互動體驗。
+                    </div>
+                </div>
+                <div class="info-box box-practical">
+                    <div class="info-box-header">&#x1F6E0;&#xFE0F; CDMO 映射：多 Agent = 多部門協作</div>
+                    <div class="info-box-content">
+                        Coordinator Mode 就像跨部門偏差調查：一個主調查員（coordinator）分派任務給 QA、生產、工程（workers），每個 worker 執行自己的調查範圍，結果匯回 coordinator 做最終判定。UDS Inbox 相當於 LIMS 中的任務分派佇列。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part VII -->
+        <div class="content-grid">
+            <div class="content-left">
+                <h3>Part VII: AI Agent 構建者的經驗教訓 (Ch.20)</h3>
+                <div class="bilingual-block">
+                    <div class="zh-text">最後一篇提煉了<span class="hl-key">可遷移的經驗教訓</span>：Harness 設計比模型選擇更重要、「用最便宜的工具解決問題」（regex vs LLM）、安全是每個邊界的對抗性輸入強化、Feature Flag 是管理複雜性的關鍵工具。</div>
+                    <div class="en-text">Transferable lessons: harness design matters more than model choice, use the cheapest tool that works, security is adversarial input hardening at every boundary.</div>
+                </div>
+                <div class="bilingual-block">
+                    <div class="zh-text">書中指出的局限也很有價值：CC 的 React Ink 終端 UI 使用「遊戲引擎式渲染優化」，REPL.tsx 超過 5,000 行——這不一定是好的工程實踐。洩露源碼的 source map 還原有精度限制。AI 生成的架構分析需要工程師驗證。</div>
+                    <div class="en-text">The book honestly notes limitations: React Ink's 5000+ line REPL.tsx may not be ideal engineering practice. Source map restoration has precision limits. AI-generated analysis needs engineer validation.</div>
+                </div>
+            </div>
+            <div class="content-right">
+                <h3>Analysis & Patterns / 分析與模式</h3>
+                <div class="info-box box-concept">
+                    <div class="info-box-header">&#x1F4DA; 核心概念：Harness &gt; Model</div>
+                    <div class="info-box-content">
+                        這呼應了你的 Harness Engineering 學習原則：性能提升來自 harness 設計而非模型升級。CC 的 89 個 Feature Flag、分段式提示詞、多層上下文壓縮——這些都是 harness 層面的優化。同一個模型在不同 harness 中表現可以天差地別。
+                    </div>
+                </div>
+                <div class="info-box box-key">
+                    <div class="info-box-header">&#x26A0;&#xFE0F; 重要反思：模型與 Harness 的耦合</div>
+                    <div class="info-box-content">
+                        前沿模型被 post-trained 在它們的 harness 上（Claude 在 CC 中，GPT-5 Codex 在 Codex 中）。這意味著模型在其原生 harness 中表現最好，但也可能過度擬合。OpenCode 需要為 Codex 模型專門添加 apply_patch 工具來模擬 Codex harness。這是 Tool Decay 原則的新面向。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- end tab-container -->
+
+<!-- Key Takeaways -->
+<div class="section-title">Key Takeaways / 重點整理</div>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="card-title">1. 三層架構是通用模式</div>
+        <div class="card-text">應用層（業務邏輯）、運行時層（執行引擎）、外部依賴層（模型/工具）的分離不是 CC 專屬設計，而是任何生產級 AI Agent 都需要的架構基礎。層間信息流方向和穿透路徑決定了系統的可觀測性和可控性。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #10b981;">
+        <div class="card-title">2. 提示詞是工程產物而非文字藝術</div>
+        <div class="card-text">CC 的分段式提示詞組合、工具描述即指令、模型特定調優——這些都說明生產級提示詞需要像代碼一樣管理：版本控制、模組化、可測試。你的 Master Prompt 版本管理系統已經在走這條路。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #8b5cf6;">
+        <div class="card-title">3. 安全是最便宜工具的勝利</div>
+        <div class="card-text">$0 的 regex 在準確性可比的情況下優於 $0.01 的 LLM 調用。YOLO 分類器用簡單模式匹配做 bash 安全檢查，LLM 僅用於真正需要語言理解的任務。這個原則適用於所有 AI 系統設計。</div>
+    </div>
+    <div class="summary-card" style="border-left-color: #f59e0b;">
+        <div class="card-title">4. AI 寫書的工程方法論可複製</div>
+        <div class="card-text">DESIGN.md → spec → plan → skill → write 的流程不僅適用於寫書，也適用於任何需要 AI 生成結構化長文內容的場景。這本身就是 harness engineering 的實踐——AI 的產出品質取決於你為它設計的工程流程。</div>
+    </div>
+</div>
+
+<!-- Practice Questions -->
+<div class="section-title">Practice Questions / 練習題</div>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">Claude Code 為什麼需要兩套並行的 Feature Flag 機制（構建時 feature() vs 運行時 GrowthBook）？它們各自解決什麼問題？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>構建時 feature()</strong> 解決「功能是否存在於構建產物中」——當 Flag 為 false，整個模組樹從 bundle 消失，模型永遠無法看到該工具。這用於實驗性功能的完整移除，需要重新構建和發布才能改變。</p>
+        <p><strong>運行時 GrowthBook</strong> 解決「已存在的功能對哪些用戶開放」——會話啟動時從服務端拉取配置，可即時生效。用於 A/B 測試、漸進灰度。</p>
+        <p>兩者互補：一個功能通常先由 feature() 守衛其模組載入（決定是否打包），再由 GrowthBook 控制其運行時行為（決定對誰開放）。這類似 GMP 中的「設備確認（IQ/OQ）」vs 「日常使用授權」——設備必須先通過確認才能安裝，但安裝後的使用權限由另一套系統管理。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">如果你要為 CDMO 的偏差調查流程設計一個 AI Agent 的權限模型，參考 CC 的 Permission Pipeline + YOLO 分類器設計，你會怎麼分級？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>參考 CC 的分層設計，CDMO 偏差調查 Agent 可以設計三層權限：</p>
+        <p><strong>Level 1 - 自動放行（YOLO safe）</strong>：查詢歷史偏差記錄、搜索 SOP 文件、生成初步報告草稿、計算統計趨勢——這些是唯讀操作，風險極低。</p>
+        <p><strong>Level 2 - 確認後執行</strong>：修改偏差分類等級、更新調查時間線、發送通知給相關人員——這些會改變記錄狀態，需要人工確認。</p>
+        <p><strong>Level 3 - 必須人工審批</strong>：關閉偏差、提交 CAPA、修改 SOP——這些是法規要求的人工判斷節點（O-Ring bottleneck），Agent 只能提供建議，不能執行。</p>
+        <p>分類器用規則（正則/關鍵字匹配）而非 LLM 推理來做分級——因為分級標準是確定性的，不需要語言理解。這也符合 GMP 的可驗證原則。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">這本書本身是 AI 生成的內容。基於「2-3x Discount Principle」，你認為哪些部分最需要打折？哪些部分的可信度最高？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>需要打折的部分：</strong></p>
+        <p>(1) 對設計動機的推測——書中解釋「為什麼這樣設計」時，是 AI 基於代碼結構的推理，不是工程師的真實決策記錄。實際動機可能涉及產品策略、技術債務、團隊偏好等源碼無法體現的因素。</p>
+        <p>(2) Feature Flag 功能推測——89 個 Flag 的名稱暗示了功能方向，但名稱與實際用途可能有差異。KAIROS 是否真的是「助手模式」需要官方確認。</p>
+        <p>(3) 性能數據——如「65ms 啟動優化」等具體數字來自源碼注釋，可能是特定環境下的測量，不一定普遍適用。</p>
+        <p><strong>可信度最高的部分：</strong></p>
+        <p>(1) 代碼結構分析——三層架構、Agent Loop 狀態機、工具註冊管線等，這些直接來自源碼，是客觀事實。</p>
+        <p>(2) Feature Flag 列表——89 個 Flag 的名稱和在代碼中的使用位置是可驗證的。</p>
+        <p>(3) 技術棧選型——TypeScript + React Ink + Bun 是明確的事實。</p>
+    </div>
+</details>
+
+<!-- Bottom Line -->
+<div class="bottom-line">
+    <div class="bottom-line-header">&#x1F3AF; 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x2714; 核心洞察</div>
+        <div class="bottom-line-text">這本書最大的價值不是 CC 的源碼細節（這些會過時），而是它提煉出的<strong>可遷移架構模式</strong>：三層分離、分段式提示詞、多層上下文壓縮、分級權限模型、雙軌 Feature Flag。這些模式適用於任何 AI Agent 系統，包括我的 CDMO triage-deviation skill。同時，「AI 寫書」的工程方法論（DESIGN.md → spec → plan → skill → write）與我的 headless pipeline 設計高度同構。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x1F4C8; 立即應用</div>
+        <div class="bottom-line-text">本週行動：(1) 在 triage-deviation skill 的設計中加入三層權限模型（auto/confirm/approve），參考 YOLO 分類器用規則而非 LLM 做分級；(2) 檢視 CLAUDE.md 的提示詞結構，確認不變內容放在前面（利於 Prompt Cache）；(3) 閱讀書中 Part V 安全篇的 Hooks 系統設計，評估是否能映射到 headless pipeline 的 pre/post-execution hooks。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">&#x26A0; 需要補充</div>
+        <div class="bottom-line-text">本書基於 v2.1.88 洩露源碼，不反映最新版本。AI 生成內容的設計動機推測需要交叉驗證。缺乏與其他 Agent 框架（LangChain、AutoGen）的橫向比較。建議 3 個月後 CC 有新版本時重新對照，看哪些架構模式被保留（驗證其穩定性）。另一本類似書籍（lintsinghua/claude-code-book，42 萬字版本）可作為交叉參考。</div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>製作日期：2026-04-04 | AI Expert Learning System v1.5.0</p>
+    <p>來源：<a href="https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding" target="_blank">GitHub: ZhangHanDong/harness-engineering-from-cc-to-ai-coding</a></p>
+    <p>在線閱讀：<a href="https://zhanghandong.github.io/harness-engineering-from-cc-to-ai-coding/" target="_blank">zhanghandong.github.io/harness-engineering</a></p>
+    <p>建議 Chat Title：<code>2026-04-04 [Agent] ZhangHanDong - Harness Engineering CC Book</code></p>
+    <p>建議檔名：<code>2026-04-04_harness-engineering-cc-book.html</code></p>
+</div>
+
+</div><!-- end container -->
+
+<script>
+function switchTab(evt, tabId) {
+    const container = evt.currentTarget.closest('.tab-container');
+    container.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+</script>
+</body>
+</html>
