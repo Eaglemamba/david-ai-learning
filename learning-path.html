@@ -125,6 +125,21 @@ function loadProgress() {
 }
 function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
 
+// ─── Migrate old keys (filename.html → processed/filename.html) ───
+function migrateProgress() {
+  const p = loadProgress();
+  const keys = Object.keys(p);
+  const needsMigration = keys.some(k => !k.startsWith('processed/'));
+  if (!needsMigration) return;
+  const migrated = {};
+  keys.forEach(k => {
+    const newKey = k.startsWith('processed/') ? k : 'processed/' + k;
+    migrated[newKey] = p[k];
+  });
+  saveProgress(migrated);
+}
+migrateProgress();
+
 function toggleDoc(file) {
   const p = loadProgress();
   p[file] = !p[file];
