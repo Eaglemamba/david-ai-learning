@@ -288,17 +288,26 @@ function main() {
 
   fs.writeFileSync(CURRICULUM_DATA, src, 'utf-8');
 
-  // Validate
-  delete require.cache[require.resolve(CURRICULUM_DATA)];
-  try {
-    const data = require(CURRICULUM_DATA);
-    if (!data.stages || !data.topicClusters) throw new Error('Missing exports');
-    data.generatePathMarkdown();
-    data.generateTopicMarkdown();
-    console.log(`Successfully classified ${newDocs.length} doc(s) into curriculum-data.js`);
-  } catch (e) {
-    console.error(`Validation failed: ${e.message}`);
-    process.exit(1);
+  // Validate by running a quick syntax check via the JS runner
+  const { execSync: execSyncValidate } = require('child_process');
+  const validationRunner = (() => {
+    try { execSyncValidate('node --version', { stdio: 'ignore' }); return 'node'; } catch {}
+    try { execSyncValidate('bun --version', { stdio: 'ignore' }); return 'bun'; } catch {}
+    return null;
+  })();
+  if (validationRunner) {
+    try {
+      execSyncValidate(
+        `${validationRunner} -e "const d=require('./curriculum-data.js');if(!d.stages||!d.topicClusters)throw new Error('Missing exports');d.generatePathMarkdown();d.generateTopicMarkdown();"`,
+        { cwd: ROOT, stdio: 'pipe' }
+      );
+      console.log(`Successfully classified ${newDocs.length} doc(s) into curriculum-data.js`);
+    } catch (e) {
+      console.error(`Validation failed: ${e.stderr ? e.stderr.toString() : e.message}`);
+      process.exit(1);
+    }
+  } else {
+    console.log(`Successfully classified ${newDocs.length} doc(s) into curriculum-data.js (validation skipped — no runner found)`);
   }
 
   // Move processed files to docs/processed/
