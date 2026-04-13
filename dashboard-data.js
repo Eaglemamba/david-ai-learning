@@ -16,21 +16,6 @@ const documents = [
   },
   {
     "date": "2026-04-12",
-    "title": "Claude Token 節省技巧 - Hassid 23 Habits",
-    "source": "Ruben Hassid / AI-Natived Newsletter",
-    "tags": [
-      "Tool",
-      "Prompt",
-      "Framework",
-      "Analysis"
-    ],
-    "rating": 3.6,
-    "summary": "23 個減少 Claude token 消耗的實用習慣，從檔案轉換到對話管理全面涵蓋。",
-    "lines": 634,
-    "file": "2026-04-12_claude-token-saving-habits.html"
-  },
-  {
-    "date": "2026-04-12",
     "title": "AI 時代學習工作流 - Tw93 Learning as Code",
     "source": "Tw93 (@HiTw93) / X",
     "tags": [
@@ -43,21 +28,6 @@ const documents = [
     "summary": "Tw93 分享 AI 時代學習方法：蒐集、篩選、大綱、草稿、精煉、發布六步驟工作流。",
     "lines": 536,
     "file": "processed/2026-04-12_tw93-learning-workflow.html"
-  },
-  {
-    "date": "2026-04-12",
-    "title": "AI 時代學習工作流 - Tw93 Learning as Code",
-    "source": "Tw93 (@HiTw93) / X",
-    "tags": [
-      "Framework",
-      "Prompt",
-      "LLM",
-      "Content"
-    ],
-    "rating": 4,
-    "summary": "Tw93 分享 AI 時代學習方法：蒐集、篩選、大綱、草稿、精煉、發布六步驟工作流。",
-    "lines": 536,
-    "file": "2026-04-12_tw93-learning-workflow.html"
   },
   {
     "date": "2026-04-11",
@@ -73,21 +43,6 @@ const documents = [
     "summary": "Garry Tan 開源個人知識大腦。Postgres+pgvector 混合搜尋、Compiled Truth+Timeline 雙層知識模型、AI Agent 自動維護。",
     "lines": 701,
     "file": "processed/2026-04-11_garrytan-gbrain.html"
-  },
-  {
-    "date": "2026-04-11",
-    "title": "GBrain - Garry Tan 個人知識大腦架構",
-    "source": "Garry Tan / GitHub garrytan/gbrain",
-    "tags": [
-      "Agent",
-      "Tool",
-      "Framework",
-      "Automation"
-    ],
-    "rating": 4.5,
-    "summary": "Garry Tan 開源個人知識大腦。Postgres+pgvector 混合搜尋、Compiled Truth+Timeline 雙層知識模型、AI Agent 自動維護。",
-    "lines": 701,
-    "file": "2026-04-11_garrytan-gbrain.html"
   },
   {
     "date": "2026-04-08",
@@ -123,20 +78,6 @@ const documents = [
   },
   {
     "date": "2026-04-08",
-    "title": "菁英溝通三支柱 - Joseph Elite Speaking Framework",
-    "source": "Joseph (YouTube)",
-    "tags": [
-      "Framework",
-      "Content",
-      "Analysis"
-    ],
-    "rating": 3.6,
-    "summary": "菁英說話三要素：清晰（輸入/輸出系統）、質地（詞彙層級與驚喜）、自在（身心靈準備）。含 Vocal Ego AI 練習法。",
-    "lines": 533,
-    "file": "2026-04-08_elite-speaking-clarity-texture-comfort.html"
-  },
-  {
-    "date": "2026-04-08",
     "title": "Hermes Agent - Self-Improving AI Agent Guide",
     "source": "Will Yang / X Thread",
     "tags": [
@@ -148,20 +89,6 @@ const documents = [
     "summary": "Nous Research Hermes Agent：自我進化 Agent 架構分析，SQLite 記憶、自動 Skill 生成、vs OpenClaw 比較。",
     "lines": 604,
     "file": "processed/2026-04-08_hermes-agent-self-improving.html"
-  },
-  {
-    "date": "2026-04-08",
-    "title": "Hermes Agent - Self-Improving AI Agent Guide",
-    "source": "Will Yang / X Thread",
-    "tags": [
-      "Agent",
-      "Tool",
-      "Automation"
-    ],
-    "rating": 3.2,
-    "summary": "Nous Research Hermes Agent：自我進化 Agent 架構分析，SQLite 記憶、自動 Skill 生成、vs OpenClaw 比較。",
-    "lines": 604,
-    "file": "2026-04-08_hermes-agent-self-improving.html"
   },
   {
     "date": "2026-04-07",
@@ -180,21 +107,6 @@ const documents = [
   },
   {
     "date": "2026-04-07",
-    "title": "KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token",
-    "source": "实践哥MinLi / @MinLiBuilds",
-    "tags": [
-      "LLM",
-      "Tool",
-      "API",
-      "Framework"
-    ],
-    "rating": 4.2,
-    "summary": "從 Transformer KV Cache 原理到 Claude Code 快取工程逆向，含實測數據與省 Token 實戰技巧。",
-    "lines": 608,
-    "file": "2026-04-07_kv-cache-token-savings.html"
-  },
-  {
-    "date": "2026-04-07",
     "title": "MemPalace AI 記憶系統 - Palace 架構與 AAAK 壓縮",
     "source": "milla-jovovich / GitHub",
     "tags": [
@@ -207,21 +119,6 @@ const documents = [
     "summary": "開源 AI 記憶系統。Palace 階層檢索、AAAK 30x 壓縮、LongMemEval 96.6% 零 API。",
     "lines": 551,
     "file": "processed/2026-04-07_mempalace-ai-memory.html"
-  },
-  {
-    "date": "2026-04-07",
-    "title": "MemPalace AI 記憶系統 - Palace 架構與 AAAK 壓縮",
-    "source": "milla-jovovich / GitHub",
-    "tags": [
-      "Tool",
-      "Agent",
-      "Framework",
-      "LLM"
-    ],
-    "rating": 4.2,
-    "summary": "開源 AI 記憶系統。Palace 階層檢索、AAAK 30x 壓縮、LongMemEval 96.6% 零 API。",
-    "lines": 551,
-    "file": "2026-04-07_mempalace-ai-memory.html"
   },
   {
     "date": "2026-04-04",
@@ -254,20 +151,6 @@ const documents = [
   },
   {
     "date": "2026-04-04",
-    "title": "GitHub 搜索指南 - 四種方式與資源分類",
-    "source": "Sac (@Saccc_c) / X (Twitter)",
-    "tags": [
-      "Tool",
-      "Framework",
-      "Tutorial"
-    ],
-    "rating": 3,
-    "summary": "GitHub 四種搜索方式（閒逛/直接/高級/Copilot）與三類資源（學習/資訊/代碼）入門指南。",
-    "lines": 592,
-    "file": "2026-04-04_github-search-guide.html"
-  },
-  {
-    "date": "2026-04-04",
     "title": "驾驭工程 - CC 源码逆向 Harness Engineering",
     "source": "AlexZ (ZhangHanDong) / GitHub",
     "tags": [
@@ -283,21 +166,6 @@ const documents = [
   },
   {
     "date": "2026-04-04",
-    "title": "驾驭工程 - CC 源码逆向 Harness Engineering",
-    "source": "AlexZ (ZhangHanDong) / GitHub",
-    "tags": [
-      "Agent",
-      "Framework",
-      "Tool",
-      "API"
-    ],
-    "rating": 4.3,
-    "summary": "CC v2.1.88 源码逆向工程書。三層架構、Agent Loop、89 Feature Flags、權限模型、Prompt Cache。",
-    "lines": 658,
-    "file": "2026-04-04_harness-engineering-cc-book.html"
-  },
-  {
-    "date": "2026-04-04",
     "title": "40歲後身體保養 - 飲食運動作息科學方案",
     "source": "Mr Panda / @PandaTalk8",
     "tags": [
@@ -308,19 +176,6 @@ const documents = [
     "summary": "40歲後飲食(蛋白質優先)、運動(力量訓練第一)、作息(睡眠為地基)的循證醫學行動方案。",
     "lines": 708,
     "file": "processed/2026-04-04_health-guide-after-40.html"
-  },
-  {
-    "date": "2026-04-04",
-    "title": "40歲後身體保養 - 飲食運動作息科學方案",
-    "source": "Mr Panda / @PandaTalk8",
-    "tags": [
-      "Analysis",
-      "Framework"
-    ],
-    "rating": 3.6,
-    "summary": "40歲後飲食(蛋白質優先)、運動(力量訓練第一)、作息(睡眠為地基)的循證醫學行動方案。",
-    "lines": 708,
-    "file": "2026-04-04_health-guide-after-40.html"
   },
   {
     "date": "2026-04-03",
@@ -336,21 +191,6 @@ const documents = [
     "summary": "透過 Chrome DevTools Protocol 將 Claude 連接 TradingView Desktop，78 個 MCP 工具 + CLI 實現 Pine Script AI 開發迴圈。",
     "lines": 645,
     "file": "processed/2026-04-03_tradingview-mcp-claude.html"
-  },
-  {
-    "date": "2026-04-03",
-    "title": "TradingView MCP - Claude 連接交易圖表平台",
-    "source": "Trades Dont Lie (@Tradesdontlie)",
-    "tags": [
-      "Tool",
-      "Integration",
-      "MCP",
-      "API"
-    ],
-    "rating": 4,
-    "summary": "透過 Chrome DevTools Protocol 將 Claude 連接 TradingView Desktop，78 個 MCP 工具 + CLI 實現 Pine Script AI 開發迴圈。",
-    "lines": 645,
-    "file": "2026-04-03_tradingview-mcp-claude.html"
   },
   {
     "date": "2026-04-01",

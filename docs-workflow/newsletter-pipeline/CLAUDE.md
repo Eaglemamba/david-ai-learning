@@ -1,6 +1,21 @@
 # Newsletter Automation — amaran-daily
 
-> **Status:** Experimental. Requires Gmail MCP server and target repos (pharma-decipher, hbr-review, ai-articles) to be cloned locally. See prerequisites below.
+> **Status:** Active. Two-phase pipeline: (1) Daily Digest reads Gmail → HTML artifact; (2) Post-Digest Publisher builds bilingual HTML docs → david-ai-learning repo → scheduled trigger.
+
+## Pipeline Overview
+
+```
+Phase 1: Daily Digest (SKILL_v6.1.5 — runs in claude.ai Project with Gmail MCP)
+  └─ User selects articles → Export clipboard text
+
+Phase 2: Post-Digest Publisher (SKILL_publisher_v1.0.md — runs in Claude Code local)
+  ├─ Parse export → generate bilingual HTML per article
+  ├─ Write to docs/ root → git commit (pre-commit hook auto-classifies)
+  ├─ git push origin main
+  └─ Fire RemoteTrigger: trig_01E8UJR1c7FsrJ7A3fxxiGtx (verification pass)
+```
+
+See `SKILL_publisher_v1.0.md` for full workflow and HTML template.
 
 ## Prerequisites
 

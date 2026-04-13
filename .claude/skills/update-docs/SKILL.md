@@ -26,33 +26,34 @@ node build-search-index.js
 node build-dashboard-data.js
 ```
 
-### 4. Update mindmap.html (both views)
-For each new doc, add entries to:
-- **Learning Path view** (`mdPath`): classify into the correct Stage (1-5) and section (required/optional)
-- **Topic Cluster view** (`mdTopic`): classify into the correct topic group
-- Update the stats count in both views
+### 4. Update curriculum-data.js
+Add each new doc to `curriculum-data.js` (single source of truth for both mindmap + learning-path):
 
-Use these classification rules based on `doc-tags`:
-| Primary Tag Pattern | Learning Path Stage | Topic Cluster |
-|---|---|---|
-| Anthropic-Docs, Tool (Claude-related) | Stage 3: AI Tools | Claude tools |
-| Agent, Automation, Skills | Stage 4: Agent Architecture | Agent architecture or Claude Skills |
-| Analysis, Framework (AI industry) | Stage 1: AI Basics (optional) | AI industry trends |
-| Prompt, Context | Stage 2: Prompt & Communication | Prompt engineering |
-| Security, Leadership, Change Mgmt | Stage 5: Organization | Security or Leadership |
-| Content, Personal Growth | Supplementary | Personal growth or Content |
+**Stage entry** — classify into Stage 1-5 using `doc-tags`:
+| Primary Tag Pattern | Learning Path Stage |
+|---|---|
+| Anthropic-Docs, Tool (Claude-related) | Stage 3: AI Tools |
+| Agent, Automation, Skills | Stage 4: Agent Architecture |
+| Analysis, Framework (AI industry) | Stage 1: AI Basics (optional) |
+| Prompt, Context | Stage 2: Prompt & Communication |
+| Security, Leadership, Change Mgmt | Stage 5: Organization |
 
-### 5. Update learning-path.html
-Add each new doc to the appropriate stage's `docs` array with:
+Add to the stage's `docs` array:
 - `file`: filename
 - `title`: from meta tag with star rating
 - `required: false` (default for new docs)
 - `why`: one-line reason from summary
 
-### 6. Commit and push
-- Stage all changed files: `dashboard-data.js`, `search-index.js`, `mindmap.html`, `learning-path.html`
+**Topic cluster entry** — classify into the matching subcluster's `docs` array:
+- `title`: from meta tag with star rating
+- `file`: filename
+
+> Note: `mindmap.html` and `learning-path.html` auto-load from `curriculum-data.js` — do NOT edit them directly.
+
+### 5. Commit and push
+- Stage all changed files: `curriculum-data.js`, `dashboard-data.js`, `search-index.js`
 - Commit with message: `$ARGUMENTS` (or auto-generate: "Add N new docs to dashboard, mindmap, learning-path & search-index")
 - Push to current branch
 
-### 7. Summary
+### 6. Summary
 Print a table of all processed docs with: filename, rating, stage placement, topic cluster.
