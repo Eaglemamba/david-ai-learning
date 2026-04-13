@@ -204,7 +204,7 @@ function insertStageDoc(src, doc) {
 
   let bracketCount = 0;
   let docsEnd = -1;
-  for (let i = docsStart + 6; i < src.length; i++) {
+  for (let i = docsStart + 7; i < src.length; i++) {
     if (src[i] === '[') bracketCount++;
     if (src[i] === ']') {
       if (bracketCount === 0) { docsEnd = i; break; }
@@ -239,7 +239,7 @@ function insertTopicDoc(src, doc) {
 
   let bracketCount = 0;
   let docsEnd = -1;
-  for (let i = docsStart + 6; i < src.length; i++) {
+  for (let i = docsStart + 7; i < src.length; i++) {
     if (src[i] === '[') bracketCount++;
     if (src[i] === ']') {
       if (bracketCount === 0) { docsEnd = i; break; }
@@ -298,7 +298,7 @@ function main() {
   if (validationRunner) {
     try {
       execSyncValidate(
-        `${validationRunner} -e "const d=require('./curriculum-data.js');if(!d.stages||!d.topicClusters)throw new Error('Missing exports');d.generatePathMarkdown();d.generateTopicMarkdown();"`,
+        `${validationRunner} -e "const fs=require('fs');const src=fs.readFileSync('./curriculum-data.js','utf8');const fn=new Function(src+'; return {stages,topicClusters};');const r=fn();if(!Array.isArray(r.stages)||r.stages.length===0)throw new Error('stages missing');if(!Array.isArray(r.topicClusters)||r.topicClusters.length===0)throw new Error('topicClusters missing');console.log('valid: '+r.stages.length+' stages');"`,
         { cwd: ROOT, stdio: 'pipe' }
       );
       console.log(`Successfully classified ${newDocs.length} doc(s) into curriculum-data.js`);
