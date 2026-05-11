@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta-Meta-Prompting: 讓 AI Agent 真正運作的祕密 - Garry Tan</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-05-10">
+<meta name="doc-title" content="Garry Tan - Meta-Meta-Prompting Personal AI OS">
+<meta name="doc-source" content="Garry Tan / Y Combinator CEO Blog">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Agent,Framework,Automation,Tool,Analysis">
+<meta name="doc-rating" content="3.4">
+<meta name="doc-summary" content="Garry Tan 個人 AI 作業系統架構。Fat skills、book mirror、skillification 與生態自我宣傳的批判分析。">
+<meta name="doc-file" content="2026-05-10_garrytan-meta-meta-prompting.html">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    text-align: center;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+    color: white;
+}
+.header-content { max-width: 1100px; margin: 0 auto; }
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+    background: white;
+}
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-left { border-right: none !important; border-bottom: 1px solid #e2e8f0; }
+}
+
+/* === HEADER === */
+.tags { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.tag { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-framework { background: #fde68a; color: #92400e; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-analysis { background: #ddd6fe; color: #4c1d95; }
+.header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.4; }
+.header .subtitle { font-size: 1.05rem; opacity: 0.92; margin-bottom: 1rem; font-weight: 300; }
+.source-info { font-size: 0.85rem; opacity: 0.85; }
+.source-info a { color: #bfdbfe; text-decoration: underline; }
+
+/* === SECTION HEADERS === */
+.section-title { font-size: 1.4rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #3b82f6; }
+
+/* === EXECUTIVE SUMMARY === */
+.exec-summary {
+    background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #3b82f6;
+    margin-bottom: 2rem;
+}
+.exec-summary h2 { font-size: 1.2rem; color: #1e3a8a; margin-bottom: 0.75rem; }
+.exec-summary p { font-size: 0.95rem; line-height: 1.75; color: #334155; }
+
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* === LEARNING OBJECTIVES === */
+.objectives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.objective-item {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 8px;
+    border-top: 3px solid #3b82f6;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-num { font-size: 0.75rem; font-weight: 700; color: #3b82f6; letter-spacing: 1px; }
+.objective-text { font-size: 0.95rem; line-height: 1.6; color: #1e293b; margin-top: 0.4rem; }
+
+/* === FRAMEWORK VISUAL === */
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 140px; max-width: 180px; }
+.framework-icon { font-size: 1.3rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-weight: 700; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.78rem; opacity: 0.9; margin-top: 0.25rem; line-height: 1.5; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; font-weight: 700; }
+@media (max-width: 700px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* === CONTENT GRID (TWO COLUMN) === */
+.content-left, .content-right { padding: 1.5rem; }
+.content-left { background: #fafafa; border-right: 1px solid #e2e8f0; }
+.content-right { background: white; }
+.col-label { font-size: 0.7rem; font-weight: 700; color: #64748b; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid #e2e8f0; }
+.part-title { font-size: 1.15rem; font-weight: 700; color: #1e3a8a; margin-bottom: 1rem; }
+.bilingual-block { margin-bottom: 1rem; }
+.bilingual-zh { color: #1e293b; font-size: 0.95rem; line-height: 1.75; margin-bottom: 0.4rem; }
+.bilingual-en { color: #64748b; font-style: italic; font-size: 0.85rem; line-height: 1.6; }
+.highlight-concept { background: #a5d6a7; padding: 0 0.2rem; border-radius: 2px; }
+.highlight-key { background: #ffcc80; padding: 0 0.2rem; border-radius: 2px; }
+.highlight-practical { background: #6ee7b7; padding: 0 0.2rem; border-radius: 2px; }
+.highlight-cost { background: #5eead4; padding: 0 0.2rem; border-radius: 2px; }
+
+/* === INFO BOXES === */
+.info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; border: 1px solid; }
+.info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content ul { padding-left: 1.2rem; margin: 0.5rem 0; }
+.info-box-content li { margin-bottom: 0.4rem; }
+.info-box-content strong { color: #1e293b; }
+
+.box-concept { border-color: #86efac; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; }
+
+.box-analogy { border-color: #fcd34d; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; }
+
+.box-key { border-color: #fdba74; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; }
+
+.box-practical { border-color: #6ee7b7; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; }
+
+.box-compare { border-color: #a5b4fc; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; }
+
+.box-critical { border-color: #fca5a5; }
+.box-critical .info-box-header { background: #fecaca; color: #991b1b; }
+.box-critical .info-box-content { background: #fef2f2; }
+
+.box-cost { border-color: #5eead4; }
+.box-cost .info-box-header { background: #99f6e4; color: #134e4a; }
+.box-cost .info-box-content { background: #f0fdfa; }
+
+/* === COMPARISON TABLE === */
+.compare-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+.compare-table th { background: #1e3a8a; color: white; padding: 0.7rem 0.8rem; text-align: left; font-weight: 600; font-size: 0.85rem; }
+.compare-table td { padding: 0.7rem 0.8rem; border-bottom: 1px solid #e2e8f0; vertical-align: top; line-height: 1.6; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:nth-child(even) td { background: #f8fafc; }
+
+/* === KEY TAKEAWAYS === */
+.takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.takeaway-card {
+    background: white;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    border-left: 4px solid #3b82f6;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.takeaway-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+.takeaway-num { font-size: 0.7rem; font-weight: 700; color: #3b82f6; letter-spacing: 1px; }
+.takeaway-title { font-size: 1rem; font-weight: 700; color: #1e3a8a; margin: 0.4rem 0 0.5rem; }
+.takeaway-text { font-size: 0.88rem; line-height: 1.65; color: #475569; }
+
+/* === ACCORDION === */
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+.question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+.question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+
+/* === BOTTOM LINE === */
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* === FOOTER === */
+.footer { text-align: center; padding: 2rem 1rem; color: #64748b; font-size: 0.85rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+.footer a { color: #3b82f6; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.chat-title-suggest { background: #eef2ff; padding: 0.6rem 1rem; border-radius: 6px; margin-top: 0.8rem; display: inline-block; font-family: 'Source Code Pro', monospace; font-size: 0.8rem; color: #3730a3; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-content">
+        <div class="tags">
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-framework">Framework</span>
+            <span class="tag tag-automation">Automation</span>
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-analysis">Analysis</span>
+        </div>
+        <h1>Meta-Meta-Prompting：讓 AI Agent 真正運作的祕密</h1>
+        <p class="subtitle">Garry Tan 的個人 AI 作業系統 — Fat Skills、Fat Code、Thin Harness</p>
+        <p class="source-info">原文：Garry Tan (Y Combinator CEO) | 文件產出：2026-05-10</p>
+    </div>
+</div>
+
+<div class="container">
+<div class="exec-summary">
+    <h2>快速摘要 Quick Summary</h2>
+    <div class="rating-bar">
+        <span class="rating-score"><span class="rating-stars">★★★☆☆</span> 3.4/5</span>
+        <span class="rating-high">↑ 實務應用、學習曲線</span>
+        <span class="rating-low">↓ 技術深度、客觀性</span>
+    </div>
+    <p>Garry Tan（Y Combinator CEO）展示他的個人 AI 作業系統：以「<strong>Fat Skills、Fat Code、Thin Harness</strong>」為核心架構，將 LLM 視為可替換的引擎，把累積知識（10 萬頁筆記）、可複用技能（100+ 個 markdown skill 檔）、與自動化排程當作真正的競爭力。文章充滿啟發性敘事（書本鏡像、會議準備、實體傳播），但同時也是其開源專案 GBrain、OpenClaw、GStack 的長篇行銷文。對 CDMO 營運的啟示：把 SOP 模組化、把領域判斷沉澱成可複用組件，比追逐最新模型更能形成複利。</p>
+</div>
+
+<h2 class="section-title">學習目標 Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 01</div>
+        <div class="objective-text">理解「Fat Skills、Fat Code、Thin Harness」架構為何讓 AI 系統具備複利效應</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 02</div>
+        <div class="objective-text">辨識「Skillification」（技能化）作為 meta-skill 的設計模式與其應用邊界</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 03</div>
+        <div class="objective-text">評估個人知識圖譜（10 萬頁 brain）的真實成本與 GMP 環境下的可行性</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 04</div>
+        <div class="objective-text">識別文章中的自我宣傳偏誤與未驗證數據，套用 2-3x 折扣原則</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 05</div>
+        <div class="objective-text">將 entity propagation（實體傳播）映射到 CDMO 的 CAPA 與偏差調查工作流</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 06</div>
+        <div class="objective-text">區分「個人創作者使用情境」與「受監管產業使用情境」的本質差異</div>
+    </div>
+</div>
+
+<div class="framework-visual">
+    <div class="framework-title">Garry Tan 的個人 AI 作業系統架構：四層解耦</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">H</div>
+            <div class="framework-step-title">Thin Harness</div>
+            <div class="framework-step-desc">薄路由層：接收訊息、選擇技能、分派執行</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">S</div>
+            <div class="framework-step-title">Fat Skills</div>
+            <div class="framework-step-desc">100+ markdown 技能檔：每個聚焦單一任務</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">D</div>
+            <div class="framework-step-title">Fat Data</div>
+            <div class="framework-step-desc">10 萬頁知識圖譜：人物/公司/會議/書籍頁面</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">M</div>
+            <div class="framework-step-title">Swappable Models</div>
+            <div class="framework-step-desc">引擎可替換：技能決定模型，路由不關心</div>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title">Part I：核心命題 — 從 Chat Window 到 Operating System</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="col-label">原文要點</div>
+        <div class="part-title">當你停止把 AI 當聊天框</div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">過去五個月裡，AI 讓我重新成為一名<span class="highlight-concept">建造者</span>。我想用具體例子展示給你看：當你停止把 AI 當聊天視窗，開始把它當作一個作業系統時，個人 AI 實際上長什麼樣子。</div>
+            <div class="bilingual-en">In the last 5 months, AI made me a builder again. I want to show you, with specific examples, what personal AI actually looks like when you stop treating it as a chat window and start treating it as an operating system.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">這是一個系列的一部分：<span class="highlight-key">Fat Skills、Fat Code、Thin Harness</span> 介紹了核心架構。Resolvers 涵蓋智慧的路由表。LOC 爭議講的是每個技術人員如何把自己乘以 100 倍到 1000 倍。Naked models are stupider 主張模型是引擎，不是車。Skillify manifesto 解釋了為什麼 LangChain 募了 1.6 億美元，卻像給你一組深蹲架和啞鈴卻沒有訓練計畫。</div>
+            <div class="bilingual-en">This is part of a series: Fat Skills, Fat Code, Thin Harness introduced the core architecture. Resolvers covered the routing table for intelligence. The LOC Controversy was about how every technical person just multiplied themselves by 100x to 1000x. Naked models are stupider argued that the model is the engine, not the car.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="col-label">概念解析</div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 核心概念：作業系統思維</div>
+            <div class="info-box-content">
+                <p><strong>聊天框 vs 作業系統</strong>的差異：</p>
+                <ul>
+                    <li><strong>聊天框</strong>：每次對話獨立，狀態不保留，每次都從零開始解釋情境</li>
+                    <li><strong>作業系統</strong>：有持久化的記憶、有可重用的程式（skills）、有排程器（cron jobs）、有路由邏輯（harness）</li>
+                </ul>
+                <p>這個比喻很重要，因為它指向一個工程化思維：把 LLM 從「智慧的源頭」降級為「可替換的引擎元件」。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">💡 CDMO 比喻：MES 而非 ERP 介面</div>
+            <div class="info-box-content">
+                <p>把 ChatGPT 當聊天框，就像每次生產都要重新設計批次紀錄。把 AI 當作業系統，比較像建立一套 <strong>MES（製造執行系統）</strong>：每個 SOP 是一個 module，每批生產資料持續累積，未來的偏差調查可以即時調用歷史批次。</p>
+                <p>Garry 的「100 個 cron jobs」就是 MES 的自動觸發器：每 10 分鐘掃郵件、每天整合會議紀錄、每週重新計算人脈圖譜。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-critical">
+            <div class="info-box-header">⚠ 批判視角：作者偏誤</div>
+            <div class="info-box-content">
+                <p>這是 Y Combinator CEO 的個人部落格，<strong>同時是其開源專案的長篇行銷文</strong>。文中提到的 GBrain、OpenClaw、GStack、Hermes Agent 都是他自己的專案。</p>
+                <p>套用 <strong>2-3x 折扣原則</strong>：「過去五個月讓我重新成為建造者」這類敘事性陳述，是用來建立信任度的修辭，不是可驗證的工作量數據。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title">Part II：書本鏡像 — 個人化深度的具體案例</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="col-label">原文要點</div>
+        <div class="part-title">The Book That Read Me Back</div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">我請我的 AI 做一個「書本鏡像」。具體來說：系統提取了書的全部 22 章，然後針對每一章，運行一個子代理同時做兩件事 — <span class="highlight-key">總結作者的想法，並把每個想法映射到我的真實生活</span>。不是那種泛泛的「這適用於領導者」的廢話。是具體的映射。</div>
+            <div class="bilingual-en">The system extracted all 22 chapters of the book, and ran a sub-agent that did two things simultaneously: summarized the author's ideas, and then mapped every idea to my actual life. Not generic "this applies to leaders" pablum. Specific mapping.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">輸出是一份 <span class="highlight-cost">3 萬字的腦頁</span>。整個過程約 40 分鐘。一位每小時 300 美元的治療師讀這本書並應用到我的生活上，40 小時都做不到，因為他們沒有我的完整職業脈絡、閱讀歷史、會議紀錄與創業者關係的全圖。</div>
+            <div class="bilingual-en">The output was a 30,000-word brain page. The whole thing took about 40 minutes. A $300/hour therapist reading this book and applying it to my life couldn't do this in 40 hours.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">第一個書本鏡像很糟糕。版本一對我家庭的事實出了三個錯誤。所以我加了一個強制性的<span class="highlight-practical">事實核查步驟</span>。每個鏡像現在都會先對腦中的已知事實進行<strong>跨模型評估</strong>後才出貨。</div>
+            <div class="bilingual-en">The first book mirror I did was terrible. Version 1 had three factual errors about my family. So I added a mandatory fact-check step. Every mirror now runs cross-modal evaluation against known facts in the brain before it ships.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="col-label">概念解析</div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 核心概念：書本鏡像（Book Mirror）</div>
+            <div class="info-box-content">
+                <p>把一本書「映射」到使用者的個人脈絡。輸出是兩欄式的長文件：</p>
+                <ul>
+                    <li><strong>左欄</strong>：作者原本的觀點摘要</li>
+                    <li><strong>右欄</strong>：對應到使用者的具體經驗、會議、人物、過往筆記</li>
+                </ul>
+                <p>這正是 David 你在做的事 — 把 Mollick、Karpathy 等人的文章映射到 CDMO 與 COO 路徑。Garry 的差別只是規模：他的 AI 自動完成這個對映。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 實務應用：跨模型評估（Cross-modal Eval）</div>
+            <div class="info-box-content">
+                <p>第一版有三個事實錯誤，<strong>解法不是換更聰明的模型，而是加一個驗證步驟</strong>。文中描述：</p>
+                <ul>
+                    <li>Opus 4.7 1M 抓精準度錯誤</li>
+                    <li>GPT-5.5 抓遺漏的脈絡</li>
+                    <li>DeepSeek V4-Pro 抓「太通用」的問題</li>
+                </ul>
+                <p>這是 GMP 環境的核心思維 — <strong>不靠單一系統做最終判斷，靠多重檢查</strong>。等同 PIC/S Annex 1 的 contamination control strategy：層層攔截。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-critical">
+            <div class="info-box-header">⚠ 批判：未驗證的時間/成本宣稱</div>
+            <div class="info-box-content">
+                <p>「40 分鐘」「3 萬字」「治療師 40 小時都做不到」 — 這些數字都<strong>無法驗證</strong>，且都用來突顯系統價值。</p>
+                <p>更重要的是：產出 3 萬字不等於閱讀者能消化 3 萬字。<strong>輸出量與認知吸收是兩件事</strong>。Garry 沒有討論他真的把這 20 本書的鏡像「讀完」了多少。</p>
+                <p>對 GMP 文件審核的啟示：AI 可以產生大量內容，但人類審核者的吞吐量沒有對應提升 — 這就是 <strong>O-Ring Bottleneck</strong>。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">💡 CDMO 比喻：偏差調查的個人化映射</div>
+            <div class="info-box-content">
+                <p>想像當一個無菌操作偏差發生時，AI 自動：</p>
+                <ul>
+                    <li>查找該設備的歷史 CAPA</li>
+                    <li>調出該操作員的訓練紀錄</li>
+                    <li>對映同類型偏差在過去 24 個月的分佈</li>
+                    <li>找出 RCA 中常被遺漏的根因類別</li>
+                </ul>
+                <p>這就是「書本鏡像」邏輯在受監管環境的版本 — 但有個關鍵不同：每一條映射都需要可追溯來源（21 CFR Part 11 的 audit trail），這是 Garry 的個人系統不需要處理的。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title">Part III：Skillification — 用技能創造技能的遞迴模式</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="col-label">原文要點</div>
+        <div class="part-title">Skills That Build Skills</div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">運行我生活的這個系統並非以單體形式存在。它是<span class="highlight-concept">由技能組裝而成</span>。而這些技能本身就是由一個技能創造出來的。</div>
+            <div class="bilingual-en">The system that runs my life didn't exist as a monolith. It was assembled from skills. And those skills were themselves created by a skill.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh"><span class="highlight-key">Skillify 是一個 meta-skill，用來創造新的技能</span>。當我遇到一個我會重複的工作流時，我說「skillify this」，它會檢查剛剛發生了什麼，提取可重複的模式，寫一個包含觸發條件與邊界案例的測試過的技能檔，然後把它註冊到 resolver 裡。</div>
+            <div class="bilingual-en">Skillify is a meta-skill that creates new skills. When I encounter a workflow I'm going to repeat, I say "skillify this" and it examines what just happened, extracts the repeatable pattern, writes a tested skill file with triggers and edge cases, and registers it in the resolver.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">技能可以組合。Book-mirror 呼叫 brain-ops 做儲存，呼叫 enrich 做脈絡補充，呼叫 cross-modal-eval 做品質檢查，呼叫 pdf-generation 做輸出。每個技能聚焦於一件事。它們串接起來形成複雜的工作流。<span class="highlight-practical">當我改進一個技能，所有使用它的工作流都會自動變好</span>。</div>
+            <div class="bilingual-en">Skills compose. Book-mirror calls brain-ops for storage, enrich for context, cross-modal-eval for quality, and pdf-generation for output. Each skill is focused on one thing. When I improve one skill, every workflow that uses it gets better automatically.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="col-label">概念解析</div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 核心概念：Meta-Skill（元技能）</div>
+            <div class="info-box-content">
+                <p><strong>Meta-Skill</strong> 是「能夠創造其他技能」的技能。這不是新概念 — Anthropic 官方文件已將 Skills 系統化，定義為 <code>SKILL.md</code> 檔案，包含觸發條件、步驟、範例。</p>
+                <p>Garry 的「Skillify」做的是：觀察使用者剛完成的工作流 → 抽出模式 → 自動產生 SKILL.md 檔。</p>
+                <p>這對應到軟體工程的 <strong>「Don't Repeat Yourself」</strong>原則，差別在於現在被抽出的不是程式碼，而是「自然語言指令 + 工具呼叫 + 觸發條件」的組合。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">💡 CDMO 比喻：SOP 的模組化與 CCS</div>
+            <div class="info-box-content">
+                <p>製藥業的 <strong>「SOP 模組化」</strong>就是這個邏輯：</p>
+                <ul>
+                    <li>每個 SOP 聚焦單一任務（環境監控、設備清潔、無菌操作）</li>
+                    <li>SOP 之間可以互相參照（呼叫）</li>
+                    <li>當一個 SOP 改版，所有引用它的批次紀錄、CAPA、變更控制都會被影響</li>
+                </ul>
+                <p>Skillify = 把 <strong>tribal knowledge（部落知識）變成 documented procedure（書面化程序）</strong>的元工具。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 重點：「複利」的真正來源</div>
+            <div class="info-box-content">
+                <p>Garry 在文章末段強調：「系統今天比兩個月前好 10 倍，再過兩個月又會好 10 倍。」</p>
+                <p>但複利的真正來源不是技能數量，而是 <strong>三個東西的乘積</strong>：</p>
+                <ul>
+                    <li><strong>累積的個人脈絡</strong>（10 萬頁 brain）</li>
+                    <li><strong>可重用的技能</strong>（100+ skills）</li>
+                    <li><strong>持續的觸發機制</strong>（100+ cron jobs）</li>
+                </ul>
+                <p>缺一個都不會複利。光有技能、沒有資料，技能找不到內容；光有資料、沒有觸發，資料不會更新。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title">Part IV：四層架構 — Thin Harness、Fat Skills、Fat Data、Swappable Models</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="col-label">原文要點</div>
+        <div class="part-title">The Architecture</div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh"><strong>Harness（外殼）很薄</strong>。OpenClaw 是 runtime。它接收我的訊息、判斷哪個技能適用、並分派執行。幾千行的路由邏輯。它不知道任何關於書、會議、創業者的事。它只做路由。</div>
+            <div class="bilingual-en">The harness is thin. OpenClaw is the runtime. It receives my messages, figures out which skill applies, and dispatches. A few thousand lines of routing logic. It doesn't know anything about books or meetings or founders. It just routes.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh"><strong>技能（Skills）很胖</strong>。現在超過 100 個，每個都是一個自包含的 markdown 檔，包含對單一特定任務的詳細指令。</div>
+            <div class="bilingual-en">The skills are fat. Over 100 of them now, each a self-contained markdown file with detailed instructions for one specific task.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh"><strong>資料很胖</strong>。10 萬頁結構化知識在 brain repo 裡。每個我接觸過的人、公司、會議、書、文章、想法，全部連結、可搜尋、每天成長。</div>
+            <div class="bilingual-en">The data is fat. 100,000 pages of structured knowledge in the brain repo. Every person, company, meeting, book, article, and idea I've engaged with, all linked, all searchable, all growing every day.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh"><strong>模型可替換</strong>。我用 Opus 4.7 1M 做精準度、GPT-5.5 做完整提取、DeepSeek V4-Pro 做創意工作、Groq + Llama 做速度。<span class="highlight-key">技能決定哪個任務呼叫哪個模型</span>。Harness 不關心。</div>
+            <div class="bilingual-en">The models are interchangeable. I run Opus 4.7 1M for precision. GPT-5.5 for recall and exhaustive extraction. DeepSeek V4-Pro for creative work and third perspectives. The skill decides which model to call for which task. The harness doesn't care.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="col-label">概念解析</div>
+
+        <table class="compare-table">
+            <thead>
+                <tr><th>層級</th><th>角色</th><th>變動頻率</th><th>CDMO 對應</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Thin Harness</strong></td>
+                    <td>路由器，分派訊息給技能</td>
+                    <td>很少（穩定基礎）</td>
+                    <td>批次紀錄系統的工作流引擎</td>
+                </tr>
+                <tr>
+                    <td><strong>Fat Skills</strong></td>
+                    <td>單一任務的指令包</td>
+                    <td>每週新增/改版</td>
+                    <td>SOP 集合（可改版、可組合）</td>
+                </tr>
+                <tr>
+                    <td><strong>Fat Data</strong></td>
+                    <td>累積的知識圖譜</td>
+                    <td>每天自動更新</td>
+                    <td>批次紀錄、CAPA、變更控制歷史</td>
+                </tr>
+                <tr>
+                    <td><strong>Swappable Models</strong></td>
+                    <td>執行 LLM 推理的引擎</td>
+                    <td>每月可換新</td>
+                    <td>分析儀器（HPLC、LC-MS） — 可校驗、可換廠牌</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 重點：解耦（Decoupling）的工程哲學</div>
+            <div class="info-box-content">
+                <p>這個架構的核心智慧是 <strong>「每一層各自演化」</strong>：</p>
+                <ul>
+                    <li>新模型出來不用改技能</li>
+                    <li>新技能不用改 harness</li>
+                    <li>資料更新不影響任何一層</li>
+                </ul>
+                <p>這正是 GMP 中的 <strong>「change control 的最佳狀態」</strong> — 每次變更影響範圍最小。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-critical">
+            <div class="info-box-header">⚠ 批判：未來模型 vs 現實模型</div>
+            <div class="info-box-content">
+                <p>原文提到的 <strong>「Opus 4.7 1M」、「GPT-5.5」、「DeepSeek V4-Pro」</strong>等模型名稱在 2026 年 5 月時並不存在。這些是 Garry 對未來模型陣容的<strong>推測性命名</strong>。</p>
+                <p>讀者需要把這當成「設計理念示意」而非「現有可複製方案」。實際上 2026 年可用的是 Claude Opus 4.7（無 1M context）、GPT-5、DeepSeek V3 等。</p>
+                <p><strong>不要被陌生的版本號迷惑</strong>。架構邏輯依然有效，但具體模型分工要等 2027 才能驗證。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-cost">
+            <div class="info-box-header">💰 成本現實</div>
+            <div class="info-box-content">
+                <p>Garry 沒有揭露的是：</p>
+                <ul>
+                    <li>10 萬頁 brain 的<strong>儲存與索引成本</strong>（向量資料庫、embedding 重新生成）</li>
+                    <li>100+ cron jobs 的<strong>持續 API 呼叫費用</strong>（每月可能數千美元）</li>
+                    <li>多模型驗證流程的<strong>3-4x token 成本</strong>（每個輸出要過三個模型）</li>
+                </ul>
+                <p>對個人使用者：可能每月 $500-$2000 美元成本。對企業/受監管環境：再加上稽核、驗證、儲存合規的費用。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title">Part V：複利系統 — 為何個人 AI 是新的競爭優勢</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <div class="col-label">原文要點</div>
+        <div class="part-title">The 2am Builder and the Compounding System</div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">人們問我關於生產力的事。我不那樣思考。我思考的是<span class="highlight-concept">複利</span>。</div>
+            <div class="bilingual-en">People ask me about productivity. I don't think about it that way. What I think about is compounding.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">我參加的每一場會議都加進大腦。我讀的每一本書都豐富了下一本書的脈絡。我建的每一個技能都讓下一個工作流更快。我更新的每一個人物頁面都讓下次會議準備更銳利。<span class="highlight-key">這個系統今天比兩個月前好 10 倍，再過兩個月又會好 10 倍</span>。</div>
+            <div class="bilingual-en">Every meeting I take adds to the brain. Every book I read enriches the context for the next book. Every skill I build makes the next workflow faster. Every person page I update makes the next meeting prep sharper. The system today is 10x what it was two months ago, and two months from now it'll be 10x again.</div>
+        </div>
+
+        <div class="bilingual-block">
+            <div class="bilingual-zh">論點很簡單：<span class="highlight-practical">未來屬於建立可複利 AI 系統的個人，而非使用企業擁有、中心化 AI 工具的個人</span>。差別是「寫日記」與「擁有神經系統」的差別。</div>
+            <div class="bilingual-en">The thesis is simple: the future belongs to individuals who build compounding AI systems, not to individuals who use corporate-owned centralized AI tools. The difference is the difference between keeping a journal and having a nervous system.</div>
+        </div>
+    </div>
+    <div class="content-right">
+        <div class="col-label">概念解析</div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 核心概念：複利的真實條件</div>
+            <div class="info-box-content">
+                <p>「10 倍成長」是矽谷常見的修辭。但複利只在三個條件都具備時才成立：</p>
+                <ul>
+                    <li><strong>輸入持續累積</strong>（每天有新會議、新書、新筆記進來）</li>
+                    <li><strong>連結持續增加</strong>（新節點與舊節點建立關聯）</li>
+                    <li><strong>檢索品質持續提升</strong>（系統能找到對的東西）</li>
+                </ul>
+                <p>對 David 你的 65+ 文件學習庫：你已經有第一個（持續累積）和第二個（透過 dashboard meta tags 建立連結）。第三個需要透過搜尋與引用來驗證。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 重點：「個人 vs 企業 AI」的二分法是誤導</div>
+            <div class="info-box-content">
+                <p>Garry 的論述把世界分成「自建 AI 的個人」 vs 「用 ChatGPT 的個人」，<strong>但這是錯誤的對立</strong>。</p>
+                <p>真正的區分是：</p>
+                <ul>
+                    <li><strong>有累積知識體系的人</strong>（無論用哪個工具都會更強）</li>
+                    <li><strong>沒有累積的人</strong>（換工具也是徒勞）</li>
+                </ul>
+                <p>Claude.ai Projects + 你的 Master Prompt v1.5.1 + GitHub repos 已經是一個<strong>同等級</strong>的累積系統，只是不像 GBrain 那樣有公關話術。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-critical">
+            <div class="info-box-header">⚠ 對 GMP 環境的關鍵不適用性</div>
+            <div class="info-box-content">
+                <p>Garry 的「複利系統」在 CDMO 環境有<strong>三個本質性的相容問題</strong>：</p>
+                <ul>
+                    <li><strong>資料離開公司網域</strong>：客戶配方、製程參數送到第三方 LLM 違反 NDA</li>
+                    <li><strong>無 audit trail</strong>：100+ cron jobs 自動更新的內容無法滿足 21 CFR Part 11 的可追溯性</li>
+                    <li><strong>無 validation</strong>：每次模型升級都會改變輸出，但 GxP 系統需要 IQ/OQ/PQ 驗證</li>
+                </ul>
+                <p>結論：這個架構對你<strong>個人學習</strong>有啟發，對<strong>公司營運</strong>則需要 on-premise + validated 版本。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 給你的可遷移啟示</div>
+            <div class="info-box-content">
+                <p>從 Garry 的架構中，可以直接搬到你既有系統的三件事：</p>
+                <ul>
+                    <li><strong>Skillify 模式</strong>：當你發現重複做某個分析（如：每篇文章都做 5 維度評分），把它寫成 Claude Skill</li>
+                    <li><strong>Entity propagation</strong>：當一個 CDMO 客戶資訊更新時，自動更新所有引用該客戶的文件（你目前還沒有）</li>
+                    <li><strong>Cross-modal eval</strong>：重要文件（如 feasibility assessment）出貨前，用 Opus 重讀一次，找事實錯誤與遺漏</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="section-title">關鍵比較：個人 vs 企業 vs GMP 應用情境</h2>
+<table class="compare-table">
+    <thead>
+        <tr>
+            <th>面向</th>
+            <th>Garry Tan（個人創作者）</th>
+            <th>一般企業營運</th>
+            <th>CDMO / GMP 環境</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>資料邊界</strong></td>
+            <td>個人筆記，無 NDA 顧慮</td>
+            <td>商業機密，限內部</td>
+            <td>客戶配方 + 病人安全資料 + 法規承諾</td>
+        </tr>
+        <tr>
+            <td><strong>驗證需求</strong></td>
+            <td>「能用就好」</td>
+            <td>QA 抽樣審查</td>
+            <td>IQ/OQ/PQ + ALCOA+ + audit trail</td>
+        </tr>
+        <tr>
+            <td><strong>模型替換成本</strong></td>
+            <td>幾分鐘改技能設定</td>
+            <td>需重跑 UAT</td>
+            <td>需完整 validation 重做</td>
+        </tr>
+        <tr>
+            <td><strong>錯誤後果</strong></td>
+            <td>個人時間損失</td>
+            <td>商業決策偏誤</td>
+            <td>批次召回、警告信、停產</td>
+        </tr>
+        <tr>
+            <td><strong>Agent Mode 適用性</strong></td>
+            <td>高（個人風險自負）</td>
+            <td>中（需審計）</td>
+            <td>低（必須 Copilot Mode + 100% 人工複核）</td>
+        </tr>
+        <tr>
+            <td><strong>每月 API 成本估算</strong></td>
+            <td>$500-2000 USD</td>
+            <td>每使用者 $50-200</td>
+            <td>含驗證與稽核：每使用者 $300-800</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="section-title">重點整理 Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="takeaway-card">
+        <div class="takeaway-num">TAKEAWAY 01</div>
+        <div class="takeaway-title">架構勝於模型</div>
+        <div class="takeaway-text">「Fat Skills、Fat Code、Thin Harness」是真正的 takeaway。把 LLM 當引擎，把累積的知識+技能+觸發器當作「車身」，這樣換引擎不必重蓋車。</div>
+    </div>
+    <div class="takeaway-card">
+        <div class="takeaway-num">TAKEAWAY 02</div>
+        <div class="takeaway-title">Skillification 是真正的 meta-工具</div>
+        <div class="takeaway-text">當你發現自己第二次做某件事時就抽出技能。這正是 David 你已經在做的事 — Master Prompt v1.5.1 就是你的 meta-skill。</div>
+    </div>
+    <div class="takeaway-card">
+        <div class="takeaway-num">TAKEAWAY 03</div>
+        <div class="takeaway-title">複利的條件比口號更重要</div>
+        <div class="takeaway-text">「10 倍成長」需要三件事同時運作：累積、連結、檢索。少一個都不會複利。65+ 文件庫 + meta tags 已具備前兩個，下一步是用 dashboard 強化第三個。</div>
+    </div>
+    <div class="takeaway-card">
+        <div class="takeaway-num">TAKEAWAY 04</div>
+        <div class="takeaway-title">個人架構不等於企業架構</div>
+        <div class="takeaway-text">Garry 的系統是個人化、無稽核需求的最大化版本。CDMO 環境需要把自動化降為 Copilot Mode、加上 validation 與 audit trail。架構邏輯可借鏡，工程細節要重做。</div>
+    </div>
+</div>
+
+<h2 class="section-title">練習題 Practice Questions</h2>
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">為什麼 Garry 主張 LLM 應該被當作「可替換的引擎」而非「智慧的源頭」？這個視角對 AI 工具採購策略有什麼影響？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p>把 LLM 當「智慧的源頭」會讓你的整套工作流綁死在某個模型供應商上。換模型 = 重做所有 prompts、重訓使用者、重驗證輸出。</p>
+        <p>把 LLM 當「引擎」則代表：</p>
+        <ul>
+            <li>真正的價值在你累積的<strong>資料、技能、流程</strong>，不在當下用哪個模型</li>
+            <li>切換模型應該是「設定變更」，不是「系統重建」</li>
+            <li>未來的競爭優勢是「車身」（你的資料圖譜+技能庫），不是引擎（誰家的 LLM）</li>
+        </ul>
+        <p><strong>對採購策略的啟示</strong>：不要簽長期 vendor lock-in。要能在 Claude / GPT / Gemini / 開源模型之間自由切換。Master Prompt 應該是 vendor-agnostic 的（你的 v1.5.1 大致符合這個原則）。</p>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">如果你要在 CDMO 環境實作類似 Garry 的「entity propagation」功能（會議結束後自動更新所有相關人員/客戶/設備的頁面），會遇到哪三個 GxP 障礙？該如何設計才能符合 21 CFR Part 11？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>三個 GxP 障礙：</strong></p>
+        <ul>
+            <li><strong>Audit Trail 完整性</strong>：每次自動更新必須記錄誰（系統 ID）、何時、改了什麼、為什麼。Garry 的 cron job 不會追蹤這些</li>
+            <li><strong>電子簽章</strong>：若更新影響 GxP 文件（如客戶要求變更），需要操作員 e-signature。AI 自動觸發無法滿足</li>
+            <li><strong>系統驗證</strong>：每個自動觸發邏輯需 IQ/OQ/PQ；當你升級模型，驗證要重做</li>
+        </ul>
+        <p><strong>合規設計：</strong></p>
+        <ul>
+            <li><strong>區分 GxP 與非 GxP 內容</strong>：個人筆記、會議摘要可以自動傳播；批次紀錄、變更控制必須人工審核</li>
+            <li><strong>Copilot Mode</strong>：AI 產生「建議更新」，人工點擊確認後才寫入</li>
+            <li><strong>不可變日誌</strong>：每次 AI 建議都進 audit log，無論是否被採納</li>
+            <li><strong>雙系統設計</strong>：用 GBrain 思維建「知識管理層」（非 GxP），與既有的 GMP 文件管理系統明確分離</li>
+        </ul>
+    </div>
+</details>
+
+<details class="question-accordion">
+    <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">Garry 說「未來屬於建立可複利 AI 系統的個人」。這個論點有什麼預設前提是值得質疑的？對於你規劃中的 COO 路徑，這個論點該如何修正？</span>
+        <span class="accordion-icon"></span>
+    </summary>
+    <div class="question-answer">
+        <p><strong>三個值得質疑的預設：</strong></p>
+        <ul>
+            <li><strong>「個人」是正確的單位</strong>嗎？：Garry 是 YC CEO，他的「個人系統」其實已經整合了大量公開資料（會議紀錄、創業者背景）。對企業領導者，個人系統與公司系統的邊界更模糊</li>
+            <li><strong>「複利」總是線性向上</strong>嗎？：知識累積後也會「過時」。3 年前的 CDMO 客戶資訊現在多半無效。Garry 沒有討論「資料衰減」</li>
+            <li><strong>「自建」一定優於「採購」</strong>嗎？：對個人開發者是。但對營運主管，自建系統的維護成本可能遠超採購成熟工具的成本</li>
+        </ul>
+        <p><strong>對 COO 路徑的修正版論點：</strong></p>
+        <ul>
+            <li>「未來屬於<strong>能夠駕馭 AI 系統來放大組織判斷力</strong>的領導者」 — 重點不是個人會建系統，而是知道哪些工作流值得 systematize、哪些必須留給人工判斷</li>
+            <li>對 COO 候選人，可複利的不是個人筆記，而是 <strong>「組織化的決策模式」</strong>：對偏差類型的判斷模式、對客戶風險的評估架構、對人員配置的歷史依據</li>
+            <li>Garry 的架構應被視為 <strong>「個人能力的擴增」</strong>而非「企業營運的範本」 — 你需要的是後者</li>
+        </ul>
+    </div>
+</details>
+
+<div class="bottom-line">
+    <div class="bottom-line-header">🎯 我的行動結論 Bottom Line for Me</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">真正的 AI 競爭優勢不在模型，而在「<strong>累積的資料 × 可重用的技能 × 持續的觸發機制</strong>」三者乘積。我的 65+ 文件庫 + Master Prompt v1.5.1 + GitHub 自動化已經是同等架構的雛形 — 我不需要羨慕 Garry 的 GBrain，我需要的是把現有系統的「entity propagation」與「cross-modal eval」補齊。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用（本週）</div>
+        <div class="bottom-line-text">把 Master Prompt v1.5.1 中的「Skillification」邏輯應用到 <strong>/triage-deviation</strong> skill 開發上 — 從第一次手動做偏差分析開始記錄步驟，第二次重做時就抽出 SKILL.md。同時設計一個簡化版「cross-modal eval」：每份重要文件（feasibility assessment）出貨前，請 Claude 用「事實檢查者」角色讀一次，找事實錯誤與遺漏。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠ 需要補充</div>
+        <div class="bottom-line-text">文章完全跳過了 GMP/受監管環境的合規要求 — Garry 的個人架構放到 CDMO 會立即撞上 21 CFR Part 11、ALCOA+、IQ/OQ/PQ 驗證等三道牆。如果要把這些想法帶到公司層級，需要補充：(1) 資料分類（GxP vs 非 GxP）的決策框架；(2) Copilot Mode 設計模式（AI 建議 → 人工確認 → 寫入）；(3) 模型升級時的 validation strategy。建議 6 個月後重讀，屆時應該已有實際 CDMO AI 部署的案例可對照。</div>
+    </div>
+</div>
+
+<div class="footer">
+    <p><strong>製作日期</strong>：2026-05-10</p>
+    <p><strong>原文來源</strong>：<a href="https://x.com/garrytan" target="_blank">Garry Tan @garrytan on X</a> — Y Combinator CEO</p>
+    <p><strong>相關 GitHub</strong>：github.com/garrytan/gbrain（開源狀態請自行驗證）</p>
+    <div class="chat-title-suggest">建議 Chat Title：2026-05-10 [Agent] Garry Tan - Meta-Meta-Prompting Personal AI OS</div>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML 的不合理有效性 - Claude Code 輸出格式革命</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-05-09">
+<meta name="doc-title" content="HTML 的不合理有效性 - Claude Code 輸出革命">
+<meta name="doc-source" content="Thariq (@trq212) / Anthropic Claude Code Team">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Tool,Content,Framework,Agent">
+<meta name="doc-rating" content="4.0">
+<meta name="doc-summary" content="從 Markdown 轉向 HTML 的論證。資訊密度、視覺清晰、易分享、雙向互動。">
+<meta name="doc-file" content="2026-05-09_thariq-html-effectiveness.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+* { box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  line-height: 1.8;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header: full viewport width */
+.header {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%);
+  color: white;
+}
+.header-content { max-width: 900px; margin: 0 auto; }
+.header-tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag { padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-content { background: #c7d2fe; color: #3730a3; }
+.tag-framework { background: #ddd6fe; color: #4c1d95; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.header h1 { font-size: 2rem; margin: 0.5rem 0; font-weight: 700; }
+.header .subtitle { font-size: 1rem; opacity: 0.9; margin-bottom: 0.5rem; font-weight: 300; }
+.header .source { font-size: 0.85rem; opacity: 0.75; }
+
+/* Container: centered, constrained width */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Section common */
+.section { margin-bottom: 2.5rem; }
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid #3b82f6;
+}
+
+/* Executive Summary */
+.exec-summary {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #3b82f6;
+  margin-bottom: 2rem;
+}
+.exec-summary p { margin: 0.5rem 0; font-size: 0.95rem; }
+
+/* Rating Bar */
+.rating-bar {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 1rem; padding: 0.6rem 1rem;
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  border-radius: 8px; flex-wrap: wrap;
+  border: 1px solid #bae6fd;
+}
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+/* Learning Objectives */
+.objectives {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.objective-item {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  border-left: 4px solid #3b82f6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-num { font-size: 1.5rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.5rem; }
+.objective-text { font-size: 0.9rem; color: #334155; }
+.objective-en { font-size: 0.8rem; color: #64748b; font-style: italic; margin-top: 0.25rem; }
+
+/* Framework Visual */
+.framework-visual {
+  background: linear-gradient(135deg, #1e3a5f, #3b5998);
+  border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0;
+}
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 130px; }
+.framework-icon {
+  font-size: 1.3rem; margin-bottom: 0.5rem;
+  width: 3.5rem; height: 3.5rem;
+  background: rgba(255,255,255,0.2);
+  border-radius: 0.75rem;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 0.5rem; font-weight: 700;
+}
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+/* Content Grid */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 2rem;
+}
+.content-left {
+  padding: 1.5rem;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+}
+.content-right {
+  padding: 1.5rem;
+  background: #fafafa;
+}
+@media (max-width: 768px) {
+  .container { padding: 1rem; }
+  .content-grid { grid-template-columns: 1fr; }
+  .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; }
+}
+
+/* Part heading */
+.part-heading {
+  font-size: 1.2rem; font-weight: 700; color: #1e3a8a;
+  margin-bottom: 1rem; padding: 0.5rem 0;
+}
+.part-tag {
+  display: inline-block;
+  font-size: 0.75rem; font-weight: 600;
+  background: #dbeafe; color: #1e40af;
+  padding: 0.25rem 0.6rem; border-radius: 4px;
+  margin-right: 0.5rem;
+}
+
+/* Bilingual block */
+.bilingual { margin-bottom: 1rem; }
+.bilingual .zh { color: #1e293b; font-weight: 400; line-height: 1.85; }
+.bilingual .en { color: #64748b; font-style: italic; font-size: 0.9rem; line-height: 1.7; margin-top: 0.4rem; }
+
+/* Highlights */
+.hl-concept { background: #a5d6a7; padding: 0 0.2rem; border-radius: 2px; }
+.hl-key { background: #ffcc80; padding: 0 0.2rem; border-radius: 2px; }
+.hl-practical { background: #6ee7b7; padding: 0 0.2rem; border-radius: 2px; }
+.hl-cost { background: #5eead4; padding: 0 0.2rem; border-radius: 2px; }
+
+/* Info Boxes */
+.info-box {
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border: 1px solid;
+}
+.info-box-header {
+  padding: 0.5rem 0.85rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.info-box-content {
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.info-box-content p { margin: 0.4rem 0; }
+.info-box-content p:first-child { margin-top: 0; }
+.info-box-content p:last-child { margin-bottom: 0; }
+
+.box-concept { border-color: #86efac; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; }
+
+.box-analogy { border-color: #fcd34d; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; }
+
+.box-key { border-color: #fdba74; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; }
+
+.box-code { border-color: #c4b5fd; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; }
+
+.box-practical { border-color: #6ee7b7; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; }
+
+.box-compare { border-color: #a5b4fc; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; }
+
+.box-critical { border-color: #fca5a5; }
+.box-critical .info-box-header { background: #fecaca; color: #991b1b; }
+.box-critical .info-box-content { background: #fef2f2; }
+
+/* Comparison table */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.compare-table thead { background: #1e3a8a; color: white; }
+.compare-table th { padding: 0.75rem 1rem; text-align: left; font-weight: 600; }
+.compare-table td { padding: 0.75rem 1rem; border-top: 1px solid #e2e8f0; vertical-align: top; }
+.compare-table tbody tr:hover { background: #f8fafc; }
+.compare-table .markdown-col { color: #64748b; }
+.compare-table .html-col { color: #1e3a8a; font-weight: 500; }
+
+/* Key Takeaways */
+.takeaways {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.summary-card {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  border-top: 4px solid #3b82f6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card h3 { color: #1e3a8a; font-size: 1rem; margin: 0 0 0.5rem 0; }
+.summary-card p { font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.7; }
+
+/* Practice / Accordion */
+.question-accordion {
+  background: white; border-radius: 0.75rem; margin-bottom: 1rem;
+  border: 1px solid #e9d5ff; overflow: hidden;
+}
+.question-header {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+  padding: 1rem 1.25rem; cursor: pointer; list-style: none;
+}
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type {
+  font-size: 0.75rem; font-weight: 600; color: #6d28d9;
+  background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem;
+}
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon {
+  width: 1.25rem; height: 1.25rem; transition: transform 0.2s;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer {
+  padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff;
+}
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+.question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+.question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+
+/* Bottom Line */
+.bottom-line {
+  background: linear-gradient(135deg, #faf5ff, #f0f9ff);
+  padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed;
+}
+.bottom-line-header {
+  font-weight: 700; color: #5b21b6; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem;
+}
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+/* Footer */
+.footer {
+  text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.85rem;
+  border-top: 1px solid #e2e8f0; margin-top: 2rem;
+}
+.footer a { color: #3b82f6; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footer .chat-title {
+  margin-top: 0.5rem; font-family: 'Source Code Pro', monospace;
+  background: #f1f5f9; padding: 0.4rem 0.8rem; border-radius: 4px;
+  display: inline-block; color: #334155;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER (full viewport width) -->
+<div class="header">
+  <div class="header-content">
+    <div class="header-tags">
+      <span class="tag tag-tool">Tool</span>
+      <span class="tag tag-content">Content</span>
+      <span class="tag tag-framework">Framework</span>
+      <span class="tag tag-agent">Agent</span>
+    </div>
+    <h1>HTML 的不合理有效性</h1>
+    <div class="subtitle">The Unreasonable Effectiveness of HTML</div>
+    <div class="subtitle">為什麼 Claude Code 團隊正在從 Markdown 轉向 HTML</div>
+    <div class="source">Thariq (@trq212) · Anthropic Claude Code Team · 2026</div>
+  </div>
+</div>
+
+<!-- CONTAINER (centered, max-width 1100px) -->
+<div class="container">
+
+  <!-- ============== EXECUTIVE SUMMARY ============== -->
+  <div class="section">
+    <h2 class="section-title">快速摘要 Executive Summary</h2>
+
+    <div class="rating-bar">
+      <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+      <span class="rating-high">↑ 實務應用, 工具生態</span>
+      <span class="rating-low">↓ 技術深度</span>
+    </div>
+
+    <div class="exec-summary">
+      <p><strong>核心論點：</strong>Anthropic Claude Code 團隊的 Thariq 主張，當 AI Agent 越來越強大時，<span class="hl-key">Markdown 的表達能力已成為瓶頸</span>。HTML 提供更高的資訊密度（表格、SVG、CSS、互動元件）、更好的視覺呈現，與更容易的分享方式。</p>
+      <p><strong>關鍵洞察：</strong>當你不再親自編輯文件，而是透過 Claude 修改文件時，Markdown「容易手動編輯」的優勢就消失了。這時應該選擇<span class="hl-concept">對讀者最友善</span>的格式。</p>
+      <p><strong>對 David 的價值：</strong>你的 HTML Learning Library 正是這個理念的實踐。但 Thariq 進一步擴展了使用情境：拋棄式編輯介面、PR 解說、設計原型、規格探索。這些模式可以延伸你目前的知識管理體系。</p>
+    </div>
+  </div>
+
+  <!-- ============== LEARNING OBJECTIVES ============== -->
+  <div class="section">
+    <h2 class="section-title">學習目標 Learning Objectives</h2>
+    <div class="objectives">
+      <div class="objective-item">
+        <div class="objective-num">01</div>
+        <div class="objective-text">理解為什麼 Markdown 的時代正在結束，HTML 為何成為 Agent 輸出的更佳選擇</div>
+        <div class="objective-en">Understand why HTML beats Markdown as the agent output format</div>
+      </div>
+      <div class="objective-item">
+        <div class="objective-num">02</div>
+        <div class="objective-text">掌握 HTML 在資訊密度、視覺清晰、易於分享、雙向互動上的四大優勢</div>
+        <div class="objective-en">Grasp the four advantages: density, clarity, sharing, interactivity</div>
+      </div>
+      <div class="objective-item">
+        <div class="objective-num">03</div>
+        <div class="objective-text">學會 5 個實務使用場景：規格探索、PR 解說、設計原型、研究報告、拋棄式編輯介面</div>
+        <div class="objective-en">Master 5 practical use cases for HTML artifacts</div>
+      </div>
+      <div class="objective-item">
+        <div class="objective-num">04</div>
+        <div class="objective-text">識別 HTML 的權衡：生成時間、版本控制、Token 成本，並判斷何時仍應使用 Markdown</div>
+        <div class="objective-en">Recognize trade-offs and know when Markdown still wins</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== FRAMEWORK VISUAL ============== -->
+  <div class="section">
+    <div class="framework-visual">
+      <div class="framework-title">HTML 優於 Markdown 的四大支柱</div>
+      <div class="framework-steps">
+        <div class="framework-step">
+          <div class="framework-icon">①</div>
+          <div class="framework-step-title">資訊密度</div>
+          <div class="framework-step-desc">表格、SVG、CSS、互動元件</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+          <div class="framework-icon">②</div>
+          <div class="framework-step-title">視覺清晰</div>
+          <div class="framework-step-desc">100+ 行也能輕鬆閱讀</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+          <div class="framework-icon">③</div>
+          <div class="framework-step-title">易於分享</div>
+          <div class="framework-step-desc">瀏覽器原生支援、直接傳連結</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+          <div class="framework-icon">④</div>
+          <div class="framework-step-title">雙向互動</div>
+          <div class="framework-step-desc">滑桿、按鈕、Copy as Prompt</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== PART 1: WHY HTML - INFORMATION DENSITY ============== -->
+  <div class="section">
+    <div class="part-heading"><span class="part-tag">Part 1</span>資訊密度 Information Density</div>
+
+    <div class="content-grid">
+      <div class="content-left">
+        <div class="bilingual">
+          <div class="zh">Markdown 已經成為 Agent 與我們溝通的主流檔案格式。它<span class="hl-concept">簡單、可攜、有基本的富文本能力</span>，而且容易讓你親自編輯。Claude 甚至意外地擅長用 ASCII 在 Markdown 裡畫圖。</div>
+          <div class="en">"Markdown has become the dominant file format used by agents to communicate with us. It's simple, portable, has some rich text capability and is easy for you to edit."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh">但隨著 Agent 變得越來越強大，我感覺 <span class="hl-key">Markdown 變成一種限制性的格式</span>。我發現很難閱讀超過一百行的 Markdown 檔案。我想要更豐富的視覺呈現、顏色和圖表，並且能夠輕鬆分享。</div>
+          <div class="en">"As agents have become more and more powerful, I have felt that markdown has become a restricting format. I find it difficult to read a markdown file of more than a hundred lines."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh">HTML 可以承載比 Markdown 豐富得多的資訊：表格資料、CSS 設計、SVG 插圖、JavaScript 程式碼、HTML+JS+CSS 的互動、SVG+HTML 的工作流程、絕對定位的空間資料、圖片標籤等等。</div>
+          <div class="en">"HTML can convey much richer information compared to markdown... tables, CSS, SVG, script tags, interactions, workflows, spatial data, images."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh">我會說，<span class="hl-key">幾乎沒有 Claude 能讀的資訊集合，是無法用 HTML 高效表達的</span>。這讓 HTML 成為模型向你傳達深度資訊、以及讓你檢視資訊的高效方式。</div>
+          <div class="en">"There is almost no set of information that Claude can read that you cannot fairly efficiently represent with HTML."</div>
+        </div>
+      </div>
+
+      <div class="content-right">
+        <div class="info-box box-analogy">
+          <div class="info-box-header">💡 比喻：紙本 SOP vs. eBR (電子批次紀錄)</div>
+          <div class="info-box-content">
+            <p>Markdown 像是<strong>紙本 SOP</strong>：簡單、可攜、容易拿筆修改。但當資訊量大到一定程度（像是 100 頁的 Master Batch Record），紙本就難以快速查找重點。</p>
+            <p>HTML 則像是<strong>eBR (Electronic Batch Record)</strong>：可以巢狀檢視、搜尋、附加圖表、即時驗證資料。當你的 Agent 在處理複雜任務時，你需要的是 eBR 而不是紙本。</p>
+          </div>
+        </div>
+
+        <div class="info-box box-key">
+          <div class="info-box-header">⚠️ 反直覺洞察</div>
+          <div class="info-box-content">
+            <p>當 Claude 必須在 Markdown 表達顏色時，它會用<strong>Unicode 字元（彩色方塊）來估算 RGB 值</strong>。這是格式限制下的扭曲行為。</p>
+            <p>就像強迫操作員用紙本記錄連續監控資料：他們會自己畫表格、創造非正式符號。問題不是操作員，是工具。</p>
+          </div>
+        </div>
+
+        <div class="info-box box-concept">
+          <div class="info-box-header">📚 核心概念：表達能力決定產出品質</div>
+          <div class="info-box-content">
+            <p>當輸出格式無法承載概念，模型必須做妥協（壓縮資訊、用 ASCII 圖、放棄細節）。</p>
+            <p>HTML 移除了這個瓶頸 → 模型不再需要妥協 → 你看到的是它<strong>真正能表達的</strong>，而不是它能塞進 Markdown 的。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== PART 2: VISUAL CLARITY & SHARING ============== -->
+  <div class="section">
+    <div class="part-heading"><span class="part-tag">Part 2</span>視覺清晰度 &amp; 易於分享 Visual Clarity &amp; Sharing</div>
+
+    <div class="content-grid">
+      <div class="content-left">
+        <div class="bilingual">
+          <div class="zh">當 Claude 能做更複雜的工作時，它也在寫更大的規格和計畫。實務上，<span class="hl-key">我發現自己不太會閱讀超過 100 行的 Markdown 檔案</span>，更不用說讓組織裡其他人讀。</div>
+          <div class="en">"As Claude is able to do more complex work, it is also writing larger and larger specs and plans. In practice, I've found I tend to not actually read more than a 100-line markdown file."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh">但 HTML 文件容易閱讀許多。Claude 可以視覺化地組織結構，搭配分頁、插圖、連結等。它甚至可以做<span class="hl-concept">行動裝置響應式</span>，讓你根據裝置不同方式閱讀。</div>
+          <div class="en">"HTML documents are much easier to read, Claude can organize the structure visually to be ideal to navigate with tabs, illustrations, links, etc. It can even be mobile responsive."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh">Markdown 檔案<span class="hl-key">很難分享</span>，因為大多數瀏覽器不會原生渲染。你常常必須以附件方式加到 email 或訊息中。</div>
+          <div class="en">"Markdown files are fairly hard to share since most browsers do not render them natively well."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh">用 HTML，只要你把檔案上傳（例如到 S3），就可以輕鬆分享連結。你的同事可以在任何地方打開、輕鬆參考。<span class="hl-practical">「你的規格、報告或 PR 紀錄被人實際閱讀的機率，會大大提升」</span>。</div>
+          <div class="en">"The chance of someone actually reading your spec, report or PR writeup is much much higher if it's in HTML."</div>
+        </div>
+      </div>
+
+      <div class="content-right">
+        <div class="info-box box-practical">
+          <div class="info-box-header">🛠️ 實務應用：你的 Dashboard 已經在做這件事</div>
+          <div class="info-box-content">
+            <p>你的 65+ HTML 學習文件 + GitHub Pages，正是 Thariq 描述的模式：<strong>檔案產出後可以立即用連結分享</strong>，不需要先下載再附件。</p>
+            <p>下一步可以延伸到：把<strong>Tech Transfer 規格、Deviation Investigation 報告</strong>也輸出為 HTML，給內部 QA 和客戶閱讀。比 PDF 更具表達力，比 Word 更易於分享。</p>
+          </div>
+        </div>
+
+        <div class="info-box box-analogy">
+          <div class="info-box-header">💡 比喻：A4 紙 vs. 大型海報</div>
+          <div class="info-box-content">
+            <p>Markdown 像 A4 紙：每頁有限，超過 100 行就讓人想「跳過」。</p>
+            <p>HTML 像研討會用的<strong>大型海報</strong>：可以分區、用顏色標示、放圖表。讀者用「掃描」而不是「逐行閱讀」就能抓到重點。對於忙碌的主管來說，這個差異決定了訊息能否傳達。</p>
+          </div>
+        </div>
+
+        <div class="info-box box-key">
+          <div class="info-box-header">⚠️ 重點提示：分享機率 = 訊息價值 × 易讀性</div>
+          <div class="info-box-content">
+            <p>一份精彩的規格如果沒人讀，價值等於零。這對於想要影響組織決策的人來說特別重要。</p>
+            <p>對於你 COO 軌道的目標來說，<strong>把 Strategy Memo、季度檢討、跨部門提案改用 HTML 輸出</strong>，可以顯著提升組織內被閱讀和被引用的機率。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== PART 3: TWO-WAY INTERACTION & DATA INGESTION ============== -->
+  <div class="section">
+    <div class="part-heading"><span class="part-tag">Part 3</span>雙向互動 &amp; 資料注入 Two-way Interaction &amp; Data Ingestion</div>
+
+    <div class="content-grid">
+      <div class="content-left">
+        <div class="bilingual">
+          <div class="zh">HTML 可以讓你與文件互動。例如你可以要 Claude 加上滑桿或旋鈕來調整設計，或讓你調整演算法的不同選項看會發生什麼事。</div>
+          <div class="en">"HTML can allow you to interact with the document, for example sliders or knobs to adjust a design or tweak different options in the algorithm."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh">你也可以要它讓你<span class="hl-key">把這些變更複製成一段 prompt 貼回 Claude Code</span>。這就是「Copy as JSON」或「Copy as Prompt」按鈕的設計模式：把 UI 操作的結果轉換回模型可以消化的格式。</div>
+          <div class="en">"You can also ask it to let you copy these changes into a prompt to paste back into Claude Code."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh">為什麼用 Claude Code 來產 HTML，而不是用 Claude.ai 或 Claude Design？最大的原因之一是 <span class="hl-concept">Claude Code 能注入的上下文</span>：你的整個程式碼資料夾、MCP 連線（Slack、Linear 等）、Chrome 瀏覽器內容、git 歷史等等。</div>
+          <div class="en">"One of the biggest reasons is all the context Claude Code can ingest... file system, MCPs, web browser, git history."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh">舉例來說，當寫這篇文章時，Thariq 要求 Claude Code 讀過他的程式碼資料夾、找出所有 HTML 檔案、分組分類，然後做出一個 HTML 檔案展示每種類型的圖表。<span class="hl-practical">這篇文章的所有圖表都是這樣產生的</span>。</div>
+          <div class="en">"When writing this article, I asked Claude Code to read through my code folder and find all the HTML files I've generated, group and categorize them and then make an HTML file with all diagrams."</div>
+        </div>
+      </div>
+
+      <div class="content-right">
+        <div class="info-box box-code">
+          <div class="info-box-header">💻 互動模式三範例</div>
+          <div class="info-box-content">
+            <p><strong>1. 拋棄式編輯介面</strong>：30 張 Linear ticket 拖拉到 Now / Next / Later / Cut 四欄，按鈕匯出 markdown。</p>
+            <p><strong>2. Feature Flag 編輯器</strong>：依區域分組、顯示依賴關係、警告前置條件未開啟，匯出 diff。</p>
+            <p><strong>3. Prompt 調校工具</strong>：左側可編輯 prompt 含變數 slot、右側即時渲染三組樣本輸入。</p>
+          </div>
+        </div>
+
+        <div class="info-box box-practical">
+          <div class="info-box-header">🛠️ CDMO 實務映射</div>
+          <div class="info-box-content">
+            <p><strong>製程參數調校工具</strong>：滑桿調整溫度/時間/速度，即時計算填充均勻度預測，按鈕匯出為 batch protocol 變更請求。</p>
+            <p><strong>Deviation Triage 介面</strong>：拖拉異常事件到「立即上報 / 需調查 / 趨勢監控 / 結案」四欄，匯出為 CAPA 草稿。</p>
+            <p><strong>Tech Transfer Risk Map</strong>：互動式風險矩陣，調整客戶/產品/設備變數，即時更新 risk score。</p>
+          </div>
+        </div>
+
+        <div class="info-box box-key">
+          <div class="info-box-header">⚠️ 重點：Context Engineering 的優勢</div>
+          <div class="info-box-content">
+            <p>Claude.ai 的 Artifact 雖然也能做 HTML，但<strong>無法存取你的整個 GitHub Repo、Slack、git 歷史</strong>。Claude Code 才能做到「讀完整套程式碼後產出 HTML」這種深度整合。</p>
+            <p>這也呼應你正在實踐的「上下文勝於指令」原則。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== PART 4: USE CASES ============== -->
+  <div class="section">
+    <div class="part-heading"><span class="part-tag">Part 4</span>五大使用場景 Five Use Cases</div>
+
+    <div class="content-grid">
+      <div class="content-left">
+        <div class="bilingual">
+          <div class="zh"><strong>① 規格、規劃與探索 Specs, Planning &amp; Exploration</strong></div>
+          <div class="en">"HTML is a rich canvas for Claude to dive into a problem."</div>
+        </div>
+        <div class="bilingual">
+          <div class="zh">當開始處理問題時，不要用單一 Markdown 計畫，<span class="hl-key">期待產出一張 HTML 檔案的網絡</span>。先讓 Claude 腦力激盪 6 種不同方向、做成 grid 並排比較；選定方向後請它擴展、做 mockup、加入程式碼片段；最後寫實作計畫，新開 session 把所有檔案傳入實作。</div>
+          <div class="en">"Generate 6 distinctly different approaches and lay them out as a single HTML file in a grid so I can compare them side by side."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh"><strong>② 程式碼審查與理解 Code Review &amp; Understanding</strong></div>
+          <div class="en">"Code can be difficult to read in a Markdown file."</div>
+        </div>
+        <div class="bilingual">
+          <div class="zh">用 HTML 可以渲染 diff、註解、流程圖、模組關係。Thariq 表示<span class="hl-practical">他現在每個 PR 都附上一個 HTML 解說</span>。比 GitHub 預設的 diff view 更易理解。</div>
+          <div class="en">"I find this often works better than the default Github diff view, and I attach a HTML code explainer to every PR I make now."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh"><strong>③ 設計與原型 Design &amp; Prototypes</strong></div>
+          <div class="en">"HTML is incredibly expressive at design."</div>
+        </div>
+        <div class="bilingual">
+          <div class="zh">即使你的最終介面不是 HTML（例如 React、Swift），Claude 也可以先用 HTML 草擬設計再轉換。也可以原型化動畫、滑桿，要 Claude 給「複製參數」按鈕，把對得起來的設定貼回。</div>
+          <div class="en">"Claude can sketch out a design in HTML and then write it in your language of choice."</div>
+        </div>
+      </div>
+
+      <div class="content-right">
+        <div class="info-box box-practical">
+          <div class="info-box-header">🛠️ ④ 報告、研究與學習</div>
+          <div class="info-box-content">
+            <p>Claude Code 擅長跨多個資料來源（Slack、git history、網路）合成資訊並轉為易讀報告。可以產出：</p>
+            <ul style="margin: 0.4rem 0 0.4rem 1.2rem; padding: 0;">
+              <li>長篇 HTML 文件</li>
+              <li>互動式解說頁</li>
+              <li>投影片/簡報</li>
+              <li>SVG 流程圖、技術圖解</li>
+            </ul>
+            <p style="margin-top: 0.6rem;"><strong>映射你的情境</strong>：週報給主管、Incident Report 給高層、Feature 解說、年度 Earnings Decipher、CB Daily Digest——都適用此模式。</p>
+          </div>
+        </div>
+
+        <div class="info-box box-compare">
+          <div class="info-box-header">⚖️ ⑤ 客製化編輯介面（最有趣的場景）</div>
+          <div class="info-box-content">
+            <p>當很難用純文字描述你想要的東西時，<strong>請 Claude 為這件事打造一個拋棄式編輯器</strong>。不是產品、不是可重用工具，就是一個 HTML 檔案，為這一份資料量身打造。</p>
+            <p>關鍵是結尾要有匯出按鈕：「Copy as JSON」或「Copy as Prompt」，把 UI 操作的結果轉回可貼回 Claude Code 的東西。</p>
+          </div>
+        </div>
+
+        <div class="info-box box-key">
+          <div class="info-box-header">⚠️ 適用場景清單</div>
+          <div class="info-box-content">
+            <p>用拋棄式 HTML 編輯介面處理：</p>
+            <ul style="margin: 0.4rem 0 0 1.2rem; padding: 0;">
+              <li>重新排序、分類任何東西（tickets、test cases、回饋）</li>
+              <li>編輯有約束的結構化設定（feature flag、env vars、JSON/YAML）</li>
+              <li>調校 prompt、模板、文案，含即時預覽</li>
+              <li>策展資料集，標記、選擇、匯出</li>
+              <li>選擇難以用文字表達的值：顏色、easing 曲線、裁切區域、cron schedule、regex</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== PART 5: TRADE-OFFS (FAQ) ============== -->
+  <div class="section">
+    <div class="part-heading"><span class="part-tag">Part 5</span>權衡取捨 Trade-offs &amp; Critical Evaluation</div>
+
+    <div class="content-grid">
+      <div class="content-left">
+        <div class="bilingual">
+          <div class="zh"><strong>Q1: HTML 不是比較不省 Token 嗎？</strong></div>
+          <div class="en">"Isn't it less token efficient?"</div>
+        </div>
+        <div class="bilingual">
+          <div class="zh">Markdown 通常 Token 用量較少，但 Thariq 認為 HTML 的表達力 + 你實際會閱讀的高機率，整體產出更好。<span class="hl-cost">Opus 4.7 有 1MM context window</span>，所以 Token 增加在實務上不太明顯。</div>
+          <div class="en">"With the 1MM context window in Opus 4.7, the increased token usage is not really noticeable."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh"><strong>Q2: 生成 HTML 不是比 Markdown 慢嗎？</strong></div>
+          <div class="en">"Doesn't this take longer to generate than markdown?"</div>
+        </div>
+        <div class="bilingual">
+          <div class="zh"><span class="hl-key">確實會慢 2-4 倍</span>。但 Thariq 認為值得：你會真的讀。</div>
+          <div class="en">"HTML can take 2-4x longer than Markdown, but I've found the results are worth it."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh"><strong>Q3: 版本控制怎麼辦？</strong></div>
+          <div class="en">"What about version control?"</div>
+        </div>
+        <div class="bilingual">
+          <div class="zh">這是 HTML 最大缺點之一。<span class="hl-key">HTML 的 diff 很雜亂，很難 review</span>，與 Markdown 比起來。</div>
+          <div class="en">"HTML diffs are noisy and hard to review compared to Markdown."</div>
+        </div>
+
+        <div class="bilingual">
+          <div class="zh"><strong>Q4: 怎麼讓 HTML 不醜？</strong></div>
+          <div class="en">"How do I get Claude to match my taste / not make it ugly?"</div>
+        </div>
+        <div class="bilingual">
+          <div class="zh">用 frontend design plugin。要符合公司風格，可以指向你的 codebase 建立一份 design system HTML 當參考。</div>
+          <div class="en">"Create a single design system HTML file by pointing Claude at your codebase."</div>
+        </div>
+      </div>
+
+      <div class="content-right">
+        <div class="info-box box-critical">
+          <div class="info-box-header">⚠️ 來源偏誤評估（2-3x Discount Principle）</div>
+          <div class="info-box-content">
+            <p><strong>Thariq 在 Anthropic Claude Code 團隊內部任職</strong>。他的核心利益是讓 Claude Code 的能力被看見並被使用。</p>
+            <p>他自承「我可能在 HTML maximalist 那一邊」（I'm probably far on the HTML maximalist side of things）——這是文章中少數的誠實校準。</p>
+            <p><strong>讀者應打折的部分</strong>：HTML 取代 Markdown 的範圍。對組織內部分享、研究報告、原型設計，HTML 確實有優勢；但對每日 chat 對話、簡短備忘、需要 git diff review 的文件，Markdown 仍佔優。</p>
+          </div>
+        </div>
+
+        <div class="info-box box-compare">
+          <div class="info-box-header">⚖️ Markdown 仍勝出的場景</div>
+          <div class="info-box-content">
+            <p>儘管 Thariq 說「我已經幾乎完全停用 Markdown」，下列場景仍應用 Markdown：</p>
+            <ul style="margin: 0.4rem 0 0 1.2rem; padding: 0;">
+              <li><strong>需要 git diff 審查的文件</strong>（README、ARCHITECTURE、ADR）</li>
+              <li><strong>純文字檢索/grep 的場景</strong>（你會用 ripgrep 搜尋的內容）</li>
+              <li><strong>機器消費的文件</strong>（LLM 讀取的 index.md、SKILL.md）</li>
+              <li><strong>極短的備忘</strong>（&lt; 50 行，沒有圖表需求）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-box box-key">
+          <div class="info-box-header">⚠️ Token Cost 的真實計算</div>
+          <div class="info-box-content">
+            <p>1MM context window 不代表「Token 不重要」。對 Max 5x 用戶來說：</p>
+            <p><strong>HTML ≈ Markdown × 2.5-4x</strong> 在輸出端，意味著訊息額度消耗速度也會增加 2-4 倍。對於每月用量緊張的使用者，這是真實成本。</p>
+            <p><strong>建議</strong>：高價值任務（報告、規格、學習文件）用 HTML；快速腦力激盪、私人筆記用 Markdown。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== TOOL COMPARISON TABLE ============== -->
+  <div class="section">
+    <h2 class="section-title">格式比較 Markdown vs HTML</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>面向 Dimension</th>
+          <th>Markdown</th>
+          <th>HTML</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>資訊密度</strong></td>
+          <td class="markdown-col">基本格式、文字為主</td>
+          <td class="html-col">表格、SVG、CSS、JS、互動元件</td>
+        </tr>
+        <tr>
+          <td><strong>易讀性（&gt; 100 行）</strong></td>
+          <td class="markdown-col">變得難以閱讀</td>
+          <td class="html-col">分頁、樣式、視覺結構讓長文件易於導航</td>
+        </tr>
+        <tr>
+          <td><strong>分享便利度</strong></td>
+          <td class="markdown-col">需要附件或專用 viewer</td>
+          <td class="html-col">瀏覽器原生支援、直接傳連結</td>
+        </tr>
+        <tr>
+          <td><strong>互動能力</strong></td>
+          <td class="markdown-col">無</td>
+          <td class="html-col">滑桿、按鈕、即時計算、Copy as Prompt</td>
+        </tr>
+        <tr>
+          <td><strong>生成速度</strong></td>
+          <td class="html-col">較快（基準）</td>
+          <td class="markdown-col">慢 2-4 倍</td>
+        </tr>
+        <tr>
+          <td><strong>Token 成本</strong></td>
+          <td class="html-col">較低</td>
+          <td class="markdown-col">較高（但 1MM context 下影響有限）</td>
+        </tr>
+        <tr>
+          <td><strong>版本控制 / git diff</strong></td>
+          <td class="html-col">乾淨、易 review</td>
+          <td class="markdown-col">雜亂、難以審查</td>
+        </tr>
+        <tr>
+          <td><strong>適合場景</strong></td>
+          <td class="markdown-col">SKILL.md、index.md、README、ADR、機器消費的文件</td>
+          <td class="html-col">學習文件、規格探索、PR 解說、研究報告、設計原型、拋棄式編輯介面</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ============== KEY TAKEAWAYS ============== -->
+  <div class="section">
+    <h2 class="section-title">重點整理 Key Takeaways</h2>
+    <div class="takeaways">
+      <div class="summary-card">
+        <h3>1. 表達能力 &gt; 編輯便利</h3>
+        <p>當你不再親手編輯文件，而是讓 Claude 修改文件時，Markdown「易於手動編輯」的優勢就消失了。這時應選擇對讀者最友善的格式。</p>
+      </div>
+      <div class="summary-card">
+        <h3>2. HTML 四大支柱</h3>
+        <p>資訊密度（表格、SVG、CSS）、視覺清晰（&gt;100 行也易讀）、易於分享（瀏覽器原生）、雙向互動（滑桿、按鈕、Copy as Prompt）。</p>
+      </div>
+      <div class="summary-card">
+        <h3>3. 拋棄式編輯介面</h3>
+        <p>最具創意的應用：請 Claude 為單一資料量身打造一次性 HTML 編輯器，結尾必須有「Copy as JSON / Prompt」按鈕，把 UI 操作結果轉回模型。</p>
+      </div>
+      <div class="summary-card">
+        <h3>4. 不要過度美化為 Skill</h3>
+        <p>Thariq 警告：不要把這變成 /html skill。直接 prompt「make a HTML file」，根據情境調整。經驗累積後再思考是否抽象化。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== PRACTICE ============== -->
+  <div class="section">
+    <h2 class="section-title">練習題 Practice (Active Recall)</h2>
+
+    <details class="question-accordion">
+      <summary class="question-header">
+        <span class="question-number">Q1</span>
+        <span class="question-type">概念理解</span>
+        <span class="question-text">為什麼 Thariq 認為 Markdown「易於手動編輯」這個優勢正在失效？</span>
+        <span class="accordion-icon"></span>
+      </summary>
+      <div class="question-answer">
+        <p>因為當 Agent 變得越來越強大，使用者不再親自編輯文件，而是 prompt Claude 去修改。</p>
+        <p>Markdown 的設計初衷之一是<strong>「人類能輕鬆用任何文字編輯器修改」</strong>。但如果你都用 Claude 修改，這個優勢就消失了——這時應該選擇<strong>對讀者最友善</strong>而不是對「手動編輯者」最友善的格式。</p>
+        <p>這個論點本質上揭露了一個更深的轉變：<strong>當 AI 接管「編輯」這個動作後，人類唯一保留的角色是「讀者」</strong>。優化目標應該重新校準到讀者體驗。</p>
+      </div>
+    </details>
+
+    <details class="question-accordion">
+      <summary class="question-header">
+        <span class="question-number">Q2</span>
+        <span class="question-type">產業應用</span>
+        <span class="question-text">在你的 CDMO 情境中，最適合從 Markdown 切換到 HTML 的三種文件類型是什麼？為什麼？</span>
+        <span class="accordion-icon"></span>
+      </summary>
+      <div class="question-answer">
+        <p><strong>① Tech Transfer 規格文件給客戶</strong>：客戶不在公司內部，無法存取你的 GitHub。HTML 可以直接以連結分享，含製程流程圖（SVG）、設備配置（CSS layout）、互動式參數比較表。</p>
+        <p><strong>② Deviation Investigation 報告給高層</strong>：高層只會掃描重點。HTML 可以分頁呈現「事件描述 / 根因分析 / CAPA / 趨勢」，附風險矩陣 SVG，讓 30 秒掃描就能抓到重點。</p>
+        <p><strong>③ 季度 Operations Review 給 COO/CEO</strong>：HTML 可以做互動式 dashboard，含 batch yield 趨勢、設備稼動率、客戶滿意度。比 PowerPoint 更易分享，比 PDF 更具表達力。</p>
+        <p><strong>但仍應留在 Markdown 的</strong>：SOP（需要 git diff 審查、QA 簽核流程、機器可讀）、Internal Knowledge Base 的 index 檔（給 LLM grep）、SKILL.md 檔。</p>
+      </div>
+    </details>
+
+    <details class="question-accordion">
+      <summary class="question-header">
+        <span class="question-number">Q3</span>
+        <span class="question-type">批判思考</span>
+        <span class="question-text">Thariq 在文章中說「我已經幾乎完全停用 Markdown」。這個立場有什麼盲點？對你的知識管理體系有什麼啟示？</span>
+        <span class="accordion-icon"></span>
+      </summary>
+      <div class="question-answer">
+        <p><strong>盲點一：Markdown 在 LLM 消費端仍是首選</strong>。Karpathy 的雙輸出架構（.md 給 LLM 查詢，.html 給人類瀏覽）正反映這點。Thariq 是 Anthropic 工程師，他的 Claude Code 可以直接讀 HTML，但其他工具鏈（grep、ripgrep、Obsidian、其他 LLM）對 Markdown 友善得多。</p>
+        <p><strong>盲點二：Token 經濟學被輕描淡寫</strong>。「1MM context window 所以 Token 不重要」是 Anthropic 員工視角。對 Max 5x 用戶，每月訊息額度真實存在。HTML 慢 2-4 倍 + Token 多 2-4 倍 = 訊息額度消耗加倍。</p>
+        <p><strong>盲點三：版本控制成本</strong>。Thariq 自承「HTML diff 雜亂」，但沒展開討論。對於需要長期維護的文件（一年後還會修改的），Markdown 的可審查性是關鍵價值。</p>
+        <p><strong>啟示</strong>：你的雙輸出架構（.md + .html）才是正確答案。不要被 Thariq 的單一立場帶偏。Markdown 給機器、給歷史審查、給 grep；HTML 給當下的人類讀者、給互動、給分享。<strong>選擇格式應該基於「誰是消費者」</strong>，不是哲學立場。</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ============== BOTTOM LINE ============== -->
+  <div class="section">
+    <div class="bottom-line">
+      <div class="bottom-line-header">🎯 我的行動結論 Bottom Line for Me</div>
+      <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">當 AI 接管「編輯」動作後，人類角色變成純讀者。文件格式應優化為「讀者友善」而非「編輯者友善」。我的 HTML Learning Library 走在這個方向，但 Thariq 揭示的更大版圖是——這個原則應該擴展到 Tech Transfer 文件、Deviation 報告、季度 Operations Review 等所有給「他人閱讀」的文件。</div>
+      </div>
+      <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用（本週）</div>
+        <div class="bottom-line-text">下一份要寫的 Tech Transfer Risk Assessment，直接用 HTML 輸出。包含：互動式風險矩陣（客戶/產品/設備變數可調）、製程流程 SVG、CAPA 草稿區、Copy as Email 按鈕。觀察客戶閱讀行為與回饋速度，與過去 PDF/Word 對比。如果驗證為真，把它升級為 /tech-transfer-html skill。</div>
+      </div>
+      <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠ 需要補充</div>
+        <div class="bottom-line-text">文章避談的問題：（1）HTML 在 GMP 環境的<strong>稽核留痕</strong>困難——FDA/PIC/S 稽核員偏好 PDF/紙本。（2）HTML 文件的<strong>長期保存</strong>挑戰——CSS/JS 隨瀏覽器演進可能失效，10 年後還能正確渲染嗎？（3）需要建立<strong>HTML→PDF 轉換 SOP</strong>，確保正式記錄仍有可審計版本。3 個月後重讀，檢視 GMP 法規對 HTML 文件的接受度發展。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== FOOTER ============== -->
+  <div class="footer">
+    <p>製作日期：2026-05-09 · 來源：<a href="https://thariqs.github.io/html-effectiveness" target="_blank">thariqs.github.io/html-effectiveness</a></p>
+    <p>原作者：Thariq (@trq212), Anthropic Claude Code Team</p>
+    <p>建議 Chat Title：</p>
+    <span class="chat-title">2026-05-09 [Tool] Thariq - HTML Effectiveness Claude Code</span>
+  </div>
+
+</div>
+
+</body>
+</html>
