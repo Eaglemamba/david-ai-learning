@@ -19209,5 +19209,511 @@ const searchIndex = [
     "sectionId": "executive-summary",
     "sectionTitle": "Executive Summary",
     "content": "中國知名開源開發者 Tw93 分享他在 AI 時代的學習方法論：將學習視為一套可重複的工程流程（workflow），而非模糊的「多讀多看」。核心六步驟為：蒐集優質素材 閱讀篩選 建立大綱 逐段撰寫 AI 精煉 發布。文章最關鍵的洞察是 Output over Input 你能產出的才真正屬於你，以及 AI 的最佳定位不是替你思考，而是精煉你已經完成的思考。 Learning Objectives 學習 = 工程化 理解為何將學習流程當作寫程式一樣有步驟、可重複、可優化 篩選 > 累積 掌握「刪掉一半素材是正常的」背後的學習品質哲學 AI 精煉定位 辨識 AI 在學習流程中的正確切入點：精煉而非替代 Tw93 Learning Workflow Collect 蒐集優質素材 Filter 閱讀+篩選 Outline 建立大綱 Draft 逐段撰寫 Refine AI 精煉 Publish 發布產出 Part I 學習品味不變，工具改變 AI 出現之前，Tw93 的學習方式非常傳統：讀書、追蹤領域大神的部落格、持續做筆記。過程很慢，但有真正的樂趣。他花了半年業餘時間學 WebGL， 每一分鐘都是享受 。 Before AI, my way of learning was much more old school. I would read books, go through the blogs of well-known people in a field... Understanding it took me almost half a year of spare time, and I loved every bit of it. AI 時代來臨後，他的品味沒有改變。他依然不喜歡 速食式學習 「三分鐘讀懂百年孤寂」或倍速播放課程不是他的風格。他寧願選擇好素材，花真正的時間去理解。 Now that AI is here, my taste has not really changed. I still dislike the fast-food style of learning online... I still prefer to choose good material and spend real time with it. 慢慢走、真正理解，勝過匆忙讀完一堆摘要卻什麼都不紮實 。 Moving slower and truly understanding something beats rushing through a pile of summaries and ending up with nothing solid. 比喻說明 這就像烹飪：微波爐能在三分鐘加熱一餐，但你不會因此學會做菜。真正的廚藝來自慢火燉煮的過程 聞味道、調火候、理解食材之間的反應。AI 是你廚房裡的新工具，但品味和判斷力還是你自己的。 核心概念 Learning Taste (學習品味) ：不因工具改變而降低對素材品質的要求。AI 改變的是流程效率，不是學習的基本標準。這呼應 Tw93 一貫的開源作品風格 注重品質勝過數量。 Part II Output over Input 產出才是真正的學習 在寫「你不知道的 Claude Code」系列文章時，Tw93 發現自己對很多領域的理解還不夠深。幸運的是，他之前存了大量相關素材，這成了清理積壓、真正理解主題、 轉化為產出 的好機會。 Recently, while writing my \"You Don't Kn"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "AI Edge 提出一個極簡但完整的個人 AI 知識管理架構：把 Identity、Memory、Skills、Project Instructions 全部用 .md 檔案儲存在本地的「AI Markdown Vault」資料夾中，再透過 Claude Cowork 等工具掛載到任何 AI 平台。核心主張是 — Markdown 是純文字、無格式雜訊、AI 解析成本最低，因此是 AI 溝通最佳的儲存格式。文章提供三種建立方式（內建文字編輯器、Cowork、Obsidian）、三種使用情境（Memory、Skills、Project Instructions）、與三條維護紀律（30 天更新、60-90 天清理、單一工作流單一檔）。內容偏向入門推廣（newsletter 型），技術深度普通，但對於還沒有建立個人知識管理系統的讀者，是很好的起點框架。"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "學習目標 Learning Objectives",
+    "content": "OBJECTIVE 01 理解為何 Markdown 對 AI 最友善 從 Token 經濟學與雜訊過濾角度，理解 .md 相較於 Word/PDF 的本質優勢。 OBJECTIVE 02 掌握三層架構的功能分工 分清 Memory（長期記憶）、Skills（任務 SOP）、Project Instructions（環境設定）的角色差異。 OBJECTIVE 03 建立可維護的個人知識金庫 學會用資料夾結構、定期更新、單一工作流單一檔的紀律，避免知識庫腐化。 AI Markdown Vault 三層架構 — 從個人到任務到環境 M Memory Identity、偏好、長期脈絡 → S Skills 任務 SOP、可複用流程 → P Project Instructions 專案環境、持久系統提示"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-i-什麼是-markdown-檔案",
+    "sectionTitle": "Part I — 什麼是 Markdown 檔案？",
+    "content": "Markdown 檔案就是一個 輕量純文字檔（Lightweight Plain-Text File） ，副檔名是 .md，僅此而已。 A Markdown file is just a lightweight plain-text file with a .MD extension. That is it. 你只需要使用像是 # 、 - 、 * 這幾個簡單符號，就能產生對應的格式輸出。 You use characters like \"#\", \"-\", and \"*\" to produce specific outputs. Markdown 的核心特性是： 可攜（Portable）、本地離線儲存、極簡易用 。 Markdown files are portable, stored locally and offline, and just generally easy to use. 💡 比喻說明 把 Markdown 想成是「桌面版的 Google Docs」— 一種極簡的文字建立與編輯方式。Obsidian 這類筆記軟體之所以受歡迎，就是因為它原生使用 .md 格式，極簡又不"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-ii-為什麼-markdown-對-ai-特別有效",
+    "sectionTitle": "Part II — 為什麼 Markdown 對 AI 特別有效？",
+    "content": "當你傳訊息給 AI 時，它把所有內容當作 資料流（Stream of Data） 來處理 — 它 看不到 人眼看到的格式美感。 When you send a message to any AI, it processes everything as a stream of data (it does not see formatting the way a human eye does). AI 不會欣賞精美設計的 Word 文件或乾淨的 PDF 排版。它看到的是 底層文字 ，而所有非文字的東西都是它必須先過濾或解碼掉的 雜訊（Noise） 。 It does not appreciate a beautifully designed Word document or a clean PDF layout. What it sees is the underlying text, and anything that is not text is noise it has to filter out or decode before getting to the actual cont"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-iii-如何建立-md-檔案三種方法",
+    "sectionTitle": "Part III — 如何建立 .md 檔案？三種方法",
+    "content": "作者建議先在桌面建立一個資料夾，命名為 「AI Markdown Vault」 ，作為所有 .md 檔案的中央倉庫。然後從以下三種建立方式選一個或組合使用。 📚 方法 1：作業系統內建文字編輯器 Mac 使用者： 用 TextEdit。 Windows 使用者： 用 Notepad。 新增文件，存檔時把副檔名改為 .md，存到你的 AI Markdown Vault 資料夾即可。零成本、零學習曲線。 🛠️ 方法 2：Claude Cowork（推薦） 由於 Claude Cowork 可以直接掛載本地桌面資料夾，你可以開一個新對話，把整個 AI Markdown Vault 資料夾附上，然後讓 Claude 代你建立、整理、更新檔案。 實務優勢： 對話式建檔 — 你描述需求，Claude 直接寫好 .md 並存到對的位置。對 David 而言，這和你已經在用的 Claude Code 桌面工作流邏輯接近。 ⚖️ 方法 3：第三方筆記 App（Obsidian） 原文作者推薦 Obsidian — 它原生使用 .md 格式，支援 Wikilinks、雙向連結、圖譜檢視，特別適合建立「"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-iv-markdown-的三大使用情境",
+    "sectionTitle": "Part IV — Markdown 的三大使用情境",
+    "content": "這是整篇文章最有價值的部分。AI Edge 提出三層架構： Memory（記憶）、Skills（技能）、Project Instructions（專案指令） 。三者各司其職，組合起來就是一個完整的個人 AI 知識管理系統。"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "情境-1記憶與脈絡檔案memory-and-context-files",
+    "sectionTitle": "情境 1：記憶與脈絡檔案（Memory and Context Files）",
+    "content": "這是 Markdown 最有價值的實務應用之一。你可以用 AI Markdown Vault 資料夾儲存所有 AI 資料，建立一個 自我進化的記憶系統（Self-evolving Memory System） 。 This is one of the most useful practical applications of Markdown. You can use your new AI Markdown Vault folder to store all your AI data and create a self-evolving memory system. 這樣儲存的好處是：你可以 在任何 AI 工具之間無縫切換 ，並隨需載入你所有的脈絡與偏好。 By storing your data this way, you can seamlessly switch between any AI tool and have it load all your context, preferences, etc. on demand. 簡言之：把你的 AI 指令、工作流、提示詞建立成 "
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "情境-2ai-技能ai-skills",
+    "sectionTitle": "情境 2：AI 技能（AI Skills）",
+    "content": "AI Skill 是一個 SOP，把 LLM 變成 特定工作流的專家 （例如 Claude Skills）。 An AI Skill is an SOP that turns LLMs into a specialist for a specific workflow (like Claude Skills). 作者建議：把你所有的 AI Skills 全部轉換成 Markdown 檔案。這樣做的好處： What I recommend doing is taking your AI Skills and converting them all into Markdown files. 可以在任何 AI 跨平台使用 可以從中組合出 mega prompts（巨型提示詞） 不被單一平台綁死 🛠️ 你的 Skills 架構對照 你已經實踐了這個建議： artifact-skill 、 cdmo-feasibility-assessment 、 amaran-presentation 、開發中的 /triage-deviation — 全部都是 SKILL.md 格式。 原文的關鍵洞察值得"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "情境-3專案指令project-instructions",
+    "sectionTitle": "情境 3：專案指令（Project Instructions）",
+    "content": "Project Instructions 是 Claude Projects 中的 持久系統提示層（Persistent System Prompt Layer） 。 Project Instructions are the persistent system prompt layer inside something like Claude Projects. 差別在於： Skill 管理特定任務，Project Instructions 管理整個脈絡 。 Where a Skill governs a specific task, Project Instructions govern an entire context. 最有效的 Project Instructions 應該寫成 Markdown 格式 。原文提供了一個基本結構模板（見下方）。 The most effective Project Instructions are written as Markdown files. 作者建議：用這種結構化的 .md， 取代直接把 PDF 丟進 AI Project 。 Use"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "part-v-如何維護你的-markdown-系統",
+    "sectionTitle": "Part V — 如何維護你的 Markdown 系統？",
+    "content": "作者直言： 建立檔案是簡單的部分，維護才是真正的挑戰 。 Building the files is the easy part, but maintaining them is the real challenge. 這呼應了所有知識管理系統共同的失敗模式 — 知識庫腐化（Knowledge Base Decay） 。沒有定期清理的個人筆記，6 個月後就會變成「資料墳場」。 原文提供三條維護紀律： 30 天更新核心 .md — Identity.md、Core Instructions.md 至少每月一次 60-90 天清理記憶檔 — 用 Cowork 跑 review prompt 單一工作流，單一檔案 — 不要把所有東西塞到一個 memory.md ⚠️ 60-90 天清理 Prompt 作者提供的清理提示詞（簡譯）： 「請檢視我的 AI Markdown Vault 資料夾。識別並移除過期、已解決、不再相關的條目。整合涵蓋同一主題的條目。保留所有仍然有用的內容。回傳清理後的檔案。」 🛠️ 對照你的「知識 Linting」規格 你正在開發的 Level 1（Python CLI"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "三層架構對照表-memory-vs-skills-vs-project-instructions",
+    "sectionTitle": "三層架構對照表 — Memory vs Skills vs Project Instructions",
+    "content": "面向 Memory（記憶） Skills（技能） Project Instructions（專案指令） 管理範圍 個人脈絡與長期偏好 單一任務的執行 SOP 整個專案的環境與規則 觸發時機 每次對話自動載入 遇到對應任務時觸發 進入專案時生效 更新頻率 每 30 天 低頻（任務變更時） 專案啟動時設定，少動 檔案範例 identity.md、memory-trading.md artifact-skill/SKILL.md、cdmo-feasibility.md project-instructions.md（內含 Context/Rules） 對應你的系統 Claude.ai 內建 memory + Master Prompt 的角色設定 已建立的 Skills（artifact、cdmo、amaran） Master Prompt v1.5.0（XML 形式更工程化）"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "1. Markdown 是 AI 溝通的最低成本格式 .md 是純文字，沒有 Word/PDF 的隱藏標籤與元資料。在批次自動化、長期累積的情境下，Token 成本與處理速度都優於格式化檔案。 2. 三層架構各司其職 Memory（誰在用 AI）、Skills（執行什麼任務）、Project Instructions（在哪個專案中）— 三者分工清楚才能最大化價值。 3. 維護紀律比建立更重要 30 天更新核心檔、60-90 天清理冗餘、單一工作流單一檔。沒有定期 review，知識庫 6 個月後會變成資料墳場。 4. 跨平台可攜性是真正的鎖定解放 把指令寫成 .md 而非綁在某個 AI 平台的 UI 設定中，當你想換工具或多平台並用時，只需要複製檔案 — 而非重新建立整套設定。"
+  },
+  {
+    "docFile": "processed/2026-05-09_md-files-for-ai-guide.html",
+    "docTitle": "Markdown Files for AI - Ultimate Guide",
+    "docDate": "2026-05-09",
+    "docSource": "AI Edge / @aiedge_",
+    "docRating": 3.6,
+    "docTags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "練習題 Practice Questions",
+    "content": "先在心中思考答案，再點開展開查看建議答案。 Q1 概念理解 為什麼 Markdown 對 AI 比 Word 或 PDF 更友善？這個論點有什麼潛在的過度簡化？ 核心理由（原文觀點）： Markdown 是純文字，沒有隱藏的 XML 標籤、字型定義、邊距設定、二進位資料。AI 必須先過濾這些雜訊才能解析內容，這會消耗 Token 與處理時間。Markdown 幾乎是「輸入即語意」，沒有解析開銷。 潛在過度簡化： 現代 LLM（Claude、GPT-4o）已有強大的多模態解析能力，並非「看不懂」PDF/Word — 只是相對較貴。 Word/PDF 在某些情境（含表格、圖表、簽核）仍是業界標準，特別是 GMP 環境。 更精準的說法是「Markdown 訊號雜訊比最高，適合大量自動化」，而非「其他格式失敗」。 這就是 2-3x 折扣原則的應用 — 行銷化的 newsletter 修辭需要降溫到實務價值。 Q2 產業應用 在 GMP 監管的 CDMO 環境中，採用「AI Markdown Vault」三層架構需要做哪些調整？ 必須調整的關鍵點： 個人 vs 公司資產分離： Memory.md"
+  },
+  {
+    "docFile": "processed/2026-05-09_thariq-html-effectiveness.html",
+    "docTitle": "HTML 的不合理有效性 - Claude Code 輸出革命",
+    "docDate": "2026-05-09",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Content",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "快速摘要-executive-summary",
+    "sectionTitle": "快速摘要 Executive Summary",
+    "content": "★★★★☆ 4.0/5 ↑ 實務應用, 工具生態 ↓ 技術深度 核心論點： Anthropic Claude Code 團隊的 Thariq 主張，當 AI Agent 越來越強大時， Markdown 的表達能力已成為瓶頸 。HTML 提供更高的資訊密度（表格、SVG、CSS、互動元件）、更好的視覺呈現，與更容易的分享方式。 關鍵洞察： 當你不再親自編輯文件，而是透過 Claude 修改文件時，Markdown「容易手動編輯」的優勢就消失了。這時應該選擇 對讀者最友善 的格式。 對 David 的價值： 你的 HTML Learning Library 正是這個理念的實踐。但 Thariq 進一步擴展了使用情境：拋棄式編輯介面、PR 解說、設計原型、規格探索。這些模式可以延伸你目前的知識管理體系。"
+  },
+  {
+    "docFile": "processed/2026-05-09_thariq-html-effectiveness.html",
+    "docTitle": "HTML 的不合理有效性 - Claude Code 輸出革命",
+    "docDate": "2026-05-09",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Content",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "學習目標 Learning Objectives",
+    "content": "01 理解為什麼 Markdown 的時代正在結束，HTML 為何成為 Agent 輸出的更佳選擇 Understand why HTML beats Markdown as the agent output format 02 掌握 HTML 在資訊密度、視覺清晰、易於分享、雙向互動上的四大優勢 Grasp the four advantages: density, clarity, sharing, interactivity 03 學會 5 個實務使用場景：規格探索、PR 解說、設計原型、研究報告、拋棄式編輯介面 Master 5 practical use cases for HTML artifacts 04 識別 HTML 的權衡：生成時間、版本控制、Token 成本，並判斷何時仍應使用 Markdown Recognize trade-offs and know when Markdown still wins HTML 優於 Markdown 的四大支柱 ① 資訊密度 表格、SVG、CSS、互動元件 → ② 視覺清晰 100+ 行也能輕鬆閱讀 → ③ 易於分享 瀏覽器原"
+  },
+  {
+    "docFile": "processed/2026-05-09_thariq-html-effectiveness.html",
+    "docTitle": "HTML 的不合理有效性 - Claude Code 輸出革命",
+    "docDate": "2026-05-09",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Content",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "格式比較-markdown-vs-html",
+    "sectionTitle": "格式比較 Markdown vs HTML",
+    "content": "面向 Dimension Markdown HTML 資訊密度 基本格式、文字為主 表格、SVG、CSS、JS、互動元件 易讀性（> 100 行） 變得難以閱讀 分頁、樣式、視覺結構讓長文件易於導航 分享便利度 需要附件或專用 viewer 瀏覽器原生支援、直接傳連結 互動能力 無 滑桿、按鈕、即時計算、Copy as Prompt 生成速度 較快（基準） 慢 2-4 倍 Token 成本 較低 較高（但 1MM context 下影響有限） 版本控制 / git diff 乾淨、易 review 雜亂、難以審查 適合場景 SKILL.md、index.md、README、ADR、機器消費的文件 學習文件、規格探索、PR 解說、研究報告、設計原型、拋棄式編輯介面"
+  },
+  {
+    "docFile": "processed/2026-05-09_thariq-html-effectiveness.html",
+    "docTitle": "HTML 的不合理有效性 - Claude Code 輸出革命",
+    "docDate": "2026-05-09",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Content",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "1-表達能力-編輯便利",
+    "sectionTitle": "1. 表達能力 > 編輯便利",
+    "content": "當你不再親手編輯文件，而是讓 Claude 修改文件時，Markdown「易於手動編輯」的優勢就消失了。這時應選擇對讀者最友善的格式。"
+  },
+  {
+    "docFile": "processed/2026-05-09_thariq-html-effectiveness.html",
+    "docTitle": "HTML 的不合理有效性 - Claude Code 輸出革命",
+    "docDate": "2026-05-09",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Content",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "2-html-四大支柱",
+    "sectionTitle": "2. HTML 四大支柱",
+    "content": "資訊密度（表格、SVG、CSS）、視覺清晰（>100 行也易讀）、易於分享（瀏覽器原生）、雙向互動（滑桿、按鈕、Copy as Prompt）。"
+  },
+  {
+    "docFile": "processed/2026-05-09_thariq-html-effectiveness.html",
+    "docTitle": "HTML 的不合理有效性 - Claude Code 輸出革命",
+    "docDate": "2026-05-09",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Content",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "3-拋棄式編輯介面",
+    "sectionTitle": "3. 拋棄式編輯介面",
+    "content": "最具創意的應用：請 Claude 為單一資料量身打造一次性 HTML 編輯器，結尾必須有「Copy as JSON / Prompt」按鈕，把 UI 操作結果轉回模型。"
+  },
+  {
+    "docFile": "processed/2026-05-09_thariq-html-effectiveness.html",
+    "docTitle": "HTML 的不合理有效性 - Claude Code 輸出革命",
+    "docDate": "2026-05-09",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Content",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "4-不要過度美化為-skill",
+    "sectionTitle": "4. 不要過度美化為 Skill",
+    "content": "Thariq 警告：不要把這變成 /html skill。直接 prompt「make a HTML file」，根據情境調整。經驗累積後再思考是否抽象化。"
+  },
+  {
+    "docFile": "processed/2026-05-09_thariq-html-effectiveness.html",
+    "docTitle": "HTML 的不合理有效性 - Claude Code 輸出革命",
+    "docDate": "2026-05-09",
+    "docSource": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Content",
+      "Framework",
+      "Agent"
+    ],
+    "sectionId": "練習題-practice-active-recall",
+    "sectionTitle": "練習題 Practice (Active Recall)",
+    "content": "Q1 概念理解 為什麼 Thariq 認為 Markdown「易於手動編輯」這個優勢正在失效？ 因為當 Agent 變得越來越強大，使用者不再親自編輯文件，而是 prompt Claude 去修改。 Markdown 的設計初衷之一是 「人類能輕鬆用任何文字編輯器修改」 。但如果你都用 Claude 修改，這個優勢就消失了——這時應該選擇 對讀者最友善 而不是對「手動編輯者」最友善的格式。 這個論點本質上揭露了一個更深的轉變： 當 AI 接管「編輯」這個動作後，人類唯一保留的角色是「讀者」 。優化目標應該重新校準到讀者體驗。 Q2 產業應用 在你的 CDMO 情境中，最適合從 Markdown 切換到 HTML 的三種文件類型是什麼？為什麼？ ① Tech Transfer 規格文件給客戶 ：客戶不在公司內部，無法存取你的 GitHub。HTML 可以直接以連結分享，含製程流程圖（SVG）、設備配置（CSS layout）、互動式參數比較表。 ② Deviation Investigation 報告給高層 ：高層只會掃描重點。HTML 可以分頁呈現「事件描述 / 根因分析 / CAPA"
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "快速摘要-quick-summary",
+    "sectionTitle": "快速摘要 Quick Summary",
+    "content": "★★★☆☆ 3.4/5 ↑ 實務應用、學習曲線 ↓ 技術深度、客觀性 Garry Tan（Y Combinator CEO）展示他的個人 AI 作業系統：以「 Fat Skills、Fat Code、Thin Harness 」為核心架構，將 LLM 視為可替換的引擎，把累積知識（10 萬頁筆記）、可複用技能（100+ 個 markdown skill 檔）、與自動化排程當作真正的競爭力。文章充滿啟發性敘事（書本鏡像、會議準備、實體傳播），但同時也是其開源專案 GBrain、OpenClaw、GStack 的長篇行銷文。對 CDMO 營運的啟示：把 SOP 模組化、把領域判斷沉澱成可複用組件，比追逐最新模型更能形成複利。"
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "學習目標 Learning Objectives",
+    "content": "OBJECTIVE 01 理解「Fat Skills、Fat Code、Thin Harness」架構為何讓 AI 系統具備複利效應 OBJECTIVE 02 辨識「Skillification」（技能化）作為 meta-skill 的設計模式與其應用邊界 OBJECTIVE 03 評估個人知識圖譜（10 萬頁 brain）的真實成本與 GMP 環境下的可行性 OBJECTIVE 04 識別文章中的自我宣傳偏誤與未驗證數據，套用 2-3x 折扣原則 OBJECTIVE 05 將 entity propagation（實體傳播）映射到 CDMO 的 CAPA 與偏差調查工作流 OBJECTIVE 06 區分「個人創作者使用情境」與「受監管產業使用情境」的本質差異 Garry Tan 的個人 AI 作業系統架構：四層解耦 H Thin Harness 薄路由層：接收訊息、選擇技能、分派執行 → S Fat Skills 100+ markdown 技能檔：每個聚焦單一任務 → D Fat Data 10 萬頁知識圖譜：人物/公司/會議/書籍頁面 → M Swappable Models 引"
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "part-i核心命題-從-chat-window-到-operating-system",
+    "sectionTitle": "Part I：核心命題 — 從 Chat Window 到 Operating System",
+    "content": "原文要點 當你停止把 AI 當聊天框 過去五個月裡，AI 讓我重新成為一名 建造者 。我想用具體例子展示給你看：當你停止把 AI 當聊天視窗，開始把它當作一個作業系統時，個人 AI 實際上長什麼樣子。 In the last 5 months, AI made me a builder again. I want to show you, with specific examples, what personal AI actually looks like when you stop treating it as a chat window and start treating it as an operating system. 這是一個系列的一部分： Fat Skills、Fat Code、Thin Harness 介紹了核心架構。Resolvers 涵蓋智慧的路由表。LOC 爭議講的是每個技術人員如何把自己乘以 100 倍到 1000 倍。Naked models are stupider 主張模型是引擎，不是車。Skillify manifesto 解釋了為什麼 LangCh"
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "part-ii書本鏡像-個人化深度的具體案例",
+    "sectionTitle": "Part II：書本鏡像 — 個人化深度的具體案例",
+    "content": "原文要點 The Book That Read Me Back 我請我的 AI 做一個「書本鏡像」。具體來說：系統提取了書的全部 22 章，然後針對每一章，運行一個子代理同時做兩件事 — 總結作者的想法，並把每個想法映射到我的真實生活 。不是那種泛泛的「這適用於領導者」的廢話。是具體的映射。 The system extracted all 22 chapters of the book, and ran a sub-agent that did two things simultaneously: summarized the author's ideas, and then mapped every idea to my actual life. Not generic \"this applies to leaders\" pablum. Specific mapping. 輸出是一份 3 萬字的腦頁 。整個過程約 40 分鐘。一位每小時 300 美元的治療師讀這本書並應用到我的生活上，40 小時都做不到，因為他們沒有我的完整職業脈絡、閱讀歷史、會議紀錄與創業者關係的全圖。 The "
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "part-iiiskillification-用技能創造技能的遞迴模式",
+    "sectionTitle": "Part III：Skillification — 用技能創造技能的遞迴模式",
+    "content": "原文要點 Skills That Build Skills 運行我生活的這個系統並非以單體形式存在。它是 由技能組裝而成 。而這些技能本身就是由一個技能創造出來的。 The system that runs my life didn't exist as a monolith. It was assembled from skills. And those skills were themselves created by a skill. Skillify 是一個 meta-skill，用來創造新的技能 。當我遇到一個我會重複的工作流時，我說「skillify this」，它會檢查剛剛發生了什麼，提取可重複的模式，寫一個包含觸發條件與邊界案例的測試過的技能檔，然後把它註冊到 resolver 裡。 Skillify is a meta-skill that creates new skills. When I encounter a workflow I'm going to repeat, I say \"skillify this\" and it examines what jus"
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "part-iv四層架構-thin-harnessfat-skillsfat-dataswappable-models",
+    "sectionTitle": "Part IV：四層架構 — Thin Harness、Fat Skills、Fat Data、Swappable Models",
+    "content": "原文要點 The Architecture Harness（外殼）很薄 。OpenClaw 是 runtime。它接收我的訊息、判斷哪個技能適用、並分派執行。幾千行的路由邏輯。它不知道任何關於書、會議、創業者的事。它只做路由。 The harness is thin. OpenClaw is the runtime. It receives my messages, figures out which skill applies, and dispatches. A few thousand lines of routing logic. It doesn't know anything about books or meetings or founders. It just routes. 技能（Skills）很胖 。現在超過 100 個，每個都是一個自包含的 markdown 檔，包含對單一特定任務的詳細指令。 The skills are fat. Over 100 of them now, each a self-contained markdown file with det"
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "part-v複利系統-為何個人-ai-是新的競爭優勢",
+    "sectionTitle": "Part V：複利系統 — 為何個人 AI 是新的競爭優勢",
+    "content": "原文要點 The 2am Builder and the Compounding System 人們問我關於生產力的事。我不那樣思考。我思考的是 複利 。 People ask me about productivity. I don't think about it that way. What I think about is compounding. 我參加的每一場會議都加進大腦。我讀的每一本書都豐富了下一本書的脈絡。我建的每一個技能都讓下一個工作流更快。我更新的每一個人物頁面都讓下次會議準備更銳利。 這個系統今天比兩個月前好 10 倍，再過兩個月又會好 10 倍 。 Every meeting I take adds to the brain. Every book I read enriches the context for the next book. Every skill I build makes the next workflow faster. Every person page I update makes the next meeting prep shar"
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "關鍵比較個人-vs-企業-vs-gmp-應用情境",
+    "sectionTitle": "關鍵比較：個人 vs 企業 vs GMP 應用情境",
+    "content": "面向 Garry Tan（個人創作者） 一般企業營運 CDMO / GMP 環境 資料邊界 個人筆記，無 NDA 顧慮 商業機密，限內部 客戶配方 + 病人安全資料 + 法規承諾 驗證需求 「能用就好」 QA 抽樣審查 IQ/OQ/PQ + ALCOA+ + audit trail 模型替換成本 幾分鐘改技能設定 需重跑 UAT 需完整 validation 重做 錯誤後果 個人時間損失 商業決策偏誤 批次召回、警告信、停產 Agent Mode 適用性 高（個人風險自負） 中（需審計） 低（必須 Copilot Mode + 100% 人工複核） 每月 API 成本估算 $500-2000 USD 每使用者 $50-200 含驗證與稽核：每使用者 $300-800"
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "TAKEAWAY 01 架構勝於模型 「Fat Skills、Fat Code、Thin Harness」是真正的 takeaway。把 LLM 當引擎，把累積的知識+技能+觸發器當作「車身」，這樣換引擎不必重蓋車。 TAKEAWAY 02 Skillification 是真正的 meta-工具 當你發現自己第二次做某件事時就抽出技能。這正是 David 你已經在做的事 — Master Prompt v1.5.1 就是你的 meta-skill。 TAKEAWAY 03 複利的條件比口號更重要 「10 倍成長」需要三件事同時運作：累積、連結、檢索。少一個都不會複利。65+ 文件庫 + meta tags 已具備前兩個，下一步是用 dashboard 強化第三個。 TAKEAWAY 04 個人架構不等於企業架構 Garry 的系統是個人化、無稽核需求的最大化版本。CDMO 環境需要把自動化降為 Copilot Mode、加上 validation 與 audit trail。架構邏輯可借鏡，工程細節要重做。"
+  },
+  {
+    "docFile": "processed/2026-05-10_garrytan-meta-meta-prompting.html",
+    "docTitle": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "docDate": "2026-05-10",
+    "docSource": "Garry Tan / Y Combinator CEO Blog",
+    "docRating": 3.4,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "練習題 Practice Questions",
+    "content": "Q1 概念理解 為什麼 Garry 主張 LLM 應該被當作「可替換的引擎」而非「智慧的源頭」？這個視角對 AI 工具採購策略有什麼影響？ 把 LLM 當「智慧的源頭」會讓你的整套工作流綁死在某個模型供應商上。換模型 = 重做所有 prompts、重訓使用者、重驗證輸出。 把 LLM 當「引擎」則代表： 真正的價值在你累積的 資料、技能、流程 ，不在當下用哪個模型 切換模型應該是「設定變更」，不是「系統重建」 未來的競爭優勢是「車身」（你的資料圖譜+技能庫），不是引擎（誰家的 LLM） 對採購策略的啟示 ：不要簽長期 vendor lock-in。要能在 Claude / GPT / Gemini / 開源模型之間自由切換。Master Prompt 應該是 vendor-agnostic 的（你的 v1.5.1 大致符合這個原則）。 Q2 產業應用 如果你要在 CDMO 環境實作類似 Garry 的「entity propagation」功能（會議結束後自動更新所有相關人員/客戶/設備的頁面），會遇到哪三個 GxP 障礙？該如何設計才能符合 21 CFR Part 11？ 三個 Gx"
   }
 ];

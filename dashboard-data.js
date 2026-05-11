@@ -1,5 +1,51 @@
 const documents = [
   {
+    "date": "2026-05-10",
+    "title": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
+    "source": "Garry Tan / Y Combinator CEO Blog",
+    "tags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Tool",
+      "Analysis"
+    ],
+    "rating": 3.4,
+    "summary": "Garry Tan 個人 AI 作業系統架構。Fat skills、book mirror、skillification 與生態自我宣傳的批判分析。",
+    "lines": 834,
+    "file": "processed/2026-05-10_garrytan-meta-meta-prompting.html"
+  },
+  {
+    "date": "2026-05-09",
+    "title": "Markdown Files for AI - Ultimate Guide",
+    "source": "AI Edge / @aiedge_",
+    "tags": [
+      "Tool",
+      "Prompt",
+      "Automation",
+      "Framework"
+    ],
+    "rating": 3.6,
+    "summary": "AI Edge 的 Markdown 系統指南。Memory、Skills、Project Instructions 三層架構與維護策略。",
+    "lines": 735,
+    "file": "processed/2026-05-09_md-files-for-ai-guide.html"
+  },
+  {
+    "date": "2026-05-09",
+    "title": "HTML 的不合理有效性 - Claude Code 輸出革命",
+    "source": "Thariq (@trq212) / Anthropic Claude Code Team",
+    "tags": [
+      "Tool",
+      "Content",
+      "Framework",
+      "Agent"
+    ],
+    "rating": 4,
+    "summary": "從 Markdown 轉向 HTML 的論證。資訊密度、視覺清晰、易分享、雙向互動。",
+    "lines": 900,
+    "file": "processed/2026-05-09_thariq-html-effectiveness.html"
+  },
+  {
     "date": "2026-04-12",
     "title": "Claude Token 節省技巧 - Hassid 23 Habits",
     "source": "Ruben Hassid / AI-Natived Newsletter",

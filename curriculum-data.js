@@ -84,6 +84,8 @@ const stages = [
       { file: 'processed/2026-04-04_github-search-guide.html', title: 'GitHub 搜索指南 - 四種方式與資源分類 ★3.0', required: false, why: 'GitHub 四種搜索方式（閒逛/直接/高級/Copilot）與三類資源（學習/資訊/代碼）入門指南' },
       { file: 'processed/2026-04-07_kv-cache-token-savings.html', title: 'KV Cache 機制 - Transformer 到 Claude Code 實戰省 Token ★4.2', required: false, why: '從 Transformer KV Cache 原理到 Claude Code 快取工程逆向，含實測數據與省 Token 技巧' },
       { file: 'processed/2026-04-12_claude-token-saving-habits.html', title: 'Claude Token 節省技巧 - Hassid 23 Habits ★3.6', required: false, why: '23 個減少 Claude token 消耗的實用習慣，從檔案轉換到對話管理全面涵蓋' },
+    
+      { file: 'processed/2026-05-09_thariq-html-effectiveness.html', title: 'HTML 的不合理有效性 - Claude Code 輸出革命 ★4.0', required: false, why: '從 Markdown 轉向 HTML 的論證。資訊密度、視覺清晰、易分享、雙向互動。' },
     ]
   },
   {
@@ -121,6 +123,10 @@ const stages = [
       { file: 'processed/2026-04-08_hermes-agent-self-improving.html', title: 'Hermes Agent - Self-Improving AI Agent Guide ★3.2', required: false, why: 'Nous Research Hermes Agent：自我進化 Agent 架構分析，SQLite 記憶、自動 Skill 生成' },
       { file: 'processed/2026-04-11_garrytan-gbrain.html', title: 'GBrain - Garry Tan 個人知識大腦架構 ★4.5', required: false, why: 'Garry Tan 開源個人知識大腦。Postgres+pgvector 混合搜尋、Compiled Truth 知識管理' },
       { file: 'processed/2026-04-12_tw93-learning-workflow.html', title: 'AI 時代學習工作流 - Tw93 Learning as Code ★4.0', required: false, why: 'Tw93 分享 AI 時代學習方法：蒐集、篩選、大綱、草稿、精煉、發布六步驟工作流' },
+    
+      { file: 'processed/2026-05-09_md-files-for-ai-guide.html', title: 'Markdown Files for AI - Ultimate Guide ★3.6', required: false, why: 'AI Edge 的 Markdown 系統指南。Memory、Skills、Project Instructions 三' },
+    
+      { file: 'processed/2026-05-10_garrytan-meta-meta-prompting.html', title: 'Garry Tan - Meta-Meta-Prompting Personal AI OS ★3.4', required: false, why: 'Garry Tan 個人 AI 作業系統架構。Fat skills、book mirror、skillification' },
     ]
   },
   {
@@ -178,6 +184,8 @@ const topicClusters = [
           { title: '架構治理與工程實踐 Tw93 ★4.5', file: 'processed/2026-03-13_claude-code-architecture-governance.html' },
           { title: 'v2.1.49-76 釋出演進 28 版本分析 ★4.2', file: 'processed/2026-03-16_claude-code-release-evolution.html' },
           { title: 'v2.1.77-96 釋出演進 20 版本分析 ★4.3', file: 'processed/2026-04-08_claude-code-release-evolution.html' },
+        
+          { title: 'HTML 的不合理有效性 - Claude Code 輸出革命 ★4.0', file: 'processed/2026-05-09_thariq-html-effectiveness.html' },
         ]
       },
       {
@@ -215,6 +223,10 @@ const topicClusters = [
           { title: 'Claude Code Auto Mode ★4.5', file: 'processed/2026-03-26_claude-code-auto-mode.html' },
           { title: '10 Claude Workflows 省 10+ 小時 ★3.6', file: 'processed/2026-03-28_claude-10-workflows.html' },
           { title: 'Claw Code 開源 CLI 架構深度解析 ★4.2', file: 'processed/2026-04-04_claw-code-open-source-cli.html' },
+        
+          { title: 'Markdown Files for AI - Ultimate Guide ★3.6', file: 'processed/2026-05-09_md-files-for-ai-guide.html' },
+        
+          { title: 'Garry Tan - Meta-Meta-Prompting Personal AI OS ★3.4', file: 'processed/2026-05-10_garrytan-meta-meta-prompting.html' },
         ]
       },
       {
