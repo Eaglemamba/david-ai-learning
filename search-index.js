@@ -19715,5 +19715,341 @@ const searchIndex = [
     "sectionId": "練習題-practice-questions",
     "sectionTitle": "練習題 Practice Questions",
     "content": "Q1 概念理解 為什麼 Garry 主張 LLM 應該被當作「可替換的引擎」而非「智慧的源頭」？這個視角對 AI 工具採購策略有什麼影響？ 把 LLM 當「智慧的源頭」會讓你的整套工作流綁死在某個模型供應商上。換模型 = 重做所有 prompts、重訓使用者、重驗證輸出。 把 LLM 當「引擎」則代表： 真正的價值在你累積的 資料、技能、流程 ，不在當下用哪個模型 切換模型應該是「設定變更」，不是「系統重建」 未來的競爭優勢是「車身」（你的資料圖譜+技能庫），不是引擎（誰家的 LLM） 對採購策略的啟示 ：不要簽長期 vendor lock-in。要能在 Claude / GPT / Gemini / 開源模型之間自由切換。Master Prompt 應該是 vendor-agnostic 的（你的 v1.5.1 大致符合這個原則）。 Q2 產業應用 如果你要在 CDMO 環境實作類似 Garry 的「entity propagation」功能（會議結束後自動更新所有相關人員/客戶/設備的頁面），會遇到哪三個 GxP 障礙？該如何設計才能符合 21 CFR Part 11？ 三個 Gx"
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "Inspect AI 是 UK AI Security Institute（UK AISI）與 Meridian Labs 共同開發的開源 LLM 評測框架，核心價值是把「評一個模型/Agent」這件事拆成三個高度組合化的抽象 — Datasets（題目+答案）→ Solvers（解題鏈，含 Agent scaffold）→ Scorers（評分，含 LLM-as-judge） 。內建 200+ 評測題庫、ReAct/Deep Agent 兩種預製 agent、MCP 工具支援、與 Docker/Kubernetes/Modal 多種 sandbox。對你正在搭建的 personal AI OS 來說，這是補上「我寫的 Skill / Agent 到底有沒有效」這個閉環的最佳工具 — 而且因為它支援 Bridge API 直接接 Claude Code 與 Gemini CLI，與你現有工具棧無縫銜接。整體技術深度高、設計哲學成熟，但門檻是需要 Python 與 async 程式基礎。"
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "學習目標 Learning Objectives",
+    "content": "OBJECTIVE 01 理解三層抽象的設計分工 看懂 Datasets / Solvers / Scorers 為什麼這樣切，以及這個切法相對於傳統 metric-based eval 的優勢。 OBJECTIVE 02 掌握 Agent eval 與 sandbox 用法 知道內建 ReAct / Deep Agent、MCP tool 整合、以及 Docker/K8s sandbox 各別在什麼情境下用。 OBJECTIVE 03 為自己的 Skill 寫第一個 eval 能套用 chain(generate(), self_critique()) + model_graded_fact() 模式，為一個現有 Skill 設計最小可運行 eval。 Inspect AI 三層抽象 — 把 Eval 拆成可組合的三件事 D Datasets input + target 樣本集 → S Solvers 解題鏈，可含 Agent scaffold → S Scorers 文字比對 / LLM-judge / 自訂"
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "part-i-inspect-ai-是什麼為什麼是-uk-aisi-出",
+    "sectionTitle": "Part I — Inspect AI 是什麼？為什麼是 UK AISI 出？",
+    "content": "Inspect AI 是一個 前沿 AI 評測框架（frontier AI evaluations framework） ，用 Python 寫成，在 2024 年由英國 AI Safety Institute（後來改名 AI Security Institute）開源釋出。 Inspect is a framework for frontier AI evaluations developed by the UK AI Security Institute and Meridian Labs. 它能評測的範圍包括： coding、agentic tasks、reasoning、knowledge、behavior、multi-modal understanding 。不限於某個特定 task，而是設計成通用底座。 Inspect can be used for a broad range of evaluations that measure coding, agentic tasks, reasoning, knowledge, behavior, and multi-modal "
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "層-1datasets-題目與標準答案",
+    "sectionTitle": "層 1：Datasets — 題目與標準答案",
+    "content": "Dataset 是 一組帶 input 與 target 標記的 sample 。input 通常是 prompt，target 可以是字串答案、參考輸出、或 grading rubric。 Datasets contain a set of labelled samples with input and target columns. Inspect 支援多種來源：本地 CSV/JSON、HuggingFace datasets、自訂 loader。你也可以用程式產生 — 例如把你寫過的 100 個 prompt + 你滿意的回答 dump 成 sample.json，就是一份 dataset。 關鍵設計： Dataset 與 Solver、Scorer 完全解耦 。同一份 dataset 可以餵給不同的 solver chain 跑不同實驗。 🛠️ 對照你的 library 你已有的 SkillsBench（ processed/2026-03-01_skillsbench-agent-skills.html ）就是「Skills 領域的 Dataset」。Inspect 的 d"
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "層-2solvers-解題鏈含-agent-scaffold",
+    "sectionTitle": "層 2：Solvers — 解題鏈，含 Agent scaffold",
+    "content": "Solver 是 處理 input 並產出結果的元件 ，可以串成 chain。最基本的 solver 是 generate() （直接呼叫模型），但你可以前後加上： chain_of_thought() — 加 CoT 提示前綴 self_critique() — 讓模型自我檢查 use_tools() — 開啟 tool calling react() — 跑 ReAct agent loop Solver 也可以是 完整 Agent scaffold — Inspect 內建 ReAct 與 Deep Agent，並支援用 Bridge API 接外部 agent（Claude Code、Gemini CLI、自家 Hermes 都行）。 💻 典型 Solver chain 官方範例（theory-of-mind eval）： 📚 為什麼解題鏈值得抽象 「同一題用不同 prompt 技巧解」是 LLM 工程的核心實驗。Solver 把 prompt 技巧變成 可組合的中介軟體（middleware） ，讓你能 A/B 測試不同 chain 對同一 dataset 的影響，而不用"
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "層-3scorers-評分含-llm-as-judge",
+    "sectionTitle": "層 3：Scorers — 評分，含 LLM-as-judge",
+    "content": "Scorer 接收 solver 的最終輸出，產出一個 score。內建幾種： match() — 完全字串比對 includes() — 包含關鍵字 pattern() — regex 比對 model_graded_fact() — 用 另一個模型 當裁判 model_graded_qa() — QA 任務專用 LLM-judge 自訂 @scorer — 你可以寫任意邏輯 關鍵設計： 同一個 sample 可以跑多個 scorer — 你可以同時要 exact match + 用 LLM 判斷語意相近，然後比較。 ⚠️ LLM-as-judge 的陷阱 用模型評分聽起來很方便，但有兩個經典坑： position bias： 裁判模型偏好先出現的選項 length bias： 裁判模型偏好較長的回答 Inspect 的 model_graded_* 系列已經內建了一些 mitigation（如位置 randomize），但你還是該對 judge prompt 自己做 calibration。"
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "part-iii-agent-評測為什麼這是-inspect-的殺手鐧",
+    "sectionTitle": "Part III — Agent 評測：為什麼這是 Inspect 的殺手鐧",
+    "content": "傳統 LLM eval 把模型當成「文字 in / 文字 out」的黑盒。 Agent 不是。 Agent 會呼叫工具、執行程式碼、查網頁、跑很多輪，且每一步都可能出錯。 Inspect 的 agent eval 設計面向這個現實： 內建 agent ：ReAct、Deep Agent 開箱即用 Multi-agent primitives ：可以跑多 agent 協作場景 Bridge API ：接 Claude Code、Gemini CLI、任意 external agent Sandbox ：Docker / Kubernetes / Modal / Proxmox 隔離執行環境 Tool support ：bash、python、text editor、web search、web browser、computer use 都是內建 tool MCP tool 整合 ：你寫的 MCP server 可以直接當 eval tool 🛠️ 對你 Hermes / Skill-creator 軌跡的延伸 你最近收的 Hermes Agent（self-improving）、Ski"
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "part-iv-從零開始第一個-eval-怎麼寫",
+    "sectionTitle": "Part IV — 從零開始：第一個 eval 怎麼寫",
+    "content": "💻 安裝與基本指令 標準 Python pip 安裝，設好 API key 後一行指令就能跑： # 安裝 pip install inspect-ai # 設定 API key（任一供應商皆可） export ANTHROPIC_API_KEY=sk-ant-... export OPENAI_API_KEY=sk-... # 跑一個現成的 eval（例如 ARC reasoning benchmark） inspect eval arc.py --model anthropic/claude-opus-4-7 # 用 Inspect View 視覺化結果 inspect view 🛠️ 寫你自己的 eval — 三步 Step 1： 準備 dataset。把你寫過的 20 個你最常用的 prompt + 你期望的輸出 dump 成 JSON。 Step 2： 定義 task。用 @task decorator，宣告 dataset、solver chain（從最簡單的 generate() 起）、scorer（先用 model_graded_fact() ）。 Step 3： 跑"
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "inspect-ai-與其他-llm-eval-工具對照",
+    "sectionTitle": "Inspect AI 與其他 LLM Eval 工具對照",
+    "content": "面向 Inspect AI Braintrust LangSmith lm-eval-harness 性質 政府機構開源 商業 SaaS（有 free tier） 商業 SaaS（LangChain 旗下） 學術社群開源（EleutherAI） 主要 strength Agent eval、sandbox、200+ 現成 eval Tracing + dataset 管理 + CI 整合 LangChain ecosystem 整合 學術 benchmark 跑分（MMLU、HellaSwag 等） 抽象層次 三層（Datasets / Solvers / Scorers） experiment + dataset + scorer chain + dataset + evaluator task + metric Agent 支援 原生（ReAct、Deep Agent、Bridge API） 有 trace 視覺化但無內建 agent 有但綁 LangChain 幾乎無 MCP 支援 原生 無 無 無 適合誰 個人/研究者寫 agent eval 產品團隊跑 production "
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "1. 三層抽象是 LLM eval 的「對的切法」 Datasets / Solvers / Scorers 解耦讓你能「同題不同 prompt」「同 prompt 不同 model」「同模型不同 scorer」三軸獨立實驗。這是傳統 metric-based eval 做不到的彈性。 2. Agent eval 是 2026 的剛需 當你的工作對象從 prompt 變成 agent（你已經到這了），eval 工具也必須升級。Inspect 是少數把 agent + sandbox + tool 都當一等公民的框架。 3. 政府機構出 = 沒有商業包袱 Braintrust / LangSmith 都是 SaaS，要你 push trace 上他們服務器。Inspect 完全本地，你的 prompt / 輸出不外流。對 personal AI OS 場景這是關鍵。 4. 入門門檻：Python + async + 寫 dataset Inspect 不是「點點按鈕」工具。需要會 Python、能讀 async、願意自己準備 dataset。投入後的回報是「你寫的每個 Skill 從此都"
+  },
+  {
+    "docFile": "processed/2026-05-11_inspect-ai-evaluation-framework.html",
+    "docTitle": "Inspect AI - UK AISI LLM 評測框架",
+    "docDate": "2026-05-11",
+    "docSource": "UK AI Security Institute / inspect.aisi.org.uk",
+    "docRating": 4,
+    "docTags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "練習題 Practice Questions",
+    "content": "先在心中思考答案，再點開展開查看建議答案。 Q1 概念理解 為什麼 Inspect 要把 eval 切成 Datasets / Solvers / Scorers 三層？合在一起寫不行嗎？ 合在一起寫的問題： 你會發現你寫了 50 個 eval 之後，每個都是「題目+模型呼叫+評分邏輯」綁死，要換 prompt 技巧得改 50 個檔案，要換 scorer 也得改 50 個檔案。這就是耦合的成本。 三層抽象的真正價值： 三軸獨立實驗。同一份 dataset 可以跑「 generate() only」vs「 chain_of_thought() + generate() + self_critique() 」兩種 solver，比較哪個 chain 對這類題目更有效；同一個 solver 可以跑「 match() 」vs「 model_graded_fact() 」兩種 scorer，看 LLM-judge 與 exact match 的相關性。 這個切法直接對應「LLM 工程的三大不確定性」 — 題目選對了嗎、prompt 寫對了嗎、評分標準合理嗎。三層分開才能各別 debug。 Q2 "
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "快速摘要",
+    "sectionTitle": "快速摘要",
+    "content": "Voyager 是 2023 年由 NVIDIA / Caltech / UT Austin / Stanford / ASU 聯合提出（Linxi \"Jim\" Fan 與 Guanzhi Wang 主導）， 第一個用 LLM 驅動、能在開放世界中終身自我學習的 embodied agent 。它在 Minecraft 中跑，靠三件設計就能自己訂目標、自己寫 code、自己累積技能、把學到的技能轉移到全新世界 — 整個過程零人類介入、零 fine-tuning，完全靠對 GPT-4 的 blackbox API 呼叫。三件神器是：(1) Automatic Curriculum 讓 GPT-4 根據當前狀態生成「下一個該探索什麼」的目標；(2) Skill Library 把 GPT-4 寫的可執行 JavaScript 程式碼存起來，用 embedding 索引，新任務時取最相關的 top-5 組合使用；(3) Iterative Prompting 把環境 feedback、執行錯誤、self-verification 灌回 GPT-4 修正程式。實驗結果：3.3x more un"
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "學習目標-learning-objectives",
+    "sectionTitle": "學習目標 Learning Objectives",
+    "content": "OBJECTIVE 01 理解三件神器的分工 看懂 Automatic Curriculum、Skill Library、Iterative Prompting 各自解決哪個 lifelong learning 的子問題。 OBJECTIVE 02 掌握「程式碼即動作」設計 理解為什麼 Voyager 用 JavaScript 而非低階控制當 action space — 這是後續所有 code-based agent 的設計起點。 OBJECTIVE 03 看出對自家 Skill 系統的啟示 能說出 Voyager 與 Anthropic Claude Skills、Hermes Agent 的對應關係 — 哪些借用、哪些革新、哪些尚未實現。 Voyager 三件神器 — Lifelong Learning 的最小可行架構 C Automatic Curriculum GPT-4 自己訂下一個目標 → S Skill Library 寫好的程式碼存起來、組合用 → I Iterative Prompting 錯誤 + 自查回饋灌回去修正"
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "part-i-為什麼-voyager-是分水嶺",
+    "sectionTitle": "Part I — 為什麼 Voyager 是分水嶺？",
+    "content": "在 Voyager 之前，「LLM agent」基本上就是 一次性 prompt 解一題 （你給目標，模型給計畫，跑完結束）。問題是 — 它不會記得自己學過什麼，每次都是從零開始。 Voyager 第一次把 「終身累積」（lifelong learning） 從強化學習領域搬到 LLM agent 上，而且全程不更動模型權重 — 完全靠 prompt engineering + 外部記憶結構。 Voyager is the first LLM-powered embodied lifelong learning agent in Minecraft that continuously explores the world, acquires diverse skills, and makes novel discoveries without human intervention. 關鍵突破點： 無監督 ：沒有人告訴它要做什麼 無 fine-tuning ：純 GPT-4 blackbox API call 真的會累積 ：今天學的可以明天用，可以後天遷移到新世界 💡 為什麼選 Min"
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "神器-1automatic-curriculum-agent-自己訂目標",
+    "sectionTitle": "神器 1：Automatic Curriculum — Agent 自己訂目標",
+    "content": "傳統 RL 需要人類設計 reward function，傳統 LLM agent 需要人類給 task。Voyager 的 curriculum 把這件事 交給 GPT-4 自己決定 。 具體機制： 把當前環境狀態（agent 位置、背包、附近方塊、生命值等）餵給 GPT-4 Prompt：「根據當前狀態，提出下一個適合的探索目標 — 不要太簡單、不要太難、最大化發現新東西」 GPT-4 回答 e.g. \"找到並挖到 3 個鐵礦\" 這個 task 成為下個 iteration 的目標 關鍵設計： curriculum 是 emergent 的 ，不是預先規劃的。GPT-4 在每個時間點動態生成最適合當下能力的下一步。 📚 對應的人類學習理論 這對應 Vygotsky 的 Zone of Proximal Development（最近發展區） 概念 — 最有效的學習目標，是「比你現在會的稍難一點」的事。 Voyager 的 curriculum 就是把這個概念交給 GPT-4 來判斷 — 而 GPT-4 對 Minecraft 的 prior knowledge 夠強，所以它真的能挑"
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "神器-2skill-library-把寫過的-code-存起來",
+    "sectionTitle": "神器 2：Skill Library — 把寫過的 code 存起來",
+    "content": "這是 Voyager 最被引用的設計。當 GPT-4 寫了一段 Minecraft JavaScript（例如 \"砍樹\"），這段 code 不會用完即丟 — 它會： 用一段 自然語言描述 包裝（\"Chop a tree with bare hands\"） 對描述計算 embedding 向量 把 (描述, embedding, code) 存進 skill library 未來遇到新任務時，Voyager 會： 對新任務描述算 embedding 從 library 取 top-5 最相似的 skill 把這 5 個 skill 當 context 灌給 GPT-4 GPT-4 可以直接重用、組合、或在它們的基礎上改寫 這就是 RAG 的雛型 — 但對象是 skill 而非 document。 ⚠️ 為什麼 top-5 而非全部 論文沒詳細討論，但邏輯是 context window 有限 + 太多無關 skill 反而會干擾 GPT-4 的決策。top-5 是經驗折衷。 對照你的 GBrain（Garry Tan 個人知識大腦）— Postgres + pgvector 做 hybr"
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "神器-3iterative-prompting-code-run-error-fix-loop",
+    "sectionTitle": "神器 3：Iterative Prompting — Code → Run → Error → Fix loop",
+    "content": "GPT-4 第一次寫的 code 通常跑不過。Voyager 的 iterative prompting 把錯誤訊息當作 feedback signal： GPT-4 寫 code v1 在 Minecraft 環境執行 蒐集三類 feedback： Environment feedback （\"你撞到水了\"） Execution errors （\"未定義函式\"） Self-verification （GPT-4 自己看結果有沒有達標） 三種 feedback 統統灌回 prompt GPT-4 寫 code v2，重複直到成功或達上限 論文記錄： 63 個獨特 item 用了 160 次 prompting iterations ，平均每個 skill 約 2.5 次 iteration 就能成功。 📚 為什麼 self-verification 重要 環境 feedback 與執行錯誤都是「外部訊號」 — 程式跑了會自然產生。但 self-verification 是 內部驗證 ：GPT-4 看完結果，自己判斷「這算成功嗎？」 沒有 self-verification 的話，ag"
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "part-iii-為什麼用-javascript-而非低階控制",
+    "sectionTitle": "Part III — 為什麼用 JavaScript 而非低階控制？",
+    "content": "傳統 RL agent 在 Minecraft 中的 action space 是 低階馬達控制 （前進、轉身、揮手、跳）。Voyager 完全不用 — 它的 action space 是 JavaScript 程式碼 ，透過 Mineflayer library 控制 agent。 The creators opt to use code as the action space instead of low-level motor commands because programs can naturally represent temporally extended and compositional actions. 為什麼這樣選？ 時間延展性（temporal extension） ：一行 code 可以代表「砍 5 棵樹」 — 對應幾百個馬達動作 組合性（compositionality） ：寫好的 function 可以呼叫其他 function — 自然層次化 可解釋性 ：人類看得懂 JavaScript，看不懂神經網路權重 遷移性 ：JavaScript 在新世界仍然能"
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "part-iv-數據結果",
+    "sectionTitle": "Part IV — 數據結果",
+    "content": "指標 Voyager 對比基準 差距 獨特 item 收集數 63 個（160 prompting iterations 內） ReAct / Reflexion / AutoGPT 3.3x more unique items 探索距離 跨多種地形持續移動 同上 baselines 2.3x longer distances 木製階段達成速度 達成 同上 15.3x faster 石製階段 達成 同上 8.5x faster 鐵製階段 達成 同上 6.4x faster 鑽石階段 唯一達到 所有 baseline 都失敗 無對比 新世界 zero-shot 任務 全部解決（用 skill library 遷移） baseline 完全 fail 無對比 ⚠️ 模型版本注意 原論文用 2023 年的 GPT-4 。Ablation 顯示 GPT-3.5 在 code generation 上明顯落後 GPT-4，因此整套架構的關鍵假設是「夠強的 base model 能寫對 code」。 2026 年用 Claude Opus 4.7 或 GPT-5 跑同樣架構，預期會更強 — 但論文"
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "重點整理-key-takeaways",
+    "sectionTitle": "重點整理 Key Takeaways",
+    "content": "1. Lifelong learning 不需要動權重 Voyager 證明了純靠 prompt + 外部記憶結構（skill library）就能做到累積學習。這顛覆了「lifelong learning = 持續訓練模型」的傳統假設。對 personal AI OS 的啟示是巨大的。 2. Skill Library = RAG for Skills 把 code 用自然語言描述包裝、算 embedding、按相似度檢索 top-K — 這就是現在所有 RAG 的設計。Voyager 把 RAG 從文件檢索擴展到「能力檢索」，是 personal AI OS 最該借鑒的設計。 3. Self-verification 是不漂移的關鍵 三類 feedback 中最容易被忽視的是 self-verification — 讓模型自己判斷「我達標了嗎」。沒有這環，agent 會在 long horizon 越跑越偏。Hermes 等後續 self-improving agent 容易漏掉這環。 4. Code as action space 是 agent 的主流路線 Voyager 確立"
+  },
+  {
+    "docFile": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html",
+    "docTitle": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "docDate": "2026-05-11",
+    "docSource": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "docRating": 4.7,
+    "docTags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "sectionId": "練習題-practice-questions",
+    "sectionTitle": "練習題 Practice Questions",
+    "content": "先在心中思考答案，再點開展開查看建議答案。 Q1 概念理解 Voyager 的「skill library」與你已用的 Anthropic Claude Skills 有什麼根本差別？ 機制相似處： 都是「自然語言描述 + 可執行內容 + 按需檢索」三件套 都有 progressive disclosure（按需才載入完整內容，省 context） 根本差別在「誰寫」： Claude Skills： 人類預先寫好、deploy 給 Claude 用。是「靜態的 library」 — 加新 skill 需要人類動手。 Voyager Skill Library： GPT-4 自己根據環境互動寫的、自己存的、自己組合的。是「動態的 library」 — 每跑一輪可能就多幾個 skill。 啟示： 把這兩條融合 — 人類設計 skill 框架，Claude 自動填內容並按使用紀錄優化 — 才是 personal AI OS 的終極形態。Hermes Agent / Skill-creator 是朝這個方向的初步嘗試。 Q2 應用設計 如果要把 Voyager 的設計搬到「個人知識管理 / p"
   }
 ];

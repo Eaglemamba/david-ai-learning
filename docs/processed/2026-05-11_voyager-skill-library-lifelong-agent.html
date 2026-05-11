@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voyager — 第一個用 GPT-4 自己長 Skill 的 Minecraft Agent</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-05-11">
+<meta name="doc-title" content="Voyager - LLM Lifelong Learning Agent in Minecraft">
+<meta name="doc-source" content="NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Agent,Framework,Automation,Analysis">
+<meta name="doc-rating" content="4.7">
+<meta name="doc-summary" content="2023 NVIDIA Voyager 論文：第一個 LLM-powered 終身學習 agent，三件神器（Automatic Curriculum / Skill Library / Iterative Prompting）讓 GPT-4 在 Minecraft 中自我探索、生成 skill、跨世界遷移。Hermes / Skill-creator / SkillsBench 的根源。">
+<meta name="doc-file" content="2026-05-11_voyager-skill-library-lifelong-agent.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+* { box-sizing: border-box; }
+body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; margin: 0; padding: 0; }
+.header { text-align: center; padding: 2.5rem 2rem; background: linear-gradient(135deg, #0f3a2e 0%, #14532d 50%, #15803d 100%); color: white; }
+.header-content { max-width: 900px; margin: 0 auto; }
+.header h1 { font-size: 2rem; font-weight: 700; margin: 0.5rem 0; }
+.header .subtitle { font-size: 1.05rem; opacity: 0.95; font-weight: 300; margin-bottom: 1rem; }
+.header .source-info { font-size: 0.85rem; opacity: 0.85; font-style: italic; }
+.header .domain-tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-framework { background: #ddd6fe; color: #4c1d95; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-automation { background: #a7f3d0; color: #065f46; }
+.tag-analysis { background: #fde68a; color: #92400e; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+.section-heading { font-size: 1.5rem; font-weight: 700; color: #14532d; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid #16a34a; }
+.part-heading { font-size: 1.25rem; font-weight: 700; color: #1e293b; margin: 1.5rem 0 1rem; }
+
+.summary-box { background: linear-gradient(135deg, #ecfdf5, #f0fdf4); border-left: 4px solid #16a34a; padding: 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2rem; }
+.summary-box h2 { font-size: 1.2rem; color: #14532d; margin: 0 0 0.5rem; }
+.summary-box p { font-size: 0.95rem; line-height: 1.7; margin: 0; color: #334155; }
+
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #d1fae5, #ecfdf5); border-radius: 8px; flex-wrap: wrap; border: 1px solid #6ee7b7; }
+.rating-score { font-weight: 700; color: #14532d; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; padding: 1.25rem; border-radius: 0.5rem; border-top: 3px solid #16a34a; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-num { font-size: 0.75rem; font-weight: 700; color: #16a34a; margin-bottom: 0.5rem; letter-spacing: 1px; }
+.objective-title { font-weight: 700; color: #14532d; margin-bottom: 0.3rem; font-size: 1rem; }
+.objective-desc { font-size: 0.85rem; color: #64748b; line-height: 1.6; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+
+.framework-visual { background: linear-gradient(135deg, #14532d, #15803d); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 130px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-weight: 700; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #86efac; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; background: white; }
+.content-left, .content-right { padding: 1.5rem; }
+.content-left { border-right: 1px solid #e2e8f0; }
+@media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+
+.zh { color: #1e293b; font-size: 0.95rem; line-height: 1.8; margin-bottom: 0.5rem; }
+.en { color: #64748b; font-style: italic; font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem; padding-left: 0.75rem; border-left: 2px solid #cbd5e1; }
+
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+.info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; border: 1px solid; }
+.info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content p { margin: 0 0 0.5rem; }
+.info-box-content p:last-child { margin-bottom: 0; }
+.info-box-content ul { margin: 0.5rem 0; padding-left: 1.3rem; }
+.info-box-content li { margin-bottom: 0.3rem; }
+
+.box-concept { border-color: #86efac; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; }
+.box-analogy { border-color: #fcd34d; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; }
+.box-key { border-color: #fdba74; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; }
+.box-code { border-color: #c4b5fd; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; }
+.box-practical { border-color: #6ee7b7; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; }
+.box-compare { border-color: #a5b4fc; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; }
+.box-critical { border-color: #fca5a5; }
+.box-critical .info-box-header { background: #fecaca; color: #991b1b; }
+.box-critical .info-box-content { background: #fef2f2; }
+
+.code-below { background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: 1rem 1.2rem; margin: -1rem 0 2rem; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; overflow-x: auto; }
+.code-below .comment { color: #94a3b8; font-style: italic; }
+.code-below .string { color: #fbbf24; }
+.code-below .keyword { color: #93c5fd; }
+
+.compare-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; font-size: 0.9rem; }
+.compare-table th { background: #14532d; color: white; padding: 0.75rem; text-align: left; font-weight: 600; }
+.compare-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:nth-child(even) td { background: #f8fafc; }
+
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #16a34a; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #14532d; margin-bottom: 0.5rem; font-size: 1rem; }
+.summary-card-desc { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+
+.practice-section { margin-bottom: 2rem; }
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+.question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+.question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+
+.bottom-line { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #14532d; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #14532d; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #15803d; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+.footer { background: #14532d; color: #d1fae5; padding: 2rem 1.5rem; text-align: center; font-size: 0.85rem; }
+.footer a { color: #86efac; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footer-divider { margin: 1rem auto; max-width: 100px; border-top: 1px solid #15803d; }
+.chat-title-box { background: #15803d; padding: 0.75rem 1rem; border-radius: 6px; margin: 1rem auto; max-width: 700px; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; color: #fbbf24; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-content">
+        <div class="domain-tags">
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-framework">Framework</span>
+            <span class="tag tag-automation">Automation</span>
+            <span class="tag tag-analysis">Analysis</span>
+        </div>
+        <h1>Voyager — 第一個用 GPT-4 自己長 Skill 的 Minecraft Agent</h1>
+        <div class="subtitle">三件神器（Automatic Curriculum / Skill Library / Iterative Prompting）開創 LLM-powered 終身學習 agent — Hermes、Skill-creator、SkillsBench 的根源論文</div>
+        <div class="source-info">原文：Wang et al., NVIDIA / Caltech / UT Austin / Stanford / ASU · arXiv 2305.16291 · 整理日期：2026-05-11</div>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="rating-bar">
+    <span class="rating-score"><span class="rating-stars">★★★★★</span> 4.7/5</span>
+    <span class="rating-high">↑ 經典開創性, 三件神器設計優雅, 可遷移性實證</span>
+    <span class="rating-low">↓ Minecraft 場景特化, 2023 GPT-4 已過時, 沒有失敗模式分析</span>
+</div>
+<div class="summary-box">
+    <h2>快速摘要</h2>
+    <p>Voyager 是 2023 年由 NVIDIA / Caltech / UT Austin / Stanford / ASU 聯合提出（Linxi "Jim" Fan 與 Guanzhi Wang 主導），<strong>第一個用 LLM 驅動、能在開放世界中終身自我學習的 embodied agent</strong>。它在 Minecraft 中跑，靠三件設計就能自己訂目標、自己寫 code、自己累積技能、把學到的技能轉移到全新世界 — 整個過程零人類介入、零 fine-tuning，完全靠對 GPT-4 的 blackbox API 呼叫。三件神器是：(1) <strong>Automatic Curriculum</strong> 讓 GPT-4 根據當前狀態生成「下一個該探索什麼」的目標；(2) <strong>Skill Library</strong> 把 GPT-4 寫的可執行 JavaScript 程式碼存起來，用 embedding 索引，新任務時取最相關的 top-5 組合使用；(3) <strong>Iterative Prompting</strong> 把環境 feedback、執行錯誤、self-verification 灌回 GPT-4 修正程式。實驗結果：3.3x more unique items、15.3x faster wooden milestone、能在新 Minecraft 世界 zero-shot 解新任務。對你來說，這篇是理解你最近狂收的 Hermes Agent、Skill-creator、SkillsBench、Building Skills Guide 為何長那樣的<strong>根源論文</strong> — 不讀它就只能讀 derivative。</p>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<h2 class="section-heading">學習目標 Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 01</div>
+        <div class="objective-title">理解三件神器的分工</div>
+        <div class="objective-desc">看懂 Automatic Curriculum、Skill Library、Iterative Prompting 各自解決哪個 lifelong learning 的子問題。</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 02</div>
+        <div class="objective-title">掌握「程式碼即動作」設計</div>
+        <div class="objective-desc">理解為什麼 Voyager 用 JavaScript 而非低階控制當 action space — 這是後續所有 code-based agent 的設計起點。</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 03</div>
+        <div class="objective-title">看出對自家 Skill 系統的啟示</div>
+        <div class="objective-desc">能說出 Voyager 與 Anthropic Claude Skills、Hermes Agent 的對應關係 — 哪些借用、哪些革新、哪些尚未實現。</div>
+    </div>
+</div>
+
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+    <div class="framework-title">Voyager 三件神器 — Lifelong Learning 的最小可行架構</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">C</div>
+            <div class="framework-step-title">Automatic Curriculum</div>
+            <div class="framework-step-desc">GPT-4 自己訂下一個目標</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">S</div>
+            <div class="framework-step-title">Skill Library</div>
+            <div class="framework-step-desc">寫好的程式碼存起來、組合用</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">I</div>
+            <div class="framework-step-title">Iterative Prompting</div>
+            <div class="framework-step-desc">錯誤 + 自查回饋灌回去修正</div>
+        </div>
+    </div>
+</div>
+
+<!-- PART 1: WHY VOYAGER MATTERS -->
+<h2 class="section-heading">Part I — 為什麼 Voyager 是分水嶺？</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">在 Voyager 之前，「LLM agent」基本上就是<span class="highlight-concept">一次性 prompt 解一題</span>（你給目標，模型給計畫，跑完結束）。問題是 — 它不會記得自己學過什麼，每次都是從零開始。</p>
+
+        <p class="zh">Voyager 第一次把<span class="highlight-key">「終身累積」（lifelong learning）</span>從強化學習領域搬到 LLM agent 上，而且全程不更動模型權重 — 完全靠 prompt engineering + 外部記憶結構。</p>
+
+        <p class="en">Voyager is the first LLM-powered embodied lifelong learning agent in Minecraft that continuously explores the world, acquires diverse skills, and makes novel discoveries without human intervention.</p>
+
+        <p class="zh">關鍵突破點：</p>
+        <ul style="padding-left: 1.3rem; color: #334155;">
+            <li><strong>無監督</strong>：沒有人告訴它要做什麼</li>
+            <li><strong>無 fine-tuning</strong>：純 GPT-4 blackbox API call</li>
+            <li><strong>真的會累積</strong>：今天學的可以明天用，可以後天遷移到新世界</li>
+        </ul>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-analogy">
+            <div class="info-box-header">💡 為什麼選 Minecraft</div>
+            <div class="info-box-content">
+                <p>Minecraft 是「開放世界 + 有明確 tech tree（科技樹）」的完美實驗場 — 既有結構化目標可以衡量進度（木 → 石 → 鐵 → 鑽石），又是無界探索空間（地圖無窮、任務無限）。</p>
+                <p>對比之下，AlphaGo 環境太封閉（19×19），ChatGPT 環境太抽象（沒有 embodiment）。Minecraft 是兩者中間的甜蜜點。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 「分水嶺」是什麼意思</div>
+            <div class="info-box-content">
+                <p>Voyager 之後幾乎所有 code-based agent 都長得像它：寫 code → 跑 → 看 error → 改 code → 跑 → ...... + 把寫過的 code 存起來重用。</p>
+                <p>你 library 裡的 Hermes Agent（自我改進）、Skill-creator epic update（自動評估）、SkillsBench（評測 skill）、甚至 Claude Skills 本身 — 設計哲學的 DNA 都來自這篇。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART 2: THREE COMPONENTS -->
+<h2 class="section-heading">Part II — 三件神器深入</h2>
+
+<h3 class="part-heading">神器 1：Automatic Curriculum — Agent 自己訂目標</h3>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">傳統 RL 需要人類設計 reward function，傳統 LLM agent 需要人類給 task。Voyager 的 curriculum 把這件事<span class="highlight-concept">交給 GPT-4 自己決定</span>。</p>
+
+        <p class="zh">具體機制：</p>
+        <ol style="padding-left: 1.3rem; color: #334155;">
+            <li>把當前環境狀態（agent 位置、背包、附近方塊、生命值等）餵給 GPT-4</li>
+            <li>Prompt：「根據當前狀態，提出下一個適合的探索目標 — 不要太簡單、不要太難、最大化發現新東西」</li>
+            <li>GPT-4 回答 e.g. "找到並挖到 3 個鐵礦"</li>
+            <li>這個 task 成為下個 iteration 的目標</li>
+        </ol>
+
+        <p class="zh">關鍵設計：<span class="highlight-key">curriculum 是 emergent 的</span>，不是預先規劃的。GPT-4 在每個時間點動態生成最適合當下能力的下一步。</p>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 對應的人類學習理論</div>
+            <div class="info-box-content">
+                <p>這對應 Vygotsky 的 <strong>Zone of Proximal Development（最近發展區）</strong>概念 — 最有效的學習目標，是「比你現在會的稍難一點」的事。</p>
+                <p>Voyager 的 curriculum 就是把這個概念交給 GPT-4 來判斷 — 而 GPT-4 對 Minecraft 的 prior knowledge 夠強，所以它真的能挑出合適難度的下一個目標。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 對你 Skill 系統的對應</div>
+            <div class="info-box-content">
+                <p>你現在的 Skill 都是<strong>你決定要寫什麼</strong>。Voyager 啟發的版本：給 Claude 看你過去半年的對話紀錄，問「我還缺什麼 skill 會明顯提升我的工作效率？」 — 這就是 personal AI OS 的 automatic curriculum 雛型。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="part-heading">神器 2：Skill Library — 把寫過的 code 存起來</h3>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">這是 Voyager 最被引用的設計。當 GPT-4 寫了一段 Minecraft JavaScript（例如 "砍樹"），這段 code 不會用完即丟 — 它會：</p>
+
+        <ol style="padding-left: 1.3rem; color: #334155;">
+            <li>用一段<strong>自然語言描述</strong>包裝（"Chop a tree with bare hands"）</li>
+            <li>對描述計算 <strong>embedding 向量</strong></li>
+            <li>把 (描述, embedding, code) 存進 skill library</li>
+        </ol>
+
+        <p class="zh" style="margin-top: 1rem;">未來遇到新任務時，Voyager 會：</p>
+        <ol style="padding-left: 1.3rem; color: #334155;">
+            <li>對新任務描述算 embedding</li>
+            <li>從 library 取<strong>top-5 最相似的 skill</strong></li>
+            <li>把這 5 個 skill 當 context 灌給 GPT-4</li>
+            <li>GPT-4 可以直接重用、組合、或在它們的基礎上改寫</li>
+        </ol>
+
+        <p class="zh" style="margin-top: 1rem;"><span class="highlight-practical">這就是 RAG 的雛型 — 但對象是 skill 而非 document。</span></p>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 為什麼 top-5 而非全部</div>
+            <div class="info-box-content">
+                <p>論文沒詳細討論，但邏輯是 context window 有限 + 太多無關 skill 反而會干擾 GPT-4 的決策。top-5 是經驗折衷。</p>
+                <p>對照你的 GBrain（Garry Tan 個人知識大腦）— Postgres + pgvector 做 hybrid search 取 top-K — 設計同源，只是知識物件不同。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-compare">
+            <div class="info-box-header">⚖️ 對應 Claude Skills 的關係</div>
+            <div class="info-box-content">
+                <p>Anthropic Claude Skills 本質上是「人類預先寫好的 Voyager skill library」 — Skills 也用自然語言描述觸發、也用檔案存 code-like 內容。</p>
+                <p>差別在<strong>誰來寫</strong>：Voyager 是 GPT-4 自己寫並存，Claude Skills 是人類寫並 deploy。Hermes Agent / Skill-creator 則嘗試把這條鴻溝補起來 — 讓 Claude 自己寫 Skills。Voyager 是這個方向的祖師爺。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="part-heading">神器 3：Iterative Prompting — Code → Run → Error → Fix loop</h3>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">GPT-4 第一次寫的 code 通常跑不過。Voyager 的 iterative prompting 把錯誤訊息當作 feedback signal：</p>
+
+        <ol style="padding-left: 1.3rem; color: #334155;">
+            <li>GPT-4 寫 code v1</li>
+            <li>在 Minecraft 環境執行</li>
+            <li>蒐集三類 feedback：
+                <ul style="margin-top: 0.3rem;">
+                    <li><strong>Environment feedback</strong>（"你撞到水了"）</li>
+                    <li><strong>Execution errors</strong>（"未定義函式"）</li>
+                    <li><strong>Self-verification</strong>（GPT-4 自己看結果有沒有達標）</li>
+                </ul>
+            </li>
+            <li>三種 feedback 統統灌回 prompt</li>
+            <li>GPT-4 寫 code v2，重複直到成功或達上限</li>
+        </ol>
+
+        <p class="zh" style="margin-top: 1rem;">論文記錄：<span class="highlight-key">63 個獨特 item 用了 160 次 prompting iterations</span>，平均每個 skill 約 2.5 次 iteration 就能成功。</p>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 為什麼 self-verification 重要</div>
+            <div class="info-box-content">
+                <p>環境 feedback 與執行錯誤都是「外部訊號」 — 程式跑了會自然產生。但 self-verification 是<strong>內部驗證</strong>：GPT-4 看完結果，自己判斷「這算成功嗎？」</p>
+                <p>沒有 self-verification 的話，agent 會把「沒有報錯」誤認為「達成目標」 — 但 Minecraft 中可能 code 跑了但什麼也沒採到。Self-verification 是 lifelong learning 不漂移的關鍵。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-critical">
+            <div class="info-box-header">⚠️ 對 Hermes 的批判視角</div>
+            <div class="info-box-content">
+                <p>你 library 裡的 Hermes Agent（self-improving）就是這個 loop 的延伸 — SQLite 記憶 + 自動 skill 生成。</p>
+                <p>但 Hermes 的 self-verification 是用 SQLite 紀錄取代 Voyager 的「GPT-4 自查」 — 工程化但失去了「模型對自己工作的批判判斷」這個關鍵成分。讀完 Voyager 回頭看 Hermes 你會發現它<strong>缺了 self-critic 那一環</strong>。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART 3: CODE AS ACTION SPACE -->
+<h2 class="section-heading">Part III — 為什麼用 JavaScript 而非低階控制？</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">傳統 RL agent 在 Minecraft 中的 action space 是<span class="highlight-concept">低階馬達控制</span>（前進、轉身、揮手、跳）。Voyager 完全不用 — 它的 action space 是 <strong>JavaScript 程式碼</strong>，透過 Mineflayer library 控制 agent。</p>
+
+        <p class="en">The creators opt to use code as the action space instead of low-level motor commands because programs can naturally represent temporally extended and compositional actions.</p>
+
+        <p class="zh">為什麼這樣選？</p>
+        <ul style="padding-left: 1.3rem; color: #334155;">
+            <li><strong>時間延展性（temporal extension）</strong>：一行 code 可以代表「砍 5 棵樹」 — 對應幾百個馬達動作</li>
+            <li><strong>組合性（compositionality）</strong>：寫好的 function 可以呼叫其他 function — 自然層次化</li>
+            <li><strong>可解釋性</strong>：人類看得懂 JavaScript，看不懂神經網路權重</li>
+            <li><strong>遷移性</strong>：JavaScript 在新世界仍然能跑 — 訓好的權重未必</li>
+        </ul>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 「Code as action」是 2024-2026 的主流</div>
+            <div class="info-box-content">
+                <p>Voyager 之後，幾乎所有 code-based agent（包括 Anthropic 的 Claude Code）都採用這個哲學 — agent 的「動作」就是寫並執行程式碼，而非選擇預定義動作。</p>
+                <p>對比 GUI-based agent（Claude Computer Use、Anthropic Operator）：那條路線是低階滑鼠/鍵盤動作。兩條路線各有適用場景，但<strong>需要長期累積能力</strong>的場景，code-as-action 幾乎一定贏。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART 4: RESULTS -->
+<h2 class="section-heading">Part IV — 數據結果</h2>
+
+<table class="compare-table">
+    <thead>
+        <tr>
+            <th>指標</th>
+            <th>Voyager</th>
+            <th>對比基準</th>
+            <th>差距</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>獨特 item 收集數</td>
+            <td>63 個（160 prompting iterations 內）</td>
+            <td>ReAct / Reflexion / AutoGPT</td>
+            <td><strong>3.3x</strong> more unique items</td>
+        </tr>
+        <tr>
+            <td>探索距離</td>
+            <td>跨多種地形持續移動</td>
+            <td>同上 baselines</td>
+            <td><strong>2.3x</strong> longer distances</td>
+        </tr>
+        <tr>
+            <td>木製階段達成速度</td>
+            <td>達成</td>
+            <td>同上</td>
+            <td><strong>15.3x faster</strong></td>
+        </tr>
+        <tr>
+            <td>石製階段</td>
+            <td>達成</td>
+            <td>同上</td>
+            <td><strong>8.5x faster</strong></td>
+        </tr>
+        <tr>
+            <td>鐵製階段</td>
+            <td>達成</td>
+            <td>同上</td>
+            <td><strong>6.4x faster</strong></td>
+        </tr>
+        <tr>
+            <td>鑽石階段</td>
+            <td><strong>唯一達到</strong></td>
+            <td>所有 baseline 都失敗</td>
+            <td>無對比</td>
+        </tr>
+        <tr>
+            <td>新世界 zero-shot 任務</td>
+            <td>全部解決（用 skill library 遷移）</td>
+            <td>baseline 完全 fail</td>
+            <td>無對比</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="info-box box-key">
+    <div class="info-box-header">⚠️ 模型版本注意</div>
+    <div class="info-box-content">
+        <p>原論文用 <strong>2023 年的 GPT-4</strong>。Ablation 顯示 GPT-3.5 在 code generation 上明顯落後 GPT-4，因此整套架構的關鍵假設是「夠強的 base model 能寫對 code」。</p>
+        <p>2026 年用 Claude Opus 4.7 或 GPT-5 跑同樣架構，預期會更強 — 但論文沒有更新。重現實驗時請當「下限證據」看。</p>
+    </div>
+</div>
+
+<!-- KEY TAKEAWAYS -->
+<h2 class="section-heading">重點整理 Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-title">1. Lifelong learning 不需要動權重</div>
+        <div class="summary-card-desc">Voyager 證明了純靠 prompt + 外部記憶結構（skill library）就能做到累積學習。這顛覆了「lifelong learning = 持續訓練模型」的傳統假設。對 personal AI OS 的啟示是巨大的。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">2. Skill Library = RAG for Skills</div>
+        <div class="summary-card-desc">把 code 用自然語言描述包裝、算 embedding、按相似度檢索 top-K — 這就是現在所有 RAG 的設計。Voyager 把 RAG 從文件檢索擴展到「能力檢索」，是 personal AI OS 最該借鑒的設計。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">3. Self-verification 是不漂移的關鍵</div>
+        <div class="summary-card-desc">三類 feedback 中最容易被忽視的是 self-verification — 讓模型自己判斷「我達標了嗎」。沒有這環，agent 會在 long horizon 越跑越偏。Hermes 等後續 self-improving agent 容易漏掉這環。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">4. Code as action space 是 agent 的主流路線</div>
+        <div class="summary-card-desc">Voyager 確立了「LLM agent 的動作就是寫並執行程式碼」這個典範。Claude Code、Cursor、所有 code-based agent 都繼承這個哲學。GUI agent 是另一條路線，但累積性遠不如 code agent。</div>
+    </div>
+</div>
+
+<!-- PRACTICE QUESTIONS -->
+<h2 class="section-heading">練習題 Practice Questions</h2>
+<p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">先在心中思考答案，再點開展開查看建議答案。</p>
+
+<div class="practice-section">
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">Voyager 的「skill library」與你已用的 Anthropic Claude Skills 有什麼根本差別？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>機制相似處：</strong></p>
+            <ul>
+                <li>都是「自然語言描述 + 可執行內容 + 按需檢索」三件套</li>
+                <li>都有 progressive disclosure（按需才載入完整內容，省 context）</li>
+            </ul>
+            <p><strong>根本差別在「誰寫」：</strong></p>
+            <ul>
+                <li><strong>Claude Skills：</strong>人類預先寫好、deploy 給 Claude 用。是「靜態的 library」 — 加新 skill 需要人類動手。</li>
+                <li><strong>Voyager Skill Library：</strong>GPT-4 自己根據環境互動寫的、自己存的、自己組合的。是「動態的 library」 — 每跑一輪可能就多幾個 skill。</li>
+            </ul>
+            <p><strong>啟示：</strong>把這兩條融合 — 人類設計 skill 框架，Claude 自動填內容並按使用紀錄優化 — 才是 personal AI OS 的終極形態。Hermes Agent / Skill-creator 是朝這個方向的初步嘗試。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">應用設計</span>
+            <span class="question-text">如果要把 Voyager 的設計搬到「個人知識管理 / personal AI OS」場景，三件神器分別對應到什麼？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>對應映射（Voyager → Personal AI OS）：</strong></p>
+            <ul>
+                <li><strong>Automatic Curriculum：</strong>讓 Claude 看你的對話紀錄、行事曆、最近專案，主動建議「你下一個該學什麼」「你下一個該做什麼自動化」。例如「你最近一週問了 5 次同樣的問題，建議寫成 skill 自動化」。</li>
+                <li><strong>Skill Library：</strong>你目前的 SKILL.md 集合就是這個 — 但缺了 embedding 索引層。下一步是加上「<strong>按描述 embedding 檢索 top-K skill</strong>」的功能，讓新對話自動載入相關 skill 而不需手動 reference。GBrain 已經在這方向上走了。</li>
+                <li><strong>Iterative Prompting：</strong>你目前的工作流缺這個 — Claude 寫了 skill 沒人逼它跑、看 error、改。要建立「skill execution log → 失敗自動 retry → 改寫 skill」的 loop。Inspect AI（前一篇文章）是搭建這個 loop 的工具基底。</li>
+            </ul>
+            <p>三者組合就是 Voyager 對 personal AI OS 的完整貢獻。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">Voyager 在 Minecraft 中表現驚人，但這個架構有哪些隱藏假設讓它不容易直接搬到 real-world 任務？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>三個隱藏假設：</strong></p>
+            <ul>
+                <li><strong>環境 feedback 廉價且即時。</strong>Minecraft 中每個動作的後果立刻可見（撞到水、得到木頭、生命值變化）。Real world 的 feedback 通常延遲（你發出的 email 對方一週後才回）、嘈雜（同事的回應未必反映你做得好不好）、或缺失（很多事根本沒人 review）。沒有快速 feedback，iterative prompting 就失效。</li>
+                <li><strong>Self-verification 容易設計。</strong>Minecraft 中「我有沒有挖到鑽石」是布林判斷。Real world 的「這份 deviation report 寫得好不好」是模糊判斷，需要更複雜的 judge。</li>
+                <li><strong>Action 後果可逆。</strong>Voyager 砍錯樹沒事，重新生一個。Real world 中很多動作不可逆（送出 email、提交 batch report、做出投資決策）。Voyager 那種「先試再改」哲學在不可逆場景需要強得多的 self-verification + human-in-the-loop。</li>
+            </ul>
+            <p><strong>結論：</strong>Voyager 適合「<strong>快 feedback、布林驗證、可逆動作</strong>」的場景 — code generation、數據分析、創意發想。對於慢 feedback、模糊驗證、不可逆動作的場景，還需要加上人類在環的設計。這也是為什麼 Claude Code 是好應用、但 Claude 寫 SOP 還需要人審的根本原因。</p>
+        </div>
+    </details>
+</div>
+
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+    <div class="bottom-line-header">🎯 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">Voyager 是我最近 4–5 月狂收的所有 self-improving agent / skillification 文章（Hermes、Skill-creator、SkillsBench、Building Skills Guide、Lessons from Building Claude Code Skills）的<strong>祖師爺論文</strong>。讀完它我才看懂這些 derivative 在繼承什麼、革新什麼、漏掉什麼。最大的洞察是：lifelong learning 不需要訓模型，只需要「自動 curriculum + skill library + iterative prompting」三件套。我的 personal AI OS 已經有零碎的 skill library 雛型，但還沒有 automatic curriculum 與 iterative prompting — 這是下一階段該補的拼圖。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用</div>
+        <div class="bottom-line-text">本週可做：（1）把現有 SKILL.md 集合加一個 <code>skills/index.json</code>，每個 skill 帶 description + embedding（先用 OpenAI text-embedding-3-small），這是 skill library 的第一步；（2）寫一個小 prompt template「Automatic Skill Curriculum」 — 餵 Claude 過去一週對話紀錄 + 現有 skill 清單，要它建議「我下一個該寫什麼 skill」；（3）開始用前一篇文章的 Inspect AI 來搭建 iterative prompting 的閉環測試。三件事各別輕量、組合起來就是 Voyager 哲學的個人版實踐。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠ 需要補充</div>
+        <div class="bottom-line-text">這篇是 2023 經典，缺幾個現代延伸：（1）<strong>Voyager 之後的進化</strong> — Eureka（NVIDIA 同團隊用 LLM 寫 reward function）、SwiftSage（雙系統思考的 agent）值得讀作續集；（2）<strong>Self-Discover</strong>（Top 3 #2 的另一篇）對應的是「Agent 自己組合 reasoning module」，與 Voyager 的「自己組合 skill」是兩種互補的 self-organization；（3）<strong>真實世界 lifelong agent 的失敗模式</strong> — Voyager 在 Minecraft 沒漂移，但 production 的 self-improving agent 容易陷入「越改越差」的 reward hacking，這是論文沒處理的問題，需要 evals（Inspect AI）這層保險。三個月後重讀本文時，重點該放在「我的個人系統有沒有實現任一件神器」。</div>
+    </div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <div>製作日期：2026-05-11 · 整理者：David's AI Learning System</div>
+    <div>原文來源：<a href="https://voyager.minedojo.org/" target="_blank">Voyager Project Page</a> · <a href="https://arxiv.org/abs/2305.16291" target="_blank">arXiv 2305.16291</a> · <a href="https://github.com/MineDojo/Voyager" target="_blank">GitHub</a></div>
+    <div class="footer-divider"></div>
+    <div style="margin-bottom: 0.5rem; font-size: 0.8rem; opacity: 0.85;">建議 Chat Title：</div>
+    <div class="chat-title-box">2026-05-11 [Agent] Voyager - LLM Lifelong Learning Agent</div>
+    <div style="margin-top: 1rem; font-size: 0.75rem; opacity: 0.7;">基於 Master Prompt v1.5.0 製作 · v1.4.3 標準頁面佈局</div>
+</div>
+
+</body>
+</html>

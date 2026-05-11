@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspect AI — UK AISI 的開源 LLM 評測框架</title>
+
+<!-- Dashboard Index Meta -->
+<meta name="doc-date" content="2026-05-11">
+<meta name="doc-title" content="Inspect AI - UK AISI LLM 評測框架">
+<meta name="doc-source" content="UK AI Security Institute / inspect.aisi.org.uk">
+<meta name="doc-source-type" content="">
+<meta name="doc-tags" content="Tool,Framework,Agent,Analysis">
+<meta name="doc-rating" content="4.0">
+<meta name="doc-summary" content="UK AISI 出的開源 LLM 評測框架。Datasets / Solvers / Scorers 三層抽象，內建 200+ evals、ReAct/Deep Agent、MCP 與 sandbox 支援，Anthropic 工具棧最佳契合的評測引擎。">
+<meta name="doc-file" content="2026-05-11_inspect-ai-evaluation-framework.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* === v1.4.3 MANDATORY PAGE LAYOUT === */
+* { box-sizing: border-box; }
+body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.8; margin: 0; padding: 0; }
+.header { text-align: center; padding: 2.5rem 2rem; background: linear-gradient(135deg, #1e3a5f 0%, #3b5998 50%, #5b7fb5 100%); color: white; }
+.header-content { max-width: 900px; margin: 0 auto; }
+.header h1 { font-size: 2rem; font-weight: 700; margin: 0.5rem 0; }
+.header .subtitle { font-size: 1.05rem; opacity: 0.95; font-weight: 300; margin-bottom: 1rem; }
+.header .source-info { font-size: 0.85rem; opacity: 0.85; font-style: italic; }
+.header .domain-tags { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.tag { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+.tag-tool { background: #fecdd3; color: #9f1239; }
+.tag-framework { background: #ddd6fe; color: #4c1d95; }
+.tag-agent { background: #c7d2fe; color: #3730a3; }
+.tag-analysis { background: #fde68a; color: #92400e; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+.section-heading { font-size: 1.5rem; font-weight: 700; color: #1e3a8a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 3px solid #3b82f6; }
+.part-heading { font-size: 1.25rem; font-weight: 700; color: #1e293b; margin: 1.5rem 0 1rem; }
+
+.summary-box { background: linear-gradient(135deg, #eff6ff, #f0f9ff); border-left: 4px solid #3b82f6; padding: 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2rem; }
+.summary-box h2 { font-size: 1.2rem; color: #1e3a8a; margin: 0 0 0.5rem; }
+.summary-box p { font-size: 0.95rem; line-height: 1.7; margin: 0; color: #334155; }
+
+.rating-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 0.6rem 1rem; background: linear-gradient(135deg, #e0f2fe, #f0f9ff); border-radius: 8px; flex-wrap: wrap; border: 1px solid #bae6fd; }
+.rating-score { font-weight: 700; color: #0c4a6e; font-size: 1rem; }
+.rating-stars { color: #f59e0b; letter-spacing: 1px; }
+.rating-high { font-size: 0.8rem; color: #047857; background: #d1fae5; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.rating-low { font-size: 0.8rem; color: #64748b; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+.objectives-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.objective-item { background: white; padding: 1.25rem; border-radius: 0.5rem; border-top: 3px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+.objective-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.objective-num { font-size: 0.75rem; font-weight: 700; color: #3b82f6; margin-bottom: 0.5rem; letter-spacing: 1px; }
+.objective-title { font-weight: 700; color: #1e3a8a; margin-bottom: 0.3rem; font-size: 1rem; }
+.objective-desc { font-size: 0.85rem; color: #64748b; line-height: 1.6; }
+@media (max-width: 768px) { .objectives-grid { grid-template-columns: 1fr; } }
+
+.framework-visual { background: linear-gradient(135deg, #1e3a5f, #3b5998); border-radius: 1rem; padding: 1.5rem; color: white; margin: 1.5rem 0 2rem; }
+.framework-title { text-align: center; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+.framework-steps { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.framework-step { text-align: center; min-width: 130px; }
+.framework-icon { font-size: 1.5rem; margin-bottom: 0.5rem; width: 3.5rem; height: 3.5rem; background: rgba(255,255,255,0.2); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-weight: 700; }
+.framework-step-title { font-weight: 700; font-size: 0.95rem; }
+.framework-step-desc { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+.framework-arrow { font-size: 1.5rem; color: #93c5fd; }
+@media (max-width: 600px) { .framework-arrow { display: none; } .framework-steps { gap: 1.5rem; } }
+
+.content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; background: white; }
+.content-left, .content-right { padding: 1.5rem; }
+.content-left { border-right: 1px solid #e2e8f0; }
+@media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-left { border-right: none; border-bottom: 1px solid #e2e8f0; } }
+
+.zh { color: #1e293b; font-size: 0.95rem; line-height: 1.8; margin-bottom: 0.5rem; }
+.en { color: #64748b; font-style: italic; font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem; padding-left: 0.75rem; border-left: 2px solid #cbd5e1; }
+
+.highlight-concept { background: #a5d6a7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-key { background: #ffcc80; padding: 0.1rem 0.3rem; border-radius: 3px; }
+.highlight-practical { background: #6ee7b7; padding: 0.1rem 0.3rem; border-radius: 3px; }
+
+.info-box { border-radius: 8px; overflow: hidden; margin-bottom: 1rem; border: 1px solid; }
+.info-box-header { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+.info-box-content { padding: 1rem; font-size: 0.9rem; line-height: 1.7; }
+.info-box-content p { margin: 0 0 0.5rem; }
+.info-box-content p:last-child { margin-bottom: 0; }
+.info-box-content ul { margin: 0.5rem 0; padding-left: 1.3rem; }
+.info-box-content li { margin-bottom: 0.3rem; }
+
+.box-concept { border-color: #86efac; }
+.box-concept .info-box-header { background: #bbf7d0; color: #14532d; }
+.box-concept .info-box-content { background: #f0fdf4; }
+.box-analogy { border-color: #fcd34d; }
+.box-analogy .info-box-header { background: #fef3c7; color: #92400e; }
+.box-analogy .info-box-content { background: #fffbeb; }
+.box-key { border-color: #fdba74; }
+.box-key .info-box-header { background: #fed7aa; color: #9a3412; }
+.box-key .info-box-content { background: #fff7ed; }
+.box-code { border-color: #c4b5fd; }
+.box-code .info-box-header { background: #ddd6fe; color: #4c1d95; }
+.box-code .info-box-content { background: #f5f3ff; }
+.box-practical { border-color: #6ee7b7; }
+.box-practical .info-box-header { background: #a7f3d0; color: #065f46; }
+.box-practical .info-box-content { background: #ecfdf5; }
+.box-compare { border-color: #a5b4fc; }
+.box-compare .info-box-header { background: #c7d2fe; color: #3730a3; }
+.box-compare .info-box-content { background: #eef2ff; }
+.box-critical { border-color: #fca5a5; }
+.box-critical .info-box-header { background: #fecaca; color: #991b1b; }
+.box-critical .info-box-content { background: #fef2f2; }
+
+.code-below { background: #1e293b; color: #e2e8f0; border-radius: 8px; padding: 1rem 1.2rem; margin: -1rem 0 2rem; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; line-height: 1.6; overflow-x: auto; }
+.code-below .comment { color: #94a3b8; font-style: italic; }
+.code-below .string { color: #fbbf24; }
+.code-below .keyword { color: #93c5fd; }
+
+.compare-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem; font-size: 0.9rem; }
+.compare-table th { background: #1e3a8a; color: white; padding: 0.75rem; text-align: left; font-weight: 600; }
+.compare-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:nth-child(even) td { background: #f8fafc; }
+
+.takeaways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.summary-card { background: white; border-radius: 0.5rem; padding: 1.25rem; border-left: 4px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+.summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.summary-card-title { font-weight: 700; color: #1e3a8a; margin-bottom: 0.5rem; font-size: 1rem; }
+.summary-card-desc { font-size: 0.9rem; color: #475569; line-height: 1.7; }
+@media (max-width: 768px) { .takeaways-grid { grid-template-columns: 1fr; } }
+
+.practice-section { margin-bottom: 2rem; }
+.question-accordion { background: white; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid #e9d5ff; overflow: hidden; }
+.question-header { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.question-header::-webkit-details-marker { display: none; }
+.question-number { font-weight: 700; color: #6d28d9; }
+.question-type { font-size: 0.75rem; font-weight: 600; color: #6d28d9; background: #e9d5ff; padding: 0.2rem 0.5rem; border-radius: 0.25rem; }
+.question-text { flex: 1; font-size: 0.95rem; color: #374151; min-width: 200px; }
+.accordion-icon { width: 1.25rem; height: 1.25rem; transition: transform 0.2s; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%237c3aed'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E") center/contain no-repeat; }
+details[open] .accordion-icon { transform: rotate(180deg); }
+.question-answer { padding: 1rem 1.25rem; background: #faf5ff; border-top: 1px solid #e9d5ff; }
+.question-answer p { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.75rem; }
+.question-answer p:last-child { margin-bottom: 0; }
+.question-answer ul { margin: 0.5rem 0; padding-left: 1.5rem; }
+.question-answer li { font-size: 0.9rem; line-height: 1.7; color: #374151; margin-bottom: 0.3rem; }
+
+.bottom-line { background: linear-gradient(135deg, #faf5ff, #f0f9ff); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7c3aed; margin-bottom: 2rem; }
+.bottom-line-header { font-weight: 700; color: #5b21b6; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+.bottom-line-item { margin-bottom: 1rem; }
+.bottom-line-item:last-child { margin-bottom: 0; }
+.bottom-line-label { font-weight: 600; color: #6d28d9; font-size: 0.85rem; margin-bottom: 0.25rem; }
+.bottom-line-text { font-size: 0.95rem; line-height: 1.7; color: #334155; }
+
+.footer { background: #1e293b; color: #cbd5e1; padding: 2rem 1.5rem; text-align: center; font-size: 0.85rem; }
+.footer a { color: #93c5fd; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footer-divider { margin: 1rem auto; max-width: 100px; border-top: 1px solid #475569; }
+.chat-title-box { background: #334155; padding: 0.75rem 1rem; border-radius: 6px; margin: 1rem auto; max-width: 700px; font-family: 'Source Code Pro', monospace; font-size: 0.85rem; color: #fbbf24; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-content">
+        <div class="domain-tags">
+            <span class="tag tag-tool">Tool</span>
+            <span class="tag tag-framework">Framework</span>
+            <span class="tag tag-agent">Agent</span>
+            <span class="tag tag-analysis">Analysis</span>
+        </div>
+        <h1>Inspect AI — UK AISI 的開源 LLM 評測框架</h1>
+        <div class="subtitle">三層抽象（Datasets / Solvers / Scorers）+ 200+ 內建 evals + Agent 評測原生支援，個人 AI OS 的「測試引擎」</div>
+        <div class="source-info">原文：UK AI Security Institute · inspect.aisi.org.uk · 整理日期：2026-05-11</div>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="rating-bar">
+    <span class="rating-score"><span class="rating-stars">★★★★☆</span> 4.0/5</span>
+    <span class="rating-high">↑ Anthropic 棧契合度, Agent 評測原生, 200+ 現成 eval</span>
+    <span class="rating-low">↓ 需 Python 基礎, 文件英國式偏抽象</span>
+</div>
+<div class="summary-box">
+    <h2>快速摘要</h2>
+    <p>Inspect AI 是 UK AI Security Institute（UK AISI）與 Meridian Labs 共同開發的開源 LLM 評測框架，核心價值是把「評一個模型/Agent」這件事拆成三個高度組合化的抽象 — <strong>Datasets（題目+答案）→ Solvers（解題鏈，含 Agent scaffold）→ Scorers（評分，含 LLM-as-judge）</strong>。內建 200+ 評測題庫、ReAct/Deep Agent 兩種預製 agent、MCP 工具支援、與 Docker/Kubernetes/Modal 多種 sandbox。對你正在搭建的 personal AI OS 來說，這是補上「我寫的 Skill / Agent 到底有沒有效」這個閉環的最佳工具 — 而且因為它支援 Bridge API 直接接 Claude Code 與 Gemini CLI，與你現有工具棧無縫銜接。整體技術深度高、設計哲學成熟，但門檻是需要 Python 與 async 程式基礎。</p>
+</div>
+
+<!-- LEARNING OBJECTIVES -->
+<h2 class="section-heading">學習目標 Learning Objectives</h2>
+<div class="objectives-grid">
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 01</div>
+        <div class="objective-title">理解三層抽象的設計分工</div>
+        <div class="objective-desc">看懂 Datasets / Solvers / Scorers 為什麼這樣切，以及這個切法相對於傳統 metric-based eval 的優勢。</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 02</div>
+        <div class="objective-title">掌握 Agent eval 與 sandbox 用法</div>
+        <div class="objective-desc">知道內建 ReAct / Deep Agent、MCP tool 整合、以及 Docker/K8s sandbox 各別在什麼情境下用。</div>
+    </div>
+    <div class="objective-item">
+        <div class="objective-num">OBJECTIVE 03</div>
+        <div class="objective-title">為自己的 Skill 寫第一個 eval</div>
+        <div class="objective-desc">能套用 chain(generate(), self_critique()) + model_graded_fact() 模式，為一個現有 Skill 設計最小可運行 eval。</div>
+    </div>
+</div>
+
+<!-- FRAMEWORK VISUAL -->
+<div class="framework-visual">
+    <div class="framework-title">Inspect AI 三層抽象 — 把 Eval 拆成可組合的三件事</div>
+    <div class="framework-steps">
+        <div class="framework-step">
+            <div class="framework-icon">D</div>
+            <div class="framework-step-title">Datasets</div>
+            <div class="framework-step-desc">input + target 樣本集</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">S</div>
+            <div class="framework-step-title">Solvers</div>
+            <div class="framework-step-desc">解題鏈，可含 Agent scaffold</div>
+        </div>
+        <div class="framework-arrow">→</div>
+        <div class="framework-step">
+            <div class="framework-icon">S</div>
+            <div class="framework-step-title">Scorers</div>
+            <div class="framework-step-desc">文字比對 / LLM-judge / 自訂</div>
+        </div>
+    </div>
+</div>
+
+<!-- PART 1: WHAT IS INSPECT -->
+<h2 class="section-heading">Part I — Inspect AI 是什麼？為什麼是 UK AISI 出？</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">Inspect AI 是一個 <span class="highlight-concept">前沿 AI 評測框架（frontier AI evaluations framework）</span>，用 Python 寫成，在 2024 年由英國 AI Safety Institute（後來改名 AI Security Institute）開源釋出。</p>
+        <p class="en">Inspect is a framework for frontier AI evaluations developed by the UK AI Security Institute and Meridian Labs.</p>
+
+        <p class="zh">它能評測的範圍包括：<span class="highlight-key">coding、agentic tasks、reasoning、knowledge、behavior、multi-modal understanding</span>。不限於某個特定 task，而是設計成通用底座。</p>
+        <p class="en">Inspect can be used for a broad range of evaluations that measure coding, agentic tasks, reasoning, knowledge, behavior, and multi-modal understanding.</p>
+
+        <p class="zh">為什麼是 UK AISI 出？因為英國政府在 2023 年 Bletchley Park AI Safety Summit 後成立了這個機構，任務就是「評測前沿模型」。Inspect 是他們做這件事所必須先建出來的工具基底。</p>
+
+        <div class="info-box box-analogy">
+            <div class="info-box-header">💡 比喻說明</div>
+            <div class="info-box-content">
+                <p>把 Inspect 想像成「LLM 界的 pytest」 — 不是給你具體的 test case（那是 200+ pre-built evals 的事），而是給你一個寫 test 的<strong>標準框架與生命週期</strong>。差別在於：傳統 pytest 是 input→assert，LLM eval 是 input→model→solver chain→scorer，多了兩層需要明確抽象。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 核心定位：Eval ≠ Benchmark</div>
+            <div class="info-box-content">
+                <p>很多人把 eval 跟 benchmark 混為一談。Inspect 的定位是<strong>「寫一次 eval，跑遍所有模型」</strong> — 而不是「跑 SuperGLUE 給你看分數」。</p>
+                <p>同樣是評測，benchmark 是<em>給定題目跑分數比模型</em>；eval 是<em>給定模型問「這樣寫的 prompt/skill/agent 行不行」</em>。對你的 personal AI OS 場景，後者才是你需要的。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ 為什麼挑 Inspect 而不是其他</div>
+            <div class="info-box-content">
+                <p>市場上 LLM eval 框架不少（Braintrust、LangSmith、Phoenix、DeepEval、lm-evaluation-harness）。挑 Inspect 的理由：</p>
+                <ul>
+                    <li><strong>政府機構出</strong>，沒商業綁定壓力</li>
+                    <li>Bridge API 直接接 <strong>Claude Code 與 Gemini CLI</strong> — 你已用的工具</li>
+                    <li>200+ 現成 eval 開箱即用</li>
+                    <li>支援 <strong>MCP tool</strong>，與你的擴充模型一致</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART 2: THE THREE ABSTRACTIONS -->
+<h2 class="section-heading">Part II — 三層抽象深入：Datasets / Solvers / Scorers</h2>
+
+<h3 class="part-heading">層 1：Datasets — 題目與標準答案</h3>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">Dataset 是<span class="highlight-concept">一組帶 input 與 target 標記的 sample</span>。input 通常是 prompt，target 可以是字串答案、參考輸出、或 grading rubric。</p>
+        <p class="en">Datasets contain a set of labelled samples with input and target columns.</p>
+
+        <p class="zh">Inspect 支援多種來源：本地 CSV/JSON、HuggingFace datasets、自訂 loader。你也可以用程式產生 — 例如把你寫過的 100 個 prompt + 你滿意的回答 dump 成 sample.json，就是一份 dataset。</p>
+
+        <p class="zh">關鍵設計：<span class="highlight-key">Dataset 與 Solver、Scorer 完全解耦</span>。同一份 dataset 可以餵給不同的 solver chain 跑不同實驗。</p>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 對照你的 library</div>
+            <div class="info-box-content">
+                <p>你已有的 SkillsBench（<code>processed/2026-03-01_skillsbench-agent-skills.html</code>）就是「Skills 領域的 Dataset」。Inspect 的 dataset 抽象讓你可以把那個 benchmark 直接 wrap 起來，跑你自己的 Skill 看分數。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="part-heading">層 2：Solvers — 解題鏈，含 Agent scaffold</h3>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">Solver 是<span class="highlight-concept">處理 input 並產出結果的元件</span>，可以串成 chain。最基本的 solver 是 <code>generate()</code>（直接呼叫模型），但你可以前後加上：</p>
+
+        <ul style="margin-top: 0.5rem; padding-left: 1.3rem; color: #334155;">
+            <li><code>chain_of_thought()</code> — 加 CoT 提示前綴</li>
+            <li><code>self_critique()</code> — 讓模型自我檢查</li>
+            <li><code>use_tools()</code> — 開啟 tool calling</li>
+            <li><code>react()</code> — 跑 ReAct agent loop</li>
+        </ul>
+
+        <p class="zh" style="margin-top: 1rem;">Solver 也可以是<span class="highlight-key">完整 Agent scaffold</span> — Inspect 內建 ReAct 與 Deep Agent，並支援用 Bridge API 接外部 agent（Claude Code、Gemini CLI、自家 Hermes 都行）。</p>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-code">
+            <div class="info-box-header">💻 典型 Solver chain</div>
+            <div class="info-box-content">
+                <p>官方範例（theory-of-mind eval）：</p>
+            </div>
+        </div>
+
+        <div class="info-box box-concept">
+            <div class="info-box-header">📚 為什麼解題鏈值得抽象</div>
+            <div class="info-box-content">
+                <p>「同一題用不同 prompt 技巧解」是 LLM 工程的核心實驗。Solver 把 prompt 技巧變成<strong>可組合的中介軟體（middleware）</strong>，讓你能 A/B 測試不同 chain 對同一 dataset 的影響，而不用每次重寫整套程式。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<pre class="code-below"><span class="comment"># 一個典型的 Solver chain — theory of mind eval</span>
+solver = chain(
+    chain_of_thought(),       <span class="comment"># 提示模型逐步推理</span>
+    generate(),               <span class="comment"># 呼叫模型</span>
+    self_critique(),          <span class="comment"># 讓模型回頭自查</span>
+)
+
+scorer = model_graded_fact()  <span class="comment"># 用另一個模型評分（LLM-as-judge）</span></pre>
+
+<h3 class="part-heading">層 3：Scorers — 評分，含 LLM-as-judge</h3>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">Scorer 接收 solver 的最終輸出，產出一個 score。內建幾種：</p>
+
+        <ul style="padding-left: 1.3rem; color: #334155;">
+            <li><code>match()</code> — 完全字串比對</li>
+            <li><code>includes()</code> — 包含關鍵字</li>
+            <li><code>pattern()</code> — regex 比對</li>
+            <li><code>model_graded_fact()</code> — 用<span class="highlight-key">另一個模型</span>當裁判</li>
+            <li><code>model_graded_qa()</code> — QA 任務專用 LLM-judge</li>
+            <li>自訂 <code>@scorer</code> — 你可以寫任意邏輯</li>
+        </ul>
+
+        <p class="zh" style="margin-top: 1rem;">關鍵設計：<span class="highlight-practical">同一個 sample 可以跑多個 scorer</span> — 你可以同時要 exact match + 用 LLM 判斷語意相近，然後比較。</p>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-critical">
+            <div class="info-box-header">⚠️ LLM-as-judge 的陷阱</div>
+            <div class="info-box-content">
+                <p>用模型評分聽起來很方便，但有兩個經典坑：</p>
+                <ul>
+                    <li><strong>position bias：</strong>裁判模型偏好先出現的選項</li>
+                    <li><strong>length bias：</strong>裁判模型偏好較長的回答</li>
+                </ul>
+                <p>Inspect 的 <code>model_graded_*</code> 系列已經內建了一些 mitigation（如位置 randomize），但你還是該對 judge prompt 自己做 calibration。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART 3: AGENT EVALUATION -->
+<h2 class="section-heading">Part III — Agent 評測：為什麼這是 Inspect 的殺手鐧</h2>
+<div class="content-grid">
+    <div class="content-left">
+        <p class="zh">傳統 LLM eval 把模型當成「文字 in / 文字 out」的黑盒。<span class="highlight-concept">Agent 不是。</span> Agent 會呼叫工具、執行程式碼、查網頁、跑很多輪，且每一步都可能出錯。</p>
+
+        <p class="zh">Inspect 的 agent eval 設計面向這個現實：</p>
+
+        <ul style="padding-left: 1.3rem; color: #334155;">
+            <li><strong>內建 agent</strong>：ReAct、Deep Agent 開箱即用</li>
+            <li><strong>Multi-agent primitives</strong>：可以跑多 agent 協作場景</li>
+            <li><strong>Bridge API</strong>：接 Claude Code、Gemini CLI、任意 external agent</li>
+            <li><strong>Sandbox</strong>：Docker / Kubernetes / Modal / Proxmox 隔離執行環境</li>
+            <li><strong>Tool support</strong>：bash、python、text editor、web search、web browser、computer use 都是內建 tool</li>
+            <li><strong>MCP tool 整合</strong>：你寫的 MCP server 可以直接當 eval tool</li>
+        </ul>
+    </div>
+
+    <div class="content-right">
+        <div class="info-box box-practical">
+            <div class="info-box-header">🛠️ 對你 Hermes / Skill-creator 軌跡的延伸</div>
+            <div class="info-box-content">
+                <p>你最近收的 Hermes Agent（self-improving）、Skill-creator epic update（含「評估系統」）、SkillsBench 三篇都在處理「Agent 該怎麼自我驗證」。Inspect 是把這個能力<strong>從特定 agent 抽出來變成獨立工具層</strong>的代表 — 任何 agent 都可以 plug 進來被評。</p>
+                <p>具體：你的 Hermes 是 self-evaluator（自評），Inspect 是 third-party evaluator（他評）。兩者組合才是完整 feedback loop。</p>
+            </div>
+        </div>
+
+        <div class="info-box box-key">
+            <div class="info-box-header">⚠️ Sandbox 的真實價值</div>
+            <div class="info-box-content">
+                <p>Agent 跑 bash / python 是高風險動作。Inspect 的 sandbox 不是裝飾 — 它是<strong>真的把每個 agent 執行隔離在 container 裡</strong>，evals 跑完容器銷毀。</p>
+                <p>你跑自家 Hermes 跑 100 次 self-improvement 不會搞爛你的本機。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PART 4: HOW TO START -->
+<h2 class="section-heading">Part IV — 從零開始：第一個 eval 怎麼寫</h2>
+
+<div class="info-box box-code">
+    <div class="info-box-header">💻 安裝與基本指令</div>
+    <div class="info-box-content">
+        <p>標準 Python pip 安裝，設好 API key 後一行指令就能跑：</p>
+    </div>
+</div>
+
+<pre class="code-below"><span class="comment"># 安裝</span>
+pip install inspect-ai
+
+<span class="comment"># 設定 API key（任一供應商皆可）</span>
+export ANTHROPIC_API_KEY=sk-ant-...
+export OPENAI_API_KEY=sk-...
+
+<span class="comment"># 跑一個現成的 eval（例如 ARC reasoning benchmark）</span>
+inspect eval arc.py --model anthropic/claude-opus-4-7
+
+<span class="comment"># 用 Inspect View 視覺化結果</span>
+inspect view</pre>
+
+<div class="info-box box-practical">
+    <div class="info-box-header">🛠️ 寫你自己的 eval — 三步</div>
+    <div class="info-box-content">
+        <p><strong>Step 1：</strong>準備 dataset。把你寫過的 20 個你最常用的 prompt + 你期望的輸出 dump 成 JSON。</p>
+        <p><strong>Step 2：</strong>定義 task。用 <code>@task</code> decorator，宣告 dataset、solver chain（從最簡單的 <code>generate()</code> 起）、scorer（先用 <code>model_graded_fact()</code>）。</p>
+        <p><strong>Step 3：</strong>跑。<code>inspect eval my_skill.py --model anthropic/claude-opus-4-7</code>。看 Inspect View，找出哪些 sample fail，回頭調 Skill。</p>
+    </div>
+</div>
+
+<!-- COMPARISON TABLE -->
+<h2 class="section-heading">Inspect AI 與其他 LLM Eval 工具對照</h2>
+<table class="compare-table">
+    <thead>
+        <tr>
+            <th>面向</th>
+            <th>Inspect AI</th>
+            <th>Braintrust</th>
+            <th>LangSmith</th>
+            <th>lm-eval-harness</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>性質</strong></td>
+            <td>政府機構開源</td>
+            <td>商業 SaaS（有 free tier）</td>
+            <td>商業 SaaS（LangChain 旗下）</td>
+            <td>學術社群開源（EleutherAI）</td>
+        </tr>
+        <tr>
+            <td><strong>主要 strength</strong></td>
+            <td>Agent eval、sandbox、200+ 現成 eval</td>
+            <td>Tracing + dataset 管理 + CI 整合</td>
+            <td>LangChain ecosystem 整合</td>
+            <td>學術 benchmark 跑分（MMLU、HellaSwag 等）</td>
+        </tr>
+        <tr>
+            <td><strong>抽象層次</strong></td>
+            <td>三層（Datasets / Solvers / Scorers）</td>
+            <td>experiment + dataset + scorer</td>
+            <td>chain + dataset + evaluator</td>
+            <td>task + metric</td>
+        </tr>
+        <tr>
+            <td><strong>Agent 支援</strong></td>
+            <td>原生（ReAct、Deep Agent、Bridge API）</td>
+            <td>有 trace 視覺化但無內建 agent</td>
+            <td>有但綁 LangChain</td>
+            <td>幾乎無</td>
+        </tr>
+        <tr>
+            <td><strong>MCP 支援</strong></td>
+            <td>原生</td>
+            <td>無</td>
+            <td>無</td>
+            <td>無</td>
+        </tr>
+        <tr>
+            <td><strong>適合誰</strong></td>
+            <td>個人/研究者寫 agent eval</td>
+            <td>產品團隊跑 production eval</td>
+            <td>已用 LangChain 的團隊</td>
+            <td>研究比 base model</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- KEY TAKEAWAYS -->
+<h2 class="section-heading">重點整理 Key Takeaways</h2>
+<div class="takeaways-grid">
+    <div class="summary-card">
+        <div class="summary-card-title">1. 三層抽象是 LLM eval 的「對的切法」</div>
+        <div class="summary-card-desc">Datasets / Solvers / Scorers 解耦讓你能「同題不同 prompt」「同 prompt 不同 model」「同模型不同 scorer」三軸獨立實驗。這是傳統 metric-based eval 做不到的彈性。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">2. Agent eval 是 2026 的剛需</div>
+        <div class="summary-card-desc">當你的工作對象從 prompt 變成 agent（你已經到這了），eval 工具也必須升級。Inspect 是少數把 agent + sandbox + tool 都當一等公民的框架。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">3. 政府機構出 = 沒有商業包袱</div>
+        <div class="summary-card-desc">Braintrust / LangSmith 都是 SaaS，要你 push trace 上他們服務器。Inspect 完全本地，你的 prompt / 輸出不外流。對 personal AI OS 場景這是關鍵。</div>
+    </div>
+    <div class="summary-card">
+        <div class="summary-card-title">4. 入門門檻：Python + async + 寫 dataset</div>
+        <div class="summary-card-desc">Inspect 不是「點點按鈕」工具。需要會 Python、能讀 async、願意自己準備 dataset。投入後的回報是「你寫的每個 Skill 從此都能客觀比較」。</div>
+    </div>
+</div>
+
+<!-- PRACTICE QUESTIONS -->
+<h2 class="section-heading">練習題 Practice Questions</h2>
+<p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;">先在心中思考答案，再點開展開查看建議答案。</p>
+
+<div class="practice-section">
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q1</span>
+            <span class="question-type">概念理解</span>
+            <span class="question-text">為什麼 Inspect 要把 eval 切成 Datasets / Solvers / Scorers 三層？合在一起寫不行嗎？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>合在一起寫的問題：</strong>你會發現你寫了 50 個 eval 之後，每個都是「題目+模型呼叫+評分邏輯」綁死，要換 prompt 技巧得改 50 個檔案，要換 scorer 也得改 50 個檔案。這就是耦合的成本。</p>
+            <p><strong>三層抽象的真正價值：</strong>三軸獨立實驗。同一份 dataset 可以跑「<code>generate()</code> only」vs「<code>chain_of_thought() + generate() + self_critique()</code>」兩種 solver，比較哪個 chain 對這類題目更有效；同一個 solver 可以跑「<code>match()</code>」vs「<code>model_graded_fact()</code>」兩種 scorer，看 LLM-judge 與 exact match 的相關性。</p>
+            <p>這個切法直接對應「LLM 工程的三大不確定性」 — 題目選對了嗎、prompt 寫對了嗎、評分標準合理嗎。三層分開才能各別 debug。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q2</span>
+            <span class="question-type">應用設計</span>
+            <span class="question-text">你想為現有的某個 Skill 寫第一個 Inspect eval，最小可行版本應該包含什麼？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>最小可行 eval 包含三件事：</strong></p>
+            <ul>
+                <li><strong>Dataset：</strong>10–20 個你過去實際用這個 Skill 處理的「input + 你滿意的輸出」配對。先用 JSON 存。不需要完美，只要代表你常用的場景即可。</li>
+                <li><strong>Solver：</strong>從最簡單的 <code>generate()</code> 起步，把你的 Skill 內容當 system prompt 注入。後續才加 <code>chain_of_thought()</code> 等技巧做 A/B。</li>
+                <li><strong>Scorer：</strong>先用 <code>model_graded_fact()</code>，judge prompt 寫成「比較模型輸出是否捕捉到了 target 中的核心要點」。日後再做 calibration。</li>
+            </ul>
+            <p><strong>關鍵心態：</strong>第一版 eval 不會完美。重點是建立 baseline，之後改 Skill 時能客觀看出「分數有沒有變好」 — 這個 baseline 比追求一次到位重要 100 倍。</p>
+        </div>
+    </details>
+
+    <details class="question-accordion">
+        <summary class="question-header">
+            <span class="question-number">Q3</span>
+            <span class="question-type">批判思考</span>
+            <span class="question-text">Inspect 內建 200+ evals，但你真的需要它們嗎？什麼情況該用內建 eval、什麼情況該自己寫？</span>
+            <span class="accordion-icon"></span>
+        </summary>
+        <div class="question-answer">
+            <p><strong>內建 eval 的價值：</strong>當你想知道「我的模型 setup 在通用基準上表現如何」 — 例如 ARC、GSM8K、HumanEval — 這些是學界共識的能力檢測，跑一輪就有業界比較基準。</p>
+            <p><strong>內建 eval 的盲點：</strong>它們<strong>無法告訴你「我寫的 Skill 對我的工作場景好不好用」</strong>。MMLU 跑 90 分不代表你的 /triage-deviation skill 寫得好；HumanEval 高分也不代表你的 cdmo-feasibility skill 對你客戶的真實案例有用。</p>
+            <p><strong>實務分工：</strong></p>
+            <ul>
+                <li><strong>內建 eval：</strong>新模型出來、想換 base model、想知道你的 prompt 技巧在通用題上有效嗎 — 用內建。</li>
+                <li><strong>自寫 eval：</strong>每個 production Skill 都該配一份自寫 eval，反映你的真實使用場景。內建 eval 永遠取代不了這個。</li>
+            </ul>
+            <p>類比：內建 eval 是「健身房體測」，自寫 eval 是「你能不能扛起家裡的水桶」。前者標準化，後者實用。兩者都需要，但別搞反了。</p>
+        </div>
+    </details>
+</div>
+
+<!-- BOTTOM LINE -->
+<div class="bottom-line">
+    <div class="bottom-line-header">🎯 我的行動結論</div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">✔ 核心洞察</div>
+        <div class="bottom-line-text">Inspect AI 用三層抽象（Datasets / Solvers / Scorers）把 LLM eval 從「臨時腳本」升級為「可組合的工程框架」 — 這正是我目前 personal AI OS 缺的拼圖。我寫了一堆 Skill 與半套 Agent，但完全沒有 systematic feedback loop 告訴我哪個有效、哪個改壞了。Inspect 是補上這塊的最佳起點。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">📈 立即應用</div>
+        <div class="bottom-line-text">本週可做：（1）<code>pip install inspect-ai</code> + 跑一個內建 eval（例如 ARC）熟悉 CLI 與 Inspect View；（2）為其中一個我最常用的 Skill 整理 10–15 組 input/target，寫成 dataset.json；（3）寫一個最小 task，用 <code>generate() + model_graded_fact()</code> 跑出第一個 baseline。整套大約 2–3 小時可完成。</div>
+    </div>
+    <div class="bottom-line-item">
+        <div class="bottom-line-label">⚠ 需要補充</div>
+        <div class="bottom-line-text">這份是工具入門，不是設計方法論。後續還需要補：（1）<strong>eval design 本身的方法</strong> — Anthropic 的「Building Effective Evals」guide、Hamel Husain 的 eval blog 系列；（2）<strong>LLM-as-judge 的 calibration</strong> — judge prompt 怎麼寫才不偏；（3）<strong>Braintrust 對照閱讀</strong>，看商業產品在 trace + dashboard 上多做了什麼，決定要不要混搭。三個月後重讀本文時，重點應該放在「我跑了多少 eval、改了多少 Skill」而非框架本身。</div>
+    </div>
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <div>製作日期：2026-05-11 · 整理者：David's AI Learning System</div>
+    <div>原文來源：<a href="https://inspect.aisi.org.uk/" target="_blank">Inspect AI Documentation</a> · <a href="https://github.com/UKGovernmentBEIS/inspect_ai" target="_blank">GitHub</a> · <a href="https://inspect.aisi.org.uk/tutorial.html" target="_blank">Tutorial</a></div>
+    <div class="footer-divider"></div>
+    <div style="margin-bottom: 0.5rem; font-size: 0.8rem; opacity: 0.85;">建議 Chat Title：</div>
+    <div class="chat-title-box">2026-05-11 [Tool] Inspect AI - UK AISI Eval Framework</div>
+    <div style="margin-top: 1rem; font-size: 0.75rem; opacity: 0.7;">基於 Master Prompt v1.5.0 製作 · v1.4.3 標準頁面佈局</div>
+</div>
+
+</body>
+</html>

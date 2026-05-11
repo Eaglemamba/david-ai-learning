@@ -1,5 +1,35 @@
 const documents = [
   {
+    "date": "2026-05-11",
+    "title": "Inspect AI - UK AISI LLM 評測框架",
+    "source": "UK AI Security Institute / inspect.aisi.org.uk",
+    "tags": [
+      "Tool",
+      "Framework",
+      "Agent",
+      "Analysis"
+    ],
+    "rating": 4,
+    "summary": "UK AISI 出的開源 LLM 評測框架。Datasets / Solvers / Scorers 三層抽象，內建 200+ evals、ReAct/Deep Agent、MCP 與 sandbox 支援，Anthropic 工具棧最佳契合的評測引擎。",
+    "lines": 607,
+    "file": "processed/2026-05-11_inspect-ai-evaluation-framework.html"
+  },
+  {
+    "date": "2026-05-11",
+    "title": "Voyager - LLM Lifelong Learning Agent in Minecraft",
+    "source": "NVIDIA / Caltech / UT Austin / Stanford / ASU - arXiv 2305.16291",
+    "tags": [
+      "Agent",
+      "Framework",
+      "Automation",
+      "Analysis"
+    ],
+    "rating": 4.7,
+    "summary": "2023 NVIDIA Voyager 論文：第一個 LLM-powered 終身學習 agent，三件神器（Automatic Curriculum / Skill Library / Iterative Prompting）讓 GPT-4 在 Minecraft 中自我探索、生成 skill、跨世界遷移。Hermes / Skill-creator / SkillsBench 的根源。",
+    "lines": 597,
+    "file": "processed/2026-05-11_voyager-skill-library-lifelong-agent.html"
+  },
+  {
     "date": "2026-05-10",
     "title": "Garry Tan - Meta-Meta-Prompting Personal AI OS",
     "source": "Garry Tan / Y Combinator CEO Blog",

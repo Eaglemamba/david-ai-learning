@@ -86,6 +86,8 @@ const stages = [
       { file: 'processed/2026-04-12_claude-token-saving-habits.html', title: 'Claude Token 節省技巧 - Hassid 23 Habits ★3.6', required: false, why: '23 個減少 Claude token 消耗的實用習慣，從檔案轉換到對話管理全面涵蓋' },
     
       { file: 'processed/2026-05-09_thariq-html-effectiveness.html', title: 'HTML 的不合理有效性 - Claude Code 輸出革命 ★4.0', required: false, why: '從 Markdown 轉向 HTML 的論證。資訊密度、視覺清晰、易分享、雙向互動。' },
+    
+      { file: 'processed/2026-05-11_inspect-ai-evaluation-framework.html', title: 'Inspect AI - UK AISI LLM 評測框架 ★4.0', required: false, why: 'UK AISI 出的開源 LLM 評測框架。Datasets / Solvers / Scorers 三層抽象，內建 2' },
     ]
   },
   {
@@ -127,6 +129,8 @@ const stages = [
       { file: 'processed/2026-05-09_md-files-for-ai-guide.html', title: 'Markdown Files for AI - Ultimate Guide ★3.6', required: false, why: 'AI Edge 的 Markdown 系統指南。Memory、Skills、Project Instructions 三' },
     
       { file: 'processed/2026-05-10_garrytan-meta-meta-prompting.html', title: 'Garry Tan - Meta-Meta-Prompting Personal AI OS ★3.4', required: false, why: 'Garry Tan 個人 AI 作業系統架構。Fat skills、book mirror、skillification' },
+    
+      { file: 'processed/2026-05-11_voyager-skill-library-lifelong-agent.html', title: 'Voyager - LLM Lifelong Learning Agent in Minecraft ★4.7', required: false, why: '2023 NVIDIA Voyager 論文：第一個 LLM-powered 終身學習 agent，三件神器（Autom' },
     ]
   },
   {
@@ -227,6 +231,8 @@ const topicClusters = [
           { title: 'Markdown Files for AI - Ultimate Guide ★3.6', file: 'processed/2026-05-09_md-files-for-ai-guide.html' },
         
           { title: 'Garry Tan - Meta-Meta-Prompting Personal AI OS ★3.4', file: 'processed/2026-05-10_garrytan-meta-meta-prompting.html' },
+        
+          { title: 'Voyager - LLM Lifelong Learning Agent in Minecraft ★4.7', file: 'processed/2026-05-11_voyager-skill-library-lifelong-agent.html' },
         ]
       },
       {
@@ -284,6 +290,8 @@ const topicClusters = [
           { title: 'ACT + BASE Agent Framework ★4.2', file: 'processed/2026-01-13_act-base-framework.html' },
           { title: 'A2UI 使用者介面框架 ★3.8', file: 'processed/2026-01-20_a2ui-framework.html' },
           { title: 'Anthropic Skills vs Agents ★3.5', file: 'processed/2025-12-09_anthropic-skills-agents.html' },
+        
+          { title: 'Inspect AI - UK AISI LLM 評測框架 ★4.0', file: 'processed/2026-05-11_inspect-ai-evaluation-framework.html' },
         ]
       },
       {
